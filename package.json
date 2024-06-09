@@ -1,0 +1,50 @@
+{
+  "name": "next-typescript-2",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint .",
+    "postbuild": "next-sitemap"
+  },
+  "dependencies": {
+    "@ant-design/nextjs-registry": "^1.0.0",
+    "@reduxjs/toolkit": "^2.2.5",
+    "@tanstack/react-query": "^5.40.1",
+    "@types/crypto-js": "^4.2.2",
+    "@types/react-dom": "^18.3.0",
+    "@types/react-intl-redux": "^0.1.19",
+    "antd": "^5.18.0",
+    "autoprefixer": "^10.4.19",
+    "axios": "^1.7.2",
+    "crypto-js": "^4.2.0",
+    "firebase": "10.6.0",
+    "lodash": "^4.17.21",
+    "next": "^14.2.3",
+    "next-sitemap": "^4.2.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-intl-redux": "^2.4.1",
+    "react-media": "^1.10.0",
+    "react-phone-input-2": "^2.15.1",
+    "react-redux": "^9.1.2",
+    "redux-persist": "^6.0.0",
+    "sass": "^1.77.4",
+    "styled-components": "^6.1.11",
+    "tailwindcss": "^3.4.4"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "@types/react": "^18.3.3",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "eslint": "^8.38.0",
+    "eslint-config-next": "^13.3.0",
+    "eslint-config-prettier": "^8.8.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.1",
+    "prettier": "^2.8.7",
+    "typescript": "5.0.4"
+  }
+}
