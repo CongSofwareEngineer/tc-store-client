@@ -9,16 +9,20 @@ export enum SLICE {
   Setting = 'Setting',
   Language = 'Language',
   UserData = 'UserData',
-  ConnectedChain = 'ConnectedChain'
+  ConnectedChain = 'ConnectedChain',
+  CategoryMenu = 'CategoryMenu'
 }
 
-export const WHITE_LIST_PERSIT_REDUX = [SLICE.Language]
+export const WHITE_LIST_PERSIT_REDUX = [SLICE.Language, SLICE.CategoryMenu, SLICE.UserData]
 
 export const INIT_STATE = {
   [SLICE.Language]: localeVN,
   [SLICE.Setting]: null,
   [SLICE.UserData]: null,
-  [SLICE.ConnectedChain]: 56
+  [SLICE.ConnectedChain]: 56,
+  [SLICE.CategoryMenu]: {
+    CategoryMenu: []
+  }
 } as const
 
 export type TYPE_SLICE = {
@@ -28,18 +32,13 @@ export type TYPE_SLICE = {
   }
   [SLICE.Setting]: Object | null
   [SLICE.UserData]: Object | null
-  [SLICE.ConnectedChain]: Number
+  [SLICE.ConnectedChain]: Number,
+  [SLICE.CategoryMenu]: {
+    CategoryMenu: Array<{ key: string, name: string }>
+  }
 }
 
-export type TYPRE_PERSIST_REDUCER = {
-  [SLICE.Language]?: {
-    locale: string,
-    messages: any
-  },
-  [SLICE.Setting]?: Object | null,
-  [SLICE.UserData]?: Object | null,
-  [SLICE.ConnectedChain]?: Number
-} & unknown
+export type TYPRE_PERSIST_REDUCER = TYPE_SLICE & unknown
 
 export type Language = typeof MessageVN
 

@@ -37,15 +37,52 @@ const nextConfig = {
   },
   compress: true,
   swcMinify: true,
-  images: {
-    domains: [],
-  },
   compiler: {
     styledComponents: {
       displayName: true,
       ssr: true,
       minify: true,
     },
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+        pathname: '/**',
+      },
+      // {
+      //   protocol: 'https',
+      //   hostname: 'ipfs.pantograph.app',
+      //   pathname: '/**',
+      // },
+      // {
+      //   protocol: 'https',
+      //   hostname: 'ipfs.pantograph.app/ipfs',
+      //   pathname: '/**',
+      // },
+      // {
+      //   protocol: 'https',
+      //   hostname: 'ipfsgw.bountykinds.com',
+      //   pathname: '/**',
+      // },
+
+      // {
+      //   protocol: 'https',
+      //   hostname: 'skywalker.infura-ipfs.io',
+      //   pathname: '/**',
+      // },
+      // {
+      //   protocol: 'https',
+      //   hostname: 'ipfs.filebase.io',
+      //   pathname: '/**',
+      // },
+      // {
+      //   protocol: 'https',
+      //   hostname: 'ucarecdn.com',
+      //   pathname: '/**',
+      // },
+    ],
   },
   webpack: (config) => {
     config.externals.push('pino-pretty', 'lokijs', 'encoding')

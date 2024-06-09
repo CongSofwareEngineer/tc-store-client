@@ -1,73 +1,63 @@
 
-import type { NextApiResponse } from 'next'
+import fetchConfig from '@/configs/fetchConfig';
+import { RequestType } from '@/constant/app';
+import { decryptData, encryptData } from '@/utils/crypto';
 
 
 
-export async function POST(req: any, res: NextApiResponse<any>) {
-  console.log('====================================');
-  console.log({ req: req.body });
-  console.log('====================================');
+export async function POST(req: any) {
+  try {
 
-  res.status(200).json({ name: 'John Doe' })
+    const dataReq = await req.json()
 
-  // try {
-  //   const dataReq = await req.
-  //   let bodyDecode = decryptData(dataReq.data)
-  //   bodyDecode = JSON.parse(bodyDecode)
 
-  //   if (!bodyDecode[process.env.NEXT_PUBLIC_KEY_SALT]) {
-  //     return Response.json(
-  //       {
-  //         data: null,
-  //         message: 'bad request',
-  //         error: 'your is hacker'
-  //       },
-  //       {
-  //         status: 500
-  //       }
-  //     )
-  //   }
+    let bodyDecode: any = decryptData(dataReq.data)
+    bodyDecode = JSON.parse(bodyDecode)
 
-  //   const bodyData = bodyDecode.body
-  //   let dataRequest = ''
+    if (!bodyDecode[process.env.NEXT_PUBLIC_KEY_SALT]) {
+      return new Response('You are hacker',
+        {
+          status: 500
+        }
+      )
+    }
 
-  //   const config = {
-  //     url: bodyDecode.url,
-  //     method: bodyDecode.method || REQUEST_TYPE.GET,
-  //     isCache: false
-  //   }
-  //   switch (bodyData?.method) {
-  //     case REQUEST_TYPE.POST:
-  //     case REQUEST_TYPE.PUT:
-  //       config.body = bodyData.body
-  //       break;
-  //   }
-  //   if (bodyData?.isAThu) {
-  //     config.isAThu = true
-  //   }
-  //   dataRequest = await fetchConfig(config)
+    const bodyData = bodyDecode.body
 
-  //   if (bodyDecode?.encode) {
-  //     return Response.json({
-  //       data: encryptData(JSON.stringify(dataRequest)),
-  //       message: 'success'
-  //     })
-  //   }
+    const config: any = {
+      url: bodyDecode.url,
+      method: bodyDecode.method || RequestType.GET,
+      isCache: false,
+    }
+    switch (bodyData?.method) {
+      case RequestType.POST:
+      case RequestType.PUT:
+        config.body = bodyData.body
+        break;
+    }
+    if (bodyData?.isAThu) {
+      config.isAThu = true
+    }
+    const dataRequest = await fetchConfig(config)
 
-  //   return Response.json({
-  //     data: dataRequest,
-  //     message: 'success'
-  //   })
-  // } catch (error) {
-  //   return Response.json(
-  //     {
-  //       data: null,
-  //       message: 'bad request',
-  //       error: 'your is hacker'
-  //     },
-  //     {
-  //       status: 500
-  //     }
-  //   )
-  // }
+
+    if (bodyDecode?.encode) {
+      const res = new Response(encryptData(JSON.stringify(dataRequest)), { status: 200 })
+
+      return await res.json()
+    }
+    const res = new Response(JSON.stringify(dataRequest), { status: 200 })
+
+    return await res.json()
+  } catch (error) {
+    console.log('====================================');
+    console.log({ error });
+    console.log('====================================');
+    return new Response('You are hacker',
+      {
+        status: 500
+      }
+    )
+  }
+
 }

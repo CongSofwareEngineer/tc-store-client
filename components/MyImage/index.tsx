@@ -6,9 +6,9 @@ const ImageCustom = styled(Image)`
   position: relative !important;
 `
 type ImageType = {
-  className: string | ''
-  alt: string
-  src: string | URL
+  className?: string | ''
+  alt?: string
+  src: any
 } & ImageProps
 
 const MyImage = ({
@@ -18,7 +18,13 @@ const MyImage = ({
   ...props
 }: ImageType) => {
   return (
-    <ImageCustom className={className} fill alt={alt} src={src} {...props} />
+    <ImageCustom
+      className={className}
+      fill
+      alt={alt || src || `alt ${Date.now()}`}
+      src={src}
+      {...props}
+    />
   )
 }
 

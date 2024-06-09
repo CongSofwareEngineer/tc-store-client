@@ -1,4 +1,4 @@
-import fetchConfig from '@/configs/fetchConfig'
+import useQueryUrl from '@/hook/useQueryUrl'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
 import Link from 'next/link'
@@ -17,24 +17,13 @@ const Nav = () => {
   const { isLogin } = useUserData()
   const { translate } = useLanguage()
   const pathname = usePathname()
+  const { currentQuery, queries } = useQueryUrl()
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const dataAPI: any = await fetchConfig({
-          url: 'all-product',
-        })
-        console.log('====================================')
-        console.log({ dataAPI })
-        console.log('====================================')
-      } catch (error) {
-        console.log('====================================')
-        console.log({ error })
-        console.log('====================================')
-      }
-    }
-    getData()
-  }, [])
+    console.log('====================================')
+    console.log({ currentQuery, queries })
+    console.log('====================================')
+  }, [currentQuery, queries])
 
   const renderDesktop = () => {
     return (

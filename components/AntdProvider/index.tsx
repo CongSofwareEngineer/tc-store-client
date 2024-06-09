@@ -19,6 +19,12 @@ const AntdProvider = ({ children }: { children: React.ReactNode }) => {
             defaultActiveBorderColor: 'transparent',
           },
           Select: {},
+          Collapse: {
+            headerBg: '#bbf7d0',
+            contentPadding: '0px 0px 10px 0px',
+            borderRadius: 16,
+            colorBorder: 'black',
+          },
         },
       }}
     >

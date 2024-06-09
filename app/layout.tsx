@@ -10,6 +10,7 @@ import { AntdRegistry } from '@ant-design/nextjs-registry'
 import StyledComponentsRegistry from '@/components/RegistryApp'
 import ClientRender from '@/components/ClientRender'
 import type { Viewport } from 'next'
+import ReactQueryProvider from '@/components/ReactQueryProvider'
 const inter = Inter({ subsets: ['latin'] })
 
 const BaseMeta = {
@@ -85,13 +86,15 @@ const LayoutMain = ({ children }: { children: React.ReactNode }) => {
       <body className={inter.className}>
         <AntdRegistry>
           <AntdProvider>
-            <ReduxProvider>
-              <MyModalProvider>
-                <StyledComponentsRegistry>
-                  <ClientRender>{children}</ClientRender>
-                </StyledComponentsRegistry>
-              </MyModalProvider>
-            </ReduxProvider>
+            <ReactQueryProvider>
+              <ReduxProvider>
+                <MyModalProvider>
+                  <StyledComponentsRegistry>
+                    <ClientRender>{children}</ClientRender>
+                  </StyledComponentsRegistry>
+                </MyModalProvider>
+              </ReduxProvider>
+            </ReactQueryProvider>
           </AntdProvider>
         </AntdRegistry>
       </body>

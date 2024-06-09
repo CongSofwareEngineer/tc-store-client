@@ -12,7 +12,7 @@ export const decryptData = (value: string, pinCode: string = process.env.NEXT_PU
   try {
     return crypto.AES.decrypt(value.toString(), pinCode).toString(crypto.enc.Utf8)
   } catch (error) {
-    return false
+    return ''
   }
 }
 

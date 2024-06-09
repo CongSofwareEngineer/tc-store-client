@@ -18,9 +18,22 @@ export const ColorConfig = {
   hover: '#bdbdbd12',
   yellow: '#F2C94C',
   'yellow-30': '#f2c94c30',
-  mask: '#00000078'
-}
+  mask: '#00000078',
+  '#bbf7d0': '#bbf7d0',
+  green1: '#66FF33',
+} as const
 
 export enum CookieKey {
   'User' = 'User'
 }
+
+export enum FilterAPI {
+  TypeProduct = 'typeProduct',
+  LargerPrice = 'largerPrice',
+  SmallerPrice = 'smallerPrice',
+  Food = 'food',
+  Water = 'water',
+  Fashion = 'fashion',
+  Electronic = 'electronic'
+}
+

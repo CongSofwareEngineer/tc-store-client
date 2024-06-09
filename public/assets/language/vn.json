@@ -13,7 +13,8 @@
     "edit": "Chỉnh sửa",
     "uploadAvatar": "Chọn ảnh (Max 5MB)",
     "save": "Lưu lại",
-    "addAddress": "Thêm địa chỉ"
+    "addAddress": "Thêm địa chỉ",
+    "clearAll": "Xóa hết"
   },
   "userDetail": {
     "addressNow": "Địa chỉ hiện tại",
@@ -67,7 +68,7 @@
   },
   "menuProduct": {
     "linePrice": "Mức giá",
-    "category": "Loại Sản phẩm"
+    "category": "Sản phẩm"
   },
   "mintNFT": {
     "addNewImg": "Thêm ảnh mới",
