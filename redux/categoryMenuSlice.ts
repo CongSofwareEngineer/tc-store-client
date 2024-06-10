@@ -10,9 +10,6 @@ export const fetchMenuCategory = createAsyncThunk(
       const menuHandle = await ServerApi.requestBase({
         url: 'menu-category'
       })
-      console.log('====================================');
-      console.log({ menuHandle });
-      console.log('====================================');
 
       return menuHandle?.data?.data || menuHandle?.data || []
     } catch (error) {
@@ -33,9 +30,6 @@ export const categoryMenuSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchMenuCategory.fulfilled, (state: any, action) => {
-        console.log('====================================');
-        console.log({ action });
-        console.log('====================================');
         state[SLICE.CategoryMenu] = action.payload
       })
   }

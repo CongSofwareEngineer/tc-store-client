@@ -1,3 +1,4 @@
+'use client'
 const PageRegister = () => {
   return <div>PageRegister</div>
 }
