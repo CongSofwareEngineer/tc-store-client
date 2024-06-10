@@ -1,11 +1,10 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
-import { useMemo } from 'react';
+import { useCallback, useEffect, useState } from 'react'
 import queryString from 'query-string';
 import { cloneData } from '@/utils/functions';
 
 const useQuerySearch = () => {
-  const [queries, setQueries] = useState<Record<string, (string | null)[]> | null>(null)
+  const [queries, setQueries] = useState<Record<string, (string | null)[]>>({})
   const [currentQueries, setCurrentQueries] = useState<string>('')
   const searchParam = useSearchParams()
   const pathPage = usePathname()
@@ -13,8 +12,6 @@ const useQuerySearch = () => {
 
   useEffect(() => {
     const searchPare = queryString.parse(window.location.search, { arrayFormat: 'comma' })
-
-    let refreshPage = false
     const searchPareClone = cloneData(searchPare)
 
     Object.entries(searchPare).map(([key, value]) => {
@@ -22,23 +19,19 @@ const useQuerySearch = () => {
         searchPareClone[key] = value.split(',')
       }
       if (Array.isArray(value) && value.length === 0) {
-        refreshPage = true
         delete searchPareClone[key]
       }
 
       if (!value) {
-        refreshPage = true
         delete searchPareClone[key]
       }
     })
-    if (refreshPage) {
-      const stringified = queryString.stringify(searchPareClone, { arrayFormat: 'comma' });
-      router.push(`${pathPage}?${stringified}`)
-    }
-    console.log({ searchPareQueries: searchPareClone });
+    const stringified = queryString.stringify(searchPareClone, { arrayFormat: 'comma' });
+    router.push(`${pathPage}?${stringified}`)
     setQueries(searchPareClone)
     setCurrentQueries(window.location.search)
-  }, [searchParam, router])
+
+  }, [searchParam, router, pathPage])
 
 
   const updateQuery = useCallback((key: string, value: string | string[] | number | number[]) => {
@@ -55,15 +48,14 @@ const useQuerySearch = () => {
     }
     console.log({ searchPareUpdateQuery: searchPareClone, queries });
 
-    console.log('====================================');
     const stringified = queryString.stringify(searchPareClone, { arrayFormat: 'comma' });
     router.push(`${pathPage}?${stringified}`)
 
-  }, [queries, searchParam])
+  }, [queries, pathPage, router])
 
   const clearAll = useCallback(() => {
     router.push(pathPage)
-  }, [pathPage])
+  }, [pathPage, router])
 
   return {
     queries,

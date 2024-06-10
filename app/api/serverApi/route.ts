@@ -43,6 +43,9 @@ export async function POST(req: any) {
       config.isAThu = true
     }
     const dataRequest = await fetchConfig(config)
+    console.log('====================================');
+    console.log({ dataRequest });
+    console.log('====================================');
 
 
     if (bodyDecode?.encode) {

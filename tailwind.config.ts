@@ -9,7 +9,7 @@ const config = {
   prefix: '',
   theme: {},
   darkMode: 'class',
-  important: true,
+  // important: true,
   plugins: [
     plugin(function ({ addUtilities }) {
       const newUtilities = {

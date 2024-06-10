@@ -1,19 +1,11 @@
 
-import { QueryKey } from '@/constant/reactQuery';
+import { QueryKey, TypeHookReactQuery } from '@/constant/reactQuery';
 import ServerApi from '@/services/serverApi';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-type ApiResponse = {
-  "data": any[],
-  "totalPage": number,
-  "page": number,
-  "status": number | undefined,
-  "messages": string | undefined
-} & Record<string, any>
 
-const getAllProduct = async ({ queryKey }: any): Promise<ApiResponse> => {
-  let res = null
-  res = await ServerApi.getProduct(queryKey[1] || '')
+const getAllProduct = async ({ queryKey }: any): Promise<TypeHookReactQuery> => {
+  const res = await ServerApi.getProduct(queryKey[1] || '')
 
   return res.data || [];
 };

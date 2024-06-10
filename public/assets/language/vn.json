@@ -68,7 +68,8 @@
   },
   "menuProduct": {
     "linePrice": "Mức giá",
-    "category": "Sản phẩm"
+    "category": "Danh mục",
+    "product": "Sản phẩm"
   },
   "mintNFT": {
     "addNewImg": "Thêm ảnh mới",

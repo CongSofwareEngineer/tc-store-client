@@ -8,6 +8,7 @@ type CollapseType = {
   expandIcon?: any
   rootClassName?: string
 } & CollapseProps
+
 const MyCollapse = ({
   items,
   defaultActiveKey,

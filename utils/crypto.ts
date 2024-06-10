@@ -8,7 +8,7 @@ export const encryptData = (value: string, pinCode: string = process.env.NEXT_PU
   }
 }
 
-export const decryptData = (value: string, pinCode: string = process.env.NEXT_PUBLIC_KEY_SALT) => {
+export const decryptData = (value: any, pinCode: string = process.env.NEXT_PUBLIC_KEY_SALT) => {
   try {
     return crypto.AES.decrypt(value.toString(), pinCode).toString(crypto.enc.Utf8)
   } catch (error) {

@@ -6,7 +6,7 @@ export const generateMetaBase = ({
   image = null,
   override = false,
   overrideImage = false
-}: any) => {
+}: Record<string, any>) => {
   const dataClone = JSON.parse(JSON.stringify(dataBase))
   if (title) {
     dataClone.title = override ? title : `${process.env.NEXT_PUBLIC_TITLE} | ${title}`

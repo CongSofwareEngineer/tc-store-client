@@ -27,7 +27,7 @@ const ServerApi = {
         req = await axios.post('/api/serverApi', { data: encryptData(JSON.stringify(param)) })
       }
       if (param.encode) {
-        const dataReq: string = req.data?.data || req.data || ''
+        const dataReq: Record<string, any> = req.data
 
         return {
           data: JSON.parse(decryptData(dataReq)),
@@ -36,7 +36,7 @@ const ServerApi = {
       }
 
       return {
-        data: req.data?.data || req.data,
+        data: req.data,
         message: 'success'
       }
     } catch (error) {
@@ -49,7 +49,7 @@ const ServerApi = {
   },
   getProduct: async (query = '') => {
     const res = await ServerApi.requestBase({
-      url: `all-product${query}`
+      url: `all-product${query}`,
     })
     return res
   },

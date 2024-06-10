@@ -1,9 +1,8 @@
 import useLanguage from '@/hook/useLanguage'
-import useQuerySearch from '@/hook/useQuerySearch'
 import useUserData from '@/hook/useUserData'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React from 'react'
 import Media from 'react-media'
 import styled from 'styled-components'
 
@@ -17,16 +16,10 @@ const Nav = () => {
   const { isLogin } = useUserData()
   const { translate } = useLanguage()
   const pathname = usePathname()
-  const { queries, updateQuery } = useQuerySearch()
-
-  useEffect(() => {}, [])
 
   const renderDesktop = () => {
     return (
       <div className="flex flex-1 gap-5 ml-2">
-        <div className="cursor-pointer" onClick={() => updateQuery('age', 18)}>
-          click
-        </div>
         <LinkCustom
           $isSelected={pathname === '/' || pathname === ''}
           href={'/'}
