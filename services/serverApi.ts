@@ -18,7 +18,7 @@ const ServerApi = {
     try {
       let req = null
       param[process.env.NEXT_PUBLIC_KEY_SALT] = process.env.NEXT_PUBLIC_KEY_SALT
-      if (process.env.NEXT_PUBLIC_ENABLE_DEBUG_API || process.env.NEXT_PUBLIC_ENABLE_DEBUG_API === 'true') {
+      if (process.env.NEXT_PUBLIC_ENABLE_DEBUG_API === 'true') {
         req = await axios.post('/api/serverApi', {
           data: encryptData(JSON.stringify(param)),
           url: `${param.url}`
