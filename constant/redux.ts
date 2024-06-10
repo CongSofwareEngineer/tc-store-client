@@ -23,7 +23,7 @@ export const INIT_STATE = {
   [SLICE.CategoryMenu]: {
     CategoryMenu: []
   }
-} as const
+}
 
 export type TYPE_SLICE = {
   [SLICE.Language]: {
@@ -38,7 +38,7 @@ export type TYPE_SLICE = {
   }
 }
 
-export type TYPRE_PERSIST_REDUCER = TYPE_SLICE & unknown
+export type TYPE_PERSIST_REDUCER = TYPE_SLICE & unknown
 
 export type Language = typeof MessageVN
 

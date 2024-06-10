@@ -2,6 +2,7 @@
 import fetchConfig from '@/configs/fetchConfig';
 import { RequestType } from '@/constant/app';
 import { decryptData, encryptData } from '@/utils/crypto';
+// import { NextResponse } from 'next/server';
 
 
 
@@ -15,11 +16,14 @@ export async function POST(req: any) {
     bodyDecode = JSON.parse(bodyDecode)
 
     if (!bodyDecode[process.env.NEXT_PUBLIC_KEY_SALT]) {
+      // return NextResponse.json({ error: 'You are hacker' }, { status: 500 });
       return new Response('You are hacker',
         {
           status: 500
         }
       )
+      // return Response.json('You are hacker', { status: 500 })
+
     }
 
     const bodyData = bodyDecode.body
@@ -43,21 +47,20 @@ export async function POST(req: any) {
 
     if (bodyDecode?.encode) {
       const res = new Response(encryptData(JSON.stringify(dataRequest)), { status: 200 })
+      return res
 
-      return await res.json()
     }
     const res = new Response(JSON.stringify(dataRequest), { status: 200 })
+    return res
 
-    return await res.json()
   } catch (error) {
-    console.log('====================================');
-    console.log({ error });
-    console.log('====================================');
+    // return NextResponse.json({ error: 'You are hacker' }, { status: 500 });
     return new Response('You are hacker',
       {
         status: 500
       }
     )
+    // return Response.json('You are hacker', { status: 500 })
   }
 
 }

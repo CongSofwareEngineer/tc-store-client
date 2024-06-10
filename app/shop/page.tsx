@@ -9,9 +9,7 @@ import ItemProduct from '@/components/ItemProduct'
 const ShopScreen = () => {
   const { currentQuery } = useQueryUrl()
   const { data, isLoading } = useAllProduct(currentQuery)
-  console.log('====================================')
-  console.log({ data })
-  console.log('====================================')
+
   return (
     <div className="w-full flex md:gap-6 gap-4  h-full justify-star">
       <div className="w-max-[300px] min-w-[250px] w-[20%]">

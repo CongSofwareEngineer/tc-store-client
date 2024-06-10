@@ -11,7 +11,7 @@ const ClientRender = ({ children }: { children: React.ReactNode }) => {
     console.log('====================================')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  return (
+  return isClient ? (
     <>
       <header>
         <Header />
@@ -22,6 +22,8 @@ const ClientRender = ({ children }: { children: React.ReactNode }) => {
         </section>
       </main>
     </>
+  ) : (
+    <></>
   )
 }
 

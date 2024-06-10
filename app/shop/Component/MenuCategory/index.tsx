@@ -17,9 +17,6 @@ const MenuCategory = () => {
   // const [tabMenu, setTabMenu] = useState(['category'])
 
   const onChangeCategory = (keyType: string, value: boolean) => {
-    console.log('====================================')
-    console.log({ keyType, value })
-    console.log('====================================')
     let dataClone = cloneData(queries?.[FilterAPI.TypeProduct] || [])
     if (value) {
       dataClone = [...dataClone, keyType]
@@ -33,7 +30,7 @@ const MenuCategory = () => {
     return (
       <div className="w-full flex gap-1 md:gap-3 md:flex-col md:mt-2 flex-wrap">
         {CategoryMenu?.CategoryMenu &&
-          CategoryMenu?.CategoryMenu?.map((menu, index) => {
+          CategoryMenu?.CategoryMenu?.map((menu, index: number) => {
             return (
               <div
                 className={`md:w-full px-4 py-2 md:border-b-lime-200 ${

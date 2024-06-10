@@ -8,9 +8,8 @@ import PrimaryButton from '@/components/PrimaryButton'
 const Home = () => {
   const router = useRouter()
   const { Language } = useAppSelector((state) => state.app)
-  console.log('====================================')
   console.log({ Language })
-  console.log('====================================')
+
   const { openModal } = useModal()
   const oprn = () => {
     router.push('')

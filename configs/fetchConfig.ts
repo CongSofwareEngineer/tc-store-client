@@ -19,9 +19,7 @@ const fetchConfig = async ({
     signal: AbortSignal.timeout(timeOut)
 
   };
-  console.log('====================================');
-  console.log({ config });
-  console.log('====================================');
+
   if (body) {
     config.data = body
   }
