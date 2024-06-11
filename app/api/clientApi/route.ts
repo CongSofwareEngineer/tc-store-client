@@ -1,6 +1,5 @@
 
-import fetchConfig from '@/configs/fetchConfig';
-import { RequestType } from '@/constant/app';
+
 import { FB_FC } from '@/constant/firebase';
 import { FirebaseConfig } from '@/services/firebaseService';
 import { decryptData, encryptData } from '@/utils/crypto';
