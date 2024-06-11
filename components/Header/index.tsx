@@ -5,8 +5,12 @@ import PrimaryButton from '../PrimaryButton'
 import { images } from '@/configs/images'
 import MyImage from '../MyImage'
 import Nav from './Component/Nav'
+import useModal from '@/hook/useModal'
 
 const Header = () => {
+  const { openModal } = useModal()
+
+  const handleLogin = () => {}
   return (
     <Affix className="w-full h-14 ">
       <div className="border-b-4 border-indigo-500  w-full flex m-auto justify-center items-center bg-white">

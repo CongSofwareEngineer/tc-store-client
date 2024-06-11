@@ -77,4 +77,4 @@ const MyFilterCheckBox = ({
   return render()
 }
 
-export default MyFilterCheckBox
+export default React.memo(MyFilterCheckBox)
