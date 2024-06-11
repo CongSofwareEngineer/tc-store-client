@@ -80,23 +80,23 @@ export const viewport: Viewport = {
   userScalable: false,
 }
 
-const LayoutMain = ({ children }: { children: React.ReactNode }) => {
+const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AntdRegistry>
-          <AntdProvider>
-            <ReactQueryProvider>
-              <ReduxProvider>
-                <MyModalProvider>
-                  <StyledComponentsRegistry>
+        <StyledComponentsRegistry>
+          <AntdRegistry>
+            <AntdProvider>
+              <ReactQueryProvider>
+                <ReduxProvider>
+                  <MyModalProvider>
                     <ClientRender>{children}</ClientRender>
-                  </StyledComponentsRegistry>
-                </MyModalProvider>
-              </ReduxProvider>
-            </ReactQueryProvider>
-          </AntdProvider>
-        </AntdRegistry>
+                  </MyModalProvider>
+                </ReduxProvider>
+              </ReactQueryProvider>
+            </AntdProvider>
+          </AntdRegistry>
+        </StyledComponentsRegistry>
       </body>
     </html>
   )

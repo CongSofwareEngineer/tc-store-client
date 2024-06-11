@@ -34,7 +34,7 @@ const ShopScreen = () => {
             {data?.data?.map((item: any) => {
               return (
                 <ItemProduct
-                  className={'h-[305px] md:h-auto'}
+                  // className={'h-[305px] md:h-auto'}
                   showFeedback
                   showSold
                   key={item.id}
@@ -44,6 +44,10 @@ const ShopScreen = () => {
               )
             })}
           </div>
+        )}
+
+        {data?.data.length === 0 && (
+          <div className="mt-3">Chưa có sản phẩm</div>
         )}
 
         {isLoading && <MyLoading className="mt-6" />}

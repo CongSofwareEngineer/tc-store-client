@@ -4,9 +4,8 @@ import React, { useState } from 'react'
 import { useServerInsertedHTML } from 'next/navigation'
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default function StyledComponentsRegistry({
-  children
+  children,
 }: {
   children: React.ReactNode
 }) {

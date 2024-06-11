@@ -19,7 +19,8 @@ const nextConfig = {
     // optimisticClientCache: true,
     // workerThreads: true,
     // optimizeCss: true,
-    // gzipSize: true,
+    gzipSize: true,
+    swcMinify: true,
     optimizePackageImports: [
       '@nextui-org/react',
       '@tanstack/react-query',
@@ -38,6 +39,7 @@ const nextConfig = {
   compress: true,
   swcMinify: true,
   compiler: {
+    reactRemoveProperties: true,
     styledComponents: {
       displayName: true,
       ssr: true,
