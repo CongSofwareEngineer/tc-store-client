@@ -6,7 +6,7 @@ export const userDataSlice = createSlice({
   initialState: INIT_STATE[SLICE.UserData],
   reducers: {
     setUserData: (state: TYPE_SLICE | any, action) => {
-      state[SLICE.UserData] = action.payload
+      return action.payload
     }
   }
 })

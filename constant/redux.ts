@@ -20,9 +20,7 @@ export const INIT_STATE = {
   [SLICE.Setting]: null,
   [SLICE.UserData]: null,
   [SLICE.ConnectedChain]: 56,
-  [SLICE.CategoryMenu]: {
-    CategoryMenu: []
-  }
+  [SLICE.CategoryMenu]: []
 }
 
 export type TYPE_SLICE = {
@@ -33,9 +31,7 @@ export type TYPE_SLICE = {
   [SLICE.Setting]: Object | null
   [SLICE.UserData]: Object | null
   [SLICE.ConnectedChain]: Number,
-  [SLICE.CategoryMenu]: {
-    CategoryMenu: Array<{ key: string, name: string }>
-  }
+  [SLICE.CategoryMenu]: Array<{ key: string, name: string }>
 }
 
 export type TYPE_PERSIST_REDUCER = TYPE_SLICE & unknown

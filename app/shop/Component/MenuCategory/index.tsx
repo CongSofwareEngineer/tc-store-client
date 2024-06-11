@@ -12,7 +12,7 @@ const MenuCategory = () => {
   return (
     <MyFilter titleHeader={translate('menuProduct.category')}>
       <MyFilterCheckBox
-        data={CategoryMenu?.CategoryMenu || []}
+        data={CategoryMenu || []}
         titleFilter={translate('menuProduct.product')}
         typeChecked={FilterAPI.TypeProduct}
         isDefault

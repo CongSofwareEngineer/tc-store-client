@@ -6,7 +6,7 @@ export const connectedChainSlice = createSlice({
   initialState: INIT_STATE[SLICE.ConnectedChain],
   reducers: {
     setConnectedChain: (state: TYPE_SLICE | any, action) => {
-      state[SLICE.ConnectedChain] = action.payload
+      return action.payload
     }
   }
 })

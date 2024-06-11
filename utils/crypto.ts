@@ -1,6 +1,6 @@
 import crypto from 'crypto-js'
 
-export const encryptData = (value: string, pinCode: string = process.env.NEXT_PUBLIC_KEY_SALT) => {
+export const encryptData = (value: string | object, pinCode: string = process.env.NEXT_PUBLIC_KEY_SALT) => {
   try {
     return crypto.AES.encrypt(value.toString(), pinCode).toString()
   } catch (error) {

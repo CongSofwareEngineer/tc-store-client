@@ -6,7 +6,7 @@ export const languageSlice = createSlice({
   initialState: INIT_STATE[SLICE.Language],
   reducers: {
     setLanguage: (state: TYPE_SLICE | any, action) => {
-      state[SLICE.Language] = action.payload
+      return action.payload
     }
   }
 })

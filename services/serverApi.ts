@@ -8,6 +8,7 @@ type TypeParma = {
   body?: object,
   encode?: boolean
 } & Record<string, string | object | boolean>
+
 const ServerApi = {
   requestBase: async (param: TypeParma = {
     url: '',

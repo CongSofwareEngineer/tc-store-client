@@ -6,7 +6,7 @@ export const settingSlice = createSlice({
   initialState: INIT_STATE[SLICE.Setting],
   reducers: {
     setSetting: (state: TYPE_SLICE | any, action) => {
-      state[SLICE.Setting] = action.payload
+      return action.payload
     }
   }
 })

@@ -176,7 +176,7 @@
     "pageNotFound": "PAGE NOT FOUND",
     "changeRpc": "Error Contract or Back-end, front-end",
     "largerImage": "Ảnh có dung lượng qúa 5MB",
-    "passChanged": "bạn đã đổi mật khẩu",
+    "passChanged": "Bạn đã đổi mật khẩu",
     "loginAgain": "Đăng nhập lại",
     "gmail": "Gamil chưa đúng định dạng",
     "noInCorrectFormat": "Chưa đúng định dạng",
@@ -195,6 +195,6 @@
   "noti": {
     "logOut": "Bạn đã đăng xuất",
     "loginSuccess": "Đăng nhập thành công",
-    "loginError": "Sài user name hoặc password"
+    "loginError": "Sài SĐT name hoặc mật khẩu"
   }
 }

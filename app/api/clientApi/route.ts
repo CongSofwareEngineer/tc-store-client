@@ -1,13 +1,14 @@
 
 import fetchConfig from '@/configs/fetchConfig';
 import { RequestType } from '@/constant/app';
+import { FB_FC } from '@/constant/firebase';
+import { FirebaseConfig } from '@/services/firebaseService';
 import { decryptData, encryptData } from '@/utils/crypto';
 
 export async function POST(req: any) {
   try {
 
     const dataReq = await req.json()
-
 
     let bodyDecode: any = decryptData(dataReq.data)
     bodyDecode = JSON.parse(bodyDecode)
@@ -22,22 +23,19 @@ export async function POST(req: any) {
     }
 
     const bodyData = bodyDecode.body
+    console.log('====================================');
+    console.log({ bodyData, bodyDecode });
+    console.log('====================================');
 
-    const config: any = {
-      url: bodyDecode.url,
-      method: bodyDecode.method || RequestType.GET,
-      isCache: false,
-    }
-    switch (bodyData?.method) {
-      case RequestType.POST:
-      case RequestType.PUT:
-        config.body = bodyData.body
+    const dataFB = FirebaseConfig.createFBFun(bodyDecode.nameDB)
+    let dataRequest: any
+
+    switch (bodyDecode.namFn) {
+      case FB_FC.queryListData:
+        dataRequest = await dataFB.listQueryData(bodyData[FB_FC.queryListData])
         break;
     }
-    if (bodyData?.isAThu) {
-      config.isAThu = true
-    }
-    const dataRequest = await fetchConfig(config)
+
     if (bodyDecode?.encode) {
       const res = new Response(encryptData(JSON.stringify(dataRequest)), { status: 200 })
       return res

@@ -24,13 +24,13 @@ export const categoryMenuSlice = createSlice({
   initialState: INIT_STATE[SLICE.CategoryMenu],
   reducers: {
     setMenuCategory: (state: any, action) => {
-      state[SLICE.CategoryMenu] = action.payload
+      return action.payload
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchMenuCategory.fulfilled, (state: any, action) => {
-        state[SLICE.CategoryMenu] = action.payload
+        return action.payload
       })
   }
 })

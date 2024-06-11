@@ -1,3 +1,5 @@
+import { ModalProps } from "antd"
+
 export type Placement =
   | 'center'
   | 'auto'
@@ -18,10 +20,14 @@ export type ConfigModal = {
   overClickClose?: boolean | true,
   showBtnClose?: boolean | true,
   positionModal?: Placement,
-  afterClose?: () => Promise<void> | void
+  afterClose?: () => Promise<void> | void,
+  width?: string | number | '500px',
+  height?: string | number | undefined,
+  moreConfig?: ModalProps
 }
 
-export type ModalProps = {
+
+export type ModalPropsType = {
   config: ConfigModal,
   closeModal: () => void
 }

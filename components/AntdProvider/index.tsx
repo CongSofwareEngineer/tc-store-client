@@ -27,7 +27,12 @@ const AntdProvider = ({ children }: { children: React.ReactNode }) => {
             margin: 0,
             borderRadius: 0,
           },
+          Form: {
+            padding: 0,
+            itemMarginBottom: 0,
+          },
         },
+        hashed: false,
       }}
     >
       {children}

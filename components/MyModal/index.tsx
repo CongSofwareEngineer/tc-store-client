@@ -21,7 +21,7 @@ const MyModalProvider = ({ children }: { children: React.ReactNode }) => {
   const [config, setConfig] = useState<ConfigModal>(defaultConfig)
 
   const closeModal = () => {
-    setConfig({ ...config, open: false })
+    setConfig({ ...config, content: null, open: false })
   }
 
   const openModal = (config: ConfigModal) => {
