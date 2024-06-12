@@ -5,31 +5,27 @@ import { formatResponseDataServer, pareDataClient } from '@/utils/serverNext';
 
 export async function POST(req: any) {
   try {
-    let bodyDecode: any = await pareDataClient(req)
+    const bodyDecode: any = await pareDataClient(req)
 
     if (!bodyDecode[process.env.NEXT_PUBLIC_KEY_SALT]) {
-      return new Response('You are hacker',
-        {
-          status: 500
-        }
+      return new Response('You are hacker', {
+        status: 500
+      }
       )
-
     }
-
-    const bodyData = bodyDecode.body
-
     const config: any = {
       url: bodyDecode.url,
       method: bodyDecode.method || RequestType.GET,
       isCache: false,
     }
-    switch (bodyData?.method) {
+
+    switch (bodyDecode.body?.method) {
       case RequestType.POST:
       case RequestType.PUT:
-        config.body = bodyData.body
+        config.body = bodyDecode.body.body
         break;
     }
-    if (bodyData?.isAThu) {
+    if (bodyDecode.body?.isAThu) {
       config.isAThu = true
     }
     const dataRequest = await fetchConfig(config)
@@ -37,10 +33,9 @@ export async function POST(req: any) {
 
 
   } catch (error) {
-    return new Response('You are hacker',
-      {
-        status: 500
-      }
+    return new Response('You are hacker', {
+      status: 500
+    }
     )
 
   }
