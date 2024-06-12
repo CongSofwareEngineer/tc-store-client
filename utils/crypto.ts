@@ -1,8 +1,17 @@
 import crypto from 'crypto-js'
+import sha256 from 'crypto-js/sha256';
 
 export const encryptData = (value: string | object, pinCode: string = process.env.NEXT_PUBLIC_KEY_SALT) => {
   try {
     return crypto.AES.encrypt(value.toString(), pinCode).toString()
+  } catch (error) {
+    return ''
+  }
+}
+
+export const encryptDataSha256 = (value: string | object) => {
+  try {
+    return sha256(value.toString()).toString()
   } catch (error) {
     return ''
   }

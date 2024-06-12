@@ -9,16 +9,8 @@ export async function POST(req: any) {
     const bodyDecode: any = await pareDataClient(req)
 
     if (!bodyDecode[process.env.NEXT_PUBLIC_KEY_SALT]) {
-      return new Response('You are hacker',
-        {
-          status: 500
-        }
-      )
-
+      return new Response('You are hacker', { status: 500 })
     }
-    console.log('====================================');
-    console.log({ bodyDecode });
-    console.log('====================================');
 
     const dataFB = FirebaseConfig.createFBFun(bodyDecode.nameDB)
     let dataRequest: any
@@ -27,16 +19,14 @@ export async function POST(req: any) {
       case FB_FC.queryListData:
         dataRequest = await dataFB.listQueryData(bodyDecode.body[FB_FC.queryListData])
         break;
+      case FB_FC.updateData:
+        dataRequest = await dataFB.updateData(bodyDecode.body.id, bodyDecode.body.data)
+        break;
     }
-    return formatResponseDataServer({ data: dataRequest }, bodyDecode)
+    return formatResponseDataServer(dataRequest, bodyDecode)
 
   } catch (error) {
-    return new Response('You are hacker',
-      {
-        status: 500
-      }
-    )
-
+    return new Response('You are hacker', { status: 500 })
   }
 
 }

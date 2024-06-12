@@ -13,7 +13,7 @@ export enum SLICE {
   CategoryMenu = 'CategoryMenu'
 }
 
-export const WHITE_LIST_PERSIT_REDUX = [SLICE.Language, SLICE.CategoryMenu, SLICE.UserData]
+export const WHITE_LIST_PERSIT_REDUX = [SLICE.Language]
 
 export const INIT_STATE = {
   [SLICE.Language]: localeVN,

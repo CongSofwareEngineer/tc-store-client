@@ -1,3 +1,4 @@
+import { message } from "antd"
 import { decryptData, encryptData } from "./crypto"
 
 export const generateMetaBase = ({
@@ -51,7 +52,7 @@ export const pareDataClient = async (req: any): Promise<Record<string, any>> => 
 export const pareResponseDataClient = async (param: any, req: any): Promise<{ data: any, message: string }> => {
   if (param.encode) {
     return {
-      data: JSON.parse(decryptData(req.data || req || '')),
+      data: JSON.parse(decryptData(req.data?.data ?? req?.data ?? req ?? '')),
       message: 'success'
     }
   }
@@ -62,10 +63,14 @@ export const pareResponseDataClient = async (param: any, req: any): Promise<{ da
 }
 
 export const formatResponseDataServer = async (data: any, bodyDecode: any): Promise<Response> => {
+
+  const body = {
+    data: data,
+    message: 'success'
+  }
   if (bodyDecode?.encode) {
-    const res = new Response(encryptData(JSON.stringify(data)), { status: 200 })
-    return res
+    body.data = encryptData(JSON.stringify(data))
 
   }
-  return new Response(JSON.stringify(data), { status: 200 })
+  return new Response(JSON.stringify(body), { status: 200, })
 }

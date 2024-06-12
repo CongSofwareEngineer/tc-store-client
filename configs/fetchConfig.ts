@@ -11,7 +11,7 @@ const fetchConfig = async ({
   // const urlFormat = process.env.NEXT_PUBLIC_API_APP + url
   const config: any = {
     // baseURL: (process.env.NEXT_PUBLIC_API_APP || 'http://192.168.50.115:3002/').trim(),
-    baseURL: 'https://server-tc-store.vercel.app',
+    baseURL: process.env.NEXT_PUBLIC_API_APP,
     url,
     // cache: isCache ? 'force-cache' : 'no-store',
     method,

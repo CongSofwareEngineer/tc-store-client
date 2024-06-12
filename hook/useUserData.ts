@@ -1,12 +1,11 @@
 import { QueryData } from '@/constant/firebase'
 import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { setUserData } from '@/redux/userDataSlice'
-import { FirebaseUser } from '@/services/firebaseService'
 import { useCallback, useMemo } from 'react'
 import useLanguage from './useLanguage'
 import { showNotificationError, showNotificationSuccess } from '@/utils/functions'
 import secureLocalStorage from "react-secure-storage";
-import { decryptData, encryptData } from '@/utils/crypto'
+import { decryptData, encryptData, encryptDataSha256 } from '@/utils/crypto'
 import { SLICE } from '@/constant/redux'
 import useModal from './useModal'
 import ClientApi from '@/services/clientApi'
@@ -17,7 +16,6 @@ const useUserData = () => {
   const { translate } = useLanguage()
   const { closeModal } = useModal()
   const isLogin = useMemo(() => !!userData, [userData])
-
 
   const loginFireBase = useCallback(async (sdt: string, pass: string) => {
     const listQuery: QueryData[] = [
@@ -33,9 +31,6 @@ const useUserData = () => {
       }
     ]
     const data = await ClientApi.login(listQuery)
-    console.log('====================================');
-    console.log({ dataDecode: data });
-    console.log('====================================');
     return data?.data || []
   }, [])
 
@@ -49,7 +44,6 @@ const useUserData = () => {
     if (dataSecure) {
       const dataDecode = decryptData(dataSecure.toString())
       const dataPare = JSON.parse(dataDecode)
-      dispatch(setUserData(dataPare))
       const data = await loginFireBase(dataPare.sdt, dataPare.pass)
       if (data.length === 0) {
         logOut()
@@ -66,7 +60,7 @@ const useUserData = () => {
 
   const login = useCallback(async (numberPhone: string, pass: string) => {
     try {
-      const data = await loginFireBase(numberPhone, pass)
+      const data = await loginFireBase(numberPhone, encryptDataSha256(pass))
 
       if (data.length === 0) {
         showNotificationError(translate('noti.loginError'))

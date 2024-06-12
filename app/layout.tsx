@@ -11,6 +11,7 @@ import StyledComponentsRegistry from '@/components/RegistryApp'
 import ClientRender from '@/components/ClientRender'
 import type { Viewport } from 'next'
 import ReactQueryProvider from '@/components/ReactQueryProvider'
+import fetchConfig from '@/configs/fetchConfig'
 const inter = Inter({ subsets: ['latin'] })
 
 const BaseMeta = {
@@ -81,6 +82,9 @@ export const viewport: Viewport = {
 }
 
 const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
+  const menuCategory = await fetchConfig({
+    url: 'menu-category',
+  })
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -90,7 +94,9 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
               <ReactQueryProvider>
                 <ReduxProvider>
                   <MyModalProvider>
-                    <ClientRender>{children}</ClientRender>
+                    <ClientRender menuCategory={menuCategory?.data || []}>
+                      {children}
+                    </ClientRender>
                   </MyModalProvider>
                 </ReduxProvider>
               </ReactQueryProvider>

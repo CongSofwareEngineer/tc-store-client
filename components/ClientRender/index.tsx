@@ -4,15 +4,26 @@ import Header from '../Header'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import useUserData from '@/hook/useUserData'
+import { useAppDispatch } from '@/redux/store'
+import { setMenuCategory } from '@/redux/categoryMenuSlice'
 
-const ClientRender = ({ children }: { children: React.ReactNode }) => {
+const ClientRender = ({
+  children,
+  menuCategory,
+}: {
+  children: React.ReactNode
+  menuCategory: any[]
+}) => {
   const [isClient, setIsClient] = useState(false)
   const { refreshLogin } = useUserData()
+  const dispatch = useAppDispatch()
 
   useLayoutEffect(() => {
     setIsClient(true)
-    console.log({ isClient })
+    console.log({ isClient, menuCategory })
     refreshLogin()
+    dispatch(setMenuCategory(menuCategory))
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

@@ -29,7 +29,7 @@ const ServerApi = {
         req = await axios.post('/api/serverApi', { data: encryptData(JSON.stringify(param)) })
       }
 
-      return pareResponseDataClient(param, req)
+      return pareResponseDataClient(param, req?.data)
 
     } catch (error) {
       console.log({ errorrequestBase: error });

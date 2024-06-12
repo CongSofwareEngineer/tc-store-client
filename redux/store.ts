@@ -7,7 +7,6 @@ import { persistStore, persistReducer } from 'redux-persist'
 import appReducer from './appReducer'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
-import { fetchMenuCategory } from './categoryMenuSlice'
 
 const reducer = (state: Partial<unknown> | unknown, action: any) => {
   return appReducer(state || {}, action)
@@ -29,7 +28,7 @@ export const makeStore = () => {
     }
   })
   if (isClient) {
-    storeRedux.dispatch(fetchMenuCategory())
+    // storeRedux.dispatch(fetchMenuCategory())
     // const intlReducerData = getPersistDataByKey(SLICES.local)
     // if (intlReducerData) {
     //   storeRedux.dispatch(setLanguage(intlReducerData))
