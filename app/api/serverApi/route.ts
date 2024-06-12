@@ -1,8 +1,7 @@
 
 import fetchConfig from '@/configs/fetchConfig';
 import { RequestType } from '@/constant/app';
-import { decryptData, encryptData } from '@/utils/crypto';
-import { pareDataClient } from '@/utils/serverNext';
+import { formatResponseDataServer, pareDataClient } from '@/utils/serverNext';
 
 export async function POST(req: any) {
   try {
@@ -34,13 +33,8 @@ export async function POST(req: any) {
       config.isAThu = true
     }
     const dataRequest = await fetchConfig(config)
-    if (bodyDecode?.encode) {
-      const res = new Response(encryptData(JSON.stringify(dataRequest)), { status: 200 })
-      return res
+    return formatResponseDataServer(dataRequest, bodyDecode)
 
-    }
-    const res = new Response(JSON.stringify(dataRequest), { status: 200 })
-    return res
 
   } catch (error) {
     return new Response('You are hacker',

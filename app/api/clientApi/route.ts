@@ -2,8 +2,7 @@
 
 import { FB_FC } from '@/constant/firebase';
 import { FirebaseConfig } from '@/services/firebaseService';
-import { decryptData, encryptData } from '@/utils/crypto';
-import { pareDataClient } from '@/utils/serverNext';
+import { formatResponseDataServer, pareDataClient } from '@/utils/serverNext';
 
 export async function POST(req: any) {
   try {
@@ -31,14 +30,7 @@ export async function POST(req: any) {
         dataRequest = await dataFB.listQueryData(bodyData[FB_FC.queryListData])
         break;
     }
-
-    if (bodyDecode?.encode) {
-      const res = new Response(encryptData(JSON.stringify({ data: dataRequest })), { status: 200 })
-      return res
-
-    }
-    const res = new Response(JSON.stringify({ data: dataRequest }), { status: 200 })
-    return res
+    return formatResponseDataServer({ data: dataRequest }, bodyDecode)
 
   } catch (error) {
     return new Response('You are hacker',

@@ -1,4 +1,4 @@
-import { decryptData } from "./crypto"
+import { decryptData, encryptData } from "./crypto"
 
 export const generateMetaBase = ({
   dataBase,
@@ -59,4 +59,13 @@ export const pareResponseDataClient = async (param: any, req: any): Promise<{ da
     data: req.data || req,
     message: 'success'
   }
+}
+
+export const formatResponseDataServer = async (data: any, bodyDecode: any): Promise<Response> => {
+  if (bodyDecode?.encode) {
+    const res = new Response(encryptData(JSON.stringify(data)), { status: 200 })
+    return res
+
+  }
+  return new Response(JSON.stringify(data), { status: 200 })
 }
