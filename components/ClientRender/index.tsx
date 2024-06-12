@@ -20,12 +20,9 @@ const ClientRender = ({
 
   useLayoutEffect(() => {
     setIsClient(true)
-    console.log({ isClient, menuCategory })
     refreshLogin()
     dispatch(setMenuCategory(menuCategory))
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [dispatch, menuCategory, refreshLogin])
 
   return isClient ? (
     <>
