@@ -3,7 +3,7 @@ import {
 } from 'firebase/firestore/lite'
 import { initializeApp, getApps } from 'firebase/app';
 import FirebaseFun from '@/utils/firebase';
-import { DataBase } from '@/constant/firebase';
+import { DataBase, DatabaseCollectionType } from '@/constant/firebase';
 
 export const FirebaseConfig = {
   config: () => {
@@ -25,7 +25,7 @@ export const FirebaseConfig = {
 
   createFBFun: (nameData: string) => {
     const dataCreate = FirebaseConfig.initFirebase()
-    const collectionData = collection(getFirestore(dataCreate), nameData)
+    const collectionData: DatabaseCollectionType = collection(getFirestore(dataCreate), nameData)
     return new FirebaseFun(collectionData)
   },
 }

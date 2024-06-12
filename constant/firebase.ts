@@ -1,4 +1,4 @@
-import { DocumentData, DocumentReference, Query, WhereFilterOp } from "firebase/firestore/lite"
+import { CollectionReference, DocumentData, DocumentReference, Query, WhereFilterOp } from "firebase/firestore/lite"
 
 export const DataBase = {
   bill: 'Bill',
@@ -30,7 +30,8 @@ export const FB_FC = {
 } as const
 
 export type DatabaseQueryType = Query<unknown, DocumentData>
+export type DatabaseCollectionType = CollectionReference<DocumentData, DocumentData>
 export type DatabaseDocsType = DocumentReference<DocumentData, DocumentData>
-export type DatabaseType = never
+export type DatabaseType = any
 
 export type QueryData = { key: string, match: WhereFilterOp, value: string }

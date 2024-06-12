@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { INIT_STATE, SLICE, TYPE_SLICE } from '@/constant/redux'
+import { INIT_STATE, SLICE } from '@/constant/redux'
 
 export const languageSlice = createSlice({
   name: SLICE.Language,
   initialState: INIT_STATE[SLICE.Language],
   reducers: {
-    setLanguage: (state: TYPE_SLICE | any, action) => {
+    setLanguage: (_, action) => {
       return action.payload
     }
   }

@@ -1,11 +1,11 @@
-import { INIT_STATE, SLICE, TYPE_SLICE } from '@/constant/redux'
+import { INIT_STATE, SLICE } from '@/constant/redux'
 import { createSlice } from '@reduxjs/toolkit'
 
 export const connectedChainSlice = createSlice({
   name: SLICE.ConnectedChain,
   initialState: INIT_STATE[SLICE.ConnectedChain],
   reducers: {
-    setConnectedChain: (state: TYPE_SLICE | any, action) => {
+    setConnectedChain: (_, action) => {
       return action.payload
     }
   }
