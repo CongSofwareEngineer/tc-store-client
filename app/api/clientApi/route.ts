@@ -3,14 +3,11 @@
 import { FB_FC } from '@/constant/firebase';
 import { FirebaseConfig } from '@/services/firebaseService';
 import { decryptData, encryptData } from '@/utils/crypto';
+import { pareDataClient } from '@/utils/serverNext';
 
 export async function POST(req: any) {
   try {
-
-    const dataReq = await req.json()
-
-    let bodyDecode: any = decryptData(dataReq.data)
-    bodyDecode = JSON.parse(bodyDecode)
+    let bodyDecode: any = await pareDataClient(req)
 
     if (!bodyDecode[process.env.NEXT_PUBLIC_KEY_SALT]) {
       return new Response('You are hacker',
@@ -36,11 +33,11 @@ export async function POST(req: any) {
     }
 
     if (bodyDecode?.encode) {
-      const res = new Response(encryptData(JSON.stringify(dataRequest)), { status: 200 })
+      const res = new Response(encryptData(JSON.stringify({ data: dataRequest })), { status: 200 })
       return res
 
     }
-    const res = new Response(JSON.stringify(dataRequest), { status: 200 })
+    const res = new Response(JSON.stringify({ data: dataRequest }), { status: 200 })
     return res
 
   } catch (error) {

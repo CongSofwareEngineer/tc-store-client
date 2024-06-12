@@ -1,5 +1,6 @@
 import { RequestType } from '@/constant/app'
 import { decryptData, encryptData } from '@/utils/crypto'
+import { pareResponseDataClient } from '@/utils/serverNext'
 import axios from 'axios'
 
 type TypeParma = {
@@ -27,19 +28,9 @@ const ServerApi = {
       } else {
         req = await axios.post('/api/serverApi', { data: encryptData(JSON.stringify(param)) })
       }
-      if (param.encode) {
-        const dataReq: Record<string, any> = req.data
 
-        return {
-          data: JSON.parse(decryptData(dataReq)),
-          message: 'success'
-        }
-      }
+      return pareResponseDataClient(param, req)
 
-      return {
-        data: req.data,
-        message: 'success'
-      }
     } catch (error) {
       console.log({ errorrequestBase: error });
       return {

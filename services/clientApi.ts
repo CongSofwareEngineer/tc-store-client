@@ -1,5 +1,6 @@
 import { DataBase, FB_FC, QueryData } from "@/constant/firebase"
 import { decryptData, encryptData } from "@/utils/crypto"
+import { pareResponseDataClient } from "@/utils/serverNext"
 import axios from "axios"
 
 type TypeParma = {
@@ -35,17 +36,7 @@ const ClientApi = {
       } else {
         req = await axios.post('/api/clientApi', { data: encryptData(JSON.stringify(param)) })
       }
-
-      if (param.encode) {
-        return {
-          data: JSON.parse(decryptData(req.data || req || '')),
-          message: 'success'
-        }
-      }
-      return {
-        data: req.data || req,
-        message: 'success'
-      }
+      return pareResponseDataClient(param, req)
 
     } catch (error) {
       console.log('====================================');

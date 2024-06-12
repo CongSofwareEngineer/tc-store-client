@@ -2,15 +2,11 @@
 import fetchConfig from '@/configs/fetchConfig';
 import { RequestType } from '@/constant/app';
 import { decryptData, encryptData } from '@/utils/crypto';
+import { pareDataClient } from '@/utils/serverNext';
 
 export async function POST(req: any) {
   try {
-
-    const dataReq = await req.json()
-
-
-    let bodyDecode: any = decryptData(dataReq.data)
-    bodyDecode = JSON.parse(bodyDecode)
+    let bodyDecode: any = await pareDataClient(req)
 
     if (!bodyDecode[process.env.NEXT_PUBLIC_KEY_SALT]) {
       return new Response('You are hacker',

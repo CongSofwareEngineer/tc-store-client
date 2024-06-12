@@ -1,3 +1,4 @@
+import { decryptData } from "./crypto"
 
 export const generateMetaBase = ({
   dataBase,
@@ -6,7 +7,14 @@ export const generateMetaBase = ({
   image = null,
   override = false,
   overrideImage = false
-}: Record<string, any>) => {
+}: {
+  dataBase: Record<string, any>,
+  title?: string | null,
+  des?: string | null,
+  image?: string | null,
+  override?: boolean,
+  overrideImage?: boolean
+}) => {
   const dataClone = JSON.parse(JSON.stringify(dataBase))
   if (title) {
     dataClone.title = override ? title : `${process.env.NEXT_PUBLIC_TITLE} | ${title}`
@@ -30,4 +38,25 @@ export const generateMetaBase = ({
     dataClone.twitter.images = image
   }
   return dataClone
+}
+
+
+export const pareDataClient = async (req: any): Promise<Record<string, any>> => {
+  const dataReq = await req.json()
+  let bodyDecode: any = decryptData(dataReq.data)
+  bodyDecode = JSON.parse(bodyDecode)
+  return bodyDecode
+}
+
+export const pareResponseDataClient = async (param: any, req: any): Promise<{ data: any, message: string }> => {
+  if (param.encode) {
+    return {
+      data: JSON.parse(decryptData(req.data || req || '')),
+      message: 'success'
+    }
+  }
+  return {
+    data: req.data || req,
+    message: 'success'
+  }
 }
