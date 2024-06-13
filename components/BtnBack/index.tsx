@@ -1,8 +1,9 @@
 import { RightOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 import MyImage from '../MyImage'
-import { useRouter } from 'next/router'
 import { images } from '@/configs/images'
+import { useRouter } from 'next/navigation'
+
 type BtnBackType = {
   children?: React.ReactNode | undefined
   onClick?: ((param?: any) => void) | null
