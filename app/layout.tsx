@@ -12,6 +12,7 @@ import ClientRender from '@/components/ClientRender'
 import type { Viewport } from 'next'
 import ReactQueryProvider from '@/components/ReactQueryProvider'
 import fetchConfig from '@/configs/fetchConfig'
+import DrawerProvider from '@/components/DrawerProvider'
 const inter = Inter({ subsets: ['latin'] })
 
 const BaseMeta = {
@@ -94,9 +95,11 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
               <ReactQueryProvider>
                 <ReduxProvider>
                   <MyModalProvider>
-                    <ClientRender menuCategory={menuCategory?.data || []}>
-                      {children}
-                    </ClientRender>
+                    <DrawerProvider>
+                      <ClientRender menuCategory={menuCategory?.data || []}>
+                        {children}
+                      </ClientRender>
+                    </DrawerProvider>
                   </MyModalProvider>
                 </ReduxProvider>
               </ReactQueryProvider>

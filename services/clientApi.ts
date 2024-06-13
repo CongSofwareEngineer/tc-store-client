@@ -39,9 +39,6 @@ const ClientApi = {
       return pareResponseDataClient(param, req)
 
     } catch (error) {
-      console.log('====================================');
-      console.log({ error });
-      console.log('====================================');
       return {
         data: null,
         error: 'error?.response?.data?.message'
