@@ -27,7 +27,7 @@ const Header = () => {
   return (
     <header>
       <Affix className="w-full h-14 ">
-        <div className="border-b-4 border-indigo-500  w-full flex m-auto justify-center items-center bg-white">
+        <div className="border-b-2 border-green-300 w-full flex m-auto justify-center items-center bg-white">
           <div className="md:px-12 px-5 h-14 w-full max-w-[1350px] flex md:gap-3 justify-between items-center">
             <div className="h-full relative ">
               <MyImage src={images.logo} alt="logo" fill className="relative" />
@@ -36,9 +36,9 @@ const Header = () => {
             <div className="h-full fex gap-2 items-center">
               <div
                 onClick={handleLogin}
-                className="rounded h-full cursor-pointer w-24 bg-green-500 flex justify-center items-center"
+                className="rounded h-full cursor-pointer w-24   flex justify-center items-center"
               >
-                <span className="text-black hover:underline">
+                <span className="text-black underline">
                   {isLogin
                     ? translate('common.logOut')
                     : translate('common.login')}

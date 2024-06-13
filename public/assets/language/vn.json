@@ -140,6 +140,7 @@
     "productGood": "Sản phẩm có tốt không ?"
   },
   "warning": {
+    "noData": "Sản phẩm đang cập nhật",
     "inValidPassWordAgain": "Mật khẩu không đúng",
     "errorUserName": "Tên không được để trống",
     "exitNumberPhone": "Số điện thoại đã đăng ký",

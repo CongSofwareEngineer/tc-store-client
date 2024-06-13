@@ -15,14 +15,14 @@ const BtnBack = ({ title, url = [], onClick = null }: BtnBackType) => {
   const router = useRouter()
   return (
     <div className="flex w-full align-middle justify-start gap-1 mb-3 md:mb-6 ">
-      <MyImage
+      {/* <MyImage
         onClick={() => (onClick ? onClick() : router.back())}
         src={images.icon.iconBack}
         width={25}
         height={25}
         alt={'TC Store Icon Back page '}
         className="cursor-pointer"
-      />
+      /> */}
       <div className="ml-2 flex gap-1">
         {typeof title === 'string' ? (
           <div className="md:text-[16px] text-[14px]">{title}</div>
