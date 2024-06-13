@@ -29,7 +29,7 @@ export type TYPE_SLICE = {
     messages: any
   }
   [SLICE.Setting]: Object | null
-  [SLICE.UserData]: Object | null
+  [SLICE.UserData]: Record<string, string> | null
   [SLICE.ConnectedChain]: Number,
   [SLICE.CategoryMenu]: Array<{ key: string, name: string }>
 }

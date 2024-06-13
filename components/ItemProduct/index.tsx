@@ -1,12 +1,16 @@
 import MyImage from '../MyImage'
-import { TextPrice, TextPriceBase } from './styled'
+import { RateCustom, TextPriceBase } from './styled'
 import styles from './style.module.scss'
-import { Rate } from 'antd'
 import Link from 'next/link'
 import useLanguage from '@/hook/useLanguage'
 import { images } from '@/configs/images'
-import { formatPrice, formatPriceBase } from '@/utils/functions'
+import {
+  formatPrice,
+  formatPriceBase,
+  numberWithCommas,
+} from '@/utils/functions'
 import MySliderSell from '../MySliderSell'
+import useMedia from '@/hook/useMedia'
 
 type ItemType = {
   item: any
@@ -22,17 +26,17 @@ const ItemProduct = ({
   item,
   callback = () => {},
   className,
-  classImage,
   showSold = false,
   showFeedback = false,
   showDiscount = true,
   href = '',
 }: ItemType) => {
   const { translate } = useLanguage()
+  const { isMobile } = useMedia()
 
   return (
     <Link
-      className={`relative item-list cursor-pointer px-3 py-6 gap-3 flex items-center justify-between flex-col ${styles['item-coffee']} ${className}`}
+      className={`relative item-list cursor-pointer px-3 pt-6 md:pb-6 pb-3 gap-3 flex items-center justify-between flex-col ${styles['item-coffee']} ${className}`}
       onClick={callback}
       href={href}
     >
@@ -42,10 +46,9 @@ const ItemProduct = ({
         </div>
       )}
 
-      <div className="m-auto max-w-[80%]">
+      <div className="m-auto max-w-[80%] relative w-full aspect-square  overflow-hidden">
         <MyImage
           src={item?.imageMain || images.footer.iconAddress}
-          className={`w-[100%] max-h-[130px] md:max-h-[160px] ${classImage}`}
           alt={`item-${item?.name || href}`}
         />
       </div>
@@ -55,27 +58,33 @@ const ItemProduct = ({
           {`${formatPriceBase(item?.price || 150)} VNĐ`}
         </TextPriceBase>
 
-        <TextPrice className=" w-full ">
+        <div className="w-full  text-green-600 md:text-[24px] text-[18px] font-bold flex justify-between  ">
           {formatPrice(item?.price || 150)}
           <span className="text-[16px] ml-3[px] h-ful flex items-center relative top-[2px]">
             VNĐ
           </span>
-        </TextPrice>
-        <MySliderSell
-          total={item.amount}
-          sell={item.sold}
-          className={'text-[14px]'}
-        />
+        </div>
+        {!isMobile && (
+          <MySliderSell
+            total={item.amount}
+            sell={item.sold}
+            className={'text-[12px]'}
+          />
+        )}
+
         {showSold && (
-          <div className="mt-2 text-[11px] flex w-full justify-between items-center">
-            <span>{`${translate('productDetail.sold')}  ${item.sold}`}</span>
+          <div className="md:mt-2 text-[11px] flex w-full justify-between items-center">
+            <span>{`${translate('productDetail.sold')}  ${numberWithCommas(
+              item.sold || '0'
+            )}`}</span>
 
             {showFeedback && (
               <div className="flex gap-1 items-center">
-                <Rate disabled defaultValue={4.5} className="text-[11px]" />
-                {/* <span >
-                      {item.numberLike || 10}
-                    </span> */}
+                <RateCustom
+                  disabled
+                  defaultValue={4.5}
+                  style={{ fontSize: 12 }}
+                />
               </div>
             )}
           </div>

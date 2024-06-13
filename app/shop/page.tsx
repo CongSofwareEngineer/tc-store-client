@@ -16,7 +16,7 @@ const ShopScreen = () => {
 
   return (
     <div className="w-full flex md:flex-row flex-col  md:gap-6 gap-3  h-full justify-star md:mt-3">
-      <div className="md:w-max-[200px] md:min-w-[200px] md:w-[20%] w-full">
+      <div className="md:w-[250px] w-full">
         <MenuCategory />
       </div>
       <div className="flex-1 w-full  h-full">

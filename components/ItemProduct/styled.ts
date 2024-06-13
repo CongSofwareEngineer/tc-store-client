@@ -1,7 +1,7 @@
+import { Rate } from 'antd';
 import styled from 'styled-components';
 export const Discount = styled.div`
   position: absolute;
-  
 `;
 
 export const TextPriceBase = styled.span`
@@ -20,5 +20,17 @@ export const TextPrice = styled.span`
   justify-content: space-between;
   @media screen and (max-width: 768px) {
     font-size: 18px;
+  }
+`;
+
+
+export const RateCustom = styled(Rate)` 
+  @media screen and (max-width: 768px) {
+    .ant-rate-star  {
+      margin-inline-end: 0px !important;
+    }
+    .ant-rate   {
+      margin-inline-end: 0px !important;
+    }
   }
 `;

@@ -1,7 +1,7 @@
 import { RightOutlined } from '@ant-design/icons'
 import Link from 'next/link'
-import MyImage from '../MyImage'
-import { images } from '@/configs/images'
+// import MyImage from '../MyImage'
+// import { images } from '@/configs/images'
 import { useRouter } from 'next/navigation'
 
 type BtnBackType = {
@@ -11,8 +11,12 @@ type BtnBackType = {
   title?: string[] | string
 }
 
-const BtnBack = ({ title, url = [], onClick = null }: BtnBackType) => {
+// const BtnBack = ({ title, url = [], onClick = null }: BtnBackType) => {
+const BtnBack = ({ title, url = [] }: BtnBackType) => {
   const router = useRouter()
+  console.log('====================================')
+  console.log({ router })
+  console.log('====================================')
   return (
     <div className="flex w-full align-middle justify-start gap-1 mb-3 md:mb-6 ">
       {/* <MyImage

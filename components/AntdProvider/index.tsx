@@ -31,6 +31,9 @@ const AntdProvider = ({ children }: { children: React.ReactNode }) => {
             padding: 0,
             itemMarginBottom: 0,
           },
+          Rate: {
+            fontSize: 14,
+          },
         },
         hashed: false,
       }}

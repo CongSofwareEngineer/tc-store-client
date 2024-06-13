@@ -12,6 +12,10 @@ const FormCustom = styled(Form)`
   .ant-form-item-explain-error {
     margin-bottom: 10px;
   }
+
+  @media screen and (min-width: 769px) {
+    gap: 0px;
+  }
 `
 type FormPropsType = {
   children?: React.ReactNode | null

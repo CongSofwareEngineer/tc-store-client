@@ -8,14 +8,12 @@ import MyFilterCheckBox from '@/components/MyFilterCheckBox'
 const MenuCategory = () => {
   const { translate } = useLanguage()
   const { CategoryMenu } = useAppSelector((state) => state.app)
-
   return (
     <MyFilter titleHeader={translate('menuProduct.category')}>
       <MyFilterCheckBox
         data={CategoryMenu || []}
         titleFilter={translate('menuProduct.product')}
         typeChecked={FilterAPI.TypeProduct}
-        isDefault
       />
     </MyFilter>
   )
