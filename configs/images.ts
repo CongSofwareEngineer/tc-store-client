@@ -12,5 +12,8 @@ export const images = {
     iconTitok: '/images/Footer/iconTiktok.png',
     iconZalo: '/images/Footer/iconZalo.png',
     iconGPS: '/images/Footer/iconGPS.png'
+  },
+  icon: {
+    iconBack: 'image/Icon/iconBack.png'
   }
 }
