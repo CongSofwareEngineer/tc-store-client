@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { PropsWithChildren, useState } from 'react'
 import { ItemDetailType } from './type'
 import PrimaryButton from '@/components/PrimaryButton'
 import useLanguage from '@/hook/useLanguage'
@@ -10,7 +10,7 @@ import { formatPrice, formatPriceBase } from '@/utils/functions'
 import InfoItemDetail from '@/components/InfoItemDetail'
 import SubAndPlus from '@/components/SubAndPlus'
 
-const ShopDetail = ({ productDetail }: { productDetail: ItemDetailType }) => {
+const ShopDetail: React.FC<ItemDetailType> = ({ productDetail }) => {
   const { translate } = useLanguage()
   const [amountBuy, setAmountBuy] = useState(1)
 
