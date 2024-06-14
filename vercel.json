@@ -1,4 +1,3 @@
 {
-  "regions": ["hkg1"],
-  "functionFailoverRegions": ["hkg1"]
+  "regions": ["hkg1"]
 }
