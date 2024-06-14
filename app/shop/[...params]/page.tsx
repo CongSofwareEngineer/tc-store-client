@@ -3,6 +3,7 @@ import { generateMetaBase } from '@/utils/serverNext'
 import { ResolvingMetadata } from 'next'
 import ShopDetail from './pageClient'
 import { ItemDetailType } from './type'
+import { notFound } from 'next/navigation'
 
 const getCoffeeDetail = async (id: string): Promise<ItemDetailType> => {
   const data = await FirebaseProduct.getDataByID(id)
@@ -26,9 +27,12 @@ export async function generateMetadata(
   })
   return metaData
 }
-const LayoutShopDetail = async ({ params }: any) => {
+const PageShopDetail = async ({ params }: any) => {
   const productDetail = await getCoffeeDetail(params.params[0])
+  if (!productDetail) {
+    return notFound()
+  }
   return <ShopDetail productDetail={productDetail} />
 }
 
-export default LayoutShopDetail
+export default PageShopDetail
