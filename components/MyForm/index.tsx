@@ -13,7 +13,7 @@ const FormCustom = styled(Form)`
     margin-bottom: 10px;
   }
 
-  @media screen and (min-width: 769px) {
+  @media screen and (max-width: 768px) {
     gap: 0px;
   }
 `
