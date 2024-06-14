@@ -27,11 +27,23 @@ export const numberWithCommas = (x: any) => {
 };
 
 export const formatPrice = (data: any) => {
-  return numberWithCommas(data)
+  try {
+    return numberWithCommas(data || '0')
+  } catch (error) {
+    return 0
+  }
 }
 export const formatPriceBase = (data: any, discount = 20) => {
-  const rate = new BigNumber(100).plus(discount).dividedBy(100).toNumber()
-  return numberWithCommas(new BigNumber(rate).multipliedBy(data).toNumber())
+  try {
+    if (Number(data) === 0) {
+      return 0
+    }
+    const rate = new BigNumber(100).plus(discount).dividedBy(100).toNumber()
+    return numberWithCommas(new BigNumber(rate).multipliedBy(data).toNumber())
+  } catch (error) {
+    return 0
+
+  }
 }
 
 export const showNotification = (

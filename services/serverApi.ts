@@ -1,5 +1,5 @@
 import { RequestType } from '@/constant/app'
-import { decryptData, encryptData } from '@/utils/crypto'
+import { encryptData } from '@/utils/crypto'
 import { pareResponseDataClient } from '@/utils/serverNext'
 import axios from 'axios'
 
@@ -7,8 +7,9 @@ type TypeParma = {
   url: string,
   method?: string,
   body?: object,
-  encode?: boolean
-} & Record<string, string | object | boolean>
+  encode?: boolean,
+  [key: string]: any
+}
 
 const ServerApi = {
   requestBase: async (param: TypeParma = {

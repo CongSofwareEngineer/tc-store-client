@@ -4,7 +4,7 @@ export type ItemDetailType = {
   des?: string,
   name: string,
   id?: string
-  amount?: 100,
+  amount?: number,
   des2?: string
   dateSale?: string
   dateEndSale?: string
@@ -12,5 +12,6 @@ export type ItemDetailType = {
   weight?: string,
   linkShoppe?: string
   linkFacebook?: string
-  sold?: string | number
-} & Record<string, any>
+  sold?: string | number,
+  [key: string]: any
+} 

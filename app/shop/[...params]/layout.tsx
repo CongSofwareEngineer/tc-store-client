@@ -1,7 +1,7 @@
 import { FirebaseProduct } from '@/services/firebaseService'
 import { generateMetaBase } from '@/utils/serverNext'
 import { ResolvingMetadata } from 'next'
-import ShopDetail from './page'
+import ShopDetail from './pageClient'
 import { ItemDetailType } from './type'
 
 const getCoffeeDetail = async (id: string): Promise<ItemDetailType> => {

@@ -6,8 +6,9 @@ import MyImage from '../MyImage'
 export type PropsSelectItem = {
   label: string | number
   value: string | number
-  name?: string | number
-} & Record<string, string | number>
+  name?: string | number | undefined
+  [key: string]: string | number | undefined
+}
 
 type PropsSelect = {
   option: Array<PropsSelectItem> | []

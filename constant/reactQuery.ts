@@ -4,9 +4,10 @@ export enum QueryKey {
 }
 
 export type TypeHookReactQuery = {
-  "data": any[],
-  "totalPage": number,
-  "page": number,
-  "status": number | undefined,
+  "data": any[]
+  "totalPage": number
+  "page": number
+  "status": number | undefined
   "messages": string | undefined
-} & Record<string, any>
+  [key: string]: any
+}

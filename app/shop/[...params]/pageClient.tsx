@@ -10,7 +10,7 @@ import { formatPrice, formatPriceBase } from '@/utils/functions'
 import InfoItemDetail from '@/components/InfoItemDetail'
 import SubAndPlus from '@/components/SubAndPlus'
 
-const ShopDetail: React.FC<ItemDetailType> = ({ productDetail }) => {
+const ShopDetail = ({ productDetail }: { productDetail: ItemDetailType }) => {
   const { translate } = useLanguage()
   const [amountBuy, setAmountBuy] = useState(1)
 
@@ -41,10 +41,7 @@ const ShopDetail: React.FC<ItemDetailType> = ({ productDetail }) => {
           <div className="text-title font-bold">{productDetail.name}</div>
           <InfoItemDetail data={productDetail} />
           <div className="text-medium  line-through">
-            {formatPriceBase(
-              productDetail?.price || '0',
-              productDetail?.discount
-            )}
+            {formatPriceBase(productDetail?.price, productDetail?.discount)}
           </div>
           <div className="text-title font-bold text-green-500">
             {`${formatPrice(

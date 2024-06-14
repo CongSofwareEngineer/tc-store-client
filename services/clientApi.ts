@@ -1,19 +1,20 @@
 import { DataBase, FB_FC, QueryData } from "@/constant/firebase"
-import { decryptData, encryptData } from "@/utils/crypto"
+import { encryptData } from "@/utils/crypto"
 import { pareResponseDataClient } from "@/utils/serverNext"
 import axios from "axios"
 
 type TypeParma = {
-  nameDB: string,
-  namFn?: string,
+  nameDB: string
+  namFn?: string
   body?: {
-    data?: string,
-    id?: string,
-    queryData?: QueryData,
+    data?: string
+    id?: string
+    queryData?: QueryData
     queryListData?: QueryData[]
-  },
+  }
   encode?: boolean
-} & Record<string, string | object | boolean>
+  [key: string]: any
+}
 
 
 const ClientApi = {
