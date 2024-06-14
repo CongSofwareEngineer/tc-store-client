@@ -1,6 +1,6 @@
 import { FirebaseProduct } from '@/services/firebaseService'
 import { generateMetaBase } from '@/utils/serverNext'
-import { Metadata } from 'next'
+import { ResolvingMetadata } from 'next'
 import ShopDetail from './page'
 import { ItemDetailType } from './type'
 
@@ -9,7 +9,10 @@ const getCoffeeDetail = async (id: string): Promise<ItemDetailType> => {
   return data
 }
 
-export async function generateMetadata({ params }: any, parent: Metadata) {
+export async function generateMetadata(
+  { params }: any,
+  parent: ResolvingMetadata
+) {
   const [dataBase, data]: any[] = await Promise.allSettled([
     parent,
     getCoffeeDetail(params.params[0]),
