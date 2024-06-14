@@ -46,7 +46,6 @@ const useQuerySearch = () => {
     } else {
       searchPareClone[key] = [value]
     }
-    console.log({ searchPareUpdateQuery: searchPareClone, queries });
 
     const stringified = queryString.stringify(searchPareClone, { arrayFormat: 'comma' });
     router.push(`${pathPage}?${stringified}`)

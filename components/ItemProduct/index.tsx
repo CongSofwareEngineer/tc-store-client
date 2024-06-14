@@ -48,7 +48,7 @@ const ItemProduct = ({
 
       <div className="m-auto max-w-[80%] relative w-full aspect-square  overflow-hidden">
         <MyImage
-          src={item?.imageMain || images.footer.iconAddress}
+          src={item?.imageMain || images.userDetail.iconUserDetail}
           alt={`item-${item?.name || href}`}
         />
       </div>

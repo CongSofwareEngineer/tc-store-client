@@ -14,7 +14,7 @@ const ImageCustom = styled(Image)<{ $height?: string; $width?: string }>`
 `
 
 const MyImage = ({
-  heightImage = 'max-content',
+  heightImage = 'fit-content',
   widthImage = '100%',
   ...props
 }: ImageType) => {

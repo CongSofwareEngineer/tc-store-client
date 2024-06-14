@@ -33,6 +33,8 @@ const AntdProvider = ({ children }: { children: React.ReactNode }) => {
           },
           Rate: {
             fontSize: 14,
+            margin: 0,
+            marginMD: 8,
           },
         },
         hashed: false,

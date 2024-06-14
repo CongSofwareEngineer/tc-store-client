@@ -1,13 +1,24 @@
 'use client'
-import useAllNests from '@/hook/tank-query/useAllNests'
 import useLanguage from '@/hook/useLanguage'
 import { Spin } from 'antd'
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import ItemNest from './Component/Item'
+import useQuerySearch from '@/hook/useQuerySearch'
+import useAllProduct from '@/hook/tank-query/useAllProduct'
+import { useRouter } from 'next/navigation'
 
 const PageNests = () => {
-  const { data, isLoading } = useAllNests()
+  const { currentQueries } = useQuerySearch()
+  const { data, isLoading } = useAllProduct(currentQueries)
   const { translate } = useLanguage()
+  const router = useRouter()
+
+  useLayoutEffect(() => {
+    if (currentQueries === '' || !currentQueries) {
+      router.push('?typeProduct=nest')
+    }
+  }, [currentQueries, router])
+
   return (
     <div className="w-full flex flex-col gap-4">
       {isLoading ? (
