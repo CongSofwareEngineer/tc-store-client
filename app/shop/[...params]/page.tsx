@@ -1,5 +1,5 @@
 'use client'
-import React, { PropsWithChildren, useState } from 'react'
+import React, { useState } from 'react'
 import { ItemDetailType } from './type'
 import PrimaryButton from '@/components/PrimaryButton'
 import useLanguage from '@/hook/useLanguage'
