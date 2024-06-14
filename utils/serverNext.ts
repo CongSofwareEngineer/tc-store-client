@@ -1,4 +1,3 @@
-import { message } from "antd"
 import { decryptData, encryptData } from "./crypto"
 
 export const generateMetaBase = ({

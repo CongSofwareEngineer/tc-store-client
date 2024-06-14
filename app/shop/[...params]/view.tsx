@@ -9,8 +9,13 @@ import MyImage from '@/components/MyImage'
 import { formatPrice, formatPriceBase } from '@/utils/functions'
 import InfoItemDetail from '@/components/InfoItemDetail'
 import SubAndPlus from '@/components/SubAndPlus'
+import Comment from '@/components/Comment'
 
-const ShopDetail = ({ productDetail }: { productDetail: ItemDetailType }) => {
+const ShopDetailScreen = ({
+  productDetail,
+}: {
+  productDetail: ItemDetailType
+}) => {
   const { translate } = useLanguage()
   const [amountBuy, setAmountBuy] = useState(1)
 
@@ -54,6 +59,7 @@ const ShopDetail = ({ productDetail }: { productDetail: ItemDetailType }) => {
             maxAmount={productDetail.amount - productDetail.sold}
             callBackPlus={(e) => setAmountBuy(e)}
           />
+          <Comment idProduct={productDetail.id || ''} />
         </div>
       </div>
     )
@@ -71,4 +77,4 @@ const ShopDetail = ({ productDetail }: { productDetail: ItemDetailType }) => {
   )
 }
 
-export default ShopDetail
+export default ShopDetailScreen
