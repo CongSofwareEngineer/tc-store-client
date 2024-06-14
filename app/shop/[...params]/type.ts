@@ -2,7 +2,7 @@ export type ItemDetailType = {
   imageMain?: string
   typeProduct?: string
   des?: string
-  name?: string
+  name: string
   id?: string
   [key: string]: any
 }
