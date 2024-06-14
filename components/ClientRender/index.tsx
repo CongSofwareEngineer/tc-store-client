@@ -32,7 +32,7 @@ const ClientRender = ({
           {children}
         </section>
       </main>
-      <ToastContainer className={'mb-3'} />
+      <ToastContainer className={'mt-3'} />
     </>
   ) : (
     <></>

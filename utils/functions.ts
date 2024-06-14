@@ -68,7 +68,7 @@ export const showNotification = (
 
 export const showNotificationError = (errorMessage = '', autoClose = 5000) => {
   toast.error(errorMessage, {
-    position: 'bottom-right',
+    position: 'top-right',
     autoClose,
     hideProgressBar: false,
     closeOnClick: true,
@@ -80,7 +80,7 @@ export const showNotificationError = (errorMessage = '', autoClose = 5000) => {
 
 export const showNotificationSuccess = (message = '', autoClose = 5000) => {
   toast.success(message, {
-    position: 'bottom-right',
+    position: 'top-right',
     autoClose,
     hideProgressBar: false,
     closeOnClick: true,
