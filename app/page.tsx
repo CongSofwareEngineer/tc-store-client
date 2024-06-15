@@ -5,13 +5,12 @@ import { FilterAPI } from '@/constant/app'
 import dynamic from 'next/dynamic'
 import CategoryHome from './(ComponentHome)/Category'
 import Media from 'react-media'
+import { Suspense } from 'react'
 const ListProduct = dynamic(() => import('./(ComponentHome)/ListProduct'), {
   ssr: false,
 })
 
-const InfoHome = dynamic(() => import('./(ComponentHome)/InfoHome'), {
-  ssr: false,
-})
+const InfoHome = dynamic(() => import('./(ComponentHome)/InfoHome'))
 
 const Home = () => {
   const { translate } = useLanguage()
@@ -21,7 +20,9 @@ const Home = () => {
       <div>
         <div className="flex  gap-5">
           <div className="w-[250px]">
-            <CategoryHome />
+            <Suspense>
+              <CategoryHome />
+            </Suspense>
           </div>
         </div>
         <div className="w-[90%] m-auto my-14">

@@ -1,6 +1,7 @@
 import { generateMetaBase } from '@/utils/serverNext'
 import { ResolvingMetadata } from 'next'
 import ShopScreen from './view'
+import { Suspense } from 'react'
 
 export async function generateMetadata(_: any, parent: ResolvingMetadata) {
   const dataBase = await parent
@@ -12,7 +13,11 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
 }
 
 const ShopPage = () => {
-  return <ShopScreen />
+  return (
+    <Suspense>
+      <ShopScreen />
+    </Suspense>
+  )
 }
 
 export default ShopPage

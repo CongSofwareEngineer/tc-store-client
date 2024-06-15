@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { generateMetaBase } from '@/utils/serverNext'
 import { ResolvingMetadata } from 'next'
 import PageNestsScreen from './view'
@@ -12,7 +12,11 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
   return metaData
 }
 const PageNests = () => {
-  return <PageNestsScreen />
+  return (
+    <Suspense>
+      <PageNestsScreen />
+    </Suspense>
+  )
 }
 
 export default PageNests
