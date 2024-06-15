@@ -1,5 +1,6 @@
 import { QueryKey, TypeHookReactQuery } from '@/constant/reactQuery';
 import ServerApi from '@/services/serverApi';
+import { useInfiniteQuery } from '@tanstack/react-query';
 const getAllProduct = async ({ queryKey }: any): Promise<TypeHookReactQuery> => {
   const res = await ServerApi.getProduct(queryKey[1]?.trim() || '')
 
