@@ -22,6 +22,12 @@ export async function POST(req: any) {
       case FB_FC.updateData:
         dataRequest = await dataFB.updateData(bodyDecode.body.id, bodyDecode.body.data)
         break;
+      case FB_FC.addData:
+        dataRequest = await dataFB.addData(bodyDecode.body.data)
+        break;
+      case FB_FC.getDataByID:
+        dataRequest = await dataFB.getDataByID(bodyDecode.body.id)
+        break;
     }
     return formatResponseDataServer(dataRequest, bodyDecode)
 

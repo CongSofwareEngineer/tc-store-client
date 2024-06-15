@@ -20,7 +20,24 @@ const InfoItemDetail = ({ data }: { data: ItemDetailType }) => {
   }
 
   const renderDesktop = () => {
-    return <div></div>
+    return (
+      <div className="w-full flex flex-col gap-2  ">
+        <div className="flex gap-1 items-center">
+          <Rate disabled defaultValue={4.5} style={{ fontSize: 18 }} />
+        </div>
+        {renderItemDes(translate('textPopular.description'), data.des)}
+        {renderItemDes(translate('productDetail.sold'), Number(data.sold))}
+        {renderItemDes(translate('productDetail.weight'), data.weight)}
+        {renderItemDes(
+          translate('productDetail.totalNumber'),
+          Number(data.amount)
+        )}
+        {renderItemDes(
+          translate('textPopular.freeShip'),
+          'Free ship trong 20 KM'
+        )}
+      </div>
+    )
   }
 
   const renderMobile = () => {

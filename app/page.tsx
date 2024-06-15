@@ -1,33 +1,69 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import useModal from '@/hook/useModal'
-import { useAppSelector } from '@/redux/store'
-import PrimaryButton from '@/components/PrimaryButton'
+import useLanguage from '@/hook/useLanguage'
+import { FilterAPI } from '@/constant/app'
+import dynamic from 'next/dynamic'
+import CategoryHome from './(ComponentHome)/Category'
+import Media from 'react-media'
+const ListProduct = dynamic(() => import('./(ComponentHome)/ListProduct'), {
+  ssr: false,
+})
+
+const InfoHome = dynamic(() => import('./(ComponentHome)/InfoHome'), {
+  ssr: false,
+})
 
 const Home = () => {
-  const router = useRouter()
-  const { Language } = useAppSelector((state) => state.app)
-  console.log({ Language })
+  const { translate } = useLanguage()
 
-  const { openModal } = useModal()
-  const oprn = () => {
-    router.push('')
-    openModal({
-      content: <div>modal</div>,
-    })
-  }
-  return (
-    <div>
-      <PrimaryButton
-        onClick={() => router.push('/shop?typeProduct=water,food,technology')}
-      >
-        shopping
-      </PrimaryButton>
-      <div onClick={oprn} className="w-full text-medium">
-        home page
+  const renderDesktop = () => {
+    return (
+      <div>
+        <div className="flex  gap-5">
+          <div className="w-[250px]">
+            <CategoryHome />
+          </div>
+        </div>
+        <div className="w-[90%] m-auto my-14">
+          <InfoHome />
+        </div>
+        <div className="w-full flex flex-col gap-4 ">
+          <ListProduct
+            title={translate('home.titleFood')}
+            type={FilterAPI.Food}
+          />
+          <ListProduct title={translate('home.water')} type={FilterAPI.Water} />
+        </div>
       </div>
-    </div>
+    )
+  }
+
+  const renderMobile = () => {
+    return (
+      <div>
+        <div className="w-[90%] m-auto my-8">
+          <InfoHome />
+        </div>
+        <div className="mb-3" />
+        <ListProduct
+          title={translate('home.titleFood')}
+          type={FilterAPI.Food}
+        />
+        <div className="mb-3" />
+        <ListProduct title={translate('home.water')} type={FilterAPI.Water} />
+      </div>
+    )
+  }
+
+  return (
+    <Media query="(min-width: 768px)">
+      {(match) => {
+        if (match) {
+          return renderDesktop()
+        }
+        return renderMobile()
+      }}
+    </Media>
   )
 }
 

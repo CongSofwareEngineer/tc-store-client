@@ -34,6 +34,7 @@
     "gmailRequire": "Nhập gmail (lấy lại tài khoản khi quên mật khẩu)"
   },
   "textPopular": {
+    "infor": "Thông tin",
     "updateFailed": "Cập nhật thất bại",
     "status": "Trạng thái",
     "statusSuccess": "Hoàn thành",
@@ -115,7 +116,8 @@
     "title": "Hóa Đơn Thanh Toán",
     "totalProduct": "Tổng Sản Phẩm",
     "totalPrice": "Tổng giá",
-    "payment": "Thanh toán"
+    "payment": "Thanh toán",
+    "totalPayment": "Thành tiền"
   },
 
   "footer": {

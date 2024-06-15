@@ -5,6 +5,7 @@ import { images } from '@/configs/images'
 import MyImage from '../MyImage'
 import Nav from './Component/Nav'
 import Account from './Component/Account'
+import Link from 'next/link'
 
 const Header = () => {
   return (
@@ -13,13 +14,15 @@ const Header = () => {
         <div className="border-b-2 border-green-300 w-full flex m-auto justify-center items-center bg-white">
           <div className="md:px-12 px-5 h-14 w-full max-w-[1350px] flex md:gap-3 justify-between items-center">
             <div className="h-full relative ">
-              <MyImage
-                src={images.logo}
-                alt="logo"
-                fill
-                widthImage={'auto'}
-                heightImage="100%"
-              />
+              <Link href={'/'}>
+                <MyImage
+                  src={images.logo}
+                  alt="logo"
+                  fill
+                  widthImage={'auto'}
+                  heightImage="100%"
+                />
+              </Link>
             </div>
             <Nav />
             <Account />

@@ -36,7 +36,7 @@ const ItemProduct = ({
 
   return (
     <Link
-      className={`relative item-list cursor-pointer px-3 pt-6 md:pb-6 pb-3 gap-3 flex items-center justify-between flex-col ${styles['item-coffee']} ${className}`}
+      className={`relative item-list cursor-pointer px-3 pt-6 md:pb-4 pb-3 gap-3 flex items-center justify-between flex-col ${styles['item-coffee']} ${className}`}
       onClick={callback}
       href={href}
     >
@@ -50,6 +50,7 @@ const ItemProduct = ({
         <MyImage
           src={item?.imageMain || images.userDetail.iconUserDetail}
           alt={`item-${item?.name || href}`}
+          heightImage="auto"
         />
       </div>
       <div className="w-full gap-1 flex flex-col">

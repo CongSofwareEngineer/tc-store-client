@@ -9,7 +9,9 @@ const config = {
   prefix: '',
   theme: {},
   darkMode: 'class',
-  // important: true,
+  // corePlugins: {
+  //   preflight: false // <== disable this!
+  // },
   plugins: [
     plugin(function ({ addUtilities }) {
       const newUtilities = {

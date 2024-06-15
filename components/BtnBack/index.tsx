@@ -16,7 +16,7 @@ const BtnBack = ({ title, url = [], onClick = null }: BtnBackType) => {
   const router = useRouter()
 
   return (
-    <div className="flex w-full align-middle justify-start gap-1 mb-3 md:mb-6 ">
+    <div className="flex w-full align-middle justify-start gap-1 mb-3 md:mb-6 items-center ">
       <MyImage
         onClick={() => (onClick ? onClick() : router.back())}
         src={images.icon.iconBack}
@@ -27,7 +27,7 @@ const BtnBack = ({ title, url = [], onClick = null }: BtnBackType) => {
       />
       <div className="ml-2 flex gap-1">
         {typeof title === 'string' ? (
-          <div className="md:text-[16px] text-[14px]">{title}</div>
+          <div className="md:text-[16px] text-[14px] ">{title}</div>
         ) : (
           title?.map((item, index) => {
             if (url[index]) {
@@ -42,7 +42,7 @@ const BtnBack = ({ title, url = [], onClick = null }: BtnBackType) => {
               )
             }
             return (
-              <div className="md:text-[16px] text-[14px]" key={item}>
+              <div className=" text-[16px] " key={item}>
                 {item}
               </div>
             )

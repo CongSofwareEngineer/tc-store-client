@@ -46,5 +46,11 @@ const ServerApi = {
     })
     return res
   },
+  getLengthCart: async (idUser: string) => {
+    const res = await ServerApi.requestBase({
+      url: `length-cart/${idUser}`
+    })
+    return res
+  },
 }
 export default ServerApi

@@ -3,10 +3,12 @@ import useModal from '@/hook/useModal'
 import useUserData from '@/hook/useUserData'
 import React from 'react'
 import ModalLogin from '../ModalLogin'
-import { MenuOutlined, ShoppingCartOutlined } from '@ant-design/icons'
+import { DownOutlined, MenuOutlined } from '@ant-design/icons'
 import useDrawer from '@/hook/useDrawer'
 import NavMobile from '../NavMobile'
 import Media from 'react-media'
+import { Dropdown, MenuProps } from 'antd'
+import CartUser from './cartUser'
 
 const Account = () => {
   const { openModal } = useModal()
@@ -47,8 +49,8 @@ const Account = () => {
     return (
       <div className="flex gap-2">
         {isLogin ? (
-          <div className="flex gap-2">
-            <ShoppingCartOutlined style={{ fontSize: 18 }} />
+          <div className="flex gap-2 items-center">
+            <CartUser />
             <div>{userData?.name}</div>
             <MenuOutlined onClick={handleViewMenu} style={{ fontSize: 20 }} />
           </div>
@@ -67,15 +69,44 @@ const Account = () => {
   }
 
   const renderDesktop = () => {
+    const items: MenuProps['items'] = [
+      {
+        key: '1',
+        label: (
+          <div onClick={handleLogin} className="cursor-pointer">
+            {translate('myProfile.myProfile')}
+          </div>
+        ),
+      },
+      {
+        key: '2',
+        label: (
+          <div onClick={handleLogin} className="cursor-pointer">
+            {translate('common.logOut')}
+          </div>
+        ),
+      },
+    ]
+
     return (
       <div className="h-full fex gap-2 items-center">
-        <div
-          onClick={handleLogin}
-          className="rounded h-full cursor-pointer w-24   flex justify-center items-center"
-        >
-          <span className="text-black underline">
-            {isLogin ? translate('common.logOut') : translate('common.login')}
-          </span>
+        <div className="rounded h-full cursor-pointer  flex justify-center items-center">
+          {isLogin ? (
+            <div className="flex gap-4 items-center">
+              <CartUser />
+
+              <Dropdown menu={{ items }}>
+                <div className="flex gap-3">
+                  {`${userData?.name || userData?.sdt}`}
+                  <DownOutlined />
+                </div>
+              </Dropdown>
+            </div>
+          ) : (
+            <span onClick={handleLogin} className="text-black underline  w-24 ">
+              {translate('common.login')}
+            </span>
+          )}
         </div>
       </div>
     )

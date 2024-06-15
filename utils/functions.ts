@@ -89,3 +89,9 @@ export const showNotificationSuccess = (message = '', autoClose = 5000) => {
     progress: undefined
   });
 };
+
+export function delayTime(ms = 500) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
+}

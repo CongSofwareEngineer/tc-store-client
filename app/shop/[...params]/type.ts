@@ -6,3 +6,8 @@ export type ItemDetailType = {
   id?: string
   [key: string]: any
 }
+
+export type ModalBuyLoginType = {
+  data?: ItemDetailType
+  amount: number
+}

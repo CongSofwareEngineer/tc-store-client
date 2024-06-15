@@ -7,8 +7,8 @@ type TypeParma = {
   nameDB: string
   namFn?: string
   body?: {
-    data?: string
-    id?: string
+    data?: string | { [key: string]: any }
+    id?: string | null
     queryData?: QueryData
     queryListData?: QueryData[]
   }

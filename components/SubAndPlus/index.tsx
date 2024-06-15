@@ -18,7 +18,7 @@ const SubAndPlus = ({
   return (
     <div className="flex align-middle gap-3 ">
       <MinusCircleOutlined
-        onClick={() => callBackSub(value === 0 ? 0 : Number(value) - 1)}
+        onClick={() => callBackSub(value === 1 ? 1 : Number(value) - 1)}
         className="cursor-pointer"
         style={{ fontSize: isMobile ? 22 : 25, color: 'green' }}
       />

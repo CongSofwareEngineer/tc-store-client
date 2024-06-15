@@ -11,10 +11,10 @@ const AntdProvider = ({ children }: { children: React.ReactNode }) => {
           Button: {
             defaultBg: '#29a200',
             defaultColor: 'white',
-            defaultHoverBg: '#6f3',
+            defaultHoverBg: '#29a200',
             defaultHoverColor: 'white',
             defaultHoverBorderColor: 'transparent',
-            defaultActiveBg: '#6f3',
+            defaultActiveBg: '#29a200',
             defaultActiveColor: 'white',
             defaultActiveBorderColor: 'transparent',
           },

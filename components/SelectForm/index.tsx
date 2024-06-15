@@ -1,5 +1,5 @@
 import useLanguage from '@/hook/useLanguage'
-import { Form, Input } from 'antd'
+import { Form, Select, SelectProps } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 const FormItem = styled(Form.Item)`
@@ -10,47 +10,35 @@ const FormItem = styled(Form.Item)`
       text-align: start !important;
     }
   }
-  @media screen and (max-width: 768px) {
-    margin-bottom: 0px !important;
-    .ant-form-item-explain-error {
-      margin-bottom: 0px !important;
-    }
-    .ant-form-item-label {
-      padding: 0px !important;
-    }
-  }
 `
 type InputFormType = {
   label?: string
   name?: string
   message?: string
   required?: boolean
-  isPass?: boolean
-  classFromItem?: string
+  options: { [name: string]: any }[]
+  configSelect?: SelectProps
   validator?: (value?: any) => string | null
 }
-const InputForm = ({
+
+const SelectForm = ({
   label,
   name,
   message,
   required = false,
-  isPass = false,
+  options = [],
   validator = () => '',
-  classFromItem = '',
+  configSelect,
 }: InputFormType) => {
   const { translate } = useLanguage()
   return (
     <FormItem
-      className={classFromItem}
       label={label}
       name={name}
       rules={[
         {
           required: required,
           validator: (_, value) => {
-            if (!required) {
-              return Promise.resolve(null)
-            }
             const errorCheck = validator(value)
             if (errorCheck) {
               return Promise.reject(new Error(errorCheck))
@@ -66,13 +54,9 @@ const InputForm = ({
         },
       ]}
     >
-      {isPass ? (
-        <Input.Password className="w-full" />
-      ) : (
-        <Input className="w-full" />
-      )}
+      <Select className="w-full" options={options} {...configSelect} />
     </FormItem>
   )
 }
 
-export default InputForm
+export default SelectForm

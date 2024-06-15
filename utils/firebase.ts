@@ -1,5 +1,5 @@
 import { DatabaseDocsType, DatabaseQueryType, DatabaseType, QueryData } from "@/constant/firebase";
-import { WhereFilterOp, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore/lite";
+import { WhereFilterOp, addDoc, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore/lite";
 import { encryptData } from "./crypto";
 
 export default class FirebaseFun {
@@ -11,7 +11,10 @@ export default class FirebaseFun {
   }
 
   formatData(data: any) {
-    const dataTemp = data.data();
+    if (!data.data()) {
+      return null
+    }
+    const dataTemp = data.data()
     dataTemp.id = data.id;
     if (dataTemp?.cost) {
       dataTemp.cost = encryptData(dataTemp?.cost)
@@ -62,4 +65,24 @@ export default class FirebaseFun {
     const data = await getDoc(temp);
     return this.formatData(data);
   }
+
+  async addData(data: any) {
+    try {
+      await addDoc(this.db, data)
+      return true
+    } catch (error) {
+      console.log('🚀 ~ file: firebase.js:57 ~ FirebaseFun ~ addData ~ error:', error)
+      return false
+    }
+  }
+
+  async deleteData(id: string) {
+    try {
+      await deleteDoc(doc(this.db, id))
+      return true
+    } catch (error) {
+      return false
+    }
+  }
+
 }

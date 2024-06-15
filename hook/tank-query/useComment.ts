@@ -1,17 +1,12 @@
-
 import { QueryKey, TypeHookReactQuery } from '@/constant/reactQuery';
-import ServerApi from '@/services/serverApi';
-import { useInfiniteQuery } from '@tanstack/react-query';
-
-
 const getAllProduct = async ({ queryKey }: any): Promise<TypeHookReactQuery> => {
   const res = await ServerApi.getProduct(queryKey[1]?.trim() || '')
 
   return res.data || [];
 };
-const useAllProduct = (query = '') => {
+const useComment = (query = '') => {
   const { data, isLoading, refetch, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteQuery({
-    queryKey: [QueryKey.GetAllProduct, query],
+    queryKey: [QueryKey.GetCommentProduction, query],
     initialPageParam: false,
     queryFn: getAllProduct,
     getNextPageParam: (lastPage: {
@@ -28,4 +23,5 @@ const useAllProduct = (query = '') => {
   }
 }
 
-export default useAllProduct
+
+export default useComment

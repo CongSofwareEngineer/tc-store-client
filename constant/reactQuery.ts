@@ -1,6 +1,9 @@
 export enum QueryKey {
   GetAllProduct = 'GetAllProduct',
   GetAllNests = 'GetAllNests',
+  GetCommentProduction = 'GetCommentProduction',
+  CartUser = 'CartUser',
+  GetProductByID = 'GetProductByID'
 }
 
 export type TypeHookReactQuery = {

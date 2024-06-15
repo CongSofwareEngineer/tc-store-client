@@ -7,7 +7,7 @@ import Media from 'react-media'
 import styled from 'styled-components'
 
 const LinkCustom = styled(styled(Link)<{ $isSelected?: Boolean }>``).attrs({
-  className: 'hover:underline hover:text-blue-700',
+  className: 'hover:underline hover:text-blue-700 uppercase',
 })`
   color: ${(props) => (props.$isSelected ? 'blue !important' : 'black')};
   font-weight: ${(props) => (props.$isSelected ? '700 !important' : 'nonce')};
@@ -32,11 +32,7 @@ const Nav = () => {
         <LinkCustom $isSelected={pathname === '/contact'} href={'/contact'}>
           {translate('header.contact')}
         </LinkCustom>
-        {isLogin ? (
-          <LinkCustom $isSelected={pathname === '/cart'} href={'/cart'}>
-            {translate('header.cart')}
-          </LinkCustom>
-        ) : (
+        {!isLogin && (
           <LinkCustom $isSelected={pathname === '/register'} href={'/register'}>
             {translate('header.register')}
           </LinkCustom>
