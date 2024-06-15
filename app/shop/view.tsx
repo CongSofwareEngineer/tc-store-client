@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { Suspense } from 'react'
 import MenuCategory from './Component/MenuCategory'
 import ItemProduct from '@/components/ItemProduct'
 import { Input } from 'antd'
@@ -12,7 +12,9 @@ const ShopScreen = ({ dataShop }: { dataShop: any }) => {
   return (
     <div className="w-full flex md:flex-row flex-col  md:gap-6 gap-3  h-full justify-star md:mt-3">
       <div className="md:w-[250px] w-full">
-        <MenuCategory />
+        <Suspense>
+          <MenuCategory />
+        </Suspense>
       </div>
       <div className="flex-1 w-full  h-full">
         <Input
