@@ -1,7 +1,6 @@
 import { formatSearchParams, generateMetaBase } from '@/utils/serverNext'
 import { ResolvingMetadata } from 'next'
 import ShopScreen from './view'
-import { Suspense } from 'react'
 import fetchConfig from '@/configs/fetchConfig'
 import { RequestType } from '@/constant/app'
 
@@ -22,11 +21,7 @@ const ShopPage = async ({ searchParams }: any) => {
     method: RequestType.GET,
   })
 
-  return (
-    <Suspense>
-      <ShopScreen dataShop={res ?? {}} />
-    </Suspense>
-  )
+  return <ShopScreen dataShop={res ?? {}} />
 }
 
 export default ShopPage
