@@ -5,7 +5,6 @@ import { FilterAPI } from '@/constant/app'
 import dynamic from 'next/dynamic'
 import CategoryHome from './(ComponentHome)/Category'
 import Media from 'react-media'
-import { Suspense } from 'react'
 const ListProduct = dynamic(() => import('./(ComponentHome)/ListProduct'), {
   ssr: false,
 })
@@ -20,9 +19,7 @@ const Home = () => {
       <div>
         <div className="flex  gap-5">
           <div className="w-[250px]">
-            <Suspense>
-              <CategoryHome />
-            </Suspense>
+            <CategoryHome />
           </div>
         </div>
         <div className="w-[90%] m-auto my-14">

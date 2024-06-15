@@ -1,18 +1,15 @@
-import MyFilter from '@/components/MyFilter'
 import useLanguage from '@/hook/useLanguage'
 import { useAppSelector } from '@/redux/store'
+import { AlignLeftOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 import React from 'react'
 
 const CategoryHome = () => {
   const { translate } = useLanguage()
   const { CategoryMenu } = useAppSelector((state) => state.app)
-  console.log('====================================')
-  console.log({ CategoryMenu })
-  console.log('====================================')
 
-  return (
-    <MyFilter titleHeader={translate('menuProduct.category')}>
+  const renderContent = () => {
+    return (
       <div className="flex flex-col ">
         {CategoryMenu.map((e, index) => {
           return (
@@ -28,7 +25,24 @@ const CategoryHome = () => {
           )
         })}
       </div>
-    </MyFilter>
+    )
+  }
+  return (
+    <div
+      className={`bg-white border-zinc-500 border-[1px] w-full  flex flex-col md:rounded-xl rounded-lg overflow-hidden  `}
+    >
+      <div
+        className={`border-b-[1px] border-zinc-500 w-full flex justify-between items-center  p-3 bg-green-200 `}
+      >
+        <div className="flex items-center gap-2">
+          <AlignLeftOutlined style={{ fontSize: 20 }} />
+          <div className="text-medium ">
+            {translate('menuProduct.category')}
+          </div>
+        </div>
+      </div>
+      {renderContent()}
+    </div>
   )
 }
 
