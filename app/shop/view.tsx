@@ -1,17 +1,12 @@
 'use client'
 import React from 'react'
 import MenuCategory from './Component/MenuCategory'
-import useAllProduct from '@/hook/tank-query/useAllProduct'
-import MyLoading from '@/components/MyLoading'
 import ItemProduct from '@/components/ItemProduct'
-import useQuerySearch from '@/hook/useQuerySearch'
 import { Input } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import useLanguage from '@/hook/useLanguage'
 
-const ShopScreen = () => {
-  const { currentQueries } = useQuerySearch()
-  const { data, isLoading } = useAllProduct(currentQueries)
+const ShopScreen = ({ dataShop }: { dataShop: any }) => {
   const { translate } = useLanguage()
 
   return (
@@ -29,9 +24,9 @@ const ShopScreen = () => {
             />
           }
         />
-        {data?.data && (
+        {dataShop?.data && (
           <div className="mt-2  w-full grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3   2xl:grid-cols-4 gap-3 md:gap-6">
-            {data?.data?.map((item: any) => {
+            {dataShop?.data?.map((item: any) => {
               return (
                 <ItemProduct
                   // className={'h-[305px] md:h-auto'}
@@ -46,11 +41,11 @@ const ShopScreen = () => {
           </div>
         )}
 
-        {data?.data.length === 0 && (
+        {dataShop?.data.length === 0 && (
           <div className="mt-3">Chưa có sản phẩm</div>
         )}
 
-        {isLoading && <MyLoading className="mt-6" />}
+        {/* {isLoading && <MyLoading className="mt-6" />} */}
       </div>
     </div>
   )

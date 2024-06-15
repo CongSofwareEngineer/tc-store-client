@@ -1,3 +1,4 @@
+import queryString from "query-string"
 import { decryptData, encryptData } from "./crypto"
 
 export const generateMetaBase = ({
@@ -72,4 +73,26 @@ export const formatResponseDataServer = async (data: any, bodyDecode: any): Prom
 
   }
   return new Response(JSON.stringify(body), { status: 200, })
+}
+
+
+export const formatSearchParams = (param: any) => {
+  try {
+    if (Object.entries(param).length === 0) {
+      return ''
+    }
+    // let query = '?'
+    // Object.entries(param).forEach(([key, value], index) => {
+    //   if (index === Object.entries(param).length - 1) {
+    //     query += `${key}=${value}`
+    //   } else {
+    //     query += `${key}=${value}&`
+
+    //   }
+    // }) 
+    const searchPare = queryString.stringify(param, { arrayFormat: 'comma' });
+    return `?${searchPare}`
+  } catch (error) {
+    return ''
+  }
 }
