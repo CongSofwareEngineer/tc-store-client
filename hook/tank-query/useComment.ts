@@ -1,4 +1,5 @@
 import { QueryKey, TypeHookReactQuery } from '@/constant/reactQuery';
+import ServerApi from '@/services/serverApi';
 const getAllProduct = async ({ queryKey }: any): Promise<TypeHookReactQuery> => {
   const res = await ServerApi.getProduct(queryKey[1]?.trim() || '')
 
