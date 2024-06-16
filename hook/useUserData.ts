@@ -15,7 +15,15 @@ const useUserData = () => {
   const { UserData: userData } = useAppSelector(state => state.app)
   const { translate } = useLanguage()
   const { closeModal } = useModal()
-  const isLogin = useMemo(() => !!userData, [userData])
+
+
+  const isLogin = useMemo(() => {
+    const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
+    if (dataSecure) {
+      return true
+    }
+    return !!userData
+  }, [userData])
 
   const loginFireBase = useCallback(async (sdt: string, pass: string) => {
     const listQuery: QueryData[] = [
@@ -44,18 +52,15 @@ const useUserData = () => {
     if (dataSecure) {
       const dataDecode = decryptData(dataSecure.toString())
       const dataPare = JSON.parse(dataDecode)
+      dispatch(setUserData(dataPare))
       const data = await loginFireBase(dataPare.sdt, dataPare.pass)
       if (data.length === 0) {
         logOut()
-      } else {
-        dispatch(setUserData(data[0]))
       }
     } else {
       logOut()
     }
   }, [dispatch, loginFireBase, logOut])
-
-
 
 
   const login = useCallback(async (numberPhone: string, pass: string) => {
@@ -80,7 +85,7 @@ const useUserData = () => {
 
   return {
     userData,
-    isLogin,
+    isLogin: !!isLogin,
     logOut,
     login,
     refreshLogin

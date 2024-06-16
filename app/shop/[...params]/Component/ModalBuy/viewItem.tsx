@@ -5,8 +5,26 @@ import { Col, Row } from 'antd'
 import React from 'react'
 import Media from 'react-media'
 
-const ViewItem = ({ data, amount }: { data: any; amount: number }) => {
+const ViewItem = ({
+  data,
+  amount,
+  setAmount,
+}: {
+  data: any
+  amount: number
+  setAmount: (amount: number) => void
+}) => {
   const { translate } = useLanguage()
+
+  const handleChangeAmount = (isPlus = false) => {
+    if (isPlus) {
+      setAmount(amount + 1)
+    } else {
+      if (amount > 1) {
+        setAmount(amount - 1)
+      }
+    }
+  }
 
   const renderTextMobile = (title: string, value: string | number) => {
     return (
@@ -59,7 +77,23 @@ const ViewItem = ({ data, amount }: { data: any; amount: number }) => {
             <div>{formatPrice(data?.price)} VNĐ</div>
           </Col>
           <Col span={3}>
-            <div className="text-center">{amount}</div>
+            <div className="text-center flex justify-center">
+              <span
+                onClick={() => handleChangeAmount(false)}
+                className="w-6 border-[1px] border-black cursor-pointer"
+              >
+                -
+              </span>
+              <span className="min-w-6 border-[1px] border-black cursor-pointer">
+                {amount}
+              </span>
+              <span
+                onClick={() => handleChangeAmount(true)}
+                className="w-6 border-[1px] border-black cursor-pointer"
+              >
+                +
+              </span>
+            </div>
           </Col>
           <Col span={4}>
             <div className="text-end">
@@ -106,7 +140,28 @@ const ViewItem = ({ data, amount }: { data: any; amount: number }) => {
                 translate('productDetail.price'),
                 `${formatPrice(data?.price)} VNĐ`
               )}
-              {renderTextMobile(translate('textPopular.amount'), amount)}
+              <div className="flex gap-1">
+                <span className="font-bold">
+                  {translate('textPopular.amount')} :{' '}
+                </span>
+                <div className="text-center flex items-center">
+                  <span
+                    onClick={() => handleChangeAmount(false)}
+                    className="leading-3 h-5 w-6 border-[1px] border-black cursor-pointer"
+                  >
+                    -
+                  </span>
+                  <span className="leading-[14px] h-[18px] min-w-6 border-[1px] border-black cursor-pointer">
+                    {amount}
+                  </span>
+                  <span
+                    onClick={() => handleChangeAmount(true)}
+                    className="leading-3 h-5 w-6 border-[1px] border-black cursor-pointer"
+                  >
+                    +
+                  </span>
+                </div>
+              </div>
               {renderTextMobile(
                 translate('bill.priceTotal'),
                 `${formatPrice(data?.price * amount)} VNĐ`

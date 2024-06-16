@@ -25,6 +25,20 @@ export async function POST(req: any) {
       case FB_FC.addData:
         dataRequest = await dataFB.addData(bodyDecode.body.data)
         break;
+      case FB_FC.getAllDataOption2:
+        dataRequest = await dataFB.getDataOption2(
+          bodyDecode.body.data?.dataLast,
+          bodyDecode.body.data?.keyOderBy,
+          bodyDecode.body.data?.limitPage
+        )
+        break;
+      case FB_FC.queryDataOption2:
+        dataRequest = await dataFB.getDataOption2(
+          bodyDecode.body.data?.dataLast,
+          bodyDecode.body.data?.keyOderBy,
+          bodyDecode.body.data?.limitPage
+        )
+        break;
       case FB_FC.getDataByID:
         dataRequest = await dataFB.getDataByID(bodyDecode.body.id)
         break;

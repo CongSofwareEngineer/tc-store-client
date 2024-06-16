@@ -37,3 +37,4 @@ export enum FilterAPI {
   Electronic = 'electronic'
 }
 
+export const PageSizeLimit = 15 

@@ -3,9 +3,12 @@ import { Affix } from 'antd'
 import React from 'react'
 import { images } from '@/configs/images'
 import MyImage from '../MyImage'
-import Nav from './Component/Nav'
-import Account from './Component/Account'
+// import Nav from './Component/Nav'
+// import Account from './Component/Account'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
+const Nav = dynamic(() => import('./Component/Nav'), { ssr: true })
+const Account = dynamic(() => import('./Component/Account'), { ssr: true })
 
 const Header = () => {
   return (

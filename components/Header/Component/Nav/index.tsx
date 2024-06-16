@@ -1,9 +1,9 @@
 import useLanguage from '@/hook/useLanguage'
+import useMedia from '@/hook/useMedia'
 import useUserData from '@/hook/useUserData'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
-import Media from 'react-media'
 import styled from 'styled-components'
 
 const LinkCustom = styled(styled(Link)<{ $isSelected?: Boolean }>``).attrs({
@@ -16,6 +16,7 @@ const Nav = () => {
   const { isLogin } = useUserData()
   const { translate } = useLanguage()
   const pathname = usePathname()
+  const { isMobile } = useMedia()
 
   const renderDesktop = () => {
     return (
@@ -41,16 +42,7 @@ const Nav = () => {
     )
   }
 
-  return (
-    <Media query="(min-width: 768px)">
-      {(match) => {
-        if (match) {
-          return renderDesktop()
-        }
-        return <></>
-      }}
-    </Media>
-  )
+  return isMobile ? <></> : renderDesktop()
 }
 
 export default Nav

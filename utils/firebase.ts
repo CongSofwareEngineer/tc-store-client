@@ -1,6 +1,7 @@
 import { DatabaseDocsType, DatabaseQueryType, DatabaseType, QueryData } from "@/constant/firebase";
-import { WhereFilterOp, addDoc, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore/lite";
-import { encryptData } from "./crypto";
+import { QueryDocumentSnapshot, QuerySnapshot, WhereFilterOp, addDoc, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, startAfter, updateDoc, where } from "firebase/firestore/lite";
+import { decryptData, encryptData } from "./crypto";
+import { PageSizeLimit } from "@/constant/app";
 
 export default class FirebaseFun {
   db: DatabaseType
@@ -82,6 +83,89 @@ export default class FirebaseFun {
       return true
     } catch (error) {
       return false
+    }
+  }
+
+  async queryDataOption2(dataLast: any, querySQL: QueryData, keyOderBy: string, limitPage: number = PageSizeLimit) {
+    try {
+      console.log('====================================');
+      console.log({ querySQL });
+      console.log('====================================');
+      if (dataLast) {
+        const docDetail = query(this.db, where(querySQL.key, querySQL.match, querySQL.value));
+
+        const first = query(docDetail, orderBy(keyOderBy), startAfter(dataLast), limit(limitPage))
+        const documentSnapshots = await getDocs(first);
+        const lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
+        return {
+          data: documentSnapshots.docs.map((doc) => {
+            return this.formatData(doc);
+          }),
+          lastVisible
+        }
+      } else {
+        const first = query(
+          this.db,
+          where(querySQL.key, querySQL.match, querySQL.value),
+          orderBy(keyOderBy),
+          limit(limitPage)
+        )
+        const documentSnapshots = await getDocs(first);
+        const lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
+
+
+        return {
+          data: documentSnapshots.docs.map((doc) => {
+            return this.formatData(doc);
+          }),
+          lastVisible
+        }
+      }
+
+    } catch (error) {
+      return {
+        data: null,
+        lastVisible: null
+      }
+    }
+  }
+
+  async getDataOption2(dataLast: any, keyOderBy: string, limitPage: number = PageSizeLimit) {
+    try {
+      if (dataLast) {
+        // const dataDecode: QueryDocumentSnapshot = JSON.parse(decryptData(dataLast))
+        const next = query(this.db, orderBy(keyOderBy), startAfter(dataLast), limit(limitPage))
+        const documentSnapshots = await getDocs(next);
+
+        const lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
+
+        return {
+          data: documentSnapshots.docs.map((doc) => {
+            return this.formatData(doc);
+          }),
+          // lastVisible: encryptData(JSON.stringify(lastVisible))
+          lastVisible
+        }
+      } else {
+        const first = query(this.db, orderBy(keyOderBy), limit(limitPage))
+        const documentSnapshots = await getDocs(first);
+        const lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
+
+        return {
+          data: documentSnapshots.docs.map((doc) => {
+            return this.formatData(doc);
+          }),
+          // lastVisible: encryptData(JSON.stringify(lastVisible)),
+          lastVisible
+        }
+      }
+
+
+    } catch (error) {
+      return {
+        data: null,
+        lastVisible: null
+      }
     }
   }
 

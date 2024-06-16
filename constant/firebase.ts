@@ -20,7 +20,9 @@ export const DataBase = {
 
 export const FB_FC = {
   getAllData: 'getAllData',
+  getAllDataOption2: 'getAllDataOption2',
   queryData: 'queryData',
+  queryDataOption2: 'queryDataOption2',
   queryListData: 'queryListData',
   getDataByID: 'getDataByID',
   addData: 'addData',

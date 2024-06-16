@@ -160,6 +160,9 @@ const ModalBuyLogin = ({ data, amount }: ModalBuyLoginType) => {
       setLoading(false)
     }
   }
+  console.log('====================================')
+  console.log({ formData })
+  console.log('====================================')
 
   return (
     <div className="flex flex-col gap-3 w-full">
@@ -225,14 +228,18 @@ const ModalBuyLogin = ({ data, amount }: ModalBuyLoginType) => {
             <div className="font-bold">
               {translate('textPopular.product')} :
             </div>
-            <ViewItem data={data} amount={amount} />
+            <ViewItem
+              data={data}
+              amount={formData?.amount}
+              setAmount={(e) => setFormData({ ...formData, amount: e })}
+            />
           </div>
           <div className="w-full flex flex-col gap-3">
             <div className="w-full bg-slate-400 h-[1px]" />
             <div className="w-full flex gap-1 justify-end items-end">
               <span>{translate('cart.totalPayment')} : </span>
               <span className="font-medium text-red-500">
-                {formatPrice(data?.price * amount)} VNĐ
+                {formatPrice(data?.price * formData?.amount)} VNĐ
               </span>
             </div>
           </div>

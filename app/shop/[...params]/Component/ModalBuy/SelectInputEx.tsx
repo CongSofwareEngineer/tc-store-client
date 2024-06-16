@@ -1,5 +1,6 @@
 import PrimaryButton from '@/components/PrimaryButton'
 import useLanguage from '@/hook/useLanguage'
+import { showNotificationError } from '@/utils/functions'
 import { PlusOutlined } from '@ant-design/icons'
 import { Form, Input, Select, SelectProps } from 'antd'
 import React, { useRef, useState } from 'react'
@@ -44,6 +45,10 @@ const SelectInputEx = ({
   const [isLoading, setIsLoading] = useState(false)
 
   const handleAddNew = async () => {
+    if (!newValue) {
+      showNotificationError(translate('errors.empty'))
+      return
+    }
     setIsLoading(true)
     await callBackAdd(newValue)
     setNewValue('')

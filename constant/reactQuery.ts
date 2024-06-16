@@ -3,7 +3,8 @@ export enum QueryKey {
   GetAllNests = 'GetAllNests',
   GetCommentProduction = 'GetCommentProduction',
   CartUser = 'CartUser',
-  GetProductByID = 'GetProductByID'
+  GetProductByID = 'GetProductByID',
+  MyCartUser = "MyCartUser"
 }
 
 export type TypeHookReactQuery = {

@@ -52,5 +52,11 @@ const ServerApi = {
     })
     return res
   },
+  getAllCart: async (idUser: string, query: string) => {
+    const res = await ServerApi.requestBase({
+      url: `all-cart/${idUser}${query}`
+    })
+    return res.data
+  },
 }
 export default ServerApi

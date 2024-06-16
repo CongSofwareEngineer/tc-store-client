@@ -4,7 +4,7 @@ import useLanguage from '@/hook/useLanguage'
 import { FilterAPI } from '@/constant/app'
 import dynamic from 'next/dynamic'
 import CategoryHome from './(ComponentHome)/Category'
-import Media from 'react-media'
+import useMedia from '@/hook/useMedia'
 const ListProduct = dynamic(() => import('./(ComponentHome)/ListProduct'), {
   ssr: false,
 })
@@ -13,6 +13,7 @@ const InfoHome = dynamic(() => import('./(ComponentHome)/InfoHome'))
 
 const Home = () => {
   const { translate } = useLanguage()
+  const { isMobile } = useMedia()
 
   const renderDesktop = () => {
     return (
@@ -53,16 +54,7 @@ const Home = () => {
     )
   }
 
-  return (
-    <Media query="(min-width: 768px)">
-      {(match) => {
-        if (match) {
-          return renderDesktop()
-        }
-        return renderMobile()
-      }}
-    </Media>
-  )
+  return isMobile ? renderMobile() : renderDesktop()
 }
 
 export default Home

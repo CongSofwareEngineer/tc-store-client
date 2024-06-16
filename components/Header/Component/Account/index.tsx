@@ -6,15 +6,16 @@ import ModalLogin from '../ModalLogin'
 import { DownOutlined, MenuOutlined } from '@ant-design/icons'
 import useDrawer from '@/hook/useDrawer'
 import NavMobile from '../NavMobile'
-import Media from 'react-media'
 import { Dropdown, MenuProps } from 'antd'
 import CartUser from './cartUser'
+import useMedia from '@/hook/useMedia'
 
 const Account = () => {
   const { openModal } = useModal()
   const { openDrawer } = useDrawer()
   const { translate } = useLanguage()
   const { isLogin, logOut, userData } = useUserData()
+  const { isMobile } = useMedia()
 
   const handleLogin = () => {
     if (isLogin) {
@@ -112,16 +113,7 @@ const Account = () => {
     )
   }
 
-  return (
-    <Media query="(min-width: 768px)">
-      {(match) => {
-        if (match) {
-          return renderDesktop()
-        }
-        return renderMobile()
-      }}
-    </Media>
-  )
+  return isMobile ? renderMobile() : renderDesktop()
 }
 
 export default Account
