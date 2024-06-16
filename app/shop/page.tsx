@@ -1,27 +1,23 @@
-import { formatSearchParams, generateMetaBase } from '@/utils/serverNext'
+import { generateMetaBase } from '@/utils/serverNext'
 import { ResolvingMetadata } from 'next'
 import ShopScreen from './view'
-import fetchConfig from '@/configs/fetchConfig'
-import { RequestType } from '@/constant/app'
+import { Suspense } from 'react'
 
 export async function generateMetadata(_: any, parent: ResolvingMetadata) {
   const dataBase = await parent
   const metaData = generateMetaBase({
     dataBase,
-    title: 'Register',
+    title: 'Shop',
   })
   return metaData
 }
 
-const ShopPage = async ({ searchParams }: any) => {
-  const dataQuery = formatSearchParams(searchParams)
-
-  const res = await fetchConfig({
-    url: `all-product${dataQuery?.trim() || ''}`,
-    method: RequestType.GET,
-  })
-
-  return <ShopScreen dataShop={res ?? {}} />
+const ShopPage = async () => {
+  return (
+    <Suspense>
+      <ShopScreen />
+    </Suspense>
+  )
 }
 
 export default ShopPage
