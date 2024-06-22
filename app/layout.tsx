@@ -89,10 +89,10 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <StyledComponentsRegistry>
-          <AntdRegistry>
-            <AntdProvider>
-              <ReactQueryProvider>
+        <ReactQueryProvider>
+          <StyledComponentsRegistry>
+            <AntdRegistry>
+              <AntdProvider>
                 <ReduxProvider>
                   <MyModalProvider>
                     <DrawerProvider>
@@ -102,10 +102,10 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
                     </DrawerProvider>
                   </MyModalProvider>
                 </ReduxProvider>
-              </ReactQueryProvider>
-            </AntdProvider>
-          </AntdRegistry>
-        </StyledComponentsRegistry>
+              </AntdProvider>
+            </AntdRegistry>
+          </StyledComponentsRegistry>
+        </ReactQueryProvider>
       </body>
     </html>
   )

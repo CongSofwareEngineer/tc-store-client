@@ -1,11 +1,11 @@
 import { useLayoutEffect, useState } from 'react'
-const defaultCheck = false
-const useMedia = () => {
+
+const useMedia = (maxWidth = 768) => {
   const [isMobile, setIsMobile] = useState(false)
 
   useLayoutEffect(() => {
     let mounted = true;
-    const mql = window.matchMedia('(max-width: 768px)');
+    const mql = window.matchMedia(`(max-width: ${maxWidth}px)`);
     const onChange = () => {
       if (!mounted) {
         return;
@@ -21,10 +21,10 @@ const useMedia = () => {
       mql.removeEventListener('change', onChange);
     };
 
-  }, []);
+  }, [maxWidth]);
 
   return {
-    isMobile: isMobile || defaultCheck
+    isMobile: isMobile || false
   }
 }
 

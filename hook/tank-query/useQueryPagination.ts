@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { DataBase, QueryData } from '@/constant/firebase'
 import { PageSizeLimit } from '@/constant/app'
 import { useQuery } from '@tanstack/react-query';
@@ -70,15 +70,19 @@ const useQueryPagination = (
   })
 
   useEffect(() => {
-    console.log('====================================');
     console.log({ listData });
-    console.log('====================================');
+
   }, [listData])
 
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (data) {
       setListData(item => {
+        if (data.data.length === 0) {
+          return item
+        }
+        console.log({ dataBase: data });
+
         const arr: any[] = []
 
         data.data.forEach((e: any) => {
@@ -90,12 +94,15 @@ const useQueryPagination = (
             }
           }
         })
+        console.log({ arr, item });
+
 
         item.forEach(e => {
-          if (arr.find((eArr) => e.id !== eArr.id)) {
+          if (!arr.some((eArr) => e.id === eArr.id)) {
             arr.push(e)
           }
         })
+        console.log({ arr });
 
         return arr
       })

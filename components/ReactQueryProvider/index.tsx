@@ -9,6 +9,7 @@ const ReactQueryProvider = ({ children }: { children: React.ReactNode }) => {
         defaultOptions: {
           queries: {
             retry: 1,
+            networkMode: 'online',
           },
         },
       })
