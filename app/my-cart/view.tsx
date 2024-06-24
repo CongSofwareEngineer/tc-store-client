@@ -56,14 +56,14 @@ const MyCartScreen = () => {
     const callBack = async () => {}
     if (isMobile) {
       openDrawer({
-        content: <ModalPayment data={listCartFormat} callBack={callBack} />,
+        content: <ModalPayment dataCart={listCartFormat} callBack={callBack} />,
         height: '90%',
         title: translate('cart.payment'),
         placement: 'bottom',
       })
     } else {
       openModal({
-        content: <ModalPayment data={listCartFormat} callBack={callBack} />,
+        content: <ModalPayment dataCart={listCartFormat} callBack={callBack} />,
         width: '500px',
         showHeader: true,
         title: translate('cart.payment'),

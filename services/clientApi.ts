@@ -1,5 +1,5 @@
 import { PageSizeLimit } from "@/constant/app"
-import { DataBase, FB_FC, QueryData } from "@/constant/firebase"
+import { BodyAddCart, DataBase, FB_FC, QueryData } from "@/constant/firebase"
 import { encryptData } from "@/utils/crypto"
 import { pareResponseDataClient } from "@/utils/serverNext"
 import axios from "axios"
@@ -70,6 +70,17 @@ const ClientApi = {
           keyOderBy: keyOderBy,
           limitPage: limitPage
         }
+      }
+    })
+    return req
+  },
+
+  createCart: async (data: BodyAddCart) => {
+    const req = await ClientApi.requestBase({
+      nameDB: DataBase.cartUser,
+      namFn: FB_FC.addData,
+      body: {
+        data
       }
     })
     return req

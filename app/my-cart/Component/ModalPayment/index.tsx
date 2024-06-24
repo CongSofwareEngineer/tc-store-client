@@ -6,7 +6,7 @@ import useModal from '@/hook/useModal'
 import useDrawer from '@/hook/useDrawer'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import ClientApi from '@/services/clientApi'
-import { DataBase, FB_FC } from '@/constant/firebase'
+import { BodyAddCart, DataBase, FB_FC } from '@/constant/firebase'
 import { QueryKey } from '@/constant/reactQuery'
 import MyForm from '@/components/MyForm'
 import InputForm from '@/components/InputForm'
@@ -14,6 +14,8 @@ import { parsePhoneNumber } from 'libphonenumber-js'
 import SelectInputEx from '@/app/shop/[...params]/Component/ModalBuy/SelectInputEx'
 import ButtonForm from '@/components/ButtonForm'
 import useMedia from '@/hook/useMedia'
+import BigNumber from 'bignumber.js'
+import { numberWithCommas } from '@/utils/functions'
 
 const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
   const { userData, isLogin, refreshLogin } = useUserData()
@@ -32,20 +34,45 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
       console.log('====================================')
       console.log({ dataCart })
       console.log('====================================')
+
       const initData = {
         sdt: userData?.sdt,
         name: userData?.name,
         addressShip: userData?.addressShipper[0] || '',
         linkContact: userData?.linkContact || '',
         gmail: userData?.gmail || '',
-        amount: dataCart.length,
       }
       setFormData(initData)
       if (Array.isArray(userData?.addressShipper)) {
         setListAddressShip(userData?.addressShipper)
       }
     }
-  }, [userData])
+  }, [userData, dataCart])
+
+  const getAmountBuy = () => {
+    let amount = 0
+    dataCart.forEach((e) => {
+      if (e.selected) {
+        amount+=e.amount
+      }
+    })
+    return amount
+  }
+
+  const getTotalPayBill = () => {
+    let total = 0
+    dataCart.forEach((e) => {
+      if (e.selected) {
+        if (e?.selected) {
+          total = BigNumber(e.amount)
+            .multipliedBy(e.price)
+            .plus(total)
+            .toNumber()
+        }
+      }
+    })
+    return numberWithCommas(total)
+  }
 
   const handleClose = () => {
     refreshQuery(QueryKey.CartUser)
@@ -80,8 +107,14 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
   const handleSubmit = async () => {
     try {
       setLoading(true)
+      const bodyApi :BodyAddCart={
+        amount:getAmountBuy(),
+        date:Date.now(),
+        idProduct:
+      }
       console.log('handleSubmit')
-      handleClose()
+      // handleClose()
+      console.log(formData)
     } finally {
       setLoading(false)
     }
@@ -107,6 +140,17 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
 
   return (
     <div className="flex flex-col gap-3 w-full">
+      <div className="flex gap-2">
+        <span>{translate('textPopular.amount')} : </span>
+        <span className="text-green-600 font-bold">{getAmountBuy()} </span>
+      </div>
+
+      <div className="flex gap-2">
+        <span>{translate('textPopular.totalMoney')} : </span>
+        <span className="text-green-600 font-bold">
+          {getTotalPayBill()} VNĐ
+        </span>
+      </div>
       {formData && (
         <MyForm
           onFinish={handleSubmit}

@@ -37,3 +37,24 @@ export type DatabaseDocsType = DocumentReference<DocumentData, DocumentData>
 export type DatabaseType = any
 
 export type QueryData = { key: string, match: WhereFilterOp, value: string }
+
+
+// type data body to work fire store
+export type BodyAddCart = {
+  amount: number
+  date: number
+  idProduct: string
+  idUser: string
+  keyNameProduct: string
+  moreConfig?: { [key: string]: any }
+}
+
+export type BodyAddBill = {
+  date: number
+  idUser: string
+  listProduction: { idProduct: string, keyNameProduct: string, amount: number }[],
+  total: number,
+  abort: boolean,
+  addressShip: string,
+  discount: number
+}
