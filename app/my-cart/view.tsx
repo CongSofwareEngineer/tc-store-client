@@ -27,8 +27,6 @@ const MyCartScreen = () => {
   const [listCartFormat, setListCartFormat] = useState<any[]>([])
   useEffect(() => {
     if (data) {
-      console.log({ dataFull: data })
-
       const arr = data.map((e: any) => ({ ...e, selected: false }))
       setListCartFormat(arr)
     }
@@ -53,17 +51,16 @@ const MyCartScreen = () => {
   }
 
   const handlePayment = () => {
-    const callBack = async () => {}
     if (isMobile) {
       openDrawer({
-        content: <ModalPayment dataCart={listCartFormat} callBack={callBack} />,
+        content: <ModalPayment dataCart={listCartFormat} />,
         height: '90%',
         title: translate('cart.payment'),
         placement: 'bottom',
       })
     } else {
       openModal({
-        content: <ModalPayment dataCart={listCartFormat} callBack={callBack} />,
+        content: <ModalPayment dataCart={listCartFormat} />,
         width: '500px',
         showHeader: true,
         title: translate('cart.payment'),
@@ -76,18 +73,30 @@ const MyCartScreen = () => {
       <>
         <table className="w-full min-w-[700px] bg-white">
           <TitleItem />
+
           <tbody>
-            {listCartFormat.map((e, index) => {
-              return (
-                <ItemCart
-                  callBack={(e) => handleSelect(e, index)}
-                  callBackDelete={() => handleDelete(index)}
-                  key={index}
-                  data={e}
-                  noBorder={index === listCartFormat.length - 1}
-                />
-              )
-            })}
+            {!isLoading && listCartFormat.length === 0 ? (
+              <tr>
+                <td colSpan={7}>
+                  <div className="text-center text-medium my-2">
+                    {translate('cart.empty')}
+                  </div>
+                </td>
+              </tr>
+            ) : (
+              !isLoading &&
+              listCartFormat.map((e, index) => {
+                return (
+                  <ItemCart
+                    callBack={(e) => handleSelect(e, index)}
+                    callBackDelete={() => handleDelete(index)}
+                    key={index}
+                    data={e}
+                    noBorder={index === listCartFormat.length - 1}
+                  />
+                )
+              })
+            )}
           </tbody>
         </table>
         {isLoading && <MyLoading className="mt-5" />}
@@ -113,7 +122,7 @@ const MyCartScreen = () => {
           url={['/shop']}
         />
         <div className="w-full flex gap-5">
-          <div className="flex-1  border-2 border-gray-300  overflow-auto">
+          <div className="flex-1  border-2 border-gray-300  overflow-y-auto">
             {renderList()}
           </div>
           <div className="w-[30%] max-w-[270px] min-w-[200px] border-2 border-gray-300 bg-white">

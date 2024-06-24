@@ -99,7 +99,7 @@ const ModalBuyLogin = ({ data, amount }: ModalBuyLoginType) => {
   }
 
   const handleClose = () => {
-    refreshQuery(QueryKey.CartUser)
+    refreshQuery(QueryKey.LengthCartUser)
     refreshQuery(QueryKey.GetProductByID)
     if (isMobile) {
       closeDrawer()

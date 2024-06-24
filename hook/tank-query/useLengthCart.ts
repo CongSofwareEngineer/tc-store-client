@@ -8,7 +8,7 @@ const getData = async ({ queryKey }: any) => {
 }
 const useLengthCart = (id = '') => {
   const { data, isLoading } = useQuery({
-    queryKey: [QueryKey.CartUser, id],
+    queryKey: [QueryKey.LengthCartUser, id],
     enabled: !!id,
     queryFn: getData
   })

@@ -43,18 +43,19 @@ export type QueryData = { key: string, match: WhereFilterOp, value: string }
 export type BodyAddCart = {
   amount: number
   date: number
-  idProduct: string
-  idUser: string
+  idProduct: string | undefined
+  idUser: string | undefined
   keyNameProduct: string
   moreConfig?: { [key: string]: any }
 }
 
 export type BodyAddBill = {
   date: number
-  idUser: string
+  idUser?: string | undefined
   listProduction: { idProduct: string, keyNameProduct: string, amount: number }[],
   total: number,
   abort: boolean,
   addressShip: string,
-  discount: number
+  discount: number,
+  sdt: string
 }

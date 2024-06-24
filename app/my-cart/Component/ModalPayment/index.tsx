@@ -6,24 +6,25 @@ import useModal from '@/hook/useModal'
 import useDrawer from '@/hook/useDrawer'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import ClientApi from '@/services/clientApi'
-import { BodyAddCart, DataBase, FB_FC } from '@/constant/firebase'
+import { BodyAddBill, DataBase, FB_FC } from '@/constant/firebase'
 import { QueryKey } from '@/constant/reactQuery'
 import MyForm from '@/components/MyForm'
 import InputForm from '@/components/InputForm'
-import { parsePhoneNumber } from 'libphonenumber-js'
 import SelectInputEx from '@/app/shop/[...params]/Component/ModalBuy/SelectInputEx'
 import ButtonForm from '@/components/ButtonForm'
 import useMedia from '@/hook/useMedia'
 import BigNumber from 'bignumber.js'
-import { numberWithCommas } from '@/utils/functions'
+import { numberWithCommas, showNotificationSuccess } from '@/utils/functions'
+import useCheckForm from '@/hook/useCheckForm'
 
-const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
+const ModalPayment = ({ dataCart }: ModalPaymentType) => {
   const { userData, isLogin, refreshLogin } = useUserData()
   const { translate } = useLanguage()
   const { closeModal } = useModal()
   const { closeDrawer } = useDrawer()
   const { refreshQuery } = useRefreshQuery()
   const { isMobile } = useMedia()
+  const { checkNumberPhone } = useCheckForm()
 
   const [formData, setFormData] = useState<Record<string, any> | null>(null)
   const [loading, setLoading] = useState(false)
@@ -31,10 +32,6 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
 
   useEffect(() => {
     if (userData) {
-      console.log('====================================')
-      console.log({ dataCart })
-      console.log('====================================')
-
       const initData = {
         sdt: userData?.sdt,
         name: userData?.name,
@@ -53,7 +50,7 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
     let amount = 0
     dataCart.forEach((e) => {
       if (e.selected) {
-        amount+=e.amount
+        amount += e.amount
       }
     })
     return amount
@@ -75,7 +72,7 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
   }
 
   const handleClose = () => {
-    refreshQuery(QueryKey.CartUser)
+    refreshQuery(QueryKey.LengthCartUser)
     refreshQuery(QueryKey.MyCartUser)
     if (isMobile) {
       closeDrawer()
@@ -87,48 +84,64 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
   const handleAddAddress = async (address: string) => {
     const arrNew = [...listAddressShip, address]
     const handleUpdate = async () => {
-      await ClientApi.requestBase({
-        nameDB: DataBase.user,
-        body: {
-          id: userData?.id?.toString(),
-          data: {
-            addressShipper: arrNew,
-          },
-        },
-        namFn: FB_FC.updateData,
-        encode: true,
-      })
+      await ClientApi.updateAddress(userData?.id?.toString(), arrNew)
       await refreshLogin()
     }
     handleUpdate()
     setListAddressShip(arrNew)
   }
 
+  const handleDeleteCart = async () => {
+    const func = dataCart.map((e) => {
+      return ClientApi.requestBase({
+        nameDB: DataBase.cartUser,
+        body: {
+          id: e.id,
+        },
+        encode: true,
+        namFn: FB_FC.deleteData,
+      })
+    })
+    await Promise.all(func)
+  }
+
   const handleSubmit = async () => {
     try {
       setLoading(true)
-      const bodyApi :BodyAddCart={
-        amount:getAmountBuy(),
-        date:Date.now(),
-        idProduct:
+      let totalBill = 0
+      const listProduction = dataCart.map((e) => {
+        totalBill += e.amount * e.price
+        return {
+          idProduct: e.idProduct,
+          keyNameProduct: e.keyNameProduct,
+          amount: e.amount,
+        }
+      })
+      const bodyAPI: BodyAddBill = {
+        abort: false,
+        addressShip: formData?.addressShip,
+        date: Date.now(),
+        discount: 0,
+        idUser: userData?.id.toString(),
+        listProduction,
+        total: totalBill,
+        sdt: formData?.sdt,
       }
-      console.log('handleSubmit')
-      // handleClose()
-      console.log(formData)
+      await handleDeleteCart()
+
+      await ClientApi.requestBase({
+        nameDB: DataBase.bill,
+        body: {
+          data: bodyAPI,
+        },
+        encode: true,
+        namFn: FB_FC.addData,
+      })
+      showNotificationSuccess(translate('productDetail.modalBuy.success'))
+      handleClose()
     } finally {
       setLoading(false)
     }
-  }
-
-  const checkNumberPhone = (sdt: string): string | null => {
-    if (!sdt) {
-      return translate('warning.errorSDT')
-    }
-    const phoneNumber = parsePhoneNumber(sdt, 'VN')
-    if (phoneNumber && phoneNumber.isValid()) {
-      return null
-    }
-    return translate('warning.errorSDT')
   }
 
   const getOptions = () => {

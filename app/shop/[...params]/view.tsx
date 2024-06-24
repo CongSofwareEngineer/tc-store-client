@@ -6,7 +6,11 @@ import useLanguage from '@/hook/useLanguage'
 import Media from 'react-media'
 import BtnBack from '@/components/BtnBack'
 import MyImage from '@/components/MyImage'
-import { formatPrice, formatPriceBase } from '@/utils/functions'
+import {
+  formatPrice,
+  formatPriceBase,
+  showNotificationSuccess,
+} from '@/utils/functions'
 import InfoItemDetail from '@/components/InfoItemDetail'
 import SubAndPlus from '@/components/SubAndPlus'
 import { images } from '@/configs/images'
@@ -17,6 +21,11 @@ import useDrawer from '@/hook/useDrawer'
 import useMedia from '@/hook/useMedia'
 import ModalBuy from './Component/ModalBuy'
 import useGetProductByID from '@/hook/tank-query/useGetProductByID'
+import { BodyAddCart, DataBase, FB_FC } from '@/constant/firebase'
+import useUserData from '@/hook/useUserData'
+import ClientApi from '@/services/clientApi'
+import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
+import { QueryKey } from '@/constant/reactQuery'
 const Comment = dynamic(() => import('@/components/Comment'), {
   ssr: false,
 })
@@ -26,11 +35,15 @@ const ShopDetailScreen = ({
 }: {
   productDetail: ItemDetailType
 }) => {
-  const { translate } = useLanguage()
   const [amountBuy, setAmountBuy] = useState(1)
+  const [loadingAddCart, setLoadingAddCart] = useState(false)
+
+  const { refreshQuery } = useRefreshQuery()
+  const { translate } = useLanguage()
   const { openModal } = useModal()
   const { openDrawer } = useDrawer()
   const { isMobile } = useMedia()
+  const { userData, isLogin } = useUserData()
   const { data } = useGetProductByID(productDetail?.id)
   const dataItem = data?.data ?? productDetail
 
@@ -50,8 +63,42 @@ const ShopDetailScreen = ({
       openModal({
         content: <ModalBuy data={dataItem} amount={amountBuy} />,
         width: '760px',
-        overClickClose: false,
       })
+    }
+  }
+
+  const handleAddCartLogin = async () => {
+    const payLoad: BodyAddCart = {
+      amount: amountBuy,
+      date: Date.now(),
+      idProduct: productDetail.id?.toString(),
+      idUser: userData?.id?.toString(),
+      keyNameProduct: productDetail.keyName,
+    }
+    await ClientApi.requestBase({
+      nameDB: DataBase.cartUser,
+      encode: true,
+      namFn: FB_FC.addData,
+      body: {
+        data: payLoad,
+      },
+    })
+    showNotificationSuccess(translate('addCart.addSuccess'))
+  }
+
+  const handleAddCart = async () => {
+    try {
+      setLoadingAddCart(true)
+      console.log('====================================')
+      console.log({ isLogin })
+      console.log('====================================')
+      if (isLogin) {
+        await handleAddCartLogin()
+      } else {
+      }
+    } finally {
+      refreshQuery(QueryKey.LengthCartUser)
+      setLoadingAddCart(false)
     }
   }
 
@@ -91,7 +138,12 @@ const ShopDetailScreen = ({
               >
                 {translate('common.buyNow')}
               </PrimaryButton>
-              <SecondButton className="min-w-[30%] " style={{ height: 40 }}>
+              <SecondButton
+                onClick={handleAddCart}
+                className="min-w-[30%] "
+                style={{ height: 40 }}
+                loading={loadingAddCart}
+              >
                 <div className="flex gap-3 whitespace-nowrap">
                   <MyImage
                     src={images.icon.iconCart}
@@ -150,7 +202,12 @@ const ShopDetailScreen = ({
             >
               {translate('common.buyNow')}
             </PrimaryButton>
-            <SecondButton className="min-w-[30%] " style={{ height: 40 }}>
+            <SecondButton
+              onClick={handleAddCart}
+              className="min-w-[30%] "
+              style={{ height: 40 }}
+              loading={loadingAddCart}
+            >
               <div className="flex gap-3 whitespace-nowrap">
                 <MyImage
                   src={images.icon.iconCart}

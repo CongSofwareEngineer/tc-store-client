@@ -18,6 +18,7 @@ const ButtonForm = ({
   disableClose = false,
   titleSubmit = '',
   className = '',
+  titleClose = '',
 }: ButtonFormType) => {
   const { translate } = useLanguage()
   const { closeModal } = useModal()

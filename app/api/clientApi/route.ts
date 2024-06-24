@@ -42,6 +42,10 @@ export async function POST(req: any) {
       case FB_FC.getDataByID:
         dataRequest = await dataFB.getDataByID(bodyDecode.body.id)
         break;
+
+      case FB_FC.deleteData:
+        dataRequest = await dataFB.deleteData(bodyDecode.body.id)
+        break;
     }
     return formatResponseDataServer(dataRequest, bodyDecode)
 

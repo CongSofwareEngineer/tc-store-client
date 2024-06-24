@@ -84,6 +84,20 @@ const ClientApi = {
       }
     })
     return req
+  },
+  updateAddress: async (isUser: string | undefined, data: string[]) => {
+    const req = await ClientApi.requestBase({
+      nameDB: DataBase.user,
+      body: {
+        id: isUser,
+        data: {
+          addressShipper: data,
+        },
+      },
+      namFn: FB_FC.updateData,
+      encode: true,
+    })
+    return req
   }
 }
 export default ClientApi

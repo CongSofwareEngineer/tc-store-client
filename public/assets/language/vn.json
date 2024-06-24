@@ -118,7 +118,8 @@
     "totalProduct": "Tổng Sản Phẩm",
     "totalPrice": "Tổng giá",
     "payment": "Thanh toán",
-    "totalPayment": "Thành tiền"
+    "totalPayment": "Thành tiền",
+    "empty": "Chưa có sản phẩm"
   },
 
   "footer": {

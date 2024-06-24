@@ -18,5 +18,4 @@ export type ItemCartType = {
 
 export type ModalPaymentType = {
   dataCart: DataItemType[]
-  callBack: (param?: any) => Promise<void>
 }

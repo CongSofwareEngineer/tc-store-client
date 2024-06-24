@@ -33,7 +33,7 @@ const getData = async ({ queryKey }: any) => {
 const useMyCart = (pageLimit = PageSizeLimit) => {
   const { userData } = useUserData()
 
-  const { data: dataBase, listData, loadMore } = useQueryPagination(
+  const { data: dataBase, listData, loadMore, isLoading: loadingQueryPagination } = useQueryPagination(
     QueryKey.MyCartUser,
     DataBase.cartUser,
     'idUser',
@@ -55,7 +55,7 @@ const useMyCart = (pageLimit = PageSizeLimit) => {
   })
 
   return {
-    data, isLoading, loadMore, listData
+    data, isLoading: loadingQueryPagination || isLoading, loadMore, listData
   }
 }
 
