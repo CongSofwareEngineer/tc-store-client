@@ -8,8 +8,13 @@ import SecondButton from '../SecondButton'
 type ModalDeleteType = {
   des?: string
   callback?: (param?: any) => Promise<void> | void
+  title?: string
 }
-const ModalDelete = ({ des = '', callback = () => {} }: ModalDeleteType) => {
+const ModalDelete = ({
+  des = '',
+  title = '',
+  callback = () => {},
+}: ModalDeleteType) => {
   const { translate } = useLanguage()
 
   const { closeModal } = useModal()
@@ -28,6 +33,10 @@ const ModalDelete = ({ des = '', callback = () => {} }: ModalDeleteType) => {
   }
   return (
     <div className="w-full flex flex-col gap-2">
+      <p className="text-title text-center">
+        {title || translate('warning.doYouWantDetele')}
+      </p>
+
       <div className="m-auto my-2">
         <MyImage
           src={images.icon.iconWarning}

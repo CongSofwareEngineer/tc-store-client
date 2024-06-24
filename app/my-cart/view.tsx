@@ -9,6 +9,10 @@ import { useEffect, useState } from 'react'
 import { PageSizeLimit } from '@/constant/app'
 import { cloneData } from '@/utils/functions'
 import dynamic from 'next/dynamic'
+import PrimaryButton from '@/components/PrimaryButton'
+import useModal from '@/hook/useModal'
+import ModalPayment from './Component/ModalPayment'
+import useDrawer from '@/hook/useDrawer'
 const TitleItem = dynamic(() => import('./Component/ItemCart/titleItem'), {
   ssr: false,
 })
@@ -17,6 +21,8 @@ const MyCartScreen = () => {
   const { data, loadMore, isLoading } = useMyCart(PageSizeLimit)
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
+  const { openModal } = useModal()
+  const { openDrawer } = useDrawer()
 
   const [listCartFormat, setListCartFormat] = useState<any[]>([])
   useEffect(() => {
@@ -38,6 +44,33 @@ const MyCartScreen = () => {
     setListCartFormat(dataClone)
   }
 
+  const handleDelete = (index: number) => {
+    let dataClone = cloneData(listCartFormat)
+    dataClone = dataClone.filter(
+      (_: any, indexFilter: number) => indexFilter !== index
+    )
+    setListCartFormat(dataClone)
+  }
+
+  const handlePayment = () => {
+    const callBack = async () => {}
+    if (isMobile) {
+      openDrawer({
+        content: <ModalPayment data={listCartFormat} callBack={callBack} />,
+        height: '90%',
+        title: translate('cart.payment'),
+        placement: 'bottom',
+      })
+    } else {
+      openModal({
+        content: <ModalPayment data={listCartFormat} callBack={callBack} />,
+        width: '500px',
+        showHeader: true,
+        title: translate('cart.payment'),
+      })
+    }
+  }
+
   const renderList = () => {
     return (
       <>
@@ -48,6 +81,7 @@ const MyCartScreen = () => {
               return (
                 <ItemCart
                   callBack={(e) => handleSelect(e, index)}
+                  callBackDelete={() => handleDelete(index)}
                   key={index}
                   data={e}
                   noBorder={index === listCartFormat.length - 1}
@@ -62,7 +96,13 @@ const MyCartScreen = () => {
   }
 
   const renderMobile = () => {
-    return <div></div>
+    return (
+      <div>
+        <PrimaryButton onClick={handlePayment}>
+          {translate('cart.payment')}
+        </PrimaryButton>
+      </div>
+    )
   }
 
   const renderDesktop = () => {
@@ -80,6 +120,9 @@ const MyCartScreen = () => {
             <div className="w-full flex flex-col gap-2 items-center">
               <div>{translate('cart.title')}</div>
             </div>
+            <PrimaryButton onClick={handlePayment}>
+              {translate('cart.payment')}
+            </PrimaryButton>
           </div>
         </div>
 

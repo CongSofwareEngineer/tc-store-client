@@ -14,7 +14,8 @@
     "uploadAvatar": "Chọn ảnh (Max 5MB)",
     "save": "Lưu lại",
     "addAddress": "Thêm địa chỉ",
-    "clearAll": "Xóa hết"
+    "clearAll": "Xóa hết",
+    "delete": "Xóa"
   },
   "userDetail": {
     "addressNow": "Địa chỉ hiện tại",
@@ -150,7 +151,8 @@
     "errorAddress": "Địa chỉ bắt buộc phải có",
     "unPayMent": "Húy thanh toán",
     "errorLogin": "Sai SĐT hoặc mật khẩu",
-    "unPayMent_des": "Nếu bản hủy sẽ không thanh toán đơn hàng này được !"
+    "unPayMent_des": "Nếu bản hủy sẽ không thanh toán đơn hàng này được !",
+    "doYouWantDetele": "Bạn có muốn xóa?"
   },
   "confirm": {
     "mintNFT": {

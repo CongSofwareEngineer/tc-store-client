@@ -8,8 +8,6 @@ import { parsePhoneNumber } from 'libphonenumber-js'
 import SelectInputEx from './SelectInputEx'
 import ClientApi from '@/services/clientApi'
 import { DataBase, FB_FC } from '@/constant/firebase'
-import PrimaryButton from '@/components/PrimaryButton'
-import SecondButton from '@/components/SecondButton'
 import useModal from '@/hook/useModal'
 import {
   formatPrice,
@@ -19,9 +17,9 @@ import {
 import ViewItem from './viewItem'
 import useMedia from '@/hook/useMedia'
 import useDrawer from '@/hook/useDrawer'
-import { Form } from 'antd'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QueryKey } from '@/constant/reactQuery'
+import ButtonForm from '@/components/ButtonForm'
 
 const ModalBuyLogin = ({ data, amount }: ModalBuyLoginType) => {
   const { userData, isLogin, refreshLogin } = useUserData()
@@ -86,7 +84,6 @@ const ModalBuyLogin = ({ data, amount }: ModalBuyLoginType) => {
       await refreshLogin()
     }
     handleUpdate()
-
     setListAddressShip(arrNew)
   }
 
@@ -244,25 +241,7 @@ const ModalBuyLogin = ({ data, amount }: ModalBuyLoginType) => {
             </div>
           </div>
 
-          <div className="w-full flex justify-center items-center gap-4 mt-2">
-            <Form.Item>
-              <PrimaryButton
-                className="w-[150px]"
-                loading={loading}
-                htmlType="submit"
-              >
-                {translate('cart.payment')}
-              </PrimaryButton>
-            </Form.Item>
-
-            <SecondButton
-              disabled={loading}
-              className="w-[150px]"
-              onClick={() => (isMobile ? closeDrawer() : closeModal())}
-            >
-              {translate('common.close')}
-            </SecondButton>
-          </div>
+          <ButtonForm loading={loading} disableClose />
         </MyForm>
       )}
     </div>

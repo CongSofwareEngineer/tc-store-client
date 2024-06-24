@@ -1,33 +1,31 @@
+import ModalDelete from '@/components/ModalDelete'
 import MyImage from '@/components/MyImage'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
+import useModal from '@/hook/useModal'
 import { cloneData, numberWithCommas } from '@/utils/functions'
+import { DeleteOutlined } from '@ant-design/icons'
 import { Checkbox } from 'antd'
 import BigNumber from 'bignumber.js'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import styled from 'styled-components'
+import { ItemCartType } from '../../type'
 const TD = styled.td<{ $noBorder: boolean }>`
   border-bottom: ${(props) => (props.$noBorder ? 0 : 2)}px solid
     rgba(229, 231, 235, 1);
   padding: 8px;
 `
-type ItemCartType = {
-  data: {
-    idUser: string
-    amount: number
-    idProduct: string
-    keyNameProduct: string
-    id: string
-    selected?: boolean
-    [key: string]: any
-  }
-  noBorder: boolean
-  callBack: (param?: any) => void
-}
-const ItemCart = ({ data, callBack, noBorder = false }: ItemCartType) => {
+
+const ItemCart = ({
+  data,
+  callBack,
+  noBorder = false,
+  callBackDelete,
+}: ItemCartType) => {
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
+  const { openModal } = useModal()
   const router = useRouter()
 
   const selectedItem = () => {
@@ -50,6 +48,14 @@ const ItemCart = ({ data, callBack, noBorder = false }: ItemCartType) => {
       }
     }
     callBack(dataClone)
+  }
+
+  const handleDelete = () => {
+    openModal({
+      content: <ModalDelete callback={callBackDelete} />,
+      width: '500px',
+      showHeader: true,
+    })
   }
 
   const handleClickName = () => {
@@ -130,10 +136,9 @@ const ItemCart = ({ data, callBack, noBorder = false }: ItemCartType) => {
         </TD>
         <td className="w-[50px] p-2 relative">
           <div className="flex flex-col h-full">
-            <Checkbox
-              checked={!!data?.selected}
-              onClick={selectedItem}
-              className="w-5"
+            <DeleteOutlined
+              style={{ color: 'red', fontSize: 18 }}
+              onClick={handleDelete}
             />
           </div>
           {!noBorder && (

@@ -1,19 +1,22 @@
-// import lodash from 'lodash'
+import lodash from 'lodash'
 import { notification } from 'antd';
 import BigNumber from 'bignumber.js';
 import { toast } from 'react-toastify';
 
 
-export const cloneData = (data: any) => {
-  if (!data) {
-    return data
+export const cloneData = (data: any, defaultValue: any = '') => {
+  try {
+    if (!data) {
+      return data
+    }
+    return lodash.cloneDeep(data)
+  } catch (error) {
+    return defaultValue
   }
-  return JSON.parse(JSON.stringify(data))
 }
 
 export const isEmptyObject = (data: any) => {
-  const isObj = data && typeof data === 'object'
-  return isObj && Object.keys(data).length < 1
+  return lodash.isEmpty(data)
 }
 
 
