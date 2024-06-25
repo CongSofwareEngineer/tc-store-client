@@ -7,6 +7,7 @@ import useUserData from '@/hook/useUserData'
 import { useAppDispatch } from '@/redux/store'
 import { setMenuCategory } from '@/redux/categoryMenuSlice'
 import useCheckPatchName from '@/hook/tank-query/useCheckPatchName'
+import useMedia from '@/hook/useMedia'
 
 const ClientRender = ({
   children,
@@ -17,6 +18,7 @@ const ClientRender = ({
 }) => {
   const { refreshLogin } = useUserData()
   const dispatch = useAppDispatch()
+  const { isMobile } = useMedia()
   useCheckPatchName()
 
   useLayoutEffect(() => {
@@ -32,7 +34,10 @@ const ClientRender = ({
           {children}
         </section>
       </main>
-      <ToastContainer className={'mb-3'} />
+      <ToastContainer
+        className={'mb-3'}
+        style={{ marginTop: isMobile ? 65 : 0 }}
+      />
     </>
   )
 }

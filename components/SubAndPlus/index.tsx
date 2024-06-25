@@ -7,36 +7,68 @@ type SubAndPlusType = {
   callBackPlus?: (value: number) => void
   value: number | string
   maxAmount?: number
+  isSquare?: boolean
 }
 const SubAndPlus = ({
   callBackSub = () => {},
   callBackPlus = () => {},
   value = 0,
   maxAmount = -1,
+  isSquare = false,
 }: SubAndPlusType) => {
   const { isMobile } = useMedia()
   return (
     <div className="flex align-middle gap-3 ">
-      <MinusCircleOutlined
-        onClick={() => callBackSub(value === 1 ? 1 : Number(value) - 1)}
-        className="cursor-pointer"
-        style={{ fontSize: isMobile ? 22 : 25, color: 'green' }}
-      />
-      <span className="min-w-[22px] text-center ">{value}</span>
+      {isSquare ? (
+        <div className="flex">
+          <div
+            className="relative right-[-1px] cursor-pointer text-center border-solid border-2 border-gray-400  min-w-5"
+            onClick={() => callBackSub(value === 1 ? 1 : Number(value) - 1)}
+          >
+            -
+          </div>
+          <div className="cursor-pointer text-center border-solid border-2 border-gray-400 md:min-w-12 min-w-8 ">
+            {value || 1}
+          </div>
+          <div
+            className="relative left-[-2px] cursor-pointer text-center border-solid border-2 border-gray-400   min-w-5"
+            onClick={() =>
+              callBackPlus(
+                maxAmount === -1
+                  ? Number(value) + 1
+                  : maxAmount === Number(value)
+                  ? Number(value)
+                  : Number(value) + 1
+              )
+            }
+          >
+            +
+          </div>
+        </div>
+      ) : (
+        <>
+          <MinusCircleOutlined
+            onClick={() => callBackSub(value === 1 ? 1 : Number(value) - 1)}
+            className="cursor-pointer"
+            style={{ fontSize: isMobile ? 22 : 25, color: 'green' }}
+          />
+          <span className="min-w-[22px] text-center ">{value}</span>
 
-      <PlusCircleOutlined
-        className="cursor-pointer"
-        onClick={() =>
-          callBackPlus(
-            maxAmount === -1
-              ? Number(value) + 1
-              : maxAmount === Number(value)
-              ? Number(value)
-              : Number(value) + 1
-          )
-        }
-        style={{ fontSize: isMobile ? 22 : 25, color: 'green' }}
-      />
+          <PlusCircleOutlined
+            className="cursor-pointer"
+            onClick={() =>
+              callBackPlus(
+                maxAmount === -1
+                  ? Number(value) + 1
+                  : maxAmount === Number(value)
+                  ? Number(value)
+                  : Number(value) + 1
+              )
+            }
+            style={{ fontSize: isMobile ? 22 : 25, color: 'green' }}
+          />
+        </>
+      )}
     </div>
   )
 }

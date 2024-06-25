@@ -126,15 +126,20 @@ const useQueryPagination = (
       showNotificationSuccess('full data')
     } else {
       setLastData(data?.lastVisible)
-
     }
   }, [data])
+
+  const refreshData = useCallback(() => {
+    setLastData(null)
+    setListData([])
+  }, [])
 
   return {
     data,
     listData,
     isLoading: isLoading || isFetching,
-    loadMore: handleLoadMore
+    loadMore: handleLoadMore,
+    refreshData
   }
 
 }

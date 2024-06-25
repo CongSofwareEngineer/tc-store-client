@@ -3,7 +3,7 @@ import MyImage from '@/components/MyImage'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import useModal from '@/hook/useModal'
-import { cloneData, numberWithCommas } from '@/utils/functions'
+import { cloneData, formatPriceBase, numberWithCommas } from '@/utils/functions'
 import { DeleteOutlined } from '@ant-design/icons'
 import { Checkbox } from 'antd'
 import BigNumber from 'bignumber.js'
@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import styled from 'styled-components'
 import { ItemCartType } from '../../type'
+import SubAndPlus from '@/components/SubAndPlus'
 const TD = styled.td<{ $noBorder: boolean }>`
   border-bottom: ${(props) => (props.$noBorder ? 0 : 2)}px solid
     rgba(229, 231, 235, 1);
@@ -22,12 +23,12 @@ const ItemCart = ({
   callBack,
   noBorder = false,
   callBackDelete,
+  noEdit = false,
 }: ItemCartType) => {
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
   const { openModal } = useModal()
   const router = useRouter()
-
   const selectedItem = () => {
     const dataClone = cloneData(data)
     if (dataClone?.selected) {
@@ -64,19 +65,22 @@ const ItemCart = ({
 
   const renderDesktop = () => {
     return (
-      <tr className=" ">
-        <td className="w-[50px] p-2 relative">
-          <div className="flex flex-col h-full items-end ">
-            <Checkbox
-              checked={!!data?.selected}
-              onClick={selectedItem}
-              className="w-5"
-            />
-          </div>
-          {!noBorder && (
-            <div className="border-[1px] border-gray-200 absolute w-[50%] bottom-[-1px] right-0" />
-          )}
-        </td>
+      <tr>
+        {!noEdit && (
+          <td className="w-[50px] p-2 relative">
+            <div className="flex flex-col h-full items-end ">
+              <Checkbox
+                checked={!!data?.selected}
+                onClick={selectedItem}
+                className="w-5"
+              />
+            </div>
+            {!noBorder && (
+              <div className="border-[1px] border-gray-200 absolute w-[50%] bottom-[-1px] right-0" />
+            )}
+          </td>
+        )}
+
         <TD $noBorder={noBorder} className="w-[100px] ">
           <div className="flex justify-center">
             <MyImage
@@ -111,46 +115,92 @@ const ItemCart = ({
           </div>
         </TD>
         <TD $noBorder={noBorder}>
-          <div className="flex h-fit items-center justify-center">
-            <div
-              className="relative right-[-1px] cursor-pointer text-center border-solid border-2 border-gray-400  min-w-5"
-              onClick={() => onChangeAmountBuy(false)}
-            >
-              -
-            </div>
-            <div className="cursor-pointer text-center border-solid border-2 border-gray-400 min-w-12 ">
-              {data?.amount || 1}
-            </div>
-            <div
-              className="relative left-[-2px] cursor-pointer text-center border-solid border-2 border-gray-400   min-w-5"
-              onClick={() => onChangeAmountBuy()}
-            >
-              +
-            </div>
-          </div>
+          {noEdit ? (
+            <div className="text-center w-full">{`x${data.amount}`}</div>
+          ) : (
+            <SubAndPlus
+              isSquare
+              value={data?.amount || 1}
+              callBackPlus={() => onChangeAmountBuy()}
+              callBackSub={() => onChangeAmountBuy(false)}
+            />
+          )}
         </TD>
         <TD className="relative p-2" $noBorder={noBorder}>
           <div className="text-center font-bold  text-green-800">
             {numberWithCommas(data.amount * data.price)} VNĐ
           </div>
         </TD>
-        <td className="w-[50px] p-2 relative">
-          <div className="flex flex-col h-full">
-            <DeleteOutlined
-              style={{ color: 'red', fontSize: 18 }}
-              onClick={handleDelete}
-            />
-          </div>
-          {!noBorder && (
-            <div className="border-[1px] border-gray-200 absolute w-[50%] bottom-[-1px] left-0" />
-          )}
-        </td>
+        {!noEdit && (
+          <td className="w-[50px] p-2 relative">
+            <div className="flex flex-col h-full">
+              <DeleteOutlined
+                style={{ color: 'red', fontSize: 18 }}
+                onClick={handleDelete}
+              />
+            </div>
+            {!noBorder && (
+              <div className="border-[1px] border-gray-200 absolute w-[50%] bottom-[-1px] left-0" />
+            )}
+          </td>
+        )}
       </tr>
     )
   }
 
   const renderMobile = () => {
-    return <div></div>
+    return (
+      <div className="flex gap-2 w-full pb-4 pt-2 pl-3 relative">
+        {!noEdit && (
+          <div className="h-auto flex flex-col justify-around  items-end">
+            <Checkbox checked={!!data?.selected} onClick={selectedItem} />
+            <DeleteOutlined
+              style={{ color: 'red', fontSize: 18 }}
+              onClick={handleDelete}
+            />
+          </div>
+        )}
+
+        <div className="w-[100px] flex ">
+          <MyImage
+            widthImage={'auto'}
+            heightImage={'80px'}
+            src={data?.imageMain}
+            alt={`item-${data.id}`}
+          />
+        </div>
+        <div className="flex flex-1 gap-1 flex-col max-w-[calc(100%-130px)] pr-2">
+          <div className="w-full">
+            <p className="text-medium font-semibold whitespace-nowrap overflow-hidden text-ellipsis ">
+              {data.name}
+            </p>
+            <span className="text-[12px] opacity-70 line-through">
+              {formatPriceBase(data.price, data.discount)} VNĐ
+            </span>
+          </div>
+          <div className="w-full flex justify-between items-baseline">
+            {noEdit ? (
+              <div>{`x${data.amount}`}</div>
+            ) : (
+              <SubAndPlus
+                isSquare
+                value={data?.amount || 1}
+                callBackPlus={() => onChangeAmountBuy()}
+                callBackSub={() => onChangeAmountBuy(false)}
+              />
+            )}
+
+            <div className="font-bold  text-green-800">
+              {`${numberWithCommas(data.amount * data.price)} VNĐ`}
+            </div>
+          </div>
+        </div>
+
+        {!noBorder && (
+          <div className="w-[90%] border-[1px] border-gray-200 absolute bottom-2 left-[5%] " />
+        )}
+      </div>
+    )
   }
 
   return isMobile ? renderMobile() : renderDesktop()

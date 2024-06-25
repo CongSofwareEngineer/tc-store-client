@@ -17,7 +17,7 @@ import BigNumber from 'bignumber.js'
 import { numberWithCommas, showNotificationSuccess } from '@/utils/functions'
 import useCheckForm from '@/hook/useCheckForm'
 
-const ModalPayment = ({ dataCart }: ModalPaymentType) => {
+const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
   const { userData, isLogin, refreshLogin } = useUserData()
   const { translate } = useLanguage()
   const { closeModal } = useModal()
@@ -137,6 +137,7 @@ const ModalPayment = ({ dataCart }: ModalPaymentType) => {
         encode: true,
         namFn: FB_FC.addData,
       })
+      callBack()
       showNotificationSuccess(translate('productDetail.modalBuy.success'))
       handleClose()
     } finally {

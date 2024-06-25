@@ -35,6 +35,7 @@
     "gmailRequire": "Nhập gmail (lấy lại tài khoản khi quên mật khẩu)"
   },
   "textPopular": {
+    "all": "Tất cả",
     "infor": "Thông tin",
     "updateFailed": "Cập nhật thất bại",
     "status": "Trạng thái",
@@ -80,6 +81,7 @@
     "student": "Student"
   },
   "bill": {
+    "infoReceived": "Thông Tin Nhận Hàng",
     "title": "Hóa đơn",
     "dateBuy": "Ngày mua",
     "priceTotal": "Tổng cộng",
