@@ -82,6 +82,7 @@
   },
   "bill": {
     "infoReceived": "Thông Tin Nhận Hàng",
+    "infoBill": "Thông Tin đơn hàng",
     "title": "Hóa đơn",
     "dateBuy": "Ngày mua",
     "priceTotal": "Tổng cộng",

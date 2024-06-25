@@ -36,6 +36,10 @@ const AntdProvider = ({ children }: { children: React.ReactNode }) => {
             margin: 0,
             marginMD: 8,
           },
+          Drawer: {
+            padding: 20,
+            paddingMD: 24,
+          },
         },
         hashed: false,
       }}

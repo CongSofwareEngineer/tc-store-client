@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ModalPaymentType } from '../../type'
+import { DataItemType, ModalPaymentType } from '../../type'
 import useUserData from '@/hook/useUserData'
 import useLanguage from '@/hook/useLanguage'
 import useModal from '@/hook/useModal'
@@ -16,6 +16,9 @@ import useMedia from '@/hook/useMedia'
 import BigNumber from 'bignumber.js'
 import { numberWithCommas, showNotificationSuccess } from '@/utils/functions'
 import useCheckForm from '@/hook/useCheckForm'
+import MyImage from '@/components/MyImage'
+import { images } from '@/configs/images'
+import ListItemCart from '../ListItemCart'
 
 const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
   const { userData, isLogin, refreshLogin } = useUserData()
@@ -29,6 +32,7 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
   const [formData, setFormData] = useState<Record<string, any> | null>(null)
   const [loading, setLoading] = useState(false)
   const [listAddressShip, setListAddressShip] = useState<string[]>([])
+  const [lisDataBill, setLisDataBill] = useState<DataItemType[]>([])
 
   useEffect(() => {
     if (userData) {
@@ -44,6 +48,8 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
         setListAddressShip(userData?.addressShipper)
       }
     }
+    const arr = dataCart.filter((e) => e.selected)
+    setLisDataBill(arr)
   }, [userData, dataCart])
 
   const getAmountBuy = () => {
@@ -215,6 +221,27 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
                 classFromItem="w-full"
               />
             )}
+          </div>
+          <div className="flex w-full gap-2">
+            <div>
+              <MyImage
+                src={images.icon.iconCart}
+                alt="my-cart-bill"
+                widthImage="25px"
+                heightImage="25px"
+              />
+            </div>
+            <div className="text-medium font-semibold">
+              {translate('bill.infoBill')}
+            </div>
+          </div>
+          <div className="w-full">
+            <ListItemCart
+              loading={false}
+              dataCart={lisDataBill}
+              noEdit
+              noTitle
+            />
           </div>
           <ButtonForm loading={loading} disableClose />
         </MyForm>

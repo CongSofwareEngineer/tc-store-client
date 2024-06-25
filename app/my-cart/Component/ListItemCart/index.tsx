@@ -29,12 +29,12 @@ const ListItemCart = ({
             />
           </table>
         )}
-        {loading && <MyLoading className="mt-5" />}
+        {loading && <MyLoading className="my-5" />}
         {dataCart.map((e, index) => {
           return (
             <ItemCart
               noEdit={noEdit}
-              callBack={(e) => callBackClick(e)}
+              callBack={(e) => callBackClick(e, index)}
               callBackDelete={() => callBackDelete(index)}
               key={index}
               data={e}
@@ -61,7 +61,7 @@ const ListItemCart = ({
           return (
             <ItemCart
               noEdit={noEdit}
-              callBack={(e) => callBackClick(e)}
+              callBack={(e) => callBackClick(e, index)}
               callBackDelete={() => callBackDelete(index)}
               key={index}
               data={e}
@@ -69,7 +69,7 @@ const ListItemCart = ({
             />
           )
         })}
-        {loading && <MyLoading className="mt-5" />}
+        {loading && <MyLoading className="my-5" />}
       </table>
     )
   }
