@@ -7,14 +7,14 @@ import { showNotificationError, showNotificationSuccess } from '@/utils/function
 import secureLocalStorage from "react-secure-storage";
 import { decryptData, encryptData, encryptDataSha256 } from '@/utils/crypto'
 import { SLICE } from '@/constant/redux'
-import useModal from './useModal'
 import ClientApi from '@/services/clientApi'
+import useModalDrawer from './useModalDrawer'
 
 const useUserData = () => {
   const dispatch = useAppDispatch()
   const { UserData: userData } = useAppSelector(state => state.app)
   const { translate } = useLanguage()
-  const { closeModal } = useModal()
+  const { closeModalDrawer } = useModalDrawer()
 
 
   const isLogin = useMemo(() => {
@@ -74,13 +74,13 @@ const useUserData = () => {
         secureLocalStorage.setItem(SLICE.UserData, userEncode)
         dispatch(setUserData(data[0]))
         showNotificationSuccess(translate('success.login'))
-        closeModal()
+        closeModalDrawer()
       }
 
     } catch (error) {
       showNotificationError(translate('noti.loginError'))
     }
-  }, [dispatch, loginFireBase, translate, closeModal])
+  }, [dispatch, loginFireBase, translate, closeModalDrawer])
 
 
   return {

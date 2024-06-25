@@ -2,7 +2,6 @@ import ModalDelete from '@/components/ModalDelete'
 import MyImage from '@/components/MyImage'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
-import useModal from '@/hook/useModal'
 import { cloneData, formatPriceBase, numberWithCommas } from '@/utils/functions'
 import { DeleteOutlined } from '@ant-design/icons'
 import { Checkbox } from 'antd'
@@ -12,6 +11,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { ItemCartType } from '../../type'
 import SubAndPlus from '@/components/SubAndPlus'
+import useModalDrawer from '@/hook/useModalDrawer'
 const TD = styled.td<{ $noBorder: boolean }>`
   border-bottom: ${(props) => (props.$noBorder ? 0 : 2)}px solid
     rgba(229, 231, 235, 1);
@@ -27,7 +27,7 @@ const ItemCart = ({
 }: ItemCartType) => {
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
-  const { openModal } = useModal()
+  const { openModalDrawer } = useModalDrawer()
   const router = useRouter()
   const selectedItem = () => {
     const dataClone = cloneData(data)
@@ -52,10 +52,12 @@ const ItemCart = ({
   }
 
   const handleDelete = () => {
-    openModal({
+    openModalDrawer({
       content: <ModalDelete callback={callBackDelete} />,
-      width: '500px',
-      showHeader: true,
+      configModal: {
+        width: '500px',
+        showHeader: true,
+      },
     })
   }
 

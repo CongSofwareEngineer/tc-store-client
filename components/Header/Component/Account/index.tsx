@@ -1,18 +1,16 @@
 import useLanguage from '@/hook/useLanguage'
-import useModal from '@/hook/useModal'
 import useUserData from '@/hook/useUserData'
 import React from 'react'
 import ModalLogin from '../ModalLogin'
 import { DownOutlined, MenuOutlined } from '@ant-design/icons'
-import useDrawer from '@/hook/useDrawer'
 import NavMobile from '../NavMobile'
 import { Dropdown, MenuProps } from 'antd'
 import CartUser from './cartUser'
 import useMedia from '@/hook/useMedia'
+import useModalDrawer from '@/hook/useModalDrawer'
 
 const Account = () => {
-  const { openModal } = useModal()
-  const { openDrawer } = useDrawer()
+  const { openModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
   const { isLogin, logOut, userData } = useUserData()
   const { isMobile } = useMedia()
@@ -21,18 +19,24 @@ const Account = () => {
     if (isLogin) {
       logOut()
     } else {
-      openModal({
+      openModalDrawer({
         content: <ModalLogin />,
-        showHeader: true,
+        configModal: {
+          showHeader: true,
+        },
       })
     }
   }
 
   const handleViewMenu = () => {
-    openDrawer({
+    openModalDrawer({
       content: <NavMobile />,
-      width: '70%',
-      title: renderTitleDrawer(),
+      onlyDrawer: true,
+      configDrawer: {
+        width: '70%',
+        title: renderTitleDrawer(),
+        placement: 'right',
+      },
     })
   }
 

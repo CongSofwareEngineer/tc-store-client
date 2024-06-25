@@ -16,9 +16,6 @@ import SubAndPlus from '@/components/SubAndPlus'
 import { images } from '@/configs/images'
 import SecondButton from '@/components/SecondButton'
 import dynamic from 'next/dynamic'
-import useModal from '@/hook/useModal'
-import useDrawer from '@/hook/useDrawer'
-import useMedia from '@/hook/useMedia'
 import ModalBuy from './Component/ModalBuy'
 import useGetProductByID from '@/hook/tank-query/useGetProductByID'
 import { BodyAddCart, DataBase, FB_FC } from '@/constant/firebase'
@@ -26,6 +23,7 @@ import useUserData from '@/hook/useUserData'
 import ClientApi from '@/services/clientApi'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QueryKey } from '@/constant/reactQuery'
+import useModalDrawer from '@/hook/useModalDrawer'
 const Comment = dynamic(() => import('@/components/Comment'), {
   ssr: false,
 })
@@ -40,17 +38,20 @@ const ShopDetailScreen = ({
 
   const { refreshQuery } = useRefreshQuery()
   const { translate } = useLanguage()
-  const { openModal } = useModal()
-  const { openDrawer } = useDrawer()
-  const { isMobile } = useMedia()
+  const { openModalDrawer } = useModalDrawer()
+
   const { userData, isLogin } = useUserData()
   const { data } = useGetProductByID(productDetail?.id)
   const dataItem = data?.data ?? productDetail
 
   const handleBuy = () => {
-    if (isMobile) {
-      openDrawer({
-        content: <ModalBuy data={dataItem} amount={amountBuy} />,
+    openModalDrawer({
+      content: <ModalBuy data={dataItem} amount={amountBuy} />,
+      useDrawer: true,
+      configModal: {
+        width: '760px',
+      },
+      configDrawer: {
         placement: 'bottom',
         height: '95%',
         title: (
@@ -58,13 +59,8 @@ const ShopDetailScreen = ({
             {translate('productDetail.modalBuy.titleOder')}
           </p>
         ),
-      })
-    } else {
-      openModal({
-        content: <ModalBuy data={dataItem} amount={amountBuy} />,
-        width: '760px',
-      })
-    }
+      },
+    })
   }
 
   const handleAddCartLogin = async () => {
@@ -89,9 +85,7 @@ const ShopDetailScreen = ({
   const handleAddCart = async () => {
     try {
       setLoadingAddCart(true)
-      console.log('====================================')
-      console.log({ isLogin })
-      console.log('====================================')
+
       if (isLogin) {
         await handleAddCartLogin()
       } else {
@@ -116,7 +110,7 @@ const ShopDetailScreen = ({
             />
           </div>
           <div className="flex-1 flex flex-col gap-2 justify-center  ">
-            <p className="text-title font-bold">{dataItem.name}</p>
+            <h3 className="text-title font-bold">{dataItem.name}</h3>
             <InfoItemDetail data={dataItem} />
             <div className="text-medium  line-through">
               {formatPriceBase(dataItem.price, dataItem.discount)} VNĐ
@@ -180,7 +174,7 @@ const ShopDetailScreen = ({
           </div>
         </div>
         <div className="w-full flex flex-col gap-2 mt-2">
-          <p className="text-title font-bold">{dataItem.name}</p>
+          <h3 className="text-title font-bold">{dataItem.name}</h3>
           <InfoItemDetail data={dataItem} />
           <div className="text-medium  line-through">
             {formatPriceBase(dataItem?.price, dataItem?.discount)} VNĐ

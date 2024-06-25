@@ -1,5 +1,5 @@
-import useDrawer from '@/hook/useDrawer'
 import useLanguage from '@/hook/useLanguage'
+import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -16,30 +16,30 @@ const NavMobile = () => {
   const { isLogin, logOut } = useUserData()
   const { translate } = useLanguage()
   const pathname = usePathname()
-  const { closeDrawer } = useDrawer()
+  const { closeModalDrawer } = useModalDrawer()
 
   const handleLogOut = () => {
     logOut()
-    closeDrawer()
+    closeModalDrawer()
   }
   return (
     <div className="flex flex-1  flex-col gap-5 ml-2">
       <LinkCustom
-        onClick={closeDrawer}
+        onClick={closeModalDrawer}
         $isSelected={pathname === '/' || pathname === ''}
         href={'/'}
       >
         {translate('header.home')}
       </LinkCustom>
       <LinkCustom
-        onClick={closeDrawer}
+        onClick={closeModalDrawer}
         $isSelected={pathname === '/shop'}
         href={'/shop'}
       >
         {translate('header.shop')}
       </LinkCustom>
       <LinkCustom
-        onClick={closeDrawer}
+        onClick={closeModalDrawer}
         $isSelected={pathname === '/contact'}
         href={'/contact'}
       >
@@ -47,7 +47,7 @@ const NavMobile = () => {
       </LinkCustom>
       {isLogin ? (
         <LinkCustom
-          onClick={closeDrawer}
+          onClick={closeModalDrawer}
           $isSelected={pathname === '/cart'}
           href={'/cart'}
         >
@@ -55,7 +55,7 @@ const NavMobile = () => {
         </LinkCustom>
       ) : (
         <LinkCustom
-          onClick={closeDrawer}
+          onClick={closeModalDrawer}
           $isSelected={pathname === '/register'}
           href={'/register'}
         >

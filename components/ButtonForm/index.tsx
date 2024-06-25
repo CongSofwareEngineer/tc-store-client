@@ -3,9 +3,8 @@ import React from 'react'
 import PrimaryButton from '../PrimaryButton'
 import SecondButton from '../SecondButton'
 import useLanguage from '@/hook/useLanguage'
-import useModal from '@/hook/useModal'
-import useMedia from '@/hook/useMedia'
-import useDrawer from '@/hook/useDrawer'
+import useModalDrawer from '@/hook/useModalDrawer'
+
 type ButtonFormType = {
   loading?: boolean
   disableClose?: boolean
@@ -21,9 +20,7 @@ const ButtonForm = ({
   titleClose = '',
 }: ButtonFormType) => {
   const { translate } = useLanguage()
-  const { closeModal } = useModal()
-  const { isMobile } = useMedia()
-  const { closeDrawer } = useDrawer()
+  const { closeModalDrawer } = useModalDrawer()
 
   return (
     <div
@@ -42,7 +39,7 @@ const ButtonForm = ({
         <SecondButton
           disabled={loading}
           className="w-[150px]"
-          onClick={() => (isMobile ? closeDrawer() : closeModal())}
+          onClick={closeModalDrawer}
         >
           {titleClose || translate('common.close')}
         </SecondButton>

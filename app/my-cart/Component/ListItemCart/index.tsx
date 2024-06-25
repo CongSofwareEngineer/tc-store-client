@@ -69,7 +69,11 @@ const ListItemCart = ({
             />
           )
         })}
-        {loading && <MyLoading className="my-5" />}
+        {loading && (
+          <td colSpan={7}>
+            <MyLoading className="my-5" />
+          </td>
+        )}
       </table>
     )
   }

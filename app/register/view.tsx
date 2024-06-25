@@ -1,20 +1,22 @@
 'use client'
 
-import useDrawer from '@/hook/useDrawer'
 import ItemNest from '../nests/Component/Item'
 import PrimaryButton from '@/components/PrimaryButton'
 import BtnBack from '@/components/BtnBack'
 import { useRouter } from 'next/navigation'
 import { CldUploadWidget } from 'next-cloudinary'
+import useModalDrawer from '@/hook/useModalDrawer'
 
 const RegisterPageScreen = () => {
-  const { openDrawer } = useDrawer()
+  const { openModalDrawer } = useModalDrawer()
   const route = useRouter()
 
   const handleOpen = () => {
-    openDrawer({
+    openModalDrawer({
       content: <div>demo</div>,
-      width: '70%',
+      configDrawer: {
+        width: '70%',
+      },
     })
   }
 

@@ -2,7 +2,7 @@ import { DrawerProps } from "antd"
 import React, { createContext } from "react"
 
 export type ConfigMyDrawerType = {
-  content: React.ReactNode
+  content?: React.ReactNode
 } & DrawerProps
 
 export type MyDrawerContextProps = {

@@ -27,24 +27,25 @@ const BtnBack = ({ title, url = [], onClick = null }: BtnBackType) => {
       />
       <div className="ml-2 flex gap-1">
         {typeof title === 'string' ? (
-          <div className="md:text-[16px] text-[14px] ">{title}</div>
+          <h1 className="md:text-[16px] text-[14px] ">{title}</h1>
         ) : (
           title?.map((item, index) => {
             if (url[index]) {
               return (
                 <Link
-                  className="cursor-pointer hover:underline text-[16px] text-blue-700"
+                  className="cursor-pointer hover:underline text-[16px] text-blue-700 flex gap-1"
                   href={url[index]}
                   key={item}
                 >
-                  {item} <RightOutlined className="black" />
+                  <h2>{item}</h2>
+                  <RightOutlined className="black" />
                 </Link>
               )
             }
             return (
-              <div className=" text-[16px] " key={item}>
+              <h1 className=" text-[16px] " key={item}>
                 {item}
-              </div>
+              </h1>
             )
           })
         )}

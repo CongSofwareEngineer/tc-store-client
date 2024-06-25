@@ -20,7 +20,7 @@ const CategoryHome = () => {
               key={e.key}
               href={`/shop?typeProduct=${e.key}`}
             >
-              <span className="hover:underline cursor-pointer">{e.name}</span>
+              <h2 className="hover:underline cursor-pointer">{e.name}</h2>
             </Link>
           )
         })}

@@ -35,6 +35,8 @@
     "gmailRequire": "Nhập gmail (lấy lại tài khoản khi quên mật khẩu)"
   },
   "textPopular": {
+    "feeShip": "Phí Ship",
+    "provisional": "Tạm tính",
     "all": "Tất cả",
     "infor": "Thông tin",
     "updateFailed": "Cập nhật thất bại",
@@ -81,7 +83,10 @@
     "student": "Student"
   },
   "bill": {
-    "infoReceived": "Thông Tin Nhận Hàng",
+    "totalBill": "Tổng thanh toán",
+    "detailPayment": "Chi Tiết Thanh Toán",
+    "infoDelivery": "Thông Tin Nhận Hàng",
+    "infoReceived": "Thông tin người nhận",
     "infoBill": "Thông Tin đơn hàng",
     "title": "Hóa đơn",
     "dateBuy": "Ngày mua",

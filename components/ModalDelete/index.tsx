@@ -1,10 +1,10 @@
 import useLanguage from '@/hook/useLanguage'
-import useModal from '@/hook/useModal'
 import { useState } from 'react'
 import MyImage from '../MyImage'
 import { images } from '@/configs/images'
 import PrimaryButton from '../PrimaryButton'
 import SecondButton from '../SecondButton'
+import useModalDrawer from '@/hook/useModalDrawer'
 type ModalDeleteType = {
   des?: string
   callback?: (param?: any) => Promise<void> | void
@@ -17,19 +17,16 @@ const ModalDelete = ({
 }: ModalDeleteType) => {
   const { translate } = useLanguage()
 
-  const { closeModal } = useModal()
+  const { closeModalDrawer } = useModalDrawer()
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async () => {
     setLoading(true)
     if (callback) {
       await callback()
-      setLoading(false)
-      closeModal()
-    } else {
-      setLoading(false)
-      closeModal()
     }
+    setLoading(false)
+    closeModalDrawer()
   }
   return (
     <div className="w-full flex flex-col gap-2">
@@ -59,7 +56,7 @@ const ModalDelete = ({
           <SecondButton
             disabled={loading}
             className="w-full"
-            onClick={() => closeModal()}
+            onClick={closeModalDrawer}
           >
             {translate('common.close')}
           </SecondButton>

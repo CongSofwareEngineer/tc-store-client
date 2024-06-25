@@ -10,7 +10,7 @@ const InfoHome = () => {
           <MyImage src={image} alt={`info-home-${title}`} heightImage="auto" />
         </div>
         <div className="flex-1 justify-start items-start">
-          <div className="uppercase font-semibold text-medium">{title}</div>
+          <h1 className="uppercase font-semibold text-medium">{title}</h1>
           <div>{des}</div>
         </div>
       </div>

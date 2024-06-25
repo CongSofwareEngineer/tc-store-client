@@ -25,3 +25,11 @@
 p {
   margin: 0px;
 }
+
+.ant-drawer {
+  .ant-drawer-body {
+    @media screen and (max-width: 768px) {
+      padding: 20px !important;
+    }
+  }
+}

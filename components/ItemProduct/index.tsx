@@ -54,7 +54,7 @@ const ItemProduct = ({
         />
       </div>
       <div className="w-full gap-1 flex flex-col">
-        <div className="w-full text-medium font-bold">{item?.name}</div>
+        <h3 className="w-full text-medium font-bold">{item?.name}</h3>
         <TextPriceBase className=" w-full ">
           {`${formatPriceBase(item?.price || 150)} VNĐ`}
         </TextPriceBase>

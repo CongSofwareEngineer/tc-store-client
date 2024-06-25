@@ -25,7 +25,8 @@ const config = {
         },
         '.text-common': {},
         '.desktop': {},
-        '.mobile': {}
+        '.mobile': {},
+        '.shadow-gray1': {}
       }
 
       addUtilities(newUtilities)

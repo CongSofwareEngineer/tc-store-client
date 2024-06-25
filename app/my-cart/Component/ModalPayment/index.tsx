@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { DataItemType, ModalPaymentType } from '../../type'
 import useUserData from '@/hook/useUserData'
 import useLanguage from '@/hook/useLanguage'
-import useModal from '@/hook/useModal'
-import useDrawer from '@/hook/useDrawer'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import ClientApi from '@/services/clientApi'
 import { BodyAddBill, DataBase, FB_FC } from '@/constant/firebase'
@@ -12,21 +10,19 @@ import MyForm from '@/components/MyForm'
 import InputForm from '@/components/InputForm'
 import SelectInputEx from '@/app/shop/[...params]/Component/ModalBuy/SelectInputEx'
 import ButtonForm from '@/components/ButtonForm'
-import useMedia from '@/hook/useMedia'
 import BigNumber from 'bignumber.js'
 import { numberWithCommas, showNotificationSuccess } from '@/utils/functions'
 import useCheckForm from '@/hook/useCheckForm'
 import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import ListItemCart from '../ListItemCart'
+import useModalDrawer from '@/hook/useModalDrawer'
 
 const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
   const { userData, isLogin, refreshLogin } = useUserData()
   const { translate } = useLanguage()
-  const { closeModal } = useModal()
-  const { closeDrawer } = useDrawer()
+  const { closeModalDrawer } = useModalDrawer()
   const { refreshQuery } = useRefreshQuery()
-  const { isMobile } = useMedia()
   const { checkNumberPhone } = useCheckForm()
 
   const [formData, setFormData] = useState<Record<string, any> | null>(null)
@@ -52,17 +48,7 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
     setLisDataBill(arr)
   }, [userData, dataCart])
 
-  const getAmountBuy = () => {
-    let amount = 0
-    dataCart.forEach((e) => {
-      if (e.selected) {
-        amount += e.amount
-      }
-    })
-    return amount
-  }
-
-  const getTotalPayBill = () => {
+  const getTotalPayBill = (plusFee = false) => {
     let total = 0
     dataCart.forEach((e) => {
       if (e.selected) {
@@ -74,17 +60,13 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
         }
       }
     })
-    return numberWithCommas(total)
+    return numberWithCommas(total + (plusFee ? 30000 : 0))
   }
 
   const handleClose = () => {
     refreshQuery(QueryKey.LengthCartUser)
     refreshQuery(QueryKey.MyCartUser)
-    if (isMobile) {
-      closeDrawer()
-    } else {
-      closeModal()
-    }
+    closeModalDrawer()
   }
 
   const handleAddAddress = async (address: string) => {
@@ -160,90 +142,131 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
 
   return (
     <div className="flex flex-col gap-3 w-full">
-      <div className="flex gap-2">
-        <span>{translate('textPopular.amount')} : </span>
-        <span className="text-green-600 font-bold">{getAmountBuy()} </span>
-      </div>
-
-      <div className="flex gap-2">
-        <span>{translate('textPopular.totalMoney')} : </span>
-        <span className="text-green-600 font-bold">
-          {getTotalPayBill()} VNĐ
-        </span>
-      </div>
       {formData && (
         <MyForm
           onFinish={handleSubmit}
           formData={formData}
           onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
         >
-          <div className="flex md:gap-6 gap-3  flex-col">
-            <div className="flex flex-1">
-              <InputForm
-                validator={checkNumberPhone}
-                required
-                name="sdt"
-                label={translate('userDetail.sdt')}
-                classFromItem="w-full"
-              />
+          <div className="flex flex-col w-full border-[1px] shadow-gray1 border-gray-300  px-4 pt-4 pb-6">
+            <div className="flex w-full gap-2">
+              <div>
+                <MyImage
+                  src={images.userDetail.iconUserDetail}
+                  alt="my-cart-infoReceived"
+                  widthImage="25px"
+                  heightImage="25px"
+                />
+              </div>
+              <div className="text-medium font-semibold">
+                {translate('bill.infoReceived')}
+              </div>
             </div>
-            <div className="flex flex-1">
-              <InputForm
-                required
-                name="name"
-                label={translate('userDetail.name')}
-                classFromItem="w-full"
-              />
+            <div className="relative w-full border-[1px] my-3 border-gray-300" />
+            <div className="flex md:gap-6 gap-3  flex-col">
+              <div className="flex flex-1">
+                <InputForm
+                  validator={checkNumberPhone}
+                  required
+                  name="sdt"
+                  label={translate('userDetail.sdt')}
+                  classFromItem="w-full"
+                />
+              </div>
+              <div className="flex flex-1">
+                <InputForm
+                  required
+                  name="name"
+                  label={translate('userDetail.name')}
+                  classFromItem="w-full"
+                />
+              </div>
+              <div className="flex flex-1">
+                <InputForm
+                  name="gmail"
+                  label={translate('productDetail.modalBuy.enterGmail')}
+                  classFromItem="w-full"
+                />
+              </div>
+              {isLogin ? (
+                <SelectInputEx
+                  required
+                  callBackAdd={(e) => handleAddAddress(e)}
+                  name="addressShip"
+                  label={translate('productDetail.modalBuy.enterAddress')}
+                  options={getOptions()}
+                  configSelect={{
+                    showSearch: true,
+                  }}
+                />
+              ) : (
+                <InputForm
+                  required
+                  name="addressShip"
+                  label={translate('productDetail.modalBuy.enterAddress')}
+                  classFromItem="w-full"
+                />
+              )}
             </div>
-            <div className="flex flex-1">
-              <InputForm
-                name="gmail"
-                label={translate('productDetail.modalBuy.enterGmail')}
-                classFromItem="w-full"
-              />
-            </div>
-            {isLogin ? (
-              <SelectInputEx
-                required
-                callBackAdd={(e) => handleAddAddress(e)}
-                name="addressShip"
-                label={translate('productDetail.modalBuy.enterAddress')}
-                options={getOptions()}
-                configSelect={{
-                  showSearch: true,
-                }}
-              />
-            ) : (
-              <InputForm
-                required
-                name="addressShip"
-                label={translate('productDetail.modalBuy.enterAddress')}
-                classFromItem="w-full"
-              />
-            )}
           </div>
-          <div className="flex w-full gap-2">
-            <div>
-              <MyImage
-                src={images.icon.iconCart}
-                alt="my-cart-bill"
-                widthImage="25px"
-                heightImage="25px"
+          <div className="w-full mt-4 flex flex-col  border-[1px] shadow-gray1 border-gray-300 md:p-3 px-4 pt-4">
+            <div className="flex w-full gap-2">
+              <div>
+                <MyImage
+                  src={images.icon.iconCart}
+                  alt="my-cart-bill"
+                  widthImage="25px"
+                  heightImage="25px"
+                />
+              </div>
+              <div className="text-medium font-semibold">
+                {translate('bill.infoBill')}
+              </div>
+            </div>
+            <div className="relative w-full border-[1px] my-3 border-gray-300" />
+            <div className="w-full min-h-11 max-h-[300px] overflow-y-auto">
+              <ListItemCart
+                loading={false}
+                dataCart={lisDataBill}
+                noEdit
+                noTitle
               />
             </div>
-            <div className="text-medium font-semibold">
-              {translate('bill.infoBill')}
+          </div>
+          <div className="w-full mt-4 flex flex-col  border-[1px] shadow-gray1 border-gray-300 md:p-3 px-4 py-4">
+            <div className="flex w-full gap-2">
+              <div>
+                <MyImage
+                  src={images.icon.iconBill}
+                  alt="my-cart-bill"
+                  widthImage="25px"
+                  heightImage="25px"
+                />
+              </div>
+              <div className="text-medium font-semibold">
+                {translate('bill.detailPayment')}
+              </div>
             </div>
+            <div className="relative w-full border-[1px] my-3 border-gray-300" />
+            <div className="flex justify-between w-full  mb-1">
+              <span>{translate('textPopular.totalMoney')}</span>
+              <span className="font-bold text-green-600">
+                {getTotalPayBill()} VNĐ
+              </span>
+            </div>
+            <div className="flex justify-between w-full">
+              <span>{translate('textPopular.feeShip')}</span>
+              <span className="font-bold text-green-600">30,000 VNĐ</span>
+            </div>
+            <div className="relative w-full border-[1px] my-3 border-gray-300" />
+            <div className="flex justify-between w-full">
+              <span>{translate('bill.totalBill')}</span>
+              <span className="font-bold text-green-600">
+                {getTotalPayBill(true)} VNĐ
+              </span>
+            </div>
+            <ButtonForm loading={loading} disableClose />
           </div>
-          <div className="w-full">
-            <ListItemCart
-              loading={false}
-              dataCart={lisDataBill}
-              noEdit
-              noTitle
-            />
-          </div>
-          <ButtonForm loading={loading} disableClose />
         </MyForm>
       )}
     </div>

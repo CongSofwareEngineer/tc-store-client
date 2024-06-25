@@ -8,7 +8,6 @@ import { parsePhoneNumber } from 'libphonenumber-js'
 import SelectInputEx from './SelectInputEx'
 import ClientApi from '@/services/clientApi'
 import { DataBase, FB_FC } from '@/constant/firebase'
-import useModal from '@/hook/useModal'
 import {
   formatPrice,
   showNotificationError,
@@ -16,17 +15,16 @@ import {
 } from '@/utils/functions'
 import ViewItem from './viewItem'
 import useMedia from '@/hook/useMedia'
-import useDrawer from '@/hook/useDrawer'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QueryKey } from '@/constant/reactQuery'
 import ButtonForm from '@/components/ButtonForm'
+import useModalDrawer from '@/hook/useModalDrawer'
 
 const ModalBuyLogin = ({ data, amount }: ModalBuyLoginType) => {
   const { userData, isLogin, refreshLogin } = useUserData()
   const { translate } = useLanguage()
-  const { closeModal } = useModal()
+  const { closeModalDrawer } = useModalDrawer()
   const { isMobile } = useMedia()
-  const { closeDrawer } = useDrawer()
   const { refreshQuery } = useRefreshQuery()
 
   const [formData, setFormData] = useState<Record<string, any> | null>(null)
@@ -101,11 +99,7 @@ const ModalBuyLogin = ({ data, amount }: ModalBuyLoginType) => {
   const handleClose = () => {
     refreshQuery(QueryKey.LengthCartUser)
     refreshQuery(QueryKey.GetProductByID)
-    if (isMobile) {
-      closeDrawer()
-    } else {
-      closeModal()
-    }
+    closeModalDrawer()
   }
 
   const updateProduction = async () => {
@@ -157,9 +151,6 @@ const ModalBuyLogin = ({ data, amount }: ModalBuyLoginType) => {
       setLoading(false)
     }
   }
-  console.log('====================================')
-  console.log({ formData })
-  console.log('====================================')
 
   return (
     <div className="flex flex-col gap-3 w-full">
