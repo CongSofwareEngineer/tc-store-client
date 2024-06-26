@@ -176,7 +176,6 @@ const MyCartScreen = () => {
 
   return isPayment ? (
     <Payment
-      allSelected={allSelected}
       refreshData={refreshData}
       clickBack={() => setIsPayment(false)}
       dataCart={listCartFormat}
