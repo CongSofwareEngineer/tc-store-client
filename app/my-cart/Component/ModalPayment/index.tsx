@@ -148,7 +148,7 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
           formData={formData}
           onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
         >
-          <div className="flex flex-col w-full border-[1px] shadow-gray1 border-gray-300  px-4 pt-4 pb-6">
+          <div className="bg-white flex flex-col w-full border-[1px] shadow-gray1 border-gray-300  px-4 pt-4 pb-6">
             <div className="flex w-full gap-2">
               <div>
                 <MyImage
@@ -162,8 +162,10 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
                 {translate('bill.infoReceived')}
               </div>
             </div>
+
             <div className="relative w-full border-[1px] my-3 border-gray-300" />
-            <div className="flex md:gap-6 gap-3  flex-col">
+
+            <div className="flex md:gap-6 gap-3 flex-col md:grid md:grid-cols-2 ">
               <div className="flex flex-1">
                 <InputForm
                   validator={checkNumberPhone}
@@ -209,7 +211,7 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
               )}
             </div>
           </div>
-          <div className="w-full mt-4 flex flex-col  border-[1px] shadow-gray1 border-gray-300 md:p-3 px-4 pt-4">
+          <div className="bg-white w-full mt-4 flex flex-col  border-[1px] shadow-gray1 border-gray-300 md:p-3 px-4 pt-4">
             <div className="flex w-full gap-2">
               <div>
                 <MyImage
@@ -233,7 +235,7 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
               />
             </div>
           </div>
-          <div className="w-full mt-4 flex flex-col  border-[1px] shadow-gray1 border-gray-300 md:p-3 px-4 py-4">
+          <div className="bg-white w-full mt-4 flex flex-col  border-[1px] shadow-gray1 border-gray-300 md:p-3 px-4 py-4">
             <div className="flex w-full gap-2">
               <div>
                 <MyImage

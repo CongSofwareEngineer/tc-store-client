@@ -9,6 +9,7 @@ import MyImage from '@/components/MyImage'
 import {
   formatPrice,
   formatPriceBase,
+  saveDataLocal,
   showNotificationSuccess,
 } from '@/utils/functions'
 import InfoItemDetail from '@/components/InfoItemDetail'
@@ -24,6 +25,7 @@ import ClientApi from '@/services/clientApi'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QueryKey } from '@/constant/reactQuery'
 import useModalDrawer from '@/hook/useModalDrawer'
+import { LocalKey } from '@/constant/app'
 const Comment = dynamic(() => import('@/components/Comment'), {
   ssr: false,
 })
@@ -79,7 +81,6 @@ const ShopDetailScreen = ({
         data: payLoad,
       },
     })
-    showNotificationSuccess(translate('addCart.addSuccess'))
   }
 
   const handleAddCart = async () => {
@@ -88,10 +89,19 @@ const ShopDetailScreen = ({
 
       if (isLogin) {
         await handleAddCartLogin()
+        refreshQuery(QueryKey.LengthCartUser)
       } else {
+        const payLoad: BodyAddCart = {
+          amount: amountBuy,
+          date: Date.now(),
+          idProduct: productDetail.id?.toString(),
+          idUser: '',
+          keyNameProduct: productDetail.keyName.toString(),
+        }
+        saveDataLocal(LocalKey.MyCart, payLoad)
       }
+      showNotificationSuccess(translate('addCart.addSuccess'))
     } finally {
-      refreshQuery(QueryKey.LengthCartUser)
       setLoadingAddCart(false)
     }
   }

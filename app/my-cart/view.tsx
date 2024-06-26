@@ -7,22 +7,30 @@ import { useEffect, useState } from 'react'
 import { PageSizeLimit } from '@/constant/app'
 import { cloneData, numberWithCommas } from '@/utils/functions'
 import PrimaryButton from '@/components/PrimaryButton'
-import ModalPayment from './Component/ModalPayment'
 import ListItemCart from './Component/ListItemCart'
-import useModalDrawer from '@/hook/useModalDrawer'
+import Payment from './Component/Payment'
 
 const MyCartScreen = () => {
   const { data, isLoading, refreshData } = useMyCart(PageSizeLimit)
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
-  const { openModalDrawer } = useModalDrawer()
 
   const [listCartFormat, setListCartFormat] = useState<any[]>([])
+  const [isPayment, setIsPayment] = useState(false)
+  const [allSelected, setAllSelected] = useState(false)
 
   useEffect(() => {
     if (data) {
-      const arr = data.map((e: any) => ({ ...e, selected: false }))
-      setListCartFormat(arr)
+      setListCartFormat((e) => {
+        const arr = data.map((eChil: any) => {
+          const item = e.find((item) => item.id === eChil.id)
+          if (item) {
+            return item
+          }
+          return { ...e, selected: false }
+        })
+        return arr
+      })
     }
   }, [data])
 
@@ -60,22 +68,23 @@ const MyCartScreen = () => {
   }
 
   const handlePayment = () => {
-    openModalDrawer({
-      content: (
-        <ModalPayment callBack={refreshData} dataCart={listCartFormat} />
-      ),
-      useDrawer: true,
-      configModal: {
-        width: '500px',
-        showHeader: true,
-        title: translate('bill.infoDelivery'),
-      },
-      configDrawer: {
-        height: '95%',
-        title: translate('bill.infoDelivery'),
-        placement: 'bottom',
-      },
-    })
+    setIsPayment(true)
+    // openModalDrawer({
+    //   content: (
+    //     <ModalPayment callBack={refreshData} dataCart={listCartFormat} />
+    //   ),
+    //   useDrawer: true,
+    //   title: translate('bill.infoDelivery'),
+    //   configModal: {
+    //     width: '760px',
+    //     height: '90vh',
+    //     showHeader: true,
+    //   },
+    //   configDrawer: {
+    //     height: '95%',
+    //     placement: 'bottom',
+    //   },
+    // })
   }
 
   const handleSelectAll = (isSelect = false) => {
@@ -87,6 +96,7 @@ const MyCartScreen = () => {
       }
     })
     setListCartFormat(dataClone)
+    setAllSelected(isSelect)
   }
 
   const renderDesktop = () => {
@@ -102,6 +112,7 @@ const MyCartScreen = () => {
             className="flex-1  border-2 border-gray-300  overflow-y-auto bg-white"
           >
             <ListItemCart
+              allSelected={allSelected}
               dataCart={listCartFormat}
               callBackClick={handleSelect}
               callBackDelete={handleDelete}
@@ -134,6 +145,7 @@ const MyCartScreen = () => {
           className=" flex-1  border-[.5px] border-gray-300 bg-white  overflow-y-auto"
         >
           <ListItemCart
+            allSelected={allSelected}
             dataCart={listCartFormat}
             callBackClick={handleSelect}
             callBackDelete={handleDelete}
@@ -162,7 +174,18 @@ const MyCartScreen = () => {
     )
   }
 
-  return isMobile ? renderMobile() : renderDesktop()
+  return isPayment ? (
+    <Payment
+      allSelected={allSelected}
+      refreshData={refreshData}
+      clickBack={() => setIsPayment(false)}
+      dataCart={listCartFormat}
+    />
+  ) : isMobile ? (
+    renderMobile()
+  ) : (
+    renderDesktop()
+  )
 }
 
 export default MyCartScreen

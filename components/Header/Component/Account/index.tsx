@@ -32,9 +32,9 @@ const Account = () => {
     openModalDrawer({
       content: <NavMobile />,
       onlyDrawer: true,
+      title: renderTitleDrawer(),
       configDrawer: {
         width: '70%',
-        title: renderTitleDrawer(),
         placement: 'right',
       },
     })

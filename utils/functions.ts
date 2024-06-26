@@ -98,3 +98,55 @@ export function delayTime(ms = 500) {
     setTimeout(resolve, ms)
   })
 }
+
+export const saveDataLocal = (key: string, data: any) => {
+  try {
+    localStorage.setItem(key, JSON.stringify(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const getDataLocal = (key = '', defaultValue: any = '') => {
+  try {
+    const data: string = localStorage.getItem(key) || ''
+    return JSON.parse(data)
+  } catch (error) {
+    return defaultValue
+  }
+}
+
+export const removeDataLocal = (key: string) => {
+  try {
+    localStorage.removeItem(key)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const getBase64 = (file: File, callback: (parma?: any) => void) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => {
+      callback &&
+        callback({
+          name: file.name,
+          type: file.type,
+          base64: reader.result,
+        })
+      resolve(reader.result)
+    }
+    reader.onerror = (error) => reject(error)
+  })
+}
+
+export const isURL = (link: string) => {
+  try {
+    let url
+    url = new URL(link)
+    return url.protocol === 'http:' || url.protocol === 'https:'
+  } catch (error) {
+    return false
+  }
+}

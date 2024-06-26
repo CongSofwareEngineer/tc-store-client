@@ -18,13 +18,21 @@ export type ItemCartType = {
 }
 
 export type ModalPaymentType = {
-  dataCart: DataItemType[],
+  dataCart: DataItemType[]
   callBack: () => void
+}
+
+
+export type PaymentPageType = {
+  dataCart: DataItemType[]
+  clickBack: () => void
+  refreshData: () => void
 }
 
 export type TitleItemType = {
   dataCart: DataItemType[]
   noEdit?: boolean
+  allSelected: boolean
   callBack?: (param?: boolean) => void
 }
 
@@ -32,6 +40,7 @@ export type ListItemCartType = {
   noEdit?: boolean
   noTitle?: boolean
   loading?: boolean
+  allSelected?: boolean
   dataCart: DataItemType[]
   callBackClick?: (param?: any, index?: number) => void
   callBackSelectAll?: () => void

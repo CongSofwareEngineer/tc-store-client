@@ -27,7 +27,7 @@ const ItemCart = ({
 }: ItemCartType) => {
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
-  const { openModalDrawer } = useModalDrawer()
+  const { openModalDrawer, closeModalDrawer } = useModalDrawer()
   const router = useRouter()
   const selectedItem = () => {
     const dataClone = cloneData(data)
@@ -63,6 +63,7 @@ const ItemCart = ({
 
   const handleClickName = () => {
     router.push(`/shop/${data.idProduct}/${data.keyName}`)
+    closeModalDrawer()
   }
 
   const renderDesktop = () => {

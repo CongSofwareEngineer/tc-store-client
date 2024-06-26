@@ -42,3 +42,39 @@ body {
     display: none;
   }
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: transparent;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  // background: transparent;
+  // background: rgb(192, 215, 169) !important;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(192, 215, 169);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  // background: rgb(192, 215, 169);
+  cursor: pointer;
+}
+
+
+::-webkit-resizer {
+  // background: rgb(192, 215, 169) !important;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent !important;
+  cursor: pointer;
+}

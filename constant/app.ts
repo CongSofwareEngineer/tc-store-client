@@ -24,7 +24,13 @@ export const ColorConfig = {
 } as const
 
 export enum CookieKey {
-  'User' = 'User'
+  'User' = 'User',
+  'MyCart' = 'MyCart'
+}
+
+export enum LocalKey {
+  'User' = 'User',
+  'MyCart' = 'MyCart'
 }
 
 export enum FilterAPI {

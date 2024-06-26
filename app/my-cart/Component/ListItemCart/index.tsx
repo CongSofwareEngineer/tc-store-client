@@ -13,6 +13,7 @@ const ListItemCart = ({
   loading = true,
   noEdit = false,
   noTitle = false,
+  allSelected = false,
 }: ListItemCartType) => {
   const { isMobile } = useMedia()
   console.log({ loading })
@@ -23,6 +24,7 @@ const ListItemCart = ({
         {!noTitle && (
           <table className="w-full md:min-w-[700px] ">
             <TitleItem
+              allSelected={allSelected}
               noEdit={noEdit}
               dataCart={dataCart}
               callBack={callBackSelectAll}
@@ -51,6 +53,7 @@ const ListItemCart = ({
       <table className="w-full md:min-w-[700px] ">
         {!noTitle && (
           <TitleItem
+            allSelected={allSelected}
             noEdit={noEdit}
             dataCart={dataCart}
             callBack={callBackSelectAll}
