@@ -23,9 +23,11 @@ const MyCartScreen = () => {
     if (data) {
       setListCartFormat((e) => {
         const arr = data.map((eChil: any) => {
-          const item = e.find((item) => item.id === eChil.id)
-          if (item) {
-            return item
+          if (e.length > 0) {
+            const item = e.find((temp) => temp.id === eChil?.id)
+            if (item) {
+              return item
+            }
           }
           return { ...e, selected: false }
         })
