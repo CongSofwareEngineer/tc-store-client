@@ -22,6 +22,9 @@ const MyCartScreen = () => {
   useEffect(() => {
     if (data) {
       setListCartFormat((e) => {
+        console.log('====================================')
+        console.log({ e })
+        console.log('====================================')
         const arr = data.map((eChil: any) => {
           if (e.length > 0) {
             const item = e.find((temp) => temp.id === eChil?.id)
@@ -29,7 +32,7 @@ const MyCartScreen = () => {
               return item
             }
           }
-          return { ...e, selected: false }
+          return { ...eChil, selected: false }
         })
         return arr
       })
