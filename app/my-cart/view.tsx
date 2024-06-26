@@ -144,10 +144,14 @@ const MyCartScreen = () => {
 
   const renderMobile = () => {
     return (
-      <div>
+      <div className="mt-1">
+        <BtnBack
+          title={[translate('header.shop'), translate('header.cart')]}
+          url={['/shop']}
+        />
         <div
           style={{ boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px' }}
-          className=" flex-1  border-[.5px] border-gray-300 bg-white  overflow-y-auto"
+          className="mt-1 flex-1  border-[.5px] border-gray-300 bg-white  overflow-y-auto"
         >
           <ListItemCart
             allSelected={allSelected}

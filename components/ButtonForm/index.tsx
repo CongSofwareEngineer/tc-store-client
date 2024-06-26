@@ -11,6 +11,9 @@ type ButtonFormType = {
   titleSubmit?: string
   titleClose?: string
   className?: string
+  classNameItem?: string
+  classBtnSubmit?: string
+  classBtnCancel?: string
 }
 const ButtonForm = ({
   loading,
@@ -18,6 +21,9 @@ const ButtonForm = ({
   titleSubmit = '',
   className = '',
   titleClose = '',
+  classBtnSubmit = '',
+  classBtnCancel = '',
+  classNameItem = '',
 }: ButtonFormType) => {
   const { translate } = useLanguage()
   const { closeModalDrawer } = useModalDrawer()
@@ -26,9 +32,9 @@ const ButtonForm = ({
     <div
       className={`w-full flex justify-center items-center gap-4 mt-2 ${className}`}
     >
-      <Form.Item>
+      <Form.Item className={classNameItem}>
         <PrimaryButton
-          className="w-[150px]"
+          className={`w-[150px] ${classBtnSubmit}`}
           loading={loading}
           htmlType="submit"
         >
@@ -38,7 +44,7 @@ const ButtonForm = ({
       {!disableClose && (
         <SecondButton
           disabled={loading}
-          className="w-[150px]"
+          className={`w-[150px] ${classBtnCancel}`}
           onClick={closeModalDrawer}
         >
           {titleClose || translate('common.close')}

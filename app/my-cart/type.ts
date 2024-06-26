@@ -36,6 +36,11 @@ export type TitleItemType = {
   callBack?: (param?: boolean) => void
 }
 
+export type ContentFormType = {
+  listAddressShip: any[]
+  setListAddressShip?: (param: string[]) => void
+}
+
 export type ListItemCartType = {
   noEdit?: boolean
   noTitle?: boolean

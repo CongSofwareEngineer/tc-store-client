@@ -10,6 +10,9 @@ const FormItem = styled(Form.Item)`
       text-align: start !important;
     }
   }
+  .ant-form-item-control {
+    flex: none !important;
+  }
   @media screen and (max-width: 768px) {
     margin-bottom: 31px !important;
     .ant-form-item-explain-error {
@@ -34,23 +37,24 @@ type InputFormType = {
   name?: string
   message?: string
   required?: boolean
-  isPass?: boolean
-  classFromItem?: string
+  rows?: number
+  className?: string
   validator?: (value?: any) => string | null
 }
-const InputForm = ({
+
+const InputAreaForm = ({
   label,
   name,
   message,
   required = false,
-  isPass = false,
+  rows = 3,
   validator = () => '',
-  classFromItem = '',
+  className = '',
 }: InputFormType) => {
   const { translate } = useLanguage()
   return (
     <FormItem
-      className={classFromItem}
+      className={className}
       label={label}
       name={name}
       rules={[
@@ -75,13 +79,8 @@ const InputForm = ({
         },
       ]}
     >
-      {isPass ? (
-        <Input.Password className="w-full" />
-      ) : (
-        <Input className="w-full" />
-      )}
+      <Input.TextArea rows={rows} className="w-full" />
     </FormItem>
   )
 }
-
-export default InputForm
+export default InputAreaForm

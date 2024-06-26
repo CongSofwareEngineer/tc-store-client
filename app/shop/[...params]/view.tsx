@@ -109,7 +109,7 @@ const ShopDetailScreen = ({
   const renderDesktop = () => {
     return (
       <div className="flex flex-col">
-        <BtnBack title={['Shopp', dataItem.name]} url={['/shop']} />
+        <BtnBack title={['Shop', dataItem.name]} url={['/shop']} />
         <div className="w-full flex gap-6 bg-white rounded-xl p-6">
           <div className="min-w-[300px] max-w-[450px] w-[50%] p-5 overflow-hidden aspect-square">
             <MyImage

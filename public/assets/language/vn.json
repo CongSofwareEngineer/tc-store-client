@@ -65,7 +65,8 @@
     "male": "Nam",
     "female": "Nữ",
     "product": "Sản phẩm",
-    "contactShop": "Nhắn tin với Shop"
+    "contactShop": "Nhắn tin với Shop",
+    "note": "Ghi Chú"
   },
   "addCart": {
     "addSuccess": "Đã thêm vào giỏ hàng",
@@ -83,6 +84,7 @@
     "student": "Student"
   },
   "bill": {
+    "noteBill": "Ghi chú đơn hàng",
     "totalBill": "Tổng thanh toán",
     "detailPayment": "Chi Tiết Thanh Toán",
     "infoDelivery": "Thông Tin Nhận Hàng",
