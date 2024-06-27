@@ -9,11 +9,15 @@ import { cloneData, delayTime, numberWithCommas } from '@/utils/functions'
 import PrimaryButton from '@/components/PrimaryButton'
 import ListItemCart from './Component/ListItemCart'
 import Payment from './Component/Payment'
+import ClientApi from '@/services/clientApi'
+import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
+import { QueryKey } from '@/constant/reactQuery'
 
 const MyCartScreen = () => {
-  const { data, isLoading, refreshData } = useMyCart(PageSizeLimit)
+  const { data, isLoading, fetchNextPage } = useMyCart(0, 1)
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
+  const { refreshQuery } = useRefreshQuery()
 
   const [listCartFormat, setListCartFormat] = useState<any[]>([])
   const [isPayment, setIsPayment] = useState(false)
@@ -21,18 +25,20 @@ const MyCartScreen = () => {
 
   useEffect(() => {
     if (data) {
-      setListCartFormat((e) => {
-        const arr = data.map((eChil: any) => {
-          if (e.length > 0) {
-            const item = e.find((temp) => temp.id === eChil?.id)
-            if (item) {
-              return item
-            }
-          }
-          return { ...eChil, selected: false }
-        })
-        return arr
-      })
+      console.log({ data })
+
+      // setListCartFormat((e) => {
+      //   const arr = data.map((eChil: any) => {
+      //     if (e.length > 0) {
+      //       const item = e.find((temp) => temp.id === eChil?.id)
+      //       if (item) {
+      //         return item
+      //       }
+      //     }
+      //     return { ...eChil, selected: false }
+      //   })
+      //   return arr
+      // })
     }
   }, [data])
 
@@ -45,6 +51,7 @@ const MyCartScreen = () => {
     })
     return `${numberWithCommas(total)} VNĐ`
   }
+
   const calculateItemPayment = () => {
     let total = 0
     listCartFormat.forEach((e: any) => {
@@ -62,12 +69,9 @@ const MyCartScreen = () => {
   }
 
   const handleDelete = async (index: number) => {
-    await delayTime(3000)
-    let dataClone = cloneData(listCartFormat)
-    dataClone = dataClone.filter(
-      (_: any, indexFilter: number) => indexFilter !== index
-    )
-    setListCartFormat(dataClone)
+    const dataRemove = listCartFormat[index]
+    await ClientApi.removeCart(dataRemove.id)
+    refreshQuery(QueryKey.MyCartUser)
   }
 
   const handleSelectAll = (isSelect = false) => {
@@ -85,6 +89,9 @@ const MyCartScreen = () => {
   const renderDesktop = () => {
     return (
       <div className="w-full">
+        <PrimaryButton onClick={() => fetchNextPage()}>
+          fetchNextPage
+        </PrimaryButton>
         <BtnBack
           title={[translate('header.shop'), translate('header.cart')]}
           url={['/shop']}

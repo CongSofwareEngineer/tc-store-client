@@ -18,6 +18,7 @@ const useAllProduct = (query = '') => {
       data: any; totalPage: number, page: number
     }) => lastPage?.totalPage > lastPage?.page,
   })
+  console.log({ data });
 
   return {
     data: data?.pages[0] || null,

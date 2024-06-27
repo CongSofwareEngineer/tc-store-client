@@ -85,6 +85,16 @@ const ClientApi = {
     })
     return req
   },
+  removeCart: async (id: string) => {
+    const req = await ClientApi.requestBase({
+      nameDB: DataBase.cartUser,
+      namFn: FB_FC.deleteData,
+      body: {
+        id
+      }
+    })
+    return req
+  },
   updateAddress: async (isUser: string | undefined, data: string[]) => {
     const req = await ClientApi.requestBase({
       nameDB: DataBase.user,
