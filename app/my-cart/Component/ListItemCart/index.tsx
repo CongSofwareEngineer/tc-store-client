@@ -65,7 +65,7 @@ const ListItemCart = ({
             <ItemCart
               noEdit={noEdit}
               callBack={(e) => callBackClick(e, index)}
-              callBackDelete={() => callBackDelete(index)}
+              callBackDelete={async () => callBackDelete(index)}
               key={index}
               data={e}
               noBorder={index === dataCart.length - 1}

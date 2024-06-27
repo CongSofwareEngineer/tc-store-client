@@ -50,8 +50,7 @@ const useMyCart = (pageLimit = PageSizeLimit) => {
       QueryKey.MyCartUser,
       dataBase
     ],
-    queryFn: getData,
-    enabled: dataBase?.data?.length > 0
+    queryFn: getData
   })
 
   return {

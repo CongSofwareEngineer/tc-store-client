@@ -5,7 +5,7 @@ import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import { useEffect, useState } from 'react'
 import { PageSizeLimit } from '@/constant/app'
-import { cloneData, numberWithCommas } from '@/utils/functions'
+import { cloneData, delayTime, numberWithCommas } from '@/utils/functions'
 import PrimaryButton from '@/components/PrimaryButton'
 import ListItemCart from './Component/ListItemCart'
 import Payment from './Component/Payment'
@@ -22,9 +22,6 @@ const MyCartScreen = () => {
   useEffect(() => {
     if (data) {
       setListCartFormat((e) => {
-        console.log('====================================')
-        console.log({ e })
-        console.log('====================================')
         const arr = data.map((eChil: any) => {
           if (e.length > 0) {
             const item = e.find((temp) => temp.id === eChil?.id)
@@ -64,32 +61,13 @@ const MyCartScreen = () => {
     setListCartFormat(dataClone)
   }
 
-  const handleDelete = (index: number) => {
+  const handleDelete = async (index: number) => {
+    await delayTime(3000)
     let dataClone = cloneData(listCartFormat)
     dataClone = dataClone.filter(
       (_: any, indexFilter: number) => indexFilter !== index
     )
     setListCartFormat(dataClone)
-  }
-
-  const handlePayment = () => {
-    setIsPayment(true)
-    // openModalDrawer({
-    //   content: (
-    //     <ModalPayment callBack={refreshData} dataCart={listCartFormat} />
-    //   ),
-    //   useDrawer: true,
-    //   title: translate('bill.infoDelivery'),
-    //   configModal: {
-    //     width: '760px',
-    //     height: '90vh',
-    //     showHeader: true,
-    //   },
-    //   configDrawer: {
-    //     height: '95%',
-    //     placement: 'bottom',
-    //   },
-    // })
   }
 
   const handleSelectAll = (isSelect = false) => {
@@ -133,7 +111,7 @@ const MyCartScreen = () => {
               </span>
             </div>
             <div className="border-[1px] border-gray-300 w-full" />
-            <PrimaryButton onClick={handlePayment}>
+            <PrimaryButton onClick={() => setIsPayment(true)}>
               {`${translate('cart.payment')} (${calculateItemPayment()})`}
             </PrimaryButton>
           </div>
@@ -174,7 +152,7 @@ const MyCartScreen = () => {
             </div>
             <div className="w-full border-[1px] border-gray-200  relative  " />
 
-            <PrimaryButton onClick={handlePayment}>
+            <PrimaryButton onClick={() => setIsPayment(true)}>
               {`${translate('cart.payment')} (${calculateItemPayment()})`}
             </PrimaryButton>
           </div>
