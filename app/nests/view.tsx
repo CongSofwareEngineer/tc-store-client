@@ -6,10 +6,11 @@ import ItemNest from './Component/Item'
 import useQuerySearch from '@/hook/useQuerySearch'
 import useAllProduct from '@/hook/tank-query/useAllProduct'
 import { useRouter } from 'next/navigation'
+import { PageSizeLimit } from '@/constant/app'
 
 const PageNestsScreen = () => {
-  const { currentQueries } = useQuerySearch()
-  const { data, isLoading } = useAllProduct(currentQueries)
+  const { currentQueries, queries } = useQuerySearch()
+  const { data, isLoading } = useAllProduct(1, PageSizeLimit, queries)
   const { translate } = useLanguage()
   const router = useRouter()
 
