@@ -31,7 +31,7 @@ export default class FirebaseFun {
   }
 
 
-  async queryData(key: string, match: WhereFilterOp, value: string) {
+  async queryData(key: string, match: WhereFilterOp, value: any) {
     const docDetail: DatabaseQueryType = query(this.db, where(key, match, value));
     const data = await getDocs(docDetail)
     return data.docs.map((doc) => {

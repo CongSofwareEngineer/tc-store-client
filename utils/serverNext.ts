@@ -42,7 +42,7 @@ export const generateMetaBase = ({
 }
 
 
-export const pareDataClient = async (req: any): Promise<Record<string, any>> => {
+export const pareDataClient = async (req: any): Promise<any> => {
   const dataReq = await req.json()
   let bodyDecode: any = decryptData(dataReq.data)
   bodyDecode = JSON.parse(bodyDecode)

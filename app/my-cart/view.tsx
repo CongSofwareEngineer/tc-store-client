@@ -5,7 +5,7 @@ import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import { useEffect, useState } from 'react'
 import { PageSizeLimit } from '@/constant/app'
-import { cloneData, delayTime, numberWithCommas } from '@/utils/functions'
+import { cloneData, numberWithCommas } from '@/utils/functions'
 import PrimaryButton from '@/components/PrimaryButton'
 import ListItemCart from './Component/ListItemCart'
 import Payment from './Component/Payment'
@@ -14,31 +14,33 @@ import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QueryKey } from '@/constant/reactQuery'
 
 const MyCartScreen = () => {
-  const { data, isLoading, fetchNextPage } = useMyCart(0, 1)
+  const [listCartFormat, setListCartFormat] = useState<any[]>([])
+  const [isPayment, setIsPayment] = useState(false)
+  const [allSelected, setAllSelected] = useState(false)
+  const [pageSize] = useState(PageSizeLimit)
+
+  const { data, isLoading, loadMore, hasNextPage, refreshData } =
+    useMyCart(pageSize)
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
   const { refreshQuery } = useRefreshQuery()
 
-  const [listCartFormat, setListCartFormat] = useState<any[]>([])
-  const [isPayment, setIsPayment] = useState(false)
-  const [allSelected, setAllSelected] = useState(false)
-
   useEffect(() => {
     if (data) {
-      console.log({ data })
+      console.log({ dataHook: data })
 
-      // setListCartFormat((e) => {
-      //   const arr = data.map((eChil: any) => {
-      //     if (e.length > 0) {
-      //       const item = e.find((temp) => temp.id === eChil?.id)
-      //       if (item) {
-      //         return item
-      //       }
-      //     }
-      //     return { ...eChil, selected: false }
-      //   })
-      //   return arr
-      // })
+      setListCartFormat((e) => {
+        const arr = data.data.map((eChil: any) => {
+          if (e.length > 0) {
+            const item = e.find((temp) => temp.id === eChil?.id)
+            if (item) {
+              return item
+            }
+          }
+          return { ...eChil, selected: false }
+        })
+        return arr
+      })
     }
   }, [data])
 
@@ -89,9 +91,7 @@ const MyCartScreen = () => {
   const renderDesktop = () => {
     return (
       <div className="w-full">
-        <PrimaryButton onClick={() => fetchNextPage()}>
-          fetchNextPage
-        </PrimaryButton>
+        <PrimaryButton onClick={() => loadMore()}>loadMore</PrimaryButton>
         <BtnBack
           title={[translate('header.shop'), translate('header.cart')]}
           url={['/shop']}
@@ -130,6 +130,10 @@ const MyCartScreen = () => {
   const renderMobile = () => {
     return (
       <div className="mt-1">
+        <PrimaryButton onClick={() => loadMore()}>fetchNextPage</PrimaryButton>
+        <PrimaryButton onClick={() => refreshData()}>
+          {`${hasNextPage},refetch`}
+        </PrimaryButton>
         <BtnBack
           title={[translate('header.shop'), translate('header.cart')]}
           url={['/shop']}
@@ -170,7 +174,7 @@ const MyCartScreen = () => {
 
   return isPayment ? (
     <Payment
-      refreshData={refreshData}
+      refreshData={() => refreshData()}
       clickBack={() => setIsPayment(false)}
       dataCart={listCartFormat}
     />

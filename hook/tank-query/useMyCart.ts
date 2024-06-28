@@ -1,61 +1,45 @@
 import { PageSizeLimit } from '@/constant/app';
 import { QueryKey, TypeHookReactQuery } from '@/constant/reactQuery';
 import useUserData from '../useUserData';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import ServerApi from '@/services/serverApi';
-import { useMemo } from 'react';
+import ClientApi from '@/services/clientApi';
+import { DataBase, FB_FC } from '@/constant/firebase';
+import useQueryPagination from './useQueryPagination';
 
-// const getData = async ({ queryKey, pageParam = 0 }: any): Promise<TypeHookReactQuery> => {
-const getData = async (params: any): Promise<TypeHookReactQuery> => {
-  console.log('====================================');
-  console.log({ params });
-  console.log('====================================');
-  // console.log({ queryKey, pageParam });
-
-  // const queryData = `page=${queryKey[2]}&limit=${queryKey[3]}`
-  // const res = await ServerApi.requestBase({
-  //   url: `/cart-user/${queryKey[1]}?${queryData}`,
-  // })
-  // console.log('====================================');
-  // console.log({ res });
-  // console.log('====================================');
-
-  // return res.data || [];
-  return [];
-}
-
-const useMyCart = (pageLimit = PageSizeLimit, page = 1) => {
-  const { userData } = useUserData()
-  const { data, isLoading, refetch, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteQuery({
-    queryKey: [QueryKey.GetAllProduct, userData?.id?.toString(), page, pageLimit],
-    queryFn: (data) => {
-      const param = { ...data }
-      if (param.pageParam === true) {
-        console.log({ param });
-
-        param.queryKey[3] = Number(param.queryKey[3]) + 1
-
+const getDataList = async ({ queryKey, pageParam = 1 }: { queryKey: any, pageParam: any }): Promise<TypeHookReactQuery> => {
+  const dataServer = await ClientApi.reqServerFB({
+    nameDB: DataBase.cartUser,
+    body: {
+      id: queryKey[1],
+      data: {
+        page: pageParam,
+        limit: queryKey[2],
       }
-      getData(data)
     },
-    getNextPageParam: (lastPage: any) => {
-      console.log('====================================');
-      console.log({ lastPage });
-      console.log('====================================');
-      // return lastPage?.totalPage > lastPage?.page
-      return false
-    },
-    initialPageParam: 1,
-    enabled: !!userData?.id
-
+    namFn: FB_FC.getMyCart
   })
-
-  console.log({ data });
-
+  if (dataServer.data) {
+    return {
+      ...dataServer.data.data
+    }
+  }
 
   return {
-    data, isLoading, refetch, fetchNextPage, isFetchingNextPage, hasNextPage
+    "data": [],
+    "totalPage": 1,
+    "page": pageParam,
   }
+}
+
+const useMyCart = (pageLimit = PageSizeLimit) => {
+  const { userData, isLogin } = useUserData()
+
+  const data = useQueryPagination({
+    listQueryKey: [QueryKey.GetAllProduct, userData?.id?.toString(), pageLimit],
+    queryFn: getDataList,
+    enabled: isLogin
+  })
+
+  return data
 }
 
 export default useMyCart

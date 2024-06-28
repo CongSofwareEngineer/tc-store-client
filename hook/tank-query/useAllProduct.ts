@@ -4,7 +4,7 @@ import ServerApi from '@/services/serverApi';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 
-const getAllProduct = async ({ queryKey }: any): Promise<TypeHookReactQuery> => {
+const getAllProduct = async ({ queryKey }: any) => {
   const res = await ServerApi.getProduct(queryKey[1]?.trim() || '')
 
   return res.data || [];
@@ -12,7 +12,7 @@ const getAllProduct = async ({ queryKey }: any): Promise<TypeHookReactQuery> => 
 const useAllProduct = (query = '') => {
   const { data, isLoading, refetch, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: [QueryKey.GetAllProduct, query],
-    initialPageParam: false,
+    initialPageParam: true,
     queryFn: getAllProduct,
     getNextPageParam: (lastPage: {
       data: any; totalPage: number, page: number

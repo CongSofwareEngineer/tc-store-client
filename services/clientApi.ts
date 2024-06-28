@@ -4,11 +4,11 @@ import { encryptData } from "@/utils/crypto"
 import { pareResponseDataClient } from "@/utils/serverNext"
 import axios from "axios"
 
-type TypeParma = {
+export type ClientAPITypeParam = {
   nameDB: string
   namFn?: string
   body?: {
-    data?: string | { [key: string]: any }
+    data?: { [key: string]: any }
     id?: string | null
     queryData?: QueryData
     queryListData?: QueryData[]
@@ -19,7 +19,35 @@ type TypeParma = {
 
 
 const ClientApi = {
-  requestBase: async (param: TypeParma = {
+  reqServerFB: async (param: ClientAPITypeParam = {
+    nameDB: '',
+    namFn: '',
+    body: {},
+    encode: false
+  }) => {
+    try {
+      let req = null
+      param[process.env.NEXT_PUBLIC_KEY_SALT] = process.env.NEXT_PUBLIC_KEY_SALT
+
+      if (process.env.NEXT_PUBLIC_ENABLE_DEBUG_API === 'true') {
+        req = await axios.post('/api/serverCloud', {
+          data: encryptData(JSON.stringify(param)),
+          nameDB: `${param.nameDB}`,
+          namFn: `${param.namFn}`
+        })
+      } else {
+        req = await axios.post('/api/clientApi', { data: encryptData(JSON.stringify(param)) })
+      }
+      return pareResponseDataClient(param, req)
+
+    } catch (error) {
+      return {
+        data: null,
+        error: 'error?.response?.data?.message'
+      }
+    }
+  },
+  requestBase: async (param: ClientAPITypeParam = {
     nameDB: '',
     namFn: '',
     body: {},
