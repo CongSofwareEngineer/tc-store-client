@@ -57,7 +57,7 @@ export const pareResponseDataClient = async (param: any, req: any): Promise<{ da
     }
   }
   return {
-    data: req.data || req,
+    data: req.data?.data ?? req?.data ?? req ?? '',
     message: 'success'
   }
 }

@@ -26,6 +26,10 @@ export const images = {
     iconSmell: '/images/Home/smell.png'
   },
   icon: {
+    iconCheckBoxSelected: '/images/Icon/iconCheckBoxSelected.svg',
+    iconCheckBox: '/images/Icon/iconCheckBox.svg',
+    iconOptionPayment: '/images/Icon/iconOptionPayment.png',
+    iconMomo: '/images/Icon/iconMomo.png',
     iconWarning: '/images/Icon/iconWarning.png',
     iconDiscount: '/images/Icon/iconDiscount.png',
     iconBill: '/images/Icon/iconBill.webp',

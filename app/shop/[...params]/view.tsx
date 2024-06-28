@@ -66,21 +66,51 @@ const ShopDetailScreen = ({
   }
 
   const handleAddCartLogin = async () => {
-    const payLoad: BodyAddCart = {
-      amount: amountBuy,
-      date: Date.now(),
-      idProduct: productDetail.id?.toString(),
-      idUser: userData?.id?.toString(),
-      keyNameProduct: productDetail.keyName,
-    }
-    await ClientApi.requestBase({
+    const dataCart = await ClientApi.requestBase({
       nameDB: DataBase.cartUser,
-      encode: true,
-      namFn: FB_FC.addData,
+      namFn: FB_FC.queryListData,
       body: {
-        data: payLoad,
+        queryListData: [
+          {
+            key: 'idProduct',
+            match: '==',
+            value: productDetail.id?.toString() || '',
+          },
+          {
+            key: 'idUser',
+            match: '==',
+            value: userData?.id?.toString() || '',
+          },
+        ],
       },
     })
+    if (dataCart.data?.length > 0) {
+      const dataUpdate = dataCart.data[0]
+      dataUpdate.amount = dataUpdate.amount + amountBuy
+      await ClientApi.requestBase({
+        nameDB: DataBase.cartUser,
+        namFn: FB_FC.updateData,
+        body: {
+          data: dataUpdate,
+          id: dataUpdate.id,
+        },
+      })
+    } else {
+      const payLoad: BodyAddCart = {
+        amount: amountBuy,
+        date: Date.now(),
+        idProduct: productDetail.id?.toString(),
+        idUser: userData?.id?.toString(),
+        keyNameProduct: productDetail.keyName,
+      }
+      await ClientApi.requestBase({
+        nameDB: DataBase.cartUser,
+        namFn: FB_FC.addData,
+        body: {
+          data: payLoad,
+        },
+      })
+    }
   }
 
   const handleAddCart = async () => {

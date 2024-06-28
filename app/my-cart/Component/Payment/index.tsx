@@ -12,6 +12,8 @@ import BtnBack from './Component/BtnBack'
 import BillFinal from './Component/BillFinal'
 import ContentForm from './Component/ContentForm'
 import ListProduct from './Component/ListProduct'
+import OptionPayment from './Component/OptionPayment'
+import useOptionPayment from '@/hook/useOptionPayment'
 
 const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
   const { translate } = useLanguage()
@@ -22,6 +24,7 @@ const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
   const [loading, setLoading] = useState(false)
   const [listAddressShip, setListAddressShip] = useState<string[]>([])
   const [lisDataBill, setLisDataBill] = useState<DataItemType[]>([])
+  const { onChangeOptions, listOptions, optionSelected } = useOptionPayment()
 
   useEffect(() => {
     if (userData) {
@@ -134,7 +137,12 @@ const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
                 <ListProduct lisDataBill={lisDataBill} />
               </div>
 
-              <div className="lg:w-[300px]">
+              <div className="lg:w-[300px] flex flex-col md:gap-6 gap-5">
+                <OptionPayment
+                  onChangeOptions={onChangeOptions}
+                  listOptions={listOptions}
+                  optionSelected={optionSelected}
+                />
                 <BillFinal
                   loading={loading}
                   totalBill={getTotalPayBill()}

@@ -83,6 +83,11 @@
     "coursers": "Coursers",
     "student": "Student"
   },
+  "optionPayment": {
+    "onDelivery": "Thanh toán khi nhận hàng (COD)",
+    "banking": "Chuyển khoản",
+    "paymentMethod": "Phương Thức Thanh Toán"
+  },
   "bill": {
     "noteBill": "Ghi chú đơn hàng",
     "totalBill": "Tổng thanh toán",

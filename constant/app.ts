@@ -43,4 +43,10 @@ export enum FilterAPI {
   Electronic = 'electronic'
 }
 
-export const PageSizeLimit = 15 
+export const PageSizeLimit = 15
+
+export const OptionPayment = {
+  momo: 'momo',
+  banking: 'banking',
+  delivery: 'delivery'
+}

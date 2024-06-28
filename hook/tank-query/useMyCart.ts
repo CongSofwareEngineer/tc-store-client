@@ -19,7 +19,7 @@ const getDataList = async ({ queryKey, pageParam = 1 }: { queryKey: any, pagePar
   })
   if (dataServer.data) {
     return {
-      ...dataServer.data.data
+      ...dataServer.data
     }
   }
 
