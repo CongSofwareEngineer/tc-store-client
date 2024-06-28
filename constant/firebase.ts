@@ -20,6 +20,7 @@ export const DataBase = {
 
 export const FB_FC = {
   getAllData: 'getAllData',
+  getProductShop: 'getProductShop',
   getMyCart: 'getMyCart',
   getAllDataOption2: 'getAllDataOption2',
   queryData: 'queryData',

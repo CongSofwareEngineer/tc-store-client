@@ -43,13 +43,32 @@ export async function POST(req: any) {
         })
         break;
 
+      case FB_FC.getProductShop:
+        let listData
 
+        if (bodyDecode.body?.queryListData && bodyDecode.body?.queryListData?.length > 0) {
+          listData = await dataFB.queryData('typeProduct', 'in', bodyDecode.body?.queryListData)
+        } else {
+          listData = await dataFB.getAllData()
+        }
+        dataRequest = listData.map((e: any) => {
+          delete e.cost
+          return e
+        })
+
+        break;
     }
     const query = {
       page: bodyDecode.body?.data?.page,
       limit: bodyDecode.body?.data?.limit
     }
+
+
     dataRequest = processQuery(dataRequest, query)
+
+    console.log('====================================');
+    console.log({ query, dataRequest, queryListData: bodyDecode.body?.queryListData });
+    console.log('====================================');
     // return formatResponseDataServer({ data: 123 }, bodyDecode)
 
     return formatResponseDataServer(dataRequest, bodyDecode)

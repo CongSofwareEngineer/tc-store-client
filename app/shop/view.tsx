@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import MenuCategory from './Component/MenuCategory'
 import ItemProduct from '@/components/ItemProduct'
 import { Input } from 'antd'
@@ -8,11 +8,12 @@ import useLanguage from '@/hook/useLanguage'
 import useQuerySearch from '@/hook/useQuerySearch'
 import useAllProduct from '@/hook/tank-query/useAllProduct'
 import MyLoading from '@/components/MyLoading'
+import { PageSizeLimit } from '@/constant/app'
 
 const ShopScreen = () => {
   const { translate } = useLanguage()
-  const { currentQueries } = useQuerySearch()
-  const { data, isLoading } = useAllProduct(currentQueries)
+  const { queries } = useQuerySearch()
+  const { data, isLoading } = useAllProduct(1, PageSizeLimit, queries)
 
   return (
     <div className="w-full flex md:flex-row flex-col  md:gap-6 gap-3  h-full justify-star md:mt-3">

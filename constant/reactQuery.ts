@@ -1,5 +1,6 @@
 export enum QueryKey {
   GetAllProduct = 'GetAllProduct',
+  GetProductShop = 'GetProductShop',
   GetAllNests = 'GetAllNests',
   GetCommentProduction = 'GetCommentProduction',
   LengthCartUser = 'LengthCartUser',
