@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react'
+import React from 'react'
 import MenuCategory from './Component/MenuCategory'
 import ItemProduct from '@/components/ItemProduct'
 import { Input } from 'antd'
