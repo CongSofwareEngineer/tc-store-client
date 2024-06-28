@@ -6,7 +6,8 @@ import { FirebaseConfig } from '@/services/firebaseService';
 import { formatResponseDataServer, pareDataClient } from '@/utils/serverNext';
 import { processQuery } from './function';
 type ReqType = ClientAPITypeParam
-export async function POST(req: ReqType) {
+
+export async function POST(req: any) {
   try {
     const bodyDecode: ReqType = await pareDataClient(req)
 
