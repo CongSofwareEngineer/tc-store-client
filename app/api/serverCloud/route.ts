@@ -37,6 +37,7 @@ export async function POST(req: any) {
             disCount: product.disCount,
             totalAmount: product.amount,
             moreConfig: product.moreConfig || {},
+            price: product.price,
             ...e,
           }
         })
