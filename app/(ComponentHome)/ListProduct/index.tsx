@@ -5,7 +5,7 @@ import ItemProduct from '@/components/ItemProduct'
 import MyLoading from '@/components/MyLoading'
 import useLanguage from '@/hook/useLanguage'
 import Link from 'next/link'
-import { FilterAPI } from '@/constant/app'
+import { FilterAPI, PageSizeLimit } from '@/constant/app'
 import {
   AlignLeftOutlined,
   CaretRightOutlined,
@@ -14,7 +14,9 @@ import {
 import { CollapseCustom } from './styled'
 
 const ListProduct = ({ title, type = 'all' }: ListProductType) => {
-  const { data, isLoading } = useAllProduct(`?typeProduct=${type}`)
+  const { data, isLoading } = useAllProduct(1, PageSizeLimit, {
+    typeProduct: type,
+  })
   const { translate } = useLanguage()
 
   const renderListItem = () => {
