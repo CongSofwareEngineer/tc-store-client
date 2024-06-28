@@ -3,8 +3,8 @@
 import { DataBase, FB_FC } from '@/constant/firebase';
 import { ClientAPITypeParam } from '@/services/clientApi';
 import { FirebaseConfig } from '@/services/firebaseService';
+import { processQuery } from '@/utils/functions';
 import { formatResponseDataServer, pareDataClient } from '@/utils/serverNext';
-import { processQuery } from './function';
 type ReqType = ClientAPITypeParam
 
 export async function POST(req: any) {
