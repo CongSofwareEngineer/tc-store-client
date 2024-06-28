@@ -19,8 +19,7 @@ const MyCartScreen = () => {
   const [allSelected, setAllSelected] = useState(false)
   const [pageSize] = useState(PageSizeLimit)
 
-  const { data, isLoading, loadMore, hasNextPage, refreshData } =
-    useMyCart(pageSize)
+  const { data, isLoading, refreshData } = useMyCart(pageSize)
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
   const { refreshQuery } = useRefreshQuery()
@@ -91,7 +90,6 @@ const MyCartScreen = () => {
   const renderDesktop = () => {
     return (
       <div className="w-full">
-        <PrimaryButton onClick={() => loadMore()}>loadMore</PrimaryButton>
         <BtnBack
           title={[translate('header.shop'), translate('header.cart')]}
           url={['/shop']}
@@ -130,10 +128,6 @@ const MyCartScreen = () => {
   const renderMobile = () => {
     return (
       <div className="mt-1">
-        <PrimaryButton onClick={() => loadMore()}>fetchNextPage</PrimaryButton>
-        <PrimaryButton onClick={() => refreshData()}>
-          {`${hasNextPage},refetch`}
-        </PrimaryButton>
         <BtnBack
           title={[translate('header.shop'), translate('header.cart')]}
           url={['/shop']}

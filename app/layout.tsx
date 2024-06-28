@@ -14,7 +14,7 @@ import ReactQueryProvider from '@/components/ReactQueryProvider'
 import fetchConfig from '@/configs/fetchConfig'
 import DrawerProvider from '@/components/DrawerProvider'
 const inter = Inter({ subsets: ['latin'] })
-
+import { SpeedInsights } from '@vercel/speed-insights/next'
 const BaseMeta = {
   title: process.env.NEXT_PUBLIC_TITLE,
   description: process.env.NEXT_PUBLIC_TITLE_DES,
@@ -106,6 +106,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
             </AntdRegistry>
           </StyledComponentsRegistry>
         </ReactQueryProvider>
+        <SpeedInsights />
       </body>
     </html>
   )
