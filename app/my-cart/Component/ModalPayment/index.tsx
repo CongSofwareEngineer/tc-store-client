@@ -40,7 +40,7 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
         gmail: userData?.gmail || '',
       }
       setFormData(initData)
-      if (Array.isArray(userData?.addressShipper)) {
+      if (userData?.addressShipper && Array.isArray(userData?.addressShipper)) {
         setListAddressShip(userData?.addressShipper)
       }
     }

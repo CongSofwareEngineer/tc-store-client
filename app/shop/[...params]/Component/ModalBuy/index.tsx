@@ -43,7 +43,7 @@ const ModalBuyLogin = ({ data, amount }: ModalBuyLoginType) => {
         amount: amount,
       }
       setFormData(initData)
-      if (Array.isArray(userData?.addressShipper)) {
+      if (userData?.addressShipper && Array.isArray(userData?.addressShipper)) {
         setListAddressShip(userData?.addressShipper)
       }
     } else {

@@ -16,7 +16,7 @@ const ContentFormPayment = () => {
   const [listAddressShip, setListAddressShip] = useState<string[]>([])
 
   useEffect(() => {
-    if (Array.isArray(userData?.addressShipper)) {
+    if (userData?.addressShipper && Array.isArray(userData?.addressShipper)) {
       setListAddressShip(userData?.addressShipper)
     }
   }, [userData])

@@ -37,7 +37,7 @@ const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
         noteBil: '',
       }
       setFormData(initData)
-      if (Array.isArray(userData?.addressShipper)) {
+      if (userData?.addressShipper && Array.isArray(userData?.addressShipper)) {
         setListAddressShip(userData?.addressShipper)
       }
     }
