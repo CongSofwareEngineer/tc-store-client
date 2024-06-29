@@ -4,7 +4,8 @@ import React from 'react'
 import MyImage from '../MyImage'
 import { CopyOutlined } from '@ant-design/icons'
 import { copyToClipboard, viewExternal } from '@/utils/functions'
-import GgMap from './ggMap'
+import dynamic from 'next/dynamic'
+const GgMap = dynamic(() => import('./ggMap'), { ssr: true })
 
 const Item = ({ icon, value, link, type }: any) => {
   const { isMobile } = useMedia()
