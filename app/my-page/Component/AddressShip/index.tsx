@@ -14,7 +14,7 @@ const AddressShip = () => {
 
   const handleUpdate = (addressOld: string, index: number) => {
     const callBack = async (address?: string) => {
-      if (Array.isArray(userData?.addressShipper)) {
+      if (userData?.addressShipper && Array.isArray(userData?.addressShipper)) {
         const arrOld = [...userData?.addressShipper]
         arrOld[index] = address?.toString() || ''
 
