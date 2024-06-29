@@ -8,6 +8,7 @@ import { useAppDispatch } from '@/redux/store'
 import { setMenuCategory } from '@/redux/categoryMenuSlice'
 import useCheckPatchName from '@/hook/tank-query/useCheckPatchName'
 import useMedia from '@/hook/useMedia'
+import Footer from '../Footer'
 
 const ClientRender = ({
   children,
@@ -16,15 +17,19 @@ const ClientRender = ({
   children: React.ReactNode
   menuCategory: any[]
 }) => {
+  useCheckPatchName()
   const { refreshLogin } = useUserData()
   const dispatch = useAppDispatch()
   const { isMobile } = useMedia()
-  useCheckPatchName()
 
   useLayoutEffect(() => {
     refreshLogin()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useLayoutEffect(() => {
     dispatch(setMenuCategory(menuCategory))
-  }, [dispatch, menuCategory, refreshLogin])
+  }, [dispatch, menuCategory])
 
   return (
     <>
@@ -34,6 +39,7 @@ const ClientRender = ({
           {children}
         </section>
       </main>
+      <Footer />
       <ToastContainer
         className={'mb-3'}
         style={{ marginTop: isMobile ? 65 : 0 }}

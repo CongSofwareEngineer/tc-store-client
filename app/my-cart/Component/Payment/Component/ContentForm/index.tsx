@@ -21,7 +21,7 @@ const ContentForm = ({
   const handleAddAddress = async (address: string) => {
     const arrNew: string[] = [...listAddressShip, address]
     const handleUpdate = async () => {
-      await ClientApi.updateAddress(userData?.id?.toString(), arrNew)
+      await ClientApi.updateAddress(userData?.id, arrNew)
       await refreshLogin()
     }
     handleUpdate()
@@ -53,6 +53,7 @@ const ContentForm = ({
 
       <div className="relative w-full border-[1px] my-3 border-gray-300" />
 
+      <div className="flex md:flex-row gap-6"></div>
       <div className="flex md:gap-6 gap-3 flex-col md:grid md:grid-cols-2 md:pb-2 pb-0">
         <InputForm
           validator={checkNumberPhone}
@@ -84,9 +85,10 @@ const ContentForm = ({
         />
       </div>
       <InputAreaForm
+        rows={2}
         name="noteBil"
         label={translate('bill.noteBill')}
-        className="w-full relative top-[-10px]"
+        className="w-full relative"
       />
     </div>
   )

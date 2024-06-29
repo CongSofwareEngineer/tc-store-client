@@ -5,19 +5,23 @@ import { images } from '@/configs/images'
 import PrimaryButton from '../PrimaryButton'
 import SecondButton from '../SecondButton'
 import useModalDrawer from '@/hook/useModalDrawer'
+import useMedia from '@/hook/useMedia'
 type ModalDeleteType = {
   des?: string
   callback?: (param?: any) => Promise<void> | void
   title?: string
+  titleConfirm?: string
 }
 const ModalDelete = ({
   des = '',
   title = '',
+  titleConfirm = '',
   callback = () => {},
 }: ModalDeleteType) => {
   const { translate } = useLanguage()
-
+  const { isMobile } = useMedia()
   const { closeModalDrawer } = useModalDrawer()
+
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async () => {
@@ -37,25 +41,26 @@ const ModalDelete = ({
       <div className="m-auto my-2">
         <MyImage
           src={images.icon.iconWarning}
-          heightImage="120px"
+          heightImage={isMobile ? '70px' : '120px'}
           alt="icon-modal-delete"
+          widthImage="auto"
         />
       </div>
-      <div className="text-center mb-2 max-w-[90%] m-auto">{des}</div>
+      <div className="text-center mb-2 md:max-w-[90%] m-auto">{des}</div>
       <div className="w-full flex gap-4">
         <div className="flex-1">
           <PrimaryButton
             loading={loading}
-            className="w-full"
+            widthBtn="100%"
             onClick={handleSubmit}
           >
-            {translate('common.ok')}
+            {titleConfirm || translate('common.ok')}
           </PrimaryButton>
         </div>
         <div className="flex-1">
           <SecondButton
             disabled={loading}
-            className="w-full"
+            widthBtn="100%"
             onClick={closeModalDrawer}
           >
             {translate('common.close')}

@@ -26,6 +26,9 @@ export const images = {
     iconSmell: '/images/Home/smell.png'
   },
   icon: {
+    iconHome: '/images/Icon/iconHome.png',
+    iconMyUser: '/images/Icon/iconMyUser.png',
+    iconLoadingModal: '/images/Icon/iconLoadingModal.png',
     iconCheckBoxSelected: '/images/Icon/iconCheckBoxSelected.svg',
     iconCheckBox: '/images/Icon/iconCheckBox.svg',
     iconOptionPayment: '/images/Icon/iconOptionPayment.png',

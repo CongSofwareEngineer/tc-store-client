@@ -4,7 +4,7 @@ import queryString from 'query-string';
 import { cloneData } from '@/utils/functions';
 
 const useQuerySearch = () => {
-  const [queries, setQueries] = useState<Record<string, (string | null)[]>>({})
+  const [queries, setQueries] = useState<Record<string, (string | null)[]> | null>(null)
   const [currentQueries, setCurrentQueries] = useState<string>('')
   const searchParam = useSearchParams()
   const pathPage = usePathname()

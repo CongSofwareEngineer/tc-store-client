@@ -85,14 +85,7 @@ const ItemCart = ({
         )}
 
         <TD $noBorder={noBorder} className="w-[100px] ">
-          <div className="flex justify-center">
-            <MyImage
-              widthImage={'auto'}
-              heightImage={'80px'}
-              src={data?.imageMain}
-              alt={`item-${data.id}`}
-            />
-          </div>
+          <div className="flex justify-center"></div>
         </TD>
         <TD $noBorder={noBorder}>
           <div className="flex flex-col gap-1">

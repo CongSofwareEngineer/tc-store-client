@@ -20,6 +20,7 @@ export const DataBase = {
 
 export const FB_FC = {
   getAllData: 'getAllData',
+  getDataByLimit: 'getDataByLimit',
   getProductShop: 'getProductShop',
   getMyCart: 'getMyCart',
   getAllDataOption2: 'getAllDataOption2',
@@ -38,7 +39,7 @@ export type DatabaseCollectionType = CollectionReference<DocumentData, DocumentD
 export type DatabaseDocsType = DocumentReference<DocumentData, DocumentData>
 export type DatabaseType = any
 
-export type QueryData = { key: string, match: WhereFilterOp, value: string }
+export type QueryData = { key: string, match: WhereFilterOp, value: any }
 
 
 // type data body to work fire store
@@ -59,5 +60,7 @@ export type BodyAddBill = {
   abort: boolean,
   addressShip: string,
   discount: number,
-  sdt: string
+  sdt: string,
+  iDBanking?: number,
+  iDMomo?: number | string
 }

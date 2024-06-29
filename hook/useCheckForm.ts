@@ -6,14 +6,18 @@ const useCheckForm = () => {
   const { translate } = useLanguage()
 
   const checkNumberPhone = useCallback((sdt: string) => {
-    if (!sdt) {
+    try {
+      if (!sdt) {
+        return translate('warning.errorSDT')
+      }
+      const phoneNumber = parsePhoneNumber(sdt, 'VN')
+      if (phoneNumber && phoneNumber.isValid()) {
+        return null
+      }
+      return translate('warning.errorSDT')
+    } catch (error) {
       return translate('warning.errorSDT')
     }
-    const phoneNumber = parsePhoneNumber(sdt, 'VN')
-    if (phoneNumber && phoneNumber.isValid()) {
-      return null
-    }
-    return translate('warning.errorSDT')
   }, [translate])
 
   const checkEmail = useCallback((email: string) => {

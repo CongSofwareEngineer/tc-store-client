@@ -66,7 +66,9 @@
     "female": "Nữ",
     "product": "Sản phẩm",
     "contactShop": "Nhắn tin với Shop",
-    "note": "Ghi Chú"
+    "note": "Ghi Chú",
+    "now": "Hiện tại",
+    "newValue": "Giá trị mới"
   },
   "addCart": {
     "addSuccess": "Đã thêm vào giỏ hàng",
@@ -178,6 +180,12 @@
       "start_des": "Waiting success your transaction",
       "success": "Your transaction success",
       "success_des": "Your transaction success. You can view transaction in scan"
+    },
+    "bill": {
+      "confirm": "Xác nhận mua hàng",
+      "confirm_des": "Shop sẽ liên hệ lại về hàng giá trị lớn. Kiểm tra kỹ trước khi nhận vì không thể sửa đơn hàng. ",
+      "createBill": "Đang tạo đơn hàng",
+      "createBill_Des": "Sau khi tạo xong. Bạn vào lịch sử đặt hàng kiểm tra tình trạng đơn hàng"
     }
   },
   "success": {
@@ -217,5 +225,10 @@
     "logOut": "Bạn đã đăng xuất",
     "loginSuccess": "Đăng nhập thành công",
     "loginError": "Sài SĐT name hoặc mật khẩu"
+  },
+  "myPage": {
+    "myOder": "Đơn hàng",
+    "myUser": "Tôi",
+    "updateSuccess": "Cập nhật thành công"
   }
 }

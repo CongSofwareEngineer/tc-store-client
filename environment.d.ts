@@ -22,7 +22,10 @@ interface EnvironmentVariables {
   readonly NEXT_PUBLIC_KEY_SALT: string
   readonly NEXT_PUBLIC_ENABLE_DEBUG_API: string
   readonly NEXT_PUBLIC_UPLOAD_CARE: string
-  readonly NEXT_PUBLIC_UPLOAD_CARE_URL: string
+  readonly NEXT_PUBLIC_UPLOAD_CARE_URL: string,
+  readonly NEXT_PUBLIC_KEY_IV_ENCODE: string,
+  readonly NEXT_PUBLIC_API_KEY_GG_MAP: string
+
 }
 
 declare namespace NodeJS {

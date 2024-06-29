@@ -1,5 +1,5 @@
 import { PageSizeLimit } from "@/constant/app"
-import { BodyAddCart, DataBase, FB_FC, QueryData } from "@/constant/firebase"
+import { BodyAddBill, BodyAddCart, DataBase, FB_FC, QueryData } from "@/constant/firebase"
 import { encryptData } from "@/utils/crypto"
 import { pareResponseDataClient } from "@/utils/serverNext"
 import axios from "axios"
@@ -113,6 +113,7 @@ const ClientApi = {
     })
     return req
   },
+
   removeCart: async (id: string) => {
     const req = await ClientApi.requestBase({
       nameDB: DataBase.cartUser,
@@ -123,6 +124,7 @@ const ClientApi = {
     })
     return req
   },
+
   updateAddress: async (isUser: string | undefined, data: string[]) => {
     const req = await ClientApi.requestBase({
       nameDB: DataBase.user,
@@ -136,6 +138,46 @@ const ClientApi = {
       encode: true,
     })
     return req
+  },
+
+  updateProductToSold: async (id: string, amountSold: number) => {
+    const item = await ClientApi.requestBase({
+      nameDB: DataBase.productShop,
+      body: {
+        id
+      },
+      namFn: FB_FC.getDataByID,
+    })
+    const amountSoldNew = item.data.sold + amountSold
+    // await ClientApi.requestBase({
+    //   nameDB: DataBase.productShop,
+    //   body: {
+    //     data: {
+    //       sold: amountSoldNew
+    //     },
+    //     id
+    //   },
+    //   namFn: FB_FC.updateData,
+    // })
+
+  },
+
+  createBill: async (bodyBill: BodyAddBill) => {
+    const litsProductFun = bodyBill.listProduction.map(e => {
+      return ClientApi.updateProductToSold(e.idProduct, e.amount)
+    })
+    Promise.all(litsProductFun)
+
+    // await ClientApi.requestBase({
+    //   nameDB: DataBase.bill,
+    //   body: {
+    //     data: bodyBill,
+    //   },
+    //   encode: true,
+    //   namFn: FB_FC.addData,
+    // })
+
+
   }
 }
 export default ClientApi

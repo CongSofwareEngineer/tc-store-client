@@ -23,7 +23,14 @@ const NavMobile = () => {
     closeModalDrawer()
   }
   return (
-    <div className="flex flex-1  flex-col gap-5 ml-2">
+    <div className="flex flex-1  flex-col gap-3 ml-2">
+      <LinkCustom
+        onClick={closeModalDrawer}
+        $isSelected={pathname === '/my-page'}
+        href={'/my-page'}
+      >
+        {translate('myProfile.myProfile')}
+      </LinkCustom>
       <LinkCustom
         onClick={closeModalDrawer}
         $isSelected={pathname === '/' || pathname === ''}

@@ -34,7 +34,7 @@ const useMyCart = (pageLimit = PageSizeLimit) => {
   const { userData, isLogin } = useUserData()
 
   const data = useQueryPagination({
-    listQueryKey: [QueryKey.GetAllProduct, userData?.id?.toString(), pageLimit],
+    listQueryKey: [QueryKey.GetAllProduct, userData?.id, pageLimit],
     queryFn: getDataList,
     enabled: isLogin
   })

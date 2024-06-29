@@ -1,6 +1,7 @@
-import { Button, ButtonProps } from 'antd'
+import { Button as ButtonCustom } from 'antd'
 import styled from 'styled-components'
-const ButtonCustom = styled(Button)`
+import { ButtonPropsType } from '../PrimaryButton'
+const Button = styled(ButtonCustom)<any>`
   background: #fcd34d !important;
   color: black !important;
   :active :hover {
@@ -8,9 +9,27 @@ const ButtonCustom = styled(Button)`
     background: #fcd34d !important;
     color: black !important;
   }
+  height: ${(props) => props.$heightBtn} !important;
+  width: ${(props) => props.$widthBtn} !important;
+  border-radius: ${(props) => (props.$noBorderRadius ? 0 : 6)}px !important;
 `
-const SecondButton = ({ children, ...props }: ButtonProps) => {
-  return <ButtonCustom {...props}>{children}</ButtonCustom>
+const SecondButton = ({
+  children,
+  heightBtn = '35px',
+  widthBtn = 'auto',
+  noBorderRadius = false,
+  ...props
+}: ButtonPropsType) => {
+  return (
+    <Button
+      $heightBtn={heightBtn}
+      $widthBtn={widthBtn}
+      $noBorderRadius={noBorderRadius}
+      {...props}
+    >
+      {children}
+    </Button>
+  )
 }
 
 export default SecondButton

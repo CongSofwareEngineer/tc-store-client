@@ -26,9 +26,12 @@ const MyFilter = ({
   const getNumberQuery = useMemo(() => {
     try {
       let numberQuery = 0
-      Object.values(queries).forEach((e) => {
-        numberQuery += e.length
-      })
+      if (queries) {
+        Object.values(queries).forEach((e) => {
+          numberQuery += e.length
+        })
+      }
+
       return numberQuery
     } catch (error) {
       console.log({ errorgetNumberQuery: error })

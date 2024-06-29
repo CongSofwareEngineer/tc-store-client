@@ -3,7 +3,10 @@ import sha256 from 'crypto-js/sha256';
 
 export const encryptData = (value: string | object, pinCode: string = process.env.NEXT_PUBLIC_KEY_SALT) => {
   try {
-    return crypto.AES.encrypt(value.toString(), pinCode).toString()
+    const iv = crypto.enc.Hex.parse(process.env.NEXT_PUBLIC_KEY_IV_ENCODE);
+    return crypto.AES.encrypt(JSON.stringify(value), crypto.enc.Utf8.parse(pinCode), {
+      iv: iv
+    }).toString()
   } catch (error) {
     return ''
   }
@@ -19,7 +22,13 @@ export const encryptDataSha256 = (value: string | object) => {
 
 export const decryptData = (value: any, pinCode: string = process.env.NEXT_PUBLIC_KEY_SALT) => {
   try {
-    return crypto.AES.decrypt(value.toString(), pinCode).toString(crypto.enc.Utf8)
+    const iv = crypto.enc.Hex.parse(process.env.NEXT_PUBLIC_KEY_IV_ENCODE);
+    const bytes = crypto.AES.decrypt(value.toString(), crypto.enc.Utf8.parse(pinCode), {
+      iv: iv
+    })
+
+    const decryptedData = JSON.parse(bytes.toString(crypto.enc.Utf8));
+    return decryptedData
   } catch (error) {
     return ''
   }

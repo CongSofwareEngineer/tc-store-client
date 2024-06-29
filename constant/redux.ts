@@ -23,13 +23,23 @@ export const INIT_STATE = {
   [SLICE.CategoryMenu]: []
 }
 
+
+export type TypeUserData = {
+  id?: string
+  address?: string
+  addressShipper: string[]
+  sdt?: string
+  name?: string
+  [key: string]: any
+}
+
 export type TYPE_SLICE = {
   [SLICE.Language]: {
     locale: string,
     messages: any
   }
   [SLICE.Setting]: Object | null
-  [SLICE.UserData]: { [key: string]: string | string[] } | null
+  [SLICE.UserData]: TypeUserData | null
   [SLICE.ConnectedChain]: Number,
   [SLICE.CategoryMenu]: Array<{ key: string, name: string }>
 }

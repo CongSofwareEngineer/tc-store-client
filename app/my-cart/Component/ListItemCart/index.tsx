@@ -16,7 +16,6 @@ const ListItemCart = ({
   allSelected = false,
 }: ListItemCartType) => {
   const { isMobile } = useMedia()
-  console.log({ loading })
 
   const renderMobile = () => {
     return (

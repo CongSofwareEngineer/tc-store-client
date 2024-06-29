@@ -27,6 +27,12 @@ p {
 }
 
 .ant-drawer {
+  .ant-drawer-header {
+    @media screen and (max-width: 768px) {
+      padding: 10px !important;
+    }
+  }
+
   .ant-drawer-body {
     @media screen and (max-width: 768px) {
       padding: 20px !important;

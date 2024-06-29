@@ -44,7 +44,7 @@ const OptionPayment = ({
             >
               <div
                 onClick={() => onChangeOptions(e)}
-                className="cursor-pointer flex gap-2 text-medium items-center"
+                className="cursor-pointer flex gap-2  md:text-[16px] text-[14px] items-center"
               >
                 <MyImage
                   heightImage="20px"

@@ -1,21 +1,24 @@
 import React from 'react'
 import { ListProductType } from './type'
-import useAllProduct from '@/hook/tank-query/useAllProduct'
 import ItemProduct from '@/components/ItemProduct'
 import MyLoading from '@/components/MyLoading'
 import useLanguage from '@/hook/useLanguage'
 import Link from 'next/link'
-import { FilterAPI, PageSizeLimit } from '@/constant/app'
+import { FilterAPI } from '@/constant/app'
 import {
   AlignLeftOutlined,
   CaretRightOutlined,
   RightOutlined,
 } from '@ant-design/icons'
 import { CollapseCustom } from './styled'
+import useProductByLimit from '@/hook/tank-query/useProductByLimit'
+import { DataBase } from '@/constant/firebase'
 
 const ListProduct = ({ title, type = 'all' }: ListProductType) => {
-  const { data, isLoading } = useAllProduct(1, PageSizeLimit, {
-    typeProduct: type,
+  const { data, isLoading } = useProductByLimit(DataBase.productShop, {
+    key: 'typeProduct',
+    match: 'in',
+    value: [type],
   })
   const { translate } = useLanguage()
 

@@ -5,7 +5,7 @@ import { useCallback, useMemo } from 'react'
 import useLanguage from './useLanguage'
 import { showNotificationError, showNotificationSuccess } from '@/utils/functions'
 import secureLocalStorage from "react-secure-storage";
-import { decryptData, encryptData, encryptDataSha256 } from '@/utils/crypto'
+import { decryptData, encryptData } from '@/utils/crypto'
 import { SLICE } from '@/constant/redux'
 import ClientApi from '@/services/clientApi'
 import useModalDrawer from './useModalDrawer'
@@ -50,12 +50,17 @@ const useUserData = () => {
   const refreshLogin = useCallback(async () => {
     const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
     if (dataSecure) {
+
       const dataDecode = decryptData(dataSecure.toString())
       const dataPare = JSON.parse(dataDecode)
-      dispatch(setUserData(dataPare))
+
       const data = await loginFireBase(dataPare.sdt, dataPare.pass)
       if (data.length === 0) {
         logOut()
+      } else {
+        dispatch(setUserData(data[0]))
+        const userEncode = encryptData(JSON.stringify(data[0]))
+        secureLocalStorage.setItem(SLICE.UserData, userEncode)
       }
     } else {
       logOut()
@@ -65,7 +70,8 @@ const useUserData = () => {
 
   const login = useCallback(async (numberPhone: string, pass: string) => {
     try {
-      const data = await loginFireBase(numberPhone, encryptDataSha256(pass))
+      const encodePass = encryptData(pass)
+      const data = await loginFireBase(numberPhone, encodePass)
 
       if (data.length === 0) {
         showNotificationError(translate('noti.loginError'))

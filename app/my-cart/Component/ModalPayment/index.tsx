@@ -72,7 +72,7 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
   const handleAddAddress = async (address: string) => {
     const arrNew = [...listAddressShip, address]
     const handleUpdate = async () => {
-      await ClientApi.updateAddress(userData?.id?.toString(), arrNew)
+      await ClientApi.updateAddress(userData?.id, arrNew)
       await refreshLogin()
     }
     handleUpdate()
@@ -110,7 +110,7 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
         addressShip: formData?.addressShip,
         date: Date.now(),
         discount: 0,
-        idUser: userData?.id.toString(),
+        idUser: userData?.id,
         listProduction,
         total: totalBill,
         sdt: formData?.sdt,

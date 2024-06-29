@@ -1,6 +1,6 @@
 import { DatabaseDocsType, DatabaseQueryType, DatabaseType, QueryData } from "@/constant/firebase";
-import { QueryDocumentSnapshot, QuerySnapshot, WhereFilterOp, addDoc, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, startAfter, updateDoc, where } from "firebase/firestore/lite";
-import { decryptData, encryptData } from "./crypto";
+import { WhereFilterOp, addDoc, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, startAfter, updateDoc, where } from "firebase/firestore/lite";
+import { encryptData } from "./crypto";
 import { PageSizeLimit } from "@/constant/app";
 
 export default class FirebaseFun {
@@ -30,6 +30,17 @@ export default class FirebaseFun {
     })
   }
 
+  async queryDataByLimit(queryData: QueryData, limitSize: number) {
+    const docDetail: DatabaseQueryType = query(
+      this.db,
+      where(queryData.key, queryData.match, queryData.value),
+      limit(limitSize)
+    );
+    const data = await getDocs(docDetail)
+    return data.docs.map((doc) => {
+      return this.formatData(doc);
+    })
+  }
 
   async queryData(key: string, match: WhereFilterOp, value: any) {
     const docDetail: DatabaseQueryType = query(this.db, where(key, match, value));
@@ -52,7 +63,7 @@ export default class FirebaseFun {
 
   async updateData(id: string, data: any): Promise<boolean> {
     try {
-      const temp: DatabaseDocsType = await doc(this.db, id);
+      const temp: DatabaseDocsType = doc(this.db, id);
       await updateDoc(temp, data)
       return true
     } catch (error) {
@@ -85,6 +96,8 @@ export default class FirebaseFun {
       return false
     }
   }
+
+
 
   async queryDataOption2(dataLast: any, querySQL: QueryData, keyOderBy: string, limitPage: number = PageSizeLimit) {
     try {

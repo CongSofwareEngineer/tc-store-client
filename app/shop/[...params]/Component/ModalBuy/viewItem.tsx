@@ -1,9 +1,10 @@
 import MyImage from '@/components/MyImage'
+import SubAndPlus from '@/components/SubAndPlus'
 import useLanguage from '@/hook/useLanguage'
+import useMedia from '@/hook/useMedia'
 import { formatPrice } from '@/utils/functions'
 import { Col, Row } from 'antd'
 import React from 'react'
-import Media from 'react-media'
 
 const ViewItem = ({
   data,
@@ -15,16 +16,7 @@ const ViewItem = ({
   setAmount: (amount: number) => void
 }) => {
   const { translate } = useLanguage()
-
-  const handleChangeAmount = (isPlus = false) => {
-    if (isPlus) {
-      setAmount(amount + 1)
-    } else {
-      if (amount > 1) {
-        setAmount(amount - 1)
-      }
-    }
-  }
+  const { isMobile } = useMedia()
 
   const renderTextMobile = (title: string, value: string | number) => {
     return (
@@ -37,10 +29,10 @@ const ViewItem = ({
 
   const renderDesktop = () => {
     return (
-      <div className="w-full flex flex-col gap-3 mt-2">
-        <Row gutter={10} className="bg-slate-100">
+      <div className="w-full flex flex-col gap-3 mt-2 overflow-y-hidden">
+        <Row className="bg-slate-100">
           <Col span={3}>
-            <div>{translate('textPopular.image')}</div>
+            <div className="">{translate('textPopular.image')}</div>
           </Col>
           <Col span={9}>
             <div className="w-full ">{translate('header.name')}</div>
@@ -56,7 +48,7 @@ const ViewItem = ({
             <div className="text-end">{translate('bill.priceTotal')}</div>
           </Col>
         </Row>
-        <Row gutter={10}>
+        <Row>
           <Col span={3}>
             <div className="w-[80%] aspect-square overflow-hidden">
               <MyImage
@@ -77,23 +69,12 @@ const ViewItem = ({
             <div>{formatPrice(data?.price)} VNĐ</div>
           </Col>
           <Col span={3}>
-            <div className="text-center flex justify-center">
-              <span
-                onClick={() => handleChangeAmount(false)}
-                className="w-6 border-[1px] border-black cursor-pointer"
-              >
-                -
-              </span>
-              <span className="min-w-6 border-[1px] border-black cursor-pointer">
-                {amount}
-              </span>
-              <span
-                onClick={() => handleChangeAmount(true)}
-                className="w-6 border-[1px] border-black cursor-pointer"
-              >
-                +
-              </span>
-            </div>
+            <SubAndPlus
+              value={amount}
+              callBackPlus={setAmount}
+              callBackSub={setAmount}
+              isSquare
+            />
           </Col>
           <Col span={4}>
             <div className="text-end">
@@ -104,6 +85,7 @@ const ViewItem = ({
       </div>
     )
   }
+
   const renderMobile = () => {
     return (
       <div className="w-full ">
@@ -140,28 +122,12 @@ const ViewItem = ({
                 translate('productDetail.price'),
                 `${formatPrice(data?.price)} VNĐ`
               )}
-              <div className="flex gap-1">
-                <span className="font-bold">
-                  {translate('textPopular.amount')} :{' '}
-                </span>
-                <div className="text-center flex items-center">
-                  <span
-                    onClick={() => handleChangeAmount(false)}
-                    className="leading-3 h-5 w-6 border-[1px] border-black cursor-pointer"
-                  >
-                    -
-                  </span>
-                  <span className="leading-[14px] h-[18px] min-w-6 border-[1px] border-black cursor-pointer">
-                    {amount}
-                  </span>
-                  <span
-                    onClick={() => handleChangeAmount(true)}
-                    className="leading-3 h-5 w-6 border-[1px] border-black cursor-pointer"
-                  >
-                    +
-                  </span>
-                </div>
-              </div>
+              <SubAndPlus
+                value={amount}
+                callBackPlus={setAmount}
+                callBackSub={setAmount}
+                isSquare
+              />
               {renderTextMobile(
                 translate('bill.priceTotal'),
                 `${formatPrice(data?.price * amount)} VNĐ`
@@ -172,16 +138,8 @@ const ViewItem = ({
       </div>
     )
   }
-  return (
-    <Media query="(min-width: 768px)">
-      {(match) => {
-        if (match) {
-          return renderDesktop()
-        }
-        return renderMobile()
-      }}
-    </Media>
-  )
+
+  return isMobile ? renderMobile() : renderDesktop()
 }
 
 export default ViewItem

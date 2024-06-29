@@ -8,12 +8,14 @@ import { Dropdown, MenuProps } from 'antd'
 import CartUser from './cartUser'
 import useMedia from '@/hook/useMedia'
 import useModalDrawer from '@/hook/useModalDrawer'
+import { useRouter } from 'next/navigation'
 
 const Account = () => {
   const { openModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
   const { isLogin, logOut, userData } = useUserData()
   const { isMobile } = useMedia()
+  const route = useRouter()
 
   const handleLogin = () => {
     if (isLogin) {
@@ -42,9 +44,9 @@ const Account = () => {
 
   const renderTitleDrawer = () => {
     return (
-      <div className="flex gap-1 items-center">
+      <div className="flex flex-col   w-full">
         <span>{userData?.name}</span>
-        <div className="bg-black w-[2px] h-[14px]" />
+        {/* <div className="bg-black w-[2px] h-[14px]" /> */}
         <span>{userData?.sdt}</span>
       </div>
     )
@@ -78,7 +80,10 @@ const Account = () => {
       {
         key: '1',
         label: (
-          <div onClick={handleLogin} className="cursor-pointer">
+          <div
+            onClick={() => route.push('/my-page')}
+            className="cursor-pointer"
+          >
             {translate('myProfile.myProfile')}
           </div>
         ),

@@ -7,11 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 
 
 const getAllProduct = async ({ queryKey }: { queryKey: any }): Promise<TypeHookReactQuery> => {
-  // const res = await ServerApi.getProduct(queryKey[1]?.trim() || '')
-
-  // return res.data || [];
   const query = queryKey[3]
-  console.log({ query: queryKey[3] });
   const dataServer = await ClientApi.reqServerFB({
     nameDB: DataBase.productShop,
     body: {
@@ -24,7 +20,7 @@ const getAllProduct = async ({ queryKey }: { queryKey: any }): Promise<TypeHookR
     },
     namFn: FB_FC.getProductShop
   })
-  console.log({ dataServer });
+
 
   if (dataServer.data) {
     return {
@@ -52,7 +48,7 @@ const useAllProduct = (page = 1, pageSize = PageSizeLimit, query: any) => {
   const { data, isLoading } = useQuery({
     queryKey: [QueryKey.GetProductShop, page, pageSize, query],
     queryFn: getAllProduct,
-
+    enabled: !!query
   })
 
   return {

@@ -1,5 +1,5 @@
 import lodash from 'lodash'
-import { notification } from 'antd';
+import { message, notification } from 'antd';
 import BigNumber from 'bignumber.js';
 import { toast } from 'react-toastify';
 
@@ -150,6 +150,12 @@ export const isURL = (link: string) => {
   }
 }
 
+export const scrollTop = () => {
+  if (window) {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+}
+
 export const processQuery = (data: any[], query: any) => {
   const page = Number(query?.page ?? 1);
   const limit = Number(query?.limit ?? 20);
@@ -181,3 +187,23 @@ export const processQuery = (data: any[], query: any) => {
     page,
   };
 };
+
+
+export const copyToClipboard = (text: any) => {
+  const tmp = document.createElement('input')
+  tmp.value = text
+  document.body.appendChild(tmp)
+  tmp.select()
+  document.execCommand('copy')
+  tmp.remove()
+  message.success({
+    type: 'success',
+    content: 'Copied',
+  })
+}
+
+export const viewExternal = (url: string) => {
+  window.open(url, '_blank');
+};
+
+

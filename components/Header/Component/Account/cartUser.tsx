@@ -7,7 +7,7 @@ import React from 'react'
 
 const CartUser = () => {
   const { userData } = useUserData()
-  const { data } = useLengthCart(userData?.id.toString())
+  const { data } = useLengthCart(userData?.id)
 
   return (
     <Link className="relative" href={'/my-cart'}>

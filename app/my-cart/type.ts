@@ -1,6 +1,6 @@
 
 export type DataItemType = {
-  idUser: string
+  idUser?: string
   amount: number
   idProduct: string
   keyNameProduct: string

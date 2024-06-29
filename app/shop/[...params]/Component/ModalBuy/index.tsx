@@ -30,6 +30,7 @@ const ModalBuyLogin = ({ data, amount }: ModalBuyLoginType) => {
   const [formData, setFormData] = useState<Record<string, any> | null>(null)
   const [loading, setLoading] = useState(false)
   const [listAddressShip, setListAddressShip] = useState<string[]>([])
+  console.log({ datadetail: data })
 
   useEffect(() => {
     if (userData && isLogin) {
@@ -71,7 +72,7 @@ const ModalBuyLogin = ({ data, amount }: ModalBuyLoginType) => {
       await ClientApi.requestBase({
         nameDB: DataBase.user,
         body: {
-          id: userData?.id?.toString(),
+          id: userData?.id,
           data: {
             addressShipper: arrNew,
           },
@@ -124,7 +125,7 @@ const ModalBuyLogin = ({ data, amount }: ModalBuyLoginType) => {
         date: Date.now(),
         discount: 0,
         keyNameProduct: data?.keyName.toString(),
-        idUser: userData?.id.toString(),
+        idUser: userData?.id,
         addressShip: formData?.addressShip,
         total: amount * data?.price,
         abort: true,
@@ -216,6 +217,7 @@ const ModalBuyLogin = ({ data, amount }: ModalBuyLoginType) => {
             <div className="font-bold">
               {translate('textPopular.product')} :
             </div>
+
             <ViewItem
               data={data}
               amount={formData?.amount}

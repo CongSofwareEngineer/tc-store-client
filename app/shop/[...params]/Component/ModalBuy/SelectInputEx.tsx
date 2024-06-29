@@ -7,11 +7,19 @@ import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 
 const FormItem = styled(Form.Item)`
-  margin-bottom: 24px !important;
+  margin-bottom: 10px !important;
   .ant-form-item-row {
     flex-direction: column !important;
     .ant-form-item-label {
       text-align: start !important;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .ant-form-item-label {
+      padding: 0px !important;
+    }
+    .ant-col {
+      min-height: unset !important;
     }
   }
 `

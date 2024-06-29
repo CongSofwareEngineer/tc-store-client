@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { ItemDetailType } from './type'
 import PrimaryButton from '@/components/PrimaryButton'
 import useLanguage from '@/hook/useLanguage'
-import Media from 'react-media'
 import BtnBack from '@/components/BtnBack'
 import MyImage from '@/components/MyImage'
 import {
@@ -17,15 +16,16 @@ import SubAndPlus from '@/components/SubAndPlus'
 import { images } from '@/configs/images'
 import SecondButton from '@/components/SecondButton'
 import dynamic from 'next/dynamic'
-import ModalBuy from './Component/ModalBuy'
 import useGetProductByID from '@/hook/tank-query/useGetProductByID'
 import { BodyAddCart, DataBase, FB_FC } from '@/constant/firebase'
 import useUserData from '@/hook/useUserData'
 import ClientApi from '@/services/clientApi'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QueryKey } from '@/constant/reactQuery'
-import useModalDrawer from '@/hook/useModalDrawer'
 import { LocalKey } from '@/constant/app'
+import useMedia from '@/hook/useMedia'
+import PaymentShop from './Component/payment'
+import { useEffect } from 'react'
 const Comment = dynamic(() => import('@/components/Comment'), {
   ssr: false,
 })
@@ -37,32 +37,22 @@ const ShopDetailScreen = ({
 }) => {
   const [amountBuy, setAmountBuy] = useState(1)
   const [loadingAddCart, setLoadingAddCart] = useState(false)
+  const [isPayment, setIsPayment] = useState(false)
 
   const { refreshQuery } = useRefreshQuery()
   const { translate } = useLanguage()
-  const { openModalDrawer } = useModalDrawer()
+  const { isMobile } = useMedia()
 
   const { userData, isLogin } = useUserData()
   const { data } = useGetProductByID(productDetail?.id)
   const dataItem = data?.data ?? productDetail
 
+  useEffect(() => {
+    setIsPayment(false)
+  }, [isLogin])
+
   const handleBuy = () => {
-    openModalDrawer({
-      content: <ModalBuy data={dataItem} amount={amountBuy} />,
-      useDrawer: true,
-      configModal: {
-        width: '760px',
-      },
-      configDrawer: {
-        placement: 'bottom',
-        height: '95%',
-        title: (
-          <p className="text-center text-medium font-bold uppercase">
-            {translate('productDetail.modalBuy.titleOder')}
-          </p>
-        ),
-      },
-    })
+    setIsPayment(true)
   }
 
   const handleAddCartLogin = async () => {
@@ -79,7 +69,7 @@ const ShopDetailScreen = ({
           {
             key: 'idUser',
             match: '==',
-            value: userData?.id?.toString() || '',
+            value: userData?.id || '',
           },
         ],
       },
@@ -100,7 +90,7 @@ const ShopDetailScreen = ({
         amount: amountBuy,
         date: Date.now(),
         idProduct: productDetail.id?.toString(),
-        idUser: userData?.id?.toString(),
+        idUser: userData?.id,
         keyNameProduct: productDetail.keyName,
       }
       await ClientApi.requestBase({
@@ -166,16 +156,16 @@ const ShopDetailScreen = ({
             />
             <div className="flex gap-6 mt-4">
               <PrimaryButton
+                heightBtn="40px"
                 onClick={handleBuy}
-                className="min-w-[30%] "
-                style={{ height: 40 }}
+                className="min-w-[30%]"
               >
                 {translate('common.buyNow')}
               </PrimaryButton>
               <SecondButton
+                heightBtn="40px"
                 onClick={handleAddCart}
                 className="min-w-[30%] "
-                style={{ height: 40 }}
                 loading={loadingAddCart}
               >
                 <div className="flex gap-3 whitespace-nowrap">
@@ -259,21 +249,17 @@ const ShopDetailScreen = ({
     )
   }
 
-  return (
-    <>
-      {dataItem && (
-        <Media query="(min-width: 768px)">
-          {(match) => {
-            if (match) {
-              return renderDesktop()
-            }
-            return renderMobile()
-          }}
-        </Media>
-      )}
-
-      {!dataItem && <div>{translate('warning.noData')}</div>}
-    </>
+  return isPayment ? (
+    <PaymentShop
+      clickBack={() => setIsPayment(false)}
+      callBack={() => setIsPayment(false)}
+      data={dataItem}
+      amount={amountBuy}
+    />
+  ) : isMobile ? (
+    renderMobile()
+  ) : (
+    renderDesktop()
   )
 }
 

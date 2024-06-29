@@ -10,13 +10,22 @@ const FormItem = styled(Form.Item)`
       text-align: start !important;
     }
   }
+
   @media screen and (max-width: 768px) {
-    margin-bottom: 31px !important;
+    .ant-form-item {
+      .ant-form-item-explain-error {
+        margin-bottom: 0px !important;
+      }
+    }
+    margin-bottom: 0px !important;
     .ant-form-item-explain-error {
       margin-bottom: 0px !important;
     }
     .ant-form-item-label {
       padding: 0px !important;
+    }
+    .ant-col {
+      min-height: unset !important;
     }
   }
   @media screen and (max-width: 568px) {

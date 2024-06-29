@@ -4,6 +4,7 @@ import PrimaryButton from '../PrimaryButton'
 import SecondButton from '../SecondButton'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
+import useMedia from '@/hook/useMedia'
 
 type ButtonFormType = {
   loading?: boolean
@@ -27,6 +28,7 @@ const ButtonForm = ({
 }: ButtonFormType) => {
   const { translate } = useLanguage()
   const { closeModalDrawer } = useModalDrawer()
+  const { isMobile } = useMedia()
 
   return (
     <div
@@ -34,7 +36,8 @@ const ButtonForm = ({
     >
       <Form.Item className={classNameItem}>
         <PrimaryButton
-          className={`w-[150px] ${classBtnSubmit}`}
+          className={`w-[150px] m-auto ${classBtnSubmit}`}
+          widthBtn={isMobile ? '100%' : '150px'}
           loading={loading}
           htmlType="submit"
         >

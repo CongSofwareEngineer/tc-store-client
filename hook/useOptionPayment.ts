@@ -3,6 +3,7 @@ import useLanguage from './useLanguage'
 import { OptionPayment } from '@/constant/app'
 import { useCallback } from 'react';
 import { images } from '@/configs/images';
+import { delayTime } from '@/utils/functions';
 
 type OptionType = {
   name: string,
@@ -43,15 +44,28 @@ const useOptionPayment = (defaultValue?: OptionType) => {
   }, [translate])
 
   const handlePayment = useCallback(async (data: any) => {
-    console.log({ handlePayment: data });
+    console.log({ handlePayment: data, optionSelected });
+    let result
     switch (optionSelected.value) {
       case OptionPayment.momo:
         console.log('====================================');
         console.log('cash by momo');
+        await delayTime(3000)
         console.log('====================================');
+        result = true
+        break;
+
+      case OptionPayment.banking:
+        console.log('====================================');
+        console.log('cash by banking');
+        await delayTime(3000)
+
+        console.log('====================================');
+        result = true
         break;
 
     }
+    return result
 
   }, [optionSelected])
 

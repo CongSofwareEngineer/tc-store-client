@@ -17,7 +17,7 @@ export async function POST(req: any) {
 
     const dataFB = FirebaseConfig.createFBFun(bodyDecode.nameDB)
     let dataRequest: any
-
+    let listData
     switch (bodyDecode.namFn) {
       case FB_FC.getMyCart:
         const listCart = await dataFB.queryData('idUser', '==', bodyDecode.body?.id?.toString())
@@ -44,8 +44,6 @@ export async function POST(req: any) {
         break;
 
       case FB_FC.getProductShop:
-        let listData
-
         if (bodyDecode.body?.queryListData && bodyDecode.body?.queryListData?.length > 0) {
           listData = await dataFB.queryData('typeProduct', 'in', bodyDecode.body?.queryListData)
         } else {
@@ -56,6 +54,16 @@ export async function POST(req: any) {
           return e
         })
 
+        break;
+
+      case FB_FC.getDataByLimit:
+        if (bodyDecode?.body?.queryData) {
+          listData = await dataFB.queryDataByLimit(bodyDecode?.body?.queryData, bodyDecode?.body?.data?.limit)
+          dataRequest = listData.map((e: any) => {
+            delete e.cost
+            return e
+          })
+        }
         break;
     }
     const query = {

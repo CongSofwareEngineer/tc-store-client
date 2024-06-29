@@ -26,7 +26,8 @@ const config = {
         '.text-common': {},
         '.desktop': {},
         '.mobile': {},
-        '.shadow-gray1': {}
+        '.shadow-gray1': {},
+        '.absolute-center': {}
       }
 
       addUtilities(newUtilities)

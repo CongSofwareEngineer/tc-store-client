@@ -94,7 +94,7 @@ const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
         addressShip: formData?.addressShip,
         date: Date.now(),
         discount: 0,
-        idUser: userData?.id.toString(),
+        idUser: userData?.id,
         listProduction,
         total: totalBill,
         sdt: formData?.sdt,
