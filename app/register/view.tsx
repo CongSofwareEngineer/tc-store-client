@@ -80,66 +80,64 @@ const RegisterScreen = () => {
             <h1 className="mb- uppercase font-bold text-center text-[16px]">
               {translate('register.title')}
             </h1>
-            {formData && (
-              <MyForm
-                onValuesChange={(_, value) =>
-                  setFormData({ ...formData, ...value })
-                }
-                formData={formData}
-                onFinish={handleSubmit}
-              >
-                <InputForm
-                  name="sdt"
-                  required
-                  validator={checkNumberPhone}
-                  label={translate('productDetail.modalBuy.enterNumberPhone')}
-                />
+            <MyForm
+              onValuesChange={(_, value) =>
+                setFormData({ ...formData, ...value })
+              }
+              formData={formData}
+              onFinish={handleSubmit}
+            >
+              <InputForm
+                name="sdt"
+                required
+                validator={checkNumberPhone}
+                label={translate('productDetail.modalBuy.enterNumberPhone')}
+              />
 
-                <InputForm
-                  name="name"
-                  required
-                  label={translate('productDetail.modalBuy.enterName')}
-                />
+              <InputForm
+                name="name"
+                required
+                label={translate('productDetail.modalBuy.enterName')}
+              />
 
-                <InputForm
-                  name="pass"
-                  isPass
-                  required
-                  label={translate('register.enterPassWord')}
-                />
-                <InputForm
-                  name="passAgain"
-                  isPass
-                  required
-                  label={translate('register.enterPassWordAgain')}
-                />
-                <div className="flex gap-2 mt-2 mb-2">
-                  <div>{translate('userDetail.sex')} :</div>
+              <InputForm
+                name="pass"
+                isPass
+                required
+                label={translate('register.enterPassWord')}
+              />
+              <InputForm
+                name="passAgain"
+                isPass
+                required
+                label={translate('register.enterPassWordAgain')}
+              />
+              <div className="flex gap-2 mt-2 mb-2">
+                <div>{translate('userDetail.sex')} :</div>
 
-                  <Checkbox
-                    checked={formData?.sex}
-                    onChange={() => setFormData({ ...formData, sex: true })}
-                  >
-                    {translate('textPopular.male')}
-                  </Checkbox>
-                  <Checkbox
-                    checked={!formData?.sex}
-                    onChange={() => setFormData({ ...formData, sex: false })}
-                  >
-                    {translate('textPopular.female')}
-                  </Checkbox>
-                </div>
+                <Checkbox
+                  checked={formData?.sex}
+                  onChange={() => setFormData({ ...formData, sex: true })}
+                >
+                  {translate('textPopular.male')}
+                </Checkbox>
+                <Checkbox
+                  checked={!formData?.sex}
+                  onChange={() => setFormData({ ...formData, sex: false })}
+                >
+                  {translate('textPopular.female')}
+                </Checkbox>
+              </div>
 
-                <ButtonForm
-                  loading={loadingRegister}
-                  widthBtnSubmit={'100%'}
-                  classNameItem="w-full"
-                  className="w-full"
-                  disableClose
-                  titleSubmit={translate('header.register')}
-                />
-              </MyForm>
-            )}
+              <ButtonForm
+                loading={loadingRegister}
+                widthBtnSubmit={'100%'}
+                classNameItem="w-full"
+                className="w-full"
+                disableClose
+                titleSubmit={translate('header.register')}
+              />
+            </MyForm>
           </div>
         </div>
       </div>
