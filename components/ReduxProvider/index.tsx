@@ -11,8 +11,9 @@ const ReduxProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <Provider store={storeRedux}>
       {/* <PersistGate persistor={persistor} /> */}
-      <LoadingFirstPage />
+
       {children}
+      <LoadingFirstPage />
     </Provider>
   )
 }
