@@ -75,8 +75,8 @@ const RegisterScreen = () => {
           </div>
         )}
 
-        <div className="  fslex justify-start items-start">
-          <div className="m-auto flex flex-col w-[450px] shadow-md p-8 rounded-[16px] justify-center align-middle bg-white">
+        <div className="flex justify-start items-start md:w-fit w-full">
+          <div className="m-auto flex flex-col md:w-[450px] w-full shadow-md p-8 rounded-[16px] justify-center align-middle bg-white">
             <h1 className="mb- uppercase font-bold text-center text-[16px]">
               {translate('register.title')}
             </h1>
@@ -113,7 +113,7 @@ const RegisterScreen = () => {
                   required
                   label={translate('register.enterPassWordAgain')}
                 />
-                <div className="flex gap-2 mt-2">
+                <div className="flex gap-2 mt-2 mb-2">
                   <div>{translate('userDetail.sex')} :</div>
 
                   <Checkbox

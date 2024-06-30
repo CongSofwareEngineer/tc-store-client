@@ -35,6 +35,10 @@
 
 .bg-custom-register {
   background-image: linear-gradient(to right, #d9f99d, white);
+
+  @media screen and (max-width: 768px) {
+    background: #d9f99d;
+  }
 }
 
 body {
