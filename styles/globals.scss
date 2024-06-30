@@ -29,6 +29,14 @@
   transform: translate(-50%, -50%);
 }
 
+.no-display {
+  display: none;
+}
+
+.bg-custom-register {
+  background-image: linear-gradient(to right, #d9f99d, white);
+}
+
 body {
   background: #ededed;
   font-size: 14px;

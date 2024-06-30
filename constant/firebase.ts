@@ -64,3 +64,20 @@ export type BodyAddBill = {
   iDBanking?: number,
   iDMomo?: number | string
 }
+
+
+
+export type BodyUserData = {
+  date: number
+  idUser?: string | undefined
+  listProduction: { idProduct: string, keyNameProduct: string, amount: number }[],
+  sdt: string,
+  isAdmin: boolean
+  exp: 0,
+  address?: string
+  name?: string
+  avatar?: string | null
+  pass?: string
+  addressShipper: string[],
+  sex: boolean,
+}

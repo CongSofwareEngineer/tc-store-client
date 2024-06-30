@@ -13,9 +13,22 @@ const useCheckPatchName = () => {
         case '/my-cart':
           router.push('/')
           break;
-
+        case '/my-page':
+          router.push('/')
+          break;
         default:
           break;
+      }
+    }
+
+    const footer = window.document.getElementsByClassName('footer-web')[0]
+    if (patchName === '/my-page' || patchName === '/my-cart' || patchName === '/register') {
+      if (footer) {
+        footer.classList.add('no-display')
+      }
+    } else {
+      if (footer) {
+        footer.classList.remove('no-display')
       }
     }
 

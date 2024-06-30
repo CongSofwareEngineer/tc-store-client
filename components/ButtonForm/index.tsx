@@ -15,6 +15,8 @@ type ButtonFormType = {
   classNameItem?: string
   classBtnSubmit?: string
   classBtnCancel?: string
+  widthBtnSubmit?: string
+  widthBtnCancel?: string
 }
 const ButtonForm = ({
   loading,
@@ -25,6 +27,8 @@ const ButtonForm = ({
   classBtnSubmit = '',
   classBtnCancel = '',
   classNameItem = '',
+  widthBtnSubmit = '',
+  widthBtnCancel = '',
 }: ButtonFormType) => {
   const { translate } = useLanguage()
   const { closeModalDrawer } = useModalDrawer()
@@ -37,7 +41,7 @@ const ButtonForm = ({
       <Form.Item className={classNameItem}>
         <PrimaryButton
           className={`w-[150px] m-auto ${classBtnSubmit}`}
-          widthBtn={isMobile ? '100%' : '150px'}
+          widthBtn={widthBtnSubmit || isMobile ? '100%' : '150px'}
           loading={loading}
           htmlType="submit"
         >
@@ -49,6 +53,7 @@ const ButtonForm = ({
           disabled={loading}
           className={`w-[150px] ${classBtnCancel}`}
           onClick={closeModalDrawer}
+          widthBtn={widthBtnCancel || '150px'}
         >
           {titleClose || translate('common.close')}
         </SecondButton>

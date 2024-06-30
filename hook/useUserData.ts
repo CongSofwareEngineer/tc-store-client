@@ -18,10 +18,6 @@ const useUserData = () => {
 
 
   const isLogin = useMemo(() => {
-    const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
-    if (dataSecure) {
-      return true
-    }
     return !!userData
   }, [userData])
 

@@ -6,7 +6,6 @@ const Button = styled(ButtonCustom)<any>`
   border-radius: ${(props) => (props.$noBorderRadius ? 0 : 6)}px !important;
 `
 export type ButtonPropsType = {
-  children: React.ReactNode
   heightBtn?: string
   widthBtn?: string
   noBorderRadius?: boolean

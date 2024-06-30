@@ -161,6 +161,7 @@
     "productGood": "Sản phẩm có tốt không ?"
   },
   "warning": {
+    "passAgain": "Mật khẩu nhập lại không đúng",
     "noData": "Sản phẩm đang cập nhật",
     "inValidPassWordAgain": "Mật khẩu không đúng",
     "errorUserName": "Tên không được để trống",

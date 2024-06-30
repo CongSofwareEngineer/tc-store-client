@@ -45,7 +45,11 @@ const ModalLogin: React.FC = () => {
         {translate('common.login')}
       </div>
       {formData && (
-        <MyForm formData={formData} onFinish={handleLogin}>
+        <MyForm
+          onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
+          formData={formData}
+          onFinish={handleLogin}
+        >
           <InputForm
             validator={checkNumber}
             required
