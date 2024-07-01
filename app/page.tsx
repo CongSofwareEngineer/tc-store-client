@@ -5,11 +5,10 @@ import { FilterAPI } from '@/constant/app'
 import dynamic from 'next/dynamic'
 import CategoryHome from './(ComponentHome)/Category'
 import useMedia from '@/hook/useMedia'
+import InfoHome from './(ComponentHome)/InfoHome'
 const ListProduct = dynamic(() => import('./(ComponentHome)/ListProduct'), {
   ssr: false,
 })
-
-const InfoHome = dynamic(() => import('./(ComponentHome)/InfoHome'))
 
 const Home = () => {
   const { translate } = useLanguage()

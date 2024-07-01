@@ -26,8 +26,6 @@ const MyCartScreen = () => {
 
   useEffect(() => {
     if (data) {
-      console.log({ dataHook: data })
-
       setListCartFormat((e) => {
         const arr = data.data.map((eChil: any) => {
           if (e.length > 0) {

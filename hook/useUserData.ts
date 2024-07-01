@@ -64,7 +64,7 @@ const useUserData = () => {
   }, [dispatch, loginFireBase, logOut])
 
 
-  const login = useCallback(async (numberPhone: string, pass: string) => {
+  const login = useCallback(async (numberPhone: string, pass: string, saveLogin = true) => {
     try {
       const encodePass = encryptData(pass)
       const data = await loginFireBase(numberPhone, encodePass)
@@ -72,8 +72,10 @@ const useUserData = () => {
       if (data.length === 0) {
         showNotificationError(translate('noti.loginError'))
       } else {
-        const userEncode = encryptData(JSON.stringify(data[0]))
-        secureLocalStorage.setItem(SLICE.UserData, userEncode)
+        if (saveLogin) {
+          const userEncode = encryptData(JSON.stringify(data[0]))
+          secureLocalStorage.setItem(SLICE.UserData, userEncode)
+        }
         dispatch(setUserData(data[0]))
         showNotificationSuccess(translate('success.login'))
         closeModalDrawer()

@@ -40,8 +40,8 @@ const ItemProduct = ({
       onClick={callback}
       href={href}
     >
-      {showDiscount && (
-        <div className="absolute right-0 top-4 bg-green-300 px-3 rounded-l-lg z-20">
+      {showDiscount && item?.discount > 0 && (
+        <div className="absolute right-0 top-4 bg-green-300 px-3 rounded-l-lg z-[1]">
           {item?.discount || 0}%
         </div>
       )}

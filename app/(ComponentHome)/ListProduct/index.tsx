@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ListProductType } from './type'
 import ItemProduct from '@/components/ItemProduct'
 import MyLoading from '@/components/MyLoading'
@@ -13,6 +13,7 @@ import {
 import { CollapseCustom } from './styled'
 import useProductByLimit from '@/hook/tank-query/useProductByLimit'
 import { DataBase } from '@/constant/firebase'
+import { scrollTop } from '@/utils/functions'
 
 const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   const { data, isLoading } = useProductByLimit(DataBase.productShop, {
@@ -21,6 +22,10 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
     value: [type],
   })
   const { translate } = useLanguage()
+
+  useEffect(() => {
+    scrollTop()
+  }, [])
 
   const renderListItem = () => {
     return (

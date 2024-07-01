@@ -27,7 +27,7 @@ const BtnBack = ({ title, url = [], onClick = null }: BtnBackType) => {
       />
       <div className="ml-2 flex gap-1">
         {typeof title === 'string' ? (
-          <h1 className="md:text-[16px] text-[14px] ">{title}</h1>
+          <h2 className="md:text-[16px] text-[14px] ">{title}</h2>
         ) : (
           title?.map((item, index) => {
             if (url[index]) {
@@ -43,9 +43,9 @@ const BtnBack = ({ title, url = [], onClick = null }: BtnBackType) => {
               )
             }
             return (
-              <h1 className=" text-[16px] " key={item}>
+              <h2 className=" text-[16px] " key={item}>
                 {item}
-              </h1>
+              </h2>
             )
           })
         )}

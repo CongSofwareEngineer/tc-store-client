@@ -4,9 +4,13 @@ import InputForm from '@/components/InputForm'
 import MyForm from '@/components/MyForm'
 import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
+import { BodyUserData, DataBase, FB_FC } from '@/constant/firebase'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
+import useUserData from '@/hook/useUserData'
+import ClientApi from '@/services/clientApi'
+import { encryptData } from '@/utils/crypto'
 import { showNotificationError } from '@/utils/functions'
 import { Checkbox } from 'antd'
 import { useRouter } from 'next/navigation'
@@ -27,6 +31,7 @@ const RegisterScreen = () => {
   const router = useRouter()
   const { checkNumberPhone } = useCheckForm()
   const { isMobile } = useMedia()
+  const { login } = useUserData()
 
   const [formData, setFormData] = useState<any>(null)
   const [loadingRegister, setLoadingRegister] = useState(false)
@@ -50,12 +55,31 @@ const RegisterScreen = () => {
 
   const handleSubmit = async () => {
     setLoadingRegister(true)
-    console.log({ formData })
 
     if (formData.pass !== formData.passAgain) {
       showNotificationError(translate('warning.passAgain'))
     } else {
-      // const bodyUser = {}
+      const bodyUser: BodyUserData = {
+        addressShipper: [],
+        date: Date.now(),
+        exp: 0,
+        sdt: formData.sdt,
+        sex: formData.sex,
+        isAdmin: false,
+        name: formData.name,
+        pass: encryptData(formData.pass),
+        avatar: '',
+        address: '',
+      }
+      await ClientApi.requestBase({
+        nameDB: DataBase.user,
+        body: {
+          data: bodyUser,
+        },
+        encode: true,
+        namFn: FB_FC.addData,
+      })
+      await login(formData.sdt, formData.pass, formData?.saveLogin)
     }
 
     setLoadingRegister(false)
@@ -112,7 +136,7 @@ const RegisterScreen = () => {
                 required
                 label={translate('register.enterPassWordAgain')}
               />
-              <div className="flex gap-2 mt-2 mb-2">
+              <div className="flex gap-2 mt-2 ">
                 <div>{translate('userDetail.sex')} :</div>
 
                 <Checkbox
@@ -127,6 +151,18 @@ const RegisterScreen = () => {
                 >
                   {translate('textPopular.female')}
                 </Checkbox>
+              </div>
+              <div className="flex gap-2  md:mt-0 mt-3 md:mb-0 mb-1 relative top-[-5px]">
+                <div>{translate('register.saveRegister')} :</div>
+                <Checkbox
+                  checked={formData?.saveLogin}
+                  onChange={() =>
+                    setFormData({
+                      ...formData,
+                      saveLogin: !formData?.saveLogin,
+                    })
+                  }
+                />
               </div>
 
               <ButtonForm

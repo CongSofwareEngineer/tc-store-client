@@ -4,17 +4,31 @@ import { images } from '@/configs/images'
 import useMedia from '@/hook/useMedia'
 import useUserData from '@/hook/useUserData'
 import { CopyOutlined, EditOutlined } from '@ant-design/icons'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ItemInfoUser from './Component/ItemInfoUser'
 import useLanguage from '@/hook/useLanguage'
 import AddressShip from './Component/AddressShip'
 import { copyToClipboard } from '@/utils/functions'
-import { Input } from 'antd'
+import MyInput from '@/components/MyInput'
+import { FormDataBaseUserType } from './type'
+import { decryptData } from '@/utils/crypto'
 
 const MyProfile = () => {
   const { isMobile } = useMedia()
   const { userData } = useUserData()
   const { translate } = useLanguage()
+
+  const [formData, setFormData] = useState<FormDataBaseUserType | null>(null)
+
+  useEffect(() => {
+    if (userData) {
+      const initData = {
+        name: userData.name?.toString(),
+        pass: decryptData(userData.pass)?.toString(),
+      }
+      setFormData(initData)
+    }
+  }, [userData])
 
   const handleEditAvatar = () => {}
 
@@ -38,9 +52,16 @@ const MyProfile = () => {
 
             <div className="flex gap-2">
               <span className="w-[140px]">{translate('userDetail.name')}</span>
-              <span>
-                <Input value={userData?.name} />
-              </span>
+              <MyInput className="w-[90%]" typeBtn={1} value={formData?.name} />
+            </div>
+            <div className="flex gap-2">
+              <span className="w-[140px]">{translate('userDetail.pass')}</span>
+              <MyInput
+                className="w-[90%]"
+                typeBtn={1}
+                type="password"
+                value={formData?.pass}
+              />
             </div>
           </div>
           <div className="w-[20%] min-w-[200px]">avatart</div>

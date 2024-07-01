@@ -4,6 +4,7 @@ import useMedia from '@/hook/useMedia'
 import TitleItem from '../ItemCart/titleItem'
 import ItemCart from '../ItemCart'
 import MyLoading from '@/components/MyLoading'
+import useLanguage from '@/hook/useLanguage'
 
 const ListItemCart = ({
   dataCart,
@@ -16,6 +17,7 @@ const ListItemCart = ({
   allSelected = false,
 }: ListItemCartType) => {
   const { isMobile } = useMedia()
+  const { translate } = useLanguage()
 
   const renderMobile = () => {
     return (
@@ -71,6 +73,15 @@ const ListItemCart = ({
             />
           )
         })}
+        {!loading && dataCart?.length === 0 && (
+          <tr>
+            <td colSpan={7}>
+              <div className="my-3 text-center text-medium font-bold">
+                {translate('cart.empty')}
+              </div>
+            </td>
+          </tr>
+        )}
         {loading && (
           <td colSpan={7}>
             <MyLoading className="my-5" />

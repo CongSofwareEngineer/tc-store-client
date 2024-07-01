@@ -29,6 +29,7 @@ const ItemCart = ({
   const { isMobile } = useMedia()
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()
   const router = useRouter()
+
   const selectedItem = () => {
     const dataClone = cloneData(data)
     if (dataClone?.selected) {
@@ -85,7 +86,14 @@ const ItemCart = ({
         )}
 
         <TD $noBorder={noBorder} className="w-[100px] ">
-          <div className="flex justify-center"></div>
+          <div className="flex justify-center">
+            <MyImage
+              widthImage={'auto'}
+              heightImage={'80px'}
+              src={data?.imageMain?.toString() || ''}
+              alt={`item-${data?.name}`}
+            />
+          </div>
         </TD>
         <TD $noBorder={noBorder}>
           <div className="flex flex-col gap-1">

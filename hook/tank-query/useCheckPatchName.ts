@@ -16,8 +16,14 @@ const useCheckPatchName = () => {
         case '/my-page':
           router.push('/')
           break;
-        default:
+
+      }
+    } else {
+      switch (patchName) {
+        case '/register':
+          router.push('/')
           break;
+
       }
     }
 

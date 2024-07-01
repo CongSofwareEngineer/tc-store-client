@@ -2,28 +2,42 @@ import InputForm from '@/components/InputForm'
 import MyForm from '@/components/MyForm'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
-import { Button, Form } from 'antd'
+import { Checkbox, Form } from 'antd'
 import React, { useLayoutEffect, useState } from 'react'
 import parsePhoneNumber from 'libphonenumber-js'
+import { useRouter } from 'next/navigation'
+import useModalDrawer from '@/hook/useModalDrawer'
+import PrimaryButton from '@/components/PrimaryButton'
 
 const ModalLogin: React.FC = () => {
   const { translate } = useLanguage()
   const { login } = useUserData()
+  const route = useRouter()
+  const { closeModalDrawer } = useModalDrawer()
 
-  const [formData, setFormData] = useState<Record<string, string> | null>(null)
+  const [formData, setFormData] = useState<Record<
+    string,
+    string | boolean
+  > | null>(null)
   const [loading, setLoading] = useState(false)
 
   useLayoutEffect(() => {
     setFormData({
       sdt: '0392225405',
       pass: '',
+      saveLogin: true,
     })
   }, [])
+
+  const handleRegister = () => {
+    closeModalDrawer()
+    route.push('/register')
+  }
 
   const handleLogin = async (e: { sdt: string; pass: string }) => {
     try {
       setLoading(true)
-      await login(e.sdt, e.pass)
+      await login(e.sdt, e.pass, !!formData?.saveLogin)
     } catch (error) {
       console.log({ error })
     } finally {
@@ -62,18 +76,39 @@ const ModalLogin: React.FC = () => {
             label={translate('userDetail.pass')}
             isPass
           />
-          <Form.Item
-            style={{ marginTop: 13, display: 'flex', justifyContent: 'center' }}
-          >
-            <Button
+          <div className="flex md:flex-row justify-between w-full md:gap-0 gap-2 md:mb-0 mb-3">
+            <div className="flex flex-1 gap-2  md:mt-0 mt-3 md:mb-0 mb-1 relative ">
+              <div>{translate('register.saveRegister')} :</div>
+              <Checkbox
+                checked={!!formData?.saveLogin}
+                onChange={() =>
+                  setFormData({
+                    ...formData,
+                    saveLogin: !formData?.saveLogin,
+                  })
+                }
+              />
+            </div>
+            <div className="flex-1  text-blue-500 flex justify-end items-end">
+              <div
+                onClick={handleRegister}
+                className="md:hover:underline cursor-pointer"
+              >
+                {translate('register.title')}
+              </div>
+            </div>
+          </div>
+
+          <Form.Item style={{ display: 'flex', justifyContent: 'center' }}>
+            <PrimaryButton
               loading={loading}
               type="primary"
               size="large"
               htmlType="submit"
-              style={{ width: 150 }}
+              widthBtn="150px"
             >
               {translate('common.ok')}
-            </Button>
+            </PrimaryButton>
           </Form.Item>
         </MyForm>
       )}

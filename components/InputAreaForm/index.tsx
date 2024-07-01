@@ -1,7 +1,8 @@
 import useLanguage from '@/hook/useLanguage'
-import { Form, Input } from 'antd'
+import { Form } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
+import MyInput from '../MyInput'
 const FormItem = styled(Form.Item)`
   margin-bottom: 24px !important;
   .ant-form-item-row {
@@ -79,7 +80,7 @@ const InputAreaForm = ({
         },
       ]}
     >
-      <Input.TextArea rows={rows} className="w-full" />
+      <MyInput type={'area'} rows={rows} className="w-full" />
     </FormItem>
   )
 }
