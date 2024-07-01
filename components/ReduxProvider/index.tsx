@@ -5,7 +5,7 @@ import storeRedux from '@/redux/store'
 import { Provider } from 'react-redux'
 // import { PersistGate } from 'redux-persist/integration/react'
 // import { PersistGate } from 'redux-persist/integration/react'
-import LoadingFirstPage from '../LoadingFirstPage'
+// import LoadingFirstPage from '../LoadingFirstPage'
 
 const ReduxProvider = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -13,7 +13,6 @@ const ReduxProvider = ({ children }: { children: React.ReactNode }) => {
       {/* <PersistGate persistor={persistor} /> */}
 
       {children}
-      <LoadingFirstPage />
     </Provider>
   )
 }

@@ -8,7 +8,7 @@ const LoadingFirstPage = () => {
     setIsClient(true)
   }, [])
   return !isClient ? (
-    <div className="bg-white z-[999999999] flex w-screen h-screen fixed justify-center items-center">
+    <div className="bg-white z-[999999999] flex w-screen h-screen fixed justify-center items-center inset-0">
       <Spin />
     </div>
   ) : (
