@@ -17,6 +17,7 @@ const ShopScreen = () => {
 
   return (
     <div className="w-full flex md:flex-row flex-col  md:gap-6 gap-3  h-full justify-star md:mt-3">
+      <h2 className="absolute opacity-0">Shop Tc store</h2>
       <div className="md:w-[250px] w-full">
         <MenuCategory />
       </div>

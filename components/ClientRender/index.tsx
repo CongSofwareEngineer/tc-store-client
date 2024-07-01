@@ -9,7 +9,10 @@ import { setMenuCategory } from '@/redux/categoryMenuSlice'
 import useCheckPatchName from '@/hook/tank-query/useCheckPatchName'
 import useMedia from '@/hook/useMedia'
 import Footer from '../Footer'
-
+import dynamic from 'next/dynamic'
+const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
+  ssr: true,
+})
 const ClientRender = ({
   children,
   menuCategory,
@@ -40,6 +43,8 @@ const ClientRender = ({
         </section>
       </main>
       <Footer />
+      <LoadingFirstPage />
+
       <ToastContainer
         className={'mb-3'}
         style={{ marginTop: isMobile ? 65 : 0 }}
