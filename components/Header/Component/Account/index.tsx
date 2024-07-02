@@ -113,9 +113,16 @@ const Account = () => {
               </Dropdown>
             </div>
           ) : (
-            <span onClick={handleLogin} className="text-black underline  w-24 ">
-              {translate('common.login')}
-            </span>
+            <div className="flex gap-2 items-center">
+              <CartUser />
+              <span
+                onClick={handleLogin}
+                className="text-black underline  w-24 "
+              >
+                {translate('common.login')}
+              </span>
+              <MenuOutlined onClick={handleViewMenu} style={{ fontSize: 20 }} />
+            </div>
           )}
         </div>
       </div>

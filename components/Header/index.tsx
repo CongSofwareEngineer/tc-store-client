@@ -20,7 +20,7 @@ const Header = () => {
               <Link href={'/'}>
                 <MyImage
                   src={images.logo}
-                  alt="logo"
+                  alt="logo-tcstore"
                   fill
                   widthImage={'auto'}
                   heightImage="100%"

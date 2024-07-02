@@ -63,6 +63,7 @@ const MyProfile = () => {
                 value={formData?.pass}
               />
             </div>
+            <AddressShip />
           </div>
           <div className="w-[20%] min-w-[200px]">avatart</div>
         </div>
