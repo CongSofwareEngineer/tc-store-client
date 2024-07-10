@@ -17,7 +17,9 @@ const Container = ({ children }: PropsWithChildren) => {
   const patchName = usePathname()
 
   useEffect(() => {
-    scrollTop()
+    setTimeout(() => {
+      scrollTop()
+    }, 100)
   }, [])
 
   const renderItem = (icon: string, name: string, link: string) => {

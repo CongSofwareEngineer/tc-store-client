@@ -4,7 +4,6 @@ import { useCallback } from 'react'
 
 const useLanguage = () => {
   const { Language } = useAppSelector(state => state.app)
-
   const translate = useCallback((key: Path<Language>) => {
     try {
       const arrKey = key.split('.')
@@ -23,7 +22,7 @@ const useLanguage = () => {
     }
 
   }, [Language?.messages])
-  return { translate }
+  return { translate, lang: Language?.locale || 'vn' }
 }
 
 export default useLanguage

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import React from 'react'
 
 const CategoryHome = () => {
-  const { translate } = useLanguage()
+  const { translate, lang } = useLanguage()
   const { CategoryMenu } = useAppSelector((state) => state.app)
 
   const renderContent = () => {
@@ -17,10 +17,12 @@ const CategoryHome = () => {
               className={`text-black hover:text-black hover:font-semibold md:px-3 md:py-4 border-b-[1px] ${
                 CategoryMenu.length - 1 !== index && 'border-green-300'
               }`}
-              key={e.key}
-              href={`/shop?typeProduct=${e.key}`}
+              key={e.keyName}
+              href={`/shop?typeProduct=${e.keyName}`}
             >
-              <h2 className="hover:underline cursor-pointer">{e.name}</h2>
+              <h2 className="hover:underline cursor-pointer">
+                {e?.lang && e.lang[lang]}
+              </h2>
             </Link>
           )
         })}

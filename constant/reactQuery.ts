@@ -10,8 +10,8 @@ export enum QueryKey {
 
 export type TypeHookReactQuery = {
   "data": any[]
-  "totalPage": number
-  "page": number
+  "totalPage"?: number
+  "page"?: number
   "status"?: number | undefined
   "messages"?: string | undefined
   [key: string]: any

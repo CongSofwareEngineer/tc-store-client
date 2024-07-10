@@ -4,10 +4,18 @@ import { ResolvingMetadata } from 'next'
 import ShopDetail from './view'
 import { ItemDetailType } from './type'
 import { notFound } from 'next/navigation'
+import fetchConfig from '@/configs/fetchConfig'
 
 const getCoffeeDetail = async (id: string): Promise<ItemDetailType> => {
-  const data = await FirebaseProduct.getDataByID(id)
-  return data
+  const data = await fetchConfig({
+    url: `product/detail/${id}`,
+  })
+  // console.log('====================================')
+  // console.log({ data2 })
+  // console.log('====================================')
+  // const data = await FirebaseProduct.getDataByID(id)
+
+  return data.data
 }
 
 export async function generateMetadata(

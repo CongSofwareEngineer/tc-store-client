@@ -62,7 +62,7 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
       children: renderListItem(),
       extra: (
         <Link
-          href={`shop?${FilterAPI.TypeProduct}=${type || 'all'}`}
+          href={`shop?${FilterAPI.Category}=${type || 'all'}`}
           className="text-medium cursor-pointer hover:font-semibold hover:text-green-600"
         >
           {translate('textPopular.viewMore')}

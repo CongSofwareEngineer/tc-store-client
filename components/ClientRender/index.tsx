@@ -37,7 +37,6 @@ const ClientRender = ({
       </main>
       <Footer />
       <LoadingFirstPage />
-
       <ToastContainer
         className={'mb-3'}
         style={{ marginTop: isMobile ? 65 : 0 }}

@@ -33,8 +33,12 @@ const MyFilterCheckBox = ({
               key={`menu_${typeChecked}_${index}`}
             >
               <Checkbox
-                checked={queries?.[typeChecked]?.includes(menu.key)}
-                onChange={() => updateQuery(typeChecked, menu.key)}
+                checked={queries?.[typeChecked]?.includes(
+                  menu?.value || menu.key
+                )}
+                onChange={() =>
+                  updateQuery(typeChecked, menu?.value || menu.key)
+                }
               >
                 <div className="whitespace-nowrap">
                   {menu.name || menu.label}

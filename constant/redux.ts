@@ -1,7 +1,7 @@
 import MessageVN from '@/public/assets/language/vn.json'
 
 const localeVN = {
-  locale: 'vi',
+  locale: 'vn',
   messages: MessageVN
 }
 
@@ -41,7 +41,7 @@ export type TYPE_SLICE = {
   [SLICE.Setting]: Object | null
   [SLICE.UserData]: TypeUserData | null
   [SLICE.ConnectedChain]: Number,
-  [SLICE.CategoryMenu]: Array<{ key: string, name: string }>
+  [SLICE.CategoryMenu]: Array<{ keyName: string, icon?: string, lang?: { [key: string]: string } }>
 }
 
 export type TYPE_PERSIST_REDUCER = TYPE_SLICE & unknown

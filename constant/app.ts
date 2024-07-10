@@ -40,7 +40,8 @@ export enum FilterAPI {
   Food = 'food',
   Water = 'water',
   Fashion = 'fashion',
-  Electronic = 'electronic'
+  Electronic = 'electronic',
+  Category = 'category'
 }
 
 export const PageSizeLimit = 15
