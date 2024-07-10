@@ -54,7 +54,7 @@ const AddressShip = () => {
   }
 
   const renderDesktop = () => {
-    return <></>
+    return <div className=""></div>
   }
 
   const renderMobile = () => {

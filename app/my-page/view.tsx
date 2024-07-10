@@ -44,24 +44,32 @@ const MyProfile = () => {
           <div className="flex flex-1 flex-col gap-3">
             <div className="flex gap-2">
               <span className="w-[140px]">{translate('userDetail.sdt')}</span>
-              <span className="flex gap-1 text-green-500">
+              <div className="flex gap-1 text-green-500">
                 {userData?.sdt}
                 <CopyOutlined onClick={() => copyToClipboard(userData?.sdt)} />
-              </span>
+              </div>
             </div>
 
             <div className="flex gap-2">
               <span className="w-[140px]">{translate('userDetail.name')}</span>
-              <MyInput className="w-[90%]" typeBtn={1} value={formData?.name} />
+              <div className="flex flex-1">
+                <MyInput
+                  className="w-[90%]"
+                  typeBtn={1}
+                  value={formData?.name}
+                />
+              </div>
             </div>
             <div className="flex gap-2">
               <span className="w-[140px]">{translate('userDetail.pass')}</span>
-              <MyInput
-                className="w-[90%]"
-                typeBtn={1}
-                type="password"
-                value={formData?.pass}
-              />
+              <div className="flex flex-1">
+                <MyInput
+                  className="w-[90%]"
+                  typeBtn={1}
+                  type="password"
+                  value={formData?.pass}
+                />
+              </div>
             </div>
             <AddressShip />
           </div>

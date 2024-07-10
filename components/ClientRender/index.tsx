@@ -3,7 +3,6 @@ import React, { useLayoutEffect } from 'react'
 import Header from '../Header'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import useUserData from '@/hook/useUserData'
 import { useAppDispatch } from '@/redux/store'
 import { setMenuCategory } from '@/redux/categoryMenuSlice'
 import useCheckPatchName from '@/hook/tank-query/useCheckPatchName'
@@ -21,14 +20,8 @@ const ClientRender = ({
   menuCategory: any[]
 }) => {
   useCheckPatchName()
-  const { refreshLogin } = useUserData()
   const dispatch = useAppDispatch()
   const { isMobile } = useMedia()
-
-  useLayoutEffect(() => {
-    refreshLogin()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   useLayoutEffect(() => {
     dispatch(setMenuCategory(menuCategory))
