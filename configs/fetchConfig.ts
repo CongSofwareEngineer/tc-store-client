@@ -11,7 +11,7 @@ const fetchConfig = async ({
   // const urlFormat = process.env.NEXT_PUBLIC_API_APP + url
   const config: any = {
     // baseURL: (process.env.NEXT_PUBLIC_API_APP || 'http://192.168.50.115:3002/').trim(),
-    baseURL: process.env.NEXT_PUBLIC_API_APP,
+    baseURL: 'http://localhost:3000/',
     url,
     // cache: isCache ? 'force-cache' : 'no-store',
     method,
@@ -29,13 +29,18 @@ const fetchConfig = async ({
 
   return await axios.request(config)
     .then(async (response) => {
+      if (response.status === 200) {
+        return {
+          ...(response?.data ?? response),
+          messages: 'success'
+        }
+      }
       return {
-        ...(response?.data ?? response),
-        messages: 'success'
+        data: null,
+        messages: 'fail',
       }
     })
     .catch((error) => {
-      console.error(error)
       return {
         data: null,
         messages: 'fail',

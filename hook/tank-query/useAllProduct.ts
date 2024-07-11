@@ -2,14 +2,15 @@
 import { PageSizeLimit } from '@/constant/app';
 import { QueryKey, TypeHookReactQuery } from '@/constant/reactQuery';
 import ServerApi from '@/services/serverApi';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useMemo } from 'react';
 
 
-const getAllProduct = async ({ queryKey }: { queryKey: any }): Promise<TypeHookReactQuery> => {
-  const query = queryKey[3]
+const getAllProduct = async ({ queryKey, pageParam }: { queryKey: any, pageParam: number }): Promise<TypeHookReactQuery> => {
+  const query = queryKey[2]
   const { category = [] } = query
 
-  let queryUrl = `?page=${queryKey[1]}&limit=${queryKey[2]}`
+  let queryUrl = `?page=${pageParam}&limit=${queryKey[1]}`
 
   if (category?.length > 0) {
     queryUrl += `&category=${category.toString()}`
@@ -19,36 +20,37 @@ const getAllProduct = async ({ queryKey }: { queryKey: any }): Promise<TypeHookR
   })
 
   return {
-    "data": dataServer.data || [],
-    "page": queryKey[1],
-    totalPage: 1
+    "data": dataServer?.data || [],
+    "page": pageParam,
   }
 };
-const useAllProduct = (page = 1, pageSize = PageSizeLimit, query: any) => {
-  // const { data, isLoading, refetch, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteQuery({
-  //   queryKey: [QueryKey.GetAllProduct, query],
-  //   initialPageParam: true,
-  //   queryFn: getAllProduct,
-  //   getNextPageParam: (lastPage: {
-  //     data: any; totalPage: number, page: number
-  //   }) => {
-  //     console.log({ lastPage });
-
-  //     return lastPage?.totalPage > lastPage?.page
-  //   },
-  // })
-  // console.log({ data });
-
-
-  const { data, isLoading } = useQuery({
-    queryKey: [QueryKey.GetProductShop, page, pageSize, query],
+const useAllProduct = (pageSize = PageSizeLimit, query: any) => {
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
+    queryKey: [QueryKey.GetAllProduct, pageSize, query],
+    initialPageParam: 1,
     queryFn: getAllProduct,
-    enabled: !!query
+    getNextPageParam: (lastPage: { data: any; page: number }) => {
+      if (lastPage.data.length == pageSize) {
+        return lastPage.page + 1
+      }
+      return null
+    },
   })
 
+  const dataFinal = useMemo(() => {
+    if (!data) {
+      return []
+    }
+    const dataFormat = data?.pages.flatMap(e => e.data)
+    return dataFormat
+  }, [data])
+
+
   return {
-    data,
-    isLoading
+    data: dataFinal,
+    isLoading: isFetchingNextPage || isLoading,
+    loadMore: fetchNextPage,
+    hasNextPage
   }
 }
 

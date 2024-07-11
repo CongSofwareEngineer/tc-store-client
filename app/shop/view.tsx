@@ -13,7 +13,7 @@ import { PageSizeLimit } from '@/constant/app'
 const ShopScreen = () => {
   const { translate } = useLanguage()
   const { queries } = useQuerySearch()
-  const { data, isLoading } = useAllProduct(1, PageSizeLimit, queries)
+  const { data, isLoading } = useAllProduct(PageSizeLimit, queries)
 
   return (
     <div className="w-full flex md:flex-row flex-col  md:gap-6 gap-3  h-full justify-star md:mt-3">
@@ -31,9 +31,9 @@ const ShopScreen = () => {
             />
           }
         />
-        {data?.data && (
+        {data.length > 0 && (
           <div className="mt-2  w-full grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3   2xl:grid-cols-4 gap-3 md:gap-6">
-            {data?.data?.map((item: any) => {
+            {data.map((item: any) => {
               return (
                 <ItemProduct
                   showFeedback
@@ -47,9 +47,7 @@ const ShopScreen = () => {
           </div>
         )}
 
-        {data?.data.length === 0 && (
-          <div className="mt-3">Chưa có sản phẩm</div>
-        )}
+        {data.length === 0 && <div className="mt-3">Chưa có sản phẩm</div>}
 
         {isLoading && <MyLoading className="mt-6" />}
       </div>
