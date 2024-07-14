@@ -5,16 +5,13 @@ import ShopDetail from './view'
 import { ItemDetailType } from './type'
 import { notFound } from 'next/navigation'
 import fetchConfig from '@/configs/fetchConfig'
+import { getCookie } from '@/services/CookeisService'
+import { CookieKey } from '@/constant/app'
 
 const getCoffeeDetail = async (id: string): Promise<ItemDetailType> => {
   const data = await fetchConfig({
     url: `product/detail/${id}`,
   })
-  // console.log('====================================')
-  // console.log({ data2 })
-  // console.log('====================================')
-  // const data = await FirebaseProduct.getDataByID(id)
-
   return data.data
 }
 

@@ -13,7 +13,7 @@ const LinkCustom = styled(styled(Link)<{ $isSelected?: Boolean }>``).attrs({
   font-weight: ${(props) => (props.$isSelected ? '700 !important' : 'nonce')};
 `
 const Nav = () => {
-  const { isLogin } = useUserData()
+  const { isLogin, refreshLogin } = useUserData()
   const { translate } = useLanguage()
   const pathname = usePathname()
   const { isMobile } = useMedia()
@@ -38,6 +38,7 @@ const Nav = () => {
             {translate('header.register')}
           </LinkCustom>
         )}
+        <div onClick={refreshLogin}>refreshLogin</div>
       </div>
     )
   }

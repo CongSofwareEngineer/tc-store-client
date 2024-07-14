@@ -73,12 +73,6 @@ export async function POST(req: any) {
 
 
     dataRequest = processQuery(dataRequest, query)
-
-    console.log('====================================');
-    console.log({ query, dataRequest, queryListData: bodyDecode.body?.queryListData });
-    console.log('====================================');
-    // return formatResponseDataServer({ data: 123 }, bodyDecode)
-
     return formatResponseDataServer(dataRequest, bodyDecode)
 
   } catch (error) {

@@ -25,11 +25,12 @@ export const INIT_STATE = {
 
 
 export type TypeUserData = {
-  id?: string
+  _id?: string
   address?: string
   addressShipper: string[]
   sdt?: string
   name?: string
+  pass?: string
   [key: string]: any
 }
 

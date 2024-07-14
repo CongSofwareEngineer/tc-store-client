@@ -1,8 +1,12 @@
 'use client'
 import React, { useLayoutEffect, useState } from 'react'
 import { Spin } from 'antd'
+import { ToastContainer } from 'react-toastify'
+import useMedia from '@/hook/useMedia'
 
 const LoadingFirstPage = () => {
+  const { isMobile } = useMedia()
+
   const [isClient, setIsClient] = useState(false)
   useLayoutEffect(() => {
     setIsClient(true)
@@ -12,7 +16,10 @@ const LoadingFirstPage = () => {
       <Spin />
     </div>
   ) : (
-    <></>
+    <ToastContainer
+      className={'mb-3'}
+      style={{ marginTop: isMobile ? 65 : 0 }}
+    />
   )
 }
 

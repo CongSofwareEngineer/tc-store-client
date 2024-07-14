@@ -16,11 +16,7 @@ import { DataBase } from '@/constant/firebase'
 import { scrollTop } from '@/utils/functions'
 
 const ListProduct = ({ title, type = 'all' }: ListProductType) => {
-  const { data, isLoading } = useProductByLimit(DataBase.productShop, {
-    key: 'typeProduct',
-    match: 'in',
-    value: [type],
-  })
+  const { data, isLoading } = useProductByLimit(type, 5)
   const { translate } = useLanguage()
 
   useEffect(() => {
@@ -39,7 +35,7 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
               showSold
               key={item.id}
               item={item}
-              href={`/shop/${item.id}/${item.keyName}`}
+              href={`/shop/${item._id}/${item.keyName}`}
               className={'w-[180px] md:w-[230px] h-[310px] md:h-[350px]'}
             />
           )

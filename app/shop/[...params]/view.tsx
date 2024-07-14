@@ -22,10 +22,13 @@ import useUserData from '@/hook/useUserData'
 import ClientApi from '@/services/clientApi'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QueryKey } from '@/constant/reactQuery'
-import { LocalKey } from '@/constant/app'
+import { CookieKey, LocalKey, RequestType } from '@/constant/app'
 import useMedia from '@/hook/useMedia'
 import PaymentShop from './Component/payment'
 import { useEffect } from 'react'
+import { DataAddCart } from '@/constant/mongoDB'
+import { setCookie } from '@/services/CookeisService'
+import ServerApi from '@/services/serverApi'
 const Comment = dynamic(() => import('@/components/Comment'), {
   ssr: false,
 })
@@ -55,72 +58,42 @@ const ShopDetailScreen = ({
     setIsPayment(true)
   }
 
-  const handleAddCartLogin = async () => {
-    const dataCart = await ClientApi.requestBase({
-      nameDB: DataBase.cartUser,
-      namFn: FB_FC.queryListData,
-      body: {
-        queryListData: [
-          {
-            key: 'idProduct',
-            match: '==',
-            value: productDetail.id?.toString() || '',
-          },
-          {
-            key: 'idUser',
-            match: '==',
-            value: userData?.id || '',
-          },
-        ],
-      },
+  const handleAddCartLogin = async (body: DataAddCart) => {
+    console.log({ body })
+    const listCartUser = await ServerApi.requestBase({
+      url: `/cart/detail/${userData?._id}`,
     })
-    if (dataCart.data?.length > 0) {
-      const dataUpdate = dataCart.data[0]
-      dataUpdate.amount = dataUpdate.amount + amountBuy
-      await ClientApi.requestBase({
-        nameDB: DataBase.cartUser,
-        namFn: FB_FC.updateData,
-        body: {
-          data: dataUpdate,
-          id: dataUpdate.id,
-        },
+    if (listCartUser?.data?.length === 0) {
+      const data = await ServerApi.requestBase({
+        url: 'cart/create',
+        body,
+        method: RequestType.POST,
       })
+      console.log({ data })
     } else {
-      const payLoad: BodyAddCart = {
-        amount: amountBuy,
-        date: Date.now(),
-        idProduct: productDetail.id?.toString(),
-        idUser: userData?.id,
-        keyNameProduct: productDetail.keyName,
-      }
-      await ClientApi.requestBase({
-        nameDB: DataBase.cartUser,
-        namFn: FB_FC.addData,
-        body: {
-          data: payLoad,
-        },
-      })
     }
+    console.log('====================================')
+    console.log({ listCartUser })
+    console.log('====================================')
   }
 
   const handleAddCart = async () => {
     try {
       setLoadingAddCart(true)
-
+      const body: DataAddCart = {
+        amount: amountBuy,
+        idProduct: productDetail._id?.toString(),
+        moreConfig: {},
+      }
       if (isLogin) {
-        await handleAddCartLogin()
+        body.idUser = userData?._id
+        await handleAddCartLogin(body)
         refreshQuery(QueryKey.LengthCartUser)
       } else {
-        const payLoad: BodyAddCart = {
-          amount: amountBuy,
-          date: Date.now(),
-          idProduct: productDetail.id?.toString(),
-          idUser: '',
-          keyNameProduct: productDetail.keyName.toString(),
-        }
-        saveDataLocal(LocalKey.MyCart, payLoad)
+        body.date = new Date().getTime().toFixed()
+        setCookie(CookieKey.MyCart, body)
+        showNotificationSuccess(translate('addCart.addSuccess'))
       }
-      showNotificationSuccess(translate('addCart.addSuccess'))
     } finally {
       setLoadingAddCart(false)
     }

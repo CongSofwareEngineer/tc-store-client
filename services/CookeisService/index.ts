@@ -15,17 +15,18 @@ export async function hasCookie(key: CookieKey) {
 export async function getCookie<T>(key: CookieKey): Promise<T | null> {
   try {
     const data = cookies().get(key)?.value || null
-    return data ? JSON.parse(data) : null
+    return data ? JSON.parse((data)) : null
   } catch (error) {
     console.error(error)
     return null
   }
 }
 
-export async function setCookie(key: CookieKey, value: any) {
+export async function setCookie(key: CookieKey, value: any, expired?: number) {
   try {
+
     cookies().set(key, JSON.stringify(value), {
-      maxAge: 60 * 60 * 24 * 365
+      expires: expired
     })
     return true
   } catch (error) {

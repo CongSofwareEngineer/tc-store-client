@@ -25,7 +25,14 @@ export const ColorConfig = {
 
 export enum CookieKey {
   'User' = 'User',
-  'MyCart' = 'MyCart'
+  'MyCart' = 'MyCart',
+  'Auth' = 'auth',
+  'AuthRefresh' = 'AuthRefresh',
+}
+
+export enum CookieExpired {
+  'ExpiredAuth' = Number((new Date()).setHours(new Date().getHours() + 2).toFixed()) - 20000,
+  'ExpiredAuthRefresh' = Number((new Date()).setDate(new Date().getDate() + 15).toFixed()) - 20000
 }
 
 export enum LocalKey {
@@ -50,4 +57,10 @@ export const OptionPayment = {
   momo: 'momo',
   banking: 'banking',
   delivery: 'delivery'
+}
+
+
+export enum ObserverKey {
+  'LogOut' = 'LogOut',
+  'UpdateCookieAuth' = 'UpdateCookieAuth',
 }

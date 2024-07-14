@@ -1,7 +1,6 @@
 'use client'
 import React, { useLayoutEffect } from 'react'
 import Header from '../Header'
-import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useAppDispatch } from '@/redux/store'
 import { setMenuCategory } from '@/redux/categoryMenuSlice'
@@ -9,6 +8,7 @@ import useCheckPatchName from '@/hook/tank-query/useCheckPatchName'
 import useMedia from '@/hook/useMedia'
 import Footer from '../Footer'
 import dynamic from 'next/dynamic'
+import useUserData from '@/hook/useUserData'
 const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
   ssr: true,
 })
@@ -21,11 +21,12 @@ const ClientRender = ({
 }) => {
   useCheckPatchName()
   const dispatch = useAppDispatch()
-  const { isMobile } = useMedia()
+  const { reLogin } = useUserData()
 
   useLayoutEffect(() => {
     dispatch(setMenuCategory(menuCategory))
-  }, [dispatch, menuCategory])
+    reLogin()
+  }, [])
 
   return (
     <>
@@ -37,10 +38,6 @@ const ClientRender = ({
       </main>
       <Footer />
       <LoadingFirstPage />
-      <ToastContainer
-        className={'mb-3'}
-        style={{ marginTop: isMobile ? 65 : 0 }}
-      />
     </>
   )
 }

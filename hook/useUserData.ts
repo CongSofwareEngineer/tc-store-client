@@ -1,14 +1,16 @@
-import { QueryData } from '@/constant/firebase'
 import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { setUserData } from '@/redux/userDataSlice'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import useLanguage from './useLanguage'
 import { showNotificationError, showNotificationSuccess } from '@/utils/functions'
 import secureLocalStorage from "react-secure-storage";
 import { decryptData, encryptData } from '@/utils/crypto'
 import { SLICE } from '@/constant/redux'
-import ClientApi from '@/services/clientApi'
 import useModalDrawer from './useModalDrawer'
+import ServerApi from '@/services/serverApi'
+import { CookieExpired, CookieKey, ObserverKey, RequestType } from '@/constant/app'
+import { deleteCookie, setCookie } from '@/services/CookeisService'
+import ObserverService from '@/services/observer'
 
 const useUserData = () => {
   const dispatch = useAppDispatch()
@@ -16,75 +18,97 @@ const useUserData = () => {
   const { translate } = useLanguage()
   const { closeModalDrawer } = useModalDrawer()
 
+  useEffect(() => {
+
+    const updateCookies = (auth: string) => {
+      setCookie(CookieKey.Auth, auth, CookieExpired.ExpiredAuth)
+    }
+    ObserverService.on(ObserverKey.LogOut, () => logOut())
+    ObserverService.on(ObserverKey.UpdateCookieAuth, updateCookies)
+
+    return () => ObserverService.removeListener(ObserverKey.LogOut)
+  }, [])
+
 
   const isLogin = useMemo(() => {
     return !!userData
   }, [userData])
 
-  const loginFireBase = useCallback(async (sdt: string, pass: string) => {
-    const listQuery: QueryData[] = [
-      {
-        key: 'sdt',
-        match: '==',
-        value: sdt
-      },
-      {
-        key: 'pass',
-        match: '==',
-        value: pass
+  const loginWithDB = useCallback(async (sdt: string, pass: string) => {
+    const data = await ServerApi.requestBase({
+      url: `user/login`,
+      method: RequestType.POST,
+      encode: true,
+      checkAuth: false,
+      body: {
+        sdt,
+        pass
       }
-    ]
-    const data = await ClientApi.login(listQuery)
-    return data?.data || []
-  }, [])
+    })
+
+    if (data?.data) {
+      dispatch(setUserData(data?.data))
+      setCookie(CookieKey.Auth, data?.data.auth?.toString(), CookieExpired.ExpiredAuth)
+      setCookie(CookieKey.AuthRefresh, data?.data.authRefresh?.toString(), CookieExpired.ExpiredAuthRefresh)
+    }
+    return data?.data || null
+  }, [dispatch])
 
   const logOut = useCallback(() => {
     dispatch(setUserData(null))
     secureLocalStorage.removeItem(SLICE.UserData)
+    deleteCookie(CookieKey.Auth)
+    deleteCookie(CookieKey.AuthRefresh)
   }, [dispatch])
 
   const refreshLogin = useCallback(async () => {
-    const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
-    if (dataSecure) {
-
-      const dataDecode = decryptData(dataSecure.toString())
-      const dataPare = JSON.parse(dataDecode)
-
-      const data = await loginFireBase(dataPare.sdt, dataPare.pass)
-      if (data.length === 0) {
+    if (userData) {
+      const data = await loginWithDB(userData?.sdt || '', userData?.pass || '')
+      if (!data) {
         logOut()
-      } else {
-        dispatch(setUserData(data[0]))
-        const userEncode = encryptData(JSON.stringify(data[0]))
-        secureLocalStorage.setItem(SLICE.UserData, userEncode)
       }
     } else {
       logOut()
     }
-  }, [dispatch, loginFireBase, logOut])
+  }, [logOut, userData, loginWithDB])
 
+  const reLogin = useCallback(async () => {
+    const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
+    if (dataSecure) {
+      const dataDecode = decryptData(dataSecure.toString())
+      const dataPare = JSON.parse(dataDecode)
+      const data = await loginWithDB(dataPare?.sdt, dataPare?.pass)
+      if (data) {
+        const userEncode = encryptData(JSON.stringify(data))
+        secureLocalStorage.setItem(SLICE.UserData, userEncode)
+      } else {
+        logOut()
+      }
+    } else {
+      logOut()
+    }
+  }, [logOut, loginWithDB])
 
   const login = useCallback(async (numberPhone: string, pass: string, saveLogin = true) => {
     try {
       const encodePass = encryptData(pass)
-      const data = await loginFireBase(numberPhone, encodePass)
+      const data = await loginWithDB(numberPhone, encodePass)
 
-      if (data.length === 0) {
-        showNotificationError(translate('noti.loginError'))
-      } else {
+      if (data) {
         if (saveLogin) {
-          const userEncode = encryptData(JSON.stringify(data[0]))
+          const userEncode = encryptData(JSON.stringify(data))
           secureLocalStorage.setItem(SLICE.UserData, userEncode)
         }
-        dispatch(setUserData(data[0]))
         showNotificationSuccess(translate('success.login'))
         closeModalDrawer()
+      } else {
+        showNotificationError(translate('noti.loginError'))
       }
 
     } catch (error) {
       showNotificationError(translate('noti.loginError'))
     }
-  }, [dispatch, loginFireBase, translate, closeModalDrawer])
+  }, [translate, closeModalDrawer, loginWithDB])
 
 
   return {
@@ -92,7 +116,8 @@ const useUserData = () => {
     isLogin: !!isLogin,
     logOut,
     login,
-    refreshLogin
+    refreshLogin,
+    reLogin
   }
 }
 

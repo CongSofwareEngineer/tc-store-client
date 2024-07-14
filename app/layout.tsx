@@ -86,6 +86,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
   const menuCategory = await fetchConfig({
     url: 'category/all',
   })
+
   return (
     <html lang="en">
       <body className={inter.className}>

@@ -18,7 +18,7 @@ const CategoryHome = () => {
                 CategoryMenu.length - 1 !== index && 'border-green-300'
               }`}
               key={e.keyName}
-              href={`/shop?typeProduct=${e.keyName}`}
+              href={`/shop?category=${e.keyName}`}
             >
               <h2 className="hover:underline cursor-pointer">
                 {e?.lang && e.lang[lang]}
