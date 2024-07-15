@@ -6,6 +6,7 @@ import useLanguage from '@/hook/useLanguage'
 import BtnBack from '@/components/BtnBack'
 import MyImage from '@/components/MyImage'
 import {
+  delayTime,
   formatPrice,
   formatPriceBase,
   saveDataLocal,
@@ -59,22 +60,27 @@ const ShopDetailScreen = ({
   }
 
   const handleAddCartLogin = async (body: DataAddCart) => {
-    console.log({ body })
     const listCartUser = await ServerApi.requestBase({
       url: `/cart/detail/${userData?._id}`,
     })
-    if (listCartUser?.data?.length === 0) {
-      const data = await ServerApi.requestBase({
+    const dataExited = listCartUser?.data?.find(
+      (e: any) => e.idProduct === body.idProduct
+    )
+    if (!dataExited) {
+      await ServerApi.requestBase({
         url: 'cart/create',
         body,
         method: RequestType.POST,
       })
-      console.log({ data })
     } else {
+      await ServerApi.requestBase({
+        url: `cart/update-cart/${dataExited._id}`,
+        body: {
+          amount: dataExited.amount + amountBuy,
+        },
+        method: RequestType.POST,
+      })
     }
-    console.log('====================================')
-    console.log({ listCartUser })
-    console.log('====================================')
   }
 
   const handleAddCart = async () => {
@@ -89,6 +95,8 @@ const ShopDetailScreen = ({
         body.idUser = userData?._id
         await handleAddCartLogin(body)
         refreshQuery(QueryKey.LengthCartUser)
+        await delayTime(1000)
+        showNotificationSuccess(translate('addCart.addSuccess'))
       } else {
         body.date = new Date().getTime().toFixed()
         setCookie(CookieKey.MyCart, body)

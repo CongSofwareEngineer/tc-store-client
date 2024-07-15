@@ -45,10 +45,10 @@ export type QueryData = { key: string, match: WhereFilterOp, value: any }
 // type data body to work fire store
 export type BodyAddCart = {
   amount: number
-  date: number
-  idProduct: string | undefined
-  idUser: string | undefined
-  keyNameProduct: string
+  date?: number
+  idProduct?: string | undefined
+  idUser?: string | undefined
+  keyNameProduct?: string
   moreConfig?: { [key: string]: any }
 }
 

@@ -3,7 +3,8 @@ export type ItemDetailType = {
   typeProduct?: string
   des?: string
   name: string
-  id?: string
+  _id?: string
+  keyName?: string
   [key: string]: any
 }
 
