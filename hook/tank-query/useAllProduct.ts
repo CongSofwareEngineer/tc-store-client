@@ -16,7 +16,7 @@ const getAllProduct = async ({ queryKey, pageParam }: { queryKey: any, pageParam
     queryUrl += `&category=${category.toString()}`
   }
   const dataServer = await ServerApi.requestBase({
-    url: `product/list-product${queryUrl}`,
+    url: `product/all${queryUrl}`,
   })
 
   return {

@@ -1,16 +1,19 @@
 import PrimaryButton from '@/components/PrimaryButton'
+import { RequestType } from '@/constant/app'
 import { DataBase, FB_FC } from '@/constant/firebase'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
 import ClientApi from '@/services/clientApi'
+import ServerApi from '@/services/serverApi'
 import { decryptData } from '@/utils/crypto'
 import {
   showNotificationError,
   showNotificationSuccess,
 } from '@/utils/functions'
 import { Checkbox, Input } from 'antd'
+import { isEmpty } from 'lodash'
 import React, { useEffect, useState } from 'react'
 type PropsType = {
   keyType: string
@@ -27,8 +30,7 @@ const ModalUpdateUser = ({ keyType, callBack, initValue }: PropsType) => {
   const [valueNew, setValueNew] = useState<string | boolean | undefined>('')
 
   useEffect(() => {
-    setValueNew(getOldValue())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setValueNew(() => getOldValue())
   }, [userData])
 
   const getOldValue = () => {
@@ -48,37 +50,43 @@ const ModalUpdateUser = ({ keyType, callBack, initValue }: PropsType) => {
 
   const handleSubmit = async () => {
     setLoading(true)
+    let error = false
     switch (keyType) {
       case 'sdt':
         if (checkNumberPhone(valueNew?.toString() || '')) {
           showNotificationError(checkNumberPhone(valueNew?.toString() || ''))
-          setLoading(false)
-          return
+          error = true
         }
+        break
+
       case 'name':
       case 'pass':
-        showNotificationError(translate('errors.empty'))
-        setLoading(false)
-        return
+        if (isEmpty(valueNew?.toString())) {
+          showNotificationError(translate('errors.empty'))
+          error = true
+        }
+        break
+    }
+    if (error) {
+      setLoading(false)
+      return
     }
     if (callBack) {
       await callBack(valueNew?.toString())
     } else {
-      await ClientApi.requestBase({
-        nameDB: DataBase.user,
+      await ServerApi.requestBase({
+        url: `user/update/${userData?._id}`,
+        method: RequestType.POST,
         body: {
-          id: userData?.id,
-          data: {
-            [keyType]: valueNew,
-          },
+          [keyType]: valueNew,
         },
         encode: true,
-        namFn: FB_FC.updateData,
       })
     }
     await refreshLogin()
     closeModalDrawer()
     showNotificationSuccess(translate('myPage.updateSuccess'))
+
     setLoading(false)
   }
 

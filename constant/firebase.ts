@@ -68,10 +68,10 @@ export type BodyAddBill = {
 
 
 export type BodyUserData = {
-  date: number
-  sdt: string,
-  isAdmin: boolean
-  exp: 0,
+  date?: number
+  sdt?: string,
+  isAdmin?: boolean
+  exp?: 0,
   address?: string
   name?: string
   avatar?: string | null

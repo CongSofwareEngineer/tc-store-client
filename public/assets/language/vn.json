@@ -32,7 +32,8 @@
     "enterPassWordAgain": "Nhập lại mật khẩu",
     "saveRegister": "Lưu đăng nhập",
     "success": "Đăng ký thành công",
-    "gmailRequire": "Nhập gmail (lấy lại tài khoản khi quên mật khẩu)"
+    "gmailRequire": "Nhập gmail (lấy lại tài khoản khi quên mật khẩu)",
+    "exitSDT": "SĐT đã tồn tại"
   },
   "textPopular": {
     "feeShip": "Phí Ship",
@@ -138,7 +139,6 @@
     "totalPayment": "Thành tiền",
     "empty": "Chưa có sản phẩm"
   },
-
   "footer": {
     "aboutContact": "Thông tin liên hệ"
   },

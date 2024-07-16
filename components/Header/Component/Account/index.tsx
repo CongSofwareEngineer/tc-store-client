@@ -59,18 +59,18 @@ const Account = () => {
           <div className="flex gap-2 items-center">
             <CartUser />
             <div>{userData?.name}</div>
-            <MenuOutlined onClick={handleViewMenu} style={{ fontSize: 20 }} />
           </div>
         ) : (
           <div
             onClick={handleLogin}
-            className="rounded h-full cursor-pointer w-24   flex justify-center items-center"
+            className="rounded h-full cursor-pointer w-24  flex justify-center items-center"
           >
             <span className="text-black underline">
               {isLogin ? translate('common.logOut') : translate('common.login')}
             </span>
           </div>
         )}
+        <MenuOutlined onClick={handleViewMenu} style={{ fontSize: 20 }} />
       </div>
     )
   }

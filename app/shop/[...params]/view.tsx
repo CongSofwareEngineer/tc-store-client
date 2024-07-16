@@ -61,11 +61,9 @@ const ShopDetailScreen = ({
 
   const handleAddCartLogin = async (body: DataAddCart) => {
     const listCartUser = await ServerApi.requestBase({
-      url: `/cart/detail/${userData?._id}`,
+      url: `/cart/details/${body.idUser}/${body.idProduct}`,
     })
-    const dataExited = listCartUser?.data?.find(
-      (e: any) => e.idProduct === body.idProduct
-    )
+    const dataExited = listCartUser?.data[0]
     if (!dataExited) {
       await ServerApi.requestBase({
         url: 'cart/create',
@@ -93,10 +91,10 @@ const ShopDetailScreen = ({
       }
       if (isLogin) {
         body.idUser = userData?._id
-        await handleAddCartLogin(body)
-        refreshQuery(QueryKey.LengthCartUser)
-        await delayTime(1000)
         showNotificationSuccess(translate('addCart.addSuccess'))
+        setLoadingAddCart(false)
+        await handleAddCartLogin(body)
+        await delayTime(1000)
       } else {
         body.date = new Date().getTime().toFixed()
         setCookie(CookieKey.MyCart, body)

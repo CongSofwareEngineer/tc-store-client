@@ -4,14 +4,16 @@ import InputForm from '@/components/InputForm'
 import MyForm from '@/components/MyForm'
 import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
+import { RequestType } from '@/constant/app'
 import { BodyUserData, DataBase, FB_FC } from '@/constant/firebase'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import useUserData from '@/hook/useUserData'
 import ClientApi from '@/services/clientApi'
+import ServerApi from '@/services/serverApi'
 import { encryptData } from '@/utils/crypto'
-import { showNotificationError } from '@/utils/functions'
+import { delayTime, showNotificationError } from '@/utils/functions'
 import { Checkbox } from 'antd'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -61,7 +63,6 @@ const RegisterScreen = () => {
     } else {
       const bodyUser: BodyUserData = {
         addressShipper: [],
-        date: Date.now(),
         exp: 0,
         sdt: formData.sdt,
         sex: formData.sex,
@@ -71,17 +72,22 @@ const RegisterScreen = () => {
         avatar: '',
         address: '',
       }
-      await ClientApi.requestBase({
-        nameDB: DataBase.user,
-        body: {
-          data: bodyUser,
-        },
-        encode: true,
-        namFn: FB_FC.addData,
-      })
-      await login(formData.sdt, formData.pass, formData?.saveLogin)
-    }
 
+      const newData = await ServerApi.requestBase({
+        url: '/user/register',
+        body: bodyUser,
+        encode: true,
+        method: RequestType.POST,
+        checkAuth: false,
+      })
+      console.log({ newData })
+
+      if (!newData?.data) {
+        showNotificationError(translate('register.exitSDT'))
+      } else {
+        await login(formData.sdt, formData.pass, !!formData?.saveLogin)
+      }
+    }
     setLoadingRegister(false)
   }
 

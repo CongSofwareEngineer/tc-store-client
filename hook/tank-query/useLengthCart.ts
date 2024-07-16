@@ -2,8 +2,11 @@ import { QueryKey } from '@/constant/reactQuery'
 import ServerApi from '@/services/serverApi'
 import { useQuery } from '@tanstack/react-query'
 const getData = async ({ queryKey }: any) => {
-  const lengthCart = await ServerApi.getLengthCart(queryKey[1])
-  return lengthCart
+  const lengthCart = await ServerApi.requestBase({
+    url: `/cart/length-cart/${queryKey[1]}`
+  })
+
+  return lengthCart?.data || 0
 
 }
 const useLengthCart = (id = '') => {
