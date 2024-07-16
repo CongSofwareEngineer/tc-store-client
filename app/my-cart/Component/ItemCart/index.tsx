@@ -69,86 +69,148 @@ const ItemCart = ({
 
   const renderDesktop = () => {
     return (
-      <tr>
-        {!noEdit && (
-          <td className="w-[50px] p-2 relative">
-            <div className="flex flex-col h-full items-end ">
-              <Checkbox
-                checked={!!data?.selected}
-                onClick={selectedItem}
-                className="w-5"
-              />
+      <div
+        className={`w-full flex gap-3 items-center p-3 pb-4 ${
+          !noBorder && 'border-b-[3px] border-gray-200'
+        }`}
+      >
+        <div className="w-8 flex flex-col gap-2">
+          <Checkbox
+            checked={!!data?.selected}
+            onClick={selectedItem}
+            className="w-5"
+          />
+          <DeleteOutlined
+            style={{ color: 'red', fontSize: 18 }}
+            onClick={handleDelete}
+          />
+        </div>
+        <div className="aspect-square w-[120px]">
+          <MyImage
+            widthImage={'100%'}
+            heightImage={'auto'}
+            src={data?.imageMain?.toString() || ''}
+            alt={`item-${data?.name}`}
+          />
+        </div>
+        <div className="flex flex-col flex-1 gap-1">
+          <div
+            onClick={() =>
+              router.push(
+                `/shop/${data?.more_data._id}/${data?.more_data.keyName}`
+              )
+            }
+            className="text-medium font-medium mb-1 hover:underline cursor-pointer "
+          >
+            {data?.more_data?.name}
+          </div>
+          <div className="opacity-80 text-xs ">
+            {`${translate('category')} : ${
+              data?.more_data?.name || 'typeProduct'
+            }`}
+          </div>
+          <div className="flex w-full gap-2 items-center">
+            <div className=" text-green-800 font-medium">
+              {numberWithCommas(data?.more_data.price)} đ
             </div>
-            {!noBorder && (
-              <div className="border-[1px] border-gray-200 absolute w-[50%] bottom-[-1px] right-0" />
-            )}
-          </td>
-        )}
+            <div className="line-through font-medium">
+              {numberWithCommas(data?.more_data.price * 1.2)}
+            </div>
+          </div>
 
-        <TD $noBorder={noBorder} className="w-[100px] ">
-          <div className="flex justify-center">
-            <MyImage
-              widthImage={'auto'}
-              heightImage={'80px'}
-              src={data?.imageMain?.toString() || ''}
-              alt={`item-${data?.name}`}
-            />
-          </div>
-        </TD>
-        <TD $noBorder={noBorder}>
-          <div className="flex flex-col gap-1">
-            <div
-              className="font-semibold   cursor-pointer md:hover:underline"
-              onClick={handleClickName}
-            >
-              {data.name}
+          <div className="w-full flex items-center justify-between">
+            <div className="font-bold text-green-500">
+              {numberWithCommas(data.amount * data?.more_data.price)} VNĐ
             </div>
-            <div className="opacity-80 text-xs ">
-              {`${translate('category')} : ${data?.name || 'typeProduct'}`}
-            </div>
-          </div>
-        </TD>
-        <TD $noBorder={noBorder}>
-          <div className="  text-green-800 flex flex-col  justify-items-start items-center gap-2">
-            <span className="line-through text-xs">
-              {numberWithCommas(data.price * 1.2)}
-            </span>
-            <div className=" text-green-800">
-              {numberWithCommas(data.price)}
-            </div>
-          </div>
-        </TD>
-        <TD $noBorder={noBorder}>
-          {noEdit ? (
-            <div className="text-center w-full">{`x${data.amount}`}</div>
-          ) : (
             <SubAndPlus
               isSquare
               value={data?.amount || 1}
               callBackPlus={() => onChangeAmountBuy()}
               callBackSub={() => onChangeAmountBuy(false)}
             />
-          )}
-        </TD>
-        <TD className="relative p-2" $noBorder={noBorder}>
-          <div className="text-center font-bold  text-green-800">
-            {numberWithCommas(data.amount * data.price)} VNĐ
           </div>
-        </TD>
-        {!noEdit && (
-          <td className="w-[50px] p-2 relative">
-            <div className="flex flex-col h-full">
-              <DeleteOutlined
-                style={{ color: 'red', fontSize: 18 }}
-                onClick={handleDelete}
-              />
-            </div>
-            {!noBorder && (
-              <div className="border-[1px] border-gray-200 absolute w-[50%] bottom-[-1px] left-0" />
-            )}
-          </td>
-        )}
-      </tr>
+        </div>
+      </div>
+      // <tr>
+      //   {!noEdit && (
+      //     <td className="w-[50px] p-2 relative">
+      //       <div className="flex flex-col h-full items-end ">
+      //         <Checkbox
+      //           checked={!!data?.selected}
+      //           onClick={selectedItem}
+      //           className="w-5"
+      //         />
+      //       </div>
+      //       {!noBorder && (
+      //         <div className="border-[1px] border-gray-200 absolute w-[50%] bottom-[-1px] right-0" />
+      //       )}
+      //     </td>
+      //   )}
+
+      //   <TD $noBorder={noBorder} className="w-[100px] ">
+      //     <div className="flex justify-center">
+      //       <MyImage
+      //         widthImage={'auto'}
+      //         heightImage={'80px'}
+      //         src={data?.imageMain?.toString() || ''}
+      //         alt={`item-${data?.name}`}
+      //       />
+      //     </div>
+      //   </TD>
+      //   <TD $noBorder={noBorder}>
+      //     <div className="flex flex-col gap-1">
+      //       <div
+      //         className="font-semibold   cursor-pointer md:hover:underline"
+      //         onClick={handleClickName}
+      //       >
+      //         {data.name}
+      //       </div>
+      //       <div className="opacity-80 text-xs ">
+      //         {`${translate('category')} : ${data?.name || 'typeProduct'}`}
+      //       </div>
+      //     </div>
+      //   </TD>
+      //   <TD $noBorder={noBorder}>
+      //     <div className="  text-green-800 flex flex-col  justify-items-start items-center gap-2">
+      //       <span className="line-through text-xs">
+      //         {numberWithCommas(data.price * 1.2)}
+      //       </span>
+      //       <div className=" text-green-800">
+      //         {numberWithCommas(data.price)}
+      //       </div>
+      //     </div>
+      //   </TD>
+      //   <TD $noBorder={noBorder}>
+      //     {noEdit ? (
+      //       <div className="text-center w-full">{`x${data.amount}`}</div>
+      //     ) : (
+      //       <SubAndPlus
+      //         isSquare
+      //         value={data?.amount || 1}
+      //         callBackPlus={() => onChangeAmountBuy()}
+      //         callBackSub={() => onChangeAmountBuy(false)}
+      //       />
+      //     )}
+      //   </TD>
+      //   <TD className="relative p-2" $noBorder={noBorder}>
+      //     <div className="text-center font-bold  text-green-800">
+      //       {numberWithCommas(data.amount * data.price)} VNĐ
+      //     </div>
+      //   </TD>
+      //   {!noEdit && (
+      //     <td className="w-[50px] p-2 relative">
+      //       <div className="flex flex-col h-full">
+      //         <DeleteOutlined
+      //           style={{ color: 'red', fontSize: 18 }}
+      //           onClick={handleDelete}
+      //         />
+      //       </div>
+      //       {!noBorder && (
+      //         <div className="border-[1px] border-gray-200 absolute w-[50%] bottom-[-1px] left-0" />
+      //       )}
+      //     </td>
+      //   )}
+      // </tr>
     )
   }
 

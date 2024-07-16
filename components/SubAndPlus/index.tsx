@@ -20,18 +20,18 @@ const SubAndPlus = ({
   return (
     <div className="flex align-middle gap-3 ">
       {isSquare ? (
-        <div className="flex">
+        <div className="flex  border-solid border-2 border-gray-400 rounded-lg py-1">
           <div
-            className="relative right-[-1px] cursor-pointer text-center border-solid border-2 border-gray-400  min-w-5"
+            className="font-bold relative  cursor-pointer text-center  min-w-5"
             onClick={() => callBackSub(value === 1 ? 1 : Number(value) - 1)}
           >
             -
           </div>
-          <div className="cursor-pointer text-center border-solid border-2 border-gray-400 md:min-w-12 min-w-8 ">
+          <div className="cursor-pointer text-center md:min-w-12 min-w-8 ">
             {value || 1}
           </div>
           <div
-            className="relative left-[-2px] cursor-pointer text-center border-solid border-2 border-gray-400   min-w-5"
+            className="relative font-bold cursor-pointer text-center   min-w-5"
             onClick={() =>
               callBackPlus(
                 maxAmount === -1

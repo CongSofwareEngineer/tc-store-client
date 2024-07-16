@@ -6,7 +6,7 @@ const getData = async ({ queryKey }: any) => {
     url: `/cart/length-cart/${queryKey[1]}`
   })
 
-  return lengthCart?.data || 0
+  return lengthCart?.data || { lengthCart: 0 }
 
 }
 const useLengthCart = (id = '') => {

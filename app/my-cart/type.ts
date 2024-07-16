@@ -48,7 +48,7 @@ export type ListItemCartType = {
   allSelected?: boolean
   dataCart: DataItemType[]
   callBackClick?: (param?: any, index?: number) => void
-  callBackSelectAll?: () => void
+  callBackSelectAll?: (param?: any) => void
   callBackDelete?: (index: number) => Promise<void> | void
 }
 

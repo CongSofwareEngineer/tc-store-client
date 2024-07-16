@@ -19,7 +19,7 @@ const MyCartScreen = () => {
   const [allSelected, setAllSelected] = useState(false)
   const [pageSize] = useState(PageSizeLimit)
 
-  const { data, isLoading, refreshData } = useMyCart(pageSize)
+  const { data, isLoading } = useMyCart(pageSize)
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
   const { refreshQuery } = useRefreshQuery()
@@ -27,7 +27,7 @@ const MyCartScreen = () => {
   useEffect(() => {
     if (data) {
       setListCartFormat((e) => {
-        const arr = data.data.map((eChil: any) => {
+        const arr = data.map((eChil: any) => {
           if (e.length > 0) {
             const item = e.find((temp) => temp.id === eChil?.id)
             if (item) {
