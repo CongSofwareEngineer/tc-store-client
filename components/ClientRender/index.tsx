@@ -9,6 +9,7 @@ import useMedia from '@/hook/useMedia'
 import Footer from '../Footer'
 import dynamic from 'next/dynamic'
 import useUserData from '@/hook/useUserData'
+import { fetchProvinces } from '@/redux/provincesSlice'
 const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
   ssr: true,
 })
@@ -25,6 +26,7 @@ const ClientRender = ({
 
   useLayoutEffect(() => {
     dispatch(setMenuCategory(menuCategory))
+    dispatch(fetchProvinces())
     reLogin()
   }, [])
 

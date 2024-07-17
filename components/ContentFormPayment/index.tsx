@@ -7,6 +7,7 @@ import OptionAddressShip from './Component/OptionAddressShip'
 import InputAreaForm from '../InputAreaForm'
 import { images } from '@/configs/images'
 import MyImage from '../MyImage'
+import OptionVnLocation from '../OptionVnLocation'
 
 const ContentFormPayment = () => {
   const { checkNumberPhone } = useCheckForm()
@@ -53,17 +54,14 @@ const ContentFormPayment = () => {
           label={translate('userDetail.name')}
           classFromItem="w-full"
         />
-        {/* <InputForm
-          name="gmail"
-          label={translate('productDetail.modalBuy.enterGmail')}
-          classFromItem="w-full"
-        /> */}
       </div>
-      <div className="md:mt-2 mt-1" />
-      <OptionAddressShip
+      <div className="md:mt-4 mt-2" />
+      {/* <OptionAddressShip
         listAddressShip={listAddressShip}
         setListAddressShip={setListAddressShip}
-      />
+      /> */}
+      <OptionVnLocation callback={() => {}} />
+
       <div className="md:mt-2 mt-1" />
 
       <InputAreaForm

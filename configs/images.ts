@@ -52,7 +52,8 @@ export const images = {
     iconZalo: '/images/Icon/iconZalo.png',
     messenger: '/images/Icon/iconMessager.png',
     iconDelete: '/images/Icon/iconDelete.png',
-    iconFacebook: '/images/Icon/iconFaboook.png'
+    iconFacebook: '/images/Icon/iconFaboook.png',
+    iconChecked: '/images/Icon/iconChecked.png',
   },
   userDetail: {
     iconUserDetail: '/images/Profile/Userdetail/iconUserDetail.png'

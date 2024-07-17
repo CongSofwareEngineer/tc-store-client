@@ -6,6 +6,7 @@ import ItemCart from '../ItemCart'
 import MyLoading from '@/components/MyLoading'
 import useLanguage from '@/hook/useLanguage'
 import { Checkbox } from 'antd'
+import MyCheckBox from '@/components/MyCheckBox'
 
 const ListItemCart = ({
   dataCart,
@@ -84,10 +85,11 @@ const ListItemCart = ({
           </td>
         )}
         <div className="w-full flex gap-3 items-center p-3 pb-4  border-b-[3px] border-gray-200 font-bold">
-          <div className="w-8">
-            <Checkbox
-              checked={allSelected}
-              onChange={() => callBackSelectAll(!allSelected)}
+          <div className="w-8 flex items-center justify-center">
+            <MyCheckBox
+              alt="check-all"
+              value={allSelected}
+              onClick={() => callBackSelectAll(!allSelected)}
             />
           </div>
           <div className="w-[120px] text-center">

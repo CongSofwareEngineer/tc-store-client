@@ -9,7 +9,6 @@ import {
   delayTime,
   formatPrice,
   formatPriceBase,
-  saveDataLocal,
   showNotificationSuccess,
 } from '@/utils/functions'
 import InfoItemDetail from '@/components/InfoItemDetail'
@@ -18,12 +17,9 @@ import { images } from '@/configs/images'
 import SecondButton from '@/components/SecondButton'
 import dynamic from 'next/dynamic'
 import useGetProductByID from '@/hook/tank-query/useGetProductByID'
-import { BodyAddCart, DataBase, FB_FC } from '@/constant/firebase'
 import useUserData from '@/hook/useUserData'
-import ClientApi from '@/services/clientApi'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
-import { QueryKey } from '@/constant/reactQuery'
-import { CookieKey, LocalKey, RequestType } from '@/constant/app'
+import { CookieKey, RequestType } from '@/constant/app'
 import useMedia from '@/hook/useMedia'
 import PaymentShop from './Component/payment'
 import { useEffect } from 'react'

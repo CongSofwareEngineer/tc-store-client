@@ -12,6 +12,8 @@ import styled from 'styled-components'
 import { ItemCartType } from '../../type'
 import SubAndPlus from '@/components/SubAndPlus'
 import useModalDrawer from '@/hook/useModalDrawer'
+import { images } from '@/configs/images'
+import MyCheckBox from '@/components/MyCheckBox'
 const TD = styled.td<{ $noBorder: boolean }>`
   border-bottom: ${(props) => (props.$noBorder ? 0 : 2)}px solid
     rgba(229, 231, 235, 1);
@@ -74,14 +76,14 @@ const ItemCart = ({
           !noBorder && 'border-b-[3px] border-gray-200'
         }`}
       >
-        <div className="w-8 flex flex-col gap-2">
-          <Checkbox
-            checked={!!data?.selected}
+        <div className="w-8 flex flex-col gap-3 items-center">
+          <MyCheckBox
+            alt={data?.more_data?.keyName}
             onClick={selectedItem}
-            className="w-5"
+            value={!!data?.selected}
           />
           <DeleteOutlined
-            style={{ color: 'red', fontSize: 18 }}
+            style={{ color: 'red', fontSize: 25 }}
             onClick={handleDelete}
           />
         </div>
@@ -90,7 +92,7 @@ const ItemCart = ({
             widthImage={'100%'}
             heightImage={'auto'}
             src={data?.imageMain?.toString() || ''}
-            alt={`item-${data?.name}`}
+            alt={`item-${data?.more_data?.keyName}`}
           />
         </div>
         <div className="flex flex-col flex-1 gap-1">

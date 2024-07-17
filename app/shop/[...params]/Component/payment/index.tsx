@@ -1,7 +1,7 @@
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { PaymentShopType } from '../../type'
 import useOptionPayment from '@/hook/useOptionPayment'
 import BillFinal from '@/app/my-cart/Component/Payment/Component/BillFinal'
@@ -50,6 +50,10 @@ const PaymentShop = ({
     setFormData(initData)
   }, [userData, data, isLogin])
 
+  const isValidSubmit = useMemo(() => {
+    return true
+  }, [formData])
+
   const handleSubmit = async () => {
     const callBack = async () => {
       setLoading(true)
@@ -78,20 +82,16 @@ const PaymentShop = ({
           {
             amount: amount,
             idProduct: data?.id || '',
-            keyNameProduct: data?.keyName,
+            KeyName: data?.keyName,
           },
         ],
         iDBanking: Date.now(),
       }
-      console.log('====================================')
-      console.log({ data, formData, optionSelected, clickBack, bodyBill })
-      console.log('====================================')
+      console.log({ bodyBill })
 
-      // await handlePayment(bodyBill)
-      // await ClientApi.createBill(bodyBill)
-      await delayTime(3000)
-      showNotificationSuccess(translate('productDetail.modalBuy.success'))
-      refreshQuery(QueryKey.GetProductByID)
+      // await delayTime(3000)
+      // showNotificationSuccess(translate('productDetail.modalBuy.success'))
+      // refreshQuery(QueryKey.GetProductByID)
       setLoading(false)
     }
     openModalDrawer({
@@ -135,6 +135,7 @@ const PaymentShop = ({
                   optionSelected={optionSelected}
                 />
                 <BillFinal
+                  disabledSubmit={isValidSubmit}
                   loading={loading}
                   totalBill={numberWithCommas(amount * data?.price)}
                   totalBillFeeShip={numberWithCommas(

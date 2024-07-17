@@ -106,7 +106,7 @@ const MyCartScreen = () => {
               loading={isLoading}
             />
           </div>
-          <div className="w-[300px] border-2 border-gray-300 bg-white flex flex-col items-center h-fit p-3 gap-3">
+          <div className="lg:w-[400px] md:w-[280px] border-2 border-gray-300 bg-white flex flex-col items-center h-fit p-3 gap-3">
             <div className="w-full flex justify-between">
               <div>{translate('textPopular.provisional')}</div>
               <span className="font-bold text-green-500">

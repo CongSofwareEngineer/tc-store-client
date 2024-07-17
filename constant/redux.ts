@@ -10,7 +10,9 @@ export enum SLICE {
   Language = 'Language',
   UserData = 'UserData',
   ConnectedChain = 'ConnectedChain',
-  CategoryMenu = 'CategoryMenu'
+  CategoryMenu = 'CategoryMenu',
+  Provinces = 'Provinces'
+
 }
 
 export const WHITE_LIST_PERSIT_REDUX = [SLICE.Language]
@@ -20,7 +22,8 @@ export const INIT_STATE = {
   [SLICE.Setting]: null,
   [SLICE.UserData]: null,
   [SLICE.ConnectedChain]: 56,
-  [SLICE.CategoryMenu]: []
+  [SLICE.CategoryMenu]: [],
+  [SLICE.Provinces]: [],
 }
 
 
@@ -42,7 +45,8 @@ export type TYPE_SLICE = {
   [SLICE.Setting]: Object | null
   [SLICE.UserData]: TypeUserData | null
   [SLICE.ConnectedChain]: Number,
-  [SLICE.CategoryMenu]: Array<{ keyName: string, icon?: string, lang?: { [key: string]: string } }>
+  [SLICE.CategoryMenu]: Array<{ keyName: string, icon?: string, lang?: { [key: string]: string } }>,
+  [SLICE.Provinces]: any[]
 }
 
 export type TYPE_PERSIST_REDUCER = TYPE_SLICE & unknown

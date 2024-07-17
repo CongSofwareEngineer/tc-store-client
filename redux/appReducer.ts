@@ -4,6 +4,7 @@ import userDataSliceReducer from './userDataSlice'
 import connectedChainReducer from './connectedChainSlice'
 import languageReducer from './languageSlice'
 import categoryMenuSlice from './categoryMenuSlice'
+import provincesSlice from './provincesSlice'
 import { SLICE } from '@/constant/redux'
 
 export default combineReducers({
@@ -11,5 +12,6 @@ export default combineReducers({
   [SLICE.Setting]: settingSliceReducer,
   [SLICE.UserData]: userDataSliceReducer,
   [SLICE.CategoryMenu]: categoryMenuSlice,
-  [SLICE.ConnectedChain]: connectedChainReducer
+  [SLICE.ConnectedChain]: connectedChainReducer,
+  [SLICE.Provinces]: provincesSlice,
 })

@@ -19,13 +19,11 @@ const useUserData = () => {
   const { closeModalDrawer } = useModalDrawer()
 
   useEffect(() => {
-
     const updateCookies = (auth: string) => {
       setCookie(CookieKey.Auth, auth, CookieExpired.ExpiredAuth)
     }
     ObserverService.on(ObserverKey.LogOut, () => logOut())
     ObserverService.on(ObserverKey.UpdateCookieAuth, updateCookies)
-
     return () => ObserverService.removeListener(ObserverKey.LogOut)
   }, [])
 
@@ -77,6 +75,7 @@ const useUserData = () => {
     if (dataSecure) {
       const dataDecode = decryptData(dataSecure.toString())
       const dataPare = JSON.parse(dataDecode)
+
       const data = await loginWithDB(dataPare?.sdt, dataPare?.pass)
       if (data) {
         const userEncode = encryptData(JSON.stringify(data))

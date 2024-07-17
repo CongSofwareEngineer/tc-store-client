@@ -8,10 +8,12 @@ const BillFinal = ({
   totalBill,
   totalBillFeeShip,
   loading = false,
+  disabledSubmit = false,
 }: {
   totalBill: string
   totalBillFeeShip: string
   loading: boolean
+  disabledSubmit?: boolean
 }) => {
   const { translate } = useLanguage()
 
@@ -45,6 +47,7 @@ const BillFinal = ({
         <span className="font-bold text-green-600">{totalBillFeeShip} VNĐ</span>
       </div>
       <ButtonForm
+        disabledSubmit={disabledSubmit}
         classNameItem={'w-full'}
         classBtnSubmit="w-full  rounded-none"
         className="mt-5"

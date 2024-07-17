@@ -36,6 +36,10 @@
     "exitSDT": "SĐT đã tồn tại"
   },
   "textPopular": {
+    "province": "Thành Phố",
+    "district": "Huyện / Quận",
+    "ward": "Phường / Xã",
+    "addressDetail": "Địa chỉ nhà củ thể",
     "feeShip": "Phí Ship",
     "provisional": "Tạm tính",
     "all": "Tất cả",

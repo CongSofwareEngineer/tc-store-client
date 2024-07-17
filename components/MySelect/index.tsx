@@ -33,7 +33,7 @@ const MySelect = ({
     return <span>{item.label || item.name || item.value}</span>
   }
 
-  const renderItemFullImage = (item: PropsSelectItem) => {
+  const renderItemFullImage = (item: any) => {
     return (
       <div className="flex flex-col gap-2">
         <span className="normal-case">{item.label || item.name}</span>
@@ -50,21 +50,19 @@ const MySelect = ({
   }
 
   return (
-    <Select className="w-max" labelRender={renderLabel} {...props}>
-      {option.map((animal: PropsSelectItem) => (
-        <Select.Option
-          className={classNameItem}
-          key={animal.value || animal.name}
-          value={animal.value || animal.name}
-        >
-          {fullImage ? (
-            renderItemFullImage(animal)
-          ) : (
-            <span className="normal-case">{animal.label || animal.name}</span>
-          )}
-        </Select.Option>
-      ))}
-    </Select>
+    <Select
+      className="w-max"
+      labelRender={renderLabel}
+      options={option}
+      optionRender={(e) => {
+        return fullImage ? (
+          renderItemFullImage(e)
+        ) : (
+          <span className="normal-case">{e.label}</span>
+        )
+      }}
+      {...props}
+    />
   )
 }
 
