@@ -4,8 +4,12 @@ import PrimaryButton from '../PrimaryButton'
 import SecondButton from '../SecondButton'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
-import useMedia from '@/hook/useMedia'
-
+import styled from 'styled-components'
+const FormItem = styled(Form.Item)`
+  .ant-form-item-row {
+    width: 100%;
+  }
+`
 type ButtonFormType = {
   loading?: boolean
   disableClose?: boolean
@@ -34,27 +38,26 @@ const ButtonForm = ({
 }: ButtonFormType) => {
   const { translate } = useLanguage()
   const { closeModalDrawer } = useModalDrawer()
-  const { isMobile } = useMedia()
 
   return (
     <div
       className={`w-full flex justify-center items-center gap-4 mt-2 ${className}`}
     >
-      <Form.Item className={classNameItem}>
+      <FormItem className={`flex flex-1 ${classNameItem}`}>
         <PrimaryButton
           disabled={disabledSubmit}
-          className={`w-[150px] m-auto ${classBtnSubmit}`}
-          widthBtn={widthBtnSubmit || isMobile ? '100%' : '150px'}
+          className={`w-full m-auto ${classBtnSubmit}`}
+          widthBtn={widthBtnSubmit || '100%'}
           loading={loading}
           htmlType="submit"
         >
           {titleSubmit || translate('cart.payment')}
         </PrimaryButton>
-      </Form.Item>
+      </FormItem>
       {!disableClose && (
         <SecondButton
           disabled={loading}
-          className={`w-[150px] ${classBtnCancel}`}
+          className={`flex flex-1 ${classBtnCancel}`}
           onClick={closeModalDrawer}
           widthBtn={widthBtnCancel || '150px'}
         >

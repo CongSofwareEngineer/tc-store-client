@@ -9,7 +9,11 @@ import { images } from '@/configs/images'
 import MyImage from '../MyImage'
 import OptionVnLocation from '../OptionVnLocation'
 
-const ContentFormPayment = () => {
+const ContentFormPayment = ({
+  onChange,
+}: {
+  onChange: (param: any) => void
+}) => {
   const { checkNumberPhone } = useCheckForm()
   const { userData } = useUserData()
   const { translate } = useLanguage()
@@ -56,11 +60,8 @@ const ContentFormPayment = () => {
         />
       </div>
       <div className="md:mt-4 mt-2" />
-      {/* <OptionAddressShip
-        listAddressShip={listAddressShip}
-        setListAddressShip={setListAddressShip}
-      /> */}
-      <OptionVnLocation callback={() => {}} />
+
+      <OptionVnLocation callback={onChange} />
 
       <div className="md:mt-2 mt-1" />
 

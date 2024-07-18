@@ -16,7 +16,6 @@ export type ModalBuyLoginType = {
 export type PaymentShopType = {
   data?: ItemDetailType
   callBack: () => void
-  clickBack: () => void
   amount: number
 }
 

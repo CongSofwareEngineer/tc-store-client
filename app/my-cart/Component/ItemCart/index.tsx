@@ -27,7 +27,7 @@ const ItemCart = ({
   callBackDelete,
   noEdit = false,
 }: ItemCartType) => {
-  const { translate } = useLanguage()
+  const { translate, getLabelCategory } = useLanguage()
   const { isMobile } = useMedia()
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()
   const router = useRouter()
@@ -108,7 +108,7 @@ const ItemCart = ({
           </div>
           <div className="opacity-80 text-xs ">
             {`${translate('category')} : ${
-              data?.more_data?.name || 'typeProduct'
+              getLabelCategory(data?.more_data?.category) || 'typeProduct'
             }`}
           </div>
           <div className="flex w-full gap-2 items-center">

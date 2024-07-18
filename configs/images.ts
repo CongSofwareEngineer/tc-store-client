@@ -54,6 +54,7 @@ export const images = {
     iconDelete: '/images/Icon/iconDelete.png',
     iconFacebook: '/images/Icon/iconFaboook.png',
     iconChecked: '/images/Icon/iconChecked.png',
+    iconSuccessGif: '/images/Icon/iconSuccess.gif',
   },
   userDetail: {
     iconUserDetail: '/images/Profile/Userdetail/iconUserDetail.png'

@@ -26,8 +26,9 @@ const MyCheckBox = ({
     />
   ) : (
     <div
+      style={{ width: size }}
       onClick={onClick}
-      className={`cursor-pointer w-[${size}px] h-[${size}px] rounded-md border-2 border-green-500 ${className}`}
+      className={`cursor-pointer aspect-square rounded-md border-2 border-green-500 ${className}`}
     />
   )
 }

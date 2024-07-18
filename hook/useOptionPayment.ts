@@ -39,6 +39,7 @@ const useOptionPayment = (defaultValue?: OptionType) => {
       {
         name: translate('optionPayment.banking'),
         value: OptionPayment.banking,
+        disabled: true
       },
     ]
   }, [translate])

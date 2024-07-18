@@ -10,9 +10,11 @@ import MyForm from '@/components/MyForm'
 import ContentFormPayment from '@/components/ContentFormPayment'
 import BtnBackUI from '@/components/BtnBackUI'
 import {
+  cloneData,
   delayTime,
   numberWithCommas,
   scrollTop,
+  showNotificationError,
   showNotificationSuccess,
 } from '@/utils/functions'
 import InfoBill from './InfoBill'
@@ -21,13 +23,11 @@ import { BodyAddBill } from '@/constant/firebase'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalProcess from '@/components/ModalProcess'
 import ModalDelete from '@/components/ModalDelete'
+import ServerApi from '@/services/serverApi'
+import { RequestType } from '@/constant/app'
+import ModalSuccess from '@/components/ModalSuccess'
 
-const PaymentShop = ({
-  data,
-  callBack,
-  amount,
-  clickBack,
-}: PaymentShopType) => {
+const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const { translate } = useLanguage()
   const { userData, isLogin } = useUserData()
   const { refreshQuery } = useRefreshQuery()
@@ -42,21 +42,48 @@ const PaymentShop = ({
     const initData = {
       sdt: userData?.sdt,
       name: userData?.name,
-      addressShip: userData?.addressShipper[0] || '',
-      linkContact: userData?.linkContact || '',
-      gmail: userData?.gmail || '',
+      addressShip: userData?.addressShipper[0]!,
+      linkContact: userData?.linkContact!,
+      gmail: userData?.gmail!,
       noteBil: '',
     }
     setFormData(initData)
   }, [userData, data, isLogin])
 
   const isValidSubmit = useMemo(() => {
-    return true
+    if (!formData?.addressShip) {
+      return false
+    }
+    return !!formData?.addressShip.addressDetail
   }, [formData])
+
+  const onChangeAddressShip = (item: any) => {
+    setFormData({
+      ...formData,
+      addressShip: {
+        ...item,
+      },
+    })
+  }
 
   const handleSubmit = async () => {
     const callBack = async () => {
       setLoading(true)
+
+      const bodyBill: BodyAddBill = {
+        addressShip: formData?.addressShip,
+        discount: 0,
+        sdt: formData?.sdt,
+        total: amount * data?.price,
+        idUser: isLogin ? userData?._id : 'no-id',
+        listBill: [
+          {
+            amount: amount,
+            _id: data?._id!,
+            keyName: data?.keyName,
+          },
+        ],
+      }
       openModalDrawer({
         content: (
           <ModalProcess
@@ -70,33 +97,37 @@ const PaymentShop = ({
           overClickClose: false,
         },
       })
-      const bodyBill: BodyAddBill = {
-        abort: false,
-        addressShip: formData?.addressShip,
-        date: Date.now(),
-        discount: 0,
-        sdt: formData?.sdt,
-        total: amount * data?.price,
-        idUser: isLogin ? userData?.id : 'no-id',
-        listProduction: [
-          {
-            amount: amount,
-            idProduct: data?.id || '',
-            KeyName: data?.keyName,
+      const res = await ServerApi.requestBase({
+        url: 'bill/create',
+        body: bodyBill,
+        method: RequestType.POST,
+        encode: true,
+      })
+      if (res?.data) {
+        openModalDrawer({
+          content: (
+            <ModalSuccess
+              showClose={false}
+              title={translate('productDetail.modalBuy.success')}
+              des={translate('productDetail.modalBuy.successDes')}
+            />
+          ),
+          configModal: {
+            showHeader: false,
+            overClickClose: false,
           },
-        ],
-        iDBanking: Date.now(),
+        })
+        refreshQuery(QueryKey.GetProductByID)
+      } else {
+        showNotificationError(translate('productDetail.modalBuy.error'))
       }
-      console.log({ bodyBill })
 
-      // await delayTime(3000)
-      // showNotificationSuccess(translate('productDetail.modalBuy.success'))
-      // refreshQuery(QueryKey.GetProductByID)
       setLoading(false)
     }
     openModalDrawer({
       content: (
         <ModalDelete
+          autoClose={false}
           callback={callBack}
           title={translate('confirm.bill.confirm')}
           des={translate('confirm.bill.confirm_des')}
@@ -122,20 +153,21 @@ const PaymentShop = ({
               setFormData({ ...formData, ...value })
             }
           >
+            {/* lg:max-h-[calc(100vh-126px)] hide-scroll */}
             <div className="flex lg:flex-row flex-col lg:gap-6 gap-5">
-              <div className="flex flex-1 flex-col lg:max-w-[calc(100%-300px)]">
-                <ContentFormPayment />
+              <div className="flex flex-1 h-full overflow-y-auto  flex-col lg:max-w-[calc(100%-300px)]">
+                <ContentFormPayment onChange={onChangeAddressShip} />
                 <InfoBill data={data} amountBuy={amount} />
               </div>
 
-              <div className="lg:w-[300px] flex flex-col md:gap-6 gap-5">
+              <div className="lg:w-[350px] flex flex-col md:gap-6 gap-5">
                 <OptionPayment
                   onChangeOptions={onChangeOptions}
                   listOptions={listOptions}
                   optionSelected={optionSelected}
                 />
                 <BillFinal
-                  disabledSubmit={isValidSubmit}
+                  disabledSubmit={!isValidSubmit}
                   loading={loading}
                   totalBill={numberWithCommas(amount * data?.price)}
                   totalBillFeeShip={numberWithCommas(

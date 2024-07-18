@@ -17,7 +17,7 @@ const ShopScreen = () => {
 
   return (
     <div className="w-full flex md:flex-row flex-col  md:gap-6 gap-3  h-full justify-star md:mt-3">
-      <h2 className="absolute opacity-0">Shop Tc store</h2>
+      <h2 className="absolute opacity-0">Shop tc store - Uy tín nhất Gia La</h2>
       <div className="md:w-[250px] w-full">
         <MenuCategory />
       </div>
@@ -47,9 +47,20 @@ const ShopScreen = () => {
           </div>
         )}
 
-        {data.length === 0 && <div className="mt-3">Chưa có sản phẩm</div>}
+        {data.length === 0 && !isLoading && (
+          <div className="mt-3">Chưa có sản phẩm</div>
+        )}
 
-        {isLoading && <MyLoading className="mt-6" />}
+        {isLoading && (
+          <div className="flex flex-col gap-4 w-full ">
+            <div className="skeleton-loading w-full rounded-lg h-12" />
+            <div className="skeleton-loading gap-3 grid grid-cols-3">
+              <div className="w-full skeleton-loading rounded-lg aspect-square" />
+              <div className="w-full skeleton-loading rounded-lg aspect-square" />
+              <div className="w-full skeleton-loading rounded-lg aspect-square" />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

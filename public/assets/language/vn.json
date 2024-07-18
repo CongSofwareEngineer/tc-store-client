@@ -160,6 +160,7 @@
       "enterGmail": "Nhập gmail (không bắt buộc)",
       "enterAddress": "Nhập địa chỉ nhà (shipper ship hàng)",
       "success": "Bạn mua hàng thành công",
+      "successDes": "Hóa đơn đã tạo. Bạn chú ý shipper gọi nhận hàng",
       "error": "Mua hàng thất bại"
     },
     "productGood": "Sản phẩm có tốt không ?"

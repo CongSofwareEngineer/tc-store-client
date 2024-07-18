@@ -80,6 +80,7 @@ type PropsType = {
   typeBtn?: 0 | 1
   type?: 'string' | 'area' | 'number' | 'password'
   rows?: number | 2
+  onChangeText?: (value?: string | number) => void
 } & InputProps &
   InputNumberProps &
   TextAreaProps
@@ -88,21 +89,47 @@ const MyInput = ({
   typeBtn = 0,
   type = 'string',
   rows = 2,
+  onChangeText = () => {},
   ...props
 }: PropsType) => {
   const inputComponent = useMemo(() => {
     switch (type) {
       case 'string':
-        return <InputBase $typeBtn={typeBtn} {...props} />
+        return (
+          <InputBase
+            onChange={(e: any) => onChangeText(e.target.value.toString())}
+            $typeBtn={typeBtn}
+            {...props}
+          />
+        )
 
       case 'number':
-        return <InputNumberBase $typeBtn={typeBtn} {...props} />
+        return (
+          <InputNumberBase
+            onChange={(e: any) => onChangeText(e)}
+            $typeBtn={typeBtn}
+            {...props}
+          />
+        )
 
       case 'password':
-        return <InputPassword $typeBtn={typeBtn} {...props} />
+        return (
+          <InputPassword
+            onChange={(e: any) => onChangeText(e.target.value.toString())}
+            $typeBtn={typeBtn}
+            {...props}
+          />
+        )
 
       default:
-        return <InputArea $typeBtn={typeBtn} rows={rows} {...props} />
+        return (
+          <InputArea
+            onChange={(e: any) => onChangeText(e.target.value)}
+            $typeBtn={typeBtn}
+            rows={rows}
+            {...props}
+          />
+        )
     }
   }, [type, props, rows, typeBtn])
 

@@ -226,7 +226,6 @@ const ShopDetailScreen = ({
 
   return isPayment ? (
     <PaymentShop
-      clickBack={() => setIsPayment(false)}
       callBack={() => setIsPayment(false)}
       data={dataItem}
       amount={amountBuy}

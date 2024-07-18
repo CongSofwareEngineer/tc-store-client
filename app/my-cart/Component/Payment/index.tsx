@@ -14,6 +14,7 @@ import ContentForm from './Component/ContentForm'
 import ListProduct from './Component/ListProduct'
 import OptionPayment from './Component/OptionPayment'
 import useOptionPayment from '@/hook/useOptionPayment'
+import ViewListOther from './Component/ViewListOther'
 
 const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
   const { translate } = useLanguage()
@@ -81,21 +82,19 @@ const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
     try {
       setLoading(true)
       let totalBill = 0
-      const listProduction = dataCart.map((e) => {
+      const listBill = dataCart.map((e) => {
         totalBill += e.amount * e.price
         return {
-          idProduct: e.idProduct,
+          _id: e.idProduct,
           keyNameProduct: e.keyNameProduct,
           amount: e.amount,
         }
       })
       const bodyAPI: BodyAddBill = {
-        abort: false,
         addressShip: formData?.addressShip,
-        date: Date.now(),
         discount: 0,
         idUser: userData?.id,
-        listProduction,
+        listBill,
         total: totalBill,
         sdt: formData?.sdt,
       }
@@ -134,7 +133,7 @@ const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
                   listAddressShip={listAddressShip}
                   setListAddressShip={setListAddressShip}
                 />
-                <ListProduct lisDataBill={lisDataBill} />
+                <ViewListOther dataCart={dataCart} />
               </div>
 
               <div className="lg:w-[300px] flex flex-col md:gap-6 gap-5">

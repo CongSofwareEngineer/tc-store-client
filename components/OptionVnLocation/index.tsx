@@ -55,10 +55,6 @@ const OptionVnLocation = ({ callback }: { callback: any }) => {
     (id: string) => {
       const data = listWards.find((e: any) => e.id === id)
       setWard(data)
-      const dataAddress = `${provence.full_name}--${districts.full_name}---${data.full_name}`
-      callback({
-        address: dataAddress,
-      })
     },
     [listWards, ward, districts, provence]
   )
@@ -116,10 +112,12 @@ const OptionVnLocation = ({ callback }: { callback: any }) => {
         <MyInput
           disabled={!districts || !provence || !ward}
           value={addressDetail}
-          onChange={(e) => {
-            setAddressDetail(e?.toString() || '')
+          onChangeText={(e) => {
+            const dataAddress = `${provence.full_name}---${districts.full_name}---${ward.full_name}`
+            setAddressDetail(e!.toString())
             callback({
-              addressDetail: e?.toString() || '',
+              addressDetail: e,
+              address: dataAddress,
             })
           }}
           type="string"

@@ -11,12 +11,14 @@ type ModalDeleteType = {
   callback?: (param?: any) => Promise<void> | void
   title?: string
   titleConfirm?: string
+  autoClose?: boolean
 }
 const ModalDelete = ({
   des = '',
   title = '',
   titleConfirm = '',
   callback = () => {},
+  autoClose = true,
 }: ModalDeleteType) => {
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
@@ -30,7 +32,7 @@ const ModalDelete = ({
       await callback()
     }
     setLoading(false)
-    closeModalDrawer()
+    autoClose && closeModalDrawer()
   }
   return (
     <div className="w-full flex flex-col gap-2">

@@ -97,3 +97,60 @@ body {
   background: transparent !important;
   cursor: pointer;
 }
+
+.hide-scroll {
+  ::-webkit-scrollbar {
+    background-color: transparent !important;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: transparent !important;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: transparent !important;
+  }
+
+
+  ::-webkit-resizer {
+    background: transparent !important;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent !important;
+  }
+}
+
+.skeleton-loading {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.06) 25%, rgba(0, 0, 0, 0.15) 37%, rgba(0, 0, 0, 0.06) 63%);
+  background-size: 400% 100%;
+  background-size: 400% 100%;
+  animation-name: loading;
+  animation-duration: 1.4s;
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
+
+  @keyframes loading {
+    0% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0 50%;
+    }
+  }
+
+  @-webkit-keyframes loading {
+    0% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0 50%;
+    }
+  }
+}

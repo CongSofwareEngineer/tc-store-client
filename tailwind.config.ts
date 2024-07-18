@@ -27,7 +27,9 @@ const config = {
         '.desktop': {},
         '.mobile': {},
         '.shadow-gray1': {},
-        '.absolute-center': {}
+        '.absolute-center': {},
+        '.hide-scroll': {},
+        '.skeleton-loading': {}
       }
 
       addUtilities(newUtilities)
