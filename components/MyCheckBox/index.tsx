@@ -17,6 +17,7 @@ const MyCheckBox = ({
 }: MyCheckBoxProps) => {
   return value ? (
     <MyImage
+      priority
       src={images.icon.iconChecked}
       widthImage={`${size}px`}
       heightImage={`${size}px`}

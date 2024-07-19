@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { DataItemType, PaymentPageType } from '../../type'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
-import { numberWithCommas, showNotificationSuccess } from '@/utils/functions'
+import {
+  delayTime,
+  numberWithCommas,
+  showNotificationError,
+  showNotificationSuccess,
+} from '@/utils/functions'
 import { QueryKey } from '@/constant/reactQuery'
 import ClientApi from '@/services/clientApi'
 import { BodyAddBill, DataBase, FB_FC } from '@/constant/firebase'
@@ -15,11 +20,17 @@ import ListProduct from './Component/ListProduct'
 import OptionPayment from './Component/OptionPayment'
 import useOptionPayment from '@/hook/useOptionPayment'
 import ViewListOther from './Component/ViewListOther'
+import { RequestType } from '@/constant/app'
+import ServerApi from '@/services/serverApi'
+import ModalProcess from '@/components/ModalProcess'
+import useModalDrawer from '@/hook/useModalDrawer'
+import ModalSuccess from '@/components/ModalSuccess'
 
 const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
   const { translate } = useLanguage()
   const { userData } = useUserData()
   const { refreshQuery } = useRefreshQuery()
+  const { openModalDrawer } = useModalDrawer()
 
   const [formData, setFormData] = useState<Record<string, any> | null>(null)
   const [loading, setLoading] = useState(false)
@@ -45,6 +56,22 @@ const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
     const arr = dataCart.filter((e) => e.selected)
     setLisDataBill(arr)
   }, [userData, dataCart])
+
+  const isValidSubmit = useMemo(() => {
+    if (!formData?.addressShip) {
+      return false
+    }
+    return !!formData?.addressShip.addressDetail
+  }, [formData])
+
+  const onChangeAddressShip = (item: any) => {
+    setFormData({
+      ...formData,
+      addressShip: {
+        ...item,
+      },
+    })
+  }
 
   const getTotalPayBill = (plusFee = false) => {
     let total = 0
@@ -75,7 +102,7 @@ const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
   const refreshAllData = () => {
     refreshQuery(QueryKey.LengthCartUser)
     refreshQuery(QueryKey.MyCartUser)
-    refreshData()
+    refreshQuery(QueryKey.GetProductByID)
   }
 
   const handleSubmit = async () => {
@@ -83,33 +110,75 @@ const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
       setLoading(true)
       let totalBill = 0
       const listBill = dataCart.map((e) => {
-        totalBill += e.amount * e.price
+        totalBill += e.amount * e.more_data.price
         return {
-          _id: e.idProduct,
-          keyNameProduct: e.keyNameProduct,
+          _id: e.more_data._id,
+          keyName: e.more_data.keyName,
           amount: e.amount,
         }
       })
       const bodyAPI: BodyAddBill = {
         addressShip: formData?.addressShip,
         discount: 0,
-        idUser: userData?.id,
+        idUser: userData?._id,
         listBill,
         total: totalBill,
         sdt: formData?.sdt,
       }
-      await handleDeleteCart()
+      console.log({ bodyAPI })
 
-      await ClientApi.requestBase({
-        nameDB: DataBase.bill,
-        body: {
-          data: bodyAPI,
+      openModalDrawer({
+        content: (
+          <ModalProcess
+            title={translate('confirm.bill.createBill')}
+            des={translate('confirm.bill.createBill_Des')}
+          />
+        ),
+        configModal: {
+          showHeader: false,
+          showBtnClose: false,
+          overClickClose: false,
         },
-        encode: true,
-        namFn: FB_FC.addData,
       })
-      refreshAllData()
-      showNotificationSuccess(translate('productDetail.modalBuy.success'))
+      const res = await ServerApi.requestBase({
+        url: 'bill/create',
+        body: bodyAPI,
+        method: RequestType.POST,
+        encode: true,
+      })
+      if (res?.data) {
+        openModalDrawer({
+          content: (
+            <ModalSuccess
+              showClose={false}
+              title={translate('productDetail.modalBuy.success')}
+              des={translate('productDetail.modalBuy.successDes')}
+            />
+          ),
+          configModal: {
+            showHeader: false,
+            overClickClose: false,
+          },
+        })
+        refreshAllData()
+        await delayTime(1000)
+        refreshAllData()
+      } else {
+        showNotificationError(translate('productDetail.modalBuy.error'))
+      }
+
+      // await handleDeleteCart()
+
+      // await ClientApi.requestBase({
+      //   nameDB: DataBase.bill,
+      //   body: {
+      //     data: bodyAPI,
+      //   },
+      //   encode: true,
+      //   namFn: FB_FC.addData,
+      // })
+      // refreshAllData()
+      // showNotificationSuccess(translate('productDetail.modalBuy.success'))
     } finally {
       setLoading(false)
     }
@@ -132,6 +201,7 @@ const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
                 <ContentForm
                   listAddressShip={listAddressShip}
                   setListAddressShip={setListAddressShip}
+                  onChange={onChangeAddressShip}
                 />
                 <ViewListOther dataCart={dataCart} />
               </div>
@@ -143,6 +213,7 @@ const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
                   optionSelected={optionSelected}
                 />
                 <BillFinal
+                  disabledSubmit={!isValidSubmit}
                   loading={loading}
                   totalBill={getTotalPayBill()}
                   totalBillFeeShip={getTotalPayBill(true)}

@@ -10,12 +10,9 @@ import MyForm from '@/components/MyForm'
 import ContentFormPayment from '@/components/ContentFormPayment'
 import BtnBackUI from '@/components/BtnBackUI'
 import {
-  cloneData,
-  delayTime,
   numberWithCommas,
   scrollTop,
   showNotificationError,
-  showNotificationSuccess,
 } from '@/utils/functions'
 import InfoBill from './InfoBill'
 import { QueryKey } from '@/constant/reactQuery'
@@ -44,7 +41,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
       name: userData?.name,
       addressShip: userData?.addressShipper[0]!,
       linkContact: userData?.linkContact!,
-      gmail: userData?.gmail!,
+      gmail: userData?.gmail,
       noteBil: '',
     }
     setFormData(initData)

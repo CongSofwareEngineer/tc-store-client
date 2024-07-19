@@ -3,16 +3,18 @@ import SelectInputEx from '@/app/shop/[...params]/Component/ModalBuy/SelectInput
 import InputAreaForm from '@/components/InputAreaForm'
 import InputForm from '@/components/InputForm'
 import MyImage from '@/components/MyImage'
+import OptionVnLocation from '@/components/OptionVnLocation'
 import { images } from '@/configs/images'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
 import ClientApi from '@/services/clientApi'
-import React from 'react'
+import React, { useMemo } from 'react'
 
 const ContentForm = ({
   listAddressShip,
   setListAddressShip = () => {},
+  onChange = () => {},
 }: ContentFormType) => {
   const { translate } = useLanguage()
   const { checkNumberPhone } = useCheckForm()
@@ -68,22 +70,9 @@ const ContentForm = ({
           label={translate('userDetail.name')}
           classFromItem="w-full"
         />
-        <InputForm
-          name="gmail"
-          label={translate('productDetail.modalBuy.enterGmail')}
-          classFromItem="w-full"
-        />
-        <SelectInputEx
-          required
-          callBackAdd={(e) => handleAddAddress(e)}
-          name="addressShip"
-          label={translate('productDetail.modalBuy.enterAddress')}
-          options={getOptions()}
-          configSelect={{
-            showSearch: true,
-          }}
-        />
       </div>
+      <OptionVnLocation callback={onChange} />
+
       <InputAreaForm
         rows={2}
         name="noteBil"

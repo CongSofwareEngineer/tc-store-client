@@ -39,6 +39,7 @@ export type TitleItemType = {
 export type ContentFormType = {
   listAddressShip: any[]
   setListAddressShip?: (param: string[]) => void
+  onChange?: (param: any) => void
 }
 
 export type ListItemCartType = {

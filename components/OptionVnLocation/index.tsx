@@ -56,7 +56,7 @@ const OptionVnLocation = ({ callback }: { callback: any }) => {
       const data = listWards.find((e: any) => e.id === id)
       setWard(data)
     },
-    [listWards, ward, districts, provence]
+    [listWards]
   )
 
   return (
