@@ -159,12 +159,15 @@ const ClientApi = {
     //   },
     //   namFn: FB_FC.updateData,
     // })
+    console.log('====================================');
+    console.log({ amountSoldNew });
+    console.log('====================================');
 
   },
 
   createBill: async (bodyBill: BodyAddBill) => {
-    const litsProductFun = bodyBill.listProduction.map(e => {
-      return ClientApi.updateProductToSold(e.idProduct, e.amount)
+    const litsProductFun = bodyBill.listBill.map(e => {
+      return ClientApi.updateProductToSold(e._id, e.amount)
     })
     Promise.all(litsProductFun)
 

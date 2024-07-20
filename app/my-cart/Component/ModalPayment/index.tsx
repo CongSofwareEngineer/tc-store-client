@@ -8,7 +8,6 @@ import { BodyAddBill, DataBase, FB_FC } from '@/constant/firebase'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import MyForm from '@/components/MyForm'
 import InputForm from '@/components/InputForm'
-import SelectInputEx from '@/app/shop/[...params]/Component/ModalBuy/SelectInputEx'
 import ButtonForm from '@/components/ButtonForm'
 import BigNumber from 'bignumber.js'
 import { numberWithCommas, showNotificationSuccess } from '@/utils/functions'
@@ -18,6 +17,7 @@ import { images } from '@/configs/images'
 import ListItemCart from '../ListItemCart'
 import useModalDrawer from '@/hook/useModalDrawer'
 import { FILTER_BILL } from '@/constant/app'
+import SelectInputEx from '@/components/ContentFormPayment/Component/SelectInputEx'
 
 const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
   const { userData, isLogin, refreshLogin } = useUserData()
