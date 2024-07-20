@@ -10,7 +10,7 @@ import { PAGE_SIZE_LIMIT } from '@/constant/app'
 
 const PageNestsScreen = () => {
   const { currentQueries, queries } = useQuerySearch()
-  const { data, isLoading } = useAllProduct(1, PAGE_SIZE_LIMIT, queries)
+  const { data, isLoading } = useAllProduct(PAGE_SIZE_LIMIT, queries)
   const { translate } = useLanguage()
   const router = useRouter()
 
