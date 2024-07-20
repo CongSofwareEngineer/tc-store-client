@@ -246,5 +246,8 @@
     "myOder": "Đơn hàng",
     "myUser": "Tôi",
     "updateSuccess": "Cập nhật thành công"
+  },
+  "admin": {
+    "revenue": "Doanh thu"
   }
 }

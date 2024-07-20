@@ -8,6 +8,7 @@ export enum QUERY_KEY {
   MyCartUser = "MyCartUser",
   MyBillUser = "MyBillUser",
   AllProvincesVn = "AllProvincesVn",
+  BillAdmin = "BillAdmin",
 }
 
 export type TypeHookReactQuery = {
