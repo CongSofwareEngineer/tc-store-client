@@ -31,6 +31,7 @@ const ClientRender = ({
     dispatch(setMenuCategory(menuCategory))
     dispatch(fetchProvinces())
     reLogin()
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -43,6 +44,7 @@ const ClientRender = ({
         moment.locale('vi')
         break
     }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Language])
 
   return (

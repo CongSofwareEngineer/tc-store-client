@@ -1,7 +1,6 @@
 import { generateMetaBase } from '@/utils/serverNext'
 import { ResolvingMetadata } from 'next'
-import { PropsWithChildren } from 'react'
-import BillScreen from './view'
+ import BillScreen from './view'
 
 export async function generateMetadata(_: any, parent: ResolvingMetadata) {
   const dataBase = await parent
@@ -12,7 +11,7 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
   return metaData
 }
 
-const BillLayout = ({ children }: PropsWithChildren) => {
+const BillLayout = ( ) => {
   return <BillScreen />
 }
 

@@ -27,9 +27,10 @@ const ModalUpdateUser = ({ keyType, callBack, initValue }: PropsType) => {
   const [loading, setLoading] = useState(false)
   const [valueNew, setValueNew] = useState<string | boolean | undefined>('')
 
-  useEffect(() => {
+  useEffect(() => { 
     setValueNew(() => getOldValue())
-  }, [userData])
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const getOldValue = () => {
     switch (keyType) {

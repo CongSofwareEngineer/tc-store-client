@@ -24,7 +24,7 @@ import ModalProcess from '@/components/ModalProcess'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalSuccess from '@/components/ModalSuccess'
 
-const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
+const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
   const { translate } = useLanguage()
   const { userData } = useUserData()
   const { refreshQuery } = useRefreshQuery()
@@ -33,7 +33,6 @@ const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
   const [formData, setFormData] = useState<Record<string, any> | null>(null)
   const [loading, setLoading] = useState(false)
   const [listAddressShip, setListAddressShip] = useState<string[]>([])
-  const [lisDataBill, setLisDataBill] = useState<DataItemType[]>([])
   const { onChangeOptions, listOptions, optionSelected } = useOptionPayment()
 
   useEffect(() => {
@@ -51,8 +50,6 @@ const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
         setListAddressShip(userData?.addressShipper)
       }
     }
-    const arr = dataCart.filter((e) => e.selected)
-    setLisDataBill(arr)
   }, [userData, dataCart])
 
   const isValidSubmit = useMemo(() => {

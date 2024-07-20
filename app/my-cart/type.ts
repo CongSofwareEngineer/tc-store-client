@@ -26,7 +26,6 @@ export type ModalPaymentType = {
 export type PaymentPageType = {
   dataCart: DataItemType[]
   clickBack: () => void
-  refreshData: () => void
 }
 
 export type TitleItemType = {
