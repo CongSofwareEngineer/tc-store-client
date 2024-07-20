@@ -201,21 +201,22 @@ const MyCartScreen = () => {
   }
 
   return (
-    isClient && (
-      <>
-        {isPayment ? (
-          <Payment
-            refreshData={() => {}}
-            clickBack={() => setIsPayment(false)}
-            dataCart={listCartFormat}
-          />
-        ) : isMobile ? (
-          renderMobile()
-        ) : (
-          renderDesktop()
-        )}
-      </>
-    )
+    <>
+      {isClient && (
+        <>
+          {isPayment ? (
+            <Payment
+              clickBack={() => setIsPayment(false)}
+              dataCart={listCartFormat}
+            />
+          ) : isMobile ? (
+            renderMobile()
+          ) : (
+            renderDesktop()
+          )}
+        </>
+      )}
+    </>
   )
 }
 
