@@ -17,6 +17,7 @@ import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import ListItemCart from '../ListItemCart'
 import useModalDrawer from '@/hook/useModalDrawer'
+import { FILTER_BILL } from '@/constant/app'
 
 const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
   const { userData, isLogin, refreshLogin } = useUserData()
@@ -100,20 +101,20 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
       const listProduction = dataCart.map((e) => {
         totalBill += e.amount * e.price
         return {
-          idProduct: e.idProduct,
-          keyNameProduct: e.keyNameProduct,
+          _id: e.idProduct,
+          keyName: e.keyNameProduct,
           amount: e.amount,
         }
       })
       const bodyAPI: BodyAddBill = {
         abort: false,
         addressShip: formData?.addressShip,
-        date: Date.now(),
         discount: 0,
         idUser: userData?.id,
-        listProduction,
         total: totalBill,
         sdt: formData?.sdt,
+        status: FILTER_BILL.Processing,
+        listBill: listProduction,
       }
       await handleDeleteCart()
 

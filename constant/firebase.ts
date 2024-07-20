@@ -63,6 +63,7 @@ export type BodyAddBill = {
   iDBanking?: number,
   iDMomo?: number | string
   status: FILTER_BILL
+  abort?: boolean
 }
 
 
