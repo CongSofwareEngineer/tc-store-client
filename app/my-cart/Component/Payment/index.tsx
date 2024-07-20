@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { DataItemType, PaymentPageType } from '../../type'
+import { PaymentPageType } from '../../type'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'

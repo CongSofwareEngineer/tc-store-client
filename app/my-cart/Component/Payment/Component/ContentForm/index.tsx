@@ -6,13 +6,11 @@ import OptionVnLocation from '@/components/OptionVnLocation'
 import { images } from '@/configs/images'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
-import useUserData from '@/hook/useUserData'
 import React from 'react'
 
 const ContentForm = ({ onChange = () => {} }: ContentFormType) => {
   const { translate } = useLanguage()
   const { checkNumberPhone } = useCheckForm()
-  const { userData, refreshLogin } = useUserData()
 
   return (
     <div className="bg-white flex flex-col w-full border-[1px] shadow-gray1 border-gray-300  px-4 pt-4 lg:pb-0 pb-3">
