@@ -22,7 +22,7 @@ const ItemCart = ({
 }: ItemCartType) => {
   const { translate, getLabelCategory } = useLanguage()
   const { isMobile } = useMedia()
-  const { openModalDrawer, closeModalDrawer } = useModalDrawer()
+  const { openModalDrawer } = useModalDrawer()
   const router = useRouter()
 
   const selectedItem = () => {
@@ -55,11 +55,6 @@ const ItemCart = ({
         showHeader: true,
       },
     })
-  }
-
-  const handleClickName = () => {
-    router.push(`/shop/${data.idProduct}/${data.keyName}`)
-    closeModalDrawer()
   }
 
   const renderDesktop = () => {
