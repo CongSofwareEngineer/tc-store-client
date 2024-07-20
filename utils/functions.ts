@@ -2,6 +2,7 @@ import lodash from 'lodash'
 import { message, notification } from 'antd';
 import BigNumber from 'bignumber.js';
 import { toast } from 'react-toastify';
+import moment from 'moment';
 
 
 export const cloneData = (data: any, defaultValue: any = '') => {
@@ -204,6 +205,11 @@ export const copyToClipboard = (text: any) => {
 
 export const viewExternal = (url: string) => {
   window.open(url, '_blank');
+};
+
+
+export const formatDateTime = (data: any) => {
+  return moment(data).format('DD / MM /YYYY')
 };
 
 

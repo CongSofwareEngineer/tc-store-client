@@ -1,4 +1,4 @@
-export enum RequestType {
+export enum REQUEST_TYPE {
   POST = 'POST',
   GET = 'GET',
   PUT = 'PUT',
@@ -6,7 +6,7 @@ export enum RequestType {
   PATCH = 'PATCH'
 }
 
-export const ColorConfig = {
+export const COLOR_CONFIG = {
   'gray-1': '#333333',
   'gray-3': '#828282',
   'gray-4': '#BDBDBD',
@@ -23,14 +23,14 @@ export const ColorConfig = {
   green1: '#66FF33',
 } as const
 
-export enum CookieKey {
+export enum COOKIE_KEY {
   'User' = 'User',
   'MyCart' = 'MyCart',
   'Auth' = 'auth',
   'AuthRefresh' = 'AuthRefresh',
 }
 
-export enum CookieExpired {
+export enum COOKIE_EXPIRED {
   'ExpiredAuth' = Number((new Date()).setHours(new Date().getHours() + 2).toFixed()) - 20000,
   'ExpiredAuthRefresh' = Number((new Date()).setDate(new Date().getDate() + 15).toFixed()) - 20000
 }
@@ -51,7 +51,7 @@ export enum FilterAPI {
   Category = 'category'
 }
 
-export const PageSizeLimit = 15
+export const PAGE_SIZE_LIMIT = 15
 
 export const OptionPayment = {
   momo: 'momo',
@@ -60,7 +60,20 @@ export const OptionPayment = {
 }
 
 
-export enum ObserverKey {
+export enum OBSERVER_KEY {
   'LogOut' = 'LogOut',
   'UpdateCookieAuth' = 'UpdateCookieAuth',
+}
+
+export enum LANGUAGE_SUPPORT {
+  'VN' = 'vn',
+  'EN' = 'en',
+}
+
+export enum FILTER_BILL {
+  'All' = 'all',
+  'Processing' = 'processing',
+  'Delivering' = 'delivering',
+  'DeliverySuccess' = 'deliverySuccess',
+  'Canceled' = 'canceled',
 }

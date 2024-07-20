@@ -131,7 +131,7 @@ const MyInput = ({
           />
         )
     }
-  }, [type, props, rows, typeBtn])
+  }, [type, props, rows, typeBtn, onChangeText])
 
   return inputComponent
 }

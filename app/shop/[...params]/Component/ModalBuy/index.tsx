@@ -16,7 +16,7 @@ import {
 import ViewItem from './viewItem'
 import useMedia from '@/hook/useMedia'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
-import { QueryKey } from '@/constant/reactQuery'
+import { QUERY_KEY } from '@/constant/reactQuery'
 import ButtonForm from '@/components/ButtonForm'
 import useModalDrawer from '@/hook/useModalDrawer'
 
@@ -98,8 +98,8 @@ const ModalBuyLogin = ({ data, amount }: ModalBuyLoginType) => {
   }
 
   const handleClose = () => {
-    refreshQuery(QueryKey.LengthCartUser)
-    refreshQuery(QueryKey.GetProductByID)
+    refreshQuery(QUERY_KEY.LengthCartUser)
+    refreshQuery(QUERY_KEY.GetProductByID)
     closeModalDrawer()
   }
 

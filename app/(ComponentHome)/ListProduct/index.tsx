@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { ListProductType } from './type'
 import ItemProduct from '@/components/ItemProduct'
-import MyLoading from '@/components/MyLoading'
 import useLanguage from '@/hook/useLanguage'
 import Link from 'next/link'
 import { FilterAPI } from '@/constant/app'
@@ -12,7 +11,6 @@ import {
 } from '@ant-design/icons'
 import { CollapseCustom } from './styled'
 import useProductByLimit from '@/hook/tank-query/useProductByLimit'
-import { DataBase } from '@/constant/firebase'
 import { scrollTop } from '@/utils/functions'
 
 const ListProduct = ({ title, type = 'all' }: ListProductType) => {
@@ -26,7 +24,13 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   const renderListItem = () => {
     return (
       <div className="flex gap-3 md:gap-5">
-        {isLoading && <MyLoading />}
+        {isLoading && (
+          <div className="w-full flex gap-3">
+            <div className="skeleton-loading w-[30%] pb-[300px] rounded-lg" />
+            <div className="skeleton-loading w-[30%] pb-[300px] rounded-lg" />
+            <div className="skeleton-loading w-[30%] pb-[300px] rounded-lg" />
+          </div>
+        )}
 
         {data?.data?.map((item) => {
           return (

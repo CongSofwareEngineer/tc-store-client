@@ -6,9 +6,10 @@ const useLanguage = () => {
   const { Language } = useAppSelector(state => state.app)
   const { CategoryMenu } = useAppSelector(state => state.app)
 
-  const translate = useCallback((key: Path<Language>) => {
+
+  const translate = useCallback((key?: Path<Language>) => {
     try {
-      const arrKey = key.split('.')
+      const arrKey = key!.split('.')
       let text: any = ''
       arrKey.forEach(e => {
         if (!text) {

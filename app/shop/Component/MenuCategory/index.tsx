@@ -25,6 +25,7 @@ const MenuCategory = () => {
         data={itemMenu || []}
         titleFilter={translate('menuProduct.product')}
         typeChecked={FilterAPI.Category}
+        isReplace={false}
       />
     </MyFilter>
   )

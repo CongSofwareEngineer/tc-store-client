@@ -23,12 +23,7 @@ interface LabelInValueType {
   name?: string
 }
 
-const MySelect = ({
-  option,
-  classNameItem,
-  fullImage = false,
-  ...props
-}: PropsSelect) => {
+const MySelect = ({ option, fullImage = false, ...props }: PropsSelect) => {
   const renderLabel = (item: LabelInValueType) => {
     return <span>{item.label || item.name || item.value}</span>
   }

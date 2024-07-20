@@ -5,9 +5,8 @@ import React, { useEffect } from 'react'
 import MyImage from '../MyImage'
 import { CopyOutlined } from '@ant-design/icons'
 import { copyToClipboard, scrollTop, viewExternal } from '@/utils/functions'
-import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
-const GgMap = dynamic(() => import('./ggMap'), { ssr: true })
+//  const GgMap = dynamic(() => import('./ggMap'), { ssr: true })
 
 const Item = ({ icon, value, link, type }: any) => {
   const { isMobile } = useMedia()
@@ -77,7 +76,7 @@ const Footer = () => {
             />
           </div>
           <div className="w-full md:w-[48%] min-h-[200px]">
-            <GgMap />
+            {/* <GgMap /> */}
           </div>
         </div>
       </div>

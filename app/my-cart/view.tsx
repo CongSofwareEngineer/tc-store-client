@@ -4,25 +4,24 @@ import useMyCart from '@/hook/tank-query/useMyCart'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import { useEffect, useState } from 'react'
-import { PageSizeLimit } from '@/constant/app'
+import { PAGE_SIZE_LIMIT } from '@/constant/app'
 import { cloneData, numberWithCommas } from '@/utils/functions'
 import PrimaryButton from '@/components/PrimaryButton'
 import ListItemCart from './Component/ListItemCart'
 import Payment from './Component/Payment'
 import ClientApi from '@/services/clientApi'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
-import { QueryKey } from '@/constant/reactQuery'
-import { Skeleton } from 'antd'
+import { QUERY_KEY } from '@/constant/reactQuery'
 
 const MyCartScreen = () => {
   const [listCartFormat, setListCartFormat] = useState<any[]>([])
   const [isPayment, setIsPayment] = useState(false)
   const [allSelected, setAllSelected] = useState(false)
-  const [pageSize] = useState(PageSizeLimit)
+  const [pageSize] = useState(PAGE_SIZE_LIMIT)
 
   const { data, isLoading } = useMyCart(pageSize)
   const { translate } = useLanguage()
-  const { isMobile } = useMedia()
+  const { isMobile, isClient } = useMedia()
   const { refreshQuery } = useRefreshQuery()
 
   useEffect(() => {
@@ -75,7 +74,7 @@ const MyCartScreen = () => {
   const handleDelete = async (index: number) => {
     const dataRemove = listCartFormat[index]
     await ClientApi.removeCart(dataRemove.id)
-    refreshQuery(QueryKey.MyCartUser)
+    refreshQuery(QUERY_KEY.MyCartUser)
   }
 
   const handleSelectAll = (isSelect = false) => {
@@ -201,16 +200,22 @@ const MyCartScreen = () => {
     )
   }
 
-  return isPayment ? (
-    <Payment
-      refreshData={() => {}}
-      clickBack={() => setIsPayment(false)}
-      dataCart={listCartFormat}
-    />
-  ) : isMobile ? (
-    renderMobile()
-  ) : (
-    renderDesktop()
+  return (
+    isClient && (
+      <>
+        {isPayment ? (
+          <Payment
+            refreshData={() => {}}
+            clickBack={() => setIsPayment(false)}
+            dataCart={listCartFormat}
+          />
+        ) : isMobile ? (
+          renderMobile()
+        ) : (
+          renderDesktop()
+        )}
+      </>
+    )
   )
 }
 

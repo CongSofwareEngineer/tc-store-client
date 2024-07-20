@@ -23,7 +23,7 @@ const Header = () => {
                   alt="logo-tcstore"
                   fill
                   widthImage={'auto'}
-                  heightImage="100%"
+                  heightImage="1pCl00%"
                 />
               </Link>
             </div>

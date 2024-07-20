@@ -1,9 +1,9 @@
 'use server'
 
-import { CookieKey } from '@/constant/app'
+import { COOKIE_KEY } from '@/constant/app'
 import { cookies } from 'next/headers'
 
-export async function hasCookie(key: CookieKey) {
+export async function hasCookie(key: COOKIE_KEY) {
   try {
     return cookies().has(key)
   } catch (error) {
@@ -12,7 +12,7 @@ export async function hasCookie(key: CookieKey) {
   }
 }
 
-export async function getCookie<T>(key: CookieKey): Promise<T | null> {
+export async function getCookie<T>(key: COOKIE_KEY): Promise<T | null> {
   try {
     const data = cookies().get(key)?.value || null
     return data ? JSON.parse((data)) : null
@@ -22,7 +22,7 @@ export async function getCookie<T>(key: CookieKey): Promise<T | null> {
   }
 }
 
-export async function setCookie(key: CookieKey, value: any, expired?: number) {
+export async function setCookie(key: COOKIE_KEY, value: any, expired?: number) {
   try {
 
     cookies().set(key, JSON.stringify(value), {
@@ -35,7 +35,7 @@ export async function setCookie(key: CookieKey, value: any, expired?: number) {
   }
 }
 
-export async function deleteCookie(key: CookieKey | CookieKey[]) {
+export async function deleteCookie(key: COOKIE_KEY | COOKIE_KEY[]) {
   try {
     if (typeof key === 'string') {
       cookies().delete(key)

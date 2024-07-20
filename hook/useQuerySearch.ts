@@ -34,12 +34,17 @@ const useQuerySearch = () => {
   }, [searchParam, router, pathPage])
 
 
-  const updateQuery = useCallback((key: string, value: string | string[] | number | number[]) => {
+  const updateQuery = useCallback((key: string, value: string | string[] | number | number[], isReplace = true) => {
 
     const searchPareClone = cloneData(queries)
+
     if (searchPareClone[key]) {
       if (!searchPareClone[key].includes(value?.toString())) {
-        searchPareClone[key].push(value)
+        if (isReplace) {
+          searchPareClone[key] = [value]
+        } else {
+          searchPareClone[key].push(value)
+        }
       } else {
         searchPareClone[key] = searchPareClone[key].filter((e: string) => e !== value?.toString())
       }

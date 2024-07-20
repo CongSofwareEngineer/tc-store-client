@@ -12,13 +12,7 @@ import styled from 'styled-components'
 import { ItemCartType } from '../../type'
 import SubAndPlus from '@/components/SubAndPlus'
 import useModalDrawer from '@/hook/useModalDrawer'
-import { images } from '@/configs/images'
 import MyCheckBox from '@/components/MyCheckBox'
-const TD = styled.td<{ $noBorder: boolean }>`
-  border-bottom: ${(props) => (props.$noBorder ? 0 : 2)}px solid
-    rgba(229, 231, 235, 1);
-  padding: 8px;
-`
 
 const ItemCart = ({
   data,
@@ -133,86 +127,6 @@ const ItemCart = ({
           </div>
         </div>
       </div>
-      // <tr>
-      //   {!noEdit && (
-      //     <td className="w-[50px] p-2 relative">
-      //       <div className="flex flex-col h-full items-end ">
-      //         <Checkbox
-      //           checked={!!data?.selected}
-      //           onClick={selectedItem}
-      //           className="w-5"
-      //         />
-      //       </div>
-      //       {!noBorder && (
-      //         <div className="border-[1px] border-gray-200 absolute w-[50%] bottom-[-1px] right-0" />
-      //       )}
-      //     </td>
-      //   )}
-
-      //   <TD $noBorder={noBorder} className="w-[100px] ">
-      //     <div className="flex justify-center">
-      //       <MyImage
-      //         widthImage={'auto'}
-      //         heightImage={'80px'}
-      //         src={data?.imageMain?.toString() || ''}
-      //         alt={`item-${data?.name}`}
-      //       />
-      //     </div>
-      //   </TD>
-      //   <TD $noBorder={noBorder}>
-      //     <div className="flex flex-col gap-1">
-      //       <div
-      //         className="font-semibold   cursor-pointer md:hover:underline"
-      //         onClick={handleClickName}
-      //       >
-      //         {data.name}
-      //       </div>
-      //       <div className="opacity-80 text-xs ">
-      //         {`${translate('category')} : ${data?.name || 'typeProduct'}`}
-      //       </div>
-      //     </div>
-      //   </TD>
-      //   <TD $noBorder={noBorder}>
-      //     <div className="  text-green-800 flex flex-col  justify-items-start items-center gap-2">
-      //       <span className="line-through text-xs">
-      //         {numberWithCommas(data.price * 1.2)}
-      //       </span>
-      //       <div className=" text-green-800">
-      //         {numberWithCommas(data.price)}
-      //       </div>
-      //     </div>
-      //   </TD>
-      //   <TD $noBorder={noBorder}>
-      //     {noEdit ? (
-      //       <div className="text-center w-full">{`x${data.amount}`}</div>
-      //     ) : (
-      //       <SubAndPlus
-      //         isSquare
-      //         value={data?.amount || 1}
-      //         callBackPlus={() => onChangeAmountBuy()}
-      //         callBackSub={() => onChangeAmountBuy(false)}
-      //       />
-      //     )}
-      //   </TD>
-      //   <TD className="relative p-2" $noBorder={noBorder}>
-      //     <div className="text-center font-bold  text-green-800">
-      //       {numberWithCommas(data.amount * data.price)} VNĐ
-      //     </div>
-      //   </TD>
-      //   {!noEdit && (
-      //     <td className="w-[50px] p-2 relative">
-      //       <div className="flex flex-col h-full">
-      //         <DeleteOutlined
-      //           style={{ color: 'red', fontSize: 18 }}
-      //           onClick={handleDelete}
-      //         />
-      //       </div>
-      //       {!noBorder && (
-      //         <div className="border-[1px] border-gray-200 absolute w-[50%] bottom-[-1px] left-0" />
-      //       )}
-      //     </td>
-      //   )}
-      // </tr>
     )
   }
 

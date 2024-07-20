@@ -1,4 +1,4 @@
-import { ColorConfig } from '@/constant/app'
+import { COLOR_CONFIG } from '@/constant/app'
 import useLanguage from '@/hook/useLanguage'
 import React, { AriaAttributes } from 'react'
 import styled from 'styled-components'
@@ -12,7 +12,7 @@ const SellMySliderSell = styled.div<{ width: any }>`
   width: ${(props) => props.width}%;
   position: absolute;
   z-index: 1;
-  background-color: ${ColorConfig.green1};
+  background-color: ${COLOR_CONFIG.green1};
   height: 100%;
   top: 0;
   left: 0;

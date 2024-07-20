@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { TypeHookReactQuery } from '@/constant/reactQuery';
 type QueryPaginationType = {
-  listQueryKey: any[],
+  listqueryKey: any[],
   queryFn: (param?: any) => Promise<TypeHookReactQuery>,
   enabled?: any
 }
@@ -11,7 +11,7 @@ const useQueryPagination = (param: QueryPaginationType) => {
   const [data, setData] = useState<TypeHookReactQuery | null>(null)
 
   const { data: dataAPI, isLoading, refetch, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteQuery({
-    queryKey: param.listQueryKey,
+    queryKey: param.listQUERY_KEY,
     queryFn: param.queryFn,
     getNextPageParam: (last) => (last.page < last.totalPage ? last.page + 1 : null),
     initialPageParam: 1,

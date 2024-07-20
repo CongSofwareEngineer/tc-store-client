@@ -10,18 +10,19 @@ import MyForm from '@/components/MyForm'
 import ContentFormPayment from '@/components/ContentFormPayment'
 import BtnBackUI from '@/components/BtnBackUI'
 import {
+  delayTime,
   numberWithCommas,
   scrollTop,
   showNotificationError,
 } from '@/utils/functions'
 import InfoBill from './InfoBill'
-import { QueryKey } from '@/constant/reactQuery'
+import { QUERY_KEY } from '@/constant/reactQuery'
 import { BodyAddBill } from '@/constant/firebase'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalProcess from '@/components/ModalProcess'
 import ModalDelete from '@/components/ModalDelete'
 import ServerApi from '@/services/serverApi'
-import { RequestType } from '@/constant/app'
+import { FILTER_BILL, REQUEST_TYPE } from '@/constant/app'
 import ModalSuccess from '@/components/ModalSuccess'
 
 const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
@@ -80,6 +81,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
             keyName: data?.keyName,
           },
         ],
+        status: FILTER_BILL.Processing,
       }
       openModalDrawer({
         content: (
@@ -97,7 +99,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
       const res = await ServerApi.requestBase({
         url: 'bill/create',
         body: bodyBill,
-        method: RequestType.POST,
+        method: REQUEST_TYPE.POST,
         encode: true,
       })
       if (res?.data) {
@@ -114,7 +116,11 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
             overClickClose: false,
           },
         })
-        refreshQuery(QueryKey.GetProductByID)
+        await delayTime(1000)
+        refreshQuery(QUERY_KEY.GetProductByID)
+        refreshQuery(QUERY_KEY.LengthCartUser)
+        refreshQuery(QUERY_KEY.MyBillUser)
+        refreshQuery(QUERY_KEY.MyCartUser)
       } else {
         showNotificationError(translate('productDetail.modalBuy.error'))
       }

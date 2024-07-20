@@ -9,18 +9,16 @@ import {
   showNotificationError,
   showNotificationSuccess,
 } from '@/utils/functions'
-import { QueryKey } from '@/constant/reactQuery'
-import ClientApi from '@/services/clientApi'
-import { BodyAddBill, DataBase, FB_FC } from '@/constant/firebase'
+import { QUERY_KEY } from '@/constant/reactQuery'
+import { BodyAddBill } from '@/constant/firebase'
 import MyForm from '@/components/MyForm'
 import BtnBack from './Component/BtnBack'
 import BillFinal from './Component/BillFinal'
 import ContentForm from './Component/ContentForm'
-import ListProduct from './Component/ListProduct'
 import OptionPayment from './Component/OptionPayment'
 import useOptionPayment from '@/hook/useOptionPayment'
 import ViewListOther from './Component/ViewListOther'
-import { RequestType } from '@/constant/app'
+import { FILTER_BILL, REQUEST_TYPE } from '@/constant/app'
 import ServerApi from '@/services/serverApi'
 import ModalProcess from '@/components/ModalProcess'
 import useModalDrawer from '@/hook/useModalDrawer'
@@ -85,24 +83,10 @@ const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
     return numberWithCommas(total + (plusFee ? 30000 : 0))
   }
 
-  const handleDeleteCart = async () => {
-    const func = dataCart.map((e) => {
-      return ClientApi.requestBase({
-        nameDB: DataBase.cartUser,
-        body: {
-          id: e.id,
-        },
-        encode: true,
-        namFn: FB_FC.deleteData,
-      })
-    })
-    await Promise.all(func)
-  }
-
   const refreshAllData = () => {
-    refreshQuery(QueryKey.LengthCartUser)
-    refreshQuery(QueryKey.MyCartUser)
-    refreshQuery(QueryKey.GetProductByID)
+    refreshQuery(QUERY_KEY.LengthCartUser)
+    refreshQuery(QUERY_KEY.MyCartUser)
+    refreshQuery(QUERY_KEY.GetProductByID)
   }
 
   const handleSubmit = async () => {
@@ -115,6 +99,7 @@ const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
           _id: e.more_data._id,
           keyName: e.more_data.keyName,
           amount: e.amount,
+          idCart: e._id,
         }
       })
       const bodyAPI: BodyAddBill = {
@@ -124,6 +109,7 @@ const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
         listBill,
         total: totalBill,
         sdt: formData?.sdt,
+        status: FILTER_BILL.Processing,
       }
       console.log({ bodyAPI })
 
@@ -143,7 +129,7 @@ const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
       const res = await ServerApi.requestBase({
         url: 'bill/create',
         body: bodyAPI,
-        method: RequestType.POST,
+        method: REQUEST_TYPE.POST,
         encode: true,
       })
       if (res?.data) {
@@ -160,9 +146,9 @@ const Payment = ({ dataCart, clickBack, refreshData }: PaymentPageType) => {
             overClickClose: false,
           },
         })
-        refreshAllData()
         await delayTime(1000)
         refreshAllData()
+        showNotificationSuccess(translate('productDetail.modalBuy.success'))
       } else {
         showNotificationError(translate('productDetail.modalBuy.error'))
       }

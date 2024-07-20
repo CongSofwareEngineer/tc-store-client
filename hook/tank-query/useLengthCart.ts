@@ -1,4 +1,4 @@
-import { QueryKey } from '@/constant/reactQuery'
+import { QUERY_KEY } from '@/constant/reactQuery'
 import ServerApi from '@/services/serverApi'
 import { useQuery } from '@tanstack/react-query'
 const getData = async ({ queryKey }: any) => {
@@ -11,7 +11,7 @@ const getData = async ({ queryKey }: any) => {
 }
 const useLengthCart = (id = '') => {
   const { data, isLoading } = useQuery({
-    queryKey: [QueryKey.LengthCartUser, id],
+    queryKey: [QUERY_KEY.LengthCartUser, id],
     enabled: !!id,
     queryFn: getData
   })

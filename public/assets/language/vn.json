@@ -36,6 +36,7 @@
     "exitSDT": "SĐT đã tồn tại"
   },
   "textPopular": {
+    "loadMore": "Xem thêm",
     "province": "Thành Phố",
     "district": "Huyện / Quận",
     "ward": "Phường / Xã",
@@ -73,7 +74,9 @@
     "contactShop": "Nhắn tin với Shop",
     "note": "Ghi Chú",
     "now": "Hiện tại",
-    "newValue": "Giá trị mới"
+    "newValue": "Giá trị mới",
+    "viewDetail": "Xem chi tiết",
+    "buyNow": "Mua ngay"
   },
   "addCart": {
     "addSuccess": "Đã thêm vào giỏ hàng",
@@ -94,6 +97,13 @@
     "onDelivery": "Thanh toán khi nhận hàng (COD)",
     "banking": "Chuyển khoản",
     "paymentMethod": "Phương Thức Thanh Toán"
+  },
+  "myBill": {
+    "title": "Hóa đơn",
+    "des": "Danh sách các hóa đơn bạn đã đặt hàng",
+    "delivering": "Đang giao",
+    "deliverySuccess": "Đã giao",
+    "processing": "Đang xử lý"
   },
   "bill": {
     "noteBill": "Ghi chú đơn hàng",

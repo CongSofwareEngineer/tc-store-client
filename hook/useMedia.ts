@@ -2,6 +2,7 @@ import { useLayoutEffect, useState } from 'react'
 
 const useMedia = (maxWidth = 768) => {
   const [isMobile, setIsMobile] = useState(false)
+  const [isClient, setIsClient] = useState(false)
 
   useLayoutEffect(() => {
     let mounted = true;
@@ -21,10 +22,16 @@ const useMedia = (maxWidth = 768) => {
       mql.removeEventListener('change', onChange);
     };
 
-  }, [maxWidth]);
+  }, [maxWidth])
+
+  useLayoutEffect(() => {
+    setIsClient(true)
+  }, [])
+
 
   return {
-    isMobile: isMobile || false
+    isMobile: isMobile || false,
+    isClient
   }
 }
 

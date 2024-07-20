@@ -1,5 +1,5 @@
 import useAddressShip from '@/hook/useAddressShip'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import MySelect from '../MySelect'
 import { useAppSelector } from '@/redux/store'
 import useLanguage from '@/hook/useLanguage'
@@ -87,7 +87,7 @@ const OptionVnLocation = ({ callback }: { callback: any }) => {
             fullImage
             className="w-full"
             option={getOption(listDistrict || [])}
-            onSelect={onChangeDistrict}
+            onChange={onChangeDistrict}
           />
         </div>
 

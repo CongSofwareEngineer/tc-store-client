@@ -7,13 +7,14 @@ import { SearchOutlined } from '@ant-design/icons'
 import useLanguage from '@/hook/useLanguage'
 import useQuerySearch from '@/hook/useQuerySearch'
 import useAllProduct from '@/hook/tank-query/useAllProduct'
-import MyLoading from '@/components/MyLoading'
-import { PageSizeLimit } from '@/constant/app'
+import { PAGE_SIZE_LIMIT } from '@/constant/app'
+import PrimaryButton from '@/components/PrimaryButton'
 
 const ShopScreen = () => {
   const { translate } = useLanguage()
   const { queries } = useQuerySearch()
-  const { data, isLoading } = useAllProduct(PageSizeLimit, queries)
+  const { data, isLoading, loadMore, hasNextPage, isFetchingNextPage } =
+    useAllProduct(PAGE_SIZE_LIMIT, queries)
 
   return (
     <div className="w-full flex md:flex-row flex-col  md:gap-6 gap-3  h-full justify-star md:mt-3">
@@ -53,12 +54,21 @@ const ShopScreen = () => {
 
         {isLoading && (
           <div className="flex flex-col gap-4 w-full ">
-            <div className="skeleton-loading w-full rounded-lg h-12" />
             <div className="skeleton-loading gap-3 grid grid-cols-3">
               <div className="w-full skeleton-loading rounded-lg aspect-square" />
               <div className="w-full skeleton-loading rounded-lg aspect-square" />
               <div className="w-full skeleton-loading rounded-lg aspect-square" />
             </div>
+          </div>
+        )}
+        {hasNextPage && (
+          <div className="w-full flex justify-center mt-10">
+            <PrimaryButton
+              onClick={() => loadMore()}
+              loading={isFetchingNextPage}
+            >
+              {translate('textPopular.loadMore')}
+            </PrimaryButton>
           </div>
         )}
       </div>

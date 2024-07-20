@@ -5,7 +5,7 @@ import useLanguage from '@/hook/useLanguage'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import ClientApi from '@/services/clientApi'
 import { BodyAddBill, DataBase, FB_FC } from '@/constant/firebase'
-import { QueryKey } from '@/constant/reactQuery'
+import { QUERY_KEY } from '@/constant/reactQuery'
 import MyForm from '@/components/MyForm'
 import InputForm from '@/components/InputForm'
 import SelectInputEx from '@/app/shop/[...params]/Component/ModalBuy/SelectInputEx'
@@ -64,8 +64,8 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
   }
 
   const handleClose = () => {
-    refreshQuery(QueryKey.LengthCartUser)
-    refreshQuery(QueryKey.MyCartUser)
+    refreshQuery(QUERY_KEY.LengthCartUser)
+    refreshQuery(QUERY_KEY.MyCartUser)
     closeModalDrawer()
   }
 

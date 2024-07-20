@@ -19,13 +19,14 @@ import dynamic from 'next/dynamic'
 import useGetProductByID from '@/hook/tank-query/useGetProductByID'
 import useUserData from '@/hook/useUserData'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
-import { CookieKey, RequestType } from '@/constant/app'
+import { COOKIE_KEY, REQUEST_TYPE } from '@/constant/app'
 import useMedia from '@/hook/useMedia'
 import PaymentShop from './Component/payment'
 import { useEffect } from 'react'
 import { DataAddCart } from '@/constant/mongoDB'
 import { setCookie } from '@/services/CookeisService'
 import ServerApi from '@/services/serverApi'
+import { QUERY_KEY } from '@/constant/reactQuery'
 const Comment = dynamic(() => import('@/components/Comment'), {
   ssr: false,
 })
@@ -64,7 +65,7 @@ const ShopDetailScreen = ({
       await ServerApi.requestBase({
         url: 'cart/create',
         body,
-        method: RequestType.POST,
+        method: REQUEST_TYPE.POST,
       })
     } else {
       await ServerApi.requestBase({
@@ -72,7 +73,7 @@ const ShopDetailScreen = ({
         body: {
           amount: dataExited.amount + amountBuy,
         },
-        method: RequestType.POST,
+        method: REQUEST_TYPE.POST,
       })
     }
   }
@@ -91,9 +92,11 @@ const ShopDetailScreen = ({
         setLoadingAddCart(false)
         await handleAddCartLogin(body)
         await delayTime(1000)
+        refreshQuery(QUERY_KEY.LengthCartUser)
+        refreshQuery(QUERY_KEY.MyCartUser)
       } else {
         body.date = new Date().getTime().toFixed()
-        setCookie(CookieKey.MyCart, body)
+        setCookie(COOKIE_KEY.MyCart, body)
         showNotificationSuccess(translate('addCart.addSuccess'))
       }
     } finally {

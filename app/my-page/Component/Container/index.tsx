@@ -11,7 +11,7 @@ import React, { useEffect } from 'react'
 import { PropsWithChildren } from 'react'
 
 const Container = ({ children }: PropsWithChildren) => {
-  const { isMobile } = useMedia()
+  const { isMobile, isClient } = useMedia()
   const { translate } = useLanguage()
   const { userData } = useUserData()
   const patchName = usePathname()
@@ -45,7 +45,7 @@ const Container = ({ children }: PropsWithChildren) => {
 
   const renderMobile = () => {
     return (
-      <div className="bg-white w-[calc(100%+40px)] top-[-6px] relative left-[-20px]">
+      <div className="bg-white w-[calc(100%+40px)]  p-4 top-[-6px] relative left-[-20px]">
         <div className="w-full relative ">
           <div className="fixed bg-white  w-full flex justify-around bottom-0 left-0 py-3  border-t-[1px] shadow-gray1 border-gray-300">
             {renderItem(images.icon.iconHome, translate('header.home'), '/')}
@@ -68,8 +68,8 @@ const Container = ({ children }: PropsWithChildren) => {
 
   const renderDesktop = () => {
     return (
-      <div className="w-full flex gap-6">
-        <div className="w-[200px] flex flex-col justify-center items-center gap-3">
+      <div className="w-full flex gap-6 h-full">
+        <div className="w-[200px] flex flex-col  items-center gap-3 h-full">
           <div className="w-[150px] relative overflow-hidden rounded-[50%]">
             <MyImage
               src={
@@ -94,12 +94,14 @@ const Container = ({ children }: PropsWithChildren) => {
             )}
           </div>
         </div>
-        <div className="flex flex-1 bg-white p-4">{children}</div>
+        <div className="flex flex-1 bg-white p-4 h-fit max-h-[calc(100vh-80px)] overflow-y-auto">
+          {children}
+        </div>
       </div>
     )
   }
 
-  return isMobile ? renderMobile() : renderDesktop()
+  return isClient && (isMobile ? renderMobile() : renderDesktop())
 }
 
 export default Container

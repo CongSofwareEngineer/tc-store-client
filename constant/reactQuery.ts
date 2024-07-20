@@ -1,4 +1,4 @@
-export enum QueryKey {
+export enum QUERY_KEY {
   GetAllProduct = 'GetAllProduct',
   GetProductShop = 'GetProductShop',
   GetAllNests = 'GetAllNests',
@@ -6,6 +6,7 @@ export enum QueryKey {
   LengthCartUser = 'LengthCartUser',
   GetProductByID = 'GetProductByID',
   MyCartUser = "MyCartUser",
+  MyBillUser = "MyBillUser",
   AllProvincesVn = "AllProvincesVn",
 }
 

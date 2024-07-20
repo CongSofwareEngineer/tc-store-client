@@ -10,6 +10,7 @@ type MyFilterCheckBox = {
   typeChecked?: string
   titleFilter?: string
   isDefault?: Boolean
+  isReplace?: boolean
 }
 
 const MyFilterCheckBox = ({
@@ -17,6 +18,7 @@ const MyFilterCheckBox = ({
   typeChecked = '',
   titleFilter = '',
   isDefault = false,
+  isReplace = true,
 }: MyFilterCheckBox) => {
   const { queries, updateQuery } = useQuerySearch()
   const { translate } = useLanguage()
@@ -37,7 +39,7 @@ const MyFilterCheckBox = ({
                   menu?.value || menu.key
                 )}
                 onChange={() =>
-                  updateQuery(typeChecked, menu?.value || menu.key)
+                  updateQuery(typeChecked, menu?.value || menu.key, isReplace)
                 }
               >
                 <div className="whitespace-nowrap">

@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-import { ObserverKey } from "@/constant/app"
+import { OBSERVER_KEY } from "@/constant/app"
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const events = require('events')
@@ -10,15 +10,15 @@ class Observer {
 
   constructor() { }
 
-  on(key: ObserverKey, func: any) {
+  on(key: OBSERVER_KEY, func: any) {
     eventEmitter.on(key, func)
   }
 
-  emit(key: ObserverKey, object?: any) {
+  emit(key: OBSERVER_KEY, object?: any) {
     eventEmitter.emit(key, object)
   }
 
-  removeListener(key: ObserverKey, func: any = null) {
+  removeListener(key: OBSERVER_KEY, func: any = null) {
     eventEmitter.removeListener(key, () => func ? func() : {})
   }
 }

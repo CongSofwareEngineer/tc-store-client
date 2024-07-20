@@ -34,7 +34,7 @@ export const makeStore = () => {
     const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
     if (dataSecure) {
       const dataDecode = decryptData(dataSecure.toString())
-      storeRedux.dispatch(setUserData(dataDecode))
+      storeRedux.dispatch(setUserData(JSON.parse(dataDecode)))
     }
     return storeRedux
   }

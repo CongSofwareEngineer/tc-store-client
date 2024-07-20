@@ -1,7 +1,7 @@
 import { DatabaseDocsType, DatabaseQueryType, DatabaseType, QueryData } from "@/constant/firebase";
 import { WhereFilterOp, addDoc, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, startAfter, updateDoc, where } from "firebase/firestore/lite";
 import { encryptData } from "./crypto";
-import { PageSizeLimit } from "@/constant/app";
+import { PAGE_SIZE_LIMIT } from "@/constant/app";
 
 export default class FirebaseFun {
   db: DatabaseType
@@ -99,7 +99,7 @@ export default class FirebaseFun {
 
 
 
-  async queryDataOption2(dataLast: any, querySQL: QueryData, keyOderBy: string, limitPage: number = PageSizeLimit) {
+  async queryDataOption2(dataLast: any, querySQL: QueryData, keyOderBy: string, limitPage: number = PAGE_SIZE_LIMIT) {
     try {
       if (dataLast) {
         const docDetail = query(this.db, where(querySQL.key, querySQL.match, querySQL.value));
@@ -140,7 +140,7 @@ export default class FirebaseFun {
     }
   }
 
-  async getDataOption2(dataLast: any, keyOderBy: string, limitPage: number = PageSizeLimit) {
+  async getDataOption2(dataLast: any, keyOderBy: string, limitPage: number = PAGE_SIZE_LIMIT) {
     try {
       if (dataLast) {
         // const dataDecode: QueryDocumentSnapshot = JSON.parse(decryptData(dataLast))

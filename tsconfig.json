@@ -36,7 +36,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "eslint.config.js",
-    ".eslintrc.ts"
+    ".eslintrc.ts",
+    "app/my-page/bill/Component/Item"
   ],
   "exclude": [
     "node_modules"

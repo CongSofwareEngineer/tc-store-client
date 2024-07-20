@@ -1,4 +1,5 @@
 import { CollectionReference, DocumentData, DocumentReference, Query, WhereFilterOp } from "firebase/firestore/lite"
+import { FILTER_BILL } from "./app"
 
 export const DataBase = {
   bill: 'Bill',
@@ -54,13 +55,14 @@ export type BodyAddCart = {
 
 export type BodyAddBill = {
   idUser?: string | undefined
-  listBill: { _id: string, keyName?: string, amount: number }[],
+  listBill: { _id: string, keyName?: string, amount: number, idCart?: string }[],
   total: number,
   addressShip: string,
   discount: number,
   sdt: string,
   iDBanking?: number,
   iDMomo?: number | string
+  status: FILTER_BILL
 }
 
 

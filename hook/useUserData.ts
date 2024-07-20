@@ -8,7 +8,7 @@ import { decryptData, encryptData } from '@/utils/crypto'
 import { SLICE } from '@/constant/redux'
 import useModalDrawer from './useModalDrawer'
 import ServerApi from '@/services/serverApi'
-import { CookieExpired, CookieKey, ObserverKey, RequestType } from '@/constant/app'
+import { COOKIE_EXPIRED, COOKIE_KEY, OBSERVER_KEY, REQUEST_TYPE } from '@/constant/app'
 import { deleteCookie, setCookie } from '@/services/CookeisService'
 import ObserverService from '@/services/observer'
 
@@ -20,11 +20,11 @@ const useUserData = () => {
 
   useEffect(() => {
     const updateCookies = (auth: string) => {
-      setCookie(CookieKey.Auth, auth, CookieExpired.ExpiredAuth)
+      setCookie(COOKIE_KEY.Auth, auth, COOKIE_EXPIRED.ExpiredAuth)
     }
-    ObserverService.on(ObserverKey.LogOut, () => logOut())
-    ObserverService.on(ObserverKey.UpdateCookieAuth, updateCookies)
-    return () => ObserverService.removeListener(ObserverKey.LogOut)
+    ObserverService.on(OBSERVER_KEY.LogOut, () => logOut())
+    ObserverService.on(OBSERVER_KEY.UpdateCookieAuth, updateCookies)
+    return () => ObserverService.removeListener(OBSERVER_KEY.LogOut)
   }, [])
 
 
@@ -35,7 +35,7 @@ const useUserData = () => {
   const loginWithDB = useCallback(async (sdt: string, pass: string) => {
     const data = await ServerApi.requestBase({
       url: `user/login`,
-      method: RequestType.POST,
+      method: REQUEST_TYPE.POST,
       encode: true,
       checkAuth: false,
       body: {
@@ -46,8 +46,8 @@ const useUserData = () => {
 
     if (data?.data) {
       dispatch(setUserData(data?.data))
-      setCookie(CookieKey.Auth, data?.data.auth?.toString(), CookieExpired.ExpiredAuth)
-      setCookie(CookieKey.AuthRefresh, data?.data.authRefresh?.toString(), CookieExpired.ExpiredAuthRefresh)
+      setCookie(COOKIE_KEY.Auth, data?.data.auth?.toString(), COOKIE_EXPIRED.ExpiredAuth)
+      setCookie(COOKIE_KEY.AuthRefresh, data?.data.authRefresh?.toString(), COOKIE_EXPIRED.ExpiredAuthRefresh)
     }
     return data?.data || null
   }, [dispatch])
@@ -55,8 +55,8 @@ const useUserData = () => {
   const logOut = useCallback(() => {
     dispatch(setUserData(null))
     secureLocalStorage.removeItem(SLICE.UserData)
-    deleteCookie(CookieKey.Auth)
-    deleteCookie(CookieKey.AuthRefresh)
+    deleteCookie(COOKIE_KEY.Auth)
+    deleteCookie(COOKIE_KEY.AuthRefresh)
   }, [dispatch])
 
   const refreshLogin = useCallback(async () => {

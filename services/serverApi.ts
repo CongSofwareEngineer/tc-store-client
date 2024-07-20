@@ -1,4 +1,4 @@
-import { CookieKey, ObserverKey, RequestType } from '@/constant/app'
+import { COOKIE_KEY, OBSERVER_KEY, REQUEST_TYPE } from '@/constant/app'
 import { encryptData } from '@/utils/crypto'
 import { pareResponseDataClient } from '@/utils/serverNext'
 import axios from 'axios'
@@ -20,7 +20,7 @@ const ServerApi = {
     body = null,
     checkAuth = true,
     encode = false,
-    method = RequestType.GET
+    method = REQUEST_TYPE.GET
   }: TypeParma) => {
     try {
       const param: TypeParma = {
@@ -32,15 +32,15 @@ const ServerApi = {
       }
 
       const [auth, authRefresh] = await Promise.all([
-        getCookie(CookieKey.Auth),
-        getCookie(CookieKey.AuthRefresh)
+        getCookie(COOKIE_KEY.Auth),
+        getCookie(COOKIE_KEY.AuthRefresh)
       ])
 
       if (param.checkAuth && !authRefresh && (
-        param.method === RequestType.POST ||
-        param.method === RequestType.DELETE
+        param.method === REQUEST_TYPE.POST ||
+        param.method === REQUEST_TYPE.DELETE
       )) {
-        ObserverService.emit(ObserverKey.LogOut)
+        ObserverService.emit(OBSERVER_KEY.LogOut)
         return {
           data: null,
           error: 'error'

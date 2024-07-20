@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import {
   APIProvider,
   AdvancedMarker,
@@ -6,6 +6,7 @@ import {
   Pin,
 } from '@vis.gl/react-google-maps'
 import useMedia from '@/hook/useMedia'
+import { scrollTop } from '@/utils/functions'
 // const AnyReactComponent = () => {
 //   return (
 //     <Tooltip title={<div>TC Store</div>}>
@@ -27,6 +28,9 @@ const GgMap = () => {
     },
     zoom: 10,
   }
+  useLayoutEffect(() => {
+    scrollTop()
+  }, [])
 
   return (
     <div style={{ height: '100%', width: '100%', minHeight: 200 }}>

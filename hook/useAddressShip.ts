@@ -1,4 +1,4 @@
-import { QueryKey } from "@/constant/reactQuery"
+import { QUERY_KEY } from "@/constant/reactQuery"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 
@@ -11,7 +11,7 @@ const getData = async ({ queryKey }: { queryKey: any }): Promise<any> => {
 
 const useAddressShip = (type: any, idItem: any) => {
   const { data, isFetching, isLoading } = useQuery({
-    queryKey: [QueryKey.AllProvincesVn, type, idItem],
+    queryKey: [QUERY_KEY.AllProvincesVn, type, idItem],
     queryFn: getData,
     enabled: !!type && !!idItem
   })

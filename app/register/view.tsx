@@ -4,16 +4,15 @@ import InputForm from '@/components/InputForm'
 import MyForm from '@/components/MyForm'
 import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
-import { RequestType } from '@/constant/app'
-import { BodyUserData, DataBase, FB_FC } from '@/constant/firebase'
+import { REQUEST_TYPE } from '@/constant/app'
+import { BodyUserData } from '@/constant/firebase'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import useUserData from '@/hook/useUserData'
-import ClientApi from '@/services/clientApi'
 import ServerApi from '@/services/serverApi'
 import { encryptData } from '@/utils/crypto'
-import { delayTime, showNotificationError } from '@/utils/functions'
+import { showNotificationError } from '@/utils/functions'
 import { Checkbox } from 'antd'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -77,7 +76,7 @@ const RegisterScreen = () => {
         url: '/user/register',
         body: bodyUser,
         encode: true,
-        method: RequestType.POST,
+        method: REQUEST_TYPE.POST,
         checkAuth: false,
       })
       console.log({ newData })

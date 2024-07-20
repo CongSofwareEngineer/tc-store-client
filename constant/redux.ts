@@ -1,7 +1,8 @@
 import MessageVN from '@/public/assets/language/vn.json'
+import { LANGUAGE_SUPPORT } from './app'
 
 const localeVN = {
-  locale: 'vn',
+  locale: LANGUAGE_SUPPORT.VN,
   messages: MessageVN
 }
 

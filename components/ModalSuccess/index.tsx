@@ -53,11 +53,13 @@ const ModalSuccess = ({
             {props.titleSubmit || translate('common.ok')}
           </PrimaryButton>
         </div>
-        <div className="flex flex-1">
-          <SecondButton widthBtn="100%" onClick={() => closeModalDrawer()}>
-            {props.titleSubmit || translate('common.close')}
-          </SecondButton>
-        </div>
+        {showClose && (
+          <div className="flex flex-1">
+            <SecondButton widthBtn="100%" onClick={() => closeModalDrawer()}>
+              {props.titleSubmit || translate('common.close')}
+            </SecondButton>
+          </div>
+        )}
       </div>
     </div>
   )

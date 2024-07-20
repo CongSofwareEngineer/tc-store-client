@@ -1,4 +1,4 @@
-import { PageSizeLimit } from "@/constant/app"
+import { PAGE_SIZE_LIMIT } from "@/constant/app"
 import { BodyAddBill, BodyAddCart, DataBase, FB_FC, QueryData } from "@/constant/firebase"
 import { encryptData } from "@/utils/crypto"
 import { pareResponseDataClient } from "@/utils/serverNext"
@@ -88,7 +88,7 @@ const ClientApi = {
     return req
   },
 
-  getDataOption2: async (nameData: string, lastData: any, keyOderBy: string, limitPage = PageSizeLimit) => {
+  getDataOption2: async (nameData: string, lastData: any, keyOderBy: string, limitPage = PAGE_SIZE_LIMIT) => {
     const req = await ClientApi.requestBase({
       nameDB: nameData,
       namFn: FB_FC.getAllDataOption2,

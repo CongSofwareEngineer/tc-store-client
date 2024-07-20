@@ -1,5 +1,4 @@
 import { ContentFormType } from '@/app/my-cart/type'
-import SelectInputEx from '@/app/shop/[...params]/Component/ModalBuy/SelectInputEx'
 import InputAreaForm from '@/components/InputAreaForm'
 import InputForm from '@/components/InputForm'
 import MyImage from '@/components/MyImage'
@@ -8,34 +7,12 @@ import { images } from '@/configs/images'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
-import ClientApi from '@/services/clientApi'
-import React, { useMemo } from 'react'
+import React from 'react'
 
-const ContentForm = ({
-  listAddressShip,
-  setListAddressShip = () => {},
-  onChange = () => {},
-}: ContentFormType) => {
+const ContentForm = ({ onChange = () => {} }: ContentFormType) => {
   const { translate } = useLanguage()
   const { checkNumberPhone } = useCheckForm()
   const { userData, refreshLogin } = useUserData()
-
-  const handleAddAddress = async (address: string) => {
-    const arrNew: string[] = [...listAddressShip, address]
-    const handleUpdate = async () => {
-      await ClientApi.updateAddress(userData?.id, arrNew)
-      await refreshLogin()
-    }
-    handleUpdate()
-    setListAddressShip(arrNew)
-  }
-
-  const getOptions = () => {
-    if (Array.isArray(listAddressShip) && listAddressShip?.length > 0) {
-      return listAddressShip.map((e) => ({ name: e, value: e }))
-    }
-    return []
-  }
 
   return (
     <div className="bg-white flex flex-col w-full border-[1px] shadow-gray1 border-gray-300  px-4 pt-4 lg:pb-0 pb-3">

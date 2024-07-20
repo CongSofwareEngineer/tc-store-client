@@ -81,7 +81,7 @@ const MyProfile = () => {
 
   const renderMobile = () => {
     return (
-      <div className="w-full bg-white p-4 flex flex-col items-center">
+      <div className="w-full bg-white flex flex-col items-center">
         <div className="h-[150px] relative overflow-hidden rounded-[50%]">
           <MyImage
             src={

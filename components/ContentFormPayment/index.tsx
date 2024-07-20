@@ -3,7 +3,6 @@ import useUserData from '@/hook/useUserData'
 import React, { useEffect, useState } from 'react'
 import InputForm from '../InputForm'
 import useLanguage from '@/hook/useLanguage'
-import OptionAddressShip from './Component/OptionAddressShip'
 import InputAreaForm from '../InputAreaForm'
 import { images } from '@/configs/images'
 import MyImage from '../MyImage'
@@ -25,6 +24,7 @@ const ContentFormPayment = ({
       setListAddressShip(userData?.addressShipper)
     }
   }, [userData])
+  console.log({ listAddressShip })
 
   return (
     <div className="bg-white flex flex-col w-full border-[1px] shadow-gray1 border-gray-300  px-4 pt-4 lg:pb-0 pb-3">

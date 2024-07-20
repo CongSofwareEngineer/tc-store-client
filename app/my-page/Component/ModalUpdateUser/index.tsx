@@ -1,11 +1,9 @@
 import PrimaryButton from '@/components/PrimaryButton'
-import { RequestType } from '@/constant/app'
-import { DataBase, FB_FC } from '@/constant/firebase'
+import { REQUEST_TYPE } from '@/constant/app'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
-import ClientApi from '@/services/clientApi'
 import ServerApi from '@/services/serverApi'
 import { decryptData } from '@/utils/crypto'
 import {
@@ -76,7 +74,7 @@ const ModalUpdateUser = ({ keyType, callBack, initValue }: PropsType) => {
     } else {
       await ServerApi.requestBase({
         url: `user/update/${userData?._id}`,
-        method: RequestType.POST,
+        method: REQUEST_TYPE.POST,
         body: {
           [keyType]: valueNew,
         },

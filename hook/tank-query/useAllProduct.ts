@@ -1,6 +1,6 @@
 
-import { PageSizeLimit } from '@/constant/app';
-import { QueryKey, TypeHookReactQuery } from '@/constant/reactQuery';
+import { PAGE_SIZE_LIMIT } from '@/constant/app';
+import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery';
 import ServerApi from '@/services/serverApi';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
@@ -24,9 +24,9 @@ const getAllProduct = async ({ queryKey, pageParam }: { queryKey: any, pageParam
     "page": pageParam,
   }
 };
-const useAllProduct = (pageSize = PageSizeLimit, query: any) => {
+const useAllProduct = (pageSize = PAGE_SIZE_LIMIT, query: any) => {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: [QueryKey.GetAllProduct, pageSize, query],
+    queryKey: [QUERY_KEY.GetAllProduct, pageSize, query],
     initialPageParam: 1,
     queryFn: getAllProduct,
     getNextPageParam: (lastPage: { data: any; page: number }) => {
@@ -48,7 +48,8 @@ const useAllProduct = (pageSize = PageSizeLimit, query: any) => {
 
   return {
     data: dataFinal,
-    isLoading: isFetchingNextPage || isLoading,
+    isLoading: isLoading,
+    isFetchingNextPage,
     loadMore: fetchNextPage,
     hasNextPage
   }

@@ -1,15 +1,16 @@
 'use client'
-import React, { useLayoutEffect } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 import Header from '../Header'
 import 'react-toastify/dist/ReactToastify.css'
-import { useAppDispatch } from '@/redux/store'
+import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { setMenuCategory } from '@/redux/categoryMenuSlice'
 import useCheckPatchName from '@/hook/tank-query/useCheckPatchName'
-import useMedia from '@/hook/useMedia'
 import Footer from '../Footer'
 import dynamic from 'next/dynamic'
 import useUserData from '@/hook/useUserData'
 import { fetchProvinces } from '@/redux/provincesSlice'
+import moment from 'moment'
+import { LANGUAGE_SUPPORT } from '@/constant/app'
 const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
   ssr: true,
 })
@@ -20,6 +21,8 @@ const ClientRender = ({
   children: React.ReactNode
   menuCategory: any[]
 }) => {
+  const { Language } = useAppSelector((state) => state.app)
+
   useCheckPatchName()
   const dispatch = useAppDispatch()
   const { reLogin } = useUserData()
@@ -29,6 +32,18 @@ const ClientRender = ({
     dispatch(fetchProvinces())
     reLogin()
   }, [])
+
+  useEffect(() => {
+    switch (Language?.locale) {
+      case LANGUAGE_SUPPORT.VN:
+        // moment.locale('vi')
+        break
+
+      default:
+        moment.locale('vi')
+        break
+    }
+  }, [Language])
 
   return (
     <>

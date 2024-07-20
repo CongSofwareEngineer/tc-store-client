@@ -1,18 +1,18 @@
-import { RequestType } from '@/constant/app';
+import { REQUEST_TYPE } from '@/constant/app';
 import axios from 'axios';
 
 export type ServerAPIReqType = {
   url: string
   body?: any
   auth?: string
-  method?: RequestType
+  method?: REQUEST_TYPE
   timeOut?: number
 }
 const fetchConfig = async ({
   url = '',
   body = null,
   auth = '',
-  method = RequestType.GET,
+  method = REQUEST_TYPE.GET,
   timeOut = 70000
 }: ServerAPIReqType) => {
   const baseUrl = process.env.NEXT_PUBLIC_ENABLE_SERVER_LOCAL === 'true' ? 'http://localhost:3000/' : process.env.NEXT_PUBLIC_API_APP
