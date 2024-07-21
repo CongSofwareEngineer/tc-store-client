@@ -24,6 +24,7 @@ const OptionSearchBase = ({
 
   useEffect(() => {
     onChangeDateTime(dateTimeBase)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateTimeBase])
 
   const [sdt, setSdt] = useState('')
@@ -60,7 +61,7 @@ const OptionSearchBase = ({
           placeholder="SDT"
           type="string"
           value={sdt}
-          onChange={(e) => setSdt(e!.toString())}
+          onChange={(e) => setSdt(e?.toString() || '')}
         />
         <Button type="primary" onClick={handleSearchSDT}>
           Search
@@ -71,7 +72,7 @@ const OptionSearchBase = ({
           placeholder="Id"
           type="string"
           value={idOther}
-          onChange={(e) => setIdOther(e!?.toString())}
+          onChange={(e) => setIdOther(e?.toString() || '')}
         />
         <Button type="primary" onClick={handleSearchIDOther}>
           Search

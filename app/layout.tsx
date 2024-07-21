@@ -15,6 +15,7 @@ import fetchConfig from '@/configs/fetchConfig'
 import DrawerProvider from '@/components/DrawerProvider'
 const inter = Inter({ subsets: ['latin'] })
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import Script from 'next/script'
 const BaseMeta = {
   title: process.env.NEXT_PUBLIC_TITLE,
   description: process.env.NEXT_PUBLIC_TITLE_DES,
@@ -64,7 +65,8 @@ export const metadata: Metadata = {
     title: BaseMeta.title,
   },
   verification: {
-    google: '-SD7kSWHZKEXxbtkWRvn1r5wtOy8o6Gv0wDuA_ituHk',
+    // google: '-SD7kSWHZKEXxbtkWRvn1r5wtOy8o6Gv0wDuA_ituHk',
+    google: 'Sr2q2elTmvBwx7P3aM-ZiaH-3yjcxuGHrMI9H9iCewI',
   },
   appLinks: {
     web: {
@@ -89,7 +91,56 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <html lang="en">
+      <head>
+        {/* Google / Search Engine Tags  */}
+        <meta itemProp="name" content={process.env.NEXT_PUBLIC_TITLE} />
+        <meta
+          itemProp="description"
+          content={process.env.NEXT_PUBLIC_TITLE_DES}
+        />
+        <meta itemProp="image" content={'/favicon.ico'} />
+
+        {process.env.NEXT_PUBLIC_MODE_PRODUCTION && (
+          <>
+            <meta
+              name="google-site-verification"
+              content="Sr2q2elTmvBwx7P3aM-ZiaH-3yjcxuGHrMI9H9iCewI"
+            />
+            <Script
+              id="GTM-T7S7DKJ4"
+              dangerouslySetInnerHTML={{
+                __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                  })(window,document,'script','dataLayer','GTM-T7S7DKJ4')`,
+              }}
+            />
+            <Script
+              id="G-Z7WSP07S5Y"
+              dangerouslySetInnerHTML={{
+                __html: `<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z7WSP07S5Y"></script>
+                <script>
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                
+                  gtag('config', 'G-Z7WSP07S5Y');
+                </script>`,
+              }}
+            />
+          </>
+        )}
+      </head>
       <body className={inter.className}>
+        {process.env.NEXT_PUBLIC_MODE_PRODUCTION && (
+          <noscript
+            dangerouslySetInnerHTML={{
+              __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T7S7DKJ4"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
+            }}
+          />
+        )}
         <ReactQueryProvider>
           <StyledComponentsRegistry>
             <AntdRegistry>

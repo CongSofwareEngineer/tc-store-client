@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation'
 import React, { useEffect } from 'react'
 
 const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
-  const { isClient, isMobile } = useMedia()
+  const { isMobile } = useMedia()
   const { translate } = useLanguage()
   const patchName = usePathname()
 
