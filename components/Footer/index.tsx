@@ -6,6 +6,7 @@ import MyImage from '../MyImage'
 import { CopyOutlined } from '@ant-design/icons'
 import { copyToClipboard, scrollTop, viewExternal } from '@/utils/functions'
 import { useRouter } from 'next/navigation'
+import SocialMediaShare from '../SocialMediaShare'
 //  const GgMap = dynamic(() => import('./ggMap'), { ssr: true })
 
 const Item = ({ icon, value, link, type }: any) => {
@@ -31,7 +32,9 @@ const Item = ({ icon, value, link, type }: any) => {
         alt={`icon-footer-${value}`}
         src={icon}
       />
-      <span onClick={handleClick}>{value}</span>
+      <span onClick={handleClick} className="hover:underline cursor-pointer">
+        {value}
+      </span>
       <CopyOutlined onClick={() => copyToClipboard(value)} />
     </div>
   )
@@ -44,6 +47,7 @@ const Footer = () => {
 
   return (
     <footer className="no footer-web w-full bg-white flex justify-center md:mt-5 mt-3">
+      <SocialMediaShare />
       <div className=" w-full max-w-[1350px] md:p-[50px] p-[20px]  pb-10 border-b-2 border-gray-300">
         <h3 className="text-medium font-bold mb-2">Thông tin vẻ Shop</h3>
         <div className="flex md:flex-row flex-col w-full justify-between md:gap-0 gap-4">

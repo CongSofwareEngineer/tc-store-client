@@ -11,7 +11,7 @@ const InfoHome = () => {
         </div>
         <div className="flex-1 justify-start items-start">
           <h1 className="uppercase font-semibold text-medium">{title}</h1>
-          <div>{des}</div>
+          <h2>{des}</h2>
         </div>
       </div>
     )

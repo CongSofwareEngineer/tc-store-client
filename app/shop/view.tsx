@@ -18,7 +18,13 @@ const ShopScreen = () => {
 
   return (
     <div className="w-full flex md:flex-row flex-col  md:gap-6 gap-3  h-full justify-star md:mt-3">
-      <h2 className="absolute opacity-0">Shop tc store - Uy tín nhất Gia La</h2>
+      <h1 className="absolute opacity-0">
+        Shop tc store - Uy tín nhất Gia Lai
+      </h1>
+      <h2 className="absolute opacity-0">
+        Trung tâm thương mại uy tín nhất Gia Lai, Với hơn 10 năm kinh nghiệm
+        cung ứng giá trị sản phẩm cho người tiêu dùng
+      </h2>
       <div className="md:w-[250px] w-full">
         <MenuCategory />
       </div>

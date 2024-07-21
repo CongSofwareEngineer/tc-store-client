@@ -141,6 +141,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
             }}
           />
         )}
+
         <ReactQueryProvider>
           <StyledComponentsRegistry>
             <AntdRegistry>
