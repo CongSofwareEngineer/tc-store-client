@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 export enum REQUEST_TYPE {
   POST = 'POST',
   GET = 'GET',
@@ -77,3 +78,5 @@ export enum FILTER_BILL {
   'DeliverySuccess' = 'deliverySuccess',
   'Canceled' = 'canceled',
 }
+
+export const DATE_START_FILTER = dayjs(new Date(Date.now()).setDate(new Date().getDate() - 1))

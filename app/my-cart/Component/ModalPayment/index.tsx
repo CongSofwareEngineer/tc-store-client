@@ -111,10 +111,10 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
         addressShip: formData?.addressShip,
         discount: 0,
         idUser: userData?.id,
-        total: totalBill,
         sdt: formData?.sdt,
         status: FILTER_BILL.Processing,
         listBill: listProduction,
+        totalBill: Number(totalBill),
       }
       await handleDeleteCart()
 

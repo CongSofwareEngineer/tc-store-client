@@ -9,6 +9,7 @@ const getCoffeeDetail = async (id: string): Promise<ItemDetailType> => {
   const data = await fetchConfig({
     url: `product/detail/${id}`,
   })
+
   return data.data
 }
 

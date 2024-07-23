@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, DatePicker } from 'antd'
 import dayjs from 'dayjs'
 import MyInput from '@/components/MyInput'
+import MyRangePicker from '@/components/MyRangePicker'
 
 const dateStart = moment(Date.now()).add(-7, 'days').format('YYYY-MM-DD')
 const { RangePicker } = DatePicker
@@ -27,19 +28,9 @@ const useSearchBaseAdmin = () => {
   const renderContent = () => {
     return (
       <div className="flex md:flex-row flex-col gap-3">
-        <RangePicker
+        <MyRangePicker
           className="md:min-w-[230] min-w-full"
-          defaultValue={[
-            dayjs(dateStart, 'YYYY-MM-DD'),
-            dayjs(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'),
-          ]}
-          defaultPickerValue={[
-            dayjs(dateStart, 'YYYY-MM-DD'),
-            dayjs(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'),
-          ]}
-          onChange={(_, dateString) => {
-            setDateTime(dateString)
-          }}
+          onChange={(dateString) => setDateTime(dateString)}
         />
         <div className="flex flex-1 gap-3">
           <MyInput

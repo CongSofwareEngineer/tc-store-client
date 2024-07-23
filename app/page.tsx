@@ -53,7 +53,14 @@ const Home = () => {
     )
   }
 
-  return isMobile ? renderMobile() : renderDesktop()
+  return (
+    <>
+      <h1 className="absolute opacity-0">
+        TC Store - Cửa hàng thương mãi uy tín nhất Gia Lai
+      </h1>
+      {isMobile ? renderMobile() : renderDesktop()}
+    </>
+  )
 }
 
 export default Home

@@ -121,7 +121,12 @@ const Account = () => {
               >
                 {translate('common.login')}
               </span>
-              <MenuOutlined onClick={handleViewMenu} style={{ fontSize: 20 }} />
+              {isLogin && (
+                <MenuOutlined
+                  onClick={handleViewMenu}
+                  style={{ fontSize: 20 }}
+                />
+              )}
             </div>
           )}
         </div>

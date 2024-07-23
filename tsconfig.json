@@ -37,7 +37,8 @@
     ".next/types/**/*.ts",
     "eslint.config.js",
     ".eslintrc.ts",
-    "app/my-page/bill/Component/Item"
+    "app/my-page/bill/Component/Item",
+    "app/my-page/bill/Component/ViewDetailBill"
   ],
   "exclude": [
     "node_modules"

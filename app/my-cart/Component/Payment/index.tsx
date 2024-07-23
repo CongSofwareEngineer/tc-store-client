@@ -104,7 +104,7 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
         discount: 0,
         idUser: userData?._id,
         listBill,
-        total: totalBill,
+        totalBill: totalBill,
         sdt: formData?.sdt,
         status: FILTER_BILL.Processing,
       }

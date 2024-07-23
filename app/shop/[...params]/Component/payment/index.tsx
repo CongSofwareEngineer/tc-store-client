@@ -67,12 +67,12 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const handleSubmit = async () => {
     const callBack = async () => {
       setLoading(true)
+      console.log({ data })
 
       const bodyBill: BodyAddBill = {
         addressShip: formData?.addressShip,
         discount: 0,
         sdt: formData?.sdt,
-        total: amount * data?.price,
         idUser: isLogin ? userData?._id : 'no-id',
         listBill: [
           {
@@ -82,7 +82,10 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
           },
         ],
         status: FILTER_BILL.Processing,
+        totalBill: data?.price * amount,
       }
+      console.log({ bodyBill })
+
       openModalDrawer({
         content: (
           <ModalProcess
@@ -116,11 +119,12 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
             overClickClose: false,
           },
         })
-        await delayTime(1000)
+        await delayTime(500)
         refreshQuery(QUERY_KEY.GetProductByID)
         refreshQuery(QUERY_KEY.LengthCartUser)
         refreshQuery(QUERY_KEY.MyBillUser)
         refreshQuery(QUERY_KEY.MyCartUser)
+        await delayTime(500)
       } else {
         showNotificationError(translate('productDetail.modalBuy.error'))
       }

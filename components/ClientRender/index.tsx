@@ -49,15 +49,6 @@ const ClientRender = ({
 
   return (
     <>
-      <div
-        className="fb-like opacity-0 absolute select-none"
-        data-href="https://tcstore.vercel.app/shop"
-        data-width=""
-        data-layout="standard"
-        data-action="like"
-        data-size="small"
-        data-share="true"
-      ></div>
       <Header />
       <main className="main-content w-full flex justify-center min-h-[calc(100vh-56px)]">
         <section

@@ -11,17 +11,19 @@ import useQuerySearch from '@/hook/useQuerySearch'
 import MyLoadMore from '@/components/MyLoadMore'
 
 const BillScreen = () => {
+  const [isDeliverySuccess, setIsDeliverySuccess] = useState(false)
+  const [isDelivering, setIsDelivering] = useState(false)
+  const [isProcessing, setIsProcessing] = useState(false)
+  // const [dateTime, setDateTime] = useState('')
+
   const { isMobile } = useMedia()
   const { isMobile: isMediaEx } = useMedia(1000)
   const { queries, currentQueries, updateQuery } = useQuerySearch()
   const { translate } = useLanguage()
-  const { data, hasNextPage, isLoading, loadMore, isFetchingNextPage } =
-    useBill(queries)
-  console.log({ data, hasNextPage, isLoading, loadMore, isFetchingNextPage })
 
-  const [isDeliverySuccess, setIsDeliverySuccess] = useState(false)
-  const [isDelivering, setIsDelivering] = useState(false)
-  const [isProcessing, setIsProcessing] = useState(false)
+  const { data, hasNextPage, isLoading, loadMore, isFetchingNextPage } =
+    useBill(queries, '')
+  console.log({ data, hasNextPage, isLoading, loadMore, isFetchingNextPage })
 
   useEffect(() => {
     if (queries?.type && queries?.type?.length > 0) {
@@ -46,6 +48,9 @@ const BillScreen = () => {
       setIsDelivering(false)
       setIsDeliverySuccess(false)
       setIsProcessing(false)
+    }
+    if (!queries?.date) {
+      console.log({})
     }
   }, [queries, currentQueries])
 
@@ -121,32 +126,41 @@ const BillScreen = () => {
       <h2 className="text-medium font-bold">{translate('myBill.title')}</h2>
       <div>{translate('myBill.des')}</div>
       <div className="relative w-full border-[1px]   border-gray-300" />
-      <div className="flex gap-4">
-        <Checkbox
-          onClick={() => onChangeFilter(FILTER_BILL.All)}
-          checked={!isDelivering && !isDeliverySuccess && !isProcessing}
-        >
-          {translate('textPopular.all')}
-        </Checkbox>
-        <Checkbox
-          onClick={() => onChangeFilter(FILTER_BILL.DeliverySuccess)}
-          checked={isDeliverySuccess}
-        >
-          {translate('myBill.deliverySuccess')}
-        </Checkbox>
-        <Checkbox
-          onClick={() => onChangeFilter(FILTER_BILL.Delivering)}
-          checked={isDelivering}
-        >
-          {translate('myBill.delivering')}
-        </Checkbox>
-        <Checkbox
-          onClick={() => onChangeFilter(FILTER_BILL.Processing)}
-          checked={isProcessing}
-        >
-          {translate('myBill.processing')}
-        </Checkbox>
+
+      <div className="flex flex-wrap gap-4 align-middle   ">
+        {/* <div>
+          <MyDatePicker onChange={(e) => setDateTime(e?.toString() || '')} />
+        </div> */}
+        <div className="flex gap-4 flex-wrap items-center ">
+          <Checkbox
+            onClick={() => onChangeFilter(FILTER_BILL.All)}
+            checked={!isDelivering && !isDeliverySuccess && !isProcessing}
+          >
+            <div className="text-nowrap">{translate('textPopular.all')}</div>
+          </Checkbox>
+          <Checkbox
+            onClick={() => onChangeFilter(FILTER_BILL.DeliverySuccess)}
+            checked={isDeliverySuccess}
+          >
+            <div className="text-nowrap">
+              {translate('myBill.deliverySuccess')}
+            </div>
+          </Checkbox>
+          <Checkbox
+            onClick={() => onChangeFilter(FILTER_BILL.Delivering)}
+            checked={isDelivering}
+          >
+            <div className="text-nowrap">{translate('myBill.delivering')}</div>
+          </Checkbox>
+          <Checkbox
+            onClick={() => onChangeFilter(FILTER_BILL.Processing)}
+            checked={isProcessing}
+          >
+            <div className="text-nowrap">{translate('myBill.processing')}</div>
+          </Checkbox>
+        </div>
       </div>
+
       <div className="flex flex-col">
         <div className="flex gap-3 flex-nowrap mt-3 bg-green-100 py-3 px-2 font-bold">
           <div className="w-[20%] min-w-[100px] text-center">

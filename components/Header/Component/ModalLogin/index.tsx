@@ -23,7 +23,7 @@ const ModalLogin: React.FC = () => {
 
   useLayoutEffect(() => {
     setFormData({
-      sdt: '0392225405',
+      sdt: '',
       pass: '',
       saveLogin: true,
     })
@@ -65,12 +65,14 @@ const ModalLogin: React.FC = () => {
           onFinish={handleLogin}
         >
           <InputForm
+            key={'sdt'}
             validator={checkNumber}
             required
             name="sdt"
             label={translate('userDetail.sdt')}
           />
           <InputForm
+            key={'password'}
             required
             name="pass"
             label={translate('userDetail.pass')}

@@ -7,10 +7,11 @@ import { useInfiniteQuery } from "@tanstack/react-query"
 
 const getData = async ({ queryKey, pageParam = 1 }: { queryKey: any, pageParam: any }): Promise<TypeHookReactQuery> => {
   const query = queryKey[2]
+  const dateTime = queryKey[3]
   const { type = null } = query
-  console.log({ type });
+  console.log({ type, dateTime });
 
-  let queryUrl = `?page=${pageParam}&limit=${PAGE_SIZE_LIMIT}`
+  let queryUrl = `?page=${pageParam}&limit=${PAGE_SIZE_LIMIT}&date=${dateTime}`
   if (type) {
     queryUrl += `&type=${type[0]}`
   }
@@ -24,11 +25,11 @@ const getData = async ({ queryKey, pageParam = 1 }: { queryKey: any, pageParam: 
   }
 }
 
-const useBill = (query: any = []) => {
+const useBill = (query: any = [], dateTime = '') => {
   const { userData } = useUserData()
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: [QUERY_KEY.MyBillUser, userData?._id, query],
+    queryKey: [QUERY_KEY.MyBillUser, userData?._id, query, dateTime],
     queryFn: getData,
     enabled: !!userData,
     initialPageParam: 1,

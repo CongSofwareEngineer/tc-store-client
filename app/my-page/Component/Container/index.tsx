@@ -5,6 +5,7 @@ import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import useUserData from '@/hook/useUserData'
 import { scrollTop } from '@/utils/functions'
+import { Col, Row } from 'antd'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useEffect } from 'react'
@@ -26,7 +27,7 @@ const Container = ({ children }: PropsWithChildren) => {
     return (
       <Link
         href={link}
-        className="cursor-pointer text-black cursor-default flex md:flex-row flex-col gap-1 md:items-start items-center hover:underline"
+        className=" text-black cursor-default flex md:flex-row flex-col gap-1 md:items-start items-center hover:underline"
         style={{
           fontWeight: patchName === link ? 'bold' : 'normal',
           color: 'black',
@@ -47,18 +48,30 @@ const Container = ({ children }: PropsWithChildren) => {
     return (
       <div className="bg-white w-[calc(100%+40px)]  p-4 top-[-6px] relative left-[-20px]">
         <div className="w-full relative ">
-          <div className="fixed bg-white  w-full flex justify-around bottom-0 left-0 py-3  border-t-[1px] shadow-gray1 border-gray-300">
-            {renderItem(images.icon.iconHome, translate('header.home'), '/')}
-            {renderItem(
-              images.icon.iconHistory,
-              translate('myPage.myOder'),
-              '/my-page/bill'
-            )}
-            {renderItem(
-              images.icon.iconMyUser,
-              translate('myPage.myUser'),
-              '/my-page'
-            )}
+          <div className="fixed bg-white  w-full flex justify-around bottom-0 left-0 py-3  border-t-[1px] shadow-gray1 border-gray-300 z-10">
+            <Row className="w-full">
+              <Col span={8}>
+                {renderItem(
+                  images.icon.iconHome,
+                  translate('header.home'),
+                  '/'
+                )}
+              </Col>
+              <Col span={8}>
+                {renderItem(
+                  images.icon.iconHistory,
+                  translate('myPage.myOder'),
+                  '/my-page/bill'
+                )}
+              </Col>
+              <Col span={8}>
+                {renderItem(
+                  images.icon.iconMyUser,
+                  translate('myPage.myUser'),
+                  '/my-page'
+                )}
+              </Col>
+            </Row>
           </div>
           {children}
         </div>

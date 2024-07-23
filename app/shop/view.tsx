@@ -22,8 +22,7 @@ const ShopScreen = () => {
         Shop tc store - Uy tín nhất Gia Lai
       </h1>
       <h2 className="absolute opacity-0">
-        Trung tâm thương mại uy tín nhất Gia Lai, Với hơn 10 năm kinh nghiệm
-        cung ứng giá trị sản phẩm cho người tiêu dùng
+        Shop với rất nhiều sản phẩm chất lượng và uy tí<nav></nav>
       </h2>
       <div className="md:w-[250px] w-full">
         <MenuCategory />

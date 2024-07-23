@@ -56,14 +56,14 @@ export type BodyAddCart = {
 export type BodyAddBill = {
   idUser?: string | undefined
   listBill: { _id: string, keyName?: string, amount: number, idCart?: string }[],
-  total: number,
   addressShip: string,
   discount: number,
   sdt: string,
   iDBanking?: number,
   iDMomo?: number | string
   status: FILTER_BILL
-  abort?: boolean
+  abort?: boolean,
+  totalBill: Number
 }
 
 
