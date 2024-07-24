@@ -85,11 +85,7 @@ const ItemCart = ({
         </div>
         <div className="flex flex-col flex-1 gap-1">
           <div
-            onClick={() =>
-              router.push(
-                `/shop/${data?.more_data._id}/${data?.more_data.keyName}`
-              )
-            }
+            onClick={() => router.push(`/shop/${data?.more_data.keyName}`)}
             className="text-medium font-medium mb-1 hover:underline cursor-pointer "
           >
             {data?.more_data?.name}
