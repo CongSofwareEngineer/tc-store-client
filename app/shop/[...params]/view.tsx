@@ -118,7 +118,7 @@ const ShopDetailScreen = ({
             />
           </div>
           <div className="flex-1 flex flex-col gap-2 justify-center  ">
-            <h3 className="text-title font-bold">{dataItem.name}</h3>
+            <h1 className="text-title font-bold">{dataItem.name}</h1>
             <InfoItemDetail data={dataItem} />
             <div className="text-medium  line-through">
               {formatPriceBase(dataItem.price, dataItem.discount)} VNĐ
@@ -182,7 +182,7 @@ const ShopDetailScreen = ({
           </div>
         </div>
         <div className="w-full flex flex-col gap-2 mt-2">
-          <h3 className="text-title font-bold">{dataItem.name}</h3>
+          <h1 className="text-title font-bold">{dataItem.name}</h1>
           <InfoItemDetail data={dataItem} />
           <div className="text-medium  line-through">
             {formatPriceBase(dataItem?.price, dataItem?.discount)} VNĐ

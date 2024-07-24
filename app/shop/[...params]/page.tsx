@@ -5,9 +5,9 @@ import { ItemDetailType } from './type'
 import { notFound } from 'next/navigation'
 import fetchConfig from '@/configs/fetchConfig'
 
-const getCoffeeDetail = async (id: string): Promise<ItemDetailType> => {
+const getCoffeeDetail = async (keyName: string): Promise<ItemDetailType> => {
   const data = await fetchConfig({
-    url: `product/detail/${id}`,
+    url: `product/detail-keyName/${keyName}`,
   })
 
   return data.data
@@ -27,6 +27,7 @@ export async function generateMetadata(
     image: data?.value?.imageMain,
     title: data?.value?.name,
     des: data?.value?.des,
+    override: true,
   })
   return metaData
 }

@@ -46,7 +46,7 @@ const ShopScreen = () => {
                   showSold
                   key={item.id}
                   item={item}
-                  href={`/shop/${item._id}/${item.keyName}`}
+                  href={`/shop/${item.keyName}`}
                 />
               )
             })}
