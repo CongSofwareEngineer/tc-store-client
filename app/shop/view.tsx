@@ -60,7 +60,7 @@ const ShopScreen = () => {
         )}
 
         {isLoading && (
-          <div className="flex flex-col gap-4 w-full ">
+          <div className="flex flex-col gap-4 w-full mt-4">
             <div className="skeleton-loading gap-3 grid grid-cols-3">
               <div className="w-full skeleton-loading rounded-lg aspect-square" />
               <div className="w-full skeleton-loading rounded-lg aspect-square" />

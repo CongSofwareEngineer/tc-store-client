@@ -12,10 +12,12 @@ import {
 import { CollapseCustom } from './styled'
 import useProductByLimit from '@/hook/tank-query/useProductByLimit'
 import { scrollTop } from '@/utils/functions'
+import useMedia from '@/hook/useMedia'
 
 const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   const { data, isLoading } = useProductByLimit(type, 5)
   const { translate } = useLanguage()
+  const { isMobile } = useMedia(640)
 
   useEffect(() => {
     scrollTop()
@@ -26,9 +28,11 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
       <div className="flex gap-3 md:gap-5">
         {isLoading && (
           <div className="w-full flex gap-3">
-            <div className="skeleton-loading w-[30%] pb-[300px] rounded-lg" />
-            <div className="skeleton-loading w-[30%] pb-[300px] rounded-lg" />
-            <div className="skeleton-loading w-[30%] pb-[300px] rounded-lg" />
+            <div className="skeleton-loading sm:w-[30%] w-[48%] md:pb-[300px] pb-[150px] rounded-lg" />
+            <div className="skeleton-loading sm:w-[30%] w-[48%] md:pb-[300px] pb-[150px] rounded-lg" />
+            {!isMobile && (
+              <div className="skeleton-loading w-[30%] md:pb-[300px] pb-[150px] rounded-lg" />
+            )}
           </div>
         )}
 
