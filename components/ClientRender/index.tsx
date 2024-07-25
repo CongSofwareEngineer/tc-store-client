@@ -11,6 +11,7 @@ import useUserData from '@/hook/useUserData'
 import { fetchProvinces } from '@/redux/provincesSlice'
 import moment from 'moment'
 import { LANGUAGE_SUPPORT } from '@/constant/app'
+import useAos from '@/hook/useAos'
 const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
   ssr: true,
 })
@@ -23,6 +24,7 @@ const ClientRender = ({
 }) => {
   const { Language } = useAppSelector((state) => state.app)
 
+  useAos()
   useCheckPatchName()
   const dispatch = useAppDispatch()
   const { reLogin } = useUserData()

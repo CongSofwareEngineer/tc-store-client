@@ -59,6 +59,18 @@ const OptionVnLocation = ({ callback }: { callback: any }) => {
     [listWards]
   )
 
+  const onChangeNote = useCallback(
+    (note: string) => {
+      const dataAddress = `${provence.full_name}---${districts.full_name}---${ward.full_name}`
+      setAddressDetail(note!.toString())
+      callback({
+        addressDetail: note,
+        address: dataAddress,
+      })
+    },
+    [provence, districts, ward]
+  )
+
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="flex flex-col gap-2 w-full md:flex-row">
@@ -112,14 +124,7 @@ const OptionVnLocation = ({ callback }: { callback: any }) => {
         <MyInput
           disabled={!districts || !provence || !ward}
           value={addressDetail}
-          onChangeText={(e) => {
-            const dataAddress = `${provence.full_name}---${districts.full_name}---${ward.full_name}`
-            setAddressDetail(e!.toString())
-            callback({
-              addressDetail: e,
-              address: dataAddress,
-            })
-          }}
+          onChangeText={(e) => onChangeNote(e?.toString() || '')}
           type="string"
           className="w-full"
         />

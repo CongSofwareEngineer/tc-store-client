@@ -80,6 +80,7 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
       defaultActiveKey={[type]}
       items={items}
       style={{ background: 'transparent' }}
+      data-aos="zoom-in"
     />
   )
 }

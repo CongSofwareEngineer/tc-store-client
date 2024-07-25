@@ -9,8 +9,10 @@ import useQuerySearch from '@/hook/useQuerySearch'
 import useAllProduct from '@/hook/tank-query/useAllProduct'
 import { PAGE_SIZE_LIMIT } from '@/constant/app'
 import PrimaryButton from '@/components/PrimaryButton'
+import useAos from '@/hook/useAos'
 
 const ShopScreen = () => {
+  useAos()
   const { translate } = useLanguage()
   const { queries } = useQuerySearch()
   const { data, isLoading, loadMore, hasNextPage, isFetchingNextPage } =
@@ -24,10 +26,10 @@ const ShopScreen = () => {
       <h2 className="absolute opacity-0">
         Shop với rất nhiều sản phẩm chất lượng và uy tí<nav></nav>
       </h2>
-      <div className="md:w-[250px] w-full">
+      <div className="md:w-[250px] w-full" data-aos="fade-right">
         <MenuCategory />
       </div>
-      <div className="flex-1 w-full  h-full">
+      <div className="flex-1 w-full  h-full" data-aos="fade-left">
         <Input
           className="w-full"
           suffix={

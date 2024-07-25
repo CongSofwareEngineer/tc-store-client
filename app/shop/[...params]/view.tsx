@@ -27,6 +27,8 @@ import { DataAddCart } from '@/constant/mongoDB'
 import { setCookie } from '@/services/CookeisService'
 import ServerApi from '@/services/serverApi'
 import { QUERY_KEY } from '@/constant/reactQuery'
+import useAos from '@/hook/useAos'
+
 const Comment = dynamic(() => import('@/components/Comment'), {
   ssr: false,
 })
@@ -40,6 +42,7 @@ const ShopDetailScreen = ({
   const [loadingAddCart, setLoadingAddCart] = useState(false)
   const [isPayment, setIsPayment] = useState(false)
 
+  useAos()
   const { refreshQuery } = useRefreshQuery()
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
@@ -117,7 +120,10 @@ const ShopDetailScreen = ({
               heightImage="auto"
             />
           </div>
-          <div className="flex-1 flex flex-col gap-2 justify-center  ">
+          <div
+            className="flex-1 flex flex-col gap-2 justify-center  "
+            data-aos="zoom-in"
+          >
             <h1 className="text-title font-bold">{dataItem.name}</h1>
             <InfoItemDetail data={dataItem} />
             <div className="text-medium  line-through">
@@ -181,7 +187,7 @@ const ShopDetailScreen = ({
             />
           </div>
         </div>
-        <div className="w-full flex flex-col gap-2 mt-2">
+        <div data-aos="fade-right" className="w-full flex flex-col gap-2 mt-2">
           <h1 className="text-title font-bold">{dataItem.name}</h1>
           <InfoItemDetail data={dataItem} />
           <div className="text-medium  line-through">

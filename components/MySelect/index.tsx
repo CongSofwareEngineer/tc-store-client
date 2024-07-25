@@ -2,6 +2,7 @@ import { Select, SelectProps } from 'antd'
 // import React, { PropsWithChildren } from 'react'
 import React from 'react'
 import MyImage from '../MyImage'
+import useLanguage from '@/hook/useLanguage'
 
 export type PropsSelectItem = {
   label: string | number
@@ -24,6 +25,7 @@ interface LabelInValueType {
 }
 
 const MySelect = ({ option, fullImage = false, ...props }: PropsSelect) => {
+  const { translate } = useLanguage()
   const renderLabel = (item: LabelInValueType) => {
     return <span>{item.label || item.name || item.value}</span>
   }
@@ -49,6 +51,9 @@ const MySelect = ({ option, fullImage = false, ...props }: PropsSelect) => {
       className="w-max"
       labelRender={renderLabel}
       options={option}
+      notFoundContent={
+        <div className="opacity-100">{translate('textPopular.notData')}</div>
+      }
       optionRender={(e) => {
         return fullImage ? (
           renderItemFullImage(e)

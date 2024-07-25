@@ -86,11 +86,13 @@ const BillScreen = () => {
   const renderDesktop = () => {
     return (
       <>
-        <div className="flex gap-3 w-full flex-col">
-          {data.map((e) => {
-            return <Item data={e} key={e?._id} />
-          })}
-        </div>
+        {data.length > 0 && (
+          <div className="flex gap-3 w-full flex-col mb-10">
+            {data.map((e) => {
+              return <Item data={e} key={e?._id} />
+            })}
+          </div>
+        )}
         {isLoading && (
           <div className="flex flex-col gap-3 w-full mt-3 ">
             <div className="w-full h-20 skeleton-loading rounded-md" />
@@ -104,11 +106,13 @@ const BillScreen = () => {
   const renderMobile = () => {
     return (
       <>
-        <div className="flex gap-3 w-full flex-col">
-          {data.map((e) => {
-            return <Item data={e} key={e?._id} />
-          })}
-        </div>
+        {data.length > 0 && (
+          <div className="flex gap-3 w-full flex-col mb-10">
+            {data.map((e) => {
+              return <Item data={e} key={e?._id} />
+            })}
+          </div>
+        )}
 
         {isLoading && (
           <div className="flex flex-col gap-3 w-full mt-3 ">
@@ -122,7 +126,7 @@ const BillScreen = () => {
   }
 
   return (
-    <div className="flex flex-col gap-3 w-full">
+    <div className="flex flex-col gap-3 w-full ">
       <h2 className="text-medium font-bold">{translate('myBill.title')}</h2>
       <div>{translate('myBill.des')}</div>
       <div className="relative w-full border-[1px]   border-gray-300" />

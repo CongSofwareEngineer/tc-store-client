@@ -16,6 +16,7 @@ import DrawerProvider from '@/components/DrawerProvider'
 const inter = Inter({ subsets: ['latin'] })
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import Script from 'next/script'
+
 const BaseMeta = {
   title: process.env.NEXT_PUBLIC_TITLE,
   description: process.env.NEXT_PUBLIC_TITLE_DES,
@@ -131,6 +132,10 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
             />
           </>
         )}
+        <link
+          href="https://unpkg.com/aos@2.3.1/dist/aos.css"
+          rel="stylesheet"
+        />
       </head>
       <body className={inter.className}>
         {process.env.NEXT_PUBLIC_MODE_PRODUCTION && (

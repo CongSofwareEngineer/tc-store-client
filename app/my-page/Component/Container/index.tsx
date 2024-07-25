@@ -73,7 +73,7 @@ const Container = ({ children }: PropsWithChildren) => {
               </Col>
             </Row>
           </div>
-          {children}
+          <div className="w-full mb-[75px]">{children}</div>
         </div>
       </div>
     )
@@ -107,7 +107,7 @@ const Container = ({ children }: PropsWithChildren) => {
             )}
           </div>
         </div>
-        <div className="flex flex-1 bg-white p-4 h-fit max-h-[calc(100vh-80px)] overflow-y-auto">
+        <div className="flex flex-1 bg-white p-4 h-fit max-h-[calc(100vh-80px)] overflow-y-auto ">
           {children}
         </div>
       </div>

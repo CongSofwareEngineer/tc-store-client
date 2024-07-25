@@ -149,19 +149,6 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
       } else {
         showNotificationError(translate('productDetail.modalBuy.error'))
       }
-
-      // await handleDeleteCart()
-
-      // await ClientApi.requestBase({
-      //   nameDB: DataBase.bill,
-      //   body: {
-      //     data: bodyAPI,
-      //   },
-      //   encode: true,
-      //   namFn: FB_FC.addData,
-      // })
-      // refreshAllData()
-      // showNotificationSuccess(translate('productDetail.modalBuy.success'))
     } finally {
       setLoading(false)
     }
