@@ -43,7 +43,7 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
               showSold
               key={item.id}
               item={item}
-              href={`/shop/${item._id}/${item.keyName}`}
+              href={`/shop/${item.keyName}`}
               className={'w-[180px] md:w-[230px] h-[310px] md:h-[350px]'}
             />
           )
@@ -84,7 +84,6 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
       defaultActiveKey={[type]}
       items={items}
       style={{ background: 'transparent' }}
-      data-aos="zoom-in"
     />
   )
 }

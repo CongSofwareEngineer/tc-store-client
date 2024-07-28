@@ -28,7 +28,7 @@ const useCheckPatchName = () => {
     }
 
     const footer = window.document.getElementsByClassName('footer-web')[0]
-    if (patchName.includes('/my-page') || patchName === '/my-cart' || patchName === '/register') {
+    if (patchName.includes('/admin') || patchName.includes('/my-page') || patchName === '/my-cart' || patchName === '/register') {
       if (footer) {
         footer.classList.add('no-display')
       }

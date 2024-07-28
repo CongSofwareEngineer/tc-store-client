@@ -213,3 +213,42 @@ export const formatDateTime = (data: any) => {
 };
 
 
+
+export const detectImg = (src: any) => {
+  try {
+    if (!src) {
+      return ''
+    }
+
+    if (src?.startsWith('https')) {
+      return src
+    }
+    return `https://res.cloudinary.com/tc-store/image/upload/v1722158972/${src}`
+  } catch (error) {
+    return ''
+  }
+};
+
+
+export const detectAvatar = (src: any) => {
+  try {
+    if (!src) {
+      return '/images/Profile/Userdetail/iconUserDetail.png'
+    }
+
+    if (src?.startsWith('https')) {
+      return src
+    }
+    return `https://res.cloudinary.com/tc-store/image/upload/v1722158972/${src}`
+  } catch (error) {
+    return '/images/Profile/Userdetail/iconUserDetail.png'
+  }
+};
+
+export const ellipsisText = (text: string, prefixLength = 13, suffixLength = 4) => {
+  text = text || ''
+  return `${text.substr(0, prefixLength)}...${text.substr(text.length - suffixLength, suffixLength)}`
+}
+
+
+

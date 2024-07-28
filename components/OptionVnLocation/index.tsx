@@ -68,7 +68,7 @@ const OptionVnLocation = ({ callback }: { callback: any }) => {
         address: dataAddress,
       })
     },
-    [provence, districts, ward]
+    [provence, districts, ward, callback]
   )
 
   return (

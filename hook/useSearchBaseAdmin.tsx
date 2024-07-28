@@ -27,7 +27,7 @@ const useSearchBaseAdmin = () => {
 
   const renderContent = () => {
     return (
-      <div className="flex md:flex-row flex-col gap-3">
+      <div className="flex  flex-col gap-3">
         <MyRangePicker
           className="md:min-w-[230] min-w-full"
           onChange={(dateString) => setDateTime(dateString)}

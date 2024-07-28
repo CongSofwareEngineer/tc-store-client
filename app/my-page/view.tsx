@@ -1,36 +1,62 @@
 'use client'
 import MyImage from '@/components/MyImage'
-import { images } from '@/configs/images'
 import useMedia from '@/hook/useMedia'
 import useUserData from '@/hook/useUserData'
 import { CopyOutlined, EditOutlined } from '@ant-design/icons'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import ItemInfoUser from './Component/ItemInfoUser'
 import useLanguage from '@/hook/useLanguage'
 import AddressShip from './Component/AddressShip'
-import { copyToClipboard } from '@/utils/functions'
+import { copyToClipboard, detectAvatar } from '@/utils/functions'
 import MyInput from '@/components/MyInput'
-import { FormDataBaseUserType } from './type'
-import { decryptData } from '@/utils/crypto'
+import useModalDrawer from '@/hook/useModalDrawer'
+import ModalUpdateUser from './Component/ModalUpdateUser'
+import ModalEnterPassAgain from './Component/ModalEnterPassAgain'
+import MyCheckBox from '@/components/MyCheckBox'
 
 const MyProfile = () => {
   const { isMobile } = useMedia()
   const { userData } = useUserData()
   const { translate } = useLanguage()
+  const { openModalDrawer } = useModalDrawer()
 
-  const [formData, setFormData] = useState<FormDataBaseUserType | null>(null)
-
-  useEffect(() => {
-    if (userData) {
-      const initData = {
-        name: userData.name?.toString(),
-        pass: decryptData(userData.pass)?.toString(),
-      }
-      setFormData(initData)
+  const getLanguage = (keyType: string) => {
+    switch (keyType) {
+      case 'pass':
+        return translate('userDetail.pass')
+      case 'sdt':
+        return translate('userDetail.sdt')
+      case 'sex':
+        return translate('userDetail.sex')
+      case 'name':
+        return translate('userDetail.name')
+      default:
+        return ''
     }
-  }, [userData])
+  }
 
   const handleEditAvatar = () => {}
+
+  const handleEditName = (key: string) => {
+    const callback = () => {
+      openModalDrawer({
+        content: <ModalUpdateUser keyType={key} />,
+        title: (
+          <div className="text-medium ">{`${translate(
+            'common.edit'
+          )} ${getLanguage(key)}`}</div>
+        ),
+      })
+    }
+
+    if (key === 'pass') {
+      openModalDrawer({
+        content: <ModalEnterPassAgain callBack={callback} />,
+      })
+    } else {
+      callback()
+    }
+  }
 
   const renderDesktop = () => {
     return (
@@ -40,40 +66,74 @@ const MyProfile = () => {
         </h1>
         <h3>{translate('myProfile.desProfile')}</h3>
         <div className="relative w-full border-[1px]   border-gray-300" />
-        <div className="flex justify-between">
-          <div className="flex flex-1 flex-col gap-3">
+        <div className="flex justify-between mt-2">
+          <div className="flex flex-1 flex-col gap-5">
             <div className="flex gap-2">
               <span className="w-[140px]">{translate('userDetail.sdt')}</span>
               <div className="flex gap-1 text-green-500">
                 {userData?.sdt}
                 <CopyOutlined onClick={() => copyToClipboard(userData?.sdt)} />
               </div>
+              {/* <EditOutlined
+                onClick={() => handleEditName('sdt')}
+                className="text-xl cursor-pointer hover:scale-110"
+                style={{ color: 'green' }}
+              /> */}
             </div>
 
             <div className="flex gap-2">
               <span className="w-[140px]">{translate('userDetail.name')}</span>
-              <div className="flex flex-1">
+              <div className="flex flex-1 gap-2 items-end">
                 <MyInput
                   className="w-[90%]"
                   typeBtn={1}
-                  value={formData?.name}
+                  value={userData?.name}
+                />
+                <EditOutlined
+                  onClick={() => handleEditName('name')}
+                  className="text-xl cursor-pointer hover:scale-110 ml-1"
+                  style={{ color: 'green' }}
                 />
               </div>
             </div>
             <div className="flex gap-2">
               <span className="w-[140px]">{translate('userDetail.pass')}</span>
-              <div className="flex flex-1">
+              <div className="flex flex-1 gap-2 items-end">
                 <MyInput
                   className="w-[90%]"
                   typeBtn={1}
                   type="password"
-                  value={formData?.pass}
+                  value={userData?.pass}
+                  disabled
+                />
+                <EditOutlined
+                  onClick={() => handleEditName('pass')}
+                  className="text-xl cursor-pointer hover:scale-110 ml-1"
+                  style={{ color: 'green' }}
                 />
               </div>
             </div>
-            <AddressShip />
+            <div className="flex gap-2">
+              <span className="w-[140px]">{translate('userDetail.sex')}</span>
+              <div className="flex flex-1 gap-2 items-end">
+                <div className="flex gap-2 items-end">
+                  <MyCheckBox value={!userData?.sex} />
+                  <span>
+                    {translate(
+                      !!userData?.sex
+                        ? 'textPopular.female'
+                        : 'textPopular.male'
+                    )}
+                  </span>
+                </div>
+                <EditOutlined
+                  onClick={() => handleEditName('sex')}
+                  className="text-xl cursor-pointer hover:scale-110 ml-1"
+                  style={{ color: 'green' }}
+                />
+              </div>
+            </div>
           </div>
-          <div className="w-[20%] min-w-[200px]">avatart</div>
         </div>
       </div>
     )
@@ -84,9 +144,7 @@ const MyProfile = () => {
       <div className="w-full bg-white flex flex-col items-center">
         <div className="h-[150px] relative overflow-hidden rounded-[50%]">
           <MyImage
-            src={
-              userData?.avatar?.toString() || images.userDetail.iconUserDetail
-            }
+            src={detectAvatar(userData?.avatar?.toString())}
             alt="avatar"
             widthImage="auto"
             heightImage="100%"

@@ -63,6 +63,7 @@ const ServerApi = {
           }
         }
       )
+
       return pareResponseDataClient(param, req?.data)
 
     } catch (error) {

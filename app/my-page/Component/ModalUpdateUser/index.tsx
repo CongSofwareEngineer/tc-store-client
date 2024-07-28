@@ -27,9 +27,9 @@ const ModalUpdateUser = ({ keyType, callBack, initValue }: PropsType) => {
   const [loading, setLoading] = useState(false)
   const [valueNew, setValueNew] = useState<string | boolean | undefined>('')
 
-  useEffect(() => { 
+  useEffect(() => {
     setValueNew(() => getOldValue())
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const getOldValue = () => {
@@ -92,7 +92,7 @@ const ModalUpdateUser = ({ keyType, callBack, initValue }: PropsType) => {
   return (
     <div>
       <div className="flex flex-col gap-1">
-        <div className="text-medium font-bold">
+        <div className="md:text-[14px] text-medium font-bold">
           {translate('textPopular.now')} :
         </div>
         <div className="">
@@ -110,7 +110,7 @@ const ModalUpdateUser = ({ keyType, callBack, initValue }: PropsType) => {
           )}
         </div>
 
-        <div className="text-medium font-bold mt-2">
+        <div className="md:text-[14px] text-medium font-bold mt-2">
           {translate('textPopular.newValue')} :
         </div>
         <div className="w-full mt-1">

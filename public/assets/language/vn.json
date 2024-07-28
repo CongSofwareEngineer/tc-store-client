@@ -36,6 +36,7 @@
     "exitSDT": "SĐT đã tồn tại"
   },
   "textPopular": {
+    "updating": "Đang cập nhật",
     "notData": "Chưa có dữ liệu",
     "loadMore": "Xem thêm",
     "province": "Thành Phố",
@@ -77,7 +78,8 @@
     "now": "Hiện tại",
     "newValue": "Giá trị mới",
     "viewDetail": "Xem chi tiết",
-    "buyNow": "Mua ngay"
+    "buyNow": "Mua ngay",
+    "enterPassToContinue": "Nhập mật khẩu để tiếp tục"
   },
   "addCart": {
     "addSuccess": "Đã thêm vào giỏ hàng",
@@ -209,6 +211,7 @@
     "login": "Đăng nhập thành công"
   },
   "errors": {
+    "update": "Cập nhật thất bại",
     "notEnoughGas": "Not enough gas fee",
     "deniedTransaction": "Error: User denied process",
     "somethingWrong": "Something went wrong with your transaction. Please wait a minute and try again.",

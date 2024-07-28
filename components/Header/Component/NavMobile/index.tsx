@@ -13,7 +13,7 @@ const LinkCustom = styled(styled(Link)<{ $isSelected?: Boolean }>``).attrs({
 `
 
 const NavMobile = () => {
-  const { isLogin, logOut } = useUserData()
+  const { isLogin, logOut, userData } = useUserData()
   const { translate } = useLanguage()
   const pathname = usePathname()
   const { closeModalDrawer } = useModalDrawer()
@@ -74,6 +74,12 @@ const NavMobile = () => {
       )}
       {isLogin && (
         <div onClick={handleLogOut}>{translate('common.logOut')}</div>
+      )}
+
+      {!!userData?.isAdmin && (
+        <LinkCustom $isSelected={pathname.includes('/admin')} href={'/admin'}>
+          Admin
+        </LinkCustom>
       )}
     </div>
   )

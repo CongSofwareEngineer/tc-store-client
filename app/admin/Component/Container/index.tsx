@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation'
 import React, { useEffect } from 'react'
 
 const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
-  const { isMobile } = useMedia()
+  const { isMobile, isClient } = useMedia()
   const { translate } = useLanguage()
   const patchName = usePathname()
 
@@ -47,8 +47,8 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
   ]
 
   return (
-    <div className="fixed w-screen  flex h-full max-h-[calc(100vh-56px)]">
-      {!isMobile && (
+    <div className="md:fixed  w-screen   flex md:flex-row flex-col h-full max-h-[calc(100vh-56px)]">
+      {!isMobile ? (
         <div className="w-[200px] flex flex-col p-3 gap-3 bg-[#000000d6]">
           <div className="w-full">
             <MyImage
@@ -75,8 +75,28 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
             )
           })}
         </div>
+      ) : (
+        <div className="flex w-full gap-4   h-10 justify-center pt-4 ">
+          <div className="flex gap-4 overflow-x-auto pb-5 px-5">
+            {LIST_MENU.map((e) => {
+              return (
+                <Link
+                  key={e.url}
+                  href={e.url}
+                  className={`${
+                    patchName === e.url ? 'font-bold' : ''
+                  } text-nowrap`}
+                >
+                  {e.title}
+                </Link>
+              )
+            })}
+          </div>
+        </div>
       )}
-      <div className="flex flex-1 md:p-4 p-5">{children}</div>
+      <div className="flex flex-1 md:p-4 p-5 md:max-w-[calc(100vw-212px)]">
+        {isClient && children}
+      </div>
     </div>
   )
 }
