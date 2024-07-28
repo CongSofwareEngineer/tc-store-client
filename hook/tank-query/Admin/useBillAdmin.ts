@@ -1,5 +1,5 @@
-import { PAGE_SIZE_LIMIT, REQUEST_TYPE } from "@/constant/app";
-import { QUERY_KEY } from "@/constant/reactQuery";
+import { PAGE_SIZE_LIMIT } from "@/constant/app";
+import { QUERY_KEY, TypeHookReactQuery } from "@/constant/reactQuery";
 import useUserData from "@/hook/useUserData";
 import ServerApi from "@/services/serverApi";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -10,8 +10,8 @@ const getData = async ({ queryKey, pageParam = 1 }: { queryKey: any, pageParam: 
   try {
     const query = queryKey[1]
     const dateTime = queryKey[2]
-    // const { type = null } = query
-    // console.log({ type, dateTime });
+    const { type = null } = query
+    console.log({ type, dateTime });
 
     let queryUrl = `?page=${pageParam}&limit=${PAGE_SIZE_LIMIT}`
     // if (type) {
