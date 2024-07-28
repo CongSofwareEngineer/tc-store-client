@@ -1,3 +1,4 @@
+'use client'
 import useCartAdmin from '@/hook/tank-query/Admin/useCart'
 import React from 'react'
 
