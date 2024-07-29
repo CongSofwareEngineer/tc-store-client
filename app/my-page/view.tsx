@@ -1,5 +1,4 @@
 'use client'
-import MyImage from '@/components/MyImage'
 import useMedia from '@/hook/useMedia'
 import useUserData from '@/hook/useUserData'
 import { CopyOutlined, EditOutlined } from '@ant-design/icons'
@@ -7,12 +6,13 @@ import React from 'react'
 import ItemInfoUser from './Component/ItemInfoUser'
 import useLanguage from '@/hook/useLanguage'
 import AddressShip from './Component/AddressShip'
-import { copyToClipboard, detectAvatar } from '@/utils/functions'
+import { copyToClipboard } from '@/utils/functions'
 import MyInput from '@/components/MyInput'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalUpdateUser from './Component/ModalUpdateUser'
 import ModalEnterPassAgain from './Component/ModalEnterPassAgain'
 import MyCheckBox from '@/components/MyCheckBox'
+import Avatar from './Component/Avatar'
 
 const MyProfile = () => {
   const { isMobile } = useMedia()
@@ -34,8 +34,6 @@ const MyProfile = () => {
         return ''
     }
   }
-
-  const handleEditAvatar = () => {}
 
   const handleEditName = (key: string) => {
     const callback = () => {
@@ -143,15 +141,7 @@ const MyProfile = () => {
     return (
       <div className="w-full bg-white flex flex-col items-center">
         <div className="h-[150px] relative overflow-hidden rounded-[50%]">
-          <MyImage
-            src={detectAvatar(userData?.avatar?.toString())}
-            alt="avatar"
-            widthImage="auto"
-            heightImage="100%"
-          />
-          <div className="absolute-center ">
-            <EditOutlined onClick={handleEditAvatar} style={{ fontSize: 23 }} />
-          </div>
+          <Avatar />
         </div>
         <div className="relative w-full border-[.5px] my-3 border-gray-300" />
 

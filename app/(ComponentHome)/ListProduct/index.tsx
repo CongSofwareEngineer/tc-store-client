@@ -36,20 +36,23 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
           </div>
         )}
 
-        {data?.data?.map((item) => {
-          return (
-            <ItemProduct
-              showFeedback
-              showSold
-              key={item.id}
-              item={item}
-              href={`/shop/${item.keyName}`}
-              className={'w-[180px] md:w-[230px] h-[310px] md:h-[350px]'}
-            />
-          )
-        })}
+        {data?.data &&
+          data?.data?.map((item) => {
+            return (
+              <ItemProduct
+                showFeedback
+                showSold
+                key={item.id}
+                item={item}
+                href={`/shop/${item.keyName}`}
+                className={'w-[180px] md:w-[230px] h-[310px] md:h-[350px]'}
+              />
+            )
+          })}
 
-        {data?.data?.length === 0 && <div>{translate('warning.noData')}</div>}
+        {data?.data && data?.data?.length === 0 && (
+          <div>{translate('warning.noData')}</div>
+        )}
       </div>
     )
   }

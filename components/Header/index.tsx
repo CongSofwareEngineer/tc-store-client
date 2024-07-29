@@ -13,6 +13,11 @@ const Account = dynamic(() => import('./Component/Account'), { ssr: true })
 const Header = () => {
   return (
     <header>
+      <a
+        href="mailto:hodiencong2000.@gmail.com"
+        className="absolute z-[-1] opacity-0"
+      />
+      <a href="tel:0932225405" className="absolute z-[-1] opacity-0" />
       <Affix className="w-full h-14 ">
         <div className="border-b-2 border-green-300 w-full flex m-auto justify-center items-center bg-white">
           <div className="md:px-12 px-5 h-14 w-full max-w-[1350px] flex md:gap-3 justify-between items-center">

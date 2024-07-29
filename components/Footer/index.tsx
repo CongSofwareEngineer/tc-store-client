@@ -4,25 +4,14 @@ import useMedia from '@/hook/useMedia'
 import React, { useEffect } from 'react'
 import MyImage from '../MyImage'
 import { CopyOutlined } from '@ant-design/icons'
-import { copyToClipboard, scrollTop, viewExternal } from '@/utils/functions'
+import { copyToClipboard, scrollTop } from '@/utils/functions'
 import { useRouter } from 'next/navigation'
 import SocialMediaShare from '../SocialMediaShare'
+import Link from 'next/link'
 //  const GgMap = dynamic(() => import('./ggMap'), { ssr: true })
 
-const Item = ({ icon, value, link, type }: any) => {
+const Item = ({ icon, value, link }: any) => {
   const { isMobile } = useMedia()
-
-  const handleClick = () => {
-    switch (type) {
-      case 'zalo':
-        window.location.href = link
-        break
-
-      default:
-        viewExternal(link)
-        break
-    }
-  }
 
   return (
     <div className="flex gap-2 items-center">
@@ -32,9 +21,9 @@ const Item = ({ icon, value, link, type }: any) => {
         alt={`icon-footer-${value}`}
         src={icon}
       />
-      <span onClick={handleClick} className="hover:underline cursor-pointer">
+      <Link href={link} className="hover:underline cursor-pointer">
         {value}
-      </span>
+      </Link>
       <CopyOutlined onClick={() => copyToClipboard(value)} />
     </div>
   )
@@ -53,14 +42,20 @@ const Footer = () => {
         <div className="flex md:flex-row flex-col w-full justify-between md:gap-0 gap-4">
           <div className="flex flex-col md:gap-3 gap-2 md:w-[48%] w-full">
             <Item
-              icon={images.footer.iconNumberPhone}
-              value={'Hồ Diên Công'}
-              link="tel:0932225405"
+              icon={images.footer.iconGmail}
+              value={'hodiencong2000.@gmail.com'}
+              link="mailto:hodiencong2000.@gmail.com"
             />
             <Item
+              icon={images.footer.iconNumberPhone}
+              value={'Hồ Diên Công'}
+              link="tel:0392225405"
+            />
+
+            <Item
               icon={images.footer.iconZalo}
-              value={'0977092863'}
-              link="zalo://chat?phone=0977092863"
+              value={'0392225405'}
+              link="https://zalo.me/0392225405"
               type={'zalo'}
             />
             <Item

@@ -6,8 +6,6 @@ const useAos = (time = 1500) => {
     const Aos = require('aos')
     Aos.init({
       duration: time,
-      disable: 'mobile'
-
     })
   }, [time])
 

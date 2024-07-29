@@ -1,11 +1,17 @@
 import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
+import useAos from '@/hook/useAos'
 import React from 'react'
 
 const InfoHome = () => {
+  useAos()
+
   const renderItem = (image: string, title: string, des: string) => {
     return (
-      <div className="flex gap-4 flex-1 items-center justify-center ">
+      <div
+        data-aos="zoom-in"
+        className="flex gap-4 flex-1 items-center justify-center "
+      >
         <div className="w-14 h-14">
           <MyImage src={image} alt={`info-home-${title}`} heightImage="auto" />
         </div>

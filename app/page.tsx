@@ -6,11 +6,17 @@ import dynamic from 'next/dynamic'
 import CategoryHome from './(ComponentHome)/Category'
 import useMedia from '@/hook/useMedia'
 import InfoHome from './(ComponentHome)/InfoHome'
+import Banner from './(ComponentHome)/Banner'
+import useAos from '@/hook/useAos'
 const ListProduct = dynamic(() => import('./(ComponentHome)/ListProduct'), {
   ssr: false,
 })
+// const Banner = dynamic(() => import('./(ComponentHome)/Banner'), {
+//   ssr: true,
+// })
 
 const Home = () => {
+  useAos()
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
 
@@ -18,9 +24,10 @@ const Home = () => {
     return (
       <div>
         <div className="flex  gap-5">
-          <div className="w-[250px]">
+          <div className="w-[250px]" data-aos="fade-right">
             <CategoryHome />
           </div>
+          <Banner />
         </div>
         <div className="w-[90%] m-auto my-14">
           <InfoHome />
@@ -39,6 +46,7 @@ const Home = () => {
   const renderMobile = () => {
     return (
       <div>
+        <Banner />
         <div className="w-[90%] m-auto my-8">
           <InfoHome />
         </div>

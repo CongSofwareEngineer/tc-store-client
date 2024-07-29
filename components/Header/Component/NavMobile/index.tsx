@@ -24,16 +24,6 @@ const NavMobile = () => {
   }
   return (
     <div className="flex flex-1  flex-col gap-3 ml-2">
-      {isLogin && (
-        <LinkCustom
-          onClick={closeModalDrawer}
-          $isSelected={pathname === '/my-page'}
-          href={'/my-page'}
-        >
-          {translate('myProfile.myProfile')}
-        </LinkCustom>
-      )}
-
       <LinkCustom
         onClick={closeModalDrawer}
         $isSelected={pathname === '/' || pathname === ''}
@@ -58,8 +48,8 @@ const NavMobile = () => {
       {isLogin ? (
         <LinkCustom
           onClick={closeModalDrawer}
-          $isSelected={pathname === '/cart'}
-          href={'/cart'}
+          $isSelected={pathname === '/my-cart'}
+          href={'/my-cart'}
         >
           {translate('header.cart')}
         </LinkCustom>
@@ -70,6 +60,16 @@ const NavMobile = () => {
           href={'/register'}
         >
           {translate('header.register')}
+        </LinkCustom>
+      )}
+
+      {isLogin && (
+        <LinkCustom
+          onClick={closeModalDrawer}
+          $isSelected={pathname.includes('/my-page')}
+          href={'/my-page'}
+        >
+          {translate('myProfile.myProfile')}
         </LinkCustom>
       )}
       {isLogin && (
