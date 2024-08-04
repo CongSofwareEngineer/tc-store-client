@@ -21,7 +21,11 @@ const Item = ({ icon, value, link }: any) => {
         alt={`icon-footer-${value}`}
         src={icon}
       />
-      <Link href={link} className="hover:underline cursor-pointer">
+      <Link
+        target="_blank"
+        href={link}
+        className="hover:underline cursor-pointer"
+      >
         {value}
       </Link>
       <CopyOutlined onClick={() => copyToClipboard(value)} />
