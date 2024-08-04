@@ -8,6 +8,7 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
   const metaData = generateMetaBase({
     dataBase,
     title: 'Shop',
+    override: true,
   })
   return metaData
 }
