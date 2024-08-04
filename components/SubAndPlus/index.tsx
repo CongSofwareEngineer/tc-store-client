@@ -5,7 +5,7 @@ import React from 'react'
 type SubAndPlusType = {
   callBackSub?: (value: number) => void
   callBackPlus?: (value: number) => void
-  value: number | string
+  value: Number | string
   maxAmount?: number
   isSquare?: boolean
 }

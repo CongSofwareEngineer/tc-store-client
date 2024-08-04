@@ -36,7 +36,7 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
           </div>
         )}
 
-        {data?.data &&
+        {Array.isArray(data?.data) &&
           data?.data?.map((item) => {
             return (
               <ItemProduct
@@ -50,7 +50,7 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
             )
           })}
 
-        {data?.data && data?.data?.length === 0 && (
+        {Array.isArray(data?.data) && data?.data?.length === 0 && (
           <div>{translate('warning.noData')}</div>
         )}
       </div>

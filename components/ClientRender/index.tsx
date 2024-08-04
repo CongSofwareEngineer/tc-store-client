@@ -29,6 +29,12 @@ const ClientRender = ({
   const dispatch = useAppDispatch()
   const { reLogin } = useUserData()
 
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const Aos = require('aos')
+    Aos.refresh()
+  }, [])
+
   useLayoutEffect(() => {
     dispatch(setMenuCategory(menuCategory))
     dispatch(fetchProvinces())

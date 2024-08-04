@@ -4,9 +4,11 @@ const useAos = (time = 1500) => {
 
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const Aos = require('aos')
-    Aos.init({
-      duration: time,
-    })
+    setTimeout(() => {
+      Aos.init({
+        duration: time,
+      })
+    }, 500);
   }, [time])
 
 }

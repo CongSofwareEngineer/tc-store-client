@@ -1,5 +1,5 @@
 export type DataAddCart = {
-  amount: number
+  amount: Number
   date?: string
   idProduct?: string
   idUser?: string
