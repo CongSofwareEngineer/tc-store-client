@@ -2,7 +2,7 @@ import { SLICE, TYPE_PERSIST_REDUCER, WHITE_LIST_PERSIT_REDUX } from '@/constant
 import { configureStore } from '@reduxjs/toolkit'
 import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2'
 import storage from 'redux-persist/lib/storage'
-import { persistStore, persistReducer } from 'redux-persist'
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, REGISTER, PURGE } from 'redux-persist'
 
 import appReducer from './appReducer'
 import { useDispatch } from 'react-redux'
@@ -28,7 +28,13 @@ export const makeStore = () => {
   const storeRedux = configureStore({
     reducer: {
       app: persistedReducer
-    }
+    },
+    middleware: (getDefaultMiddleware: any) =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }),
   })
   if (isClient) {
     const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
