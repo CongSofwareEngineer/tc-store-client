@@ -12,9 +12,15 @@ import moment from 'moment'
 import { LANGUAGE_SUPPORT } from '@/constant/app'
 import useAos from '@/hook/useAos'
 import { fetchProvinces } from '@/redux/provincesSlice'
+
 const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
   ssr: true,
 })
+
+const ToastNoti = dynamic(() => import('../ToastNoti'), {
+  ssr: true,
+})
+
 const ClientRender = ({
   children,
   menuCategory,
@@ -68,6 +74,7 @@ const ClientRender = ({
       </main>
       <Footer />
       <LoadingFirstPage />
+      <ToastNoti />
     </>
   )
 }
