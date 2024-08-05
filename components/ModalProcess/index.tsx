@@ -39,6 +39,7 @@ const ModalProcess = ({ icon, des, title }: PropsType) => {
             alt="icon-modal-delete"
             widthImage="auto"
             className="animate-pulse"
+            priority
           />
         </ContainerIcon>
       </div>
