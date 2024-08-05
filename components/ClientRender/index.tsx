@@ -8,10 +8,10 @@ import useCheckPatchName from '@/hook/tank-query/useCheckPatchName'
 import Footer from '../Footer'
 import dynamic from 'next/dynamic'
 import useUserData from '@/hook/useUserData'
-import { fetchProvinces } from '@/redux/provincesSlice'
 import moment from 'moment'
 import { LANGUAGE_SUPPORT } from '@/constant/app'
 import useAos from '@/hook/useAos'
+import { fetchProvinces } from '@/redux/provincesSlice'
 const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
   ssr: true,
 })

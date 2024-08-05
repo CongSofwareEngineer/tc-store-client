@@ -1,9 +1,8 @@
 import { INIT_STATE, SLICE } from '@/constant/redux'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, UnknownAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-
-export const fetchProvinces = createAsyncThunk(
+export const fetchProvinces: any = createAsyncThunk(
   'provinces/fetchProvinces',
   async () => {
     try {
@@ -25,11 +24,10 @@ export const provincesSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(fetchProvinces.fulfilled, (_: any, action) => {
-        return action.payload
-      })
-  }
+    builder.addCase(fetchProvinces.fulfilled, (_: any, action) => {
+      return action.payload
+    })
+  },
 })
 
 export const { setProvinces } = provincesSlice.actions
