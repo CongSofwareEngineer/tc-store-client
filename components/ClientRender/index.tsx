@@ -18,7 +18,7 @@ const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
 })
 
 const ToastNoti = dynamic(() => import('../ToastNoti'), {
-  ssr: true,
+  ssr: false,
 })
 
 const ClientRender = ({
