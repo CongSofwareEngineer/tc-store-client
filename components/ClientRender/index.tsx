@@ -36,7 +36,7 @@ const ClientRender = ({
     reLogin()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  pC
+
   useLayoutEffect(() => {
     dispatch(setMenuCategory(menuCategory))
     dispatch(fetchProvinces())
