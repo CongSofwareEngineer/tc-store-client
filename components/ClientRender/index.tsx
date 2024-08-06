@@ -33,12 +33,15 @@ const ClientRender = ({
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const Aos = require('aos')
     Aos.refresh()
+    reLogin()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
+  pC
   useLayoutEffect(() => {
     dispatch(setMenuCategory(menuCategory))
     dispatch(fetchProvinces())
-    reLogin()
+    console.log({ type: typeof reLogin })
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
