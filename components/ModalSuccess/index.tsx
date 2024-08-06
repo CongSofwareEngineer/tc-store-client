@@ -35,7 +35,6 @@ const ModalSuccess = ({
           heightImage={isMobile ? '70px' : '100px'}
           alt="icon-modal-success"
           widthImage="auto"
-          className="animate-pulse"
           priority
         />
       </div>
@@ -57,7 +56,7 @@ const ModalSuccess = ({
         {showClose && (
           <div className="flex flex-1">
             <SecondButton widthBtn="100%" onClick={() => closeModalDrawer()}>
-              {props.titleSubmit || translate('common.close')}
+              {props.titleClose || translate('common.close')}
             </SecondButton>
           </div>
         )}

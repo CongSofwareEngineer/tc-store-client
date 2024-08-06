@@ -14,7 +14,8 @@ import {
 import { EditTwoTone } from '@ant-design/icons'
 import { Upload } from 'antd'
 import ImgCrop from 'antd-img-crop'
-import React from 'react'
+import React, { useMemo } from 'react'
+import { isIOS, isMacOs } from 'react-device-detect'
 
 const Avatar = () => {
   const { userData, refreshLogin } = useUserData()
@@ -56,6 +57,13 @@ const Avatar = () => {
     getBase64(file, callBack)
   }
 
+  const typeFile = useMemo(() => {
+    if (isIOS && isMacOs) {
+      return 'image/*'
+    }
+    return '.png,.jpg,.jpeg,.gif,.svg'
+  }, [])
+
   return (
     <div className="w-[150px] relative overflow-hidden rounded-[50%]">
       <MyImage
@@ -72,7 +80,7 @@ const Avatar = () => {
           modalCancel={translate('common.close')}
           onModalOk={(file) => onChangeAvatar(file)}
         >
-          <Upload showUploadList={false} accept=".png,.jpg,.jpeg,.gif,.svg">
+          <Upload showUploadList={false} accept={typeFile}>
             <label className="edit-avatar " htmlFor="avatar">
               <EditTwoTone
                 className="cursor-pointer hover:scale-125"

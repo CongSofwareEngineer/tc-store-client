@@ -1,14 +1,18 @@
+import { QUERY_KEY } from '@/constant/reactQuery'
 import { useQueryClient } from '@tanstack/react-query'
 import { useCallback } from 'react'
 
 const useRefreshQuery = () => {
   const queryClient = useQueryClient()
-  const refreshQuery = useCallback((key: string) => {
+  const refreshQuery = useCallback((key: QUERY_KEY) => {
     queryClient.invalidateQueries({ queryKey: [key] })
-  },
-    [queryClient]
-  )
-  return { refreshQuery }
+  }, [queryClient])
+
+  const refreshListQuery = useCallback((listKey: QUERY_KEY[]) => {
+    queryClient.invalidateQueries({ queryKey: listKey })
+  }, [queryClient])
+
+  return { refreshQuery, refreshListQuery }
 
 }
 

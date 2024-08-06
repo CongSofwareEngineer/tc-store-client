@@ -36,9 +36,10 @@ export enum COOKIE_EXPIRED {
   'ExpiredAuthRefresh' = Number((new Date()).setDate(new Date().getDate() + 15).toFixed()) - 20000
 }
 
-export enum LocalKey {
+export enum LOCAL_STORAGE_KEY {
   'User' = 'User',
-  'MyCart' = 'MyCart'
+  'MyCart' = 'MyCart',
+  "ListSDTBuy" = 'ListSDTBuy'
 }
 
 export enum FilterAPI {

@@ -11,7 +11,9 @@ import ContentFormPayment from '@/components/ContentFormPayment'
 import BtnBackUI from '@/components/BtnBackUI'
 import {
   delayTime,
+  getDataLocal,
   numberWithCommas,
+  saveDataLocal,
   scrollTop,
   showNotificationError,
 } from '@/utils/functions'
@@ -22,14 +24,16 @@ import useModalDrawer from '@/hook/useModalDrawer'
 import ModalProcess from '@/components/ModalProcess'
 import ModalDelete from '@/components/ModalDelete'
 import ServerApi from '@/services/serverApi'
-import { FILTER_BILL, REQUEST_TYPE } from '@/constant/app'
+import { FILTER_BILL, LOCAL_STORAGE_KEY, REQUEST_TYPE } from '@/constant/app'
 import ModalSuccess from '@/components/ModalSuccess'
+import { useRouter } from 'next/navigation'
 
 const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const { translate } = useLanguage()
+  const route = useRouter()
   const { userData, isLogin } = useUserData()
   const { refreshQuery } = useRefreshQuery()
-  const { openModalDrawer } = useModalDrawer()
+  const { openModalDrawer, closeModalDrawer } = useModalDrawer()
   const { onChangeOptions, listOptions, optionSelected } = useOptionPayment()
 
   const [formData, setFormData] = useState<Record<string, any> | null>(null)
@@ -46,7 +50,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
       noteBil: '',
     }
     setFormData(initData)
-  }, [userData, data, isLogin])
+  }, [userData, isLogin])
 
   const isValidSubmit = useMemo(() => {
     if (!formData?.addressShip) {
@@ -64,10 +68,19 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
     })
   }
 
+  const saveDataNoLogin = (bodyBill: BodyAddBill) => {
+    if (!isLogin) {
+      const listSDT: string[] = getDataLocal(LOCAL_STORAGE_KEY.ListSDTBuy) || []
+
+      if (!listSDT.find((e) => e === bodyBill.sdt)) {
+        saveDataLocal(LOCAL_STORAGE_KEY.ListSDTBuy, [...listSDT, bodyBill.sdt])
+      }
+    }
+  }
+
   const handleSubmit = async () => {
     const callBack = async () => {
       setLoading(true)
-      console.log({ data })
 
       const bodyBill: BodyAddBill = {
         addressShip: formData?.addressShip,
@@ -84,7 +97,8 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         status: FILTER_BILL.Processing,
         totalBill: data?.price * amount,
       }
-      console.log({ bodyBill })
+
+      saveDataNoLogin(bodyBill)
 
       openModalDrawer({
         content: (
@@ -99,31 +113,36 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
           overClickClose: false,
         },
       })
+
       const res = await ServerApi.requestBase({
         url: 'bill/create',
         body: bodyBill,
         method: REQUEST_TYPE.POST,
         encode: true,
       })
+      // const res = { data: 'have data' }
+
       if (res?.data) {
         openModalDrawer({
           content: (
             <ModalSuccess
-              showClose={false}
+              showClose
               title={translate('productDetail.modalBuy.success')}
               des={translate('productDetail.modalBuy.successDes')}
+              titleSubmit={translate('common.viewBill')}
+              titleClose={translate('common.ok')}
+              callback={() => {
+                route.push('/my-page/bill')
+                closeModalDrawer()
+              }}
             />
           ),
-          configModal: {
-            showHeader: false,
-            overClickClose: false,
-          },
         })
         await delayTime(500)
-        refreshQuery(QUERY_KEY.GetProductByID)
-        refreshQuery(QUERY_KEY.LengthCartUser)
-        refreshQuery(QUERY_KEY.MyBillUser)
         refreshQuery(QUERY_KEY.MyCartUser)
+        refreshQuery(QUERY_KEY.GetProductByID)
+        refreshQuery(QUERY_KEY.MyBillUser)
+        refreshQuery(QUERY_KEY.LengthCartUser)
         await delayTime(500)
       } else {
         showNotificationError(translate('productDetail.modalBuy.error'))
