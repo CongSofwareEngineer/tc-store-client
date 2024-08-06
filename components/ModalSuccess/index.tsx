@@ -36,6 +36,7 @@ const ModalSuccess = ({
           alt="icon-modal-success"
           widthImage="auto"
           className="animate-pulse"
+          priority
         />
       </div>
       {props.des && (

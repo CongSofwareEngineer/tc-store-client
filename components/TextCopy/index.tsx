@@ -1,16 +1,19 @@
 import { copyToClipboard } from '@/utils/functions'
 import { CopyOutlined } from '@ant-design/icons'
+import Link from 'next/link'
 import React from 'react'
 type Props = {
   textView?: string
   value?: string
-  isTel?: boolean
+  isLink?: boolean
 }
-const TextCopy = ({ textView = '', value = '', isTel = false }: Props) => {
+const TextCopy = ({ textView = '', value = '', isLink = false }: Props) => {
   return (
     <div className="flex gap-2">
-      {isTel ? (
-        <a href={`tel:${value || textView}`}>{value || textView}</a>
+      {isLink ? (
+        <Link target="_blank" href={value || textView}>
+          {value || textView}
+        </Link>
       ) : (
         <span>{value || textView}</span>
       )}
