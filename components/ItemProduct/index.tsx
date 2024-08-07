@@ -11,7 +11,20 @@ import {
 } from '@/utils/functions'
 import MySliderSell from '../MySliderSell'
 import useMedia from '@/hook/useMedia'
-
+import styled from 'styled-components'
+const LinkCustom = styled(Link)`
+  user-select: none;
+  .img {
+    transition: all 0.3s ease-in-out;
+  }
+  @media screen and (min-width: 768px) {
+    &:hover {
+      .img {
+        transform: scale(1.12);
+      }
+    }
+  }
+`
 type ItemType = {
   item: any
   callback?: () => void
@@ -35,8 +48,8 @@ const ItemProduct = ({
   const { isMobile } = useMedia()
 
   return (
-    <Link
-      className={`relative item-list cursor-pointer px-3 pt-6 md:pb-4 pb-3 gap-3 flex items-center justify-between flex-col ${styles['item-coffee']} ${className}`}
+    <LinkCustom
+      className={` relative item-list cursor-pointer px-3 pt-6 md:pb-4 pb-3 gap-3 flex items-center justify-between flex-col ${styles['item-coffee']} ${className}`}
       onClick={callback}
       href={href}
     >
@@ -46,15 +59,16 @@ const ItemProduct = ({
         </div>
       )}
 
-      <div className="m-auto max-w-[80%] relative w-full aspect-square  overflow-hidden">
+      <div className=" m-auto max-w-[85%] relative w-full aspect-square  overflow-hidden">
         <MyImage
           src={item?.imageMain || images.userDetail.iconUserDetail}
           alt={`item-${item?.name || href}`}
-          heightImage="auto"
+          heightImage="auto  "
+          className="img select-none"
         />
       </div>
       <div className="w-full gap-1 flex flex-col">
-        <h3 className="w-full text-medium font-bold">{item?.name}</h3>
+        <p className="w-full text-medium font-bold">{item?.name}</p>
         <TextPriceBase className=" w-full ">
           {`${formatPriceBase(item?.price || 150)} VNĐ`}
         </TextPriceBase>
@@ -91,7 +105,7 @@ const ItemProduct = ({
           </div>
         )}
       </div>
-    </Link>
+    </LinkCustom>
   )
 }
 

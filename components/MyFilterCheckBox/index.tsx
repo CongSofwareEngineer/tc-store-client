@@ -9,7 +9,7 @@ import useMedia from '@/hook/useMedia'
 type MyFilterCheckBox = {
   data?: Record<string, any>[]
   typeChecked?: string
-  titleFilter?: string
+  titleFilter?: string 
   isDefault?: Boolean
   isReplace?: boolean
 }
