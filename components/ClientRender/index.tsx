@@ -12,6 +12,7 @@ import moment from 'moment'
 import { LANGUAGE_SUPPORT } from '@/constant/app'
 import useAos from '@/hook/useAos'
 import { fetchProvinces } from '@/redux/provincesSlice'
+import useMedia from '@/hook/useMedia'
 
 const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
   ssr: true,
@@ -34,20 +35,19 @@ const ClientRender = ({
   useCheckPatchName()
   const dispatch = useAppDispatch()
   const { reLogin } = useUserData()
+  const { isClient } = useMedia()
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const Aos = require('aos')
-    Aos.refresh()
-    reLogin()
+    console.log('====================================')
+    console.log({ isClient })
+    console.log('====================================')
+    isClient && reLogin()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [isClient])
 
   useLayoutEffect(() => {
     dispatch(setMenuCategory(menuCategory))
     dispatch(fetchProvinces())
-    console.log({ type: typeof reLogin })
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

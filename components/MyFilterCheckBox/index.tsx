@@ -4,6 +4,7 @@ import React from 'react'
 import MyCollapse from '../MyCollapse'
 import { AlignLeftOutlined, CaretRightOutlined } from '@ant-design/icons'
 import useLanguage from '@/hook/useLanguage'
+import useMedia from '@/hook/useMedia'
 
 type MyFilterCheckBox = {
   data?: Record<string, any>[]
@@ -22,6 +23,7 @@ const MyFilterCheckBox = ({
 }: MyFilterCheckBox) => {
   const { queries, updateQuery } = useQuerySearch()
   const { translate } = useLanguage()
+  const { isClient, isMobile } = useMedia()
 
   const renderContent = () => {
     return (
@@ -71,13 +73,15 @@ const MyFilterCheckBox = ({
     ]
 
     return (
-      <MyCollapse
-        expandIcon={({ isActive }: any) => (
-          <CaretRightOutlined rotate={isActive ? 90 : 0} />
-        )}
-        defaultActiveKey={isDefault ? [typeChecked] : []}
-        items={items}
-      />
+      isClient && (
+        <MyCollapse
+          expandIcon={({ isActive }: any) => (
+            <CaretRightOutlined rotate={isActive ? 90 : 0} />
+          )}
+          defaultActiveKey={isDefault || !isMobile ? [typeChecked] : []}
+          items={items}
+        />
+      )
     )
   }
   return render()
