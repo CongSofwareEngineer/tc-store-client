@@ -42,7 +42,7 @@ const Footer = () => {
   return (
     <footer className="no footer-web w-full bg-white flex justify-center md:mt-5 mt-3">
       <SocialMediaShare />
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full items-center justify-center">
         <div className=" w-full max-w-[1350px] md:p-[50px] p-[20px]  pb-10 ">
           <h3 className="text-medium font-bold mb-2">Thông tin vẻ Shop</h3>
           <div className="flex md:flex-row flex-col w-full justify-between md:gap-0 gap-4">
