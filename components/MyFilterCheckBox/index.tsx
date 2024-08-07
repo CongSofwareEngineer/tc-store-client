@@ -72,16 +72,16 @@ const MyFilterCheckBox = ({
       },
     ]
 
-    return (
-      isClient && (
-        <MyCollapse
-          expandIcon={({ isActive }: any) => (
-            <CaretRightOutlined rotate={isActive ? 90 : 0} />
-          )}
-          defaultActiveKey={isDefault || !isMobile ? [typeChecked] : []}
-          items={items}
-        />
-      )
+    return isClient ? (
+      <MyCollapse
+        expandIcon={({ isActive }: any) => (
+          <CaretRightOutlined rotate={isActive ? 90 : 0} />
+        )}
+        defaultActiveKey={isDefault || !isMobile ? [typeChecked] : []}
+        items={items}
+      />
+    ) : (
+      <></>
     )
   }
   return render()
