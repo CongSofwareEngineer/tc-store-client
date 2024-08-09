@@ -6,15 +6,18 @@ import { Checkbox } from 'antd'
 import Link from 'next/link'
 import Item from './Component/Item'
 import useMedia from '@/hook/useMedia'
-import { FILTER_BILL } from '@/constant/app'
+import { FILTER_BILL, TYPE_LOADING_GET_DATA } from '@/constant/app'
 import useQuerySearch from '@/hook/useQuerySearch'
 import MyLoadMore from '@/components/MyLoadMore'
+import LoadingGetData from '@/components/LoadingGetData'
+import MyDatePicker from '@/components/MyDatePicker'
 
 const BillScreen = () => {
   const [isDeliverySuccess, setIsDeliverySuccess] = useState(false)
   const [isDelivering, setIsDelivering] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
-  // const [dateTime, setDateTime] = useState('')
+  const [dateTime, setDateTime] = useState('')
+  console.log({ dateTime })
 
   const { isMobile } = useMedia()
   const { isMobile: isMediaEx } = useMedia(1000)
@@ -23,7 +26,6 @@ const BillScreen = () => {
 
   const { data, hasNextPage, isLoading, loadMore, isFetchingNextPage } =
     useBill(queries, '')
-  console.log({ data, hasNextPage, isLoading, loadMore, isFetchingNextPage })
 
   useEffect(() => {
     if (queries?.type && queries?.type?.length > 0) {
@@ -93,13 +95,10 @@ const BillScreen = () => {
             })}
           </div>
         )}
-        {isLoading && (
-          <div className="flex flex-col gap-3 w-full mt-3 ">
-            <div className="w-full h-20 skeleton-loading rounded-md" />
-            <div className="w-full h-20 skeleton-loading rounded-md" />
-            <div className="w-full h-20 skeleton-loading rounded-md" />
-          </div>
-        )}
+        <LoadingGetData
+          loading={isLoading}
+          type={TYPE_LOADING_GET_DATA.MyBill}
+        />
       </>
     )
   }
@@ -113,14 +112,10 @@ const BillScreen = () => {
             })}
           </div>
         )}
-
-        {isLoading && (
-          <div className="flex flex-col gap-3 w-full mt-3 ">
-            <div className="w-full h-20 skeleton-loading rounded-md" />
-            <div className="w-full h-20 skeleton-loading rounded-md" />
-            <div className="w-full h-20 skeleton-loading rounded-md" />
-          </div>
-        )}
+        <LoadingGetData
+          loading={isLoading}
+          type={TYPE_LOADING_GET_DATA.MyBill}
+        />
       </>
     )
   }
@@ -132,10 +127,8 @@ const BillScreen = () => {
       <div className="relative w-full border-[1px]   border-gray-300" />
 
       <div className="flex flex-wrap gap-4 align-middle   ">
-        {/* <div>
-          <MyDatePicker onChange={(e) => setDateTime(e?.toString() || '')} />
-        </div> */}
         <div className="flex gap-4 flex-wrap items-center ">
+          <MyDatePicker onChange={(e) => setDateTime(e?.toString() || '')} />
           <Checkbox
             onClick={() => onChangeFilter(FILTER_BILL.All)}
             checked={!isDelivering && !isDeliverySuccess && !isProcessing}
@@ -178,6 +171,9 @@ const BillScreen = () => {
               </div>
               <div className="w-[100px] text-center">
                 {translate('textPopular.status')}
+              </div>
+              <div className="w-[50px] text-center">
+                {translate('common.view')}
               </div>
             </>
           )}

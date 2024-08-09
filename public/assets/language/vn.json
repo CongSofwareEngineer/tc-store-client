@@ -16,7 +16,8 @@
     "addAddress": "Thêm địa chỉ",
     "clearAll": "Xóa hết",
     "delete": "Xóa",
-    "viewBill": "Xem hóa đơn"
+    "viewBill": "Xem hóa đơn",
+    "view": "Xem"
   },
   "userDetail": {
     "addressNow": "Địa chỉ hiện tại",

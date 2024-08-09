@@ -61,6 +61,19 @@ const Item = ({ data }: Props) => {
     }
   }
 
+  const getColorStatus = (key: FILTER_BILL) => {
+    switch (key) {
+      case FILTER_BILL.Processing:
+        return 'red'
+
+      case FILTER_BILL.Delivering:
+        return '#0056ff'
+
+      default:
+        return '#22c55e'
+    }
+  }
+
   const getAddressShip = (item: any) => {
     const address = { ...item.addressShip }
     address.address = address.address.replaceAll('---', ' ')
@@ -82,7 +95,12 @@ const Item = ({ data }: Props) => {
       <div className="w-[20%] min-w-[100px] text-center flex flex-col gap-2">
         <div> {moment(Number(data.date)).format('DD/MM/YYYY')}</div>
         {isMobile && (
-          <div className=" text-center">{getStatus(data.status)}</div>
+          <div
+            className=" text-center font-bold"
+            style={{ color: getColorStatus(data.status) }}
+          >
+            {getStatus(data.status)}
+          </div>
         )}
       </div>
       <div className="flex flex-col lg:gap-3 gap-2 flex-1">
@@ -169,7 +187,15 @@ const Item = ({ data }: Props) => {
           <div className="w-[15%] text-end">
             <span>{`${numberWithCommas(data.totalBill || '0')} VNĐ`}</span>
           </div>
-          <div className="w-[100px] text-center">{getStatus(data.status)}</div>
+          <div
+            className="w-[100px] text-center font-bold"
+            style={{ color: getColorStatus(data.status) }}
+          >
+            {getStatus(data.status)}
+          </div>
+          <PrimaryButton size="small" onClick={() => handleViewDetail(data)}>
+            {translate('common.view')}
+          </PrimaryButton>
         </>
       )}
     </div>
