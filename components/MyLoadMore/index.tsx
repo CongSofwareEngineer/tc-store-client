@@ -21,6 +21,8 @@ const MyLoadMore = ({
         {title || translate('textPopular.loadMore')}
       </MyButton>
     </div>
+  ) : loading ? (
+    <></>
   ) : (
     <div className="w-full text-center my-3">
       {translate('textPopular.fullData')}

@@ -43,7 +43,10 @@ const GgMap = () => {
       >
         <AnyReactComponent />
       </GoogleMapReact> */}
-      <APIProvider apiKey={process.env.NEXT_PUBLIC_API_KEY_GG_MAP}>
+      <APIProvider
+        onLoad={() => scrollTop()}
+        apiKey={process.env.NEXT_PUBLIC_API_KEY_GG_MAP}
+      >
         <Map
           style={{
             height: isMobile ? 200 : '100%',

@@ -6,6 +6,7 @@ import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import { REQUEST_TYPE } from '@/constant/app'
 import { BodyUserData } from '@/constant/firebase'
+import useAos from '@/hook/useAos'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
@@ -28,6 +29,7 @@ const ContainerRegister = styled.div`
 `
 
 const RegisterScreen = () => {
+  useAos(1000)
   const { translate } = useLanguage()
   const router = useRouter()
   const { checkNumberPhone } = useCheckForm()
@@ -94,7 +96,10 @@ const RegisterScreen = () => {
     <ContainerRegister>
       <div className="w-full flex justify-between h-full items-center">
         {!isMobile && (
-          <div className="flex-1 flex flex-col justify-center items-center max-w-[450px]">
+          <div
+            data-aos="fade-right"
+            className="flex-1 flex flex-col justify-center items-center max-w-[450px]"
+          >
             <MyImage
               alt={'tc-store-logo-register'}
               className="cursor-pointer max-w-0["
@@ -104,7 +109,10 @@ const RegisterScreen = () => {
           </div>
         )}
 
-        <div className="flex justify-start items-start md:w-fit w-full">
+        <div
+          data-aos="fade-left"
+          className="flex justify-start items-start md:w-fit w-full"
+        >
           <div className="m-auto flex flex-col md:w-[450px] w-full shadow-md p-8 rounded-[16px] justify-center align-middle bg-white">
             <h1 className="mb- uppercase font-bold text-center text-[16px]">
               {translate('register.title')}

@@ -1,8 +1,9 @@
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
-import { Input } from 'antd'
 import React from 'react'
 import MyButton from '../MyButton'
+import MyInput from '../MyInput'
+import { FileImageOutlined } from '@ant-design/icons'
 
 const Comment = ({ idProduct }: { idProduct: string }) => {
   const { isLogin } = useUserData()
@@ -15,7 +16,8 @@ const Comment = ({ idProduct }: { idProduct: string }) => {
       </div>
       <div>{idProduct}</div>
       <div className="flex items-center">
-        <Input className="flex-1" />
+        <MyInput type="area" className="flex-1" />
+        <FileImageOutlined />
         <MyButton disabled={!isLogin}>{translate('common.Send')}</MyButton>
       </div>
     </div>

@@ -80,7 +80,7 @@ type PropsType = {
   typeBtn?: 0 | 1
   type?: 'string' | 'area' | 'number' | 'password'
   rows?: number | 2
-  onChangeText?: (value?: string | number) => void
+  onChangeText?: (value: string | number) => void
 } & InputProps &
   InputNumberProps &
   TextAreaProps

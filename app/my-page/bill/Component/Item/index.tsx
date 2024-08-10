@@ -92,7 +92,13 @@ const Item = ({ data }: Props) => {
     })
   }
 
-  const handlecancelOrder = (item: any) => {
+  const handleCancelOrder = (item: any) => {
+    openModalDrawer({
+      content: <ModalCancelOrder data={item} />,
+    })
+  }
+
+  const handleFeeback = (item: any) => {
     openModalDrawer({
       content: <ModalCancelOrder data={item} />,
     })
@@ -110,18 +116,31 @@ const Item = ({ data }: Props) => {
             {getStatus(data.status)}
           </div>
         ) : (
-          data.status === FILTER_BILL.Processing && (
-            <div className="flex w-full justify-center">
-              <MyButton
-                type="primary"
-                size="small"
-                className="text-[13px]"
-                onClick={() => handlecancelOrder(data)}
-              >
-                {translate('common.cancelOrder')}
-              </MyButton>
-            </div>
-          )
+          <>
+            {data.status === FILTER_BILL.Processing && (
+              <div className="flex w-full justify-center">
+                <MyButton
+                  type="primary"
+                  size="small"
+                  className="text-[13px]"
+                  onClick={() => handleCancelOrder(data)}
+                >
+                  {translate('common.cancelOrder')}
+                </MyButton>
+              </div>
+            )}
+            {data.status === FILTER_BILL.DeliverySuccess && (
+              <div className="flex w-full justify-center">
+                <MyButton
+                  size="small"
+                  className="text-[13px]"
+                  onClick={() => handleFeeback(data)}
+                >
+                  {translate('textPopular.feeback')}
+                </MyButton>
+              </div>
+            )}
+          </>
         )}
       </div>
       <div className="flex flex-col lg:gap-3 gap-2 flex-1">
@@ -159,10 +178,21 @@ const Item = ({ data }: Props) => {
                 <MyButton
                   size="small"
                   type="primary"
-                  onClick={() => handlecancelOrder(data)}
+                  onClick={() => handleCancelOrder(data)}
                 >
                   {translate('common.cancelOrder')}
                 </MyButton>
+              )}
+              {data.status === FILTER_BILL.DeliverySuccess && (
+                <div className="flex w-full justify-center">
+                  <MyButton
+                    size="small"
+                    className="text-[13px]"
+                    onClick={() => handleFeeback(data)}
+                  >
+                    {translate('textPopular.feeback')}
+                  </MyButton>
+                </div>
               )}
             </div>
           </>

@@ -16,7 +16,7 @@ const ListProduct = dynamic(() => import('./(ComponentHome)/ListProduct'), {
 // })
 
 const Home = () => {
-  useAos()
+  useAos(1000)
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
 
