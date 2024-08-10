@@ -8,8 +8,8 @@ import useLanguage from '@/hook/useLanguage'
 import useQuerySearch from '@/hook/useQuerySearch'
 import useAllProduct from '@/hook/tank-query/useAllProduct'
 import { PAGE_SIZE_LIMIT } from '@/constant/app'
-import PrimaryButton from '@/components/PrimaryButton'
 import useAos from '@/hook/useAos'
+import MyLoadMore from '@/components/MyLoadMore'
 
 const ShopScreen = () => {
   useAos()
@@ -68,16 +68,11 @@ const ShopScreen = () => {
             </div>
           </div>
         )}
-        {hasNextPage && (
-          <div className="w-full flex justify-center mt-10">
-            <PrimaryButton
-              onClick={() => loadMore()}
-              loading={isFetchingNextPage}
-            >
-              {translate('textPopular.loadMore')}
-            </PrimaryButton>
-          </div>
-        )}
+        <MyLoadMore
+          callback={loadMore}
+          hasLoadMore={hasNextPage}
+          loading={isFetchingNextPage}
+        />
       </div>
     </div>
   )

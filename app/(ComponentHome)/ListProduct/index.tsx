@@ -12,13 +12,11 @@ import {
 import { CollapseCustom } from './styled'
 import useProductByLimit from '@/hook/tank-query/useProductByLimit'
 import { scrollTop } from '@/utils/functions'
-import useMedia from '@/hook/useMedia'
 import LoadingGetData from '@/components/LoadingGetData'
 
 const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   const { data, isLoading } = useProductByLimit(type, 5)
   const { translate } = useLanguage()
-  const { isMobile } = useMedia(640)
 
   useEffect(() => {
     scrollTop()

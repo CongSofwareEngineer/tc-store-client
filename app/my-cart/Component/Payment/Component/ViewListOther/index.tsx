@@ -44,11 +44,14 @@ const ViewListOther = ({ dataCart }: { dataCart: any[] }) => {
             {translate('textPopular.totalMoney')}
           </div>
         </div>
-        {listDataValid.map((e) => {
+        {listDataValid.map((e, index) => {
           return (
             <div
               key={e._id}
-              className="w-full flex gap-4 relative py-2 items-center"
+              className={`w-full flex gap-4 relative py-2 items-center ${
+                index < listDataValid.length - 1 &&
+                'border-b-[3px] border-gray-200'
+              }`}
             >
               <div className="w-[100px] ">
                 <div className="flex justify-center mt-2">
@@ -110,11 +113,14 @@ const ViewListOther = ({ dataCart }: { dataCart: any[] }) => {
           </div>
         </div>
 
-        {listDataValid.map((e) => {
+        {listDataValid.map((e, index) => {
           return (
             <div
               key={e._id}
-              className="w-full flex gap-4 relative py-2 items-center"
+              className={`w-full flex gap-4 relative py-2 items-center ${
+                index < listDataValid.length - 1 &&
+                'border-b-[3px] border-gray-200'
+              }`}
             >
               <div className="w-[100px] ">
                 <div className="flex justify-center mt-2">

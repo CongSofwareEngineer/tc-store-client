@@ -22,9 +22,9 @@ import useGetProductByID from '@/hook/tank-query/useGetProductByID'
 import MyImage from '@/components/MyImage'
 import InfoItemDetail from '@/components/InfoItemDetail'
 import SubAndPlus from '@/components/SubAndPlus'
-import PrimaryButton from '@/components/PrimaryButton'
-import SecondButton from '@/components/SecondButton'
+
 import { images } from '@/configs/images'
+import MyButton from '@/components/MyButton'
 
 const Comment = dynamic(() => import('@/components/Comment'), {
   ssr: false,
@@ -140,15 +140,16 @@ const ViewDetail = ({
               callBackPlus={(e) => setAmountBuy(e)}
             />
             <div className="flex gap-6 mt-4">
-              <PrimaryButton
+              <MyButton
                 heightBtn="40px"
                 onClick={handleBuy}
                 className="min-w-[30%]"
               >
                 {translate('common.buyNow')}
-              </PrimaryButton>
-              <SecondButton
+              </MyButton>
+              <MyButton
                 heightBtn="40px"
+                type="primary"
                 onClick={handleAddCart}
                 className="min-w-[30%] "
                 loading={loadingAddCart}
@@ -162,7 +163,7 @@ const ViewDetail = ({
                   />
                   <span>{translate('common.addCart')}</span>
                 </div>
-              </SecondButton>
+              </MyButton>
             </div>
           </div>
         </div>
@@ -207,14 +208,15 @@ const ViewDetail = ({
             callBackPlus={(e) => setAmountBuy(e)}
           />
           <div className="flex gap-6 mt-4">
-            <PrimaryButton
+            <MyButton
               onClick={handleBuy}
               className="min-w-[30%] "
               style={{ height: 40 }}
             >
               {translate('common.buyNow')}
-            </PrimaryButton>
-            <SecondButton
+            </MyButton>
+            <MyButton
+              type="primary"
               onClick={handleAddCart}
               className="min-w-[30%] "
               style={{ height: 40 }}
@@ -229,7 +231,7 @@ const ViewDetail = ({
                 />
                 <span>{translate('common.addCart')}</span>
               </div>
-            </SecondButton>
+            </MyButton>
           </div>
           <Comment idProduct={dataItem.id || ''} />
         </div>

@@ -3,9 +3,9 @@ import React from 'react'
 import MyImage from '../MyImage'
 import { images } from '@/configs/images'
 import useMedia from '@/hook/useMedia'
-import PrimaryButton from '../PrimaryButton'
 import useModalDrawer from '@/hook/useModalDrawer'
-import SecondButton from '../SecondButton'
+import MyButton from '../MyButton'
+
 type Props = {
   title?: string
   titleSubmit?: string
@@ -46,18 +46,22 @@ const ModalSuccess = ({
 
       <div className="flex w-full gap-3">
         <div className="flex flex-1">
-          <PrimaryButton
-            widthBtn="100%"
+          <MyButton
+            className="w-full"
             onClick={() => (callback ? callback() : closeModalDrawer())}
           >
             {props.titleSubmit || translate('common.ok')}
-          </PrimaryButton>
+          </MyButton>
         </div>
         {showClose && (
           <div className="flex flex-1">
-            <SecondButton widthBtn="100%" onClick={() => closeModalDrawer()}>
+            <MyButton
+              className="w-full"
+              type="primary"
+              onClick={() => closeModalDrawer()}
+            >
               {props.titleClose || translate('common.close')}
-            </SecondButton>
+            </MyButton>
           </div>
         )}
       </div>

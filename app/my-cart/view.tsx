@@ -4,14 +4,16 @@ import useMyCart from '@/hook/tank-query/useMyCart'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import { useEffect, useState } from 'react'
-import { PAGE_SIZE_LIMIT } from '@/constant/app'
+import { PAGE_SIZE_LIMIT, TYPE_LOADING_GET_DATA } from '@/constant/app'
 import { cloneData, numberWithCommas } from '@/utils/functions'
-import PrimaryButton from '@/components/PrimaryButton'
 import ListItemCart from './Component/ListItemCart'
 import Payment from './Component/Payment'
 import ClientApi from '@/services/clientApi'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
+import LoadingGetData from '@/components/LoadingGetData'
+import Link from 'next/link'
+import MyButton from '@/components/MyButton'
 
 const MyCartScreen = () => {
   const [listCartFormat, setListCartFormat] = useState<any[]>([])
@@ -40,11 +42,6 @@ const MyCartScreen = () => {
       })
     }
   }, [data])
-
-  console.log('====================================')
-  console.log({ listCartFormat })
-  console.log('====================================')
-
   const calculatePayment = () => {
     let total = 0
     listCartFormat.forEach((e: any) => {
@@ -88,18 +85,6 @@ const MyCartScreen = () => {
     setListCartFormat(dataClone)
     setAllSelected(isSelect)
   }
-  const renderLoading = () => {
-    return (
-      <div className="w-full flex gap-4 h-ful">
-        <div className="flex flex-1 flex-col gap-3">
-          <div className="skeleton-loading w-full rounded-lg h-12" />
-          <div className="skeleton-loading w-full rounded-lg h-[30vh]" />
-          <div className="skeleton-loading w-full rounded-lg h-[30vh]" />
-        </div>
-        <div className="lg:w-[300px] skeleton-loading rounded-lg lg:h-[50vh]" />
-      </div>
-    )
-  }
 
   const renderDesktop = () => {
     return (
@@ -110,7 +95,10 @@ const MyCartScreen = () => {
         />
 
         {isLoading ? (
-          renderLoading()
+          <LoadingGetData
+            loading={isLoading}
+            type={TYPE_LOADING_GET_DATA.MyCart}
+          />
         ) : (
           <div className="w-full flex gap-5">
             <div
@@ -125,6 +113,12 @@ const MyCartScreen = () => {
                 callBackSelectAll={handleSelectAll}
                 loading={isLoading}
               />
+              {listCartFormat.length === 0 && (
+                <div className="w-full flex gap-1 mt-3 pl-3">
+                  <span>{translate('textPopular.notData')}</span>
+                  <Link href={'/shop'}>{translate('common.buyNow')}</Link>
+                </div>
+              )}
             </div>
             <div className="lg:w-[400px] md:w-[280px] border-2 border-gray-300 bg-white flex flex-col items-center h-fit p-3 gap-3">
               <div className="w-full flex justify-between">
@@ -134,13 +128,13 @@ const MyCartScreen = () => {
                 </span>
               </div>
               <div className="border-[1px] border-gray-300 w-full" />
-              <PrimaryButton
-                widthBtn="100%"
+              <MyButton
+                className="w-full"
                 disabled={Number(calculatePayment()) <= 1}
                 onClick={() => setIsPayment(true)}
               >
                 {`${translate('cart.payment')} (${calculateItemPayment()})`}
-              </PrimaryButton>
+              </MyButton>
             </div>
           </div>
         )}
@@ -156,7 +150,10 @@ const MyCartScreen = () => {
           url={['/shop']}
         />
         {isLoading ? (
-          renderLoading()
+          <LoadingGetData
+            loading={isLoading}
+            type={TYPE_LOADING_GET_DATA.MyCart}
+          />
         ) : (
           <>
             <div
@@ -171,6 +168,12 @@ const MyCartScreen = () => {
                 callBackSelectAll={handleSelectAll}
                 loading={isLoading}
               />
+              {listCartFormat.length === 0 && (
+                <div className="w-full flex gap-1 my-2 pl-3">
+                  <span>{translate('textPopular.notData')}</span>
+                  <Link href={'/shop'}>{translate('common.buyNow')}</Link>
+                </div>
+              )}
             </div>
             <div className="fixed z-[2] w-full bg-white border-gray-300 p-[20px] bottom-0 left-0">
               <div className="relative flex flex-col gap-2">
@@ -184,14 +187,14 @@ const MyCartScreen = () => {
                 </div>
                 <div className="w-full border-[1px] border-gray-200  relative  " />
 
-                <PrimaryButton
+                <MyButton
                   disabled={Number(calculatePayment()) <= 1}
                   onClick={() => setIsPayment(true)}
                 >
                   {`${translate('cart.payment')} (${numberWithCommas(
                     calculatePayment()
                   )} VNĐ)`}
-                </PrimaryButton>
+                </MyButton>
               </div>
             </div>
           </>

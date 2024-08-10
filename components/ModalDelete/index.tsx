@@ -2,10 +2,9 @@ import useLanguage from '@/hook/useLanguage'
 import { useState } from 'react'
 import MyImage from '../MyImage'
 import { images } from '@/configs/images'
-import PrimaryButton from '../PrimaryButton'
-import SecondButton from '../SecondButton'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useMedia from '@/hook/useMedia'
+import MyButton from '../MyButton'
 type ModalDeleteType = {
   des?: string
   callback?: (param?: any) => Promise<void> | void
@@ -51,22 +50,19 @@ const ModalDelete = ({
       <div className="text-center mb-2 md:max-w-[90%] m-auto">{des}</div>
       <div className="w-full flex gap-4">
         <div className="flex-1">
-          <PrimaryButton
-            loading={loading}
-            widthBtn="100%"
-            onClick={handleSubmit}
-          >
+          <MyButton loading={loading} widthBtn="100%" onClick={handleSubmit}>
             {titleConfirm || translate('common.ok')}
-          </PrimaryButton>
+          </MyButton>
         </div>
         <div className="flex-1">
-          <SecondButton
+          <MyButton
             disabled={loading}
+            type="primary"
             widthBtn="100%"
             onClick={closeModalDrawer}
           >
             {translate('common.close')}
-          </SecondButton>
+          </MyButton>
         </div>
       </div>
     </div>

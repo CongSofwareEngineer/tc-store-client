@@ -10,14 +10,14 @@ import { FILTER_BILL, TYPE_LOADING_GET_DATA } from '@/constant/app'
 import useQuerySearch from '@/hook/useQuerySearch'
 import MyLoadMore from '@/components/MyLoadMore'
 import LoadingGetData from '@/components/LoadingGetData'
-import MyDatePicker from '@/components/MyDatePicker'
+// import MyDatePicker from '@/components/MyDatePicker'
 
 const BillScreen = () => {
   const [isDeliverySuccess, setIsDeliverySuccess] = useState(false)
   const [isDelivering, setIsDelivering] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
-  const [dateTime, setDateTime] = useState('')
-  console.log({ dateTime })
+  // const [dateTime, setDateTime] = useState('')
+  // console.log({ dateTime })
 
   const { isMobile } = useMedia()
   const { isMobile: isMediaEx } = useMedia(1000)
@@ -128,7 +128,7 @@ const BillScreen = () => {
 
       <div className="flex flex-wrap gap-4 align-middle   ">
         <div className="flex gap-4 flex-wrap items-center ">
-          <MyDatePicker onChange={(e) => setDateTime(e?.toString() || '')} />
+          {/* <MyDatePicker onChange={(e) => setDateTime(e?.toString() || '')} /> */}
           <Checkbox
             onClick={() => onChangeFilter(FILTER_BILL.All)}
             checked={!isDelivering && !isDeliverySuccess && !isProcessing}

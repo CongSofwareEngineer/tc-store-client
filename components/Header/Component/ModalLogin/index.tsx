@@ -7,7 +7,7 @@ import React, { useLayoutEffect, useState } from 'react'
 import parsePhoneNumber from 'libphonenumber-js'
 import { useRouter } from 'next/navigation'
 import useModalDrawer from '@/hook/useModalDrawer'
-import PrimaryButton from '@/components/PrimaryButton'
+import MyButton from '@/components/MyButton'
 
 const ModalLogin: React.FC = () => {
   const { translate } = useLanguage()
@@ -102,15 +102,14 @@ const ModalLogin: React.FC = () => {
           </div>
 
           <Form.Item style={{ display: 'flex', justifyContent: 'center' }}>
-            <PrimaryButton
+            <MyButton
               loading={loading}
-              type="primary"
               size="large"
               htmlType="submit"
-              widthBtn="150px"
+              className="w-[150px]"
             >
               {translate('common.ok')}
-            </PrimaryButton>
+            </MyButton>
           </Form.Item>
         </MyForm>
       )}

@@ -54,6 +54,18 @@ const LoadingGetData = ({
           </div>
         )
 
+      case TYPE_LOADING_GET_DATA.MyCart:
+        return (
+          <div className="w-full flex gap-4 h-ful">
+            <div className="flex flex-1 flex-col gap-3">
+              <div className="skeleton-loading w-full rounded-lg h-12" />
+              <div className="skeleton-loading w-full rounded-lg h-[30vh]" />
+              <div className="skeleton-loading w-full rounded-lg h-[30vh]" />
+            </div>
+            <div className="lg:w-[300px] skeleton-loading rounded-lg lg:h-[50vh]" />
+          </div>
+        )
+
       default:
         return <></>
     }

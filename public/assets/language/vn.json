@@ -17,7 +17,8 @@
     "clearAll": "Xóa hết",
     "delete": "Xóa",
     "viewBill": "Xem hóa đơn",
-    "view": "Xem"
+    "view": "Xem",
+    "cancelOrder": "Hủy đơn"
   },
   "userDetail": {
     "addressNow": "Địa chỉ hiện tại",
@@ -41,8 +42,8 @@
     "updating": "Đang cập nhật",
     "notData": "Chưa có dữ liệu",
     "loadMore": "Xem thêm",
-    "province": "Thành Phố",
-    "district": "Huyện / Quận",
+    "province": "Tỉnh",
+    "district": "Huyện / Quận / Thành phố",
     "ward": "Phường / Xã",
     "addressDetail": "Địa chỉ nhà củ thể",
     "feeShip": "Phí Ship",
@@ -81,7 +82,9 @@
     "newValue": "Giá trị mới",
     "viewDetail": "Xem chi tiết",
     "buyNow": "Mua ngay",
-    "enterPassToContinue": "Nhập mật khẩu để tiếp tục"
+    "enterPassToContinue": "Nhập mật khẩu để tiếp tục",
+    "fullData": "Đã hết dữ liệu",
+    "reason": "Lý do"
   },
   "addCart": {
     "addSuccess": "Đã thêm vào giỏ hàng",
@@ -108,7 +111,14 @@
     "des": "Danh sách các hóa đơn bạn đã đặt hàng",
     "delivering": "Đang giao",
     "deliverySuccess": "Đã giao",
-    "processing": "Đang xử lý"
+    "processing": "Đang xử lý",
+    "cancelOrder": {
+      "whyCancel": "Lý do hủy đơn",
+      "cancelOrder": "Hủy đơn hàng",
+      "cancelSuccess": "Hủy đơn thành công",
+      "cancelEror": "Mạng có vấn đề. Thử lại sau vài phút"
+    },
+    "idOrder": "Mã đơn"
   },
   "bill": {
     "noteBill": "Ghi chú đơn hàng",

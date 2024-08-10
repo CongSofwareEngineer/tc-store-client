@@ -1,8 +1,9 @@
-import { Button, DatePicker } from 'antd'
+import { DatePicker } from 'antd'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import MyInput from '@/components/MyInput'
+import MyButton from '@/components/MyButton'
 
 type Props = {
   onChangeDateTime?: (param: any) => any
@@ -63,9 +64,9 @@ const OptionSearchBase = ({
           value={sdt}
           onChange={(e) => setSdt(e?.toString() || '')}
         />
-        <Button type="primary" onClick={handleSearchSDT}>
+        <MyButton type="dashed" onClick={handleSearchSDT}>
           Search
-        </Button>
+        </MyButton>
       </div>
       <div className="flex flex-1 gap-3">
         <MyInput
@@ -74,9 +75,9 @@ const OptionSearchBase = ({
           value={idOther}
           onChange={(e) => setIdOther(e?.toString() || '')}
         />
-        <Button type="primary" onClick={handleSearchIDOther}>
+        <MyButton type="dashed" onClick={handleSearchIDOther}>
           Search
-        </Button>
+        </MyButton>
       </div>
     </div>
   )

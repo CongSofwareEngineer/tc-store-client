@@ -32,13 +32,13 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
       sessionMain && sessionMain.classList.remove('container-admin')
       header && header.classList.remove('container-admin')
     }
-  }, [])
+  }, [patchName])
 
   useEffect(() => {
     if (!isLogin) {
       router.push('/')
     }
-  }, [isLogin])
+  }, [isLogin, router])
 
   const LIST_MENU = [
     {

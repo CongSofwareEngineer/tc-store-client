@@ -1,4 +1,4 @@
-import PrimaryButton from '@/components/PrimaryButton'
+import MyButton from '@/components/MyButton'
 import useLanguage from '@/hook/useLanguage'
 import { showNotificationError } from '@/utils/functions'
 import { PlusOutlined } from '@ant-design/icons'
@@ -101,14 +101,14 @@ const SelectInputEx = ({
                 onKeyDown={(e) => e.stopPropagation()}
                 className="flex-1"
               />
-              <PrimaryButton
+              <MyButton
                 loading={loadingNewAddressShip || isLoading}
                 type="text"
                 icon={<PlusOutlined />}
                 onClick={handleAddNew}
               >
                 {translate('common.addAddress')}
-              </PrimaryButton>
+              </MyButton>
             </div>
           </>
         )}

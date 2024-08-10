@@ -20,7 +20,10 @@ const ViewDetailBill = ({ data }: Props) => {
       {data &&
         data?.listBill?.map((e: any) => {
           return (
-            <div key={e._id} className="flex gap-2 w-full">
+            <div
+              key={e._id}
+              className={`flex gap-2 w-full pb-4 border-b-[3px] border-gray-200`}
+            >
               <div className="aspect-square w-[100px] flex justify-center align-middle overflow-hidden">
                 <MyImage
                   alt={`icon-product-bill-${e._id}`}
@@ -42,7 +45,7 @@ const ViewDetailBill = ({ data }: Props) => {
             </div>
           )
         })}
-      <div className="text-medium gap-1 flex w-full justify-end font-bold text-green-500 border-t-2 border-gray-200 pt-3 mt-1">
+      <div className="text-medium gap-1 flex w-full justify-end font-bold text-green-500 ">
         <span>{translate('textPopular.totalMoney')} : </span>
         <span>{`${formatPrice(data.totalBill || '0')} VNĐ`}</span>
       </div>

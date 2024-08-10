@@ -1,5 +1,4 @@
 import MyTable from '@/components/MyTable'
-import PrimaryButton from '@/components/PrimaryButton'
 import TextCopy from '@/components/TextCopy'
 import { FILTER_BILL, PAGE_SIZE_LIMIT, REQUEST_TYPE } from '@/constant/app'
 import useBillAdmin from '@/hook/tank-query/Admin/useBillAdmin'
@@ -12,7 +11,6 @@ import {
   showNotificationError,
   showNotificationSuccess,
 } from '@/utils/functions'
-import { Button } from 'antd'
 import React from 'react'
 import ItemDetail from './Components/Itemdetail'
 import ModalDelete from '@/components/ModalDelete'
@@ -20,6 +18,7 @@ import ServerApi from '@/services/serverApi'
 import useLanguage from '@/hook/useLanguage'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
+import MyButton from '@/components/MyButton'
 
 const BillAdminScreen = () => {
   const { renderContent } = useSearchBaseAdmin()
@@ -130,27 +129,30 @@ const BillAdminScreen = () => {
 
             <div className="flex gap-5 md:flex-row">
               {record?.status === FILTER_BILL.Processing && (
-                <PrimaryButton
+                <MyButton
                   onClick={() => handleSubmit(record, FILTER_BILL.Delivering)}
                   widthBtn={isMobile ? '100%' : '150px'}
                 >
                   Delivering
-                </PrimaryButton>
+                </MyButton>
               )}
               {record?.status === FILTER_BILL.Delivering && (
-                <PrimaryButton
+                <MyButton
                   onClick={() =>
                     handleSubmit(record, FILTER_BILL.DeliverySuccess)
                   }
                   widthBtn={isMobile ? '100%' : '150px'}
                 >
                   Delivery success
-                </PrimaryButton>
+                </MyButton>
               )}
               <div className="flex md:flex-auto flex-1">
-                <Button onClick={() => handleViewDetail(record)} type="primary">
+                <MyButton
+                  onClick={() => handleViewDetail(record)}
+                  type="primary"
+                >
                   View Detail
-                </Button>
+                </MyButton>
               </div>
             </div>
           </div>

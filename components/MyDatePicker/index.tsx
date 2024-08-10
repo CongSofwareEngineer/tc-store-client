@@ -8,9 +8,15 @@ type Props = {
   dateStart?: string | null
   onChange: (param?: any) => any
   className?: string
+  allowClear?: boolean
 }
 
-const MyDatePicker = ({ className, onChange, dateStart = null }: Props) => {
+const MyDatePicker = ({
+  className,
+  onChange,
+  dateStart = null,
+  allowClear = true,
+}: Props) => {
   return (
     <DatePicker
       onChange={(e) => onChange(e)}
@@ -18,6 +24,7 @@ const MyDatePicker = ({ className, onChange, dateStart = null }: Props) => {
       className={className}
       format={dateFormatList}
       lang="vn"
+      allowClear={allowClear}
     />
   )
 }

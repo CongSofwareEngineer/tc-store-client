@@ -1,4 +1,4 @@
-import PrimaryButton from '@/components/PrimaryButton'
+import MyButton from '@/components/MyButton'
 import { REQUEST_TYPE } from '@/constant/app'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
@@ -132,13 +132,9 @@ const ModalUpdateUser = ({ keyType, callBack, initValue }: PropsType) => {
           )}
         </div>
         <div className="w-full mt-3">
-          <PrimaryButton
-            widthBtn="100%"
-            loading={loading}
-            onClick={handleSubmit}
-          >
+          <MyButton className="w-full" loading={loading} onClick={handleSubmit}>
             {translate('common.save')}
-          </PrimaryButton>
+          </MyButton>
         </div>
       </div>
     </div>

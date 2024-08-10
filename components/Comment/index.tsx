@@ -2,7 +2,7 @@ import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
 import { Input } from 'antd'
 import React from 'react'
-import PrimaryButton from '../PrimaryButton'
+import MyButton from '../MyButton'
 
 const Comment = ({ idProduct }: { idProduct: string }) => {
   const { isLogin } = useUserData()
@@ -16,9 +16,7 @@ const Comment = ({ idProduct }: { idProduct: string }) => {
       <div>{idProduct}</div>
       <div className="flex items-center">
         <Input className="flex-1" />
-        <PrimaryButton disabled={!isLogin}>
-          {translate('common.Send')}
-        </PrimaryButton>
+        <MyButton disabled={!isLogin}>{translate('common.Send')}</MyButton>
       </div>
     </div>
   )

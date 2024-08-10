@@ -4,6 +4,7 @@ import { Button, DatePicker } from 'antd'
 import dayjs from 'dayjs'
 import MyInput from '@/components/MyInput'
 import MyRangePicker from '@/components/MyRangePicker'
+import MyButton from '@/components/MyButton'
 
 const dateStart = moment(Date.now()).add(-7, 'days').format('YYYY-MM-DD')
 const { RangePicker } = DatePicker
@@ -39,16 +40,16 @@ const useSearchBaseAdmin = () => {
             value={sdt}
             onChangeText={(e) => setSdt(e!.toString())}
           />
-          <Button type="primary" onClick={handleSearchSDT}>
+          <MyButton type="dashed" onClick={handleSearchSDT}>
             Search
-          </Button>
+          </MyButton>
         </div>
         <div className="flex flex-1 gap-3">
           <MyInput
             placeholder="Id"
             type="string"
             value={idOther}
-            onChangeText={(e) => setIdOther(e!?.toString())}
+            onChangeText={(e) => setIdOther(e?.toString())}
           />
           <Button type="primary" onClick={handleSearchIDOther}>
             Search

@@ -10,9 +10,11 @@ import {
 } from '@/utils/functions'
 import { useAppSelector } from '@/redux/store'
 import { FILTER_BILL } from '@/constant/app'
-import PrimaryButton from '@/components/PrimaryButton'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ViewDetailBill from '../ViewDetailBill'
+import ModalCancelOrder from '../ModalCancelOrder'
+import TextCopy from '@/components/TextCopy'
+import MyButton from '@/components/MyButton'
 type Props = {
   data: { [key: string]: any }
 }
@@ -90,20 +92,43 @@ const Item = ({ data }: Props) => {
     })
   }
 
+  const handlecancelOrder = (item: any) => {
+    openModalDrawer({
+      content: <ModalCancelOrder data={item} />,
+    })
+  }
+
   return (
     <div className="w-full justify-center items-center flex gap-3 mt-1 border-b-2 border-gray-200 p-2">
       <div className="w-[20%] min-w-[100px] text-center flex flex-col gap-2">
         <div> {moment(Number(data.date)).format('DD/MM/YYYY')}</div>
-        {isMobile && (
+        {isMobile ? (
           <div
             className=" text-center font-bold"
             style={{ color: getColorStatus(data.status) }}
           >
             {getStatus(data.status)}
           </div>
+        ) : (
+          data.status === FILTER_BILL.Processing && (
+            <div className="flex w-full justify-center">
+              <MyButton
+                type="primary"
+                size="small"
+                className="text-[13px]"
+                onClick={() => handlecancelOrder(data)}
+              >
+                {translate('common.cancelOrder')}
+              </MyButton>
+            </div>
+          )
         )}
       </div>
       <div className="flex flex-col lg:gap-3 gap-2 flex-1">
+        <div className="flex gap-2 w-full text-[11px]">
+          <span>{`${translate('myBill.idOrder')} : `}</span>
+          <TextCopy value={data._id} />
+        </div>
         {isMobile && (
           <>
             <div className="flex gap-1">
@@ -126,13 +151,19 @@ const Item = ({ data }: Props) => {
               </span>
               <span>{getAddressShip(data)}</span>
             </span>
-            <div>
-              <PrimaryButton
-                size="small"
-                onClick={() => handleViewDetail(data)}
-              >
+            <div className="w-fill flex gap-3">
+              <MyButton size="small" onClick={() => handleViewDetail(data)}>
                 {translate('textPopular.viewDetail')}
-              </PrimaryButton>
+              </MyButton>
+              {data.status === FILTER_BILL.Processing && (
+                <MyButton
+                  size="small"
+                  type="primary"
+                  onClick={() => handlecancelOrder(data)}
+                >
+                  {translate('common.cancelOrder')}
+                </MyButton>
+              )}
             </div>
           </>
         )}
@@ -193,9 +224,9 @@ const Item = ({ data }: Props) => {
           >
             {getStatus(data.status)}
           </div>
-          <PrimaryButton size="small" onClick={() => handleViewDetail(data)}>
+          <MyButton onClick={() => handleViewDetail(data)}>
             {translate('common.view')}
-          </PrimaryButton>
+          </MyButton>
         </>
       )}
     </div>

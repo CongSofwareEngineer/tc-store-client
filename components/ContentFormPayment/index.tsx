@@ -18,11 +18,11 @@ const ContentFormPayment = ({
   const { translate } = useLanguage()
 
   const [listAddressShip, setListAddressShip] = useState<string[]>([])
+  console.log({ listAddressShip })
 
   useEffect(() => {
     if (userData?.addressShipper && Array.isArray(userData?.addressShipper)) {
       setListAddressShip(() => userData?.addressShipper)
-      console.log({ listAddressShip })
     }
   }, [userData])
 
@@ -59,7 +59,7 @@ const ContentFormPayment = ({
           classFromItem="w-full"
         />
       </div>
-      <div className="md:mt-4 mt-2" />
+      <div className="md:mt-4 mt-2 w-full" />
 
       <OptionVnLocation callback={onChange} />
 

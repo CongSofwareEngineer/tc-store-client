@@ -1,5 +1,5 @@
+import MyButton from '@/components/MyButton'
 import MyInput from '@/components/MyInput'
-import PrimaryButton from '@/components/PrimaryButton'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
 import { encryptData } from '@/utils/crypto'
@@ -31,13 +31,13 @@ const ModalEnterPassAgain = ({ callBack }: { callBack: () => void }) => {
           {isValidPass && translate('warning.inValidPassWordAgain')}
         </span>
         <div className="flex justify-center w-full mt-2">
-          <PrimaryButton
+          <MyButton
             onClick={callBack}
             disabled={isValidPass}
-            widthBtn="150px"
+            className="w-[150px]"
           >
             {translate('common.ok')}
-          </PrimaryButton>
+          </MyButton>
         </div>
       </div>
     </div>

@@ -46,6 +46,8 @@ const ContentForm = ({ onChange = () => {} }: ContentFormType) => {
           classFromItem="w-full"
         />
       </div>
+      <div className="md:mt-4 mt-2 w-full" />
+
       <OptionVnLocation callback={onChange} />
 
       <InputAreaForm

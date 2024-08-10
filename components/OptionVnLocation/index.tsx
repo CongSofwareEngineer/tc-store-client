@@ -61,7 +61,7 @@ const OptionVnLocation = ({ callback }: { callback: any }) => {
 
   const onChangeNote = useCallback(
     (note: string) => {
-      const dataAddress = `${provence.full_name}---${districts.full_name}---${ward.full_name}`
+      const dataAddress = `${ward.full_name}---${districts.full_name}---${provence.full_name}`
       setAddressDetail(note!.toString())
       callback({
         addressDetail: note,

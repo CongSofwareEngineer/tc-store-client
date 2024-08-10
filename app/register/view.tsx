@@ -172,7 +172,6 @@ const RegisterScreen = () => {
 
               <ButtonForm
                 loading={loadingRegister}
-                widthBtnSubmit={'100%'}
                 classNameItem="w-full"
                 className="w-full"
                 disableClose

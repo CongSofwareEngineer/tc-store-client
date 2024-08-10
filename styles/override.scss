@@ -39,3 +39,20 @@ p {
     }
   }
 }
+.ant-btn-primary {
+  background: #fcd34d !important;
+  color: black !important;
+  :active :hover {
+    opacity: 0.8 !important;
+    background: #fcd34d !important;
+    color: black !important;
+  }
+}
+.ant-btn-default:disabled,
+.ant-btn-default.ant-btn-disabled {
+  cursor: not-allowed;
+  border-color: #29a200 !important;
+  background: #29a200 !important;
+  opacity: 0.5;
+  color: white !important;
+}
