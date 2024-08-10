@@ -42,8 +42,7 @@ const ClientRender = ({
     console.log({ isClient })
     console.log('====================================')
     isClient && reLogin()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isClient])
+  }, [isClient, reLogin])
 
   useLayoutEffect(() => {
     dispatch(setMenuCategory(menuCategory))
