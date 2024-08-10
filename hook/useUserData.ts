@@ -22,7 +22,11 @@ const useUserData = () => {
     const updateCookies = (auth: string) => {
       setCookie(COOKIE_KEY.Auth, auth, COOKIE_EXPIRED.ExpiredAuth)
     }
-    ObserverService.on(OBSERVER_KEY.LogOut, () => logOut())
+    ObserverService.on(OBSERVER_KEY.LogOut, () =>{
+      secureLocalStorage.removeItem(SLICE.UserData)
+      deleteCookie(COOKIE_KEY.Auth)
+      deleteCookie(COOKIE_KEY.AuthRefresh)
+    })
     ObserverService.on(OBSERVER_KEY.UpdateCookieAuth, updateCookies)
     return () => ObserverService.removeListener(OBSERVER_KEY.LogOut)
   }, [])
@@ -67,8 +71,8 @@ const useUserData = () => {
       }
     } else {
       logOut()
-    }
-  }, [logOut, userData, loginWithDB])
+    } 
+  }, [logOut, userData, loginWithDB]) 
 
   const reLogin = useCallback(async () => {
     const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
