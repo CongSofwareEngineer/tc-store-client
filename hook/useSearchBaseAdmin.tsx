@@ -1,13 +1,11 @@
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
-import { Button, DatePicker } from 'antd'
-import dayjs from 'dayjs'
+import React, { useState } from 'react'
+import { Button } from 'antd'
 import MyInput from '@/components/MyInput'
 import MyRangePicker from '@/components/MyRangePicker'
 import MyButton from '@/components/MyButton'
 
 const dateStart = moment(Date.now()).add(-7, 'days').format('YYYY-MM-DD')
-const { RangePicker } = DatePicker
 
 const useSearchBaseAdmin = () => {
   const [dateTime, setDateTime] = useState([
@@ -49,7 +47,7 @@ const useSearchBaseAdmin = () => {
             placeholder="Id"
             type="string"
             value={idOther}
-            onChangeText={(e) => setIdOther(e?.toString())}
+            onChangeText={(e) => setIdOther(e?.toString() || '')}
           />
           <Button type="primary" onClick={handleSearchIDOther}>
             Search
