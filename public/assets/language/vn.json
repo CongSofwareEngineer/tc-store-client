@@ -202,7 +202,8 @@
     "unPayMent": "Húy thanh toán",
     "errorLogin": "Sai SĐT hoặc mật khẩu",
     "unPayMent_des": "Nếu bản hủy sẽ không thanh toán đơn hàng này được !",
-    "doYouWantDetele": "Bạn có muốn xóa?"
+    "doYouWantDetele": "Bạn có muốn xóa?",
+    "maxSizeFile": "File dụng lượng lớn hơn {size}"
   },
   "confirm": {
     "mintNFT": {
@@ -242,7 +243,9 @@
     "loginAgain": "Đăng nhập lại",
     "gmail": "Gamil chưa đúng định dạng",
     "noInCorrectFormat": "Chưa đúng định dạng",
-    "empty": "Không được để trống"
+    "empty": "Không được để trống",
+    "file": "File chưa đúng định dạng",
+    "existFile": "File đã tồn tại"
   },
   "home": {
     "titleCoffee": "Coffee",

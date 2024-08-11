@@ -5,3 +5,12 @@ export type DataAddCart = {
   idUser?: string
   moreConfig?: { [key: string]: any };
 }
+
+export type DataAddComment = {
+  idProduct?: string
+  sdt?: string
+  listImg?: {[key:string]:any}[];
+  name?:string
+  rate?:number
+  note:string
+}

@@ -1,5 +1,5 @@
 import useLanguage from '@/hook/useLanguage'
-import { Form } from 'antd'
+import { Form, Rate } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 import MyInput from '../MyInput'
@@ -43,7 +43,7 @@ const FormItem = styled(styled(Form.Item)<{ $configInput: any }>``)`
     border: ${(props) => (props.$configInput.noBorder ? 0 : 1)} solid #d9d9d9 !important;
   }
 `
-type InputFormType = {
+type RateFormType = {
   label?: string
   name?: string
   message?: string
@@ -58,54 +58,24 @@ type InputFormType = {
   typeBtn?: 'string' | 'number' | 'area'
   disable?: boolean
 }
-const InputForm = ({
+
+const RateForm = ({
   label,
   name,
-  message,
-  required = false,
-  isPass = false,
-  validator = () => '',
   classFromItem = '',
   configInput = {},
-  typeBtn = 'string',
   disable = false,
-}: InputFormType) => {
-  const { translate } = useLanguage()
+}: RateFormType) => {
   return (
     <FormItem
       $configInput={configInput}
       className={classFromItem}
       label={label}
       name={name}
-      rules={[
-        {
-          required: required,
-          validator: (_, value) => {
-            if (!required) {
-              return Promise.resolve(null)
-            }
-            const errorCheck = validator(value)
-            if (errorCheck) {
-              return Promise.reject(new Error(errorCheck))
-            }
-            if (!value) {
-              return Promise.reject(
-                new Error(message || translate('errors.empty'))
-              )
-            }
-
-            return Promise.resolve(null)
-          },
-        },
-      ]}
     >
-      <MyInput
-        disabled={disable}
-        type={isPass ? 'password' : typeBtn}
-        className="w-full"
-      />
+      <Rate disabled={disable} className="w-full" />
     </FormItem>
   )
 }
 
-export default InputForm
+export default RateForm

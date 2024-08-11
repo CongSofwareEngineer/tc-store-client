@@ -71,7 +71,8 @@ const ShopScreen = () => {
         <MyLoadMore
           callback={loadMore}
           hasLoadMore={hasNextPage}
-          loading={isFetchingNextPage}
+          loading={isLoading}
+          isFetchingNextPage={isFetchingNextPage}
         />
       </div>
     </div>

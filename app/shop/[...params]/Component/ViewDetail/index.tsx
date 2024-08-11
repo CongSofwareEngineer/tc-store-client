@@ -169,7 +169,7 @@ const ViewDetail = ({
         </div>
 
         <div className="w-full bg-white rounded-xl p-6 mt-6">
-          <Comment idProduct={dataItem.id || ''} />
+          <Comment dataItem={dataItem} />
         </div>
       </div>
     )
@@ -207,7 +207,7 @@ const ViewDetail = ({
             maxAmount={dataItem.amount - dataItem.sold}
             callBackPlus={(e) => setAmountBuy(e)}
           />
-          <div className="flex gap-6 mt-4">
+          <div className="flex gap-6 mt-4 mb-3">
             <MyButton
               onClick={handleBuy}
               className="min-w-[30%] "
@@ -233,7 +233,7 @@ const ViewDetail = ({
               </div>
             </MyButton>
           </div>
-          <Comment idProduct={dataItem.id || ''} />
+          <Comment dataItem={dataItem} />
         </div>
       </div>
     )

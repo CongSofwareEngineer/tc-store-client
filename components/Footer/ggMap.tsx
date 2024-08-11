@@ -1,12 +1,4 @@
-import React, { useLayoutEffect } from 'react'
-import {
-  APIProvider,
-  AdvancedMarker,
-  Map,
-  Pin,
-} from '@vis.gl/react-google-maps'
-import useMedia from '@/hook/useMedia'
-import { scrollTop } from '@/utils/functions'
+import React from 'react'
 // const AnyReactComponent = () => {
 //   return (
 //     <Tooltip title={<div>TC Store</div>}>
@@ -20,17 +12,17 @@ import { scrollTop } from '@/utils/functions'
 //   )
 // }
 const GgMap = () => {
-  const { isMobile } = useMedia()
-  const defaultProps = {
-    center: {
-      lat: 13.820217,
-      lng: 107.751934,
-    },
-    zoom: 10,
-  }
-  useLayoutEffect(() => {
-    scrollTop()
-  }, [])
+  // const { isMobile } = useMedia()
+  // const defaultProps = {
+  //   center: {
+  //     lat: 13.820217,
+  //     lng: 107.751934,
+  //   },
+  //   zoom: 10,
+  // }
+  // useLayoutEffect(() => {
+  //   scrollTop()
+  // }, [])
 
   return (
     <div style={{ height: '100%', width: '100%', minHeight: 200 }}>
@@ -43,9 +35,9 @@ const GgMap = () => {
       >
         <AnyReactComponent />
       </GoogleMapReact> */}
-      <APIProvider
+      {/* <APIProvider
         onLoad={() => scrollTop()}
-        apiKey={process.env.NEXT_PUBLIC_API_KEY_GG_MAP}
+        apiKey={'AIzaSyAKoxPxbmoYXi99y-e5vDxozF94uzCYF6M'}
       >
         <Map
           style={{
@@ -71,7 +63,12 @@ const GgMap = () => {
             ></Pin>
           </AdvancedMarker>
         </Map>
-      </APIProvider>
+      </APIProvider> */}
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.925735303758!2d106.63089767616822!3d10.816995289334312!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529d60f102fe1%3A0x48a05f8f5cd877f6!2zODMvNDEgUGjhuqFtIFbEg24gQuG6oWNoLCBQaMaw4budbmcgMTUsIFTDom4gQsOsbmgsIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1723361925647!5m2!1svi!2s"
+        className="w-full h-full"
+        loading="lazy"
+      ></iframe>
     </div>
   )
 }
