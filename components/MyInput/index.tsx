@@ -41,6 +41,7 @@ const InputPassword = styled(styled(Input.Password)<Record<string, any>>``)`
 `
 
 const InputNumberBase = styled(styled(InputNumber)<Record<string, any>>``)`
+  width: 100% !important;
   ${(props) =>
     props.$typeBtn === 1 &&
     css`

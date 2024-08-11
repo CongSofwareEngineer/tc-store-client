@@ -1,5 +1,6 @@
 {
   "common": {
+    "create": "Tạo mới",
     "ok": "OK",
     "login": "Đăng nhập",
     "logOut": "Đăng xuất",
