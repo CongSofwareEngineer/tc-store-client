@@ -1,8 +1,6 @@
-import useLanguage from '@/hook/useLanguage'
 import { Form, Rate } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
-import MyInput from '../MyInput'
 const FormItem = styled(styled(Form.Item)<{ $configInput: any }>``)`
   margin-bottom: 24px !important;
   .ant-form-item-row {

@@ -1,18 +1,8 @@
-import useLanguage from '@/hook/useLanguage'
-import useUserData from '@/hook/useUserData'
 import React from 'react'
-import MyButton from '../MyButton'
-import MyInput from '../MyInput'
-import { FileImageOutlined } from '@ant-design/icons'
-import useMedia from '@/hook/useMedia'
 import WriteComment from './WriteComment'
 import { ItemDetailType } from '../InfoItemDetail/type'
 
 const Comment = ({ dataItem }: { dataItem: ItemDetailType }) => {
-  const { isLogin } = useUserData()
-  const { translate } = useLanguage()
-  const { isMobile } = useMedia()
-
   return (
     <div className="w-full md:mt-4 mt-3">
       <WriteComment dataItem={dataItem} />
