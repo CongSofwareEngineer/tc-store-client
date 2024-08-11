@@ -14,7 +14,7 @@ const useBase64Img = (maxSizeMB = 5) => {
       getBase64Base(file, callback)
     } catch (error) {
       showNotificationError(translate('errors.file'))
-    }
+     }
   }
 
   return {

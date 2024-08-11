@@ -1,20 +1,38 @@
+import useBase64Img from '@/hook/useBase64Img'
 import useLanguage from '@/hook/useLanguage'
+import { showNotificationError } from '@/utils/functions'
 import { Upload } from 'antd'
 import ImgCrop from 'antd-img-crop'
-import React from 'react'
+import React, { useRef } from 'react'
 type Props = {
   typeFile?: string
   children?: React.ReactNode
   disbale?: boolean
   handleUpload: (file: any) => Promise<void> | void
+  maxSize?: number
 }
 const UploadImage = ({
   children = <></>,
   disbale = false,
   typeFile = '',
   handleUpload,
+  maxSize = 5,
 }: Props) => {
   const { translate } = useLanguage()
+  const { getBase64 } = useBase64Img(maxSize)
+  const listImgRef = useRef<{ [key: string]: any }[]>([])
+
+  const handleLoadFile = (file: any) => {
+    const callBack = (data: any) => {
+      if (listImgRef.current.some((e) => e?.name === data.name)) {
+        showNotificationError(translate('errors.existFile'))
+      } else {
+        listImgRef.current.push(data)
+        handleUpload(data)
+      }
+    }
+    getBase64(file, callBack)
+  }
 
   return (
     <ImgCrop
@@ -22,11 +40,16 @@ const UploadImage = ({
       quality={1}
       modalOk={translate('common.ok')}
       modalCancel={translate('common.close')}
-      onModalOk={(file) => handleUpload(file)}
+      onModalOk={(file) => handleLoadFile(file)}
     >
-      <Upload disabled={disbale} showUploadList={false} accept={typeFile}>
+      <Upload
+        className="w-full flex justify-center items-center"
+        disabled={disbale}
+        showUploadList={false}
+        accept={typeFile}
+      >
         <label
-          className="edit-avatar flex items-center justify-center gap-2 w-ful "
+          className="cursor-pointer hover:scale-105 edit-avatar flex w-full items-center justify-center gap-2 w-ful "
           htmlFor="avatar"
           style={{ opacity: disbale ? 0.5 : 1 }}
         >
