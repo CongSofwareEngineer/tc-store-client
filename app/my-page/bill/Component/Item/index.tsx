@@ -205,7 +205,7 @@ const Item = ({ data }: Props) => {
                   <div className="flex items-baseline gap-2">
                     <Link
                       className="text-black font-bold cursor-pointer hover:underline "
-                      href={`shop/${e._id}/${e?.more_data?.keyName}`}
+                      href={`/shop/${e?.more_data?.keyName}`}
                     >
                       {e?.more_data.name}
                     </Link>
