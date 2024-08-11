@@ -47,7 +47,8 @@ const ClientRender = ({
   useLayoutEffect(() => {
     dispatch(setMenuCategory(menuCategory))
     dispatch(fetchProvinces())
-  }, [menuCategory, dispatch])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     switch (Language?.locale) {
