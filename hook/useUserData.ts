@@ -7,10 +7,10 @@ import secureLocalStorage from "react-secure-storage";
 import { decryptData, encryptData } from '@/utils/crypto'
 import { SLICE } from '@/constant/redux'
 import useModalDrawer from './useModalDrawer'
-import ServerApi from '@/services/serverApi'
 import { COOKIE_EXPIRED, COOKIE_KEY, OBSERVER_KEY, REQUEST_TYPE } from '@/constant/app'
 import { deleteCookie, setCookie } from '@/services/CookeisService'
 import ObserverService from '@/services/observer'
+import fetchConfig from '@/configs/fetchConfig'
 
 const useUserData = () => {
   const dispatch = useAppDispatch()
@@ -37,14 +37,17 @@ const useUserData = () => {
   }, [userData])
 
   const loginWithDB = useCallback(async (sdt: string, pass: string) => {
-    const data = await ServerApi.requestBase({
+   
+    const dataBody=encryptData(JSON.stringify({
+      sdt,
+      pass
+    }))
+    
+    const data=await fetchConfig({
       url: `user/login`,
-      method: REQUEST_TYPE.POST,
-      encode: true,
-      checkAuth: false,
-      body: {
-        sdt,
-        pass
+      method: REQUEST_TYPE.POST, 
+      body:{
+        data:dataBody
       }
     })
 
