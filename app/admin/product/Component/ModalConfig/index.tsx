@@ -56,7 +56,6 @@ const ProductConfig = ({ item }: { item: any }) => {
 
   const handleSubmit = async () => {
     setLoading(true)
-
     await delayTime(200)
     setLoading(false)
   }
@@ -126,13 +125,12 @@ const ProductConfig = ({ item }: { item: any }) => {
             <UploadImage
               typeFile={typeFile}
               handleUpload={(e) => setFormData({ ...formData, imageMain: e })}
-              children={
-                <div className="flex gap-2">
-                  <CameraOutlined />
-                  <span>Hình chính</span>
-                </div>
-              }
-            />
+            >
+              <div className="flex gap-2">
+                <CameraOutlined />
+                <span>Hình chính</span>
+              </div>
+            </UploadImage>
           </div>
           <div className="w-[150px] flex justify-center ">
             <div className="w-[100px] aspect-square overflow-hidden">
