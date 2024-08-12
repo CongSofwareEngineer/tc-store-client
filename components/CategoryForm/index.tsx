@@ -1,5 +1,5 @@
 import { useAppSelector } from '@/redux/store'
-import { Form, Rate, Select } from 'antd'
+import { Form } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 import MySelect from '../MySelect'
@@ -68,6 +68,7 @@ const CategoryForm = ({
   disable = false,
 }: Props) => {
   const { CategoryMenu, Language } = useAppSelector((state) => state.app)
+  console.log({ disable })
 
   const getMenu = () => {
     const data = CategoryMenu.map((e) => {
