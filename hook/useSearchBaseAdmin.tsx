@@ -31,27 +31,29 @@ const useSearchBaseAdmin = () => {
           className="md:min-w-[230] min-w-full"
           onChange={(dateString) => setDateTime(dateString)}
         />
-        <div className="flex flex-1 gap-3">
-          <MyInput
-            placeholder="SDT"
-            type="string"
-            value={sdt}
-            onChangeText={(e) => setSdt(e!.toString())}
-          />
-          <MyButton type="dashed" onClick={handleSearchSDT}>
-            Search
-          </MyButton>
-        </div>
-        <div className="flex flex-1 gap-3">
-          <MyInput
-            placeholder="Id"
-            type="string"
-            value={idOther}
-            onChangeText={(e) => setIdOther(e?.toString() || '')}
-          />
-          <Button type="primary" onClick={handleSearchIDOther}>
-            Search
-          </Button>
+        <div className="w-full md:flex-col flex-row flex gap-2">
+          <div className="flex flex-1 gap-3">
+            <MyInput
+              placeholder="SDT"
+              type="string"
+              value={sdt}
+              onChangeText={(e) => setSdt(e!.toString())}
+            />
+            <MyButton type="dashed" onClick={handleSearchSDT}>
+              Search
+            </MyButton>
+          </div>
+          <div className="flex flex-1 gap-3">
+            <MyInput
+              placeholder="Id"
+              type="string"
+              value={idOther}
+              onChangeText={(e) => setIdOther(e?.toString() || '')}
+            />
+            <Button type="primary" onClick={handleSearchIDOther}>
+              Search
+            </Button>
+          </div>
         </div>
       </div>
     )

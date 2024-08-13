@@ -4,16 +4,17 @@ import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
 import { Checkbox, Form } from 'antd'
 import React, { useLayoutEffect, useState } from 'react'
-import parsePhoneNumber from 'libphonenumber-js'
 import { useRouter } from 'next/navigation'
 import useModalDrawer from '@/hook/useModalDrawer'
 import MyButton from '@/components/MyButton'
+import useCheckForm from '@/hook/useCheckForm'
 
 const ModalLogin: React.FC = () => {
   const { translate } = useLanguage()
   const { login } = useUserData()
   const route = useRouter()
   const { closeModalDrawer } = useModalDrawer()
+  const { checkNumberPhone, checkPassword } = useCheckForm()
 
   const [formData, setFormData] = useState<Record<
     string,
@@ -45,14 +46,6 @@ const ModalLogin: React.FC = () => {
     }
   }
 
-  const checkNumber = (sdt: string): string | null => {
-    const phoneNumber = parsePhoneNumber(sdt, 'VN')
-    if (phoneNumber && phoneNumber.isValid()) {
-      return null
-    }
-    return translate('warning.errorSDT')
-  }
-
   return (
     <div className="w-full flex flex-col gap-2 justify-start ">
       <div className="text-medium uppercase text-center w-full font-semibold">
@@ -66,7 +59,7 @@ const ModalLogin: React.FC = () => {
         >
           <InputForm
             key={'sdt'}
-            validator={checkNumber}
+            validator={checkNumberPhone}
             required
             name="sdt"
             label={translate('userDetail.sdt')}
@@ -77,6 +70,7 @@ const ModalLogin: React.FC = () => {
             name="pass"
             label={translate('userDetail.pass')}
             isPass
+            validator={checkPassword}
           />
           <div className="flex md:flex-row justify-between w-full md:gap-0 gap-2 md:mb-0 mb-3">
             <div className="flex flex-1 gap-2  md:mt-0 mt-3 md:mb-0 mb-1 relative ">

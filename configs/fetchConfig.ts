@@ -15,7 +15,7 @@ const fetchConfig = async ({
   method = REQUEST_TYPE.GET,
   timeOut = 70000
 }: ServerAPIReqType) => {
-  const baseUrl = process.env.NEXT_PUBLIC_ENABLE_SERVER_LOCAL === 'true' ? 'http://localhost:3000/' : process.env.NEXT_PUBLIC_API_APP
+  const baseUrl = process.env.NEXT_PUBLIC_ENABLE_SERVER_LOCAL === 'true' ? 'http://192.168.88.99:3000/' : process.env.NEXT_PUBLIC_API_APP
   const config: any = {
     // baseURL: (process.env.NEXT_PUBLIC_API_APP || 'http://192.168.50.115:3002/').trim(),
     baseURL: baseUrl,

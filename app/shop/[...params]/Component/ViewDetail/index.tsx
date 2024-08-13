@@ -11,6 +11,7 @@ import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
 import {
   delayTime,
+  detectImg,
   formatPrice,
   formatPriceBase,
   showNotificationSuccess,
@@ -115,7 +116,7 @@ const ViewDetail = ({
             className="min-w-[300px] max-w-[450px] w-[50%] p-5 overflow-hidden aspect-square"
           >
             <MyImage
-              src={dataItem.imageMain || ''}
+              src={detectImg(dataItem.imageMain || '')}
               alt={`img-main--${dataItem.name}`}
               widthImage="100%"
               heightImage="auto"
@@ -168,7 +169,7 @@ const ViewDetail = ({
           </div>
         </div>
 
-        <div className="w-full bg-white rounded-xl p-6 mt-6">
+        <div data-aos="fade-up" className="w-full bg-white rounded-xl p-6 mt-6">
           <Comment dataItem={dataItem} />
         </div>
       </div>
@@ -179,60 +180,70 @@ const ViewDetail = ({
     return (
       <div className="flex flex-col gap-2">
         <BtnBack title={['Shopp', dataItem.name]} url={['/shop']} />
-        <div className="bg-white py-[10%] shadow-lg shadow-yellow-50  w-full flex justify-center items-center">
+        <div className="pt-8 pb-2 shadow-lg shadow-yellow-50 bg-white   w-full flex flex-col justify-center items-center">
           <div
             data-aos="fade-right"
             className="w-[80%]  aspect-square overflow-hidden "
           >
             <MyImage
-              src={dataItem.imageMain || images.userDetail.iconUserDetail}
+              src={detectImg(
+                dataItem.imageMain || images.userDetail.iconUserDetail
+              )}
               alt={dataItem.des || ''}
               widthImage="100%"
               heightImage="auto"
             />
           </div>
+          <div
+            data-aos="fade-right"
+            className="w-full flex-col gap-2 px-5 pt-5"
+          >
+            <h1 className="text-title font-bold">{dataItem.name}</h1>
+            <InfoItemDetail data={dataItem} />
+            <div className="text-medium  line-through">
+              {formatPriceBase(dataItem?.price, dataItem?.discount)} VNĐ
+            </div>
+            <div className="text-title font-bold text-green-500">
+              {`${formatPrice(Number(dataItem?.price || '0') * amountBuy)} VNĐ`}
+            </div>
+            <SubAndPlus
+              callBackSub={(e) => setAmountBuy(e)}
+              value={amountBuy}
+              maxAmount={dataItem.amount - dataItem.sold}
+              callBackPlus={(e) => setAmountBuy(e)}
+            />
+            <div className="flex sm:gap-6 gap-2 mt-4 mb-3 sm:flex-row flex-col">
+              <MyButton
+                onClick={handleBuy}
+                className="min-w-[30%] "
+                style={{ height: 40 }}
+              >
+                {translate('common.buyNow')}
+              </MyButton>
+              <MyButton
+                type="primary"
+                onClick={handleAddCart}
+                className="min-w-[30%] "
+                style={{ height: 40 }}
+                loading={loadingAddCart}
+              >
+                <div className="flex gap-3 whitespace-nowrap">
+                  <MyImage
+                    src={images.icon.iconCart}
+                    alt="btn-add-cart"
+                    widthImage="25px"
+                    heightImage="25px"
+                  />
+                  <span>{translate('common.addCart')}</span>
+                </div>
+              </MyButton>
+            </div>
+          </div>
         </div>
-        <div data-aos="fade-right" className="w-full flex flex-col gap-2 mt-2">
-          <h1 className="text-title font-bold">{dataItem.name}</h1>
-          <InfoItemDetail data={dataItem} />
-          <div className="text-medium  line-through">
-            {formatPriceBase(dataItem?.price, dataItem?.discount)} VNĐ
-          </div>
-          <div className="text-title font-bold text-green-500">
-            {`${formatPrice(Number(dataItem?.price || '0') * amountBuy)} VNĐ`}
-          </div>
-          <SubAndPlus
-            callBackSub={(e) => setAmountBuy(e)}
-            value={amountBuy}
-            maxAmount={dataItem.amount - dataItem.sold}
-            callBackPlus={(e) => setAmountBuy(e)}
-          />
-          <div className="flex gap-6 mt-4 mb-3">
-            <MyButton
-              onClick={handleBuy}
-              className="min-w-[30%] "
-              style={{ height: 40 }}
-            >
-              {translate('common.buyNow')}
-            </MyButton>
-            <MyButton
-              type="primary"
-              onClick={handleAddCart}
-              className="min-w-[30%] "
-              style={{ height: 40 }}
-              loading={loadingAddCart}
-            >
-              <div className="flex gap-3 whitespace-nowrap">
-                <MyImage
-                  src={images.icon.iconCart}
-                  alt="btn-add-cart"
-                  widthImage="25px"
-                  heightImage="25px"
-                />
-                <span>{translate('common.addCart')}</span>
-              </div>
-            </MyButton>
-          </div>
+        <div
+          data-aos="fade-right"
+          className=" shadow-yellow-50 bg-white p-5  w-full flex flex-col gap-2 mt-2"
+        >
           <Comment dataItem={dataItem} />
         </div>
       </div>

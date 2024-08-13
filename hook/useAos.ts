@@ -1,5 +1,8 @@
 import { useEffect } from 'react'
+import useMedia from './useMedia'
 const useAos = (time = 1500) => {
+  const { isMobile } = useMedia()
+
   useEffect(() => {
 
     // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -9,7 +12,7 @@ const useAos = (time = 1500) => {
         duration: time,
       })
     }, 500);
-  }, [time])
+  }, [time,isMobile])
 
 }
 

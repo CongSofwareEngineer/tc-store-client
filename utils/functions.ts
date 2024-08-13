@@ -219,6 +219,9 @@ export const detectImg = (src: any) => {
     if (!src) {
       return ''
     }
+    if(src?.startsWith('data:image')){
+      return src
+    }
 
     if (src?.startsWith('https')) {
       return src

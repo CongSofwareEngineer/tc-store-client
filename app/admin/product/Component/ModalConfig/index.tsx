@@ -1,5 +1,10 @@
 import MyForm from '@/components/MyForm'
-import { delayTime, detectImg } from '@/utils/functions'
+import {
+  delayTime,
+  detectImg,
+  showNotificationError,
+  showNotificationSuccess,
+} from '@/utils/functions'
 import React, { useEffect, useState } from 'react'
 import InputForm from '@/components/InputForm'
 import ButtonForm from '@/components/ButtonForm'
@@ -9,13 +14,22 @@ import UploadImage from '../../../../../components/UploadImg/index'
 import { CameraOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import { Image } from 'antd'
 import useTypeFile from '@/hook/useTypeFile'
+import useCheckForm from '@/hook/useCheckForm'
+import fetchConfig from '@/configs/fetchConfig'
+import { REQUEST_TYPE } from '@/constant/app'
+import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
+import { QUERY_KEY } from '@/constant/reactQuery'
+import useModalDrawer from '@/hook/useModalDrawer'
 
 const ProductConfig = ({ item }: { item: any }) => {
   const { translate } = useLanguage()
   const { typeFile } = useTypeFile({ typeAndroid: '.png,.jpg,.jpeg' })
+  const { checkIsNumber } = useCheckForm()
+  const { refreshQuery } = useRefreshQuery()
+  const { closeModalDrawer } = useModalDrawer()
+
   const [formData, setFormData] = useState<{ [key: string]: any } | null>(null)
   const [loading, setLoading] = useState(false)
-  console.log({ item })
 
   useEffect(() => {
     const initData = {
@@ -40,7 +54,7 @@ const ProductConfig = ({ item }: { item: any }) => {
       category: item?.category || 'water',
     }
     setFormData(initData)
-  }, [])
+  }, [item])
 
   useEffect(() => {
     console.log({ name: formData?.name })
@@ -50,12 +64,27 @@ const ProductConfig = ({ item }: { item: any }) => {
     }))
   }, [formData?.name])
 
-  console.log('====================================')
-  console.log({ formData })
-  console.log('====================================')
+  const handleDeleteMoreImg = (index: number) => {
+    const newList = formData?.imageMore?.filter(
+      (_: any, indexFilter: number) => indexFilter !== index
+    )
+    setFormData({ ...formData, imageMore: newList })
+  }
 
   const handleSubmit = async () => {
     setLoading(true)
+    const data = await fetchConfig({
+      url: '/product/create',
+      method: REQUEST_TYPE.POST,
+      body: formData,
+    })
+    if (data?.data) {
+      showNotificationSuccess(translate('success.create'))
+      refreshQuery(QUERY_KEY.GetAllProduct)
+      closeModalDrawer()
+    } else {
+      showNotificationError(translate('errors.create'))
+    }
     await delayTime(200)
     setLoading(false)
   }
@@ -92,6 +121,7 @@ const ProductConfig = ({ item }: { item: any }) => {
           label="cost"
           required
           typeBtn="number"
+          validator={checkIsNumber}
         />
 
         <InputForm
@@ -100,6 +130,7 @@ const ProductConfig = ({ item }: { item: any }) => {
           label="price"
           required
           typeBtn="number"
+          validator={checkIsNumber}
         />
       </div>
       <div className="flex gap-4 w-full">
@@ -109,6 +140,7 @@ const ProductConfig = ({ item }: { item: any }) => {
           label="disCount"
           required
           typeBtn="number"
+          validator={checkIsNumber}
         />
 
         <InputForm
@@ -147,33 +179,33 @@ const ProductConfig = ({ item }: { item: any }) => {
           <div className="w-full">
             <UploadImage
               typeFile={typeFile}
+              listData={formData?.imageMore || []}
               handleUpload={(e) =>
                 setFormData({
                   ...formData,
                   imageMore: [...formData.imageMore, e],
                 })
               }
-              children={
-                <div className="flex w-full gap-2 justify-center items-center">
-                  <CameraOutlined />
-                  <span>Hình phụ</span>
-                </div>
-              }
-            />
+            >
+              <div className="flex w-full gap-2 justify-center items-center">
+                <CameraOutlined />
+                <span>Hình phụ</span>
+              </div>
+            </UploadImage>
           </div>
           <div className="flex flex-nowrap gap-3 overflow-scroll w-full ">
             {formData?.imageMore &&
-              formData?.imageMore.map((e: any) => {
+              formData?.imageMore.map((e: any, index: number) => {
                 return (
-                  <div className="w-[100px]" key={e.base64}>
+                  <div className="w-[100px]" key={detectImg(e?.base64 || e)}>
                     <div className="w-[100px] relative">
                       <Image
                         className="w-[100px]"
-                        alt={`img-moew-${e.name}`}
-                        src={e.base64}
+                        alt={`img-moew-${e?.name}`}
+                        src={detectImg(e?.base64 || e)}
                       />
                       <CloseCircleOutlined
-                        onClick={() => {}}
+                        onClick={() => handleDeleteMoreImg(index)}
                         className="absolute right-0 top-0 text-[18px] cursor-pointer "
                       />
                     </div>

@@ -19,7 +19,8 @@
     "delete": "Xóa",
     "viewBill": "Xem hóa đơn",
     "view": "Xem",
-    "cancelOrder": "Hủy đơn"
+    "cancelOrder": "Hủy đơn",
+    "writeComment": "Viết bình luận"
   },
   "userDetail": {
     "addressNow": "Địa chỉ hiện tại",
@@ -86,7 +87,8 @@
     "buyNow": "Mua ngay",
     "enterPassToContinue": "Nhập mật khẩu để tiếp tục",
     "fullData": "Đã hết dữ liệu",
-    "reason": "Lý do"
+    "reason": "Lý do",
+    "cost": "Giá gốc"
   },
   "addCart": {
     "addSuccess": "Đã thêm vào giỏ hàng",
@@ -223,9 +225,11 @@
     }
   },
   "success": {
-    "login": "Đăng nhập thành công"
+    "login": "Đăng nhập thành công",
+    "create": "Tạo mới thành công"
   },
   "errors": {
+    "create": "Tạo mới Thất bại",
     "update": "Cập nhật thất bại",
     "notEnoughGas": "Not enough gas fee",
     "deniedTransaction": "Error: User denied process",
@@ -246,7 +250,9 @@
     "noInCorrectFormat": "Chưa đúng định dạng",
     "empty": "Không được để trống",
     "file": "File chưa đúng định dạng",
-    "existFile": "File đã tồn tại"
+    "existFile": "File đã tồn tại",
+    "invalidPass": "Mật khẩu chưa mã độc",
+    "inValueNumber": "Không phải là số"
   },
   "home": {
     "titleCoffee": "Coffee",
@@ -270,5 +276,13 @@
   },
   "admin": {
     "revenue": "Doanh thu"
+  },
+  "comment": {
+    "veryGood": "Rất hài lòng",
+    "good": "Hài lòng",
+    "wellwell": "Khá hài lòng",
+    "normal": "Bình thường",
+    "bad": "Chưa tốt",
+    "writeToShare": "Chia sẻ nhận xét của bạn về sản phẩm này"
   }
 }

@@ -41,6 +41,10 @@ const AntdProvider = ({ children }: { children: React.ReactNode }) => {
             paddingMD: 20,
             paddingContentVertical: 20,
           },
+          Card: {
+            padding: 24,
+            paddingMD: 0,
+          },
         },
         hashed: false,
       }}

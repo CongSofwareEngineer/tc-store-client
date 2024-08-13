@@ -1,11 +1,10 @@
-import { useCallback } from 'react'
 import useLanguage from './useLanguage'
 import { parsePhoneNumber } from 'libphonenumber-js'
 
 const useCheckForm = () => {
   const { translate } = useLanguage()
 
-  const checkNumberPhone = useCallback((sdt: string) => {
+  const checkNumberPhone = (sdt: string) => {
     try {
       if (!sdt) {
         return translate('warning.errorSDT')
@@ -18,9 +17,27 @@ const useCheckForm = () => {
     } catch (error) {
       return translate('warning.errorSDT')
     }
-  }, [translate])
+  }
 
-  const checkEmail = useCallback((email: string) => {
+  const checkIsNumber = (value: any) => {
+    try {
+      if (!value) {
+        return translate('errors.empty')
+
+      }
+      const hasNumbers = /[0-9]/.test(value);
+      if (hasNumbers) {
+        return null
+      }
+      return translate('errors.inValueNumber')
+
+    } catch (error) {
+      return translate('errors.inValueNumber')
+
+    }
+  }
+
+  const checkEmail = (email: string) => {
     if (!email) {
       return translate('errors.empty')
     }
@@ -34,11 +51,27 @@ const useCheckForm = () => {
       return null
     }
     return translate('errors.gmail')
-  }, [translate])
+  }
+
+  const checkPassword = (pass: string) => {
+    if (!pass) {
+      return translate('errors.empty')
+
+    }
+    const noSQLInjectionPattern = /(\$|\{|\}|\[|\])/g;
+
+    // Check if the input contains any NoSQL injection patterns
+    if (noSQLInjectionPattern.test(pass)) {
+      return translate('errors.invalidPass');
+    }
+    return null
+  }
 
   return {
     checkNumberPhone,
-    checkEmail
+    checkEmail,
+    checkPassword,
+    checkIsNumber
   }
 }
 

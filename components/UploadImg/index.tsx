@@ -3,13 +3,15 @@ import useLanguage from '@/hook/useLanguage'
 import { showNotificationError } from '@/utils/functions'
 import { Upload } from 'antd'
 import ImgCrop from 'antd-img-crop'
-import React, { useRef } from 'react'
+import { isEqual } from 'lodash'
+import React from 'react'
 type Props = {
   typeFile?: string
   children?: React.ReactNode
   disbale?: boolean
   handleUpload: (file: any) => Promise<void> | void
   maxSize?: number
+  listData?: any[]
 }
 const UploadImage = ({
   children = <></>,
@@ -17,17 +19,16 @@ const UploadImage = ({
   typeFile = '',
   handleUpload,
   maxSize = 5,
+  listData = [],
 }: Props) => {
   const { translate } = useLanguage()
   const { getBase64 } = useBase64Img(maxSize)
-  const listImgRef = useRef<{ [key: string]: any }[]>([])
 
   const handleLoadFile = (file: any) => {
     const callBack = (data: any) => {
-      if (listImgRef.current.some((e) => e?.name === data.name)) {
+      if (listData.some((e) => isEqual(e, data))) {
         showNotificationError(translate('errors.existFile'))
       } else {
-        listImgRef.current.push(data)
         handleUpload(data)
       }
     }

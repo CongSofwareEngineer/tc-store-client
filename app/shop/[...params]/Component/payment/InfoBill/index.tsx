@@ -5,7 +5,7 @@ import { images } from '@/configs/images'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import { useRouter } from 'next/navigation'
-import { numberWithCommas } from '@/utils/functions'
+import { detectImg, numberWithCommas } from '@/utils/functions'
 
 const InfoBill = ({ data, amountBuy }: InfoBillType) => {
   const { translate } = useLanguage()
@@ -36,7 +36,7 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
               <MyImage
                 widthImage={'auto'}
                 heightImage={'80px'}
-                src={data?.imageMain?.toString() || ''}
+                src={detectImg(data?.imageMain?.toString() || '')}
                 alt={`item-${data?.name}`}
               />
             </div>
@@ -89,7 +89,7 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
               <MyImage
                 widthImage={'auto'}
                 heightImage={'80px'}
-                src={data?.imageMain?.toString() || ''}
+                src={detectImg(data?.imageMain?.toString() || '')}
                 alt={`item-${data?.name}`}
               />
             </div>
