@@ -1,7 +1,7 @@
 import MyImage from '@/components/MyImage'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
-import { formatPrice } from '@/utils/functions'
+import { detectImg, formatPrice } from '@/utils/functions'
 import React from 'react'
 type Props = {
   data?: any
@@ -27,7 +27,7 @@ const ViewDetailBill = ({ data }: Props) => {
               <div className="aspect-square w-[100px] flex justify-center align-middle overflow-hidden">
                 <MyImage
                   alt={`icon-product-bill-${e._id}`}
-                  src={e.more_data.imageMain}
+                  src={detectImg(e.more_data.imageMain)}
                   widthImage="auto"
                   heightImage="auto"
                 />

@@ -8,7 +8,7 @@ import { TagFilled } from '@ant-design/icons'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
-
+import '@mdxeditor/editor/style.css'
 const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
   const { isMobile, isClient } = useMedia()
   const { translate } = useLanguage()

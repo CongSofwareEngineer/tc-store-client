@@ -2,7 +2,12 @@ import ModalDelete from '@/components/ModalDelete'
 import MyImage from '@/components/MyImage'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
-import { cloneData, formatPriceBase, numberWithCommas } from '@/utils/functions'
+import {
+  cloneData,
+  detectImg,
+  formatPriceBase,
+  numberWithCommas,
+} from '@/utils/functions'
 import { DeleteOutlined } from '@ant-design/icons'
 import { Checkbox } from 'antd'
 import BigNumber from 'bignumber.js'
@@ -24,6 +29,9 @@ const ItemCart = ({
   const { isMobile } = useMedia()
   const { openModalDrawer } = useModalDrawer()
   const router = useRouter()
+  console.log('====================================')
+  console.log({ data })
+  console.log('====================================')
 
   const selectedItem = () => {
     const dataClone = cloneData(data)
@@ -79,14 +87,14 @@ const ItemCart = ({
           <MyImage
             widthImage={'100%'}
             heightImage={'auto'}
-            src={data?.imageMain?.toString() || ''}
+            src={detectImg(data?.more_data?.imageMain?.toString() || '')}
             alt={`item-${data?.more_data?.keyName}`}
           />
         </div>
         <div className="flex flex-col flex-1 gap-1">
           <div
             onClick={() => router.push(`/shop/${data?.more_data.keyName}`)}
-            className="text-medium font-medium mb-1 hover:underline cursor-pointer "
+            className="text-medium font-medium  hover:underline cursor-pointer "
           >
             {data?.more_data?.name}
           </div>
@@ -137,7 +145,7 @@ const ItemCart = ({
           <MyImage
             widthImage={'auto'}
             heightImage={'80px'}
-            src={data?.imageMain}
+            src={detectImg(data?.more_data?.imageMain)}
             alt={`item-${data.id}`}
           />
         </div>

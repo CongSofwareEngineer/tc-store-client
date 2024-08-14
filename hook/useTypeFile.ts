@@ -9,7 +9,7 @@ const useTypeFile = (props?: Props) => {
     if (isIOS && isMacOs) {
       return props?.typeApple || 'image/*'
     }
-    return props?.typeAndroid || '.png,.jpg,.jpeg,.gif,.svg'
+    return props?.typeAndroid || '.png,.jpg,.jpeg,.gif'
   }, [props])
   return {
     typeFile

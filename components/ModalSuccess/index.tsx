@@ -13,11 +13,13 @@ type Props = {
   des?: string
   icon?: string
   callback?: ((params?: any) => any) | null
+  callbackClose?: (() => Promise<void> | void) | null
   showClose?: boolean | false
 }
 const ModalSuccess = ({
   showClose = false,
   callback = null,
+  callbackClose = null,
   ...props
 }: Props) => {
   const { translate } = useLanguage()
@@ -58,7 +60,10 @@ const ModalSuccess = ({
             <MyButton
               className="w-full"
               type="primary"
-              onClick={() => closeModalDrawer()}
+              onClick={() => {
+                callbackClose && callbackClose()
+                closeModalDrawer()
+              }}
             >
               {props.titleClose || translate('common.close')}
             </MyButton>

@@ -63,7 +63,8 @@ export type BodyAddBill = {
   iDMomo?: number | string
   status: FILTER_BILL
   abort?: boolean,
-  totalBill: Number
+  totalBill: Number,
+  listNewSoldProduct?: { [key: string]: any }[]
 }
 
 

@@ -1,6 +1,6 @@
 import { TYPE_LOADING_GET_DATA } from '@/constant/app'
 import useMedia from '@/hook/useMedia'
-import React, { useMemo } from 'react'
+import React from 'react'
 type Props = {
   loading?: boolean
   type: TYPE_LOADING_GET_DATA
@@ -11,7 +11,7 @@ const LoadingGetData = ({
 }: Props) => {
   const { isMobile } = useMedia()
 
-  const component = useMemo(() => {
+  const component = () => {
     if (!loading) {
       return <></>
     }
@@ -34,12 +34,13 @@ const LoadingGetData = ({
 
       case TYPE_LOADING_GET_DATA.Shop:
         return (
-          <div className="flex flex-col gap-4 w-full mt-4">
-            <div className="skeleton-loading gap-3 grid grid-cols-3">
-              <div className="w-full skeleton-loading rounded-lg aspect-square" />
-              <div className="w-full skeleton-loading rounded-lg aspect-square" />
-              <div className="w-full skeleton-loading rounded-lg aspect-square" />
-            </div>
+          <div className="gap-3 grid md:grid-cols-3 grid-cols-2">
+            <div className="w-full skeleton-loading rounded-lg aspect-square" />
+            <div className="w-full skeleton-loading rounded-lg aspect-square" />
+            <div className="w-full skeleton-loading rounded-lg aspect-square" />
+            <div className="w-full skeleton-loading rounded-lg aspect-square" />
+            <div className="w-full skeleton-loading rounded-lg aspect-square" />
+            <div className="w-full skeleton-loading rounded-lg aspect-square" />
           </div>
         )
 
@@ -69,9 +70,9 @@ const LoadingGetData = ({
       default:
         return <></>
     }
-  }, [isMobile, type, loading])
+  }
 
-  return component
+  return component()
 }
 
 export default LoadingGetData

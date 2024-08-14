@@ -68,7 +68,7 @@ const BillAdminScreen = () => {
         title: (
           <p className="text-center text-medium font-bold ">Bill detail</p>
         ),
-        height: 'fit-content',
+        height: 'auto',
       },
     })
   }

@@ -7,9 +7,10 @@ import { SearchOutlined } from '@ant-design/icons'
 import useLanguage from '@/hook/useLanguage'
 import useQuerySearch from '@/hook/useQuerySearch'
 import useAllProduct from '@/hook/tank-query/useAllProduct'
-import { PAGE_SIZE_LIMIT } from '@/constant/app'
+import { PAGE_SIZE_LIMIT, TYPE_LOADING_GET_DATA } from '@/constant/app'
 import useAos from '@/hook/useAos'
 import MyLoadMore from '@/components/MyLoadMore'
+import LoadingGetData from '@/components/LoadingGetData'
 
 const ShopScreen = () => {
   useAos()
@@ -60,13 +61,10 @@ const ShopScreen = () => {
         )}
 
         {isLoading && (
-          <div className="flex flex-col gap-4 w-full mt-4">
-            <div className="skeleton-loading gap-3 grid grid-cols-3">
-              <div className="w-full skeleton-loading rounded-lg aspect-square" />
-              <div className="w-full skeleton-loading rounded-lg aspect-square" />
-              <div className="w-full skeleton-loading rounded-lg aspect-square" />
-            </div>
-          </div>
+          <LoadingGetData
+            loading={isLoading}
+            type={TYPE_LOADING_GET_DATA.Shop}
+          />
         )}
         <MyLoadMore
           callback={loadMore}

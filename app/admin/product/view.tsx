@@ -10,11 +10,15 @@ import useQuerySearch from '@/hook/useQuerySearch'
 import useSearchBaseAdmin from '@/hook/useSearchBaseAdmin'
 import { detectImg, numberWithCommas } from '@/utils/functions'
 import { Button } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
 import ProductConfig from './Component/ModalConfig'
 import useLanguage from '@/hook/useLanguage'
 import Link from 'next/link'
-
+import dynamic from 'next/dynamic'
+const ViewCreate = dynamic(() => import('./Component/ViewCreate'), {
+  // Make sure we turn SSR off
+  ssr: false,
+})
 const ProductAdminScreen = () => {
   const { renderContent } = useSearchBaseAdmin()
   const { queries } = useQuerySearch()
@@ -24,7 +28,10 @@ const ProductAdminScreen = () => {
   const { openModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
 
+  const [productSelected, setProductSelected] = useState<any>(null)
+
   const handleUpdate = (item: any) => {
+    setProductSelected(item)
     openModalDrawer({
       content: <ProductConfig item={item} />,
       useDrawer: true,
@@ -37,7 +44,7 @@ const ProductAdminScreen = () => {
         width: '700px',
       },
       configDrawer: {
-        height: 'max-content',
+        height: 'auto',
         placement: 'bottom',
       },
     })
@@ -161,6 +168,7 @@ const ProductAdminScreen = () => {
 
   return (
     <div className="flex flex-col w-full gap-3">
+      <ViewCreate item={productSelected} />
       {renderContent()}
       {renderTable()}
     </div>

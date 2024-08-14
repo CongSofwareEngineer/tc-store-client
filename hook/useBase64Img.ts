@@ -1,7 +1,7 @@
-import { getBase64 as getBase64Base, showNotificationError } from '../utils/functions';
+import { getBase64 as getBase64Base, showNotificationError, showNotificationSuccess } from '../utils/functions';
 import useLanguage from './useLanguage';
 
-const useBase64Img = (maxSizeMB = 5) => {
+const useBase64Img = (maxSizeMB = 7) => {
   const { translate } = useLanguage()
   const getBase64 = (file: any, callback: (parma?: any) => void) => {
     try {

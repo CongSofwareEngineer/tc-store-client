@@ -7,6 +7,7 @@ const Comment = ({ dataItem }: { dataItem: ItemDetailType }) => {
   return (
     <div className="w-full md:mt-4 mt-3 flex flex-col gap-3">
       <WriteComment dataItem={dataItem} />
+      <div className="md:mt-2 mt-2" />
       <ListComment dataItem={dataItem} />
     </div>
   )

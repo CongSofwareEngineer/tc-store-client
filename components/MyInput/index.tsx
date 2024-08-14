@@ -1,6 +1,6 @@
 import { Input, InputProps, InputNumber, InputNumberProps } from 'antd'
 import { TextAreaProps } from 'antd/es/input'
-import React, { useMemo } from 'react'
+import React from 'react'
 import styled, { css } from 'styled-components'
 const { TextArea } = Input
 
@@ -93,7 +93,7 @@ const MyInput = ({
   onChangeText = () => {},
   ...props
 }: PropsType) => {
-  const inputComponent = useMemo(() => {
+  const inputComponent = () => {
     switch (type) {
       case 'string':
         return (
@@ -132,9 +132,9 @@ const MyInput = ({
           />
         )
     }
-  }, [type, props, rows, typeBtn, onChangeText])
+  }
 
-  return inputComponent
+  return inputComponent()
 }
 
 export default MyInput
