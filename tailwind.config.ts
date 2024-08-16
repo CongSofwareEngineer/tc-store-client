@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss'
 import plugin from 'tailwindcss/plugin'
+const { fontFamily } = require("tailwindcss/defaultTheme")
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const config = {
   content: [
@@ -7,7 +8,13 @@ const config = {
     './app/**/*.{ts,tsx}',
   ],
   prefix: '',
-  theme: {},
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ["var(--font-sans)", ...fontFamily.sans],
+      },
+    },
+  },
   darkMode: 'class',
   // corePlugins: {
   //   preflight: false // <== disable this!

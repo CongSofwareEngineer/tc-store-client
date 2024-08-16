@@ -6,8 +6,8 @@ import { Checkbox, Form } from 'antd'
 import React, { useLayoutEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import useModalDrawer from '@/hook/useModalDrawer'
-import MyButton from '@/components/MyButton'
 import useCheckForm from '@/hook/useCheckForm'
+import MyButton from '@/components/ShadcnUI/MyButton'
 
 const ModalLogin: React.FC = () => {
   const { translate } = useLanguage()
@@ -47,7 +47,7 @@ const ModalLogin: React.FC = () => {
   }
 
   return (
-    <div className="w-full flex flex-col gap-2 justify-start ">
+    <div className="rou w-full flex flex-col gap-2 justify-start ">
       <div className="text-medium uppercase text-center w-full font-semibold">
         {translate('common.login')}
       </div>
@@ -96,12 +96,7 @@ const ModalLogin: React.FC = () => {
           </div>
 
           <Form.Item style={{ display: 'flex', justifyContent: 'center' }}>
-            <MyButton
-              loading={loading}
-              size="large"
-              htmlType="submit"
-              className="w-[150px]"
-            >
+            <MyButton loading={loading} type="submit" className="w-[150px]">
               {translate('common.ok')}
             </MyButton>
           </Form.Item>

@@ -6,6 +6,7 @@ import ReduxProvider from '@/components/ReduxProvider'
 import MyModalProvider from '@/components/MyModal'
 import '@/styles/globals.scss'
 import '@/styles/override.scss'
+import './globals.css'
 import { AntdRegistry } from '@ant-design/nextjs-registry'
 import StyledComponentsRegistry from '@/components/RegistryApp'
 import ClientRender from '@/components/ClientRender'
@@ -13,9 +14,13 @@ import type { Viewport } from 'next'
 import ReactQueryProvider from '@/components/ReactQueryProvider'
 import fetchConfig from '@/configs/fetchConfig'
 import DrawerProvider from '@/components/DrawerProvider'
-const inter = Inter({ subsets: ['latin'] })
+
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import Script from 'next/script'
+import { cn } from '@/lib/utils'
+import DrawerProviderShadcn from '@/components/ShadcnUI/DrawerProvider'
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 
 const BaseMeta = {
   title: process.env.NEXT_PUBLIC_TITLE,
@@ -137,7 +142,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
           rel="stylesheet"
         />
       </head>
-      <body className={inter.className}>
+      <body className={cn(inter.variable)}>
         {process.env.NEXT_PUBLIC_MODE_PRODUCTION && (
           <noscript
             dangerouslySetInnerHTML={{
@@ -154,9 +159,11 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
                 <ReduxProvider>
                   <MyModalProvider>
                     <DrawerProvider>
-                      <ClientRender menuCategory={menuCategory?.data || []}>
-                        {children}
-                      </ClientRender>
+                      <DrawerProviderShadcn>
+                        <ClientRender menuCategory={menuCategory?.data || []}>
+                          {children}
+                        </ClientRender>
+                      </DrawerProviderShadcn>
                     </DrawerProvider>
                   </MyModalProvider>
                 </ReduxProvider>
