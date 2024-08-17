@@ -47,8 +47,6 @@ const AddressShip = () => {
       )}`,
       configDrawer: {
         height: '400px',
-        placement: 'bottom',
-        maskClosable: false,
       },
     })
   }
