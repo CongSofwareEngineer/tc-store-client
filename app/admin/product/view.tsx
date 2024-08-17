@@ -34,7 +34,9 @@ const ProductAdminScreen = () => {
   const { refreshQuery } = useRefreshQuery()
 
   const [productSelected, setProductSelected] = useState<any>(null)
-
+  console.log('====================================')
+  console.log({ productSelected })
+  console.log('====================================')
   const handleUpdate = (item: any) => {
     setProductSelected(item)
     openModalDrawer({
@@ -195,7 +197,7 @@ const ProductAdminScreen = () => {
 
   return (
     <div className="flex flex-col w-full gap-3">
-      <ViewCreate item={productSelected} />
+      <ViewCreate />
       {renderContent()}
       {renderTable()}
     </div>
