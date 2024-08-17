@@ -23,9 +23,6 @@ const Account = () => {
     } else {
       openModalDrawer({
         content: <ModalLogin />,
-        configModal: {
-          showHeader: true,
-        },
       })
     }
   }
