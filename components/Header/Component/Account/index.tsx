@@ -2,20 +2,20 @@ import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
 import React from 'react'
 import ModalLogin from '../ModalLogin'
-import { DownOutlined, MenuOutlined } from '@ant-design/icons'
+import { MenuOutlined } from '@ant-design/icons'
 import NavMobile from '../NavMobile'
-import { Dropdown, MenuProps } from 'antd'
 import CartUser from './cartUser'
 import useMedia from '@/hook/useMedia'
-import useModalDrawer from '@/hook/useModalDrawer'
-import { useRouter } from 'next/navigation'
+import MyNavigationMenu, {
+  NavigationMenuProps,
+} from '@/components/ShadcnUI/MyNavigationMenu'
+import useMyDrawer from '@/hook/useMyDrawer'
 
 const Account = () => {
-  const { openModalDrawer } = useModalDrawer()
+  const { openModalDrawer } = useMyDrawer()
   const { translate } = useLanguage()
   const { isLogin, logOut, userData } = useUserData()
   const { isMobile } = useMedia()
-  const route = useRouter()
 
   const handleLogin = () => {
     if (isLogin) {
@@ -36,8 +36,8 @@ const Account = () => {
       onlyDrawer: true,
       title: renderTitleDrawer(),
       configDrawer: {
-        width: '70%',
-        placement: 'right',
+        width: '70vw',
+        position: 'right',
       },
     })
   }
@@ -46,7 +46,6 @@ const Account = () => {
     return (
       <div className="flex flex-col   w-full">
         <span>{userData?.name}</span>
-        {/* <div className="bg-black w-[2px] h-[14px]" /> */}
         <span>{userData?.sdt}</span>
       </div>
     )
@@ -76,25 +75,30 @@ const Account = () => {
   }
 
   const renderDesktop = () => {
-    const items: MenuProps['items'] = [
+    const items: NavigationMenuProps[] = [
       {
-        key: '1',
-        label: (
-          <div
-            onClick={() => route.push('/my-page')}
-            className="cursor-pointer"
-          >
-            {translate('myProfile.myProfile')}
+        title: (
+          <div className="flex gap-3">
+            {`${userData?.name || userData?.sdt}`}
           </div>
         ),
-      },
-      {
-        key: '2',
-        label: (
-          <div onClick={handleLogin} className="cursor-pointer">
-            {translate('common.logOut')}
-          </div>
-        ),
+        content: [
+          {
+            title: (
+              <div className="cursor-pointer">
+                {translate('myProfile.myProfile')}
+              </div>
+            ),
+            url: '/my-page',
+          },
+          {
+            title: (
+              <div onClick={handleLogin} className="cursor-pointer">
+                {translate('common.logOut')}
+              </div>
+            ),
+          },
+        ],
       },
     ]
 
@@ -104,13 +108,7 @@ const Account = () => {
           {isLogin ? (
             <div className="flex gap-4 items-center">
               <CartUser />
-
-              <Dropdown menu={{ items }}>
-                <div className="flex gap-3">
-                  {`${userData?.name || userData?.sdt}`}
-                  <DownOutlined />
-                </div>
-              </Dropdown>
+              <MyNavigationMenu data={items} />
             </div>
           ) : (
             <div className="flex gap-2 items-center">

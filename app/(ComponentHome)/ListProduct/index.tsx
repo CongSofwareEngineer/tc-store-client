@@ -4,15 +4,11 @@ import ItemProduct from '@/components/ItemProduct'
 import useLanguage from '@/hook/useLanguage'
 import Link from 'next/link'
 import { FilterAPI, TYPE_LOADING_GET_DATA } from '@/constant/app'
-import {
-  AlignLeftOutlined,
-  CaretRightOutlined,
-  RightOutlined,
-} from '@ant-design/icons'
-import { CollapseCustom } from './styled'
+import { AlignLeftOutlined, RightOutlined } from '@ant-design/icons'
 import useProductByLimit from '@/hook/tank-query/useProductByLimit'
 import { scrollTop } from '@/utils/functions'
 import LoadingGetData from '@/components/LoadingGetData'
+import MyCollapse from '@/components/ShadcnUI/MyCollapse'
 
 const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   const { data, isLoading } = useProductByLimit(type, 5)
@@ -74,13 +70,11 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   ]
 
   return (
-    <CollapseCustom
-      expandIcon={({ isActive }: any) => (
-        <CaretRightOutlined rotate={isActive ? 90 : 0} />
-      )}
+    <MyCollapse
+      className="bg-transparent mb-4 border-b-2 px-0 border-gray-300"
+      classNameItem="px-0"
       defaultActiveKey={[type]}
       items={items}
-      style={{ background: 'transparent' }}
     />
   )
 }

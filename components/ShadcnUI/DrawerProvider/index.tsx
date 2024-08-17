@@ -27,7 +27,7 @@ const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
 
   const classNameContent = () => {
     if (config?.position == 'right' || config?.position == 'left') {
-      return 'relative h-screen top-0 right-0 left-auto mt-0 w-auto rounded-none overflow-y-auto  md:px-12 px-5 py-5'
+      return 'relative h-screen top-0 right-0 left-auto mt-0 w-auto rounded-none overflow-y-auto  md:px-12 px-3 py-2'
     }
     return 'relative w-screen overflow-y-auto max-h-[calc(100%-20px)] md:px-12 px-5'
   }
@@ -38,7 +38,6 @@ const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
     }
     return 'max-h-[98vh]'
   }
-  console.log({ config })
 
   return (
     <DrawerContext.Provider value={{ config, closeDrawer, openDrawer }}>
@@ -55,21 +54,23 @@ const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
             <div className="mx-auto mt-[5px] h-[5px] w-[100px] rounded-full bg-black/40" />
           )}
           {config?.title && (
-            <div className="text-medium font-bold flex w-full justify-center items-center pt-2 md:px-12 px-5 pb-2 mb-1 border-b-2 border-b-gray-200">
-              {isMobile && <CloseOutlined onClick={closeDrawer} />}
+            <div className="text-medium font-bold flex w-full justify-center items-center pt-2 md:px-12 px-3 pb-2 mb-1 border-b-2 border-b-gray-200">
+              {isMobile && config?.position !== 'bottom' && (
+                <CloseOutlined onClick={closeDrawer} />
+              )}
               <div className="flex-1 flex text-center justify-center items-center">
                 {config?.title}
               </div>
             </div>
           )}
           <div
-            className={`${classNameContent()} ${config.className}`}
+            className={`pb-3 ${classNameContent()} ${config.className}`}
             style={{ width: config?.width, maxHeight: config?.maxHeight }}
           >
             {config?.content || <></>}
           </div>
           {config?.configFooter && (
-            <div className="flex gap-3 md:px-12 px-5 py-3">
+            <div className="flex gap-3 md:px-12 px-5 pb-3">
               <MyButton
                 size={isMobile ? 'small' : 'default'}
                 className="w-full"

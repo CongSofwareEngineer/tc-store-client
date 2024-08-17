@@ -229,3 +229,12 @@ body {
   padding: 0px !important;
   max-width: 100% !important;
 }
+
+.hidle-content {
+  // overflow: hidden;
+  // position: relative;
+  // transition: all 2s;
+  // // height: 0px;
+  // height: 1px;
+  display: none;
+}

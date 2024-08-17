@@ -1,15 +1,14 @@
 import useAddressShip from '@/hook/useAddressShip'
 import React, { useCallback, useState } from 'react'
-import MySelect from '../MySelect'
 import { useAppSelector } from '@/redux/store'
 import useLanguage from '@/hook/useLanguage'
-import MyInput from '../MyInput'
+import MyCombobox from '../ShadcnUI/MyCombobox'
+import FormInput from '../ShadcnUI/FormInput'
 
 const OptionVnLocation = ({ callback }: { callback: any }) => {
   const [provence, setProvence] = useState<any>(null)
   const [districts, setDistricts] = useState<any>(null)
   const [ward, setWard] = useState<any>(null)
-  const [addressDetail, setAddressDetail] = useState('')
 
   const { Provinces } = useAppSelector((state) => state.app)
   const { translate } = useLanguage()
@@ -27,7 +26,6 @@ const OptionVnLocation = ({ callback }: { callback: any }) => {
       return {
         label: e.full_name,
         value: e.id,
-        name: e.full_name,
       }
     })
   }, [])
@@ -51,82 +49,57 @@ const OptionVnLocation = ({ callback }: { callback: any }) => {
     [listDistrict]
   )
 
-  const onChangeWard = useCallback(
-    (id: string) => {
-      const data = listWards.find((e: any) => e.id === id)
-      setWard(data)
-    },
-    [listWards]
-  )
+  const onChangeWard = (id: string) => {
+    const data = listWards.find((e: any) => e.id === id)
+    setWard(data)
+    const dataAddress = `${data.full_name}---${districts.full_name}---${provence.full_name}`
 
-  const onChangeNote = useCallback(
-    (note: string) => {
-      const dataAddress = `${ward.full_name}---${districts.full_name}---${provence.full_name}`
-      setAddressDetail(note!.toString())
-      callback({
-        addressDetail: note,
-        address: dataAddress,
-      })
-    },
-    [provence, districts, ward, callback]
-  )
+    callback(dataAddress)
+  }
 
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="flex flex-col gap-2 w-full md:flex-row">
         <div className="w-full flex flex-col gap-2">
           <div>{translate('textPopular.province')}</div>
-          <MySelect
+
+          <MyCombobox
             value={provence?.id}
-            placeholder={translate('textPopular.province')}
-            optionFilterProp="label"
-            showSearch
-            fullImage
-            className="w-full"
-            option={getOption(Provinces)}
+            options={getOption(Provinces)}
             onChange={onChangeProvince}
+            titleSearch={translate('textPopular.province')}
           />
         </div>
 
         <div className="w-full flex flex-col gap-2">
           <div>{translate('textPopular.district')}</div>
-          <MySelect
+
+          <MyCombobox
             loading={loadingDistrict}
             value={districts?.id}
-            placeholder={translate('textPopular.district')}
-            optionFilterProp="label"
-            showSearch
-            fullImage
-            className="w-full"
-            option={getOption(listDistrict || [])}
+            options={getOption(listDistrict || [])}
             onChange={onChangeDistrict}
+            titleSearch={translate('textPopular.district')}
           />
         </div>
 
         <div className="w-full flex flex-col gap-2">
           <div>{translate('textPopular.ward')}</div>
-
-          <MySelect
-            loading={loadingWard}
+          <MyCombobox
             value={ward?.id}
-            placeholder={translate('textPopular.ward')}
-            optionFilterProp="label"
-            showSearch
-            fullImage
-            className="w-full"
-            option={getOption(listWards || [])}
+            options={getOption(listWards || [])}
+            loading={loadingWard}
             onChange={onChangeWard}
+            titleSearch={translate('textPopular.ward')}
           />
         </div>
       </div>
       <div className="w-full flex flex-col gap-2">
-        <div>{translate('textPopular.addressDetail')}</div>
-        <MyInput
+        <FormInput
           disabled={!districts || !provence || !ward}
-          value={addressDetail}
-          onChangeText={(e) => onChangeNote(e?.toString() || '')}
-          type="string"
-          className="w-full"
+          name="addressShip.addressDetail"
+          label={translate('textPopular.addressDetail')}
+          placeholder={translate('textPopular.addressDetail')}
         />
       </div>
     </div>

@@ -1,15 +1,15 @@
 import useQuerySearch from '@/hook/useQuerySearch'
-import { Checkbox } from 'antd'
 import React from 'react'
-import MyCollapse from '../MyCollapse'
-import { AlignLeftOutlined, CaretRightOutlined } from '@ant-design/icons'
+import { AlignLeftOutlined } from '@ant-design/icons'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
+import MyCollapse from '../ShadcnUI/MyCollapse'
+import CheckBoxShadc from '../ShadcnUI/CheckBoxShadc'
 
 type MyFilterCheckBox = {
   data?: Record<string, any>[]
   typeChecked?: string
-  titleFilter?: string 
+  titleFilter?: string
   isDefault?: Boolean
   isReplace?: boolean
 }
@@ -31,12 +31,12 @@ const MyFilterCheckBox = ({
         {data.map((menu, index: number) => {
           return (
             <div
-              className={`md:w-full px-4 py-2  md:border-b-lime-200 ${
+              className={`md:w-full px-1 py-2  md:border-b-lime-200 ${
                 index !== data.length - 1 && ' '
               }`}
               key={`menu_${typeChecked}_${index}`}
             >
-              <Checkbox
+              <CheckBoxShadc
                 checked={queries?.[typeChecked]?.includes(
                   menu?.value || menu.key
                 )}
@@ -47,7 +47,7 @@ const MyFilterCheckBox = ({
                 <div className="whitespace-nowrap">
                   {menu.name || menu.label}
                 </div>
-              </Checkbox>
+              </CheckBoxShadc>
             </div>
           )
         })}
@@ -73,13 +73,12 @@ const MyFilterCheckBox = ({
     ]
 
     return isClient ? (
-      <MyCollapse
-        expandIcon={({ isActive }: any) => (
-          <CaretRightOutlined rotate={isActive ? 90 : 0} />
-        )}
-        defaultActiveKey={isDefault || !isMobile ? [typeChecked] : []}
-        items={items}
-      />
+      <div className="flex flex-col gap-2">
+        <MyCollapse
+          items={items}
+          defaultActiveKey={isDefault || !isMobile ? [typeChecked] : []}
+        />
+      </div>
     ) : (
       <></>
     )

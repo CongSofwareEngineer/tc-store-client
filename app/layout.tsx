@@ -19,6 +19,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import Script from 'next/script'
 import { cn } from '@/lib/utils'
 import DrawerProviderShadcn from '@/components/ShadcnUI/DrawerProvider'
+import MyModalShadcnUI from '@/components/ShadcnUI/MyModal'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 
@@ -159,11 +160,13 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
                 <ReduxProvider>
                   <MyModalProvider>
                     <DrawerProvider>
-                      <DrawerProviderShadcn>
-                        <ClientRender menuCategory={menuCategory?.data || []}>
-                          {children}
-                        </ClientRender>
-                      </DrawerProviderShadcn>
+                      <MyModalShadcnUI>
+                        <DrawerProviderShadcn>
+                          <ClientRender menuCategory={menuCategory?.data || []}>
+                            {children}
+                          </ClientRender>
+                        </DrawerProviderShadcn>
+                      </MyModalShadcnUI>
                     </DrawerProvider>
                   </MyModalProvider>
                 </ReduxProvider>

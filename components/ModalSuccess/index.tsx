@@ -3,8 +3,8 @@ import React from 'react'
 import MyImage from '../MyImage'
 import { images } from '@/configs/images'
 import useMedia from '@/hook/useMedia'
-import useModalDrawer from '@/hook/useModalDrawer'
 import MyButton from '../MyButton'
+import useMyDrawer from '@/hook/useMyDrawer'
 
 type Props = {
   title?: string
@@ -24,7 +24,7 @@ const ModalSuccess = ({
 }: Props) => {
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
-  const { closeModalDrawer } = useModalDrawer()
+  const { closeModalDrawer } = useMyDrawer()
 
   return (
     <div className="flex flex-col w-full gap-4 justify-center align-middle">

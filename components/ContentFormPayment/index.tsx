@@ -1,31 +1,19 @@
-import useCheckForm from '@/hook/useCheckForm'
-import useUserData from '@/hook/useUserData'
-import React, { useEffect, useState } from 'react'
-import InputForm from '../InputForm'
+import React from 'react'
 import useLanguage from '@/hook/useLanguage'
 import InputAreaForm from '../InputAreaForm'
 import { images } from '@/configs/images'
 import MyImage from '../MyImage'
 import OptionVnLocation from '../OptionVnLocation'
+import FormInput from '../ShadcnUI/FormInput'
 
 const ContentFormPayment = ({
   onChange,
+  form,
 }: {
   onChange: (param: any) => void
+  form: any
 }) => {
-  const { checkNumberPhone } = useCheckForm()
-  const { userData } = useUserData()
   const { translate } = useLanguage()
-
-  const [listAddressShip, setListAddressShip] = useState<string[]>([])
-  console.log({ listAddressShip })
-
-  useEffect(() => {
-    if (userData?.addressShipper && Array.isArray(userData?.addressShipper)) {
-      setListAddressShip(() => userData?.addressShipper)
-    }
-  }, [userData])
-
   return (
     <div className="bg-white flex flex-col w-full border-[1px] shadow-gray1 border-gray-300  px-4 pt-4 lg:pb-0 pb-3">
       <div className="flex w-full gap-2">
@@ -45,18 +33,12 @@ const ContentFormPayment = ({
       <div className="relative w-full border-[1px] my-3 border-gray-300" />
 
       <div className="flex md:gap-6 gap-2 flex-col md:grid md:grid-cols-2 md:pb-2 pb-0">
-        <InputForm
-          validator={checkNumberPhone}
-          required
-          name="sdt"
-          label={translate('userDetail.sdt')}
-          classFromItem="w-full"
-        />
-        <InputForm
-          required
+        <FormInput name="sdt" form={form} label={translate('userDetail.sdt')} />
+
+        <FormInput
           name="name"
+          form={form}
           label={translate('userDetail.name')}
-          classFromItem="w-full"
         />
       </div>
       <div className="md:mt-4 mt-2 w-full" />

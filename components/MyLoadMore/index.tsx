@@ -1,6 +1,6 @@
 import React from 'react'
 import useLanguage from '@/hook/useLanguage'
-import MyButton from '../MyButton'
+import MyButton from '../ShadcnUI/MyButton'
 
 type Props = {
   hasLoadMore?: boolean

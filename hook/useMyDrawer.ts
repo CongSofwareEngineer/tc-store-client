@@ -1,12 +1,11 @@
-import { ConfigModal } from '@/components/MyModal/type'
-import {
+ import {
   ConfigMyDrawerType,
   DrawerContext,
 } from '@/components/ShadcnUI/DrawerProvider/config'
 import React, { useContext } from 'react'
 import useMedia from './useMedia'
-import { ModalContext } from '@/components/MyModal'
-type UseModalType = {
+import { ConfigModal, ModalContext } from '@/components/ShadcnUI/MyModal/type'
+ type UseModalType = {
   useDrawer?: boolean | false
   onlyDrawer?: boolean | false
   configModal?: ConfigModal
@@ -31,6 +30,7 @@ const useMyDrawer = () => {
       width: '100vw',
       height: 'auto',
       maxHeight: '70vh',
+      configFooter: null,
       ...config.configDrawer,
       title: config.configDrawer?.title || config?.title,
     }
@@ -41,13 +41,10 @@ const useMyDrawer = () => {
         openDrawer(configDrawerBase)
       } else {
         open({
+          width:'500px',
           ...config.configModal,
           title: config.configModal?.title || config.title,
-          content: config.content,
-          showBtnClose:
-            config?.configModal?.showBtnClose === false
-              ? false
-              : config?.configModal?.overClickClose,
+          content: config.content, 
           open: true,
         })
       }

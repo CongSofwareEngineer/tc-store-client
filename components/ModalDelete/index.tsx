@@ -2,9 +2,9 @@ import useLanguage from '@/hook/useLanguage'
 import { useState } from 'react'
 import MyImage from '../MyImage'
 import { images } from '@/configs/images'
-import useModalDrawer from '@/hook/useModalDrawer'
 import useMedia from '@/hook/useMedia'
 import MyButton from '../MyButton'
+import useMyDrawer from '@/hook/useMyDrawer'
 type ModalDeleteType = {
   des?: string
   callback?: (param?: any) => Promise<void> | void
@@ -21,7 +21,7 @@ const ModalDelete = ({
 }: ModalDeleteType) => {
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
-  const { closeModalDrawer } = useModalDrawer()
+  const { closeModalDrawer } = useMyDrawer()
 
   const [loading, setLoading] = useState(false)
 

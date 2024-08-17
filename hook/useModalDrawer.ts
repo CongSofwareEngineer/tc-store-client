@@ -2,7 +2,10 @@ import { ModalContext } from '@/components/MyModal'
 import { ConfigModal } from '@/components/MyModal/type'
 import { useContext, useCallback } from 'react';
 import useMedia from './useMedia'
-import { ConfigMyDrawerType, DrawerContext } from '@/components/DrawerProvider/config';
+import {
+  ConfigMyDrawerType,
+  DrawerContext,
+} from '@/components/ShadcnUI/DrawerProvider/config'
 import React from 'react';
 
 type UseModalType = {
@@ -20,20 +23,22 @@ const useModalDrawer = () => {
   const { isMobile } = useMedia()
 
   const openModalDrawer = useCallback((config: UseModalType) => {
-    if (config.onlyDrawer) {
-      openDrawer({
-        content: config.content,
-        ...config.configDrawer,
-        title: config.configDrawer?.title || config.title
+    const configDrawerBase: ConfigMyDrawerType = {
+      content: config.content,
+      position: 'bottom',
+      width: '100vw',
+      height: 'auto',
+      maxHeight: '70vh',
+      configFooter: null,
+      ...config.configDrawer,
+      title: config.configDrawer?.title || config?.title,
+    }
 
-      })
+    if (config.onlyDrawer) {
+     openDrawer(configDrawerBase)
     } else {
       if (isMobile && config.useDrawer) {
-        openDrawer({
-          content: config.content,
-          ...config.configDrawer,
-          title: config.configDrawer?.title || config.title
-        })
+        openDrawer(configDrawerBase)
       } else {
         open({
           ...config.configModal,

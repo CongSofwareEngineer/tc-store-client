@@ -1,15 +1,8 @@
-import { Form } from 'antd'
 import React from 'react'
-
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
-import styled from 'styled-components'
-import MyButton from '../MyButton'
-const FormItem = styled(Form.Item)`
-  .ant-form-item-row {
-    width: 100%;
-  }
-`
+import MyButton from '../ShadcnUI/MyButton'
+
 type ButtonFormType = {
   loading?: boolean
   disableClose?: boolean
@@ -39,22 +32,22 @@ const ButtonForm = ({
     <div
       className={`w-full flex justify-center items-center gap-4 mt-2 ${className}`}
     >
-      <FormItem className={`flex flex-1 ${classNameItem}`}>
+      <div className={`flex flex-1 ${classNameItem}`}>
         <MyButton
           disabled={disabledSubmit}
           className={`w-full m-auto ${classBtnSubmit}`}
           loading={loading}
-          htmlType="submit"
+          type="submit"
         >
           {titleSubmit || translate('cart.payment')}
         </MyButton>
-      </FormItem>
+      </div>
       {!disableClose && (
         <MyButton
           disabled={loading}
           className={`flex flex-1 w-[150px] ${classBtnCancel}`}
           onClick={closeModalDrawer}
-          type="primary"
+          typeBtn="secondary"
         >
           {titleClose || translate('common.close')}
         </MyButton>

@@ -8,17 +8,17 @@ import useLanguage from '@/hook/useLanguage'
 import AddressShip from './Component/AddressShip'
 import { copyToClipboard } from '@/utils/functions'
 import MyInput from '@/components/MyInput'
-import useModalDrawer from '@/hook/useModalDrawer'
 import ModalUpdateUser from './Component/ModalUpdateUser'
 import ModalEnterPassAgain from './Component/ModalEnterPassAgain'
 import MyCheckBox from '@/components/MyCheckBox'
 import Avatar from './Component/Avatar'
+import useMyDrawer from '@/hook/useMyDrawer'
 
 const MyProfile = () => {
   const { isMobile } = useMedia()
   const { userData } = useUserData()
   const { translate } = useLanguage()
-  const { openModalDrawer } = useModalDrawer()
+  const { openModalDrawer } = useMyDrawer()
 
   const getLanguage = (keyType: string) => {
     switch (keyType) {

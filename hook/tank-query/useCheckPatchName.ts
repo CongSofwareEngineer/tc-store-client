@@ -1,11 +1,13 @@
 import { useEffect } from 'react'
 import useUserData from '../useUserData'
 import { usePathname, useRouter } from 'next/navigation'
+import useMyDrawer from '../useMyDrawer'
 
 const useCheckPatchName = () => {
   const { isLogin } = useUserData()
   const patchName = usePathname()
   const router = useRouter()
+  const {closeModalDrawer}=useMyDrawer()
 
   useEffect(() => {
     if (!isLogin) {
@@ -37,7 +39,9 @@ const useCheckPatchName = () => {
         footer.classList.remove('no-display')
       }
     }
+    closeModalDrawer()
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogin, patchName, router])
 
 }

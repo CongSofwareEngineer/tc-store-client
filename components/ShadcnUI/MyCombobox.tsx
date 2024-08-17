@@ -23,15 +23,19 @@ type props = {
   options: { label: string | undefined; value: string | undefined }[]
   loading?: boolean
   titleSearch?: string
+  onChange?: (param?: any) => void
+  value?: any
+  hideSearch?: boolean
 }
 const MyCombobox = ({
   options = [],
   loading = false,
   titleSearch = '',
+  onChange = () => {},
+  hideSearch = false,
+  value,
 }: props) => {
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState('')
-
   const { translate } = useLanguage()
 
   return (
@@ -41,7 +45,7 @@ const MyCombobox = ({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-full justify-between h-8 font-[400]"
         >
           {loading ? (
             <MyLoading />
@@ -56,7 +60,10 @@ const MyCombobox = ({
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder={titleSearch || 'Search framework...'} />
+          {!hideSearch && (
+            <CommandInput placeholder={titleSearch || 'Search framework...'} />
+          )}
+
           <CommandList>
             {!loading && (
               <CommandEmpty>{translate('textPopular.notData')}</CommandEmpty>
@@ -68,10 +75,13 @@ const MyCombobox = ({
                 <>
                   {options.map((framework) => (
                     <CommandItem
+                      className="cursor-pointer"
                       key={framework.value}
-                      value={framework.value}
-                      onSelect={(currentValue) => {
-                        setValue(currentValue === value ? '' : currentValue)
+                      value={framework?.label}
+                      onSelect={() => {
+                        if (framework?.value !== value) {
+                          onChange(framework?.value)
+                        }
                         setOpen(false)
                       }}
                     >

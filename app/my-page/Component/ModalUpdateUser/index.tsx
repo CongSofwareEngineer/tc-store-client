@@ -2,10 +2,10 @@ import MyButton from '@/components/MyButton'
 import { REQUEST_TYPE } from '@/constant/app'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
-import useModalDrawer from '@/hook/useModalDrawer'
+import useMyDrawer from '@/hook/useMyDrawer'
 import useUserData from '@/hook/useUserData'
 import ServerApi from '@/services/serverApi'
-import { decryptData } from '@/utils/crypto'
+import { decryptData, encryptData } from '@/utils/crypto'
 import {
   showNotificationError,
   showNotificationSuccess,
@@ -19,8 +19,8 @@ type PropsType = {
   initValue?: string
 }
 const ModalUpdateUser = ({ keyType, callBack, initValue }: PropsType) => {
-  const { refreshLogin, userData } = useUserData()
-  const { closeModalDrawer } = useModalDrawer()
+  const { login, userData, refreshLogin } = useUserData()
+  const { closeModalDrawer } = useMyDrawer()
   const { translate } = useLanguage()
   const { checkNumberPhone } = useCheckForm()
 
@@ -46,10 +46,19 @@ const ModalUpdateUser = ({ keyType, callBack, initValue }: PropsType) => {
         return initValue?.toString()
     }
   }
+  console.log({
+    valueNew,
+    keyType,
+    body: {
+      [keyType]: keyType,
+    },
+  })
 
   const handleSubmit = async () => {
-    setLoading(true)
+    let valueAPI = valueNew
     let error = false
+
+    setLoading(true)
     switch (keyType) {
       case 'sdt':
         if (checkNumberPhone(valueNew?.toString() || '')) {
@@ -64,6 +73,9 @@ const ModalUpdateUser = ({ keyType, callBack, initValue }: PropsType) => {
           showNotificationError(translate('errors.empty'))
           error = true
         }
+        if (keyType === 'pass') {
+          valueAPI = encryptData(valueAPI?.toString() || '')
+        }
         break
     }
     if (error) {
@@ -71,18 +83,28 @@ const ModalUpdateUser = ({ keyType, callBack, initValue }: PropsType) => {
       return
     }
     if (callBack) {
-      await callBack(valueNew?.toString())
+      await callBack(valueAPI?.toString())
     } else {
-      await ServerApi.requestBase({
+      const isUpdate = await ServerApi.requestBase({
         url: `user/update/${userData?._id}`,
         method: REQUEST_TYPE.POST,
         body: {
-          [keyType]: valueNew,
+          [keyType]: valueAPI,
         },
         encode: true,
+        checkAuth: true,
       })
+      if (!isUpdate?.data) {
+      }
+      console.log({ isUpdate })
     }
-    await refreshLogin()
+
+    if (keyType === 'pass') {
+      await login(userData?.sdt!, valueNew + '')
+    } else {
+      await refreshLogin()
+    }
+
     closeModalDrawer()
     showNotificationSuccess(translate('myPage.updateSuccess'))
 
@@ -131,7 +153,7 @@ const ModalUpdateUser = ({ keyType, callBack, initValue }: PropsType) => {
             />
           )}
         </div>
-        <div className="w-full mt-3">
+        <div className="w-full mt-3 mb-3">
           <MyButton className="w-full" loading={loading} onClick={handleSubmit}>
             {translate('common.save')}
           </MyButton>
