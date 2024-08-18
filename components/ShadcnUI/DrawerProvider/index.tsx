@@ -9,7 +9,7 @@ import { CloseOutlined } from '@ant-design/icons'
 
 const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
   const { translate } = useLanguage()
-  const { isMobile } = useMedia()
+  const { isMobile, isClient } = useMedia()
 
   const [config, setConfig] = useState<ConfigMyDrawerType>(defaultConfig)
 
@@ -42,69 +42,71 @@ const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <DrawerContext.Provider value={{ config, closeDrawer, openDrawer }}>
       {children}
-      <Drawer
-        preventScrollRestoration
-        fixed
-        direction={config?.position}
-        onOpenChange={onChangeOpen}
-        open={config?.open}
-      >
-        <DrawerContent className={`bg-white  ${classNameContainerContent()}`}>
-          {config?.position === 'bottom' && (
-            <div className="mx-auto mt-[5px] h-[5px] w-[100px] rounded-full bg-black/40" />
-          )}
-          {config?.title && (
-            <div className="text-medium font-bold flex w-full justify-center items-center pt-2 md:px-12 px-3 pb-2 mb-1 border-b-2 border-b-gray-200">
-              {isMobile && config?.position !== 'bottom' && (
-                <CloseOutlined onClick={closeDrawer} />
-              )}
-              <div className="flex-1 flex text-center justify-center items-center">
-                {config?.title}
+      {isClient && (
+        <Drawer
+          preventScrollRestoration
+          fixed
+          direction={config?.position}
+          onOpenChange={onChangeOpen}
+          open={config?.open}
+        >
+          <DrawerContent className={`bg-white  ${classNameContainerContent()}`}>
+            {config?.position === 'bottom' && (
+              <div className="mx-auto mt-[5px] h-[5px] w-[100px] rounded-full bg-black/40" />
+            )}
+            {config?.title && (
+              <div className="text-medium font-bold flex w-full justify-center items-center pt-2 md:px-12 px-3 pb-2 mb-1 border-b-2 border-b-gray-200">
+                {isMobile && config?.position !== 'bottom' && (
+                  <CloseOutlined onClick={closeDrawer} />
+                )}
+                <div className="flex-1 flex text-center justify-center items-center">
+                  {config?.title}
+                </div>
               </div>
+            )}
+            <div
+              className={`pb-3 ${classNameContent()} ${config.className}`}
+              style={{ width: config?.width, maxHeight: config?.maxHeight }}
+            >
+              {config?.content || <></>}
             </div>
-          )}
-          <div
-            className={`pb-3 ${classNameContent()} ${config.className}`}
-            style={{ width: config?.width, maxHeight: config?.maxHeight }}
-          >
-            {config?.content || <></>}
-          </div>
-          {config?.configFooter && (
-            <div className="flex gap-3 md:px-12 px-5 pb-3">
-              <MyButton
-                size={isMobile ? 'small' : 'default'}
-                className="w-full"
-                onClick={async () => {
-                  if (config?.configFooter?.callBackSubmit) {
-                    await config?.configFooter?.callBackSubmit()
-                  }
-                  closeDrawer()
-                }}
-              >
-                {config?.configFooter?.titelSubmit || translate('common.ok')}
-              </MyButton>
-
-              {(config?.configFooter?.showFull ||
-                config?.configFooter?.showClose) && (
+            {config?.configFooter && (
+              <div className="flex gap-3 md:px-12 px-5 pb-3">
                 <MyButton
                   size={isMobile ? 'small' : 'default'}
                   className="w-full"
-                  typeBtn={'secondary'}
                   onClick={async () => {
-                    if (config?.configFooter?.callBackClose) {
-                      await config?.configFooter?.callBackClose()
+                    if (config?.configFooter?.callBackSubmit) {
+                      await config?.configFooter?.callBackSubmit()
                     }
                     closeDrawer()
                   }}
                 >
-                  {config?.configFooter?.titelSubmit ||
-                    translate('common.close')}
+                  {config?.configFooter?.titelSubmit || translate('common.ok')}
                 </MyButton>
-              )}
-            </div>
-          )}
-        </DrawerContent>
-      </Drawer>
+
+                {(config?.configFooter?.showFull ||
+                  config?.configFooter?.showClose) && (
+                  <MyButton
+                    size={isMobile ? 'small' : 'default'}
+                    className="w-full"
+                    typeBtn={'secondary'}
+                    onClick={async () => {
+                      if (config?.configFooter?.callBackClose) {
+                        await config?.configFooter?.callBackClose()
+                      }
+                      closeDrawer()
+                    }}
+                  >
+                    {config?.configFooter?.titelSubmit ||
+                      translate('common.close')}
+                  </MyButton>
+                )}
+              </div>
+            )}
+          </DrawerContent>
+        </Drawer>
+      )}
     </DrawerContext.Provider>
   )
 }

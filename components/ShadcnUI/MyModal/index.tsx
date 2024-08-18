@@ -3,10 +3,11 @@ import { DialogContent, DialogHeader } from '@/components/ui/dialog'
 import { Dialog, DialogTitle } from '@radix-ui/react-dialog'
 import React, { useState } from 'react'
 import { ConfigModal, defaultConfig, ModalContext } from './type'
+import useMedia from '@/hook/useMedia'
 
 const MyModalShadcnUI = ({ children }: { children: React.ReactNode }) => {
   const [config, setConfig] = useState<ConfigModal>(defaultConfig)
-
+  const { isClient } = useMedia()
   const closeModal = () => {
     setConfig({ ...config, width: '500px', content: null, open: false })
   }
@@ -22,17 +23,19 @@ const MyModalShadcnUI = ({ children }: { children: React.ReactNode }) => {
   return (
     <ModalContext.Provider value={{ closeModal, config, openModal }}>
       {children}
-      <Dialog open={config?.open} onOpenChange={onChangeOpen}>
-        <DialogContent style={{ width: config?.width }}>
-          {config.title && (
-            <DialogHeader>
-              <DialogTitle>{config.title}</DialogTitle>
-            </DialogHeader>
-          )}
+      {isClient && (
+        <Dialog open={config?.open} onOpenChange={onChangeOpen}>
+          <DialogContent style={{ width: config?.width }}>
+            {config.title && (
+              <DialogHeader>
+                <DialogTitle>{config.title}</DialogTitle>
+              </DialogHeader>
+            )}
 
-          {config?.content && config?.content}
-        </DialogContent>
-      </Dialog>
+            {config?.content && config?.content}
+          </DialogContent>
+        </Dialog>
+      )}
     </ModalContext.Provider>
   )
 }
