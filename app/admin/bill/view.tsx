@@ -19,7 +19,6 @@ import useLanguage from '@/hook/useLanguage'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import MyButton from '@/components/MyButton'
-import fetchConfig from '@/configs/fetchConfig'
 
 const BillAdminScreen = () => {
   const { renderContent } = useSearchBaseAdmin()
