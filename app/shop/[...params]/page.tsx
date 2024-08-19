@@ -8,6 +8,7 @@ import fetchConfig from '@/configs/fetchConfig'
 const getCoffeeDetail = async (keyName: string): Promise<ItemDetailType> => {
   const data = await fetchConfig({
     url: `product/detail-keyName/${keyName}`,
+    isAthu: false,
   })
 
   return data.data

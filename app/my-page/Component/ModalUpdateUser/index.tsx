@@ -1,10 +1,10 @@
 import MyButton from '@/components/MyButton'
+import fetchConfig from '@/configs/fetchConfig'
 import { REQUEST_TYPE } from '@/constant/app'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
-import ServerApi from '@/services/serverApi'
 import { decryptData } from '@/utils/crypto'
 import {
   showNotificationError,
@@ -73,13 +73,12 @@ const ModalUpdateUser = ({ keyType, callBack, initValue }: PropsType) => {
     if (callBack) {
       await callBack(valueNew?.toString())
     } else {
-      await ServerApi.requestBase({
+      await fetchConfig({
         url: `user/update/${userData?._id}`,
         method: REQUEST_TYPE.POST,
         body: {
           [keyType]: valueNew,
         },
-        encode: true,
       })
     }
     await refreshLogin()

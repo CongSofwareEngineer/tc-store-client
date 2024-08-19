@@ -27,6 +27,11 @@ const MyCartScreen = () => {
   const { refreshQuery } = useRefreshQuery()
 
   useEffect(() => {
+    refreshQuery(QUERY_KEY.MyCartUser)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
     if (data) {
       setListCartFormat((e) => {
         const arr = data.map((eChil: any) => {

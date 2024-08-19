@@ -23,10 +23,10 @@ import { BodyAddBill } from '@/constant/firebase'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalProcess from '@/components/ModalProcess'
 import ModalDelete from '@/components/ModalDelete'
-import ServerApi from '@/services/serverApi'
 import { FILTER_BILL, LOCAL_STORAGE_KEY, REQUEST_TYPE } from '@/constant/app'
 import ModalSuccess from '@/components/ModalSuccess'
 import { useRouter } from 'next/navigation'
+import fetchConfig from '@/configs/fetchConfig'
 
 const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const { translate } = useLanguage()
@@ -96,7 +96,14 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         ],
         status: FILTER_BILL.Processing,
         totalBill: data?.price * amount,
+        listNewSoldProduct: [
+          {
+            sold: amount + data?.sold,
+            idProduct: data?._id,
+          },
+        ],
       }
+      console.log({ bodyBill, data })
 
       saveDataNoLogin(bodyBill)
 
@@ -114,13 +121,11 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         },
       })
 
-      const res = await ServerApi.requestBase({
+      const res = await fetchConfig({
         url: 'bill/create',
         body: bodyBill,
         method: REQUEST_TYPE.POST,
-        encode: true,
       })
-      // const res = { data: 'have data' }
 
       if (res?.data) {
         openModalDrawer({
@@ -146,6 +151,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         await delayTime(500)
       } else {
         showNotificationError(translate('productDetail.modalBuy.error'))
+        closeModalDrawer()
       }
 
       setLoading(false)

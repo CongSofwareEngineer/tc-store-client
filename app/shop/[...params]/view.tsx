@@ -35,7 +35,7 @@ const ShopDetailScreen = ({
     <ViewDetail
       amountBuy={amountBuy}
       isPayment={isPayment}
-      productDetail={productDetail}
+      productDetail={dataItem}
       setAmountBuy={setAmountBuy}
       setIsPayment={setIsPayment}
     />

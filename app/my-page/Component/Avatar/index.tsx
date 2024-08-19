@@ -1,10 +1,10 @@
 import ModalProcess from '@/components/ModalProcess'
 import MyImage from '@/components/MyImage'
+import fetchConfig from '@/configs/fetchConfig'
 import { REQUEST_TYPE } from '@/constant/app'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
-import ServerApi from '@/services/serverApi'
 import {
   detectAvatar,
   getBase64,
@@ -36,12 +36,11 @@ const Avatar = () => {
         public_id: userData?.avatar,
       }
 
-      const res = await ServerApi.requestBase({
+      const res = await fetchConfig({
         url: `user/update-avatar/${userData?._id}`,
         body: {
           file: bodyAPI,
         },
-        encode: true,
         method: REQUEST_TYPE.POST,
       })
 

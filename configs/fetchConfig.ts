@@ -1,4 +1,6 @@
-import { REQUEST_TYPE } from '@/constant/app'
+import { COOKIE_KEY, REQUEST_TYPE } from '@/constant/app'
+import { getCookie } from '@/services/CookeisService'
+import { decryptData, encryptData } from '@/utils/crypto'
 import axios from 'axios'
 
 export type ServerAPIReqType = {
@@ -7,6 +9,7 @@ export type ServerAPIReqType = {
   auth?: string
   method?: REQUEST_TYPE
   timeOut?: number
+  isAthu?: boolean
 }
 const fetchConfig = async ({
   url = '',
@@ -14,7 +17,8 @@ const fetchConfig = async ({
   auth = '',
   method = REQUEST_TYPE.GET,
   timeOut = 70000,
-}: ServerAPIReqType): Promise<{ data: any; error: any; messages: any }> => {
+  isAthu = true,
+}: ServerAPIReqType): Promise<{ data: any; error?: any; messages: any }> => {
   const baseUrl =
     process.env.NEXT_PUBLIC_ENABLE_SERVER_LOCAL === 'true'
       ? 'http://192.168.88.99:3000/'
@@ -32,18 +36,30 @@ const fetchConfig = async ({
   }
 
   if (body) {
-    config.data = body
+    if (method !== REQUEST_TYPE.GET) {
+      config.data = {
+        data: encryptData(body),
+      }
+    } else {
+      config.params = body
+    }
   }
-  if (auth) {
-    config.headers.Authorization = auth
+
+  if (isAthu && method !== REQUEST_TYPE.GET) {
+    const authCookies = await getCookie(COOKIE_KEY.Auth)
+    config.headers.Authorization = auth || authCookies
   }
 
   return await axios
     .request(config)
     .then(async (response) => {
       if (response.status === 200) {
+        let data = response?.data?.data ?? response?.data ?? response
+        if (method !== REQUEST_TYPE.GET) {
+          data = decryptData(data)
+        }
         return {
-          ...(response?.data ?? response),
+          data: data,
           messages: 'success',
         }
       }

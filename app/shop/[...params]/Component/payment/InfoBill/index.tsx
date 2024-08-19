@@ -11,7 +11,6 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
   const router = useRouter()
-  console.log({ data })
 
   const handleClickName = () => {
     router.push(`/shop/${data?.idProduct}/${data?.keyName}`)

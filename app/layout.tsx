@@ -88,6 +88,7 @@ export const viewport: Viewport = {
 const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
   const menuCategory = await fetchConfig({
     url: 'category/all',
+    isAthu: false,
   })
 
   return (

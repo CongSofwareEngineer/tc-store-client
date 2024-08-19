@@ -2,19 +2,27 @@ import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { setUserData } from '@/redux/userDataSlice'
 import { useCallback, useEffect, useMemo } from 'react'
 import useLanguage from './useLanguage'
-import { showNotificationError, showNotificationSuccess } from '@/utils/functions'
-import secureLocalStorage from "react-secure-storage";
+import {
+  showNotificationError,
+  showNotificationSuccess,
+} from '@/utils/functions'
+import secureLocalStorage from 'react-secure-storage'
 import { decryptData, encryptData } from '@/utils/crypto'
 import { SLICE } from '@/constant/redux'
 import useModalDrawer from './useModalDrawer'
-import { COOKIE_EXPIRED, COOKIE_KEY, OBSERVER_KEY, REQUEST_TYPE } from '@/constant/app'
+import {
+  COOKIE_EXPIRED,
+  COOKIE_KEY,
+  OBSERVER_KEY,
+  REQUEST_TYPE,
+} from '@/constant/app'
 import { deleteCookie, setCookie } from '@/services/CookeisService'
 import ObserverService from '@/services/observer'
 import fetchConfig from '@/configs/fetchConfig'
 
 const useUserData = () => {
   const dispatch = useAppDispatch()
-  const { UserData: userData } = useAppSelector(state => state.app)
+  const { UserData: userData } = useAppSelector((state) => state.app)
   const { translate } = useLanguage()
   const { closeModalDrawer } = useModalDrawer()
 
@@ -22,7 +30,7 @@ const useUserData = () => {
     const updateCookies = (auth: string) => {
       setCookie(COOKIE_KEY.Auth, auth, COOKIE_EXPIRED.ExpiredAuth)
     }
-    ObserverService.on(OBSERVER_KEY.LogOut, () =>{
+    ObserverService.on(OBSERVER_KEY.LogOut, () => {
       secureLocalStorage.removeItem(SLICE.UserData)
       deleteCookie(COOKIE_KEY.Auth)
       deleteCookie(COOKIE_KEY.AuthRefresh)
@@ -31,33 +39,44 @@ const useUserData = () => {
     return () => ObserverService.removeListener(OBSERVER_KEY.LogOut)
   }, [])
 
-
   const isLogin = useMemo(() => {
     return !!userData
   }, [userData])
 
-  const loginWithDB = useCallback(async (sdt: string, pass: string) => {
-   
-    const dataBody=encryptData(JSON.stringify({
-      sdt,
-      pass
-    }))
-    
-    const data=await fetchConfig({
-      url: `user/login`,
-      method: REQUEST_TYPE.POST, 
-      body:{
-        data:dataBody
-      }
-    })
+  const loginWithDB = useCallback(
+    async (sdt: string, pass: string) => {
+      const dataBody = encryptData(
+        JSON.stringify({
+          sdt,
+          pass,
+        })
+      )
 
-    if (data?.data) {
-      dispatch(setUserData(data?.data))
-      setCookie(COOKIE_KEY.Auth, data?.data.auth?.toString(), COOKIE_EXPIRED.ExpiredAuth)
-      setCookie(COOKIE_KEY.AuthRefresh, data?.data.authRefresh?.toString(), COOKIE_EXPIRED.ExpiredAuthRefresh)
-    }
-    return data?.data || null
-  }, [dispatch])
+      const data = await fetchConfig({
+        url: `user/login`,
+        method: REQUEST_TYPE.POST,
+        body: {
+          data: dataBody,
+        },
+      })
+
+      if (data?.data) {
+        dispatch(setUserData(data?.data))
+        setCookie(
+          COOKIE_KEY.Auth,
+          data?.data.auth?.toString(),
+          COOKIE_EXPIRED.ExpiredAuth
+        )
+        setCookie(
+          COOKIE_KEY.AuthRefresh,
+          data?.data.authRefresh?.toString(),
+          COOKIE_EXPIRED.ExpiredAuthRefresh
+        )
+      }
+      return data?.data || null
+    },
+    [dispatch]
+  )
 
   const logOut = useCallback(() => {
     dispatch(setUserData(null))
@@ -74,8 +93,8 @@ const useUserData = () => {
       }
     } else {
       logOut()
-    } 
-  }, [logOut, userData, loginWithDB]) 
+    }
+  }, [logOut, userData, loginWithDB])
 
   const reLogin = useCallback(async () => {
     const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
@@ -95,27 +114,28 @@ const useUserData = () => {
     }
   }, [logOut, loginWithDB])
 
-  const login = useCallback(async (numberPhone: string, pass: string, saveLogin = true) => {
-    try {
-      const encodePass = encryptData(pass)
-      const data = await loginWithDB(numberPhone, encodePass)
+  const login = useCallback(
+    async (numberPhone: string, pass: string, saveLogin = true) => {
+      try {
+        const encodePass = encryptData(pass)
+        const data = await loginWithDB(numberPhone, encodePass)
 
-      if (data) {
-        if (saveLogin) {
-          const userEncode = encryptData(JSON.stringify(data))
-          secureLocalStorage.setItem(SLICE.UserData, userEncode)
+        if (data) {
+          if (saveLogin) {
+            const userEncode = encryptData(JSON.stringify(data))
+            secureLocalStorage.setItem(SLICE.UserData, userEncode)
+          }
+          showNotificationSuccess(translate('success.login'))
+          closeModalDrawer()
+        } else {
+          showNotificationError(translate('noti.loginError'))
         }
-        showNotificationSuccess(translate('success.login'))
-        closeModalDrawer()
-      } else {
+      } catch (error) {
         showNotificationError(translate('noti.loginError'))
       }
-
-    } catch (error) {
-      showNotificationError(translate('noti.loginError'))
-    }
-  }, [translate, closeModalDrawer, loginWithDB])
-
+    },
+    [translate, closeModalDrawer, loginWithDB]
+  )
 
   return {
     userData,
@@ -123,7 +143,7 @@ const useUserData = () => {
     logOut,
     login,
     refreshLogin,
-    reLogin
+    reLogin,
   }
 }
 

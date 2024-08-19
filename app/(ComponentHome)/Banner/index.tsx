@@ -8,7 +8,7 @@ const ContainerList = styled.div`
   display: flex;
   flex-flow: column wrap;
   width: 100%;
-  height: 60vh;
+  height: 100%;
   transition: ease 1000ms;
   scroll-snap-type: x mandatory;
   @media screen and (max-width: 568px) {

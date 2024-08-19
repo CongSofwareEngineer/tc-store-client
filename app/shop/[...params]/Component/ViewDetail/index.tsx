@@ -26,6 +26,7 @@ import SubAndPlus from '@/components/SubAndPlus'
 
 import { images } from '@/configs/images'
 import MyButton from '@/components/MyButton'
+import fetchConfig from '@/configs/fetchConfig'
 
 const Comment = dynamic(() => import('@/components/Comment'), {
   ssr: false,
@@ -62,18 +63,20 @@ const ViewDetail = ({
     const listCartUser = await ServerApi.requestBase({
       url: `/cart/details/${body.idUser}/${body.idProduct}`,
     })
+
     const dataExited = listCartUser?.data[0]
+
     if (!dataExited) {
-      await ServerApi.requestBase({
+      await fetchConfig({
         url: 'cart/create',
         body,
         method: REQUEST_TYPE.POST,
       })
     } else {
-      await ServerApi.requestBase({
+      await fetchConfig({
         url: `cart/update-cart/${dataExited._id}`,
         body: {
-          amount: dataExited.amount + amountBuy,
+          amount: Number(dataExited.amount) + Number(amountBuy),
         },
         method: REQUEST_TYPE.POST,
       })
@@ -90,16 +93,17 @@ const ViewDetail = ({
       }
       if (isLogin) {
         body.idUser = userData?._id
-        showNotificationSuccess(translate('addCart.addSuccess'))
-        setLoadingAddCart(false)
         await handleAddCartLogin(body)
-        await delayTime(1000)
         refreshQuery(QUERY_KEY.LengthCartUser)
         refreshQuery(QUERY_KEY.MyCartUser)
+        await delayTime(500)
+        setLoadingAddCart(false)
+        showNotificationSuccess(translate('addCart.addSuccess'))
       } else {
         body.date = new Date().getTime().toFixed()
         setCookie(COOKIE_KEY.MyCart, body)
         showNotificationSuccess(translate('addCart.addSuccess'))
+        setLoadingAddCart(false)
       }
     } finally {
       setLoadingAddCart(false)

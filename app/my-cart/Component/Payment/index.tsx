@@ -19,10 +19,10 @@ import OptionPayment from './Component/OptionPayment'
 import useOptionPayment from '@/hook/useOptionPayment'
 import ViewListOther from './Component/ViewListOther'
 import { FILTER_BILL, REQUEST_TYPE } from '@/constant/app'
-import ServerApi from '@/services/serverApi'
 import ModalProcess from '@/components/ModalProcess'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalSuccess from '@/components/ModalSuccess'
+import fetchConfig from '@/configs/fetchConfig'
 
 const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
   const { translate } = useLanguage()
@@ -108,7 +108,6 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
         sdt: formData?.sdt,
         status: FILTER_BILL.Processing,
       }
-      console.log({ bodyAPI })
 
       openModalDrawer({
         content: (
@@ -123,11 +122,10 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
           overClickClose: false,
         },
       })
-      const res = await ServerApi.requestBase({
+      const res = await fetchConfig({
         url: 'bill/create',
         body: bodyAPI,
         method: REQUEST_TYPE.POST,
-        encode: true,
       })
       if (res?.data) {
         openModalDrawer({
