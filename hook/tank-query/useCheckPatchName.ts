@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 import useUserData from '../useUserData'
 import { usePathname, useRouter } from 'next/navigation'
-import useMyDrawer from '../useMyDrawer'
-
+import useModalDrawer from '../useModalDrawer'
+ 
 const useCheckPatchName = () => {
   const { isLogin } = useUserData()
   const patchName = usePathname()
   const router = useRouter()
-  const {closeModalDrawer}=useMyDrawer()
+  const {closeModalDrawer}=useModalDrawer()
 
   useEffect(() => {
     if (!isLogin) {
