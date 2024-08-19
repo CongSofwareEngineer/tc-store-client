@@ -34,26 +34,26 @@ const LoadingGetData = ({
 
     case TYPE_LOADING_GET_DATA.Shop:
       return (
-        <div className="flex flex-col gap-4 w-full mt-4">
-          <MySkeleton className="w-full items-center flex gap-2 flex-col p-5 rounded-lg aspect-square">
+        <div className="gap-4 w-full mt-4 grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-3 grid-cols-2">
+          <MySkeleton className="w-full items-center flex gap-2 flex-col md:p-5 p-3 rounded-lg aspect-square">
             <MySkeleton className="w-[100%] aspect-square " />
             <MySkeleton className="w-full h-6" />
             <MySkeleton className="w-full h-6" />
             <MySkeleton className="w-full h-6" />
           </MySkeleton>
-          <MySkeleton className="w-full items-center flex gap-2 flex-col p-5 rounded-lg aspect-square">
+          <MySkeleton className="w-full items-center flex gap-2 flex-col md:p-5 p-3 rounded-lg aspect-square">
             <MySkeleton className="w-[100%] aspect-square " />
             <MySkeleton className="w-full h-6" />
             <MySkeleton className="w-full h-6" />
             <MySkeleton className="w-full h-6" />
           </MySkeleton>
-          <MySkeleton className="w-full items-center flex gap-2 flex-col p-5 rounded-lg aspect-square">
+          <MySkeleton className="w-full items-center flex gap-2 flex-col md:p-5 p-3 rounded-lg aspect-square">
             <MySkeleton className="w-[100%] aspect-square " />
             <MySkeleton className="w-full h-6" />
             <MySkeleton className="w-full h-6" />
             <MySkeleton className="w-full h-6" />
           </MySkeleton>
-          <MySkeleton className="w-full items-center flex gap-2 flex-col p-5 rounded-lg aspect-square">
+          <MySkeleton className="w-full items-center flex gap-2 flex-col md:p-5 p-3 rounded-lg aspect-square">
             <MySkeleton className="w-[100%] aspect-square " />
             <MySkeleton className="w-full h-6" />
             <MySkeleton className="w-full h-6" />
@@ -61,13 +61,13 @@ const LoadingGetData = ({
           </MySkeleton>
           {!isMobile && (
             <>
-              <MySkeleton className="w-full items-center flex gap-2 flex-col p-5 rounded-lg aspect-square">
+              <MySkeleton className="w-full items-center flex gap-2 flex-col md:p-5 p-3 rounded-lg aspect-square">
                 <MySkeleton className="w-[100%] aspect-square " />
                 <MySkeleton className="w-full h-6" />
                 <MySkeleton className="w-full h-6" />
                 <MySkeleton className="w-full h-6" />
               </MySkeleton>
-              <MySkeleton className="w-full items-center flex gap-2 flex-col p-5 rounded-lg aspect-square">
+              <MySkeleton className="w-full items-center flex gap-2 flex-col md:p-5 p-3 rounded-lg aspect-square">
                 <MySkeleton className="w-[100%] aspect-square " />
                 <MySkeleton className="w-full h-6" />
                 <MySkeleton className="w-full h-6" />
@@ -80,11 +80,35 @@ const LoadingGetData = ({
 
     case TYPE_LOADING_GET_DATA.ListProductInHome:
       return (
-        <div className="w-full flex gap-3">
-          <MySkeleton className="sm:w-[30%] w-[48%] md:pb-[300px] pb-[150px] rounded-lg" />
-          <MySkeleton className="sm:w-[30%] w-[48%] md:pb-[300px] pb-[150px] rounded-lg" />
+        <div className="gap-4 w-full mt-4 flex  ">
+          <MySkeleton className="w-[250px] items-center flex gap-2 flex-col md:p-5 p-3 rounded-lg aspect-square">
+            <MySkeleton className="w-[100%] aspect-square " />
+            <MySkeleton className="w-full h-6" />
+            <MySkeleton className="w-full h-6" />
+            <MySkeleton className="w-full h-6" />
+          </MySkeleton>
+          <MySkeleton className="w-[250px] items-center flex gap-2 flex-col md:p-5 p-3 rounded-lg aspect-square">
+            <MySkeleton className="w-[100%] aspect-square " />
+            <MySkeleton className="w-full h-6" />
+            <MySkeleton className="w-full h-6" />
+            <MySkeleton className="w-full h-6" />
+          </MySkeleton>
+
           {!isMobile && (
-            <MySkeleton className="w-[30%] md:pb-[300px] pb-[150px] rounded-lg" />
+            <>
+              <MySkeleton className="w-[250px] items-center flex gap-2 flex-col md:p-5 p-3 rounded-lg aspect-square">
+                <MySkeleton className="w-[100%] aspect-square " />
+                <MySkeleton className="w-full h-6" />
+                <MySkeleton className="w-full h-6" />
+                <MySkeleton className="w-full h-6" />
+              </MySkeleton>
+              <MySkeleton className="w-[250px] items-center flex gap-2 flex-col md:p-5 p-3 rounded-lg aspect-square">
+                <MySkeleton className="w-[100%] aspect-square " />
+                <MySkeleton className="w-full h-6" />
+                <MySkeleton className="w-full h-6" />
+                <MySkeleton className="w-full h-6" />
+              </MySkeleton>
+            </>
           )}
         </div>
       )

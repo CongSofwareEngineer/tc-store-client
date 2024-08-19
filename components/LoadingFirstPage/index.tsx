@@ -1,4 +1,5 @@
 'use client'
+import { Loading3QuartersOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
 
 const LoadingFirstPage = () => {
@@ -10,7 +11,10 @@ const LoadingFirstPage = () => {
     <></>
   ) : (
     <div className="bg-white z-[999999999] flex w-screen h-screen fixed justify-center items-center inset-0">
-      <iframe src="https://lottie.host/embed/1ab2ebfc-a8ca-4bc7-9442-60730846ab8b/7LAWUClNe2.json"></iframe>
+      <Loading3QuartersOutlined
+        style={{ color: 'green' }}
+        className="text-[40px] animation_spin1s "
+      />
     </div>
   )
 }
