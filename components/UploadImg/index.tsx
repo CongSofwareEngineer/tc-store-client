@@ -1,5 +1,6 @@
 import useBase64Img from '@/hook/useBase64Img'
 import useLanguage from '@/hook/useLanguage'
+import useTypeFile from '@/hook/useTypeFile'
 import { showNotificationError } from '@/utils/functions'
 import { Upload } from 'antd'
 import ImgCrop from 'antd-img-crop'
@@ -23,6 +24,7 @@ const UploadImage = ({
 }: Props) => {
   const { translate } = useLanguage()
   const { getBase64 } = useBase64Img(maxSize)
+  const { typeFile: typeFileBase } = useTypeFile()
 
   const handleLoadFile = (file: any) => {
     const callBack = (data: any) => {
@@ -47,7 +49,7 @@ const UploadImage = ({
         className="w-full flex justify-center items-center"
         disabled={disbale}
         showUploadList={false}
-        accept={typeFile}
+        accept={typeFile || typeFileBase}
       >
         <label
           className="cursor-pointer hover:scale-105 edit-avatar flex w-full items-center justify-center gap-2 w-ful "
