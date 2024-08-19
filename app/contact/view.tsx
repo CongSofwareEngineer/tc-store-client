@@ -3,7 +3,7 @@ import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import useAos from '@/hook/useAos'
 import useMedia from '@/hook/useMedia'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 const ContactScreen = () => {
