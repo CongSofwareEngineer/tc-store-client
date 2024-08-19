@@ -18,7 +18,7 @@ const WriteComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
       title: <div className="text-medium">ĐÁNH GIÁ CỦA BẠN VỀ SẢN PHẨM</div>,
       configDrawer: {
         title: 'ĐÁNH GIÁ CỦA BẠN VỀ SẢN PHẨM',
-        height: 'max-content',
+        height: 'auto',
         placement: 'bottom',
       },
       configModal: {

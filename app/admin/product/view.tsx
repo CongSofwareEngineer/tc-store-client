@@ -37,7 +37,7 @@ const ProductAdminScreen = () => {
         width: '700px',
       },
       configDrawer: {
-        height: 'max-content',
+        height: 'auto',
         placement: 'bottom',
       },
     })
