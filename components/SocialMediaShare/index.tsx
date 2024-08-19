@@ -4,7 +4,8 @@ import {
   TwitterShareButton,
   LinkedinShareButton,
   EmailShareButton,
-  // TelegramShareButton
+  TelegramShareButton,
+  InstapaperShareButton,
 } from 'react-share'
 const url = 'https://tcstore.vercel.app/shop'
 const title = 'TC Store - Uy tín khách hàng là chất lượng chúng tôi'
@@ -20,12 +21,16 @@ const SocialMediaShare = () => {
       <LinkedinShareButton url={url} title={title}>
         <></>
       </LinkedinShareButton>
-      <EmailShareButton url="hodiencong2000@gmail.com" title="CEO TC Store">
+      <EmailShareButton url={url} title={title}>
         <></>
       </EmailShareButton>
-      {/* <TelegramShareButton url=''>
+      <TelegramShareButton url={url} title={title}>
+        <></>
+      </TelegramShareButton>
 
-      </TelegramShareButton> */}
+      <InstapaperShareButton url={url} title={title}>
+        <></>
+      </InstapaperShareButton>
     </div>
   )
 }
