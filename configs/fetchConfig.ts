@@ -1,5 +1,5 @@
-import { REQUEST_TYPE } from '@/constant/app';
-import axios from 'axios';
+import { REQUEST_TYPE } from '@/constant/app'
+import axios from 'axios'
 
 export type ServerAPIReqType = {
   url: string
@@ -13,9 +13,12 @@ const fetchConfig = async ({
   body = null,
   auth = '',
   method = REQUEST_TYPE.GET,
-  timeOut = 70000
-}: ServerAPIReqType) => {
-  const baseUrl = process.env.NEXT_PUBLIC_ENABLE_SERVER_LOCAL === 'true' ? 'http://192.168.88.99:3000/' : process.env.NEXT_PUBLIC_API_APP
+  timeOut = 70000,
+}: ServerAPIReqType): Promise<{ data: any; error: any; messages: any }> => {
+  const baseUrl =
+    process.env.NEXT_PUBLIC_ENABLE_SERVER_LOCAL === 'true'
+      ? 'http://192.168.88.99:3000/'
+      : process.env.NEXT_PUBLIC_API_APP
   const config: any = {
     // baseURL: (process.env.NEXT_PUBLIC_API_APP || 'http://192.168.50.115:3002/').trim(),
     baseURL: baseUrl,
@@ -23,10 +26,10 @@ const fetchConfig = async ({
     // cache: isCache ? 'force-cache' : 'no-store',
     method,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     signal: AbortSignal.timeout(timeOut),
-  };
+  }
 
   if (body) {
     config.data = body
@@ -35,12 +38,13 @@ const fetchConfig = async ({
     config.headers.Authorization = auth
   }
 
-  return await axios.request(config)
+  return await axios
+    .request(config)
     .then(async (response) => {
       if (response.status === 200) {
         return {
           ...(response?.data ?? response),
-          messages: 'success'
+          messages: 'success',
         }
       }
       return {
@@ -52,8 +56,8 @@ const fetchConfig = async ({
       return {
         data: null,
         messages: 'fail',
-        error
+        error,
       }
     })
-};
-export default fetchConfig;
+}
+export default fetchConfig

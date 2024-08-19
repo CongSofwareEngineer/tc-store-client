@@ -19,6 +19,7 @@ import useLanguage from '@/hook/useLanguage'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import MyButton from '@/components/MyButton'
+import fetchConfig from '@/configs/fetchConfig'
 
 const BillAdminScreen = () => {
   const { renderContent } = useSearchBaseAdmin()
@@ -59,6 +60,26 @@ const BillAdminScreen = () => {
     })
   }
 
+  // const handleDelete = async (id: string) => {
+  //   const callback = async () => {
+  //     const data = await fetchConfig({
+  //       url: `/bill/delete/${id}`,
+  //       method: REQUEST_TYPE.DELETE,
+  //     })
+  //     if (data?.data) {
+  //       showNotificationSuccess(translate('success.delete'))
+  //       refreshQuery(QUERY_KEY.BillAdmin)
+  //     } else {
+  //       showNotificationError(translate('error.delete'))
+  //     }
+  //     closeModalDrawer()
+  //   }
+
+  //   openModalDrawer({
+  //     content: <ModalDelete title="Do you delete Bill" callback={callback} />,
+  //   })
+  // }
+
   const handleViewDetail = (item: any) => {
     openModalDrawer({
       content: <ItemDetail data={item} />,
@@ -66,9 +87,11 @@ const BillAdminScreen = () => {
       configDrawer: {
         placement: 'bottom',
         title: (
-          <p className="text-center text-medium font-bold ">Bill detail</p>
+          <p className="text-center text-medium font-bold ">
+            {translate('bill.infoBill')}
+          </p>
         ),
-        height: 'fit-content',
+        height: 'auto',
       },
     })
   }
@@ -76,16 +99,30 @@ const BillAdminScreen = () => {
   const renderStatus = (status: string) => {
     switch (status) {
       case FILTER_BILL.Processing:
-        return <span className="text-blue-700 font-bold">Processing</span>
+        return (
+          <span className="text-blue-700 font-bold">
+            {translate('myBill.processing')}
+          </span>
+        )
       case FILTER_BILL.Delivering:
-        return <span className="text-green-500 font-bold">Delivering</span>
+        return (
+          <span className="text-green-500 font-bold">
+            {translate('myBill.delivering')}
+          </span>
+        )
 
       case FILTER_BILL.Canceled:
-        return <span className="text-red-500 font-bold">Canceled</span>
+        return (
+          <span className="text-red-500 font-bold">
+            {translate('common.cancelBill')}
+          </span>
+        )
 
       default:
         return (
-          <span className="text-green-500 font-bold">Delivery success</span>
+          <span className="text-green-500 font-bold">
+            {translate('myBill.deliverySuccess')}
+          </span>
         )
     }
   }
@@ -99,7 +136,9 @@ const BillAdminScreen = () => {
         return (
           <div className="flex flex-col gap-2">
             <div className="flex gap-2">
-              <span className="font-bold">Date: </span>
+              <span className="font-bold">{`${translate(
+                'bill.dateBuy'
+              )} :`}</span>
               <span className="text-nowrap">
                 {formatDateTime(parseInt(record?.date))}
               </span>{' '}
@@ -109,19 +148,25 @@ const BillAdminScreen = () => {
               <TextCopy textView={record._id} />
             </div>
             <div className="flex gap-2">
-              <span className="font-bold">sdt: </span>
+              <span className="font-bold">SĐT :</span>
               <TextCopy textView={record.sdt} />
             </div>
             <div className="flex gap-2">
-              <span className="font-bold">Amount: </span>
+              <span className="font-bold">{`${translate(
+                'textPopular.amount'
+              )} :`}</span>
               <span>{getAmountBuy(record)}</span>
             </div>
             <div className="flex gap-2">
-              <span className="font-bold">status: </span>
+              <span className="font-bold">{`${translate(
+                'textPopular.status'
+              )} :`}</span>
               {renderStatus(record.status)}
             </div>
             <div className="flex gap-2">
-              <span className="font-bold">Total: </span>
+              <span className="font-bold">{`${translate(
+                'textPopular.totalMoney'
+              )} :`}</span>
               <span className="text-green-500 font-bold">
                 {formatPrice(record?.totalBill || '0')}
               </span>
@@ -133,7 +178,7 @@ const BillAdminScreen = () => {
                   onClick={() => handleSubmit(record, FILTER_BILL.Delivering)}
                   widthBtn={isMobile ? '100%' : '150px'}
                 >
-                  Delivering
+                  {translate('myBill.delivering')}
                 </MyButton>
               )}
               {record?.status === FILTER_BILL.Delivering && (
@@ -143,7 +188,7 @@ const BillAdminScreen = () => {
                   }
                   widthBtn={isMobile ? '100%' : '150px'}
                 >
-                  Delivery success
+                  {translate('myBill.deliverySuccess')}
                 </MyButton>
               )}
               <div className="flex md:flex-auto flex-1">
@@ -151,7 +196,7 @@ const BillAdminScreen = () => {
                   onClick={() => handleViewDetail(record)}
                   type="primary"
                 >
-                  View Detail
+                  {translate('common.view')}
                 </MyButton>
               </div>
             </div>

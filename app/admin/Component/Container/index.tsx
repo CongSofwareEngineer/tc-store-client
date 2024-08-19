@@ -17,11 +17,11 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter()
 
   useEffect(() => {
-    const sessionMain = window.document.getElementById('id-section-content')
+    const sectionMain = window.document.getElementById('id-section-content')
     const header = window.document.getElementById('id-container-header')
     if (patchName.includes('/admin')) {
-      if (sessionMain) {
-        sessionMain.classList.add('container-admin')
+      if (sectionMain) {
+        sectionMain.classList.add('container-admin')
       }
       if (header) {
         header.classList.add('container-admin')
@@ -29,7 +29,7 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
     }
 
     return () => {
-      sessionMain && sessionMain.classList.remove('container-admin')
+      sectionMain && sectionMain.classList.remove('container-admin')
       header && header.classList.remove('container-admin')
     }
   }, [patchName])

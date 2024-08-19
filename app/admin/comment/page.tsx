@@ -1,7 +1,8 @@
 import React from 'react'
+import CommentClient from './view'
 
 const CommentAdmin = () => {
-  return <div>CommentAdmin</div>
+  return <CommentClient />
 }
 
 export default CommentAdmin

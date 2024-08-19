@@ -20,9 +20,9 @@ const CategoryHome = () => {
               key={e.keyName}
               href={`/shop?category=${e.keyName}`}
             >
-              <h2 className="hover:underline cursor-pointer">
+              <div className="hover:underline cursor-pointer">
                 {e?.lang && e.lang[lang]}
-              </h2>
+              </div>
             </Link>
           )
         })}
