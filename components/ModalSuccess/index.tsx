@@ -3,8 +3,8 @@ import React from 'react'
 import MyImage from '../MyImage'
 import { images } from '@/configs/images'
 import useMedia from '@/hook/useMedia'
+import useModalDrawer from '@/hook/useModalDrawer'
 import MyButton from '../MyButton'
-import useMyDrawer from '@/hook/useMyDrawer'
 
 type Props = {
   title?: string
@@ -13,18 +13,16 @@ type Props = {
   des?: string
   icon?: string
   callback?: ((params?: any) => any) | null
-  callbackClose?: (() => Promise<void> | void) | null
   showClose?: boolean | false
 }
 const ModalSuccess = ({
   showClose = false,
   callback = null,
-  callbackClose = null,
   ...props
 }: Props) => {
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
-  const { closeModalDrawer } = useMyDrawer()
+  const { closeModalDrawer } = useModalDrawer()
 
   return (
     <div className="flex flex-col w-full gap-4 justify-center align-middle">
@@ -60,10 +58,7 @@ const ModalSuccess = ({
             <MyButton
               className="w-full"
               type="primary"
-              onClick={() => {
-                callbackClose && callbackClose()
-                closeModalDrawer()
-              }}
+              onClick={() => closeModalDrawer()}
             >
               {props.titleClose || translate('common.close')}
             </MyButton>

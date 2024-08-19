@@ -2,7 +2,7 @@ import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
-import { detectImg, numberWithCommas } from '@/utils/functions'
+import { numberWithCommas } from '@/utils/functions'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
@@ -58,7 +58,7 @@ const ViewListOther = ({ dataCart }: { dataCart: any[] }) => {
                   <MyImage
                     widthImage={'auto'}
                     heightImage={'80px'}
-                    src={detectImg(e.more_data?.imageMain?.toString() || '')}
+                    src={e.more_data?.imageMain?.toString() || ''}
                     alt={`item-${e.more_data?.name}`}
                   />
                 </div>
@@ -127,7 +127,7 @@ const ViewListOther = ({ dataCart }: { dataCart: any[] }) => {
                   <MyImage
                     widthImage={'auto'}
                     heightImage={'80px'}
-                    src={detectImg(e.more_data?.imageMain?.toString() || '')}
+                    src={e.more_data?.imageMain?.toString() || ''}
                     alt={`item-${e.more_data?.name}`}
                   />
                 </div>

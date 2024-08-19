@@ -4,16 +4,18 @@ import InputForm from '@/components/InputForm'
 import MyForm from '@/components/MyForm'
 import MyImage from '@/components/MyImage'
 import RateForm from '@/components/RateForm'
-import UploadImage from '@/components/UploadImg'
 import { DataAddComment } from '@/constant/mongoDB'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
+import useBase64Img from '@/hook/useBase64Img'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
+import useTypeFile from '@/hook/useTypeFile'
 import useUserData from '@/hook/useUserData'
-import { delayTime } from '@/utils/functions'
+import { delayTime, showNotificationError } from '@/utils/functions'
 import { CameraOutlined, CloseCircleOutlined } from '@ant-design/icons'
-import { Image } from 'antd'
+import { Image, Upload } from 'antd'
+import ImgCrop from 'antd-img-crop'
 import React, { useEffect, useState } from 'react'
 
 const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
@@ -22,7 +24,9 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
 
   const { isLogin, userData } = useUserData()
   const { translate } = useLanguage()
+  const { typeFile } = useTypeFile({ typeAndroid: '.png,.jpg,.jpeg' })
   const { checkNumberPhone } = useCheckForm()
+  const { getBase64 } = useBase64Img()
   const { refreshQuery } = useRefreshQuery()
 
   useEffect(() => {
@@ -58,6 +62,17 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
       console.log('====================================')
       setloading(false)
     } catch (error) {}
+  }
+
+  const handleUpload = async (file: any) => {
+    const callBack = async (data: any) => {
+      if (formData?.listImg.some((e: any) => e.name === data.name)) {
+        showNotificationError(translate('errors.existFile'))
+      } else {
+        setFormData((prev) => ({ ...prev, listImg: [...prev?.listImg, data] }))
+      }
+    }
+    getBase64(file, callBack)
   }
 
   const deleteImg = (name: string) => {
@@ -99,6 +114,10 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
             <div className="flex flex-1 flex-col gap-2 h-auto justify-center">
               <p className="text-medium font-bold">{dataItem.name}</p>
               <RateForm name="rate" />
+              {/* <Rate
+                defaultValue={formData.rate || 5}
+                style={{ fontSize: 18 }}
+              /> */}
             </div>
           </div>
           <InputForm
@@ -126,27 +145,33 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
             classFromItem="w-full"
           />
 
-          <div className="flex flex-col w-full gap-2 md:mt-10 mt-4">
+          <div className="flex flex-col w-full gap-2 mt-8">
             {renderListImg()}
-            <UploadImage
-              handleUpload={(data) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  listImg: [...prev?.listImg, data],
-                }))
-              }
-              listData={formData?.listImg || []}
-              disbale={formData?.listImg?.length >= 2}
+            <ImgCrop
+              aspect={1}
+              quality={1}
+              modalOk={translate('common.ok')}
+              modalCancel={translate('common.close')}
+              onModalOk={(file) => handleUpload(file)}
             >
-              <div className="flex w-full gap-2">
-                <CameraOutlined
-                  className="cursor-pointer"
-                  style={{ fontSize: 25, color: 'blue' }}
-                />
-                <span>Gửi hình chụp thực tế và video (Tối đa 2 hình)</span>
-              </div>
-            </UploadImage>
-
+              <Upload
+                disabled={formData?.listImg?.length >= 2}
+                showUploadList={false}
+                accept={typeFile}
+              >
+                <label
+                  className="edit-avatar flex items-center justify-center gap-2 w-ful "
+                  htmlFor="avatar"
+                  style={{ opacity: formData?.listImg?.length >= 2 ? 0.5 : 1 }}
+                >
+                  <CameraOutlined
+                    className="cursor-pointer"
+                    style={{ fontSize: 25, color: 'blue' }}
+                  />
+                  <span>Gửi hình chụp thực tế và video (Tối đa 2 hình)</span>
+                </label>
+              </Upload>
+            </ImgCrop>
             <ButtonForm
               loading={loading}
               classNameItem="w-full "

@@ -31,6 +31,8 @@ const ItemInfoUser = ({ value, keyType, title }: ItemInfoUserType) => {
       title: `${translate('common.edit')} ${getLanguage()}`,
       configDrawer: {
         height: '300px',
+        placement: 'bottom',
+        maskClosable: false,
       },
     })
   }

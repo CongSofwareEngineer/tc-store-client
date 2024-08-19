@@ -1,13 +1,13 @@
+import useModalDrawer from '@/hook/useModalDrawer'
 import { Button, Rate } from 'antd'
 import React from 'react'
 import ModalWrite from './ModalWrite'
 import { ItemDetailType } from '@/components/InfoItemDetail/type'
 import useMedia from '@/hook/useMedia'
 import useLanguage from '@/hook/useLanguage'
-import useMyDrawer from '@/hook/useMyDrawer'
 
 const WriteComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
-  const { openModalDrawer } = useMyDrawer()
+  const { openModalDrawer } = useModalDrawer()
   const { isMobile } = useMedia()
   const { translate } = useLanguage()
 
@@ -17,7 +17,9 @@ const WriteComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
       useDrawer: true,
       title: <div className="text-medium">ĐÁNH GIÁ CỦA BẠN VỀ SẢN PHẨM</div>,
       configDrawer: {
-        height: 'auto',
+        title: 'ĐÁNH GIÁ CỦA BẠN VỀ SẢN PHẨM',
+        height: 'max-content',
+        placement: 'bottom',
       },
       configModal: {
         width: '600px',

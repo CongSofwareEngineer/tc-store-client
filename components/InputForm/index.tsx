@@ -42,9 +42,6 @@ const FormItem = styled(styled(Form.Item)<{ $configInput: any }>``)`
     border-radius: ${(props) => props.$configInput?.borderRadius || '8px'};
     border: ${(props) => (props.$configInput.noBorder ? 0 : 1)} solid #d9d9d9 !important;
   }
-  /* .ant-form-item-control {
-    flex: none !important;
-  } */
 `
 type InputFormType = {
   label?: string
@@ -60,7 +57,6 @@ type InputFormType = {
   }
   typeBtn?: 'string' | 'number' | 'area'
   disable?: boolean
-  rows?: number
 }
 const InputForm = ({
   label,
@@ -73,7 +69,6 @@ const InputForm = ({
   configInput = {},
   typeBtn = 'string',
   disable = false,
-  rows = 3,
 }: InputFormType) => {
   const { translate } = useLanguage()
   return (
@@ -108,7 +103,6 @@ const InputForm = ({
         disabled={disable}
         type={isPass ? 'password' : typeBtn}
         className="w-full"
-        rows={rows}
       />
     </FormItem>
   )

@@ -23,14 +23,12 @@ import ServerApi from '@/services/serverApi'
 import ModalProcess from '@/components/ModalProcess'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalSuccess from '@/components/ModalSuccess'
-import { useRouter } from 'next/navigation'
 
 const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
   const { translate } = useLanguage()
   const { userData } = useUserData()
   const { refreshQuery } = useRefreshQuery()
   const { openModalDrawer } = useModalDrawer()
-  const router = useRouter()
 
   const [formData, setFormData] = useState<Record<string, any> | null>(null)
   const [loading, setLoading] = useState(false)
@@ -92,15 +90,8 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
     try {
       setLoading(true)
       let totalBill = 0
-      const listNewSoldProduct: any[] = []
-
-      // sum total amout and cauculate amount sold of product
-      const listBillDetail = dataCart.map((e) => {
+      const listBill = dataCart.map((e) => {
         totalBill += e.amount * e.more_data.price
-        listNewSoldProduct.push({
-          idProduct: e.more_data._id,
-          sold: e.more_data.sold + e.amount,
-        })
         return {
           _id: e.more_data._id,
           keyName: e.more_data.keyName,
@@ -112,12 +103,12 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
         addressShip: formData?.addressShip,
         discount: 0,
         idUser: userData?._id,
-        listBill: listBillDetail,
+        listBill,
         totalBill: totalBill,
         sdt: formData?.sdt,
         status: FILTER_BILL.Processing,
-        listNewSoldProduct: listNewSoldProduct,
       }
+      console.log({ bodyAPI })
 
       openModalDrawer({
         content: (
@@ -138,21 +129,13 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
         method: REQUEST_TYPE.POST,
         encode: true,
       })
-
       if (res?.data) {
-        await delayTime(200)
-        refreshAllData()
-        await delayTime(1000)
         openModalDrawer({
           content: (
             <ModalSuccess
+              showClose={false}
               title={translate('productDetail.modalBuy.success')}
               des={translate('productDetail.modalBuy.successDes')}
-              callback={() => router.push('/my-page/bill')}
-              titleClose={translate('common.ok')}
-              titleSubmit={translate('common.viewBill')}
-              showClose
-              callbackClose={clickBack}
             />
           ),
           configModal: {
@@ -160,7 +143,8 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
             overClickClose: false,
           },
         })
-
+        await delayTime(1000)
+        refreshAllData()
         showNotificationSuccess(translate('productDetail.modalBuy.success'))
       } else {
         showNotificationError(translate('productDetail.modalBuy.error'))

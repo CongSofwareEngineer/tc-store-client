@@ -64,10 +64,11 @@ const BillAdminScreen = () => {
       content: <ItemDetail data={item} />,
       useDrawer: true,
       configDrawer: {
+        placement: 'bottom',
         title: (
           <p className="text-center text-medium font-bold ">Bill detail</p>
         ),
-        height: 'auto',
+        height: 'fit-content',
       },
     })
   }

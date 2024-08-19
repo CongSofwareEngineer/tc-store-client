@@ -10,6 +10,7 @@ const Content = () => {
   const { queries } = useQuerySearch()
   const { data, isLoading, loadMore, hasNextPage, isFetchingNextPage } =
     useAllProduct(PAGE_SIZE_LIMIT, queries)
+
   return (
     <>
       {data.length > 0 && (
@@ -32,15 +33,14 @@ const Content = () => {
         <div className="mt-3">Chưa có sản phẩm</div>
       )}
 
-      {isLoading && (
-        <LoadingGetData loading={isLoading} type={TYPE_LOADING_GET_DATA.Shop} />
-      )}
       <MyLoadMore
         callback={loadMore}
         hasLoadMore={hasNextPage}
         loading={isLoading}
         isFetchingNextPage={isFetchingNextPage}
       />
+
+      <LoadingGetData type={TYPE_LOADING_GET_DATA.Shop} loading={isLoading} />
     </>
   )
 }

@@ -1,50 +1,44 @@
+import InputForm from '@/components/InputForm'
+import MyForm from '@/components/MyForm'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
-import React, { useState } from 'react'
+import { Checkbox, Form } from 'antd'
+import React, { useLayoutEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import useModalDrawer from '@/hook/useModalDrawer'
-import { z } from 'zod'
-import useCheckFormShadcn from '@/hook/useCheckFormShadcn'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import MyFormShadcn from '@/components/ShadcnUI/MyForm'
-import FormInput from '@/components/ShadcnUI/FormInput'
-import ButtonForm from '@/components/ButtonForm'
-import FormCheckBox from '@/components/ShadcnUI/FormCheckBox'
+import MyButton from '@/components/MyButton'
+import useCheckForm from '@/hook/useCheckForm'
 
 const ModalLogin: React.FC = () => {
   const { translate } = useLanguage()
   const { login } = useUserData()
   const route = useRouter()
   const { closeModalDrawer } = useModalDrawer()
-  const { checkNumberPhone, checkPassword } = useCheckFormShadcn()
+  const { checkNumberPhone, checkPassword } = useCheckForm()
 
-  const formSchema = z.object({
-    sdt: checkNumberPhone(z),
-    pass: checkPassword(z),
-    saveLogin: z.boolean(),
-  })
+  const [formData, setFormData] = useState<Record<
+    string,
+    string | boolean
+  > | null>(null)
+  const [loading, setLoading] = useState(false)
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
+  useLayoutEffect(() => {
+    setFormData({
       sdt: '',
       pass: '',
       saveLogin: true,
-    },
-  })
-
-  const [loading, setLoading] = useState(false)
+    })
+  }, [])
 
   const handleRegister = () => {
     closeModalDrawer()
     route.push('/register')
   }
 
-  const handleLogin = async (formData: any) => {
+  const handleLogin = async (e: { sdt: string; pass: string }) => {
     try {
       setLoading(true)
-      await login(formData.sdt, formData.pass, !!formData?.saveLogin)
+      await login(e.sdt, e.pass, !!formData?.saveLogin)
     } catch (error) {
       console.log({ error })
     } finally {
@@ -53,49 +47,11 @@ const ModalLogin: React.FC = () => {
   }
 
   return (
-    <div className="rou w-full flex flex-col gap-2 justify-start ">
+    <div className="w-full flex flex-col gap-2 justify-start ">
       <div className="text-medium uppercase text-center w-full font-semibold">
         {translate('common.login')}
       </div>
-      <MyFormShadcn form={form} onSubmit={handleLogin}>
-        <FormInput
-          name="sdt"
-          form={form}
-          placeholder={translate('userDetail.sdt')}
-          label={translate('userDetail.sdt')}
-        />
-        <FormInput
-          name="pass"
-          form={form}
-          label={translate('userDetail.pass')}
-          placeholder={translate('userDetail.pass')}
-          typeBtn="password"
-        />
-        <div className="pt-1 w-full" />
-
-        <div className="flex md:justify-between md:flex-row flex-col gap-2 flex-wrap">
-          <FormCheckBox
-            name="saveLogin"
-            form={form}
-            label={translate('register.saveRegister')}
-          />
-          <div
-            onClick={handleRegister}
-            className="md:underline cursor-pointer text-blue-700"
-          >
-            {translate('register.title')}
-          </div>
-        </div>
-
-        <div className="md:pt-2 w-full" />
-        <ButtonForm
-          loading={loading}
-          disableClose
-          titleSubmit={translate('common.login')}
-        />
-      </MyFormShadcn>
-
-      {/* {formData && (
+      {formData && (
         <MyForm
           onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
           formData={formData}
@@ -140,12 +96,17 @@ const ModalLogin: React.FC = () => {
           </div>
 
           <Form.Item style={{ display: 'flex', justifyContent: 'center' }}>
-            <MyButton loading={loading} type="submit" className="w-[150px]">
+            <MyButton
+              loading={loading}
+              size="large"
+              htmlType="submit"
+              className="w-[150px]"
+            >
               {translate('common.ok')}
             </MyButton>
           </Form.Item>
         </MyForm>
-      )} */}
+      )}
     </div>
   )
 }

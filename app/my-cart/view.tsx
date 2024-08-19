@@ -103,7 +103,7 @@ const MyCartScreen = () => {
           <div className="w-full flex gap-5">
             <div
               style={{ boxShadow: '3px 3px 6px rgba(0,0,0,.0509803922)' }}
-              className="flex-1  border-2 border-gray-300  overflow-y-auto bg-white min-h-[50vh]"
+              className="flex-1  border-2 border-gray-300  overflow-y-auto bg-white"
             >
               <ListItemCart
                 allSelected={allSelected}

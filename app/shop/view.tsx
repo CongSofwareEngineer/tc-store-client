@@ -5,7 +5,6 @@ import { SearchOutlined } from '@ant-design/icons'
 import useLanguage from '@/hook/useLanguage'
 import useAos from '@/hook/useAos'
 import dynamic from 'next/dynamic'
-
 const Content = dynamic(() => import('./Component/Content'), { ssr: false })
 const MenuCategory = dynamic(() => import('./Component/MenuCategory'), {
   ssr: false,

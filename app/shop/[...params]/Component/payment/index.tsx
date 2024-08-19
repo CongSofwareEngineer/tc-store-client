@@ -1,11 +1,12 @@
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { PaymentShopType } from '../../type'
 import useOptionPayment from '@/hook/useOptionPayment'
 import BillFinal from '@/app/my-cart/Component/Payment/Component/BillFinal'
 import OptionPayment from '@/app/my-cart/Component/Payment/Component/OptionPayment'
+import MyForm from '@/components/MyForm'
 import ContentFormPayment from '@/components/ContentFormPayment'
 import BtnBackUI from '@/components/BtnBackUI'
 import {
@@ -19,70 +20,52 @@ import {
 import InfoBill from './InfoBill'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import { BodyAddBill } from '@/constant/firebase'
+import useModalDrawer from '@/hook/useModalDrawer'
 import ModalProcess from '@/components/ModalProcess'
 import ModalDelete from '@/components/ModalDelete'
 import ServerApi from '@/services/serverApi'
 import { FILTER_BILL, LOCAL_STORAGE_KEY, REQUEST_TYPE } from '@/constant/app'
 import ModalSuccess from '@/components/ModalSuccess'
 import { useRouter } from 'next/navigation'
-import useCheckFormShadcn from '@/hook/useCheckFormShadcn'
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import MyFormShadcn from '@/components/ShadcnUI/MyForm'
-import useMyDrawer from '@/hook/useMyDrawer'
 
 const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const { translate } = useLanguage()
   const route = useRouter()
   const { userData, isLogin } = useUserData()
   const { refreshQuery } = useRefreshQuery()
-  const { openModalDrawer, closeModalDrawer } = useMyDrawer()
+  const { openModalDrawer, closeModalDrawer } = useModalDrawer()
   const { onChangeOptions, listOptions, optionSelected } = useOptionPayment()
-  const { checkNumberPhone } = useCheckFormShadcn()
-  const addressRef = useRef('')
 
+  const [formData, setFormData] = useState<Record<string, any> | null>(null)
   const [loading, setLoading] = useState(false)
-
-  const formSchema = z.object({
-    sdt: checkNumberPhone(z),
-    name: z.string().min(1, {
-      message: translate('errors.empty'),
-    }),
-    addressShip: z.object({
-      addressDetail: z.string().min(1, {
-        message: translate('errors.empty'),
-      }),
-      address: z.string(),
-    }),
-    noteBil: z.string(),
-  })
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      sdt: userData?.sdt || '',
-      name: userData?.name || '',
-      addressShip: {
-        addressDetail: '',
-        address: '',
-      },
-      noteBil: '',
-    },
-  })
 
   useEffect(() => {
     scrollTop()
+    const initData = {
+      sdt: userData?.sdt,
+      name: userData?.name,
+      addressShip: userData?.addressShipper[0]!,
+      linkContact: userData?.linkContact!,
+      gmail: userData?.gmail,
+      noteBil: '',
+    }
+    setFormData(initData)
   }, [userData, isLogin])
 
-  useEffect(() => {
-    console.log({ form })
-  }, [form])
+  const isValidSubmit = useMemo(() => {
+    if (!formData?.addressShip) {
+      return false
+    }
+    return !!formData?.addressShip.addressDetail
+  }, [formData])
 
   const onChangeAddressShip = (item: any) => {
-    console.log({ item })
-
-    addressRef.current = item
+    setFormData({
+      ...formData,
+      addressShip: {
+        ...item,
+      },
+    })
   }
 
   const saveDataNoLogin = (bodyBill: BodyAddBill) => {
@@ -95,15 +78,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
     }
   }
 
-  const handleSubmit = async (dataForm: any) => {
-    const formData = {
-      ...dataForm,
-      addressShip: {
-        addressDetail: dataForm.addressShip.addressDetail,
-        address: addressRef.current,
-      },
-    }
-
+  const handleSubmit = async () => {
     const callBack = async () => {
       setLoading(true)
 
@@ -122,7 +97,6 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         status: FILTER_BILL.Processing,
         totalBill: data?.price * amount,
       }
-      console.log({ bodyBill })
 
       saveDataNoLogin(bodyBill)
 
@@ -133,6 +107,11 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
             des={translate('confirm.bill.createBill_Des')}
           />
         ),
+        configModal: {
+          showHeader: false,
+          showBtnClose: false,
+          overClickClose: false,
+        },
       })
 
       const res = await ServerApi.requestBase({
@@ -141,6 +120,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         method: REQUEST_TYPE.POST,
         encode: true,
       })
+      // const res = { data: 'have data' }
 
       if (res?.data) {
         openModalDrawer({
@@ -166,11 +146,10 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         await delayTime(500)
       } else {
         showNotificationError(translate('productDetail.modalBuy.error'))
-        closeModalDrawer()
       }
+
       setLoading(false)
     }
-
     openModalDrawer({
       content: (
         <ModalDelete
@@ -192,14 +171,18 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         titlePage={data?.name}
       />
       <div className="flex flex-col gap-3 w-full mt-1">
-        {form && (
-          <MyFormShadcn form={form} onSubmit={handleSubmit}>
+        {formData && (
+          <MyForm
+            onFinish={handleSubmit}
+            formData={formData}
+            onValuesChange={(_, value) =>
+              setFormData({ ...formData, ...value })
+            }
+          >
+            {/* lg:max-h-[calc(100vh-126px)] hide-scroll */}
             <div className="flex lg:flex-row flex-col lg:gap-6 gap-5">
               <div className="flex flex-1 h-full overflow-y-auto  flex-col lg:max-w-[calc(100%-300px)]">
-                <ContentFormPayment
-                  form={form}
-                  onChange={onChangeAddressShip}
-                />
+                <ContentFormPayment onChange={onChangeAddressShip} />
                 <InfoBill data={data} amountBuy={amount} />
               </div>
 
@@ -210,6 +193,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
                   optionSelected={optionSelected}
                 />
                 <BillFinal
+                  disabledSubmit={!isValidSubmit}
                   loading={loading}
                   totalBill={numberWithCommas(amount * data?.price)}
                   totalBillFeeShip={numberWithCommas(
@@ -218,7 +202,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
                 />
               </div>
             </div>
-          </MyFormShadcn>
+          </MyForm>
         )}
       </div>
     </div>
