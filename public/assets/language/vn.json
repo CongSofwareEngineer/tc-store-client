@@ -1,5 +1,7 @@
 {
   "common": {
+    "addNew": "Thêm mới",
+    "update": "Cập nhật",
     "create": "Tạo mới",
     "ok": "OK",
     "login": "Đăng nhập",

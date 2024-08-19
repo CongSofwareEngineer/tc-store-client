@@ -117,10 +117,10 @@ const ProductAdminScreen = () => {
                       onClick={() => handleUpdate(record)}
                       className="w-full"
                     >
-                      Update
+                      {translate('common.update')}
                     </Button>
                     <Button className="w-full" type="primary">
-                      Delete
+                      {translate('common.delete')}
                     </Button>
                   </div>
                 )}
@@ -131,10 +131,10 @@ const ProductAdminScreen = () => {
                     onClick={() => handleUpdate(record)}
                     className="w-full"
                   >
-                    Update
+                    {translate('common.update')}
                   </Button>
                   <Button className="w-full" type="primary">
-                    Delete
+                    {translate('common.delete')}
                   </Button>
                 </div>
               )}
@@ -154,7 +154,11 @@ const ProductAdminScreen = () => {
         data={data || []}
         limit={PAGE_SIZE_LIMIT}
         total={20}
-        extra={<Button onClick={() => handleUpdate(null)}>Add new</Button>}
+        extra={
+          <Button onClick={() => handleUpdate(null)}>
+            {translate('common.addNew')}
+          </Button>
+        }
       />
     )
   }

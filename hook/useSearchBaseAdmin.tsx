@@ -43,7 +43,7 @@ const useSearchBaseAdmin = () => {
               Search
             </MyButton>
           </div>
-          <div className="flex flex-1 gap-3">
+          <div className="flex flex-1 md:flex-row  flex-col  gap-3">
             <MyInput
               placeholder="Id"
               type="string"
