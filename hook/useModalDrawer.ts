@@ -2,11 +2,9 @@ import { ModalContext } from '@/components/MyModal'
 import { ConfigModal } from '@/components/MyModal/type'
 import { useContext, useCallback } from 'react';
 import useMedia from './useMedia'
-import {
-  ConfigMyDrawerType,
-  DrawerContext,
-} from '@/components/ShadcnUI/DrawerProvider/config'
+ 
 import React from 'react';
+import { ConfigMyDrawerType, DrawerContext } from '@/components/DrawerProvider/config';
 
 type UseModalType = {
   useDrawer?: boolean | false

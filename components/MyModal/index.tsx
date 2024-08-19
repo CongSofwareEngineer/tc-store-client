@@ -2,6 +2,7 @@
 import React, { createContext, useState } from 'react'
 import ModalConfig from './modalConfig'
 import { ConfigModal, ContainerContextProps } from './type'
+import useMedia from '@/hook/useMedia'
 
 const defaultValue: ContainerContextProps = {
   config: {
@@ -19,6 +20,7 @@ export const ModalContext = createContext<ContainerContextProps>(defaultValue)
 
 const MyModalProvider = ({ children }: { children: React.ReactNode }) => {
   const [config, setConfig] = useState<ConfigModal>(defaultConfig)
+  const { isClient } = useMedia()
 
   const closeModal = () => {
     setConfig({ ...config, content: null, open: false })
@@ -31,7 +33,7 @@ const MyModalProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <ModalContext.Provider value={{ config, closeModal, openModal }}>
       {children}
-      <ModalConfig config={config} closeModal={closeModal} />
+      {isClient && <ModalConfig config={config} closeModal={closeModal} />}
     </ModalContext.Provider>
   )
 }

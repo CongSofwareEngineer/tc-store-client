@@ -2,10 +2,11 @@
 import { Drawer } from 'antd'
 import React, { useState } from 'react'
 import { ConfigMyDrawerType, DrawerContext, defaultConfig } from './config'
+import useMedia from '@/hook/useMedia'
 
 const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
   const [config, setConfig] = useState<ConfigMyDrawerType>(defaultConfig)
-
+  const { isClient } = useMedia()
   const closeDrawer = () => {
     setConfig({ ...config, content: null, open: false })
   }
@@ -17,9 +18,11 @@ const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <DrawerContext.Provider value={{ config, closeDrawer, openDrawer }}>
       {children}
-      <Drawer onClose={closeDrawer} {...config}>
-        {config.content ?? <></>}
-      </Drawer>
+      {isClient && (
+        <Drawer onClose={closeDrawer} {...config}>
+          {config.content ?? <></>}
+        </Drawer>
+      )}
     </DrawerContext.Provider>
   )
 }
