@@ -23,11 +23,8 @@ const useModalDrawer = () => {
   const openModalDrawer = useCallback((config: UseModalType) => {
     const configDrawerBase: ConfigMyDrawerType = {
       content: config.content,
-      position: 'bottom',
-      width: '100vw',
-      height: 'auto',
-      maxHeight: '70vh',
-      configFooter: null,
+      placement: 'bottom', 
+      height: 'auto',  
       ...config.configDrawer,
       title: config.configDrawer?.title || config?.title,
     }
