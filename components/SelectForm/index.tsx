@@ -2,6 +2,7 @@ import useLanguage from '@/hook/useLanguage'
 import { Form, Select, SelectProps } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
+import { PropsSelectItem } from '../MySelect'
 const FormItem = styled(Form.Item)`
   margin-bottom: 24px !important;
   .ant-form-item-row {
@@ -16,7 +17,7 @@ type InputFormType = {
   name?: string
   message?: string
   required?: boolean
-  options: { [name: string]: any }[]
+  options: Array<PropsSelectItem> | []
   configSelect?: SelectProps
   validator?: (value?: any) => string | null
 }

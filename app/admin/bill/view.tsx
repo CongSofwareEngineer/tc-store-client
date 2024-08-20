@@ -21,7 +21,10 @@ import { QUERY_KEY } from '@/constant/reactQuery'
 import MyButton from '@/components/MyButton'
 
 const BillAdminScreen = () => {
-  const { renderContent } = useSearchBaseAdmin()
+  const { renderContent } = useSearchBaseAdmin({
+    showAdmin: false,
+    showCategory: false,
+  })
   const { data, isLoading } = useBillAdmin([], '')
   const { isMobile } = useMedia()
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()

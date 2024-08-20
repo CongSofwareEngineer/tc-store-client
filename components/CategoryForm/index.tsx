@@ -68,7 +68,6 @@ const CategoryForm = ({
   disable = false,
 }: Props) => {
   const { CategoryMenu, Language } = useAppSelector((state) => state.app)
-  console.log({ disable })
 
   const getMenu = () => {
     const data = CategoryMenu.map((e) => {
