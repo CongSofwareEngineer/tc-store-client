@@ -64,12 +64,13 @@ const Avatar = () => {
   }, [])
 
   return (
-    <div className="w-[150px] relative overflow-hidden rounded-[50%]">
+    <div className="w-[150px] min-h-[150px] relative overflow-hidden rounded-[50%]">
       <MyImage
         src={detectAvatar(userData?.avatar?.toString())}
         alt="avatar"
         widthImage="100%"
         heightImage="auto"
+        priority
       />
       <div className="absolute-center mt-2">
         <ImgCrop

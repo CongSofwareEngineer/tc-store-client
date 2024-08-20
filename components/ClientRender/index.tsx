@@ -9,10 +9,20 @@ import Footer from '../Footer'
 import dynamic from 'next/dynamic'
 import useUserData from '@/hook/useUserData'
 import moment from 'moment'
-import { LANGUAGE_SUPPORT } from '@/constant/app'
+import {
+  COOKIE_EXPIRED,
+  COOKIE_KEY,
+  LANGUAGE_SUPPORT,
+  OBSERVER_KEY,
+} from '@/constant/app'
 import useAos from '@/hook/useAos'
 import { fetchProvinces } from '@/redux/provincesSlice'
 import useMedia from '@/hook/useMedia'
+import { deleteCookie, setCookie } from '@/services/CookeisService'
+import ObserverService from '@/services/observer'
+import { SLICE } from '@/constant/redux'
+import secureLocalStorage from 'react-secure-storage'
+import { setUserData } from '@/redux/userDataSlice'
 
 const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
   ssr: true,
@@ -38,15 +48,23 @@ const ClientRender = ({
   const { isClient } = useMedia()
 
   useEffect(() => {
-    console.log('====================================')
-    console.log({ isClient })
-    console.log('====================================')
     isClient && reLogin()
   }, [isClient, reLogin])
 
   useLayoutEffect(() => {
     dispatch(setMenuCategory(menuCategory))
     dispatch(fetchProvinces())
+    const updateCookies = (auth: string) => {
+      setCookie(COOKIE_KEY.Auth, auth, COOKIE_EXPIRED.ExpiredAuth)
+    }
+    ObserverService.on(OBSERVER_KEY.LogOut, () => {
+      secureLocalStorage.removeItem(SLICE.UserData)
+      deleteCookie(COOKIE_KEY.Auth)
+      deleteCookie(COOKIE_KEY.AuthRefresh)
+      dispatch(setUserData(null))
+    })
+    ObserverService.on(OBSERVER_KEY.UpdateCookieAuth, updateCookies)
+    return () => ObserverService.removeListener(OBSERVER_KEY.LogOut)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

@@ -22,8 +22,9 @@ import MyButton from '@/components/MyButton'
 
 const BillAdminScreen = () => {
   const { renderContent } = useSearchBaseAdmin({
-    showAdmin: false,
-    showCategory: false,
+    admin: false,
+    category: false,
+    keyName: false,
   })
   const { data, isLoading } = useBillAdmin([], '')
   const { isMobile } = useMedia()

@@ -57,7 +57,7 @@ type Props = {
     borderRadius?: number
   }
   typeBtn?: 'string' | 'number' | 'area'
-  disable?: boolean
+  disabled?: boolean
 }
 
 const CategoryForm = ({
@@ -65,7 +65,7 @@ const CategoryForm = ({
   name,
   classFromItem = '',
   configInput = {},
-  disable = false,
+  disabled = false,
 }: Props) => {
   const { CategoryMenu, Language } = useAppSelector((state) => state.app)
 
@@ -77,7 +77,13 @@ const CategoryForm = ({
         name: e.keyName,
       }
     })
-    return data
+    return [
+      {
+        label: 'All',
+        value: 'all',
+      },
+      ...data,
+    ]
   }
 
   return CategoryMenu ? (
@@ -87,7 +93,7 @@ const CategoryForm = ({
       label={label}
       name={name}
     >
-      <MySelect option={getMenu()} className="w-full" />
+      <MySelect disabled={disabled} option={getMenu()} className="w-full" />
     </FormItem>
   ) : (
     <></>

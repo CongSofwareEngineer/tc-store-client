@@ -1,9 +1,8 @@
 import lodash from 'lodash'
-import { message, notification } from 'antd';
-import BigNumber from 'bignumber.js';
-import { toast } from 'react-toastify';
-import moment from 'moment';
-
+import { message, notification } from 'antd'
+import BigNumber from 'bignumber.js'
+import { toast } from 'react-toastify'
+import moment from 'moment'
 
 export const cloneData = (data: any, defaultValue: any = '') => {
   try {
@@ -20,15 +19,14 @@ export const isEmptyObject = (data: any) => {
   return lodash.isEmpty(data)
 }
 
-
 export const numberWithCommas = (x: any) => {
   if (!x) {
     return 0
   }
-  const parts = x.toString().split('.');
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  return parts.join('.');
-};
+  const parts = x.toString().split('.')
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  return parts.join('.')
+}
 
 export const formatPrice = (data: any) => {
   try {
@@ -46,29 +44,24 @@ export const formatPriceBase = (data: any, discount = 20) => {
     return numberWithCommas(new BigNumber(rate).multipliedBy(data).toNumber())
   } catch (error) {
     return 0
-
   }
 }
 
-export const showNotification = (
-  title = null,
-  description = ''
-) => {
+export const showNotification = (title = null, description = '') => {
   const params: any = {
     placement: 'bottomRight',
     className: 'notification-class',
     bottom: 54,
-    duration: 5
-  };
+    duration: 5,
+  }
   if (title) {
-    params.message = title;
+    params.message = title
   }
   if (description) {
-    params.description = description;
+    params.description = description
   }
-  notification.open(params);
+  notification.open(params)
 }
-
 
 export const showNotificationError = (errorMessage = '', autoClose = 5000) => {
   toast.error(errorMessage, {
@@ -78,9 +71,9 @@ export const showNotificationError = (errorMessage = '', autoClose = 5000) => {
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
-    progress: undefined
-  });
-};
+    progress: undefined,
+  })
+}
 
 export const showNotificationSuccess = (message = '', autoClose = 5000) => {
   toast.success(message, {
@@ -90,9 +83,9 @@ export const showNotificationSuccess = (message = '', autoClose = 5000) => {
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
-    progress: undefined
-  });
-};
+    progress: undefined,
+  })
+}
 
 export function delayTime(ms = 500) {
   return new Promise((resolve) => {
@@ -158,37 +151,34 @@ export const scrollTop = () => {
 }
 
 export const processQuery = (data: any[], query: any) => {
-  const page = Number(query?.page ?? 1);
-  const limit = Number(query?.limit ?? 20);
+  const page = Number(query?.page ?? 1)
+  const limit = Number(query?.limit ?? 20)
 
-  const amountQuery = page * limit;
-  const arr: any[] = [];
-  let totalPage = BigNumber(data.length)
-    .dividedBy(Number(limit))
-    .toNumber();
+  const amountQuery = page * limit
+  const arr: any[] = []
+  let totalPage = BigNumber(data.length).dividedBy(Number(limit)).toNumber()
 
   if (totalPage <= 1) {
-    totalPage = 1;
+    totalPage = 1
   }
   data.forEach((item, index) => {
     if (page === 1) {
       if (index < limit) {
-        arr.push(item);
+        arr.push(item)
       }
     } else {
       if (index >= limit * (page - 1) && index <= amountQuery) {
-        arr.push(item);
+        arr.push(item)
       }
     }
-  });
+  })
 
   return {
     data: arr,
     totalPage,
     page,
-  };
-};
-
+  }
+}
 
 export const copyToClipboard = (text: any) => {
   const tmp = document.createElement('input')
@@ -204,22 +194,19 @@ export const copyToClipboard = (text: any) => {
 }
 
 export const viewExternal = (url: string) => {
-  window.open(url, '_blank');
-};
-
+  window.open(url, '_blank')
+}
 
 export const formatDateTime = (data: any) => {
   return moment(data).format('DD / MM /YYYY')
-};
-
-
+}
 
 export const detectImg = (src: any) => {
   try {
     if (!src) {
       return ''
     }
-    if(src?.startsWith('data:image')){
+    if (src?.startsWith('data:image')) {
       return src
     }
 
@@ -230,8 +217,7 @@ export const detectImg = (src: any) => {
   } catch (error) {
     return ''
   }
-};
-
+}
 
 export const detectAvatar = (src: any) => {
   try {
@@ -246,12 +232,27 @@ export const detectAvatar = (src: any) => {
   } catch (error) {
     return '/images/Profile/Userdetail/iconUserDetail.png'
   }
-};
-
-export const ellipsisText = (text: string, prefixLength = 13, suffixLength = 4) => {
-  text = text || ''
-  return `${text.substr(0, prefixLength)}...${text.substr(text.length - suffixLength, suffixLength)}`
 }
 
+export const ellipsisText = (
+  text: string,
+  prefixLength = 13,
+  suffixLength = 4
+) => {
+  text = text || ''
+  return `${text.substr(0, prefixLength)}...${text.substr(
+    text.length - suffixLength,
+    suffixLength
+  )}`
+}
 
-
+export function isObject(value: any) {
+  try {
+    if (!value) {
+      return false
+    }
+    return Object.prototype.toString.call(value) === '[object Object]'
+  } catch (error) {
+    return false
+  }
+}

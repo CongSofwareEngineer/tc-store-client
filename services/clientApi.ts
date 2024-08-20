@@ -14,10 +14,7 @@ export type ClientAPITypeParam = {
 
 const ClientApi = {
   fetchData: async (
-    param: ClientAPITypeParam = {
-      isAthu: true,
-      method: REQUEST_TYPE.GET,
-    }
+    param: ClientAPITypeParam
   ): Promise<{
     data: any
     error?: any
@@ -25,10 +22,23 @@ const ClientApi = {
   }> => {
     try {
       let athu: string | null = ''
-      if (param.method !== REQUEST_TYPE.GET && param.isAthu) {
+      const config: ClientAPITypeParam = {
+        isAthu: true,
+        method: REQUEST_TYPE.GET,
+        ...param,
+      }
+      console.log({ config })
+
+      if (config.method !== REQUEST_TYPE.GET && config.isAthu) {
         athu = await getCookie(COOKIE_KEY.Auth)
-        if (!athu && param.isAthu) {
+        console.log('====================================')
+        console.log({ athu })
+        console.log('====================================')
+        if (!athu && config.isAthu) {
           const authRefresh = await getCookie(COOKIE_KEY.AuthRefresh)
+          console.log('====================================')
+          console.log({ authRefresh })
+          console.log('====================================')
           if (!authRefresh) {
             ObserverService.emit(OBSERVER_KEY.LogOut)
             return {
@@ -41,14 +51,17 @@ const ClientApi = {
             url: 'auth/refresh',
             isAthu: false,
             auth: authRefresh.toString(),
+            method: REQUEST_TYPE.POST,
           })
+          console.log({ newAthu })
+
           if (newAthu?.data?.token) {
             athu = newAthu?.data?.token
             setCookie(COOKIE_KEY.Auth, newAthu?.data?.token)
           }
         }
       }
-      return fetchConfig({ ...param, auth: athu || '' })
+      return fetchConfig({ ...config, auth: athu || '' })
     } catch (error) {
       return {
         data: null,

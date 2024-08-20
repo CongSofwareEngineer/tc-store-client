@@ -73,18 +73,22 @@ const ModalUpdateUser = ({ keyType, callBack, initValue }: PropsType) => {
     if (callBack) {
       await callBack(valueNew?.toString())
     } else {
-      await ClientApi.fetchData({
+      const res = await ClientApi.fetchData({
         url: `user/update/${userData?._id}`,
         method: REQUEST_TYPE.POST,
         body: {
           [keyType]: valueNew,
         },
       })
-    }
-    await refreshLogin()
-    closeModalDrawer()
-    showNotificationSuccess(translate('myPage.updateSuccess'))
 
+      if (!res?.error) {
+        await refreshLogin()
+        showNotificationSuccess(translate('myPage.updateSuccess'))
+      } else {
+        showNotificationError(translate('error.expiredLogin'))
+      }
+    }
+    closeModalDrawer()
     setLoading(false)
   }
 

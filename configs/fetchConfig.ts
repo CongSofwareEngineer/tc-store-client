@@ -18,7 +18,6 @@ const fetchConfig = async ({
   auth = '',
   method = REQUEST_TYPE.GET,
   timeOut = 70000,
-  isAthu = true,
 }: ServerAPIReqType): Promise<{ data: any; error?: any; messages: any }> => {
   const baseUrl =
     process.env.NEXT_PUBLIC_ENABLE_SERVER_LOCAL === 'true'
@@ -46,9 +45,8 @@ const fetchConfig = async ({
     }
   }
 
-  if (isAthu && method !== REQUEST_TYPE.GET) {
-    const authCookies = await getCookie(COOKIE_KEY.Auth)
-    config.headers.Authorization = auth || authCookies
+  if (auth) {
+    config.headers.Authorization = auth
   }
 
   return await axios

@@ -1,10 +1,10 @@
-import dayjs from 'dayjs';
+import dayjs from 'dayjs'
 export enum REQUEST_TYPE {
   POST = 'POST',
   GET = 'GET',
   PUT = 'PUT',
   DELETE = 'DELETE',
-  PATCH = 'PATCH'
+  PATCH = 'PATCH',
 }
 
 export enum TYPE_LOADING_GET_DATA {
@@ -15,7 +15,6 @@ export enum TYPE_LOADING_GET_DATA {
   MyProfile = 'MyProfile',
   ListProductInHome = 'ListProductInHome',
 }
-
 
 export const COLOR_CONFIG = {
   'gray-1': '#333333',
@@ -37,19 +36,23 @@ export const COLOR_CONFIG = {
 export enum COOKIE_KEY {
   'User' = 'User',
   'MyCart' = 'MyCart',
-  'Auth' = 'auth',
+  'Auth' = 'Auth',
   'AuthRefresh' = 'AuthRefresh',
 }
 
 export enum COOKIE_EXPIRED {
-  'ExpiredAuth' = Number((new Date()).setHours(new Date().getHours() + 2).toFixed()) - 20000,
-  'ExpiredAuthRefresh' = Number((new Date()).setDate(new Date().getDate() + 15).toFixed()) - 20000
+  'ExpiredAuth' = Number(
+    new Date().setHours(new Date().getHours() + 2).toFixed()
+  ) - 20000,
+  'ExpiredAuthRefresh' = Number(
+    new Date().setDate(new Date().getDate() + 15).toFixed()
+  ) - 20000,
 }
 
 export enum LOCAL_STORAGE_KEY {
   'User' = 'User',
   'MyCart' = 'MyCart',
-  "ListSDTBuy" = 'ListSDTBuy'
+  'ListSDTBuy' = 'ListSDTBuy',
 }
 
 export enum FilterAPI {
@@ -60,7 +63,7 @@ export enum FilterAPI {
   Water = 'water',
   Fashion = 'fashion',
   Electronic = 'electronic',
-  Category = 'category'
+  Category = 'category',
 }
 
 export const PAGE_SIZE_LIMIT = 12
@@ -68,9 +71,8 @@ export const PAGE_SIZE_LIMIT = 12
 export const OptionPayment = {
   momo: 'momo',
   banking: 'banking',
-  delivery: 'delivery'
+  delivery: 'delivery',
 }
-
 
 export enum OBSERVER_KEY {
   'LogOut' = 'LogOut',
@@ -90,4 +92,6 @@ export enum FILTER_BILL {
   'Canceled' = 'canceled',
 }
 
-export const DATE_START_FILTER = dayjs(new Date(Date.now()).setDate(new Date().getDate() - 1))
+export const DATE_START_FILTER = dayjs(
+  new Date(Date.now()).setDate(new Date().getDate() - 1)
+)

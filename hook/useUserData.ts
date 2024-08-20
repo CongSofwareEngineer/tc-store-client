@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { setUserData } from '@/redux/userDataSlice'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import useLanguage from './useLanguage'
 import {
   showNotificationError,
@@ -10,14 +10,8 @@ import secureLocalStorage from 'react-secure-storage'
 import { decryptData, encryptData } from '@/utils/crypto'
 import { SLICE } from '@/constant/redux'
 import useModalDrawer from './useModalDrawer'
-import {
-  COOKIE_EXPIRED,
-  COOKIE_KEY,
-  OBSERVER_KEY,
-  REQUEST_TYPE,
-} from '@/constant/app'
+import { COOKIE_EXPIRED, COOKIE_KEY, REQUEST_TYPE } from '@/constant/app'
 import { deleteCookie, setCookie } from '@/services/CookeisService'
-import ObserverService from '@/services/observer'
 import ClientApi from '@/services/clientApi'
 
 const useUserData = () => {
@@ -25,19 +19,6 @@ const useUserData = () => {
   const { UserData: userData } = useAppSelector((state) => state.app)
   const { translate } = useLanguage()
   const { closeModalDrawer } = useModalDrawer()
-
-  useEffect(() => {
-    const updateCookies = (auth: string) => {
-      setCookie(COOKIE_KEY.Auth, auth, COOKIE_EXPIRED.ExpiredAuth)
-    }
-    ObserverService.on(OBSERVER_KEY.LogOut, () => {
-      secureLocalStorage.removeItem(SLICE.UserData)
-      deleteCookie(COOKIE_KEY.Auth)
-      deleteCookie(COOKIE_KEY.AuthRefresh)
-    })
-    ObserverService.on(OBSERVER_KEY.UpdateCookieAuth, updateCookies)
-    return () => ObserverService.removeListener(OBSERVER_KEY.LogOut)
-  }, [])
 
   const isLogin = useMemo(() => {
     return !!userData

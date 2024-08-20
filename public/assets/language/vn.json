@@ -238,7 +238,8 @@
     "login": "Đăng nhập thất bại",
     "create": "Tạo mới thất bại",
     "delete": "Xóa thất bại",
-    "update": "Cập nhật thất bại"
+    "update": "Cập nhật thất bại",
+    "expiredLogin": "Hết hạn đăng nhập"
   },
   "errors": {
     "create": "Tạo mới Thất bại",

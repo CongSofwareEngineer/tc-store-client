@@ -57,6 +57,7 @@ type InputFormType = {
   }
   typeBtn?: 'string' | 'number' | 'area'
   disable?: boolean
+  rows?: number
 }
 const InputForm = ({
   label,
@@ -69,6 +70,7 @@ const InputForm = ({
   configInput = {},
   typeBtn = 'string',
   disable = false,
+  rows = 3,
 }: InputFormType) => {
   const { translate } = useLanguage()
   return (
@@ -101,6 +103,7 @@ const InputForm = ({
     >
       <MyInput
         disabled={disable}
+        rows={rows}
         type={isPass ? 'password' : typeBtn}
         className="w-full"
       />

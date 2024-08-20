@@ -1,6 +1,6 @@
 import MyImage from '@/components/MyImage'
 import useMedia from '@/hook/useMedia'
-import { formatPrice } from '@/utils/functions'
+import { detectImg, formatPrice } from '@/utils/functions'
 import React from 'react'
 
 const ItemDetail = ({ data }: { data: any }) => {
@@ -41,7 +41,7 @@ const ItemDetail = ({ data }: { data: any }) => {
             <div className="w-[150px] aspect-square overflow-hidden">
               <MyImage
                 alt={`img-product`}
-                src={e?.more_data?.imageMain}
+                src={detectImg(e?.more_data?.imageMain)}
                 widthImage="100%"
                 heightImage="auto"
               />

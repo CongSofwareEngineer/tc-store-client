@@ -16,7 +16,10 @@ import useLanguage from '@/hook/useLanguage'
 import Link from 'next/link'
 
 const ProductAdminScreen = () => {
-  const { renderContent } = useSearchBaseAdmin()
+  const { renderContent } = useSearchBaseAdmin({
+    status: false,
+    admin: false,
+  })
   const { queries } = useQuerySearch()
   const { data, isLoading, hasNextPage, isFetchingNextPage, loadMore } =
     useAllProduct(PAGE_SIZE_LIMIT, queries)
