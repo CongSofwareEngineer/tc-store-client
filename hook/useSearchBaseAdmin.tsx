@@ -1,41 +1,40 @@
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-import { Button } from 'antd'
-import MyInput from '@/components/MyInput'
-import MyRangePicker from '@/components/MyRangePicker'
-import MyButton from '@/components/MyButton'
 import MyForm from '@/components/MyForm'
 import InputForm from '@/components/InputForm'
 import useLanguage from './useLanguage'
-import SelectForm from '@/components/SelectForm'
-import { FILTER_BILL } from '@/constant/app'
 import CategoryForm from '@/components/CategoryForm'
 import CheckBoxForm from '@/components/CheckBoxForm'
+import { usePathname } from 'next/navigation'
+import { useRouter } from 'next/router'
+import ButtonForm from '@/components/ButtonForm'
 
 const dateStart = moment(Date.now()).add(-7, 'days').format('YYYY-MM-DD')
 type Props = {
-  showId?: boolean
-  showSDT?: boolean
-  showKeyName?: boolean
-  showAllDate?: boolean
-  showOneDate?: boolean
-  showStatus?: boolean
-  showCategory?: boolean
-  showAdmin?: boolean
+  allDate?: boolean
+  category?: boolean
+  id?: boolean
+  sdt?: boolean
+  keyName?: boolean
+  status?: boolean
+  admin?: boolean
+  oneDate?: boolean
 }
 const useSearchBaseAdmin = (
   param: Props = {
-    showAllDate: true,
-    showCategory: true,
-    showId: true,
-    showSDT: true,
-    showKeyName: true,
-    showStatus: true,
-    showOneDate: false,
-    showAdmin: false,
+    allDate: true,
+    category: true,
+    id: true,
+    sdt: true,
+    keyName: true,
+    status: true,
+    oneDate: true,
+    admin: false,
   }
 ) => {
   const { translate } = useLanguage()
+  const pathPage = usePathname()
+  const router = useRouter()
 
   const [formData, setFormData] = useState<{ [key: string]: any } | null>(null)
 
@@ -54,7 +53,20 @@ const useSearchBaseAdmin = (
     return () => setFormData(initData)
   }, [])
 
-  const handleSubmit = () => {}
+  const handleSubmit = () => {
+    let query = ''
+    Object.entries(param).forEach(([key, value]: [string, boolean]) => {
+      if (value) {
+        if (query) {
+          query += `&${formData?.[key]}`
+        } else {
+          query += formData?.[key]
+        }
+      }
+    })
+
+    router.push(`${pathPage}?${query}`)
+  }
 
   const renderContent = () => {
     return (
@@ -69,7 +81,7 @@ const useSearchBaseAdmin = (
             className="w-full"
           >
             <div className="flex justify-between flex-wrap">
-              {param.showKeyName && (
+              {param.keyName && (
                 <div className="md:w-[48%] w-full">
                   <InputForm
                     key={'KeyName'}
@@ -79,7 +91,7 @@ const useSearchBaseAdmin = (
                 </div>
               )}
 
-              {param.showSDT && (
+              {param.sdt && (
                 <div className="md:w-[48%] w-full">
                   <InputForm
                     key={'sdt'}
@@ -89,16 +101,22 @@ const useSearchBaseAdmin = (
                 </div>
               )}
 
-              {param.showCategory && (
+              {param.category && (
                 <div className="md:w-[48%] w-full">
                   <CategoryForm label="category" name="category" />
                 </div>
               )}
-              {param.showAdmin && (
+              {param.admin && (
                 <div className="md:w-[48%] w-full">
                   <CheckBoxForm label="Admin" name="admin" />
                 </div>
               )}
+            </div>
+            <div className="flex justify-center w-full">
+              <ButtonForm
+                disableClose
+                titleSubmit={translate('common.search')}
+              />
             </div>
           </MyForm>
         )}

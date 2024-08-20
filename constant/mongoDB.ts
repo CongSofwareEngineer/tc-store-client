@@ -30,3 +30,48 @@ export type BodyAddBill = {
   totalBill: Number
   listNewSoldProduct?: { [key: string]: any }[]
 }
+
+const FILTER_BASE_DB = {
+  page: 'page',
+  limit: 'limit',
+  id: 'id',
+}
+
+export const OPTION_FILTER_DB = {
+  Poduct: {
+    ...FILTER_BASE_DB,
+    keyName: 'keyName',
+  },
+  Bill: {
+    ...FILTER_BASE_DB,
+    type: 'type',
+    date: 'date',
+    sdt: 'sdt',
+    status: 'status',
+    idUser: 'idUser',
+  },
+  User: {
+    ...FILTER_BASE_DB,
+    sdt: 'sdt',
+    admin: 'admin',
+  },
+  Cart: {
+    ...FILTER_BASE_DB,
+    date: 'date',
+    sdt: 'sdt',
+  },
+  Comment: {
+    ...FILTER_BASE_DB,
+    date: 'date',
+    sdt: 'sdt',
+    idProduct: 'idProduct',
+  },
+}
+
+export enum KEY_OPTION_FILTER_DB {
+  Poduct = 'Poduct',
+  Bill = 'Bill',
+  User = 'User',
+  Cart = 'Cart',
+  Comment = 'Comment',
+}
