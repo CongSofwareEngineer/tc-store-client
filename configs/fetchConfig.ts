@@ -11,6 +11,7 @@ export type ServerAPIReqType = {
   timeOut?: number
   isAthu?: boolean
 }
+
 const fetchConfig = async ({
   url = '',
   body = null,

@@ -4,7 +4,6 @@ import { ItemDetailType } from '../../type'
 import useAos from '@/hook/useAos'
 import useMedia from '@/hook/useMedia'
 import { DataAddCart } from '@/constant/mongoDB'
-import ServerApi from '@/services/serverApi'
 import { COOKIE_KEY, REQUEST_TYPE } from '@/constant/app'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useLanguage from '@/hook/useLanguage'
@@ -26,7 +25,7 @@ import SubAndPlus from '@/components/SubAndPlus'
 
 import { images } from '@/configs/images'
 import MyButton from '@/components/MyButton'
-import fetchConfig from '@/configs/fetchConfig'
+import ClientApi from '@/services/clientApi'
 
 const Comment = dynamic(() => import('@/components/Comment'), {
   ssr: false,
@@ -60,20 +59,20 @@ const ViewDetail = ({
   }
 
   const handleAddCartLogin = async (body: DataAddCart) => {
-    const listCartUser = await ServerApi.requestBase({
+    const listCartUser = await ClientApi.fetchData({
       url: `/cart/details/${body.idUser}/${body.idProduct}`,
     })
 
     const dataExited = listCartUser?.data[0]
 
     if (!dataExited) {
-      await fetchConfig({
+      await ClientApi.fetchData({
         url: 'cart/create',
         body,
         method: REQUEST_TYPE.POST,
       })
     } else {
-      await fetchConfig({
+      await ClientApi.fetchData({
         url: `cart/update-cart/${dataExited._id}`,
         body: {
           amount: Number(dataExited.amount) + Number(amountBuy),

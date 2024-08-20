@@ -10,16 +10,17 @@ import InputForm from '@/components/InputForm'
 import ButtonForm from '@/components/ButtonForm'
 import CategoryForm from '@/components/CategoryForm'
 import useLanguage from '@/hook/useLanguage'
-import UploadImage from '../../../../../components/UploadImg/index'
 import { CameraOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import { Image } from 'antd'
 import useTypeFile from '@/hook/useTypeFile'
 import useCheckForm from '@/hook/useCheckForm'
-import fetchConfig from '@/configs/fetchConfig'
 import { REQUEST_TYPE } from '@/constant/app'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import useModalDrawer from '@/hook/useModalDrawer'
+import ClientApi from '@/services/clientApi'
+import { isEqual } from 'lodash'
+import UploadImage from '@/components/UploadImg'
 
 const ProductConfig = ({ item }: { item: any }) => {
   const { translate } = useLanguage()
@@ -57,7 +58,6 @@ const ProductConfig = ({ item }: { item: any }) => {
   }, [item])
 
   useEffect(() => {
-    console.log({ name: formData?.name })
     setFormData((pre) => ({
       ...pre,
       keyName: formData?.name.replaceAll(' ', '-'),
@@ -73,11 +73,27 @@ const ProductConfig = ({ item }: { item: any }) => {
 
   const handleSubmit = async () => {
     setLoading(true)
-    const data = await fetchConfig({
-      url: '/product/create',
-      method: REQUEST_TYPE.POST,
-      body: formData,
-    })
+    let data
+    if (item) {
+      const dataEdit: Record<string, any> = {}
+      Object.keys(item).forEach((key) => {
+        if (!isEqual(formData![key], item[key])) {
+          dataEdit[key] = formData![key]
+        }
+      })
+      data = await ClientApi.fetchData({
+        url: '/product/create',
+        method: REQUEST_TYPE.POST,
+        body: dataEdit,
+      })
+    } else {
+      data = await ClientApi.fetchData({
+        url: '/product/create',
+        method: REQUEST_TYPE.POST,
+        body: formData,
+      })
+    }
+
     if (data?.data) {
       showNotificationSuccess(translate('success.create'))
       refreshQuery(QUERY_KEY.GetAllProduct)

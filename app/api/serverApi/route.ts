@@ -1,7 +1,6 @@
-
-import fetchConfig, { ServerAPIReqType } from '@/configs/fetchConfig';
-import { COOKIE_KEY, REQUEST_TYPE } from '@/constant/app';
-import { formatResponseDataServer, pareDataClient } from '@/utils/serverNext';
+import fetchConfig, { ServerAPIReqType } from '@/configs/fetchConfig'
+import { COOKIE_KEY, REQUEST_TYPE } from '@/constant/app'
+import { formatResponseDataServer, pareDataClient } from '@/utils/serverNext'
 
 export async function POST(req: any) {
   try {
@@ -11,7 +10,6 @@ export async function POST(req: any) {
     if (!bodyDecode[process.env.NEXT_PUBLIC_KEY_SALT]) {
       return new Response('You are hacker', { status: 500 })
     }
-    console.log({ bodyDecode });
 
     if (bodyDecode?.checkAuth) {
       auth = req.cookies?._parsed.get(COOKIE_KEY.Auth)
@@ -23,7 +21,7 @@ export async function POST(req: any) {
         const resNewAuth = await fetchConfig({
           url: `auth/refresh`,
           method: REQUEST_TYPE.POST,
-          auth: authRefresh?.value
+          auth: authRefresh?.value,
         })
         auth = resNewAuth?.data?.token || ''
       }
@@ -34,23 +32,19 @@ export async function POST(req: any) {
       method: bodyDecode.method || REQUEST_TYPE.GET,
       auth: auth,
     }
-    console.log({ config });
 
     switch (bodyDecode.method) {
       case REQUEST_TYPE.POST:
       case REQUEST_TYPE.PUT:
         config.body = bodyDecode.body
-        break;
+        break
     }
 
     const dataRequest = await fetchConfig(config)
     return formatResponseDataServer(dataRequest?.data, bodyDecode)
   } catch (error) {
     return new Response('You are hacker', {
-      status: 500
-    }
-    )
-
+      status: 500,
+    })
   }
-
 }

@@ -1,8 +1,8 @@
-import fetchConfig from '@/configs/fetchConfig'
 import { QUERY_KEY } from '@/constant/reactQuery'
+import ClientApi from '@/services/clientApi'
 import { useQuery } from '@tanstack/react-query'
 const getData = async ({ queryKey }: any) => {
-  const lengthCart = await fetchConfig({
+  const lengthCart = await ClientApi.fetchData({
     url: `/cart/length-cart/${queryKey[1]}`,
   })
 

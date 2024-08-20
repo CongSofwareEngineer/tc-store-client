@@ -3,10 +3,10 @@ import { ResolvingMetadata } from 'next'
 import ShopDetail from './view'
 import { ItemDetailType } from './type'
 import { notFound } from 'next/navigation'
-import fetchConfig from '@/configs/fetchConfig'
+import ClientApi from '@/services/clientApi'
 
 const getCoffeeDetail = async (keyName: string): Promise<ItemDetailType> => {
-  const data = await fetchConfig({
+  const data = await ClientApi.fetchData({
     url: `product/detail-keyName/${keyName}`,
     isAthu: false,
   })

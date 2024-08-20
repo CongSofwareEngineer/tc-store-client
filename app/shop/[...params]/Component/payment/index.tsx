@@ -26,7 +26,7 @@ import ModalDelete from '@/components/ModalDelete'
 import { FILTER_BILL, LOCAL_STORAGE_KEY, REQUEST_TYPE } from '@/constant/app'
 import ModalSuccess from '@/components/ModalSuccess'
 import { useRouter } from 'next/navigation'
-import fetchConfig from '@/configs/fetchConfig'
+import ClientApi from '@/services/clientApi'
 
 const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const { translate } = useLanguage()
@@ -121,7 +121,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         },
       })
 
-      const res = await fetchConfig({
+      const res = await ClientApi.fetchData({
         url: 'bill/create',
         body: bodyBill,
         method: REQUEST_TYPE.POST,

@@ -22,7 +22,7 @@ import { FILTER_BILL, REQUEST_TYPE } from '@/constant/app'
 import ModalProcess from '@/components/ModalProcess'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalSuccess from '@/components/ModalSuccess'
-import fetchConfig from '@/configs/fetchConfig'
+import ClientApi from '@/services/clientApi'
 
 const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
   const { translate } = useLanguage()
@@ -122,7 +122,7 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
           overClickClose: false,
         },
       })
-      const res = await fetchConfig({
+      const res = await ClientApi.fetchData({
         url: 'bill/create',
         body: bodyAPI,
         method: REQUEST_TYPE.POST,

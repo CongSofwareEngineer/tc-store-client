@@ -3,7 +3,7 @@ import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery'
 import useUserData from '../useUserData'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
-import fetchConfig from '@/configs/fetchConfig'
+import ClientApi from '@/services/clientApi'
 
 const getData = async ({
   queryKey,
@@ -13,7 +13,7 @@ const getData = async ({
   pageParam: any
 }): Promise<TypeHookReactQuery> => {
   const queryUrl = `?page=${pageParam}&limit=${queryKey[2]}`
-  const dataServer = await fetchConfig({
+  const dataServer = await ClientApi.fetchData({
     url: `cart/detail/${queryKey[1]}${queryUrl}`,
   })
 

@@ -1,6 +1,6 @@
-import fetchConfig from '@/configs/fetchConfig'
 import { PAGE_SIZE_LIMIT } from '@/constant/app'
 import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery'
+import ClientApi from '@/services/clientApi'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 
@@ -19,7 +19,7 @@ const getAllProduct = async ({
   if (category?.length > 0) {
     queryUrl += `&category=${category.toString()}`
   }
-  const dataServer = await fetchConfig({
+  const dataServer = await ClientApi.fetchData({
     url: `product/all${queryUrl}`,
   })
 

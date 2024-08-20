@@ -11,11 +11,11 @@ import StyledComponentsRegistry from '@/components/RegistryApp'
 import ClientRender from '@/components/ClientRender'
 import type { Viewport } from 'next'
 import ReactQueryProvider from '@/components/ReactQueryProvider'
-import fetchConfig from '@/configs/fetchConfig'
 import DrawerProvider from '@/components/DrawerProvider'
 const inter = Inter({ subsets: ['latin'] })
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import Script from 'next/script'
+import ClientApi from '@/services/clientApi'
 
 const BaseMeta = {
   title: process.env.NEXT_PUBLIC_TITLE,
@@ -86,7 +86,7 @@ export const viewport: Viewport = {
 }
 
 const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
-  const menuCategory = await fetchConfig({
+  const menuCategory = await ClientApi.fetchData({
     url: 'category/all',
     isAthu: false,
   })

@@ -18,7 +18,7 @@ import {
 } from '@/constant/app'
 import { deleteCookie, setCookie } from '@/services/CookeisService'
 import ObserverService from '@/services/observer'
-import fetchConfig from '@/configs/fetchConfig'
+import ClientApi from '@/services/clientApi'
 
 const useUserData = () => {
   const dispatch = useAppDispatch()
@@ -52,12 +52,13 @@ const useUserData = () => {
         })
       )
 
-      const data = await fetchConfig({
+      const data = await ClientApi.fetchData({
         url: `user/login`,
         method: REQUEST_TYPE.POST,
         body: {
           data: dataBody,
         },
+        isAthu: false,
       })
 
       if (data?.data) {
