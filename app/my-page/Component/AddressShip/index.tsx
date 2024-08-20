@@ -19,18 +19,6 @@ const AddressShip = () => {
       if (userData?.addressShipper && Array.isArray(userData?.addressShipper)) {
         const arrOld = [...userData?.addressShipper]
         arrOld[index] = address?.toString() || ''
-
-        await ClientApi.requestBase({
-          nameDB: DataBase.user,
-          body: {
-            id: userData?.id,
-            data: {
-              addressShipper: arrOld,
-            },
-          },
-          encode: true,
-          namFn: FB_FC.updateData,
-        })
       }
     }
     openModalDrawer({

@@ -4,7 +4,7 @@ import { decryptData, encryptData } from '@/utils/crypto'
 import axios from 'axios'
 
 export type ServerAPIReqType = {
-  url: string
+  url?: string
   body?: any
   auth?: string
   method?: REQUEST_TYPE

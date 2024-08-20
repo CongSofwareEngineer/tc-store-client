@@ -80,20 +80,6 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
     setListAddressShip(arrNew)
   }
 
-  const handleDeleteCart = async () => {
-    const func = dataCart.map((e) => {
-      return ClientApi.requestBase({
-        nameDB: DataBase.cartUser,
-        body: {
-          id: e.id,
-        },
-        encode: true,
-        namFn: FB_FC.deleteData,
-      })
-    })
-    await Promise.all(func)
-  }
-
   const handleSubmit = async () => {
     try {
       setLoading(true)
@@ -116,16 +102,7 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
         listBill: listProduction,
         totalBill: Number(totalBill),
       }
-      await handleDeleteCart()
 
-      await ClientApi.requestBase({
-        nameDB: DataBase.bill,
-        body: {
-          data: bodyAPI,
-        },
-        encode: true,
-        namFn: FB_FC.addData,
-      })
       callBack()
       showNotificationSuccess(translate('productDetail.modalBuy.success'))
       handleClose()
