@@ -5,8 +5,8 @@ import { CopyOutlined, EditOutlined } from '@ant-design/icons'
 import React from 'react'
 import ItemInfoUser from './Component/ItemInfoUser'
 import useLanguage from '@/hook/useLanguage'
-import AddressShip from './Component/AddressShip'
-import { copyToClipboard } from '@/utils/functions'
+// import AddressShip from './Component/AddressShip'
+import { copyToClipboard, numberWithCommas } from '@/utils/functions'
 import MyInput from '@/components/MyInput'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalUpdateUser from './Component/ModalUpdateUser'
@@ -131,6 +131,14 @@ const MyProfile = () => {
                 />
               </div>
             </div>
+            <div className="flex gap-2">
+              <span className="w-[140px]">
+                {translate('textPopular.point')}
+              </span>
+              <div className="flex flex-1 gap-2 items-end">
+                <span>{numberWithCommas(userData?.point || 0)}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -174,7 +182,11 @@ const MyProfile = () => {
           />
           <div className="relative w-full border-[.5px] my-3 border-gray-300" />
 
-          <AddressShip />
+          <div className="flex gap-2 justify-between w-full py-2 pr-2">
+            <span>{translate('textPopular.point')}</span>
+            <div>{numberWithCommas(userData?.point || 0)}</div>
+          </div>
+          <div className="relative w-full border-[.5px] my-3 mb-0 border-gray-300" />
         </div>
       </div>
     )

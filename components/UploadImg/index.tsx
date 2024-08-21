@@ -52,7 +52,7 @@ const UploadImage = ({
         accept={typeFile || typeFileBase}
       >
         <label
-          className="cursor-pointer hover:scale-105 edit-avatar flex w-full items-center justify-center gap-2 w-ful "
+          className="cursor-pointer   edit-avatar flex w-full items-center justify-center gap-2 w-ful "
           htmlFor="avatar"
           style={{ opacity: disbale ? 0.5 : 1 }}
         >

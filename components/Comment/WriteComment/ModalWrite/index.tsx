@@ -70,7 +70,8 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
         setFormData((prev) => ({ ...prev, listImg: [...prev?.listImg, data] }))
       }
     }
-    getBase64(file, callBack)
+    const dataFinal = await getBase64(file, callBack)
+    console.log({ dataFinal })
   }
 
   const deleteImg = (name: string) => {
@@ -143,7 +144,7 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
             classFromItem="w-full"
           />
 
-          <div className="flex flex-col w-full gap-2 mt-8">
+          <div className="flex flex-col w-full gap-2 mt-10">
             {renderListImg()}
             <UploadImage
               handleUpload={handleUpload}

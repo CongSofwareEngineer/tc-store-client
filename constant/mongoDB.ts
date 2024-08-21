@@ -44,10 +44,9 @@ export const OPTION_FILTER_DB = {
   },
   Bill: {
     ...FILTER_BASE_DB,
-    type: 'type',
+    status: 'status',
     date: 'date',
     sdt: 'sdt',
-    status: 'status',
     idUser: 'idUser',
   },
   User: {

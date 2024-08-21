@@ -92,7 +92,8 @@
     "enterPassToContinue": "Nhập mật khẩu để tiếp tục",
     "fullData": "Đã hết dữ liệu",
     "reason": "Lý do",
-    "cost": "Giá gốc"
+    "cost": "Giá gốc",
+    "point": "Điểm tích lũy"
   },
   "addCart": {
     "addSuccess": "Đã thêm vào giỏ hàng",

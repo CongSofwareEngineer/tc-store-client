@@ -1,10 +1,7 @@
 'use client'
-import { Affix } from 'antd'
 import React from 'react'
 import { images } from '@/configs/images'
 import MyImage from '../MyImage'
-// import Nav from './Component/Nav'
-// import Account from './Component/Account'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 const Nav = dynamic(() => import('./Component/Nav'), { ssr: true })
@@ -18,7 +15,8 @@ const Header = () => {
         className="absolute z-[-1] opacity-0"
       />
       <a href="tel:0932225405" className="absolute z-[-1] opacity-0" />
-      <Affix className="w-full h-14 ">
+      <div className="w-full h-14 " />
+      <div className="w-full h-14 fixed z-10 inset-0 ">
         <div className="border-b-2 border-green-300 w-full flex m-auto justify-center items-center bg-white">
           <div
             id="id-container-header"
@@ -39,7 +37,7 @@ const Header = () => {
             <Account />
           </div>
         </div>
-      </Affix>
+      </div>
     </header>
   )
 }
