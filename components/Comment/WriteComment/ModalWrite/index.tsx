@@ -5,14 +5,15 @@ import MyForm from '@/components/MyForm'
 import MyImage from '@/components/MyImage'
 import RateForm from '@/components/RateForm'
 import UploadImage from '@/components/UploadImg'
+import { REQUEST_TYPE } from '@/constant/app'
 import { DataAddComment } from '@/constant/mongoDB'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
-import useBase64Img from '@/hook/useBase64Img'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
-import { delayTime, showNotificationError } from '@/utils/functions'
+import ClientApi from '@/services/clientApi'
+import { delayTime, detectImg } from '@/utils/functions'
 import { CameraOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import { Image } from 'antd'
 import React, { useEffect, useState } from 'react'
@@ -24,12 +25,11 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
   const { isLogin, userData } = useUserData()
   const { translate } = useLanguage()
   const { checkNumberPhone } = useCheckForm()
-  const { getBase64 } = useBase64Img()
   const { refreshQuery } = useRefreshQuery()
 
   useEffect(() => {
     const initData = {
-      idProduct: dataItem.id,
+      idProduct: dataItem._id,
       sdt: userData?.sdt || '',
       name: userData?.name || '',
       note: 'Sản phẩm rất tốt',
@@ -38,7 +38,6 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
     }
     setFormData(initData)
   }, [userData, dataItem.id])
-  console.log({ formData })
 
   const handleSubmit = async () => {
     try {
@@ -51,31 +50,32 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
         rate: formData?.rate || 5,
         sdt: formData?.sdt,
       }
+      const res = await ClientApi.fetchData({
+        url: 'comment/create',
+        method: REQUEST_TYPE.POST,
+        body: body,
+      })
+      console.log({ res })
+
       await delayTime(200)
       refreshQuery(QUERY_KEY.GetProductByID)
       refreshQuery(QUERY_KEY.GetCommentProduction)
 
       console.log('====================================')
-      console.log({ body })
+      console.log({ body, dataItem })
       console.log('====================================')
       setloading(false)
     } catch (error) {}
   }
 
   const handleUpload = async (file: any) => {
-    const callBack = async (data: any) => {
-      if (formData?.listImg.some((e: any) => e.name === data.name)) {
-        showNotificationError(translate('errors.existFile'))
-      } else {
-        setFormData((prev) => ({ ...prev, listImg: [...prev?.listImg, data] }))
-      }
-    }
-    const dataFinal = await getBase64(file, callBack)
-    console.log({ dataFinal })
+    setFormData((prev) => ({ ...prev, listImg: [...prev?.listImg, file] }))
   }
 
-  const deleteImg = (name: string) => {
-    const data = formData?.listImg.filter((e: any) => e.name !== name)
+  const deleteImg = (index: number) => {
+    const data = formData?.listImg.filter(
+      (_: any, indexFilter: number) => indexFilter !== index
+    )
     setFormData((prev) => ({ ...prev, listImg: data }))
   }
 
@@ -87,7 +87,7 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
             <div key={`img-${index}`} className="relative w-[70px] ">
               <Image alt="img" className="w-[70px]" src={item?.base64} />
               <CloseCircleOutlined
-                onClick={() => deleteImg(item.name)}
+                onClick={() => deleteImg(index)}
                 className="absolute text-[20px] z-10 cursor-pointer right-0 top-0"
               />
             </div>
@@ -108,7 +108,10 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
         >
           <div className="flex gap-2 w-full">
             <div className="w-[100px] aspect-square overflow-hidden">
-              <MyImage alt="avatar-product" src={dataItem.image} />
+              <MyImage
+                alt="avatar-product"
+                src={detectImg(dataItem.imageMain)}
+              />
             </div>
             <div className="flex flex-1 flex-col gap-2 h-auto justify-center">
               <p className="text-medium font-bold">{dataItem.name}</p>
@@ -150,7 +153,7 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
               handleUpload={handleUpload}
               disbale={formData?.listImg?.length >= 2}
               listData={formData?.listImg || []}
-              maxSize={7}
+              maxSizeOutputKB={15}
             >
               <div className="flex gap-2 item-center w-full">
                 <CameraOutlined

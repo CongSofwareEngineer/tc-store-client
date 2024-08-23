@@ -11,7 +11,7 @@ type Props = {
   children?: React.ReactNode
   disbale?: boolean
   handleUpload: (file: any) => Promise<void> | void
-  maxSize?: number
+  maxSizeOutputKB?: number
   listData?: any[]
 }
 const UploadImage = ({
@@ -19,11 +19,11 @@ const UploadImage = ({
   disbale = false,
   typeFile = '',
   handleUpload,
-  maxSize = 5,
+  maxSizeOutputKB = 15,
   listData = [],
 }: Props) => {
   const { translate } = useLanguage()
-  const { getBase64 } = useBase64Img(maxSize)
+  const { getBase64 } = useBase64Img(maxSizeOutputKB)
   const { typeFile: typeFileBase } = useTypeFile()
 
   const handleLoadFile = (file: any) => {

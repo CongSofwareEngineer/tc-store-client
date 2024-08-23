@@ -37,11 +37,6 @@ const WriteComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
           style={{ fontSize: isMobile ? 15 : 18 }}
         />
         <div className="opacity-75"> (23 đánh giá)</div>
-        {/* {isMobile && (
-          <div className="flex flex-col gap-2 flex-1  md:items-center">
-            <Button onClick={handleWrite}>Viet binh luan</Button>
-          </div>
-        )} */}
       </div>
       <div className="flex flex-col gap-2 justify-center">
         <div className="flex gap-2 w-full">

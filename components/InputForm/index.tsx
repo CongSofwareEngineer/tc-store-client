@@ -58,6 +58,8 @@ type InputFormType = {
   typeBtn?: 'string' | 'number' | 'area'
   disable?: boolean
   rows?: number
+  maxLength?: number
+  showCount?: boolean
 }
 const InputForm = ({
   label,
@@ -71,6 +73,8 @@ const InputForm = ({
   typeBtn = 'string',
   disable = false,
   rows = 3,
+  maxLength = 200,
+  showCount = false,
 }: InputFormType) => {
   const { translate } = useLanguage()
   return (
@@ -106,6 +110,8 @@ const InputForm = ({
         rows={rows}
         type={isPass ? 'password' : typeBtn}
         className="w-full"
+        maxLength={maxLength}
+        showCount={showCount}
       />
     </FormItem>
   )

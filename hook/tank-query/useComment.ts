@@ -1,18 +1,37 @@
-import { PAGE_SIZE_LIMIT } from '@/constant/app';
-import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery';
-import ServerApi from '@/services/serverApi';
-import { useInfiniteQuery } from '@tanstack/react-query';
-const getAllProduct = async ({ queryKey }: any): Promise<TypeHookReactQuery> => {
-  const res = await ServerApi.getProduct(queryKey[1]?.trim() || '')
+import { PAGE_SIZE_LIMIT } from '@/constant/app'
+import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery'
+import ClientApi from '@/services/clientApi'
+import ServerApi from '@/services/serverApi'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { useMemo } from 'react'
+const getAllProduct = async ({
+  queryKey,
+  pageParam,
+}: {
+  queryKey: any
+  pageParam: number
+}): Promise<TypeHookReactQuery> => {
+  let queryUrl = `?page=${pageParam}&limit=${PAGE_SIZE_LIMIT}`
+
+  const dataServer = await ClientApi.fetchData({
+    url: `/comment/detail/${queryKey[1]}${queryUrl}`,
+  })
 
   return {
-    data: res.data || [],
-    page: 1
-  };
-};
-const useComment = (query = '') => {
-  const { data, isLoading, refetch, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteQuery({
-    queryKey: [QUERY_KEY.GetCommentProduction, query],
+    data: dataServer?.data || [],
+    page: pageParam,
+  }
+}
+const useComment = (isProduct = '') => {
+  const {
+    data,
+    isLoading,
+    refetch,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
+    queryKey: [QUERY_KEY.GetCommentProduction, isProduct],
     initialPageParam: 1,
     queryFn: getAllProduct,
     getNextPageParam: (lastPage: { data: any; page: number }) => {
@@ -23,14 +42,21 @@ const useComment = (query = '') => {
     },
   })
 
+  const dataFinal = useMemo(() => {
+    if (!data) {
+      return []
+    }
+    const dataFormat = data?.pages.flatMap((e) => e.data)
+    return dataFormat
+  }, [data])
+
   return {
-    data: data?.pages[0] || null,
-    isLoading: isLoading || isFetchingNextPage,
-    refetch,
-    fetchNextPage,
-    hasNextPage
+    data: dataFinal,
+    isLoading: isLoading,
+    isFetchingNextPage,
+    loadMore: fetchNextPage,
+    hasNextPage,
   }
 }
-
 
 export default useComment

@@ -1,3 +1,5 @@
+import { images } from '@/configs/images'
+import { detectImg } from '@/utils/functions'
 import { Image } from 'antd'
 import React from 'react'
 import { useInView } from 'react-intersection-observer'
@@ -17,7 +19,7 @@ const ImageAdmin = ({
         <Image
           alt={alt || `${new Date().getTime().toString()}-${src}`}
           className="w-full h-auto"
-          src={src}
+          src={detectImg(src) || images.userDetail.iconUserDetail}
         />
       )}
     </div>

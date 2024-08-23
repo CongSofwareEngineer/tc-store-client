@@ -118,18 +118,10 @@ export const removeDataLocal = (key: string) => {
   }
 }
 
-export const getBase642 = (file: any) => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onloadend = function () {
-      const base64data = reader.result
-
-      resolve(base64data)
-    }
-
-    reader.onerror = (error) => reject(error)
-    reader.readAsDataURL(file)
-  })
+export const getBase642 = (file: any, callback: any): void => {
+  const reader = new FileReader()
+  reader.addEventListener('load', () => callback(reader.result))
+  reader.readAsDataURL(file)
 }
 
 export const getBase64 = (file: File, callback: (parma?: any) => void) => {

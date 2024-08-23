@@ -10,6 +10,7 @@ export enum REQUEST_TYPE {
 export enum TYPE_LOADING_GET_DATA {
   MyBill = 'MyBill',
   Shop = 'Shop',
+  CommentUser = 'CommentUser',
   MyCart = 'MyCart',
   ShopDetail = 'ShopDetail',
   MyProfile = 'MyProfile',

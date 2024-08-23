@@ -19,7 +19,15 @@ const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
     <DrawerContext.Provider value={{ config, closeDrawer, openDrawer }}>
       {children}
       {isClient && (
-        <Drawer onClose={closeDrawer} {...config}>
+        <Drawer
+          onClose={closeDrawer}
+          className={`max-h-[${
+            config.placement === 'right' || config.placement === 'left'
+              ? 'unset'
+              : '85vh'
+          }]`}
+          {...config}
+        >
           {config.content ?? <></>}
         </Drawer>
       )}

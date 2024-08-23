@@ -1,67 +1,73 @@
-import {
-  delayTime,
-  getBase642,
-  getBase64 as getBase64Base,
-  showNotificationError,
-} from '../utils/functions'
+import { getBase642, showNotificationError } from '../utils/functions'
 import useLanguage from './useLanguage'
 
-const useBase64Img = (maxSizeMB = 7) => {
+const useBase64Img = (maxSizeOutputKB = 15) => {
   const { translate } = useLanguage()
 
-  const reduceImageQuality = (imageFile: File, quality = 0.5) => {
-    return new Promise((resolve) => {
-      const reader = new FileReader()
-      reader.readAsDataURL(imageFile)
-      reader.onload = (event) => {
-        const imgElement = document.createElement('img')
-        imgElement.src = event.target?.result + ''
-        imgElement.onload = () => {
-          const canvas = document.createElement('canvas')
-          const context = canvas.getContext('2d')
-          canvas.width = imgElement.width
-          canvas.height = imgElement.height
-          context?.drawImage(imgElement, 0, 0, canvas.width, canvas.height)
+  const reduceImageSize = (
+    imageFile: File,
+    maxSizeInKB = 5,
+    quality = 0.7,
+    callback: any
+  ) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(imageFile)
+    reader.onload = (event) => {
+      const imgElement = document.createElement('img')
+      imgElement.src = event.target?.result + ''
+      imgElement.onload = () => {
+        const canvas = document.createElement('canvas')
+        const context = canvas.getContext('2d')
+
+        // Adjust canvas size to reduce the dimensions of the image
+        const MAX_WIDTH = 200 // Adjust width as needed
+        const scaleSize = MAX_WIDTH / imgElement.width
+        canvas.width = MAX_WIDTH
+        canvas.height = imgElement.height * scaleSize
+        context?.drawImage(imgElement, 0, 0, canvas.width, canvas.height)
+
+        const compressImage = (currentQuality: any) => {
           canvas.toBlob(
-            (blob) => {
-              resolve(blob)
+            (blob: any) => {
+              if (blob.size / 1024 < maxSizeInKB) {
+                // If the compressed image is under the desired size, return it
+                callback(blob)
+              } else if (currentQuality > 0.1) {
+                // If the image is still too large, compress further by reducing quality
+                compressImage(currentQuality - 0.1)
+              } else {
+                // If we've reduced quality too much, return the lowest quality version
+                callback(blob)
+              }
             },
             'image/jpeg',
-            quality
+            currentQuality
           )
         }
+
+        // Start compressing with initial quality
+        compressImage(quality)
       }
-    })
+    }
   }
 
-  const getBase64 = async (file: any, callBack: any) => {
+  const getBase64 = async (fileUpload: any, callBack: any) => {
     try {
-      if (file.size > maxSizeMB * 1048576) {
-        const text = translate('warning.maxSizeFile').replace(
-          '{size}',
-          `${maxSizeMB} MB`
-        )
+      if (fileUpload.size > 30 * 1048576) {
+        const text = translate('warning.maxSizeFile').replace('{size}', `30 MB`)
         showNotificationError(text)
         return
       }
 
-      const blod = await reduceImageQuality(file)
-      const base64 = await getBase642(blod)
-      await delayTime(1000)
-      console.log('====================================')
-      console.log({
-        base64: base64,
-        name: file.name,
-      })
-      console.log('====================================')
-      callBack({
-        base64: base64,
-        name: file.name,
+      reduceImageSize(fileUpload, maxSizeOutputKB, 1, (file: any) => {
+        getBase642(file, async (base64: any) => {
+          callBack({
+            base64: base64,
+            name: fileUpload.name,
+          })
+        })
       })
     } catch (error) {
-      console.log('====================================')
-      console.log({ error })
-      console.log('====================================')
       showNotificationError(translate('errors.file'))
       return null
     }

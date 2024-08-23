@@ -171,6 +171,7 @@ const ProductConfig = ({ item }: { item: any }) => {
         <div className="flex flex-col  w-[150px]   justify-between items-center">
           <div className="w-[100px]">
             <UploadImage
+              maxSizeOutputKB={500}
               typeFile={typeFile}
               handleUpload={(e) => setFormData({ ...formData, imageMain: e })}
             >
@@ -202,6 +203,7 @@ const ProductConfig = ({ item }: { item: any }) => {
                   imageMore: [...formData.imageMore, e],
                 })
               }
+              maxSizeOutputKB={300}
             >
               <div className="flex w-full gap-2 justify-center items-center">
                 <CameraOutlined />

@@ -245,7 +245,7 @@ const ViewDetail = ({
         </div>
         <div
           data-aos="fade-right"
-          className=" shadow-yellow-50 bg-white p-5  w-full flex flex-col gap-2 mt-2"
+          className=" shadow-yellow-50 bg-white p-5 md:pr-5 pr-3 w-full flex flex-col gap-2 mt-2"
         >
           <Comment dataItem={dataItem} />
         </div>
