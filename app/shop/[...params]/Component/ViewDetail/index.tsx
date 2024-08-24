@@ -108,6 +108,7 @@ const ViewDetail = ({
       setLoadingAddCart(false)
     }
   }
+  console.log({ dataItem })
 
   const renderDesktop = () => {
     return (

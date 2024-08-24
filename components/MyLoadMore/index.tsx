@@ -17,18 +17,15 @@ const MyLoadMore = ({
   callback,
 }: Props) => {
   const { translate } = useLanguage()
-  return hasLoadMore ? (
-    <div className="mt-4 w-full flex justify-center items-center">
-      <MyButton onClick={callback} loading={isFetchingNextPage}>
-        {title || translate('textPopular.loadMore')}
-      </MyButton>
-    </div>
-  ) : loading ? (
-    <></>
-  ) : (
-    <div className="w-full text-center my-3">
-      {translate('textPopular.fullData')}
-    </div>
+  return (
+    !loading &&
+    hasLoadMore && (
+      <div className="mt-4 w-full flex justify-center items-center">
+        <MyButton onClick={callback} loading={isFetchingNextPage}>
+          {title || translate('textPopular.loadMore')}
+        </MyButton>
+      </div>
+    )
   )
 }
 

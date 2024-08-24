@@ -1,5 +1,8 @@
 {
   "common": {
+    "updateFeedback": "Cập nhật đánh giá",
+    "feedback": "Đánh giá",
+    "sendFeedback": "Đánh giá",
     "search": "Tìm",
     "cancelBill": "Hủy đơn",
     "addNew": "Thêm mới",
@@ -292,11 +295,14 @@
     "revenue": "Doanh thu"
   },
   "comment": {
+    "feedbackSuccess": "Cảm ơn bạn đánh giá",
+    "feedbackFaild": "Đánh giá thật bại",
     "veryGood": "Rất hài lòng",
     "good": "Hài lòng",
     "wellwell": "Khá hài lòng",
     "normal": "Bình thường",
     "bad": "Chưa tốt",
-    "writeToShare": "Chia sẻ nhận xét của bạn về sản phẩm này"
+    "writeToShare": "Chia sẻ nhận xét của bạn về sản phẩm này",
+    "uploadImg_des": "Gửi (chụp) hình  thực tế  (Tối đa 2 hình)"
   }
 }

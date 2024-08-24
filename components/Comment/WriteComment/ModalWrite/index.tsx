@@ -3,6 +3,7 @@ import { ItemDetailType } from '@/components/InfoItemDetail/type'
 import InputForm from '@/components/InputForm'
 import MyForm from '@/components/MyForm'
 import MyImage from '@/components/MyImage'
+import MyLoading from '@/components/MyLoading'
 import RateForm from '@/components/RateForm'
 import UploadImage from '@/components/UploadImg'
 import { REQUEST_TYPE } from '@/constant/app'
@@ -11,9 +12,15 @@ import { QUERY_KEY } from '@/constant/reactQuery'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
+import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
 import ClientApi from '@/services/clientApi'
-import { delayTime, detectImg } from '@/utils/functions'
+import {
+  delayTime,
+  detectImg,
+  showNotificationError,
+  showNotificationSuccess,
+} from '@/utils/functions'
 import { CameraOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import { Image } from 'antd'
 import { isEqual } from 'lodash'
@@ -21,13 +28,17 @@ import React, { useEffect, useRef, useState } from 'react'
 
 const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
   const [loading, setloading] = useState(false)
+  const [loadingGetData, setloadingGetData] = useState(true)
   const [formData, setFormData] = useState<{ [key: string]: any } | null>(null)
-  const exitedDataRef = useRef<{ [key: string]: any } | null>(null)
+  const [dataExited, setDataExited] = useState<{ [key: string]: any } | null>(
+    null
+  )
 
   const { isLogin, userData } = useUserData()
   const { translate } = useLanguage()
   const { checkNumberPhone } = useCheckForm()
   const { refreshQuery } = useRefreshQuery()
+  const { closeModalDrawer } = useModalDrawer()
 
   useEffect(() => {
     const getData = async () => {
@@ -47,18 +58,19 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
           initData.listImg = res.data.listImg
           initData.note = res.data.note
           initData.rate = res.data.rate
-          exitedDataRef.current = res.data
+          setDataExited(res.data)
         }
       }
       setFormData(initData)
+      setloadingGetData(false)
     }
     getData()
   }, [userData, dataItem.id])
 
   const getDataToUpdate = () => {
     const data: { [key: string]: any } = {}
-    for (const key in exitedDataRef.current) {
-      if (!isEqual(formData?.[key], exitedDataRef.current[key])) {
+    for (const key in dataExited) {
+      if (!isEqual(formData?.[key], dataExited[key])) {
         if (formData?.[key]) {
           data[key] = formData?.[key]
         }
@@ -68,40 +80,39 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
   }
 
   const handleSubmit = async () => {
-    try {
-      setloading(true)
-      const body: DataAddComment = {
-        idProduct: formData?.idProduct,
-        listImg: formData?.listImg,
-        note: formData?.note,
-        name: formData?.name,
-        rate: formData?.rate || 5,
-        sdt: formData?.sdt,
-      }
-      let res
-      console.log({ exitedDataRef: exitedDataRef.current })
-      console.log({ getDataToUpdate: getDataToUpdate() })
+    setloading(true)
+    const body: DataAddComment = {
+      idProduct: formData?.idProduct,
+      listImg: formData?.listImg,
+      note: formData?.note,
+      name: formData?.name,
+      rate: formData?.rate || 5,
+      sdt: formData?.sdt,
+    }
+    let res
 
-      // if (exitedDataRef.current) {
-      //   res = await ClientApi.fetchData({
-      //     url: `comment/update/${exitedDataRef.current?._id}`,
-      //     method: REQUEST_TYPE.POST,
-      //     body: body,
-      //   })
-      // } else {
-      //   res = await ClientApi.fetchData({
-      //     url: 'comment/create',
-      //     method: REQUEST_TYPE.POST,
-      //     body: body,
-      //   })
-      // }
-
-      // await delayTime(200)
-      // refreshQuery(QUERY_KEY.GetProductByID)
-      // refreshQuery(QUERY_KEY.GetCommentProduction)
-
-      setloading(false)
-    } catch (error) {}
+    if (dataExited) {
+      res = await ClientApi.fetchData({
+        url: `comment/update/${dataExited?._id}`,
+        method: REQUEST_TYPE.POST,
+        body: getDataToUpdate(),
+      })
+    } else {
+      res = await ClientApi.fetchData({
+        url: 'comment/create',
+        method: REQUEST_TYPE.POST,
+        body: body,
+      })
+    }
+    if (res?.data) {
+      closeModalDrawer()
+      showNotificationSuccess(translate('comment.feedbackSuccess'))
+      refreshQuery(QUERY_KEY.GetProductByID)
+      refreshQuery(QUERY_KEY.GetCommentProduction)
+    } else {
+      showNotificationError(translate('comment.feedbackFaild'))
+    }
+    setloading(false)
   }
 
   const handleUpload = async (file: any) => {
@@ -139,7 +150,8 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
 
   return (
     <div className="flex flex-col gap-3 w-full justify-center items-center">
-      {formData && (
+      {loadingGetData && <MyLoading />}
+      {!loadingGetData && formData && (
         <MyForm
           onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
           className="w-full gap-0"
@@ -198,7 +210,7 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
                   className="cursor-pointer"
                   style={{ fontSize: 25, color: 'blue' }}
                 />
-                <span>Gửi hình chụp thực tế và video (Tối đa 2 hình)</span>
+                <span>{translate('comment.uploadImg_des')}</span>
               </div>
             </UploadImage>
 
@@ -207,7 +219,9 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
               classNameItem="w-full "
               className="w-full mt-4"
               disableClose
-              titleSubmit={'Gửi đánh giá'}
+              titleSubmit={translate(
+                dataExited ? 'common.updateFeedback' : 'common.sendFeedback'
+              )}
             />
           </div>
         </MyForm>

@@ -1,6 +1,6 @@
-import { Spin } from 'antd'
 import React from 'react'
 import MyImage from '../MyImage'
+import MyLottie from '../MyLottie'
 // import MyLottie from '../MyLottie'
 
 type MyLoadingType = {
@@ -14,8 +14,7 @@ const MyLoading = ({ icon, className, size = 'default' }: MyLoadingType) => {
       {icon ? (
         <MyImage src={icon} alt="icon loading" />
       ) : (
-        // <MyLottie width={200} height={200} />
-        <Spin size={size} style={{ color: 'green' }} />
+        <MyLottie width={200} height={200} />
       )}
     </div>
   )

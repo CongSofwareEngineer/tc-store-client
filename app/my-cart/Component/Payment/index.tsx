@@ -23,12 +23,14 @@ import ModalProcess from '@/components/ModalProcess'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalSuccess from '@/components/ModalSuccess'
 import ClientApi from '@/services/clientApi'
+import { useRouter } from 'next/navigation'
 
 const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
   const { translate } = useLanguage()
   const { userData } = useUserData()
   const { refreshQuery } = useRefreshQuery()
-  const { openModalDrawer } = useModalDrawer()
+  const { openModalDrawer, closeModalDrawer } = useModalDrawer()
+  const route = useRouter()
 
   const [formData, setFormData] = useState<Record<string, any> | null>(null)
   const [loading, setLoading] = useState(false)
@@ -85,19 +87,29 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
     refreshQuery(QUERY_KEY.MyCartUser)
     refreshQuery(QUERY_KEY.GetProductByID)
   }
+  console.log({ dataCart })
 
   const handleSubmit = async () => {
     try {
       setLoading(true)
       let totalBill = 0
-      const listBill = dataCart.map((e) => {
+      const listBill: any[] = []
+      const listNewSoldProduct: any[] = []
+      dataCart.forEach((e) => {
         totalBill += e.amount * e.more_data.price
-        return {
+        const itemBill = {
           _id: e.more_data._id,
           keyName: e.more_data.keyName,
           amount: e.amount,
           idCart: e._id,
         }
+        const itemNewSold = {
+          idProduct: e.more_data._id,
+          sold: Number(e.amount) + Number(e.more_data.sold),
+        }
+
+        listNewSoldProduct.push(itemNewSold)
+        listBill.push(itemBill)
       })
       const bodyAPI: BodyAddBill = {
         addressShip: formData?.addressShip,
@@ -107,6 +119,7 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
         totalBill: totalBill,
         sdt: formData?.sdt,
         status: FILTER_BILL.Processing,
+        listNewSoldProduct,
       }
 
       openModalDrawer({
@@ -128,27 +141,30 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
         method: REQUEST_TYPE.POST,
       })
       if (res?.data) {
+        await delayTime(500)
+        refreshAllData()
+        await delayTime(500)
         openModalDrawer({
           content: (
             <ModalSuccess
-              showClose={false}
+              showClose
               title={translate('productDetail.modalBuy.success')}
               des={translate('productDetail.modalBuy.successDes')}
+              titleSubmit={translate('common.viewBill')}
+              titleClose={translate('common.ok')}
+              callback={() => {
+                route.push('/my-page/bill')
+                closeModalDrawer()
+              }}
             />
           ),
-          configModal: {
-            showHeader: false,
-            overClickClose: false,
-          },
         })
-        await delayTime(1000)
-        refreshAllData()
-        showNotificationSuccess(translate('productDetail.modalBuy.success'))
       } else {
         showNotificationError(translate('productDetail.modalBuy.error'))
       }
     } finally {
       setLoading(false)
+      closeModalDrawer()
     }
   }
 
