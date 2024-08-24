@@ -19,7 +19,7 @@ import { FILTER_BILL } from '@/constant/app'
 import SelectInputEx from '@/components/ContentFormPayment/Component/SelectInputEx'
 
 const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
-  const { userData, isLogin, refreshLogin } = useUserData()
+  const { userData, isLogin } = useUserData()
   const { translate } = useLanguage()
   const { closeModalDrawer } = useModalDrawer()
   const { refreshQuery } = useRefreshQuery()

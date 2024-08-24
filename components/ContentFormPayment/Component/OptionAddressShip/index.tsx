@@ -1,6 +1,5 @@
 import InputForm from '@/components/InputForm'
 import useUserData from '@/hook/useUserData'
-import ClientApi from '@/services/clientApi'
 import React from 'react'
 import SelectInputEx from '../SelectInputEx'
 import useLanguage from '@/hook/useLanguage'
@@ -12,7 +11,7 @@ const OptionAddressShip = ({
   listAddressShip,
   setListAddressShip,
 }: PropsType) => {
-  const { isLogin, userData, refreshLogin } = useUserData()
+  const { isLogin, refreshLogin } = useUserData()
   const { translate } = useLanguage()
 
   const getOptions = () => {
@@ -25,7 +24,7 @@ const OptionAddressShip = ({
   const handleAddAddress = async (address: string) => {
     const arrNew: string[] = [...listAddressShip, address]
     const handleUpdate = async () => {
-      await ClientApi.updateAddress(userData?.id, arrNew)
+      // await ClientApi.updateAddress(userData?.id, arrNew)
       await refreshLogin()
     }
     handleUpdate()

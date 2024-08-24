@@ -1,26 +1,21 @@
-import { DataBase, FB_FC } from '@/constant/firebase'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import ClientApi from '@/services/clientApi'
 import { useQuery } from '@tanstack/react-query'
 const getData = async ({ queryKey }: any) => {
-  const data = await ClientApi.requestBase({
-    nameDB: DataBase.productShop,
-    body: {
-      id: queryKey[1]
-    },
-    namFn: FB_FC.getDataByID
+  const data = await ClientApi.fetchData({
+    url: `/product/detail/${queryKey[1]}`,
   })
   return data?.data || null
-
 }
 const useGetProductByID = (id = '') => {
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_KEY.GetProductByID, id],
     enabled: !!id,
-    queryFn: getData
+    queryFn: getData,
   })
   return {
-    data, isLoading
+    data,
+    isLoading,
   }
 }
 

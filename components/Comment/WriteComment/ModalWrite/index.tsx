@@ -64,7 +64,7 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
       setloadingGetData(false)
     }
     getData()
-  }, [userData, dataItem.id])
+  }, [userData, dataItem])
 
   const getDataToUpdate = () => {
     const data: { [key: string]: any } = {}

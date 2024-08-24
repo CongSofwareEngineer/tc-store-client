@@ -23,7 +23,7 @@ type Props = {
   admin?: boolean
   oneDate?: boolean
 }
-const useSearchBaseAdmin = (param: Props) => {
+const useSearchBaseAdmin = (param?: Props) => {
   const config: Props = {
     allDate: true,
     category: true,
