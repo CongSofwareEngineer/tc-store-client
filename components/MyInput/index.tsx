@@ -1,6 +1,6 @@
 import { Input, InputProps, InputNumber, InputNumberProps } from 'antd'
 import { TextAreaProps } from 'antd/es/input'
-import React, { useMemo } from 'react'
+import React from 'react'
 import styled, { css } from 'styled-components'
 const { TextArea } = Input
 
@@ -93,48 +93,44 @@ const MyInput = ({
   onChangeText = () => {},
   ...props
 }: PropsType) => {
-  const inputComponent = useMemo(() => {
-    switch (type) {
-      case 'string':
-        return (
-          <InputBase
-            onChange={(e: any) => onChangeText(e.target.value.toString())}
-            $typeBtn={typeBtn}
-            {...props}
-          />
-        )
+  switch (type) {
+    case 'string':
+      return (
+        <InputBase
+          onChange={(e: any) => onChangeText(e.target.value.toString())}
+          $typeBtn={typeBtn}
+          {...props}
+        />
+      )
 
-      case 'number':
-        return (
-          <InputNumberBase
-            onChange={(e: any) => onChangeText(e)}
-            $typeBtn={typeBtn}
-            {...props}
-          />
-        )
+    case 'number':
+      return (
+        <InputNumberBase
+          onChange={(e: any) => onChangeText(e)}
+          $typeBtn={typeBtn}
+          {...props}
+        />
+      )
 
-      case 'password':
-        return (
-          <InputPassword
-            onChange={(e: any) => onChangeText(e.target.value.toString())}
-            $typeBtn={typeBtn}
-            {...props}
-          />
-        )
+    case 'password':
+      return (
+        <InputPassword
+          onChange={(e: any) => onChangeText(e.target.value.toString())}
+          $typeBtn={typeBtn}
+          {...props}
+        />
+      )
 
-      default:
-        return (
-          <InputArea
-            onChange={(e: any) => onChangeText(e.target.value)}
-            $typeBtn={typeBtn}
-            rows={rows}
-            {...props}
-          />
-        )
-    }
-  }, [type, props, rows, typeBtn, onChangeText])
-
-  return inputComponent
+    default:
+      return (
+        <InputArea
+          onChange={(e: any) => onChangeText(e.target.value)}
+          $typeBtn={typeBtn}
+          rows={rows}
+          {...props}
+        />
+      )
+  }
 }
 
 export default MyInput

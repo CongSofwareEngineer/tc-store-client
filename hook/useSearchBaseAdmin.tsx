@@ -83,10 +83,6 @@ const useSearchBaseAdmin = (param: Props) => {
 
   const handleSubmit = () => {
     let query = ''
-
-    console.log('====================================')
-    console.log({ config })
-    console.log('====================================')
     Object.entries(config).forEach(([key, value]: [string, boolean]) => {
       if (value && formData?.[key]) {
         if (query) {

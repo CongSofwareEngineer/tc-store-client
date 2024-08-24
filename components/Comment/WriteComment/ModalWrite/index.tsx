@@ -16,11 +16,13 @@ import ClientApi from '@/services/clientApi'
 import { delayTime, detectImg } from '@/utils/functions'
 import { CameraOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import { Image } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { isEqual } from 'lodash'
+import React, { useEffect, useRef, useState } from 'react'
 
 const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
   const [loading, setloading] = useState(false)
   const [formData, setFormData] = useState<{ [key: string]: any } | null>(null)
+  const exitedDataRef = useRef<{ [key: string]: any } | null>(null)
 
   const { isLogin, userData } = useUserData()
   const { translate } = useLanguage()
@@ -28,16 +30,42 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
   const { refreshQuery } = useRefreshQuery()
 
   useEffect(() => {
-    const initData = {
-      idProduct: dataItem._id,
-      sdt: userData?.sdt || '',
-      name: userData?.name || '',
-      note: 'Sản phẩm rất tốt',
-      rate: 5,
-      listImg: [],
+    const getData = async () => {
+      const initData = {
+        idProduct: dataItem._id,
+        sdt: userData?.sdt || '',
+        name: userData?.name || '',
+        note: 'Sản phẩm rất tốt',
+        rate: 5,
+        listImg: [],
+      }
+      if (userData) {
+        const res = await ClientApi.fetchData({
+          url: `/comment/detail/${dataItem._id}/${userData?.sdt}`,
+        })
+        if (res?.data) {
+          initData.listImg = res.data.listImg
+          initData.note = res.data.note
+          initData.rate = res.data.rate
+          exitedDataRef.current = res.data
+        }
+      }
+      setFormData(initData)
     }
-    setFormData(initData)
+    getData()
   }, [userData, dataItem.id])
+
+  const getDataToUpdate = () => {
+    const data: { [key: string]: any } = {}
+    for (const key in exitedDataRef.current) {
+      if (!isEqual(formData?.[key], exitedDataRef.current[key])) {
+        if (formData?.[key]) {
+          data[key] = formData?.[key]
+        }
+      }
+    }
+    return data
+  }
 
   const handleSubmit = async () => {
     try {
@@ -50,20 +78,28 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
         rate: formData?.rate || 5,
         sdt: formData?.sdt,
       }
-      const res = await ClientApi.fetchData({
-        url: 'comment/create',
-        method: REQUEST_TYPE.POST,
-        body: body,
-      })
-      console.log({ res })
+      let res
+      console.log({ exitedDataRef: exitedDataRef.current })
+      console.log({ getDataToUpdate: getDataToUpdate() })
 
-      await delayTime(200)
-      refreshQuery(QUERY_KEY.GetProductByID)
-      refreshQuery(QUERY_KEY.GetCommentProduction)
+      // if (exitedDataRef.current) {
+      //   res = await ClientApi.fetchData({
+      //     url: `comment/update/${exitedDataRef.current?._id}`,
+      //     method: REQUEST_TYPE.POST,
+      //     body: body,
+      //   })
+      // } else {
+      //   res = await ClientApi.fetchData({
+      //     url: 'comment/create',
+      //     method: REQUEST_TYPE.POST,
+      //     body: body,
+      //   })
+      // }
 
-      console.log('====================================')
-      console.log({ body, dataItem })
-      console.log('====================================')
+      // await delayTime(200)
+      // refreshQuery(QUERY_KEY.GetProductByID)
+      // refreshQuery(QUERY_KEY.GetCommentProduction)
+
       setloading(false)
     } catch (error) {}
   }
@@ -85,7 +121,11 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
         <div className="flex gap-3">
           {formData?.listImg?.map((item: any, index: number) => (
             <div key={`img-${index}`} className="relative w-[70px] ">
-              <Image alt="img" className="w-[70px]" src={item?.base64} />
+              <Image
+                alt="img"
+                className="w-[70px]"
+                src={detectImg(item?.base64 || item)}
+              />
               <CloseCircleOutlined
                 onClick={() => deleteImg(index)}
                 className="absolute text-[20px] z-10 cursor-pointer right-0 top-0"
@@ -116,10 +156,6 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
             <div className="flex flex-1 flex-col gap-2 h-auto justify-center">
               <p className="text-medium font-bold">{dataItem.name}</p>
               <RateForm name="rate" />
-              {/* <Rate
-                defaultValue={formData.rate || 5}
-                style={{ fontSize: 18 }}
-              /> */}
             </div>
           </div>
           <InputForm
@@ -145,6 +181,8 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
             typeBtn="area"
             label={translate('textPopular.note')}
             classFromItem="w-full"
+            showCount
+            maxLength={200}
           />
 
           <div className="flex flex-col w-full gap-2 mt-10">

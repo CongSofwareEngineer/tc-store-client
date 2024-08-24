@@ -27,18 +27,13 @@ const ClientApi = {
         method: REQUEST_TYPE.GET,
         ...param,
       }
-      console.log({ config })
 
       if (config.method !== REQUEST_TYPE.GET && config.isAthu) {
         athu = await getCookie(COOKIE_KEY.Auth)
-        console.log('====================================')
-        console.log({ athu })
-        console.log('====================================')
+
         if (!athu && config.isAthu) {
           const authRefresh = await getCookie(COOKIE_KEY.AuthRefresh)
-          console.log('====================================')
-          console.log({ authRefresh })
-          console.log('====================================')
+
           if (!authRefresh) {
             ObserverService.emit(OBSERVER_KEY.LogOut)
             return {
