@@ -16,7 +16,6 @@ import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
 import ClientApi from '@/services/clientApi'
 import {
-  delayTime,
   detectImg,
   showNotificationError,
   showNotificationSuccess,
@@ -24,7 +23,7 @@ import {
 import { CameraOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import { Image } from 'antd'
 import { isEqual } from 'lodash'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
   const [loading, setloading] = useState(false)

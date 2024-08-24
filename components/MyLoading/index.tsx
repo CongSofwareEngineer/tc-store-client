@@ -8,7 +8,7 @@ type MyLoadingType = {
   className?: string
   size?: any
 }
-const MyLoading = ({ icon, className, size = 'default' }: MyLoadingType) => {
+const MyLoading = ({ icon, className }: MyLoadingType) => {
   return (
     <div className={`w-full flex justify-center items-center ${className}`}>
       {icon ? (

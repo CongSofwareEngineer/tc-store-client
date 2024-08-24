@@ -9,7 +9,7 @@ import React from 'react'
 const Content = () => {
   const { queries } = useQuerySearch()
   const { data, isLoading, loadMore, hasNextPage, isFetchingNextPage } =
-    useAllProduct(1, queries)
+    useAllProduct(PAGE_SIZE_LIMIT, queries)
 
   return (
     <>
