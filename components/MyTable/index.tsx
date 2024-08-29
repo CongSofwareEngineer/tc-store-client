@@ -1,6 +1,14 @@
 import React from 'react'
 import { Card, Table } from 'antd'
 import MyLoadMore from '../MyLoadMore'
+import styled from 'styled-components'
+const CardCustom = styled(Card)`
+  @media screen and (max-width: 768px) {
+    .ant-card-body {
+      padding: 10px !important;
+    }
+  }
+`
 type Props = {
   data?: any[]
   columns?: any[]
@@ -23,7 +31,7 @@ const MyTable = ({
   loadMore,
 }: Props) => {
   return (
-    <Card
+    <CardCustom
       extra={extra}
       title={`Total : ${total || 0}`}
       className="w-full overflow-x-auto  "
@@ -40,7 +48,7 @@ const MyTable = ({
         loading={loading}
         callback={loadMore}
       />
-    </Card>
+    </CardCustom>
   )
 }
 

@@ -10,7 +10,7 @@ import {
 } from '@/utils/functions'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import { BodyAddBill } from '@/constant/firebase'
-import MyForm from '@/components/MyForm'
+import MyForm from '@/components/Form/MyForm'
 import BtnBack from './Component/BtnBack'
 import BillFinal from './Component/BillFinal'
 import ContentForm from './Component/ContentForm'

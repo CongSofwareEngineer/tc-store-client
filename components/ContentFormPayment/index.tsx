@@ -1,12 +1,12 @@
 import useCheckForm from '@/hook/useCheckForm'
 import useUserData from '@/hook/useUserData'
 import React, { useEffect, useState } from 'react'
-import InputForm from '../InputForm'
 import useLanguage from '@/hook/useLanguage'
-import InputAreaForm from '../InputAreaForm'
 import { images } from '@/configs/images'
 import MyImage from '../MyImage'
 import OptionVnLocation from '../OptionVnLocation'
+import InputAreaForm from '../Form/InputAreaForm'
+import InputForm from '../Form/InputForm'
 
 const ContentFormPayment = ({
   onChange,

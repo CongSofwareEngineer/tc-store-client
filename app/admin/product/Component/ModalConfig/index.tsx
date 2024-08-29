@@ -1,4 +1,4 @@
-import MyForm from '@/components/MyForm'
+import MyForm from '@/components/Form/MyForm'
 import {
   delayTime,
   detectImg,
@@ -6,8 +6,7 @@ import {
   showNotificationSuccess,
 } from '@/utils/functions'
 import React, { useEffect, useState } from 'react'
-import InputForm from '@/components/InputForm'
-import ButtonForm from '@/components/ButtonForm'
+
 import CategoryForm from '@/components/CategoryForm'
 import useLanguage from '@/hook/useLanguage'
 import { CameraOutlined, CloseCircleOutlined } from '@ant-design/icons'
@@ -21,6 +20,8 @@ import useModalDrawer from '@/hook/useModalDrawer'
 import ClientApi from '@/services/clientApi'
 import { isEqual } from 'lodash'
 import UploadImage from '@/components/UploadImg'
+import InputForm from '@/components/Form/InputForm'
+import ButtonForm from '@/components/Form/ButtonForm'
 
 const ProductConfig = ({ item }: { item: any }) => {
   const { translate } = useLanguage()

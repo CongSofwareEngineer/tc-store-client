@@ -25,6 +25,7 @@ const BillAdminScreen = () => {
     admin: false,
     category: false,
     keyName: false,
+    oneDate: false,
   })
   const { data, isLoading } = useBillAdmin([], '')
   const { isMobile } = useMedia()

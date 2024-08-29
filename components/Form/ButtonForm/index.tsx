@@ -4,7 +4,7 @@ import React from 'react'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import styled from 'styled-components'
-import MyButton from '../MyButton'
+import MyButton from '@/components/MyButton'
 const FormItem = styled(Form.Item)`
   .ant-form-item-row {
     width: 100%;

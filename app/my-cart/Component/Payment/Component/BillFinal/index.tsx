@@ -1,4 +1,4 @@
-import ButtonForm from '@/components/ButtonForm'
+import ButtonForm from '@/components/Form/ButtonForm'
 import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import useLanguage from '@/hook/useLanguage'

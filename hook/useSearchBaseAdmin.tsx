@@ -1,20 +1,25 @@
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-import MyForm from '@/components/MyForm'
-import InputForm from '@/components/InputForm'
+import MyForm from '@/components/Form/MyForm'
+import InputForm from '@/components/Form/InputForm'
 import useLanguage from './useLanguage'
 import CategoryForm from '@/components/CategoryForm'
-import CheckBoxForm from '@/components/CheckBoxForm'
+import CheckBoxForm from '@/components/Form/CheckBoxForm'
 import { usePathname, useRouter } from 'next/navigation'
-import ButtonForm from '@/components/ButtonForm'
+import ButtonForm from '@/components/Form/ButtonForm'
 import { useAppSelector } from '@/redux/store'
 import useMedia from './useMedia'
 import { isObject } from '@/utils/functions'
 import useQuerySearch from './useQuerySearch'
+import MyRangePicker from '@/components/MyRangePicker'
+import MyDatePickerForm from '@/components/Form/MyDatePickerForm'
+import dayjs from 'dayjs'
+import MyButton from '@/components/MyButton'
 
-const dateStart = moment(Date.now()).add(-7, 'days').format('YYYY-MM-DD')
+const dateStart = moment(Date.now()).add(-7, 'days')
 type Props = {
-  allDate?: boolean
+  dateStart?: boolean
+  dateEnd?: boolean
   category?: boolean
   id?: boolean
   sdt?: boolean
@@ -25,7 +30,8 @@ type Props = {
 }
 const useSearchBaseAdmin = (param?: Props) => {
   const config: Props = {
-    allDate: true,
+    dateStart: true,
+    dateEnd: true,
     category: true,
     id: true,
     sdt: true,
@@ -66,7 +72,6 @@ const useSearchBaseAdmin = (param?: Props) => {
     }
     if (isClient) {
       const initData = {
-        allDate: [dateStart, moment().format('YYYY-MM-DD')],
         category: getCategory(),
         id: '',
         sdt: '',
@@ -74,6 +79,10 @@ const useSearchBaseAdmin = (param?: Props) => {
         status: '',
         oneDate: moment().format('YYYY-MM-DD'),
         admin: false,
+        dateStart: dayjs(
+          new Date(Date.now()).setDate(new Date().getDate() - 7)
+        ),
+        dateEnd: dayjs(new Date(Date.now()).setDate(new Date().getDate())),
       }
       setFormData(initData)
     }
@@ -81,26 +90,58 @@ const useSearchBaseAdmin = (param?: Props) => {
     return () => setFormData(null)
   }, [CategoryMenu, Language, queries, isClient])
 
+  const clearSearcch = () => {
+    const initData = {
+      category: '',
+      id: '',
+      sdt: '',
+      keyName: '',
+      status: '',
+      oneDate: moment().format('YYYY-MM-DD'),
+      admin: false,
+      dateStart: dayjs(new Date(Date.now()).setDate(new Date().getDate() - 7)),
+      dateEnd: dayjs(new Date(Date.now()).setDate(new Date().getDate())),
+    }
+    setFormData(initData)
+  }
+
   const handleSubmit = () => {
     let query = ''
+
     Object.entries(config).forEach(([key, value]: [string, boolean]) => {
       if (value && formData?.[key]) {
         if (query) {
           if (isObject(formData?.[key])) {
-            query += `&${key}=${formData?.[key]?.value}`
+            if (key === 'dateStart' || key === 'dateEnd' || key === 'oneDate') {
+              console.log('format data')
+
+              const time = new Date(formData?.[key].toString()).getTime()
+              query += `&${key}=${time}`
+            } else {
+              query += `&${key}=${formData?.[key]?.value}`
+            }
           } else {
             query += `&${key}=${formData?.[key]}`
           }
         } else {
           if (isObject(formData?.[key])) {
-            query += `${key}=${formData?.[key]?.value}`
+            if (key === 'dateStart' || key === 'dateEnd' || key === 'oneDate') {
+              const time = new Date(formData?.[key].toString()).getTime()
+              query += `${key}=${time}`
+            } else {
+              query += `${key}=${formData?.[key]?.value}`
+            }
           } else {
-            query += `${key}=${formData?.[key]}`
+            if (key === 'dateStart' || key === 'dateEnd' || key === 'oneDate') {
+              const time = new Date(formData?.[key].toString()).getTime()
+              query += `${key}=${time}`
+            } else {
+              query += `${key}=${formData?.[key]}`
+            }
           }
         }
       }
     })
-    console.log({ query })
 
     router.push(`${pathPage}?${query}`)
   }
@@ -148,46 +189,35 @@ const useSearchBaseAdmin = (param?: Props) => {
                   <CheckBoxForm label="Admin" name="admin" />
                 </div>
               )}
+
+              {config.dateStart && (
+                <div className="md:w-[48%] w-full">
+                  <MyDatePickerForm
+                    label={translate('textPopular.dateStart')}
+                    name="dateStart"
+                    defaultValue={formData.dateStart}
+                  />
+                </div>
+              )}
+              {config.dateEnd && (
+                <div className="md:w-[48%] w-full">
+                  <MyDatePickerForm
+                    label={translate('textPopular.dateEnd')}
+                    name="dateEnd"
+                    defaultValue={formData.dateEnd}
+                  />
+                </div>
+              )}
             </div>
             <div className="flex justify-center w-full">
               <ButtonForm
                 disableClose
                 titleSubmit={translate('common.search')}
               />
+              <MyButton onClick={() => clearSearcch()}>{'Cearn'}</MyButton>
             </div>
           </MyForm>
         )}
-        {/* {param.showAllDate && (
-          <MyRangePicker
-            className="md:min-w-[230] min-w-full"
-            onChange={(dateString) => setDateTime(dateString)}
-          />
-        )}
-
-        <div className="w-full md:flex-col flex-row flex gap-2">
-          <div className="flex flex-1 gap-3">
-            <MyInput
-              placeholder="SDT"
-              type="string"
-              value={sdt}
-              onChangeText={(e) => setSdt(e!.toString())}
-            />
-            <MyButton type="dashed" onClick={handleSearchSDT}>
-              Search
-            </MyButton>
-          </div>
-          <div className="flex flex-1 md:flex-row  flex-col  gap-3">
-            <MyInput
-              placeholder="Id"
-              type="string"
-              value={idOther}
-              onChangeText={(e) => setIdOther(e?.toString() || '')}
-            />
-            <Button type="primary" onClick={handleSearchIDOther}>
-              Search
-            </Button>
-          </div>
-        </div> */}
       </div>
     )
   }

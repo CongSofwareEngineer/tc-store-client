@@ -19,6 +19,9 @@ const ProductAdminScreen = () => {
   const { renderContent } = useSearchBaseAdmin({
     status: false,
     admin: false,
+    sdt: false,
+    allDate: false,
+    oneDate: false,
   })
   const { queries } = useQuerySearch()
   const { data, isLoading, hasNextPage, isFetchingNextPage, loadMore } =

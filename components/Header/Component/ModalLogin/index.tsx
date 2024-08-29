@@ -1,5 +1,5 @@
-import InputForm from '@/components/InputForm'
-import MyForm from '@/components/MyForm'
+import InputForm from '@/components/Form/InputForm'
+import MyForm from '@/components/Form/MyForm'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
 import { Checkbox, Form } from 'antd'

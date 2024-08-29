@@ -1,6 +1,6 @@
 import { ContentFormType } from '@/app/my-cart/type'
 import InputAreaForm from '@/components/InputAreaForm'
-import InputForm from '@/components/InputForm'
+import InputForm from '@/components/Form/InputForm'
 import MyImage from '@/components/MyImage'
 import OptionVnLocation from '@/components/OptionVnLocation'
 import { images } from '@/configs/images'

@@ -6,7 +6,7 @@ import { PaymentShopType } from '../../type'
 import useOptionPayment from '@/hook/useOptionPayment'
 import BillFinal from '@/app/my-cart/Component/Payment/Component/BillFinal'
 import OptionPayment from '@/app/my-cart/Component/Payment/Component/OptionPayment'
-import MyForm from '@/components/MyForm'
+import MyForm from '@/components/Form/MyForm'
 import ContentFormPayment from '@/components/ContentFormPayment'
 import BtnBackUI from '@/components/BtnBackUI'
 import {

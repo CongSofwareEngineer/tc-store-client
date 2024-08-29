@@ -96,7 +96,9 @@
     "fullData": "Đã hết dữ liệu",
     "reason": "Lý do",
     "cost": "Giá gốc",
-    "point": "Điểm tích lũy"
+    "point": "Điểm tích lũy",
+    "dateStart": "Ngày bắt đầu",
+    "dateEnd": "Ngày kết thúc"
   },
   "addCart": {
     "addSuccess": "Đã thêm vào giỏ hàng",
