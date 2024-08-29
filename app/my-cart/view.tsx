@@ -11,14 +11,15 @@ import {
 } from '@/constant/app'
 import { cloneData, numberWithCommas } from '@/utils/functions'
 import ListItemCart from './Component/ListItemCart'
-import Payment from './Component/Payment'
+// import Payment from './Component/Payment'
 import ClientApi from '@/services/clientApi'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import LoadingGetData from '@/components/LoadingGetData'
 import Link from 'next/link'
 import MyButton from '@/components/MyButton'
-
+import dynamic from 'next/dynamic'
+const Payment = dynamic(() => import('./Component/Payment'), { ssr: false })
 const MyCartScreen = () => {
   const [listCartFormat, setListCartFormat] = useState<any[]>([])
   const [isPayment, setIsPayment] = useState(false)
