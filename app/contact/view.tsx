@@ -1,7 +1,7 @@
 'use client'
 import ButtonForm from '@/components/Form/ButtonForm'
 import InputForm from '@/components/Form/InputForm'
-import ModalProcess from '@/components/ModalProcess'
+// import ModalProcess from '@/components/ModalProcess'
 import MyForm from '@/components/Form/MyForm'
 import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
@@ -13,15 +13,19 @@ import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-
+import dynamic from 'next/dynamic'
+const ModalProcess = dynamic(() => import('@/components/ModalProcess'), {
+  ssr: true,
+})
 const ContactScreen = () => {
   useAos()
   const { isMobile } = useMedia()
   const router = useRouter()
   const { translate } = useLanguage()
   const { checkNumberPhone } = useCheckForm()
-  const { userData } = useUserData()
+  const { userData, isLogin } = useUserData()
   const { closeModalDrawer, openModalDrawer } = useModalDrawer()
+
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState<any>(null)
 
@@ -40,19 +44,22 @@ const ContactScreen = () => {
     setFormData(initData)
 
     return () => content.classList.remove('bg-custom-register')
-  }, [userData])
-  console.log('====================================')
-  console.log({ formData })
-  console.log('====================================')
+  }, [])
 
   const handleSubmit = async () => {
     setLoading(true)
     openModalDrawer({
       content: <ModalProcess />,
+      configModal: {
+        overClickClose: false,
+      },
     })
-    closeModalDrawer()
+    setTimeout(() => {
+      closeModalDrawer()
+    }, 3000)
     setLoading(false)
   }
+
   return (
     <div className=" flex flex-col justify-center items-center h-full w-full gap-2">
       <div className="w-full flex  justify-between h-full items-center">

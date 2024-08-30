@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { setUserData } from '@/redux/userDataSlice'
-import { useCallback, useMemo } from 'react'
+import { useMemo } from 'react'
 import useLanguage from './useLanguage'
 import {
   showNotificationError,
@@ -20,54 +20,47 @@ const useUserData = () => {
   const { translate } = useLanguage()
   const { closeModalDrawer } = useModalDrawer()
 
-  const isLogin = useMemo(() => {
-    return !!userData
-  }, [userData])
-
-  const loginWithDB = useCallback(
-    async (sdt: string, pass: string) => {
-      const dataBody = encryptData(
-        JSON.stringify({
-          sdt,
-          pass,
-        })
-      )
-
-      const data = await ClientApi.fetchData({
-        url: `user/login`,
-        method: REQUEST_TYPE.POST,
-        body: {
-          data: dataBody,
-        },
-        isAthu: false,
+  const loginWithDB = async (sdt: string, pass: string) => {
+    const dataBody = encryptData(
+      JSON.stringify({
+        sdt,
+        pass,
       })
+    )
 
-      if (data?.data) {
-        dispatch(setUserData(data?.data))
-        setCookie(
-          COOKIE_KEY.Auth,
-          data?.data.auth?.toString(),
-          COOKIE_EXPIRED.ExpiredAuth
-        )
-        setCookie(
-          COOKIE_KEY.AuthRefresh,
-          data?.data.authRefresh?.toString(),
-          COOKIE_EXPIRED.ExpiredAuthRefresh
-        )
-      }
-      return data?.data || null
-    },
-    [dispatch]
-  )
+    const data = await ClientApi.fetchData({
+      url: `user/login`,
+      method: REQUEST_TYPE.POST,
+      body: {
+        data: dataBody,
+      },
+      isAthu: false,
+    })
 
-  const logOut = useCallback(() => {
+    if (data?.data) {
+      dispatch(setUserData(data?.data))
+      setCookie(
+        COOKIE_KEY.Auth,
+        data?.data.auth?.toString(),
+        COOKIE_EXPIRED.ExpiredAuth
+      )
+      setCookie(
+        COOKIE_KEY.AuthRefresh,
+        data?.data.authRefresh?.toString(),
+        COOKIE_EXPIRED.ExpiredAuthRefresh
+      )
+    }
+    return data?.data || null
+  }
+
+  const logOut = () => {
     dispatch(setUserData(null))
     secureLocalStorage.removeItem(SLICE.UserData)
     deleteCookie(COOKIE_KEY.Auth)
     deleteCookie(COOKIE_KEY.AuthRefresh)
-  }, [dispatch])
+  }
 
-  const refreshLogin = useCallback(async () => {
+  const refreshLogin = async () => {
     if (userData) {
       const data = await loginWithDB(userData?.sdt || '', userData?.pass || '')
       if (!data) {
@@ -76,9 +69,9 @@ const useUserData = () => {
     } else {
       logOut()
     }
-  }, [logOut, userData, loginWithDB])
+  }
 
-  const reLogin = useCallback(async () => {
+  const reLogin = async () => {
     const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
     if (dataSecure) {
       const dataDecode = decryptData(dataSecure.toString())
@@ -94,34 +87,31 @@ const useUserData = () => {
     } else {
       logOut()
     }
-  }, [logOut, loginWithDB])
+  }
 
-  const login = useCallback(
-    async (numberPhone: string, pass: string, saveLogin = true) => {
-      try {
-        const encodePass = encryptData(pass)
-        const data = await loginWithDB(numberPhone, encodePass)
+  const login = async (numberPhone: string, pass: string, saveLogin = true) => {
+    try {
+      const encodePass = encryptData(pass)
+      const data = await loginWithDB(numberPhone, encodePass)
 
-        if (data) {
-          if (saveLogin) {
-            const userEncode = encryptData(JSON.stringify(data))
-            secureLocalStorage.setItem(SLICE.UserData, userEncode)
-          }
-          showNotificationSuccess(translate('success.login'))
-          closeModalDrawer()
-        } else {
-          showNotificationError(translate('noti.loginError'))
+      if (data) {
+        if (saveLogin) {
+          const userEncode = encryptData(JSON.stringify(data))
+          secureLocalStorage.setItem(SLICE.UserData, userEncode)
         }
-      } catch (error) {
+        showNotificationSuccess(translate('success.login'))
+        closeModalDrawer()
+      } else {
         showNotificationError(translate('noti.loginError'))
       }
-    },
-    [translate, closeModalDrawer, loginWithDB]
-  )
+    } catch (error) {
+      showNotificationError(translate('noti.loginError'))
+    }
+  }
 
   return {
     userData,
-    isLogin: !!isLogin,
+    isLogin: !!userData,
     logOut,
     login,
     refreshLogin,

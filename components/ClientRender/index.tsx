@@ -49,7 +49,7 @@ const ClientRender = ({
 
   useEffect(() => {
     isClient && reLogin()
-  }, [isClient, reLogin])
+  }, [isClient])
 
   useLayoutEffect(() => {
     dispatch(setMenuCategory(menuCategory))

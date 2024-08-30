@@ -2,19 +2,7 @@ import useLanguage from '@/hook/useLanguage'
 import React from 'react'
 import MyImage from '../MyImage'
 import { images } from '@/configs/images'
-import styled, { keyframes } from 'styled-components'
 import useMedia from '@/hook/useMedia'
-const spinAround = keyframes`
-    from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`
-const ContainerIcon = styled.div`
-  animation: ${spinAround} 2.5s ease-in-out infinite;
-`
 
 type PropsType = {
   icon?: string
@@ -32,7 +20,7 @@ const ModalProcess = ({ icon, des, title }: PropsType) => {
       </p>
 
       <div className="m-auto my-2 relative overflow-hidden">
-        <ContainerIcon>
+        <div className="animation_spin25s ">
           <MyImage
             src={icon || images.icon.iconLoadingModal}
             heightImage={isMobile ? '70px' : '120px'}
@@ -41,11 +29,10 @@ const ModalProcess = ({ icon, des, title }: PropsType) => {
             className="animate-pulse"
             priority
           />
-        </ContainerIcon>
+        </div>
       </div>
       <div className="text-center mb-2 md:max-w-[90%] m-auto">{des}</div>
     </div>
   )
 }
-
 export default ModalProcess

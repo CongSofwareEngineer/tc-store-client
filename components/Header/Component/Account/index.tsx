@@ -5,11 +5,12 @@ import ModalLogin from '../ModalLogin'
 import { DownOutlined, MenuOutlined } from '@ant-design/icons'
 import NavMobile from '../NavMobile'
 import { Dropdown, MenuProps } from 'antd'
-import CartUser from './cartUser'
+// import CartUser from './cartUser'
 import useMedia from '@/hook/useMedia'
 import useModalDrawer from '@/hook/useModalDrawer'
 import { useRouter } from 'next/navigation'
-
+import dynamic from 'next/dynamic'
+const CartUser = dynamic(() => import('./cartUser'), { ssr: false })
 const Account = () => {
   const { openModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()

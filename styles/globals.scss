@@ -169,6 +169,18 @@ body {
       }
     }
   }
+
+  &_spin25s {
+    animation: spin25s 2.5s infinite linear;
+    @keyframes spin25s {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  }
 }
 
 .container-admin {
