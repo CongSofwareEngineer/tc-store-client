@@ -103,6 +103,7 @@ const useSearchBaseAdmin = (param?: Props) => {
       dateEnd: dayjs(new Date(Date.now()).setDate(new Date().getDate())),
     }
     setFormData(initData)
+    router.push(pathPage)
   }
 
   const handleSubmit = () => {
@@ -209,12 +210,18 @@ const useSearchBaseAdmin = (param?: Props) => {
                 </div>
               )}
             </div>
-            <div className="flex justify-center w-full">
+            <div className="flex justify-center items-center gap-2 w-full">
               <ButtonForm
                 disableClose
                 titleSubmit={translate('common.search')}
               />
-              <MyButton onClick={() => clearSearcch()}>{'Cearn'}</MyButton>
+              <MyButton
+                type="primary"
+                className=" mt-2"
+                onClick={() => clearSearcch()}
+              >
+                {'Clean'}
+              </MyButton>
             </div>
           </MyForm>
         )}

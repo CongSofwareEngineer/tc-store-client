@@ -53,10 +53,12 @@ const fetchConfig = async ({
     .request(config)
     .then(async (response) => {
       if (response.status === 200) {
-        let data = response?.data?.data ?? response?.data ?? response
+        let data = response?.data?.data || response?.data || response
+
         if (method !== REQUEST_TYPE.GET) {
           data = decryptData(data)
         }
+
         return {
           data: data,
           messages: 'success',

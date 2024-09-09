@@ -11,7 +11,7 @@ const MenuCategory = dynamic(() => import('./Component/MenuCategory'), {
 })
 
 const ShopScreen = () => {
-  useAos()
+  useAos(1000)
   const { translate } = useLanguage()
 
   return (
