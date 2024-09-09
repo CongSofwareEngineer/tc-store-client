@@ -49,6 +49,7 @@ const ClientRender = ({
 
   useEffect(() => {
     isClient && reLogin()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isClient])
 
   useLayoutEffect(() => {

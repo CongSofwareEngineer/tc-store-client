@@ -1,6 +1,5 @@
 import MyForm from '@/components/Form/MyForm'
 import {
-  delayTime,
   detectImg,
   showNotificationError,
   showNotificationSuccess,
