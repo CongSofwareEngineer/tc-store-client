@@ -1,5 +1,6 @@
 import { Language, Path } from '@/constant/redux'
 import { useAppSelector } from '@/redux/store'
+import { message } from 'antd'
 import { useCallback } from 'react'
 
 const useLanguage = () => {
@@ -35,7 +36,25 @@ const useLanguage = () => {
     }
   }
 
-  return { getLabelCategory, translate, lang: Language?.locale || 'vn' }
+  const copyToClipboard = (text: any) => {
+    const tmp = document.createElement('input')
+    tmp.value = text
+    document.body.appendChild(tmp)
+    tmp.select()
+    document.execCommand('copy')
+    tmp.remove()
+    message.success({
+      type: 'success',
+      content: translate('textPopular.copied'),
+    })
+  }
+
+  return {
+    copyToClipboard,
+    getLabelCategory,
+    translate,
+    lang: Language?.locale || 'vn',
+  }
 }
 
 export default useLanguage

@@ -21,11 +21,12 @@ const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
       {isClient && (
         <Drawer
           onClose={closeDrawer}
-          className={`max-h-[${
-            config.placement === 'right' || config.placement === 'left'
-              ? 'unset'
-              : '85vh'
-          }]`}
+          style={{
+            maxHeight:
+              config.placement === 'right' || config.placement === 'left'
+                ? 'unset'
+                : '95vh',
+          }}
           {...config}
         >
           {config.content ?? <></>}
