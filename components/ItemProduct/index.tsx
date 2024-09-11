@@ -68,16 +68,16 @@ const ItemProduct = ({
           />
         </div>
         <div className="w-full gap-1 flex flex-col">
-          <p className="w-full text-medium font-bold">{item?.name}</p>
+          <p className="w-full md:text-medium font-bold whitespace-nowrap overflow-hidden text-ellipsis">
+            {item?.name}
+          </p>
           <TextPriceBase className=" w-full ">
             {`${formatPriceBase(item?.price || 150)} VNĐ`}
           </TextPriceBase>
 
-          <div className="w-full  text-green-600 md:text-[24px] text-[18px] font-bold flex justify-between  ">
+          <div className="w-full  text-green-600 md:text-[24px] text-[13px] font-bold flex justify-between  ">
             {formatPrice(item?.price || 150)}
-            <span className="text-[16px] ml-3[px] h-ful flex items-center relative top-[2px]">
-              VNĐ
-            </span>
+            VNĐ
           </div>
           {!isMobile && (
             <MySliderSell
