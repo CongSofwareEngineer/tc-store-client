@@ -26,8 +26,13 @@ import SubAndPlus from '@/components/SubAndPlus'
 import { images } from '@/configs/images'
 import MyButton from '@/components/MyButton'
 import ClientApi from '@/services/clientApi'
+import { Tabs, TabsProps } from 'antd'
 
 const Comment = dynamic(() => import('@/components/Comment'), {
+  ssr: false,
+})
+
+const InfoDetail = dynamic(() => import('../InfoDetail'), {
   ssr: false,
 })
 
@@ -108,8 +113,22 @@ const ViewDetail = ({
       setLoadingAddCart(false)
     }
   }
-  console.log({ dataItem })
 
+  const renderMoreInfo = () => {
+    const items: TabsProps['items'] = [
+      {
+        key: 'info',
+        label: translate('textPopular.infor'),
+        children: <InfoDetail dataItem={dataItem} />,
+      },
+      {
+        key: 'Comment',
+        label: translate('textPopular.comment'),
+        children: <Comment dataItem={dataItem} />,
+      },
+    ]
+    return <Tabs className="p-0" items={items} />
+  }
   const renderDesktop = () => {
     return (
       <div className="flex flex-col">
@@ -174,7 +193,7 @@ const ViewDetail = ({
         </div>
 
         <div data-aos="fade-up" className="w-full bg-white rounded-xl p-6 mt-6">
-          <Comment dataItem={dataItem} />
+          {renderMoreInfo()}
         </div>
       </div>
     )
@@ -248,7 +267,7 @@ const ViewDetail = ({
           data-aos="fade-right"
           className=" shadow-yellow-50 bg-white p-5 md:pr-5 pr-3 w-full flex flex-col gap-2 mt-2"
         >
-          <Comment dataItem={dataItem} />
+          {renderMoreInfo()}
         </div>
       </div>
     )

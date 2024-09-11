@@ -249,7 +249,6 @@ const ProductConfig = ({ item }: { item: any }) => {
           required
           typeBtn="area"
         />
-        <div className="mt-10" />
 
         <InputForm
           classFromItem="w-full"

@@ -19,6 +19,7 @@ import useLanguage from '@/hook/useLanguage'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import MyButton from '@/components/MyButton'
+import useQuerySearch from '@/hook/useQuerySearch'
 
 const BillAdminScreen = () => {
   const { renderContent } = useSearchBaseAdmin({
@@ -27,7 +28,8 @@ const BillAdminScreen = () => {
     keyName: false,
     oneDate: false,
   })
-  const { data, isLoading } = useBillAdmin([], '')
+  const { queries } = useQuerySearch()
+  const { data, isLoading } = useBillAdmin(queries)
   const { isMobile } = useMedia()
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()

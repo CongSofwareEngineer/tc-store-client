@@ -98,7 +98,7 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
             </div>
           ) : (
             <div className="flex w-full gap-4   pt-4  px-5 ">
-              <div className="flex w-full gap-4  overflow-x-auto  pt-4 pb-3 px-5 ">
+              <div className="flex w-full gap-3  overflow-x-auto  pt-4 pb-3  ">
                 {LIST_MENU.map((e) => {
                   return (
                     <div key={e.url} className="w-auto">
@@ -106,7 +106,7 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
                         href={e.url}
                         className={`${
                           patchName === e.url ? 'font-bold underline' : ''
-                        } text-nowrap bg-green-100 p-4 py-1 min-w-[50px] border-[1px] border-blue-300 rounded-xl text-black`}
+                        } text-nowrap bg-green-100 p-4 py-1 min-w-[50px] border-[1px] border-blue-300 rounded-lg text-black`}
                       >
                         {e.title}
                       </Link>
