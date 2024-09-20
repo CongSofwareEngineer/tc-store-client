@@ -33,10 +33,7 @@ const Home = () => {
           <InfoHome />
         </div>
         <div className="w-full flex flex-col gap-4 ">
-          <ListProduct
-            title={translate('home.titleFood')}
-            type={FilterAPI.Food}
-          />
+          <ListProduct title={translate('textPopular.nest')} type={'nest'} />
           <ListProduct title={translate('home.water')} type={FilterAPI.Water} />
         </div>
       </div>

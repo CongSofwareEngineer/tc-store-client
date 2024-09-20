@@ -99,7 +99,8 @@
     "cost": "Giá gốc",
     "point": "Điểm tích lũy",
     "dateStart": "Ngày bắt đầu",
-    "dateEnd": "Ngày kết thúc"
+    "dateEnd": "Ngày kết thúc",
+    "nest": "Yến"
   },
   "addCart": {
     "addSuccess": "Đã thêm vào giỏ hàng",
