@@ -5,7 +5,6 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { PaymentShopType } from '../../type'
 import useOptionPayment from '@/hook/useOptionPayment'
 import BillFinal from '@/app/my-cart/Component/Payment/Component/BillFinal'
-import OptionPayment from '@/app/my-cart/Component/Payment/Component/OptionPayment'
 import MyForm from '@/components/Form/MyForm'
 import ContentFormPayment from '@/components/ContentFormPayment'
 import BtnBackUI from '@/components/BtnBackUI'
@@ -27,6 +26,7 @@ import { FILTER_BILL, LOCAL_STORAGE_KEY, REQUEST_TYPE } from '@/constant/app'
 import ModalSuccess from '@/components/ModalSuccess'
 import { useRouter } from 'next/navigation'
 import ClientApi from '@/services/clientApi'
+import OptionsPayemnt from '@/app/my-cart/Component/Payment/Component/OptionsPayemnt'
 
 const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const { translate } = useLanguage()
@@ -193,7 +193,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
               </div>
 
               <div className="lg:w-[350px] flex flex-col md:gap-6 gap-5">
-                <OptionPayment
+                <OptionsPayemnt
                   onChangeOptions={onChangeOptions}
                   listOptions={listOptions}
                   optionSelected={optionSelected}

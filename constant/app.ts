@@ -69,7 +69,7 @@ export enum FilterAPI {
 
 export const PAGE_SIZE_LIMIT = 12
 
-export const OptionPayment = {
+export const OPTIONS_PAYMENT = {
   momo: 'momo',
   banking: 'banking',
   delivery: 'delivery',

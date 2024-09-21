@@ -14,7 +14,6 @@ import MyForm from '@/components/Form/MyForm'
 import BtnBack from './Component/BtnBack'
 import BillFinal from './Component/BillFinal'
 import ContentForm from './Component/ContentForm'
-import OptionPayment from './Component/OptionPayment'
 import useOptionPayment from '@/hook/useOptionPayment'
 import ViewListOther from './Component/ViewListOther'
 import { FILTER_BILL, REQUEST_TYPE } from '@/constant/app'
@@ -23,6 +22,7 @@ import useModalDrawer from '@/hook/useModalDrawer'
 import ModalSuccess from '@/components/ModalSuccess'
 import ClientApi from '@/services/clientApi'
 import { useRouter } from 'next/navigation'
+import OptionsPayemnt from './Component/OptionsPayemnt'
 
 const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
   const { translate } = useLanguage()
@@ -190,7 +190,7 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
               </div>
 
               <div className="lg:w-[300px] flex flex-col md:gap-6 gap-5">
-                <OptionPayment
+                <OptionsPayemnt
                   onChangeOptions={onChangeOptions}
                   listOptions={listOptions}
                   optionSelected={optionSelected}
