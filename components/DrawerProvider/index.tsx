@@ -25,7 +25,7 @@ const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
             maxHeight:
               config.placement === 'right' || config.placement === 'left'
                 ? 'unset'
-                : '95vh',
+                : '95dvh',
           }}
           {...config}
         >
