@@ -3,7 +3,6 @@ import ImageAdmin from '@/components/ImageAdmin'
 import MyTable from '@/components/MyTable'
 import TextCopy from '@/components/TextCopy'
 import { PAGE_SIZE_LIMIT } from '@/constant/app'
-import useAllProduct from '@/hook/tank-query/useAllProduct'
 import useMedia from '@/hook/useMedia'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useQuerySearch from '@/hook/useQuerySearch'
@@ -14,6 +13,7 @@ import React from 'react'
 import ProductConfig from './Component/ModalConfig'
 import useLanguage from '@/hook/useLanguage'
 import Link from 'next/link'
+import useListProductAdmin from '@/hook/tank-query/Admin/useListProductAdmin'
 
 const ProductAdminScreen = () => {
   const { renderContent } = useSearchBaseAdmin({
@@ -26,7 +26,7 @@ const ProductAdminScreen = () => {
   })
   const { queries } = useQuerySearch()
   const { data, isLoading, hasNextPage, isFetchingNextPage, loadMore } =
-    useAllProduct(PAGE_SIZE_LIMIT, queries)
+    useListProductAdmin(PAGE_SIZE_LIMIT, queries)
   const { isMobile } = useMedia()
   const { openModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()

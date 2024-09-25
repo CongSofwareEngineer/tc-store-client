@@ -101,7 +101,7 @@ const ProductConfig = ({ item }: { item: any }) => {
       showNotificationSuccess(
         translate(item ? 'success.update' : 'success.create')
       )
-      refreshQuery(QUERY_KEY.GetAllProduct)
+      refreshQuery(QUERY_KEY.GetListProductAdmin)
       closeModalDrawer()
     } else {
       showNotificationError(translate('errors.create'))
@@ -178,6 +178,7 @@ const ProductConfig = ({ item }: { item: any }) => {
               <UploadImage
                 maxSizeOutputKB={500}
                 typeFile={typeFile}
+                fullQuality
                 handleUpload={(e) => setFormData({ ...formData, imageMain: e })}
               >
                 <div className="flex gap-2">
@@ -205,6 +206,7 @@ const ProductConfig = ({ item }: { item: any }) => {
               <UploadImage
                 typeFile={typeFile}
                 listData={formData?.imageMore || []}
+                fullQuality
                 handleUpload={(e) =>
                   setFormData({
                     ...formData,
