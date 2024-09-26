@@ -23,10 +23,10 @@ const ModalProcess = ({ icon, des, title }: PropsType) => {
         <div className="animation_spin25s ">
           <MyImage
             src={icon || images.icon.iconLoadingModal}
-            heightImage={isMobile ? '70px' : '120px'}
             alt="icon-modal-delete"
-            widthImage="auto"
-            className="animate-pulse"
+            widthImg={'auto'}
+            heightImg={`[120px]`}
+            className="animate-pulse md:!h-[120px] !h-[70px]"
             priority
           />
         </div>

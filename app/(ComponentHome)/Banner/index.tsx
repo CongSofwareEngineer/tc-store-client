@@ -84,17 +84,10 @@ const Banner = () => {
               key={e.url}
             >
               <MyImage
-                positionImg={'absolute'}
                 alt={`img-banner-${e.url}`}
                 src={e.url}
-                widthImage="auto"
-                heightImage={'auto'}
-                style={{
-                  minWidth: '100%',
-                  minHeight: '100%',
-                  maxWidth: 'unset',
-                }}
-                className="select-none"
+                position="absolute"
+                className="select-none  !h-auto !w-auto min-w-full min-h-full !max-w-none !absolute"
               />
             </div>
           )
@@ -110,9 +103,9 @@ const Banner = () => {
           <MyImage
             alt={`icon-btnPre`}
             src={images.home.banner.btnSlider}
-            widthImage="45px"
-            heightImage="auto"
-            className="cursor-pointer hover:scale-110"
+            widthImg="[45px]"
+            heightImg="auto"
+            className="cursor-pointer hover:scale-110 "
             onClick={() => handleControl()}
           />
         </div>
@@ -133,8 +126,7 @@ const Banner = () => {
                         : 'btnPositionUnActive'
                     ]
                   }
-                  widthImage="100%"
-                  heightImage="auto"
+                  className="!w-full !h-auto"
                 />
                 <div className="absolute-center text-white  text-center">
                   {indexItem + 1}
@@ -147,9 +139,7 @@ const Banner = () => {
           <MyImage
             alt={`icon-btnPre`}
             src={images.home.banner.btnSlider}
-            widthImage="45px"
-            heightImage="auto"
-            className="cursor-pointer hover:scale-110 rotate-180"
+            className="!w-[45px] !h-auto cursor-pointer hover:scale-110 rotate-180"
             onClick={() => handleControl(false)}
           />
         </div>

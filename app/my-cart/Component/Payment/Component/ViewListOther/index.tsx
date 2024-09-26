@@ -56,8 +56,8 @@ const ViewListOther = ({ dataCart }: { dataCart: any[] }) => {
               <div className="w-[100px] ">
                 <div className="flex justify-center mt-2">
                   <MyImage
-                    widthImage={'auto'}
-                    heightImage={'80px'}
+                    widthImg={'auto'}
+                    heightImg={'[80px]'}
                     src={detectImg(e.more_data?.imageMain?.toString())}
                     alt={`item-${e.more_data?.name}`}
                   />
@@ -125,8 +125,8 @@ const ViewListOther = ({ dataCart }: { dataCart: any[] }) => {
               <div className="w-[100px] ">
                 <div className="flex justify-center mt-2">
                   <MyImage
-                    widthImage={'auto'}
-                    heightImage={'80px'}
+                    widthImg={'auto'}
+                    heightImg={'[80px]'}
                     src={detectImg(e.more_data?.imageMain?.toString())}
                     alt={`item-${e.more_data?.name}`}
                   />
@@ -175,8 +175,8 @@ const ViewListOther = ({ dataCart }: { dataCart: any[] }) => {
           <MyImage
             src={images.icon.iconCart}
             alt="my-cart-bill"
-            widthImage="25px"
-            heightImage="25px"
+            widthImg="[25px]"
+            heightImg="[25px]"
           />
         </div>
         <div className="text-medium font-semibold">

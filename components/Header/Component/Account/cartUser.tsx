@@ -25,8 +25,8 @@ const CartUser = () => {
       <MyImage
         src={images.icon.iconCart}
         alt="my-cart"
-        widthImage="25px"
-        heightImage="25px"
+        widthImg="[25px]"
+        heightImg="[25px]"
       />
     </div>
   )

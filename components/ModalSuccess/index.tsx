@@ -2,7 +2,6 @@ import useLanguage from '@/hook/useLanguage'
 import React from 'react'
 import MyImage from '../MyImage'
 import { images } from '@/configs/images'
-import useMedia from '@/hook/useMedia'
 import useModalDrawer from '@/hook/useModalDrawer'
 import MyButton from '../MyButton'
 
@@ -21,7 +20,6 @@ const ModalSuccess = ({
   ...props
 }: Props) => {
   const { translate } = useLanguage()
-  const { isMobile } = useMedia()
   const { closeModalDrawer } = useModalDrawer()
 
   return (
@@ -32,9 +30,9 @@ const ModalSuccess = ({
       <div className="m-auto my-2 relative overflow-hidden">
         <MyImage
           src={props.icon || images.icon.iconSuccess}
-          heightImage={isMobile ? '70px' : '100px'}
           alt="icon-modal-success"
-          widthImage="auto"
+          widthImg={'auto'}
+          className=" md:!h-[100px] !h-[70px]"
           priority
         />
       </div>

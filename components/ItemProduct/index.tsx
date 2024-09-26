@@ -63,8 +63,7 @@ const ItemProduct = ({
           <MyImage
             src={detectImg(item?.imageMain || images.userDetail.iconUserDetail)}
             alt={`item-${item?.name || href}`}
-            heightImage="auto  "
-            className="img select-none"
+            className="img !h-auto select-none"
           />
         </div>
         <div className="w-full gap-1 flex flex-col">

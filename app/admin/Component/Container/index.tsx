@@ -73,8 +73,7 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
                 <MyImage
                   alt="logo-admin"
                   src={images.logo}
-                  widthImage="100%"
-                  heightImage="auto"
+                  className="!w-full !h-auto"
                 />
               </div>
               {LIST_MENU.map((e) => {
