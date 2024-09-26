@@ -2,7 +2,6 @@ import useLanguage from '@/hook/useLanguage'
 import React from 'react'
 import MyImage from '../MyImage'
 import { images } from '@/configs/images'
-import useMedia from '@/hook/useMedia'
 
 type PropsType = {
   icon?: string
@@ -11,7 +10,6 @@ type PropsType = {
 }
 const ModalProcess = ({ icon, des, title }: PropsType) => {
   const { translate } = useLanguage()
-  const { isMobile } = useMedia()
 
   return (
     <div className="w-full flex flex-col gap-2">
