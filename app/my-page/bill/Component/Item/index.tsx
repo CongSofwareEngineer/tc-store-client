@@ -15,6 +15,7 @@ import ViewDetailBill from '../ViewDetailBill'
 import ModalCancelOrder from '../ModalCancelOrder'
 import TextCopy from '@/components/TextCopy'
 import MyButton from '@/components/MyButton'
+import ModalFeeback from '../ModalFeeback'
 type Props = {
   data: { [key: string]: any }
 }
@@ -100,7 +101,13 @@ const Item = ({ data }: Props) => {
 
   const handleFeeback = (item: any) => {
     openModalDrawer({
-      content: <ModalCancelOrder data={item} />,
+      content: <ModalFeeback data={item} />,
+      useDrawer: true,
+      title: (
+        <div className="text-medium font-bold">
+          {translate('textPopular.feeback')}
+        </div>
+      ),
     })
   }
 
@@ -118,7 +125,7 @@ const Item = ({ data }: Props) => {
         ) : (
           <>
             {data.status === FILTER_BILL.Processing && (
-              <div className="flex w-full justify-center">
+              <div className="flex md:w-full justify-center">
                 <MyButton
                   type="primary"
                   size="small"
@@ -130,7 +137,7 @@ const Item = ({ data }: Props) => {
               </div>
             )}
             {data.status === FILTER_BILL.DeliverySuccess && (
-              <div className="flex w-full justify-center">
+              <div className="flex  md:w-full justify-center">
                 <MyButton
                   size="small"
                   className="text-[13px]"

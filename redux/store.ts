@@ -1,8 +1,4 @@
-import {
-  SLICE,
-  TYPE_PERSIST_REDUCER,
-  WHITE_LIST_PERSIT_REDUX,
-} from '@/constant/redux'
+import { TYPE_PERSIST_REDUCER, WHITE_LIST_PERSIT_REDUX } from '@/constant/redux'
 import { configureStore } from '@reduxjs/toolkit'
 import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2'
 import storage from 'redux-persist/lib/storage'
@@ -20,9 +16,6 @@ import {
 import appReducer from './appReducer'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
-import secureLocalStorage from 'react-secure-storage'
-import { decryptData } from '@/utils/crypto'
-import { setUserData } from './userDataSlice'
 
 const reducer = (state: Partial<unknown> | unknown, action: any) => {
   return appReducer(state || {}, action)
@@ -53,12 +46,6 @@ export const makeStore = () => {
       }),
   })
   if (isClient) {
-    const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
-
-    if (dataSecure) {
-      const dataDecode = decryptData(dataSecure.toString())
-      storeRedux.dispatch(setUserData(JSON.parse(dataDecode)))
-    }
     return storeRedux
   }
 

@@ -23,6 +23,7 @@ import ObserverService from '@/services/observer'
 import { SLICE } from '@/constant/redux'
 import secureLocalStorage from 'react-secure-storage'
 import { setUserData } from '@/redux/userDataSlice'
+import { decryptData } from '@/utils/crypto'
 
 const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
   ssr: true,
@@ -53,19 +54,31 @@ const ClientRender = ({
   }, [isClient])
 
   useLayoutEffect(() => {
+    const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
+    if (dataSecure) {
+      const dataDecode = decryptData(dataSecure.toString())
+      dispatch(setUserData(JSON.parse(dataDecode)))
+    }
     dispatch(setMenuCategory(menuCategory))
     dispatch(fetchProvinces())
+
     const updateCookies = (auth: string) => {
       setCookie(COOKIE_KEY.Auth, auth, COOKIE_EXPIRED.ExpiredAuth)
     }
-    ObserverService.on(OBSERVER_KEY.LogOut, () => {
+    const handleLogout = () => {
       secureLocalStorage.removeItem(SLICE.UserData)
       deleteCookie(COOKIE_KEY.Auth)
       deleteCookie(COOKIE_KEY.AuthRefresh)
       dispatch(setUserData(null))
-    })
+    }
+
+    ObserverService.on(OBSERVER_KEY.LogOut, handleLogout)
     ObserverService.on(OBSERVER_KEY.UpdateCookieAuth, updateCookies)
-    return () => ObserverService.removeListener(OBSERVER_KEY.LogOut)
+
+    return () => {
+      ObserverService.removeListener(OBSERVER_KEY.LogOut)
+      ObserverService.removeListener(OBSERVER_KEY.UpdateCookieAuth)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
