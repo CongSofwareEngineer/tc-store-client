@@ -43,8 +43,8 @@ const Container = ({ children }: PropsWithChildren) => {
         <MyImage
           src={icon}
           alt={`icon-menu-my-profile-${name}`}
-          widthImg={`[${isMobile ? 20 : 25}px]`}
-          heightImg={`[${isMobile ? 20 : 25}px]`}
+          widthImage={isMobile ? '20px' : '25px'}
+          heightImage={isMobile ? '20px' : '25px'}
         />
         <span>{name}</span>
       </Link>

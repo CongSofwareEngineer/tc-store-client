@@ -3,6 +3,7 @@ import { useState } from 'react'
 import MyImage from '../MyImage'
 import { images } from '@/configs/images'
 import useModalDrawer from '@/hook/useModalDrawer'
+import useMedia from '@/hook/useMedia'
 import MyButton from '../MyButton'
 type ModalDeleteType = {
   des?: string
@@ -19,6 +20,7 @@ const ModalDelete = ({
   autoClose = true,
 }: ModalDeleteType) => {
   const { translate } = useLanguage()
+  const { isMobile } = useMedia()
   const { closeModalDrawer } = useModalDrawer()
 
   const [loading, setLoading] = useState(false)
@@ -40,12 +42,11 @@ const ModalDelete = ({
       <div className="m-auto my-2">
         <MyImage
           src={images.icon.iconWarning}
+          heightImage={isMobile ? '70px' : '120px'}
           alt="icon-modal-delete"
-          widthImg={'auto'}
-          className=" md:!h-[120px] !h-[70px]"
+          widthImage="auto"
         />
       </div>
-
       <div className="text-center mb-2 md:max-w-[90%] m-auto">{des}</div>
       <div className="w-full flex gap-4">
         <div className="flex-1">

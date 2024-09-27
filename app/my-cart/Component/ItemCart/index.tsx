@@ -84,7 +84,8 @@ const ItemCart = ({
         </div>
         <div className="aspect-square w-[120px]">
           <MyImage
-            className="!w-full !h-auto"
+            widthImage={'100%'}
+            heightImage={'auto'}
             src={detectImg(data?.more_data?.imageMain?.toString() || '')}
             alt={`item-${data?.more_data?.keyName}`}
           />
@@ -141,7 +142,8 @@ const ItemCart = ({
 
         <div className="w-[100px] flex ">
           <MyImage
-            className="!w-auto !h-[80px]"
+            widthImage={'auto'}
+            heightImage={'80px'}
             src={detectImg(data?.more_data?.imageMain?.toString() || '')}
             alt={`item-${data.id}`}
           />

@@ -13,7 +13,7 @@ const InfoHome = () => {
         className="flex gap-4 flex-1 items-center justify-center "
       >
         <div className="w-14 h-14">
-          <MyImage src={image} alt={`info-home-${title}`} heightImg="auto" />
+          <MyImage src={image} alt={`info-home-${title}`} heightImage="auto" />
         </div>
         <div className="flex-1 justify-start items-start">
           <div className="uppercase font-semibold text-medium">{title}</div>

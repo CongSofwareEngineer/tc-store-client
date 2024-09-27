@@ -132,8 +132,8 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
                 <MyImage
                   src={images.userDetail.iconUserDetail}
                   alt="my-cart-infoReceived"
-                  widthImg="[25px]"
-                  heightImg="[25px]"
+                  widthImage="25px"
+                  heightImage="25px"
                 />
               </div>
               <div className="text-medium font-semibold">
@@ -195,8 +195,8 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
                 <MyImage
                   src={images.icon.iconCart}
                   alt="my-cart-bill"
-                  widthImg="[25px]"
-                  heightImg="[25px]"
+                  widthImage="25px"
+                  heightImage="25px"
                 />
               </div>
               <div className="text-medium font-semibold">
@@ -219,8 +219,8 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
                 <MyImage
                   src={images.icon.iconBill}
                   alt="my-cart-bill"
-                  widthImg="[25px]"
-                  heightImg="[25px]"
+                  widthImage="25px"
+                  heightImage="25px"
                 />
               </div>
               <div className="text-medium font-semibold">

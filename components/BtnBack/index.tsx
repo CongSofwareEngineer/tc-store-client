@@ -20,8 +20,8 @@ const BtnBack = ({ title, url = [], onClick = null }: BtnBackType) => {
       <MyImage
         onClick={() => (onClick ? onClick() : router.back())}
         src={images.icon.iconBack}
-        widthImg={'[25px]'}
-        heightImg={'[25px]'}
+        widthImage={'25px'}
+        heightImage={'25px'}
         alt={'TC Store Icon Back page '}
         className="cursor-pointer"
       />

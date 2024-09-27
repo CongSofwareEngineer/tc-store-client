@@ -19,8 +19,8 @@ const ListProduct = ({ lisDataBill }: { lisDataBill: any[] }) => {
           <MyImage
             src={images.icon.iconCart}
             alt="my-cart-bill"
-            widthImg="[25px]"
-            heightImg="[25px]"
+            widthImage="25px"
+            heightImage="25px"
           />
         </div>
         <div className="text-medium font-semibold">

@@ -25,8 +25,8 @@ const OptionsPayemnt = ({
           <MyImage
             src={images.icon.iconOptionPayment}
             alt="icon-optionPayment-bill"
-            widthImg="[25px]"
-            heightImg="[25px]"
+            widthImage="25px"
+            heightImage="25px"
           />
         </div>
 
@@ -47,13 +47,15 @@ const OptionsPayemnt = ({
                 className="cursor-pointer flex gap-2  md:text-[16px] text-[14px] items-center"
               >
                 <MyImage
-                  className="!w-[20px] !h-[20px]"
+                  heightImage="20px"
+                  widthImage="20px"
                   src={getIcon(e.value)}
                   alt={`checkbox-${e.name}`}
                 />
                 {e.icon && (
                   <MyImage
-                    className="!w-[18px] !h-18px"
+                    heightImage="18px"
+                    widthImage="18px"
                     src={e.icon}
                     alt={`icon-${e.name}`}
                   />

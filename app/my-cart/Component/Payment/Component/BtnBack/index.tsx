@@ -11,8 +11,10 @@ const BtnBack = ({ clickBack }: { clickBack: () => void }) => {
       <MyImage
         onClick={clickBack}
         src={images.icon.iconBack}
+        widthImage={'25px'}
+        heightImage={'25px'}
         alt={'TC Store Icon Back page '}
-        className="cursor-pointer !w-[25px] !h-[25px]"
+        className="cursor-pointer"
       />
       <a
         onClick={clickBack}
