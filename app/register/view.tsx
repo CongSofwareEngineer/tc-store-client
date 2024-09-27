@@ -17,6 +17,16 @@ import { showNotificationError } from '@/utils/functions'
 import { Checkbox } from 'antd'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
+
+const ContainerRegister = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  max-width: 1000px;
+  margin: auto;
+`
 
 const RegisterScreen = () => {
   useAos(1000)
@@ -83,7 +93,7 @@ const RegisterScreen = () => {
   }
 
   return (
-    <div className="h-full max-w-[1000px] relative flex justify-center m-auto">
+    <ContainerRegister>
       <div className="w-full flex justify-between h-full items-center">
         {!isMobile && (
           <div
@@ -179,7 +189,7 @@ const RegisterScreen = () => {
           </div>
         </div>
       </div>
-    </div>
+    </ContainerRegister>
   )
 }
 
