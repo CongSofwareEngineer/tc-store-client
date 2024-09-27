@@ -33,8 +33,8 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
           <div className="w-[100px] ">
             <div className="flex justify-center mt-2">
               <MyImage
-                widthImage={'auto'}
-                heightImage={'80px'}
+                widthImg={'auto'}
+                heightImg={'[80px]'}
                 src={detectImg(data?.imageMain?.toString() || '')}
                 alt={`item-${data?.name}`}
               />
@@ -86,8 +86,8 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
           <div className="w-[100px] ">
             <div className="flex justify-center mt-2">
               <MyImage
-                widthImage={'auto'}
-                heightImage={'80px'}
+                widthImg={'auto'}
+                heightImg={'[80px]'}
                 src={detectImg(data?.imageMain?.toString() || '')}
                 alt={`item-${data?.name}`}
               />
@@ -134,8 +134,8 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
           <MyImage
             src={images.icon.iconCart}
             alt="my-cart-bill"
-            widthImage="25px"
-            heightImage="25px"
+            widthImg="[25px]"
+            heightImg="[25px]"
           />
         </div>
         <div className="text-medium font-semibold">

@@ -1,5 +1,4 @@
 import React from 'react'
-import MyImage from '../MyImage'
 import { images } from '@/configs/images'
 type MyCheckBoxProps = {
   className?: string
@@ -16,13 +15,14 @@ const MyCheckBox = ({
   value = false,
 }: MyCheckBoxProps) => {
   return value ? (
-    <MyImage
-      priority
+    <img
       src={images.icon.iconChecked}
-      widthImage={`${size}px`}
-      heightImage={`${size}px`}
+      style={{
+        width: size,
+        height: size,
+      }}
       alt={`icon-MyCheckBox-${alt}`}
-      className={`transition-all duration-500 cursor-pointer select-none ${className}`}
+      className={`transition-all   duration-500 cursor-pointer select-none ${className}`}
       onClick={onClick}
     />
   ) : (

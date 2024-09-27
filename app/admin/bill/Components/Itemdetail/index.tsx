@@ -44,8 +44,7 @@ const ItemDetail = ({ data }: { data: any }) => {
               <MyImage
                 alt={`img-product`}
                 src={detectImg(e?.more_data?.imageMain)}
-                widthImage="100%"
-                heightImage="auto"
+                className="!w-full !h-auto"
               />
             </div>
             <div className="flex flex-col gap-2 flex-1">

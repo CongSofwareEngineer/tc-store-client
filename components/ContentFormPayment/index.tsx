@@ -33,8 +33,8 @@ const ContentFormPayment = ({
           <MyImage
             src={images.userDetail.iconUserDetail}
             alt="my-cart-infoReceived"
-            widthImage="25px"
-            heightImage="25px"
+            widthImg={'[25px]'}
+            heightImg={'[25px]'}
           />
         </div>
         <div className="text-medium font-semibold">

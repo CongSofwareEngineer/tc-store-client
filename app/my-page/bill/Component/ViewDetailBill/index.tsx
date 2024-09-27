@@ -28,8 +28,8 @@ const ViewDetailBill = ({ data }: Props) => {
                 <MyImage
                   alt={`icon-product-bill-${e._id}`}
                   src={e.more_data.imageMain}
-                  widthImage="auto"
-                  heightImage="auto"
+                  widthImg="auto"
+                  heightImg="auto"
                 />
               </div>
               <div className="flex flex-col gap-2">

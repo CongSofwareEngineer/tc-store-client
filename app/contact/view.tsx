@@ -44,6 +44,7 @@ const ContactScreen = () => {
     setFormData(initData)
 
     return () => content.classList.remove('bg-custom-register')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleSubmit = async () => {

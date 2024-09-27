@@ -15,8 +15,8 @@ const BtnBackUI = ({ clickBack, titlePageMain, titlePage }: PropsType) => {
       <MyImage
         onClick={clickBack}
         src={images.icon.iconBack}
-        widthImage={'25px'}
-        heightImage={'25px'}
+        widthImg={'[25px]'}
+        heightImg={'[25px]'}
         alt={'TC Store Icon Back page '}
         className="cursor-pointer"
       />

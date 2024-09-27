@@ -68,8 +68,8 @@ const Avatar = () => {
       <MyImage
         src={detectAvatar(userData?.avatar?.toString())}
         alt="avatar"
-        widthImage="100%"
-        heightImage="auto"
+        widthImg="full"
+        heightImg="auto"
         priority
       />
       <div className="absolute-center mt-2">

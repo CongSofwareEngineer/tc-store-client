@@ -27,9 +27,7 @@ const Header = () => {
                 <MyImage
                   src={images.logo}
                   alt="logo-tcstore"
-                  fill
-                  widthImage={'auto'}
-                  heightImage="1pCl00%"
+                  className="!w-auto !h-full"
                 />
               </Link>
             </div>

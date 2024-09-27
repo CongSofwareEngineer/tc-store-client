@@ -2,7 +2,6 @@ import useLanguage from '@/hook/useLanguage'
 import React from 'react'
 import MyImage from '../MyImage'
 import { images } from '@/configs/images'
-import useMedia from '@/hook/useMedia'
 
 type PropsType = {
   icon?: string
@@ -11,7 +10,6 @@ type PropsType = {
 }
 const ModalProcess = ({ icon, des, title }: PropsType) => {
   const { translate } = useLanguage()
-  const { isMobile } = useMedia()
 
   return (
     <div className="w-full flex flex-col gap-2">
@@ -23,10 +21,10 @@ const ModalProcess = ({ icon, des, title }: PropsType) => {
         <div className="animation_spin25s ">
           <MyImage
             src={icon || images.icon.iconLoadingModal}
-            heightImage={isMobile ? '70px' : '120px'}
             alt="icon-modal-delete"
-            widthImage="auto"
-            className="animate-pulse"
+            widthImg={'auto'}
+            heightImg={`[120px]`}
+            className="animate-pulse md:!h-[120px] !h-[70px]"
             priority
           />
         </div>

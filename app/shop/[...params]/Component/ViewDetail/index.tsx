@@ -141,8 +141,8 @@ const ViewDetail = ({
             <MyImage
               src={detectImg(dataItem.imageMain || '')}
               alt={`img-main--${dataItem.name}`}
-              widthImage="100%"
-              heightImage="auto"
+              widthImg="full"
+              heightImg="auto"
             />
           </div>
           <div
@@ -182,8 +182,8 @@ const ViewDetail = ({
                   <MyImage
                     src={images.icon.iconCart}
                     alt="btn-add-cart"
-                    widthImage="25px"
-                    heightImage="25px"
+                    widthImg="[25px]"
+                    heightImg="[25px]"
                   />
                   <span>{translate('common.addCart')}</span>
                 </div>
@@ -213,8 +213,8 @@ const ViewDetail = ({
                 dataItem.imageMain || images.userDetail.iconUserDetail
               )}
               alt={dataItem.des || ''}
-              widthImage="100%"
-              heightImage="auto"
+              widthImg="full"
+              heightImg="auto"
             />
           </div>
           <div
@@ -254,8 +254,8 @@ const ViewDetail = ({
                   <MyImage
                     src={images.icon.iconCart}
                     alt="btn-add-cart"
-                    widthImage="25px"
-                    heightImage="25px"
+                    widthImg="[25px]"
+                    heightImg="[25px]"
                   />
                   <span>{translate('common.addCart')}</span>
                 </div>
