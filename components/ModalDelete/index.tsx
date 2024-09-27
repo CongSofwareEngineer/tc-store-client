@@ -45,6 +45,7 @@ const ModalDelete = ({
           className=" md:!h-[120px] !h-[70px]"
         />
       </div>
+
       <div className="text-center mb-2 md:max-w-[90%] m-auto">{des}</div>
       <div className="w-full flex gap-4">
         <div className="flex-1">
