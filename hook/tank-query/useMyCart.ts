@@ -1,9 +1,10 @@
-import { PAGE_SIZE_LIMIT } from '@/constant/app'
+import { COOKIE_KEY, PAGE_SIZE_LIMIT } from '@/constant/app'
 import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery'
 import useUserData from '../useUserData'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import ClientApi from '@/services/clientApi'
+import { getCookie } from '@/services/CookeisService'
 
 const getData = async ({
   queryKey,
@@ -12,13 +13,29 @@ const getData = async ({
   queryKey: any
   pageParam: any
 }): Promise<TypeHookReactQuery> => {
-  const queryUrl = `?page=${pageParam}&limit=${queryKey[2]}`
-  const dataServer = await ClientApi.fetchData({
-    url: `cart/detail/${queryKey[1]}${queryUrl}`,
-  })
+  const isLogin = queryKey[3]
+  if (isLogin) {
+    const queryUrl = `?page=${pageParam}&limit=${queryKey[2]}`
+    const dataServer = await ClientApi.fetchData({
+      url: `cart/detail/${queryKey[1]}${queryUrl}`,
+    })
+    return {
+      data: dataServer?.data || [],
+      page: pageParam,
+    }
+  } else {
+    const data = await getCookie(COOKIE_KEY.MyCart)
+    console.log({ datagetCookie: data })
+    if (Array.isArray(data)) {
+      return {
+        data,
+        page: pageParam,
+      }
+    }
+  }
 
   return {
-    data: dataServer?.data || [],
+    data: [],
     page: pageParam,
   }
 }
@@ -28,9 +45,8 @@ const useMyCart = (pageSize = PAGE_SIZE_LIMIT) => {
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: [QUERY_KEY.MyCartUser, userData?._id, pageSize],
+      queryKey: [QUERY_KEY.MyCartUser, userData?._id, pageSize, isLogin],
       queryFn: getData,
-      enabled: isLogin,
       initialPageParam: 1,
       getNextPageParam: (lastPage: { data: any; page: number }) => {
         if (lastPage?.data?.length == pageSize) {

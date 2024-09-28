@@ -42,9 +42,8 @@ const ContactScreen = () => {
       note: '',
     }
     setFormData(initData)
-
     return () => content.classList.remove('bg-custom-register')
-  }, [])
+  }, [userData])
 
   const handleSubmit = async () => {
     setLoading(true)

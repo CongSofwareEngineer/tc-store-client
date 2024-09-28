@@ -13,36 +13,12 @@ import OptionFilter from './Component/OptionFilter'
 // import MyDatePicker from '@/components/MyDatePicker'
 
 const BillScreen = () => {
-  const { isMobile } = useMedia()
   const { isMobile: isMediaEx } = useMedia(1000)
   const { queries } = useQuerySearch()
   const { translate } = useLanguage()
 
   const { data, hasNextPage, isLoading, loadMore, isFetchingNextPage } =
     useBill(queries, '')
-
-  const renderDesktop = () => {
-    return (
-      data.length > 0 && (
-        <div className="flex gap-3 w-full flex-col mb-10">
-          {data.map((e) => {
-            return <Item data={e} key={e?._id} />
-          })}
-        </div>
-      )
-    )
-  }
-  const renderMobile = () => {
-    return (
-      data.length > 0 && (
-        <div className="flex gap-3 w-full flex-col mb-10">
-          {data.map((e) => {
-            return <Item data={e} key={e?._id} />
-          })}
-        </div>
-      )
-    )
-  }
 
   return (
     <div className="flex flex-col gap-3 w-full ">
@@ -73,7 +49,13 @@ const BillScreen = () => {
           )}
         </div>
 
-        {isMobile ? renderMobile() : renderDesktop()}
+        {data.length > 0 && (
+          <div className="flex gap-3 w-full flex-col mb-10">
+            {data.map((e) => {
+              return <Item data={e} key={e?._id} />
+            })}
+          </div>
+        )}
 
         <LoadingGetData
           loading={isLoading}

@@ -3,11 +3,7 @@ import { PaymentPageType } from '../../type'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
-import {
-  delayTime,
-  numberWithCommas,
-  showNotificationError,
-} from '@/utils/functions'
+import { numberWithCommas, showNotificationError } from '@/utils/functions'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import { BodyAddBill } from '@/constant/firebase'
 import MyForm from '@/components/Form/MyForm'
@@ -86,15 +82,14 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
     refreshQuery(QUERY_KEY.MyCartUser)
     refreshQuery(QUERY_KEY.GetProductByID)
   }
-  console.log({ dataCart })
 
   const handleSubmit = async () => {
-    try {
-      setLoading(true)
-      let totalBill = 0
-      const listBill: any[] = []
-      const listNewSoldProduct: any[] = []
-      dataCart.forEach((e) => {
+    setLoading(true)
+    let totalBill = 0
+    const listBill: any[] = []
+    const listNewSoldProduct: any[] = []
+    dataCart.forEach((e) => {
+      if (e.selected) {
         totalBill += e.amount * e.more_data.price
         const itemBill = {
           _id: e.more_data._id,
@@ -109,61 +104,57 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
 
         listNewSoldProduct.push(itemNewSold)
         listBill.push(itemBill)
-      })
-      const bodyAPI: BodyAddBill = {
-        addressShip: formData?.addressShip,
-        discount: 0,
-        idUser: userData?._id,
-        listBill,
-        totalBill: totalBill,
-        sdt: formData?.sdt,
-        status: FILTER_BILL.Processing,
-        listNewSoldProduct,
       }
+    })
+    const bodyAPI: BodyAddBill = {
+      addressShip: formData?.addressShip,
+      discount: 0,
+      idUser: userData?._id,
+      listBill,
+      totalBill: totalBill,
+      sdt: formData?.sdt,
+      status: FILTER_BILL.Processing,
+      listNewSoldProduct,
+    }
 
+    openModalDrawer({
+      content: (
+        <ModalProcess
+          title={translate('confirm.bill.createBill')}
+          des={translate('confirm.bill.createBill_Des')}
+        />
+      ),
+      configModal: {
+        showHeader: false,
+        showBtnClose: false,
+        overClickClose: false,
+      },
+    })
+    const res = await ClientApi.fetchData({
+      url: 'bill/create',
+      body: bodyAPI,
+      method: REQUEST_TYPE.POST,
+    })
+    if (res?.data) {
+      refreshAllData()
       openModalDrawer({
         content: (
-          <ModalProcess
-            title={translate('confirm.bill.createBill')}
-            des={translate('confirm.bill.createBill_Des')}
+          <ModalSuccess
+            showClose
+            title={translate('productDetail.modalBuy.success')}
+            des={translate('productDetail.modalBuy.successDes')}
+            titleSubmit={translate('common.viewBill')}
+            titleClose={translate('common.ok')}
+            callback={() => {
+              route.push('/my-page/bill')
+              closeModalDrawer()
+            }}
           />
         ),
-        configModal: {
-          showHeader: false,
-          showBtnClose: false,
-          overClickClose: false,
-        },
       })
-      const res = await ClientApi.fetchData({
-        url: 'bill/create',
-        body: bodyAPI,
-        method: REQUEST_TYPE.POST,
-      })
-      if (res?.data) {
-        await delayTime(500)
-        refreshAllData()
-        await delayTime(500)
-        openModalDrawer({
-          content: (
-            <ModalSuccess
-              showClose
-              title={translate('productDetail.modalBuy.success')}
-              des={translate('productDetail.modalBuy.successDes')}
-              titleSubmit={translate('common.viewBill')}
-              titleClose={translate('common.ok')}
-              callback={() => {
-                route.push('/my-page/bill')
-                closeModalDrawer()
-              }}
-            />
-          ),
-        })
-      } else {
-        showNotificationError(translate('productDetail.modalBuy.error'))
-      }
-    } finally {
-      setLoading(false)
-      closeModalDrawer()
+      clickBack()
+    } else {
+      showNotificationError(translate('productDetail.modalBuy.error'))
     }
   }
 

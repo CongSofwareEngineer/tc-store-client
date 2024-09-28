@@ -4,6 +4,7 @@ import React from 'react'
 import moment from 'moment'
 import Link from 'next/link'
 import {
+  ellipsisText,
   formatPrice,
   formatPriceBase,
   numberWithCommas,
@@ -153,7 +154,7 @@ const Item = ({ data }: Props) => {
       <div className="flex flex-col lg:gap-3 gap-2 flex-1">
         <div className="flex gap-2 w-full text-[11px]">
           <span>{`${translate('myBill.idOrder')} : `}</span>
-          <TextCopy value={data._id} />
+          <TextCopy value={data._id} textView={ellipsisText(data._id, 4, 3)} />
         </div>
         {isMobile && (
           <>

@@ -15,7 +15,7 @@ const TextCopy = ({ textView = '', value = '', isLink = false }: Props) => {
           {value || textView}
         </Link>
       ) : (
-        <span>{value || textView}</span>
+        <span>{textView || value}</span>
       )}
       <CopyOutlined onClick={() => copyToClipboard(value || textView)} />
     </div>

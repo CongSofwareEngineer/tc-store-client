@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { ItemDetailType } from '../../type'
 import useAos from '@/hook/useAos'
 import useMedia from '@/hook/useMedia'
@@ -16,7 +16,7 @@ import {
   showNotificationSuccess,
 } from '@/utils/functions'
 import { QUERY_KEY } from '@/constant/reactQuery'
-import { setCookie } from '@/services/CookeisService'
+import { getCookie, setCookie } from '@/services/CookeisService'
 import BtnBack from '@/components/BtnBack'
 import useGetProductByID from '@/hook/tank-query/useGetProductByID'
 import MyImage from '@/components/MyImage'
@@ -55,7 +55,10 @@ const ViewDetail = ({
   const { translate } = useLanguage()
   const { userData, isLogin } = useUserData()
   const { data } = useGetProductByID(productDetail?.id)
-  const dataItem = data?.data ?? productDetail
+  const dataItem = useMemo(
+    () => data?.data ?? productDetail,
+    [data, productDetail]
+  )
 
   const [loadingAddCart, setLoadingAddCart] = useState(false)
 
@@ -87,28 +90,57 @@ const ViewDetail = ({
     }
   }
 
+  const addCartNoLogin = async (body: DataAddCart) => {
+    const dataCart = await getCookie(COOKIE_KEY.MyCart)
+    const arrTemp: Array<DataAddCart> = []
+    if (Array.isArray(dataCart)) {
+      let isExited = false
+      dataCart.forEach((e: DataAddCart) => {
+        const itemTemp = e
+        if (itemTemp.idProduct === body.idProduct) {
+          itemTemp.amount = itemTemp.amount + body.amount
+          itemTemp.date = body.date
+          isExited = true
+        }
+        arrTemp.push(itemTemp)
+      })
+      if (!isExited) {
+        arrTemp.push(body)
+      }
+    } else {
+      arrTemp.push(body)
+    }
+    await setCookie(COOKIE_KEY.MyCart, arrTemp)
+  }
+
   const handleAddCart = async () => {
     try {
       setLoadingAddCart(true)
       const body: DataAddCart = {
         amount: amountBuy,
-        idProduct: productDetail._id?.toString(),
+        idProduct: dataItem._id?.toString(),
         moreConfig: {},
       }
       if (isLogin) {
         body.idUser = userData?._id
         await handleAddCartLogin(body)
-        refreshQuery(QUERY_KEY.LengthCartUser)
-        refreshQuery(QUERY_KEY.MyCartUser)
-        await delayTime(500)
-        setLoadingAddCart(false)
-        showNotificationSuccess(translate('addCart.addSuccess'))
       } else {
         body.date = new Date().getTime().toFixed()
-        setCookie(COOKIE_KEY.MyCart, body)
-        showNotificationSuccess(translate('addCart.addSuccess'))
-        setLoadingAddCart(false)
+        body.moreConfig = {
+          imageMain: dataItem.imageMain,
+          name: dataItem.name,
+          keyName: dataItem.keyName,
+          price: dataItem.price,
+          category: dataItem.category,
+          disCount: dataItem.disCount,
+        }
+        await addCartNoLogin(body)
       }
+      refreshQuery(QUERY_KEY.LengthCartUser)
+      refreshQuery(QUERY_KEY.MyCartUser)
+      await delayTime(500)
+      setLoadingAddCart(false)
+      showNotificationSuccess(translate('addCart.addSuccess'))
     } finally {
       setLoadingAddCart(false)
     }

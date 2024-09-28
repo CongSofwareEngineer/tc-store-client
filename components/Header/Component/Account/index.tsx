@@ -55,10 +55,10 @@ const Account = () => {
 
   const renderMobile = () => {
     return (
-      <div className="flex gap-2">
+      <div className="flex gap-2 items-center">
+        <CartUser />
         {isLogin ? (
           <div className="flex gap-2 items-center">
-            <CartUser />
             <div>{userData?.name}</div>
           </div>
         ) : (
@@ -67,7 +67,7 @@ const Account = () => {
             className="rounded h-full cursor-pointer w-24  flex justify-center items-center"
           >
             <span className="text-black underline">
-              {isLogin ? translate('common.logOut') : translate('common.login')}
+              {translate('common.login')}
             </span>
           </div>
         )}
