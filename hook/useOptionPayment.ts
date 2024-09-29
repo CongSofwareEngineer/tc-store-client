@@ -4,6 +4,7 @@ import { OPTIONS_PAYMENT } from '@/constant/app'
 import { useCallback } from 'react'
 import { images } from '@/configs/images'
 import { delayTime } from '@/utils/functions'
+import useUserData from './useUserData'
 
 type OptionType = {
   name: string
@@ -12,6 +13,7 @@ type OptionType = {
 }
 const useOptionPayment = (defaultValue?: OptionType) => {
   const { translate } = useLanguage()
+  const { isLogin } = useUserData()
 
   const [optionSelected, setOptionSelected] = useState<OptionType>(
     defaultValue || {
@@ -32,7 +34,7 @@ const useOptionPayment = (defaultValue?: OptionType) => {
         name: 'Momo',
         value: OPTIONS_PAYMENT.momo,
         icon: images.icon.iconMomo,
-        disabled: true,
+        disabled: true || !isLogin,
       },
       {
         name: translate('optionPayment.onDelivery'),
@@ -41,10 +43,10 @@ const useOptionPayment = (defaultValue?: OptionType) => {
       {
         name: translate('optionPayment.banking'),
         value: OPTIONS_PAYMENT.banking,
-        disabled: true,
+        disabled: true || !isLogin,
       },
     ]
-  }, [translate])
+  }, [translate, isLogin])
 
   const handlePayment = useCallback(
     async (data: any) => {
