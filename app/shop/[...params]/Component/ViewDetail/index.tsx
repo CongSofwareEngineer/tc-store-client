@@ -27,6 +27,7 @@ import { images } from '@/configs/images'
 import MyButton from '@/components/MyButton'
 import ClientApi from '@/services/clientApi'
 import { Tabs, TabsProps } from 'antd'
+import { DataItemType } from '@/app/my-cart/type'
 
 const Comment = dynamic(() => import('@/components/Comment'), {
   ssr: false,
@@ -90,12 +91,12 @@ const ViewDetail = ({
     }
   }
 
-  const addCartNoLogin = async (body: DataAddCart) => {
+  const addCartNoLogin = async (body: DataItemType) => {
     const dataCart = await getCookie(COOKIE_KEY.MyCart)
-    const arrTemp: Array<DataAddCart> = []
+    const arrTemp: Array<DataItemType> = []
     if (Array.isArray(dataCart)) {
       let isExited = false
-      dataCart.forEach((e: DataAddCart) => {
+      dataCart.forEach((e: DataItemType) => {
         const itemTemp = e
         if (itemTemp.idProduct === body.idProduct) {
           itemTemp.amount = itemTemp.amount + body.amount
@@ -125,8 +126,15 @@ const ViewDetail = ({
         body.idUser = userData?._id
         await handleAddCartLogin(body)
       } else {
-        body.date = new Date().getTime().toFixed()
-        body.moreConfig = {
+        const bodyOther: DataItemType = {
+          amount: Number(body.amount),
+          idProduct: body.idProduct!.toString(),
+          keyNameProduct: dataItem.keyName,
+          selected: true,
+          id: '',
+        }
+        bodyOther.date = new Date().getTime().toFixed()
+        bodyOther.moreConfig = {
           imageMain: dataItem.imageMain,
           name: dataItem.name,
           keyName: dataItem.keyName,
@@ -134,7 +142,7 @@ const ViewDetail = ({
           category: dataItem.category,
           disCount: dataItem.disCount,
         }
-        await addCartNoLogin(body)
+        await addCartNoLogin(bodyOther)
       }
       refreshQuery(QUERY_KEY.LengthCartUser)
       refreshQuery(QUERY_KEY.MyCartUser)

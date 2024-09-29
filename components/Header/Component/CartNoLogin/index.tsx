@@ -1,34 +1,60 @@
+import Payment from '@/app/my-cart/Component/Payment'
+import { DataItemType } from '@/app/my-cart/type'
 import MyImage from '@/components/MyImage'
 import SubAndPlus from '@/components/SubAndPlus'
+import { COOKIE_KEY } from '@/constant/app'
 import { DataAddCart } from '@/constant/mongoDB'
+import { QUERY_KEY } from '@/constant/reactQuery'
 import useMyCart from '@/hook/tank-query/useMyCart'
+import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useLanguage from '@/hook/useLanguage'
+import useMedia from '@/hook/useMedia'
 import useModalDrawer from '@/hook/useModalDrawer'
+import { setCookie } from '@/services/CookeisService'
 import { detectImg, formatPriceBase, numberWithCommas } from '@/utils/functions'
+import { Button } from 'antd'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
 const CartNoLogin = () => {
-  const { closeModalDrawer } = useModalDrawer()
+  const { openModalDrawer, closeModalDrawer } = useModalDrawer()
   const { translate, getLabelCategory } = useLanguage()
   const { data } = useMyCart()
+  const { refreshQuery } = useRefreshQuery()
+  const { isMobile } = useMedia()
 
-  const [listCart, setListCart] = useState<Array<DataAddCart>>([])
+  const [listCart, setListCart] = useState<Array<DataItemType>>([])
 
   useEffect(() => {
-    if (Array.isArray(data)) {
+    if (Array.isArray(data) && listCart.length === 0) {
       setListCart(data)
     }
-  }, [data])
+  }, [data, listCart])
 
-  const getPrice = () => {
-    console.log('====================================')
-    console.log({ closeModalDrawer })
-    console.log('====================================')
+  const onChangeAmount = (index: number, isPlus = false) => {
+    const arrTemp = [...listCart]
+
+    if (isPlus) {
+      arrTemp[index].amount++
+    } else {
+      if (arrTemp[index].amount > 1) {
+        arrTemp[index].amount--
+      }
+    }
+    setListCart(arrTemp)
+    setCookie(COOKIE_KEY.MyCart, arrTemp)
   }
-  getPrice()
 
-  const renderItem = (item: DataAddCart) => {
+  const handlePayment = () => {
+    refreshQuery(QUERY_KEY.MyCartUser)
+    openModalDrawer({
+      content: (
+        <Payment dataCart={listCart} clickBack={() => closeModalDrawer()} />
+      ),
+    })
+  }
+
+  const renderItem = (item: DataItemType, index: number) => {
     return (
       <div
         key={`item-cart-${item.idProduct}`}
@@ -57,7 +83,7 @@ const CartNoLogin = () => {
           <div className="line-through font-medium">
             {formatPriceBase(item.moreConfig?.price, item.moreConfig?.disCount)}
           </div>
-          <div className="text-green-500 font-bold">
+          <div className="text-green-500 font-bold mb-2">
             {`
                 ${numberWithCommas(item.moreConfig?.price)}
                 VNĐ
@@ -66,8 +92,8 @@ const CartNoLogin = () => {
           <SubAndPlus
             isSquare
             value={item?.amount || 1}
-            // callBackPlus={() => onChangeAmountBuy()}
-            // callBackSub={() => onChangeAmountBuy(false)}
+            callBackPlus={() => onChangeAmount(index, true)}
+            callBackSub={() => onChangeAmount(index, false)}
           />
         </div>
       </div>
@@ -76,9 +102,14 @@ const CartNoLogin = () => {
 
   return (
     <div className="list-none">
-      {[...listCart, ...listCart]?.map((e) => {
-        return renderItem(e)
+      {listCart.map((e, index) => {
+        return renderItem(e, index)
       })}
+      <div className="flex md:justify-end justify-center w-full mt-5">
+        <Button onClick={handlePayment} className="md:w-[200px] w-full">
+          {translate('cart.payment')}
+        </Button>
+      </div>
     </div>
   )
 }

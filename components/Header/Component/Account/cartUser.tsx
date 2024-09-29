@@ -31,7 +31,7 @@ const CartUser = () => {
         onlyDrawer: true,
         configDrawer: {
           placement: isMobile ? 'bottom' : 'right',
-          width: isMobile ? '100%' : '50dvw',
+          width: isMobile ? '100%' : '550px',
         },
       })
     }

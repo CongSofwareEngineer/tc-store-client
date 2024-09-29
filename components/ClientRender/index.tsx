@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useLayoutEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Header from '../Header'
 import 'react-toastify/dist/ReactToastify.css'
 import { useAppDispatch, useAppSelector } from '@/redux/store'
@@ -61,7 +61,7 @@ const ClientRender = ({
     isClientRef.current = true
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const updateCookies = (auth: string) => {
       setCookie(COOKIE_KEY.Auth, auth, COOKIE_EXPIRED.ExpiredAuth)
     }
