@@ -25,7 +25,7 @@ const getData = async ({
     }
   } else {
     const data = await getCookie(COOKIE_KEY.MyCart)
-    console.log({ datagetCookie: data })
+
     if (Array.isArray(data)) {
       return {
         data,
