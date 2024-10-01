@@ -114,11 +114,20 @@ const ProductConfig = ({ item }: { item: any }) => {
       onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
       formData={formData}
       onFinish={handleSubmit}
+      className="!overflow-auto gap-2"
     >
       <div className="flex flex-col gap-2 w-full flex-1 overflow-y-auto ">
         <div className="flex gap-4 w-full">
-          <InputForm classFromItem="w-full" name="name" label="name" required />
-          <CategoryForm label="category" name="category" />
+          <InputForm
+            classFromItem="w-full"
+            name="name"
+            label={translate('header.name')}
+            required
+          />
+          <CategoryForm
+            label={translate('menuProduct.category')}
+            name="category"
+          />
         </div>
 
         <div className="flex gap-4 w-full">
@@ -139,7 +148,7 @@ const ProductConfig = ({ item }: { item: any }) => {
           <InputForm
             classFromItem="w-full"
             name="cost"
-            label="cost"
+            label={translate('textPopular.cost')}
             required
             typeBtn="number"
             validator={checkIsNumber}
@@ -148,7 +157,7 @@ const ProductConfig = ({ item }: { item: any }) => {
           <InputForm
             classFromItem="w-full"
             name="price"
-            label="price"
+            label={translate('productDetail.price')}
             required
             typeBtn="number"
             validator={checkIsNumber}
@@ -158,7 +167,7 @@ const ProductConfig = ({ item }: { item: any }) => {
           <InputForm
             classFromItem="w-full"
             name="disCount"
-            label="disCount"
+            label={translate('textPopular.disCount')}
             required
             typeBtn="number"
             validator={checkIsNumber}
@@ -167,7 +176,7 @@ const ProductConfig = ({ item }: { item: any }) => {
           <InputForm
             classFromItem="w-full"
             name="weight"
-            label="weight"
+            label={translate('productDetail.weight')}
             required
             disable={!!item}
           />
@@ -263,10 +272,12 @@ const ProductConfig = ({ item }: { item: any }) => {
         />
       </div>
 
-      <ButtonForm
-        titleSubmit={translate(item ? 'common.update' : 'common.create')}
-        loading={loading}
-      />
+      <div className="flex flex-1 w-full">
+        <ButtonForm
+          titleSubmit={translate(item ? 'common.update' : 'common.create')}
+          loading={loading}
+        />
+      </div>
     </MyForm>
   ) : (
     <></>

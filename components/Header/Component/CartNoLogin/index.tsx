@@ -1,5 +1,7 @@
 import Payment from '@/app/my-cart/Component/Payment'
 import { DataItemType } from '@/app/my-cart/type'
+import ModalDelete from '@/components/ModalDelete'
+import MyCheckBox from '@/components/MyCheckBox'
 import MyImage from '@/components/MyImage'
 import SubAndPlus from '@/components/SubAndPlus'
 import { COOKIE_KEY } from '@/constant/app'
@@ -11,7 +13,13 @@ import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import useModalDrawer from '@/hook/useModalDrawer'
 import { setCookie } from '@/services/CookeisService'
-import { detectImg, formatPriceBase, numberWithCommas } from '@/utils/functions'
+import {
+  cloneData,
+  detectImg,
+  formatPriceBase,
+  numberWithCommas,
+} from '@/utils/functions'
+import { DeleteOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
@@ -24,6 +32,20 @@ const CartNoLogin = () => {
   const { isMobile } = useMedia()
 
   const [listCart, setListCart] = useState<Array<DataItemType>>([])
+
+  const refreshData = () => {
+    refreshQuery(QUERY_KEY.MyCartUser)
+    refreshQuery(QUERY_KEY.LengthCartUser)
+  }
+
+  useEffect(() => {
+    refreshQuery(QUERY_KEY.MyCartUser)
+    refreshQuery(QUERY_KEY.LengthCartUser)
+    return () => {
+      setListCart([])
+      refreshData()
+    }
+  }, [])
 
   useEffect(() => {
     if (Array.isArray(data) && listCart.length === 0) {
@@ -43,10 +65,12 @@ const CartNoLogin = () => {
     }
     setListCart(arrTemp)
     setCookie(COOKIE_KEY.MyCart, arrTemp)
+    refreshData()
   }
 
   const handlePayment = () => {
     refreshQuery(QUERY_KEY.MyCartUser)
+    refreshData()
     openModalDrawer({
       content: (
         <Payment dataCart={listCart} clickBack={() => closeModalDrawer()} />
@@ -54,12 +78,46 @@ const CartNoLogin = () => {
     })
   }
 
+  const selectedItem = (index: number, value: boolean) => {
+    const dataClone = cloneData(data)
+    dataClone[index].selected = value
+    setListCart(dataClone)
+    setCookie(COOKIE_KEY.MyCart, dataClone)
+    refreshData()
+  }
+
+  const handleDelete = (index: number) => {
+    const callBack = () => {
+      let dataClone = cloneData(data)
+      dataClone = dataClone.filter(
+        (_: any, indexFilter: number) => indexFilter !== index
+      )
+      setListCart(dataClone)
+      setCookie(COOKIE_KEY.MyCart, dataClone)
+      refreshQuery(QUERY_KEY.MyCartUser)
+    }
+    openModalDrawer({
+      content: <ModalDelete callback={callBack} />,
+    })
+  }
+
   const renderItem = (item: DataItemType, index: number) => {
     return (
       <div
         key={`item-cart-${item.idProduct}`}
-        className="w-full flex un  gap-3 md:py-6 py-4 first:pt-0 border-b-2 border-gray-300"
+        className="w-full flex align-middle  gap-3 md:py-6 py-4 first:pt-0 border-b-2 border-gray-300"
       >
+        <div className="flex flex-col gap-2 self-stretch justify-center align-middle">
+          <MyCheckBox
+            alt={item.moreConfig?.keyName}
+            onClick={(e: boolean) => selectedItem(index, e)}
+            value={!!item?.selected}
+          />
+          <DeleteOutlined
+            style={{ color: 'red', fontSize: 25 }}
+            onClick={() => handleDelete(index)}
+          />
+        </div>
         <div className="md:w-[120px] w-[100px] aspect-square relative overflow-hidden">
           <MyImage
             src={detectImg(item.moreConfig?.imageMain)}
@@ -101,12 +159,18 @@ const CartNoLogin = () => {
   }
 
   return (
-    <div className="list-none">
-      {listCart.map((e, index) => {
-        return renderItem(e, index)
-      })}
+    <div className="h-full max-h-full flex flex-col overflow-auto  ">
+      <div className="flex flex-1 flex-col w-full overflow-auto  ">
+        {listCart.map((e, index) => {
+          return renderItem(e, index)
+        })}
+      </div>
       <div className="flex md:justify-end justify-center w-full mt-5">
-        <Button onClick={handlePayment} className="md:w-[200px] w-full">
+        <Button
+          disabled={listCart.length === 0}
+          onClick={handlePayment}
+          className="w-full"
+        >
           {translate('cart.payment')}
         </Button>
       </div>
