@@ -1,19 +1,22 @@
-import lodash from 'lodash'
-import BigNumber from 'bignumber.js'
+// import lodash from 'lodash'
 
 export const cloneData = (data: any, defaultValue: any = '') => {
   try {
     if (!data) {
       return data
     }
-    return lodash.cloneDeep(data)
+    return JSON.parse(JSON.stringify(data))
   } catch (error) {
     return defaultValue
   }
 }
 
 export const isEmptyObject = (data: any) => {
-  return lodash.isEmpty(data)
+  try {
+    return Object.keys(data).length > 0
+  } catch (error) {
+    return false
+  }
 }
 
 export const numberWithCommas = (x: any) => {
@@ -37,8 +40,10 @@ export const formatPriceBase = (data: any, discount = 20) => {
     if (Number(data) === 0) {
       return 0
     }
-    const rate = new BigNumber(100).plus(discount).dividedBy(100).toNumber()
-    return numberWithCommas(new BigNumber(rate).multipliedBy(data).toNumber())
+    // const rate = new BigNumber(100).plus(discount).dividedBy(100).toNumber()
+    const rate = (100 + discount) / 100
+    // return numberWithCommas(new BigNumber(rate).multipliedBy(data).toNumber())
+    return numberWithCommas(rate * rate)
   } catch (error) {
     return 0
   }
@@ -119,7 +124,7 @@ export const processQuery = (data: any[], query: any) => {
 
   const amountQuery = page * limit
   const arr: any[] = []
-  let totalPage = BigNumber(data.length).dividedBy(Number(limit)).toNumber()
+  let totalPage = data.length / limit
 
   if (totalPage <= 1) {
     totalPage = 1
