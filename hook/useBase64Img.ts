@@ -1,8 +1,5 @@
-import {
-  getBase642,
-  showNotificationError,
-  getBase64 as getBase64Base,
-} from '../utils/functions'
+import { showNotificationError } from '@/utils/notification'
+import { getBase642, getBase64 as getBase64Base } from '../utils/functions'
 import useLanguage from './useLanguage'
 
 const useBase64Img = (maxSizeOutputKB = 15) => {

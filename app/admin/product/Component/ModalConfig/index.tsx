@@ -1,9 +1,5 @@
 import MyForm from '@/components/Form/MyForm'
-import {
-  detectImg,
-  showNotificationError,
-  showNotificationSuccess,
-} from '@/utils/functions'
+import { detectImg } from '@/utils/functions'
 import React, { useEffect, useState } from 'react'
 
 import CategoryForm from '@/components/CategoryForm'
@@ -21,6 +17,10 @@ import { isEqual } from 'lodash'
 import UploadImage from '@/components/UploadImg'
 import InputForm from '@/components/Form/InputForm'
 import ButtonForm from '@/components/Form/ButtonForm'
+import {
+  showNotificationError,
+  showNotificationSuccess,
+} from '@/utils/notification'
 
 const ProductConfig = ({ item }: { item: any }) => {
   const { translate } = useLanguage()

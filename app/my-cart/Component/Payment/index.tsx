@@ -3,7 +3,7 @@ import { PaymentPageType } from '../../type'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
-import { numberWithCommas, showNotificationError } from '@/utils/functions'
+import { numberWithCommas } from '@/utils/functions'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import { BodyAddBill } from '@/constant/firebase'
 import MyForm from '@/components/Form/MyForm'
@@ -19,6 +19,7 @@ import ModalSuccess from '@/components/ModalSuccess'
 import ClientApi from '@/services/clientApi'
 import { useRouter } from 'next/navigation'
 import OptionsPayemnt from './Component/OptionsPayemnt'
+import { showNotificationError } from '@/utils/notification'
 
 const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
   const { translate } = useLanguage()

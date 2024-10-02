@@ -15,15 +15,15 @@ import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
 import ClientApi from '@/services/clientApi'
-import {
-  detectImg,
-  showNotificationError,
-  showNotificationSuccess,
-} from '@/utils/functions'
+import { detectImg } from '@/utils/functions'
 import { CameraOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import { Image } from 'antd'
 import { isEqual } from 'lodash'
 import React, { useEffect, useState } from 'react'
+import {
+  showNotificationError,
+  showNotificationSuccess,
+} from '@/utils/notification'
 
 const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
   const [loading, setloading] = useState(false)

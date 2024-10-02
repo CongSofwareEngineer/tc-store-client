@@ -1,4 +1,4 @@
-import { copyToClipboard } from '@/utils/functions'
+import { copyToClipboard } from '@/utils/notification'
 import { CopyOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 import React from 'react'

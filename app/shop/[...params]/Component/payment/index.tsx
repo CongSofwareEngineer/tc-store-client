@@ -14,7 +14,6 @@ import {
   numberWithCommas,
   saveDataLocal,
   scrollTop,
-  showNotificationError,
 } from '@/utils/functions'
 import InfoBill from './InfoBill'
 import { QUERY_KEY } from '@/constant/reactQuery'
@@ -27,6 +26,7 @@ import ModalSuccess from '@/components/ModalSuccess'
 import { useRouter } from 'next/navigation'
 import ClientApi from '@/services/clientApi'
 import OptionsPayemnt from '@/app/my-cart/Component/Payment/Component/OptionsPayemnt'
+import { showNotificationError } from '@/utils/notification'
 
 const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const { translate } = useLanguage()

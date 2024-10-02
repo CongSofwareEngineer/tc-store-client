@@ -1,10 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { setUserData } from '@/redux/userDataSlice'
 import useLanguage from './useLanguage'
-import {
-  showNotificationError,
-  showNotificationSuccess,
-} from '@/utils/functions'
+
 import secureLocalStorage from 'react-secure-storage'
 import { decryptData, encryptData } from '@/utils/crypto'
 import { SLICE } from '@/constant/redux'
@@ -18,6 +15,10 @@ import {
 import { deleteCookie, setCookie } from '@/services/CookeisService'
 import ClientApi from '@/services/clientApi'
 import ObserverService from '@/services/observer'
+import {
+  showNotificationError,
+  showNotificationSuccess,
+} from '@/utils/notification'
 
 const useUserData = () => {
   const dispatch = useAppDispatch()

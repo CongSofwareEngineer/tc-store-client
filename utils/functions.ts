@@ -1,8 +1,5 @@
 import lodash from 'lodash'
-import { message, notification } from 'antd'
 import BigNumber from 'bignumber.js'
-import { toast } from 'react-toastify'
-import moment from 'moment'
 
 export const cloneData = (data: any, defaultValue: any = '') => {
   try {
@@ -45,46 +42,6 @@ export const formatPriceBase = (data: any, discount = 20) => {
   } catch (error) {
     return 0
   }
-}
-
-export const showNotification = (title = null, description = '') => {
-  const params: any = {
-    placement: 'bottomRight',
-    className: 'notification-class',
-    bottom: 54,
-    duration: 5,
-  }
-  if (title) {
-    params.message = title
-  }
-  if (description) {
-    params.description = description
-  }
-  notification.open(params)
-}
-
-export const showNotificationError = (errorMessage = '', autoClose = 5000) => {
-  toast.error(errorMessage, {
-    position: 'top-right',
-    autoClose,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  })
-}
-
-export const showNotificationSuccess = (message = '', autoClose = 5000) => {
-  toast.success(message, {
-    position: 'top-right',
-    autoClose,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  })
 }
 
 export function delayTime(ms = 500) {
@@ -186,25 +143,8 @@ export const processQuery = (data: any[], query: any) => {
   }
 }
 
-export const copyToClipboard = (text: any) => {
-  const tmp = document.createElement('input')
-  tmp.value = text
-  document.body.appendChild(tmp)
-  tmp.select()
-  document.execCommand('copy')
-  tmp.remove()
-  message.success({
-    type: 'success',
-    content: 'Copied',
-  })
-}
-
 export const viewExternal = (url: string) => {
   window.open(url, '_blank')
-}
-
-export const formatDateTime = (data: any) => {
-  return moment(data).format('DD / MM /YYYY')
 }
 
 export const detectImg = (src: any) => {

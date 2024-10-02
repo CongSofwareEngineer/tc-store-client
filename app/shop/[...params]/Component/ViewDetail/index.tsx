@@ -13,7 +13,6 @@ import {
   detectImg,
   formatPrice,
   formatPriceBase,
-  showNotificationSuccess,
 } from '@/utils/functions'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import { getCookie, setCookie } from '@/services/CookeisService'
@@ -28,6 +27,7 @@ import MyButton from '@/components/MyButton'
 import ClientApi from '@/services/clientApi'
 import { Tabs, TabsProps } from 'antd'
 import { DataItemType } from '@/app/my-cart/type'
+import { showNotificationSuccess } from '@/utils/notification'
 
 const Comment = dynamic(() => import('@/components/Comment'), {
   ssr: false,

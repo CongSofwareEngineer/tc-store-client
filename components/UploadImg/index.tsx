@@ -1,7 +1,7 @@
 import useBase64Img from '@/hook/useBase64Img'
 import useLanguage from '@/hook/useLanguage'
 import useTypeFile from '@/hook/useTypeFile'
-import { showNotificationError } from '@/utils/functions'
+import { showNotificationError } from '@/utils/notification'
 import { Upload } from 'antd'
 import ImgCrop from 'antd-img-crop'
 import { isEqual } from 'lodash'

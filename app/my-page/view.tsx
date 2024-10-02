@@ -6,13 +6,14 @@ import React from 'react'
 import ItemInfoUser from './Component/ItemInfoUser'
 import useLanguage from '@/hook/useLanguage'
 // import AddressShip from './Component/AddressShip'
-import { copyToClipboard, numberWithCommas } from '@/utils/functions'
+import { numberWithCommas } from '@/utils/functions'
 import MyInput from '@/components/MyInput'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalUpdateUser from './Component/ModalUpdateUser'
 import ModalEnterPassAgain from './Component/ModalEnterPassAgain'
 import MyCheckBox from '@/components/MyCheckBox'
 import Avatar from './Component/Avatar'
+import { copyToClipboard } from '@/utils/notification'
 
 const MyProfile = () => {
   const { isMobile } = useMedia()

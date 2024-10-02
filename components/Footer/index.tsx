@@ -4,11 +4,12 @@ import useMedia from '@/hook/useMedia'
 import React, { useEffect } from 'react'
 import MyImage from '../MyImage'
 import { CopyOutlined } from '@ant-design/icons'
-import { copyToClipboard, scrollTop } from '@/utils/functions'
+import { scrollTop } from '@/utils/functions'
 import { useRouter } from 'next/navigation'
 import SocialMediaShare from '../SocialMediaShare'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
+import { copyToClipboard } from '@/utils/notification'
 const GgMap = dynamic(() => import('./ggMap'), { ssr: true })
 
 const Item = ({ icon, value, link }: any) => {
