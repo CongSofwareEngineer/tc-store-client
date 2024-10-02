@@ -8,7 +8,10 @@ const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
   const [config, setConfig] = useState<ConfigMyDrawerType>(defaultConfig)
   const { isClient } = useMedia()
   const closeDrawer = () => {
-    setConfig({ ...config, content: null, open: false })
+    if (config?.afterClose) {
+      config.afterClose()
+    }
+    setConfig({ ...config, width: '500px', content: null, open: false })
   }
 
   const openDrawer = (config?: ConfigMyDrawerType) => {

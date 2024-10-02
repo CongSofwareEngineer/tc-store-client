@@ -20,7 +20,7 @@ const SubAndPlus = ({
   return (
     <div className="flex align-middle gap-3 ">
       {isSquare ? (
-        <div className="flex  border-solid border-2 border-gray-400 rounded-lg py-1">
+        <div className="flex  border-solid border-2 border-gray-400 rounded-lg md:py-1 py-[2px]">
           <div
             className="font-bold relative  cursor-pointer text-center  min-w-5"
             onClick={() => callBackSub(value === 1 ? 1 : Number(value) - 1)}

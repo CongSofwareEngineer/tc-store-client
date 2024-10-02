@@ -35,11 +35,7 @@ const ProductAdminScreen = () => {
     openModalDrawer({
       content: <ProductConfig item={item} />,
       useDrawer: true,
-      title: (
-        <div className="text-medium font-bold">
-          {item ? `Update ${item.name}` : 'Create'}
-        </div>
-      ),
+      title: item ? `Update ${item.name}` : 'Create',
       configModal: {
         width: '700px',
       },

@@ -1,4 +1,3 @@
-
 export type DataItemType = {
   idUser?: string
   amount: number
@@ -22,10 +21,11 @@ export type ModalPaymentType = {
   callBack: () => void
 }
 
-
 export type PaymentPageType = {
   dataCart: DataItemType[]
   clickBack: () => void
+  showBack?: boolean
+  noLogin?: boolean
 }
 
 export type TitleItemType = {
@@ -53,11 +53,14 @@ export type ListItemCartType = {
 }
 
 type OptionItemType = {
-  name: string, value: string, icon?: string, disabled?: boolean
+  name: string
+  value: string
+  icon?: string
+  disabled?: boolean
 }
 
 export type OptionPaymentType = {
-  listOptions: OptionItemType[],
-  onChangeOptions: (param: OptionItemType) => void,
+  listOptions: OptionItemType[]
+  onChangeOptions: (param: OptionItemType) => void
   optionSelected: OptionItemType
 }

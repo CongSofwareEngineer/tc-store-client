@@ -8,6 +8,8 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import CartNoLogin from '../CartNoLogin'
 import useLanguage from '@/hook/useLanguage'
+import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
+import { QUERY_KEY } from '@/constant/reactQuery'
 
 const CartUser = () => {
   const router = useRouter()
@@ -16,6 +18,7 @@ const CartUser = () => {
   const { openModalDrawer } = useModalDrawer()
   const { isMobile } = useMedia()
   const { translate } = useLanguage()
+  const { refreshQuery } = useRefreshQuery()
 
   const handleClick = () => {
     if (isLogin) {
@@ -32,6 +35,10 @@ const CartUser = () => {
         configDrawer: {
           placement: isMobile ? 'bottom' : 'right',
           width: isMobile ? '100%' : '550px',
+          afterClose: () => {
+            refreshQuery(QUERY_KEY.MyCartUser)
+            refreshQuery(QUERY_KEY.LengthCartUser)
+          },
         },
       })
     }

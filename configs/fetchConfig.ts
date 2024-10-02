@@ -1,5 +1,4 @@
-import { COOKIE_KEY, REQUEST_TYPE } from '@/constant/app'
-import { getCookie } from '@/services/CookeisService'
+import { REQUEST_TYPE } from '@/constant/app'
 import { decryptData, encryptData } from '@/utils/crypto'
 import axios from 'axios'
 

@@ -1,5 +1,7 @@
 // import lodash from 'lodash'
 
+import BigNumber from 'bignumber.js'
+
 export const cloneData = (data: any, defaultValue: any = '') => {
   try {
     if (!data) {
@@ -40,10 +42,10 @@ export const formatPriceBase = (data: any, discount = 20) => {
     if (Number(data) === 0) {
       return 0
     }
-    // const rate = new BigNumber(100).plus(discount).dividedBy(100).toNumber()
-    const rate = (100 + discount) / 100
-    // return numberWithCommas(new BigNumber(rate).multipliedBy(data).toNumber())
-    return numberWithCommas(rate * rate)
+    const rate = new BigNumber(100).plus(discount).dividedBy(100).toNumber()
+    // const rate = (100 + discount) / 100
+    return numberWithCommas(new BigNumber(rate).multipliedBy(data).toNumber())
+    // return numberWithCommas(rate * rate)
   } catch (error) {
     return 0
   }

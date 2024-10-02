@@ -21,7 +21,7 @@ import { useRouter } from 'next/navigation'
 import OptionsPayemnt from './Component/OptionsPayemnt'
 import { showNotificationError } from '@/utils/notification'
 
-const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
+const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
   const { translate } = useLanguage()
   const { userData } = useUserData()
   const { refreshQuery } = useRefreshQuery()
@@ -34,19 +34,17 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
   const { onChangeOptions, listOptions, optionSelected } = useOptionPayment()
 
   useEffect(() => {
-    if (userData) {
-      const initData = {
-        sdt: userData?.sdt,
-        name: userData?.name,
-        addressShip: userData?.addressShipper[0] || '',
-        linkContact: userData?.linkContact || '',
-        gmail: userData?.gmail || '',
-        noteBil: '',
-      }
-      setFormData(initData)
-      if (userData?.addressShipper && Array.isArray(userData?.addressShipper)) {
-        setListAddressShip(userData?.addressShipper)
-      }
+    const initData = {
+      sdt: userData?.sdt || '',
+      name: userData?.name,
+      addressShip: userData?.addressShipper[0] || '',
+      linkContact: userData?.linkContact || '',
+      gmail: userData?.gmail || '',
+      noteBil: '',
+    }
+    setFormData(initData)
+    if (userData?.addressShipper && Array.isArray(userData?.addressShipper)) {
+      setListAddressShip(userData?.addressShipper)
     }
   }, [userData, dataCart])
 
@@ -84,6 +82,13 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
     refreshQuery(QUERY_KEY.GetProductByID)
   }
 
+  const getItemForShow = (e: any) => {
+    if (e?.moreConfig) {
+      return e?.moreConfig
+    }
+    return e.more_data || {}
+  }
+
   const handleSubmit = async () => {
     setLoading(true)
     let totalBill = 0
@@ -91,16 +96,16 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
     const listNewSoldProduct: any[] = []
     dataCart.forEach((e) => {
       if (e.selected) {
-        totalBill += e.amount * e.more_data.price
+        totalBill += e.amount * getItemForShow(e).price
         const itemBill = {
-          _id: e.more_data._id,
-          keyName: e.more_data.keyName,
+          _id: getItemForShow(e)._id,
+          keyName: getItemForShow(e).keyName,
           amount: e.amount,
           idCart: e._id,
         }
         const itemNewSold = {
-          idProduct: e.more_data._id,
-          sold: Number(e.amount) + Number(e.more_data.sold),
+          idProduct: getItemForShow(e)._id,
+          sold: Number(e.amount) + Number(getItemForShow(e).sold),
         }
 
         listNewSoldProduct.push(itemNewSold)
@@ -161,7 +166,7 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
 
   return (
     <div className="w-full mb-7 mt-1">
-      <BtnBack clickBack={clickBack} />
+      {showBack && <BtnBack clickBack={clickBack} />}
       <div className="flex flex-col gap-3 w-full mt-1">
         {formData && (
           <MyForm

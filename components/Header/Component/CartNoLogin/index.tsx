@@ -5,9 +5,7 @@ import MyCheckBox from '@/components/MyCheckBox'
 import MyImage from '@/components/MyImage'
 import SubAndPlus from '@/components/SubAndPlus'
 import { COOKIE_KEY } from '@/constant/app'
-import { QUERY_KEY } from '@/constant/reactQuery'
 import useMyCart from '@/hook/tank-query/useMyCart'
-import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import { setCookie } from '@/services/CookeisService'
@@ -20,25 +18,29 @@ import {
 import { DeleteOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
+import { useEffect } from 'react'
 
 const CartNoLogin = () => {
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()
   const { translate, getLabelCategory } = useLanguage()
-  const { data } = useMyCart()
-  const { refreshQuery } = useRefreshQuery()
+  const { data, isLoading } = useMyCart()
+  const [listArr, setListArr] = useState<Array<DataItemType>>([])
 
-  const refreshData = (listData?: Array<DataItemType>) => {
-    if (listData) {
-      setCookie(COOKIE_KEY.MyCart, listData)
+  useEffect(() => {
+    if (!isLoading) {
+      setListArr(data)
     }
-    refreshQuery(QUERY_KEY.MyCartUser)
-    refreshQuery(QUERY_KEY.LengthCartUser)
+  }, [data, isLoading])
+
+  const refreshData = (listData: Array<DataItemType>) => {
+    setCookie(COOKIE_KEY.MyCart, listData)
+    setListArr(listData)
   }
 
   const getTotalsBill = () => {
     let total = 0
-    data.forEach((item: DataItemType) => {
+    listArr.forEach((item: DataItemType) => {
       if (item?.selected) {
         total += item.amount * item.moreConfig?.price
       }
@@ -47,7 +49,7 @@ const CartNoLogin = () => {
   }
 
   const onChangeAmount = (index: number, isPlus = false) => {
-    const arrTemp = [...data]
+    const arrTemp = [...listArr]
     if (isPlus) {
       arrTemp[index].amount++
     } else {
@@ -59,14 +61,14 @@ const CartNoLogin = () => {
   }
 
   const selectedItem = (index: number, value: boolean) => {
-    const dataClone = cloneData(data)
+    const dataClone = cloneData(listArr)
     dataClone[index].selected = value
     refreshData(dataClone)
   }
 
   const handleDelete = (index: number) => {
     const callBack = () => {
-      let dataClone = cloneData(data)
+      let dataClone = cloneData(listArr)
       dataClone = dataClone.filter(
         (_: any, indexFilter: number) => indexFilter !== index
       )
@@ -79,8 +81,31 @@ const CartNoLogin = () => {
 
   const handlePayment = () => {
     openModalDrawer({
-      content: <Payment dataCart={data} clickBack={() => closeModalDrawer()} />,
+      content: (
+        <div className="md:w-screen w-full md:max-w-[1000px] overflow-auto">
+          <Payment
+            showBack={false}
+            dataCart={listArr}
+            clickBack={() => closeModalDrawer()}
+          />
+        </div>
+      ),
+      title: translate('bill.title'),
+      useDrawer: true,
+      configModal: {
+        width: 'auto',
+      },
     })
+  }
+
+  const getAmountBill = () => {
+    let total = 0
+    listArr.forEach((item: DataItemType) => {
+      if (item?.selected) {
+        total += item.amount
+      }
+    })
+    return total
   }
 
   const renderItem = (item: DataItemType, index: number) => {
@@ -143,20 +168,22 @@ const CartNoLogin = () => {
   return (
     <div className="h-full max-h-full flex flex-col overflow-auto  ">
       <div className="flex flex-1 flex-col w-full overflow-auto  ">
-        {data.map((e, index) => {
+        {listArr.map((e, index) => {
           return renderItem(e, index)
         })}
       </div>
-      <div className="w-full flex justify-end text-title text-green-600 font-bold my-3">
-        {`${getTotalsBill()} VNĐ`}
+      <div className="w-full flex- flex justify-between  text-green-600 font-bold my-3">
+        <div>{translate('textPopular.totalMoney')}</div>
+        <div className="md:text-title text-medium">{`
+        ${getTotalsBill()} VNĐ `}</div>
       </div>
       <div className="flex md:justify-end justify-center w-full ">
         <Button
-          disabled={data.length === 0}
+          disabled={listArr.length === 0 || getAmountBill() === 0}
           onClick={handlePayment}
           className="w-full"
         >
-          {translate('cart.payment')}
+          {`${translate('cart.payment')} (${getAmountBill()})`}
         </Button>
       </div>
     </div>
