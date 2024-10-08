@@ -118,17 +118,18 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
                   })(window,document,'script','dataLayer','GTM-T7S7DKJ4')`,
               }}
             />
-            <Script
-              id="G-Z7WSP07S5Y"
+            <script
+              async
+              src="https://www.googletagmanager.com/gtag/js?id=G-QH99F8WFPW"
+            />
+            <script
               dangerouslySetInnerHTML={{
-                __html: `<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z7WSP07S5Y"></script>
-                <script>
+                __html: ` 
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
                 
-                  gtag('config', 'G-Z7WSP07S5Y');
-                </script>`,
+                  gtag('config', 'G-QH99F8WFPW');`,
               }}
             />
           </>
