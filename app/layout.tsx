@@ -14,7 +14,6 @@ import ReactQueryProvider from '@/components/ReactQueryProvider'
 import DrawerProvider from '@/components/DrawerProvider'
 const inter = Inter({ subsets: ['latin'] })
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import Script from 'next/script'
 import ClientApi from '@/services/clientApi'
 
 const BaseMeta = {
