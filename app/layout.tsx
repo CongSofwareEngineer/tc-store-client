@@ -108,8 +108,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
               name="google-site-verification"
               content="Sr2q2elTmvBwx7P3aM-ZiaH-3yjcxuGHrMI9H9iCewI"
             />
-            <Script
-              id="GTM-T7S7DKJ4"
+            <script
               dangerouslySetInnerHTML={{
                 __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
