@@ -306,5 +306,9 @@
     "bad": "Chưa tốt",
     "writeToShare": "Chia sẻ nhận xét của bạn về sản phẩm này",
     "uploadImg_des": "Gửi (chụp) hình  thực tế  (Tối đa 2 hình)"
+  },
+  "contactMe": {
+    "contactSuccess": "Bạn đã liên hệ thành công",
+    "contactFail": "Hệ thống bào trì, bạn hãy liên hệ ngày mai"
   }
 }

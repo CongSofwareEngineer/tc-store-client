@@ -14,6 +14,13 @@ import useUserData from '@/hook/useUserData'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
+import { DataAddContact } from '@/constant/mongoDB'
+import ClientApi from '@/services/clientApi'
+import { REQUEST_TYPE } from '@/constant/app'
+import {
+  showNotificationError,
+  showNotificationSuccess,
+} from '@/utils/functions'
 const ModalProcess = dynamic(() => import('@/components/ModalProcess'), {
   ssr: true,
 })
@@ -48,15 +55,32 @@ const ContactScreen = () => {
 
   const handleSubmit = async () => {
     setLoading(true)
+    const dataAPI: DataAddContact = {
+      des: formData?.note,
+      sdt: formData?.sdt,
+      emailUser: formData?.email,
+      nameUser: formData?.name,
+    }
     openModalDrawer({
       content: <ModalProcess />,
       configModal: {
         overClickClose: false,
       },
     })
-    setTimeout(() => {
-      closeModalDrawer()
-    }, 3000)
+    const res = await ClientApi.fetchData({
+      url: 'contact-me/create',
+      body: dataAPI,
+      method: REQUEST_TYPE.POST,
+    })
+    console.log('====================================')
+    console.log({ res })
+    console.log('====================================')
+    closeModalDrawer()
+    if (res?.data) {
+      showNotificationSuccess(translate('contactMe.contactSuccess'))
+    } else {
+      showNotificationError(translate('contactMe.contactFail'))
+    }
     setLoading(false)
   }
 
@@ -117,6 +141,7 @@ const ContactScreen = () => {
                   rows={5}
                   name="note"
                   label={translate('textPopular.note')}
+                  maxLength={300}
                 />
                 <div className="md:mt-16 mt-6" />
 

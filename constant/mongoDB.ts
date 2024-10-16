@@ -1,5 +1,12 @@
 import { FILTER_BILL } from './app'
 
+export type DataAddContact = {
+  nameUser?: string
+  sdt?: string
+  emailUser?: string
+  des?: string
+}
+
 export type DataAddCart = {
   amount: number
   date?: string

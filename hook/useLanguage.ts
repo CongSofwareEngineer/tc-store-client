@@ -23,7 +23,7 @@ const useLanguage = () => {
         return ''
       }
     },
-    [Language?.messages]
+    [Language]
   )
 
   const getLabelCategory = (key: string) => {

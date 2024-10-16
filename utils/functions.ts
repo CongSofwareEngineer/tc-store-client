@@ -110,7 +110,7 @@ export const getDataLocal = (key = '', defaultValue: any = '') => {
   }
 }
 
-export const removeDataLocal = (key: string) => {
+export const removeDataLocal = (key: string): void => {
   try {
     localStorage.removeItem(key)
   } catch (error) {
@@ -186,7 +186,7 @@ export const processQuery = (data: any[], query: any) => {
   }
 }
 
-export const copyToClipboard = (text: any) => {
+export const copyToClipboard = (text: any): void => {
   const tmp = document.createElement('input')
   tmp.value = text
   document.body.appendChild(tmp)
@@ -199,7 +199,7 @@ export const copyToClipboard = (text: any) => {
   })
 }
 
-export const viewExternal = (url: string) => {
+export const viewExternal = (url: string): void => {
   window.open(url, '_blank')
 }
 
@@ -207,7 +207,7 @@ export const formatDateTime = (data: any) => {
   return moment(data).format('DD / MM /YYYY')
 }
 
-export const detectImg = (src: any) => {
+export const detectImg = (src: any): string => {
   try {
     if (!src) {
       return ''
@@ -244,7 +244,7 @@ export const ellipsisText = (
   text: string,
   prefixLength = 13,
   suffixLength = 4
-) => {
+): string => {
   text = text || ''
   return `${text.substr(0, prefixLength)}...${text.substr(
     text.length - suffixLength,
@@ -252,7 +252,7 @@ export const ellipsisText = (
   )}`
 }
 
-export function isObject(value: any) {
+export function isObject(value: any): boolean {
   try {
     if (!value) {
       return false

@@ -16,7 +16,7 @@ const ModalProcess = ({ icon, des, title }: PropsType) => {
   return (
     <div className="w-full flex flex-col gap-2">
       <p className="text-title text-center">
-        {title || translate('warning.doYouWantDetele')}
+        {title || translate('textPopular.statusProcessing')}
       </p>
 
       <div className="m-auto my-2 relative overflow-hidden">
