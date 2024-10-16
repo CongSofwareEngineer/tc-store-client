@@ -4,7 +4,7 @@ import ClientApi from '@/services/clientApi'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 
-const getAllProduct = async ({
+const getData = async ({
   queryKey,
   pageParam,
 }: {
@@ -12,19 +12,15 @@ const getAllProduct = async ({
   pageParam: number
 }): Promise<TypeHookReactQuery> => {
   const query = queryKey[2]
-  const { category = [], name } = query
+  const { category = [] } = query
 
   let queryUrl = `?page=${pageParam}&limit=${queryKey[1]}`
 
   if (category?.length > 0) {
     queryUrl += `&category=${category.toString()}`
   }
-
-  if (name) {
-    queryUrl += `&name=${name.toString()}`
-  }
   const dataServer = await ClientApi.fetchData({
-    url: `product/all${queryUrl}`,
+    url: `product/admin/all${queryUrl}`,
   })
 
   return {
@@ -32,12 +28,13 @@ const getAllProduct = async ({
     page: pageParam,
   }
 }
-const useAllProduct = (pageSize = PAGE_SIZE_LIMIT, query: any) => {
+
+const useListProductAdmin = (pageSize = PAGE_SIZE_LIMIT, query: any) => {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: [QUERY_KEY.GetAllProduct, pageSize, query],
+      queryKey: [QUERY_KEY.GetListProductAdmin, pageSize, query],
       initialPageParam: 1,
-      queryFn: getAllProduct,
+      queryFn: getData,
       getNextPageParam: (lastPage: { data: any; page: number }) => {
         if (lastPage.data.length == pageSize) {
           return lastPage.page + 1
@@ -63,4 +60,4 @@ const useAllProduct = (pageSize = PAGE_SIZE_LIMIT, query: any) => {
   }
 }
 
-export default useAllProduct
+export default useListProductAdmin

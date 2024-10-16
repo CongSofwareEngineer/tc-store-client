@@ -1,6 +1,8 @@
+import { OBSERVER_KEY } from '@/constant/app'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
+import ObserverService from '@/services/observer'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
@@ -13,13 +15,13 @@ const LinkCustom = styled(styled(Link)<{ $isSelected?: Boolean }>``).attrs({
 `
 
 const NavMobile = () => {
-  const { isLogin, logOut, userData } = useUserData()
+  const { isLogin, userData } = useUserData()
   const { translate } = useLanguage()
   const pathname = usePathname()
   const { closeModalDrawer } = useModalDrawer()
 
   const handleLogOut = () => {
-    logOut()
+    ObserverService.emit(OBSERVER_KEY.LogOut)
     closeModalDrawer()
   }
   return (

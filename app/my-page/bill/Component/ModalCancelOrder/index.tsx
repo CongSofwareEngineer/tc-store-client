@@ -6,11 +6,11 @@ import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ServerApi from '@/services/serverApi'
+import { delayTime } from '@/utils/functions'
 import {
-  delayTime,
   showNotificationError,
   showNotificationSuccess,
-} from '@/utils/functions'
+} from '@/utils/notification'
 import React, { useState } from 'react'
 
 const ModalCancelOrder = ({ data }: { data: any }) => {

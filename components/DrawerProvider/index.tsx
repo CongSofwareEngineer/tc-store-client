@@ -8,7 +8,10 @@ const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
   const [config, setConfig] = useState<ConfigMyDrawerType>(defaultConfig)
   const { isClient } = useMedia()
   const closeDrawer = () => {
-    setConfig({ ...config, content: null, open: false })
+    if (config?.afterClose) {
+      config.afterClose()
+    }
+    setConfig({ ...config, width: '500px', content: null, open: false })
   }
 
   const openDrawer = (config?: ConfigMyDrawerType) => {
@@ -21,14 +24,25 @@ const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
       {isClient && (
         <Drawer
           onClose={closeDrawer}
-          className={`max-h-[${
-            config.placement === 'right' || config.placement === 'left'
-              ? 'unset'
-              : '85vh'
-          }]`}
+          style={{
+            maxHeight:
+              config.placement === 'right' || config.placement === 'left'
+                ? 'unset'
+                : '95dvh',
+          }}
           {...config}
         >
-          {config.content ?? <></>}
+          <div
+            className="flex flex-col w-full"
+            style={{
+              maxHeight:
+                config.placement === 'right' || config.placement === 'left'
+                  ? 'calc(100dvh - 100px)'
+                  : 'calc(95dvh - 100px)',
+            }}
+          >
+            {config.content ?? <></>}
+          </div>
         </Drawer>
       )}
     </DrawerContext.Provider>

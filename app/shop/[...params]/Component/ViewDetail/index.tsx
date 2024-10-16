@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { ItemDetailType } from '../../type'
 import useAos from '@/hook/useAos'
 import useMedia from '@/hook/useMedia'
@@ -13,10 +13,9 @@ import {
   detectImg,
   formatPrice,
   formatPriceBase,
-  showNotificationSuccess,
 } from '@/utils/functions'
 import { QUERY_KEY } from '@/constant/reactQuery'
-import { setCookie } from '@/services/CookeisService'
+import { getCookie, setCookie } from '@/services/CookeisService'
 import BtnBack from '@/components/BtnBack'
 import useGetProductByID from '@/hook/tank-query/useGetProductByID'
 import MyImage from '@/components/MyImage'
@@ -26,8 +25,15 @@ import SubAndPlus from '@/components/SubAndPlus'
 import { images } from '@/configs/images'
 import MyButton from '@/components/MyButton'
 import ClientApi from '@/services/clientApi'
+import { Tabs, TabsProps } from 'antd'
+import { DataItemType } from '@/app/my-cart/type'
+import { showNotificationSuccess } from '@/utils/notification'
 
 const Comment = dynamic(() => import('@/components/Comment'), {
+  ssr: false,
+})
+
+const InfoDetail = dynamic(() => import('../InfoDetail'), {
   ssr: false,
 })
 
@@ -50,7 +56,10 @@ const ViewDetail = ({
   const { translate } = useLanguage()
   const { userData, isLogin } = useUserData()
   const { data } = useGetProductByID(productDetail?.id)
-  const dataItem = data?.data ?? productDetail
+  const dataItem = useMemo(
+    () => data?.data ?? productDetail,
+    [data, productDetail]
+  )
 
   const [loadingAddCart, setLoadingAddCart] = useState(false)
 
@@ -82,34 +91,84 @@ const ViewDetail = ({
     }
   }
 
+  const addCartNoLogin = async (body: DataItemType) => {
+    const dataCart = await getCookie(COOKIE_KEY.MyCart)
+    const arrTemp: Array<DataItemType> = []
+    if (Array.isArray(dataCart)) {
+      let isExited = false
+      dataCart.forEach((e: DataItemType) => {
+        const itemTemp = e
+        if (itemTemp.idProduct === body.idProduct) {
+          itemTemp.amount = itemTemp.amount + body.amount
+          itemTemp.date = body.date
+          isExited = true
+        }
+        arrTemp.push(itemTemp)
+      })
+      if (!isExited) {
+        arrTemp.push(body)
+      }
+    } else {
+      arrTemp.push(body)
+    }
+    await setCookie(COOKIE_KEY.MyCart, arrTemp)
+  }
+
   const handleAddCart = async () => {
     try {
       setLoadingAddCart(true)
       const body: DataAddCart = {
         amount: amountBuy,
-        idProduct: productDetail._id?.toString(),
+        idProduct: dataItem._id?.toString(),
         moreConfig: {},
       }
       if (isLogin) {
         body.idUser = userData?._id
         await handleAddCartLogin(body)
-        refreshQuery(QUERY_KEY.LengthCartUser)
-        refreshQuery(QUERY_KEY.MyCartUser)
-        await delayTime(500)
-        setLoadingAddCart(false)
-        showNotificationSuccess(translate('addCart.addSuccess'))
       } else {
-        body.date = new Date().getTime().toFixed()
-        setCookie(COOKIE_KEY.MyCart, body)
-        showNotificationSuccess(translate('addCart.addSuccess'))
-        setLoadingAddCart(false)
+        const bodyOther: DataItemType = {
+          amount: Number(body.amount),
+          idProduct: body.idProduct!.toString(),
+          keyNameProduct: dataItem.keyName,
+          selected: true,
+          id: '',
+        }
+        bodyOther.date = new Date().getTime().toFixed()
+        bodyOther.moreConfig = {
+          imageMain: dataItem.imageMain,
+          name: dataItem.name,
+          keyName: dataItem.keyName,
+          price: dataItem.price,
+          category: dataItem.category,
+          disCount: dataItem.disCount,
+        }
+        await addCartNoLogin(bodyOther)
       }
+      refreshQuery(QUERY_KEY.LengthCartUser)
+      refreshQuery(QUERY_KEY.MyCartUser)
+      await delayTime(500)
+      setLoadingAddCart(false)
+      showNotificationSuccess(translate('addCart.addSuccess'))
     } finally {
       setLoadingAddCart(false)
     }
   }
-  console.log({ dataItem })
 
+  const renderMoreInfo = () => {
+    const items: TabsProps['items'] = [
+      {
+        key: 'info',
+        label: translate('textPopular.infor'),
+        children: <InfoDetail dataItem={dataItem} />,
+      },
+      {
+        key: 'Comment',
+        label: translate('textPopular.comment'),
+        children: <Comment dataItem={dataItem} />,
+      },
+    ]
+    return <Tabs className="p-0" items={items} />
+  }
   const renderDesktop = () => {
     return (
       <div className="flex flex-col">
@@ -174,7 +233,7 @@ const ViewDetail = ({
         </div>
 
         <div data-aos="fade-up" className="w-full bg-white rounded-xl p-6 mt-6">
-          <Comment dataItem={dataItem} />
+          {renderMoreInfo()}
         </div>
       </div>
     )
@@ -248,7 +307,7 @@ const ViewDetail = ({
           data-aos="fade-right"
           className=" shadow-yellow-50 bg-white p-5 md:pr-5 pr-3 w-full flex flex-col gap-2 mt-2"
         >
-          <Comment dataItem={dataItem} />
+          {renderMoreInfo()}
         </div>
       </div>
     )

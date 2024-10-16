@@ -15,12 +15,7 @@ const WriteComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
     openModalDrawer({
       content: <ModalWrite dataItem={dataItem} />,
       useDrawer: true,
-      title: <div className="text-medium">ĐÁNH GIÁ CỦA BẠN VỀ SẢN PHẨM</div>,
-      configDrawer: {
-        title: 'ĐÁNH GIÁ CỦA BẠN VỀ SẢN PHẨM',
-        height: 'auto',
-        placement: 'bottom',
-      },
+      title: <div className="text-medium">{translate('feeback.title')}</div>,
       configModal: {
         width: '600px',
       },

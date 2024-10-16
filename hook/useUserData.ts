@@ -1,18 +1,24 @@
 import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { setUserData } from '@/redux/userDataSlice'
-import { useMemo } from 'react'
 import useLanguage from './useLanguage'
-import {
-  showNotificationError,
-  showNotificationSuccess,
-} from '@/utils/functions'
+
 import secureLocalStorage from 'react-secure-storage'
 import { decryptData, encryptData } from '@/utils/crypto'
 import { SLICE } from '@/constant/redux'
 import useModalDrawer from './useModalDrawer'
-import { COOKIE_EXPIRED, COOKIE_KEY, REQUEST_TYPE } from '@/constant/app'
+import {
+  COOKIE_EXPIRED,
+  COOKIE_KEY,
+  OBSERVER_KEY,
+  REQUEST_TYPE,
+} from '@/constant/app'
 import { deleteCookie, setCookie } from '@/services/CookeisService'
 import ClientApi from '@/services/clientApi'
+import ObserverService from '@/services/observer'
+import {
+  showNotificationError,
+  showNotificationSuccess,
+} from '@/utils/notification'
 
 const useUserData = () => {
   const dispatch = useAppDispatch()
@@ -53,21 +59,14 @@ const useUserData = () => {
     return data?.data || null
   }
 
-  const logOut = () => {
-    dispatch(setUserData(null))
-    secureLocalStorage.removeItem(SLICE.UserData)
-    deleteCookie(COOKIE_KEY.Auth)
-    deleteCookie(COOKIE_KEY.AuthRefresh)
-  }
-
   const refreshLogin = async () => {
     if (userData) {
       const data = await loginWithDB(userData?.sdt || '', userData?.pass || '')
       if (!data) {
-        logOut()
+        ObserverService.emit(OBSERVER_KEY.LogOut)
       }
     } else {
-      logOut()
+      ObserverService.emit(OBSERVER_KEY.LogOut)
     }
   }
 
@@ -82,10 +81,10 @@ const useUserData = () => {
         const userEncode = encryptData(JSON.stringify(data))
         secureLocalStorage.setItem(SLICE.UserData, userEncode)
       } else {
-        logOut()
+        ObserverService.emit(OBSERVER_KEY.LogOut, false)
       }
     } else {
-      logOut()
+      ObserverService.emit(OBSERVER_KEY.LogOut, false)
     }
   }
 
@@ -112,7 +111,6 @@ const useUserData = () => {
   return {
     userData,
     isLogin: !!userData,
-    logOut,
     login,
     refreshLogin,
     reLogin,

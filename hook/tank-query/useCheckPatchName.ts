@@ -1,28 +1,28 @@
-import { useEffect } from 'react'
+import { useEffect, useLayoutEffect } from 'react'
 import useUserData from '../useUserData'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import useModalDrawer from '../useModalDrawer'
+import {
+  LIST_PAGE_NO_FOOTER,
+  LIST_PAGE_REQUIRE_LOGIN,
+  OBSERVER_KEY,
+} from '@/constant/app'
+import ObserverService from '@/services/observer'
 
 const useCheckPatchName = () => {
   const { isLogin } = useUserData()
   const patchName = usePathname()
-  const router = useRouter()
   const { closeModalDrawer } = useModalDrawer()
 
   useEffect(() => {
     if (!isLogin) {
-      switch (patchName) {
-        case '/my-cart':
-          router.push('/')
-          break
-        case '/my-page':
-          router.push('/')
-          break
+      if (LIST_PAGE_REQUIRE_LOGIN.includes(patchName)) {
+        ObserverService.emit(OBSERVER_KEY.LogOut)
       }
     } else {
       switch (patchName) {
         case '/register':
-          router.push('/')
+          ObserverService.emit(OBSERVER_KEY.LogOut)
           break
       }
     }
@@ -31,9 +31,7 @@ const useCheckPatchName = () => {
     if (
       patchName.includes('/admin') ||
       patchName.includes('/my-page') ||
-      patchName === '/my-cart' ||
-      patchName === '/contact' ||
-      patchName === '/register'
+      LIST_PAGE_NO_FOOTER.includes(patchName)
     ) {
       if (footer) {
         footer.classList.add('no-display')
@@ -46,7 +44,7 @@ const useCheckPatchName = () => {
     closeModalDrawer()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLogin, patchName, router])
+  }, [isLogin, patchName])
 }
 
 export default useCheckPatchName

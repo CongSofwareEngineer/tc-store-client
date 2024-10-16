@@ -10,17 +10,19 @@ import useMedia from '@/hook/useMedia'
 import useModalDrawer from '@/hook/useModalDrawer'
 import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
+import ObserverService from '@/services/observer'
+import { OBSERVER_KEY } from '@/constant/app'
 const CartUser = dynamic(() => import('./cartUser'), { ssr: false })
 const Account = () => {
   const { openModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
-  const { isLogin, logOut, userData } = useUserData()
+  const { isLogin, userData } = useUserData()
   const { isMobile } = useMedia()
   const route = useRouter()
 
   const handleLogin = () => {
     if (isLogin) {
-      logOut()
+      ObserverService.emit(OBSERVER_KEY.LogOut)
     } else {
       openModalDrawer({
         content: <ModalLogin />,
@@ -55,10 +57,10 @@ const Account = () => {
 
   const renderMobile = () => {
     return (
-      <div className="flex gap-2">
+      <div className="flex gap-2 items-center">
+        <CartUser />
         {isLogin ? (
           <div className="flex gap-2 items-center">
-            <CartUser />
             <div>{userData?.name}</div>
           </div>
         ) : (
@@ -67,7 +69,7 @@ const Account = () => {
             className="rounded h-full cursor-pointer w-24  flex justify-center items-center"
           >
             <span className="text-black underline">
-              {isLogin ? translate('common.logOut') : translate('common.login')}
+              {translate('common.login')}
             </span>
           </div>
         )}

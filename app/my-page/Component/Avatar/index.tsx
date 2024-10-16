@@ -5,12 +5,11 @@ import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
 import ClientApi from '@/services/clientApi'
+import { detectAvatar, getBase64 } from '@/utils/functions'
 import {
-  detectAvatar,
-  getBase64,
   showNotificationError,
   showNotificationSuccess,
-} from '@/utils/functions'
+} from '@/utils/notification'
 import { EditTwoTone } from '@ant-design/icons'
 import { Upload } from 'antd'
 import ImgCrop from 'antd-img-crop'

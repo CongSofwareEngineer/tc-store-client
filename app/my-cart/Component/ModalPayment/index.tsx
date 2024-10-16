@@ -9,7 +9,7 @@ import MyForm from '@/components/Form/MyForm'
 import InputForm from '@/components/Form/InputForm'
 import ButtonForm from '@/components/Form/ButtonForm'
 import BigNumber from 'bignumber.js'
-import { numberWithCommas, showNotificationSuccess } from '@/utils/functions'
+import { numberWithCommas } from '@/utils/functions'
 import useCheckForm from '@/hook/useCheckForm'
 import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
@@ -17,6 +17,7 @@ import ListItemCart from '../ListItemCart'
 import useModalDrawer from '@/hook/useModalDrawer'
 import { FILTER_BILL } from '@/constant/app'
 import SelectInputEx from '@/components/ContentFormPayment/Component/SelectInputEx'
+import { showNotificationSuccess } from '@/utils/notification'
 
 const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
   const { userData, isLogin } = useUserData()

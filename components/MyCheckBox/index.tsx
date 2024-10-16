@@ -23,12 +23,12 @@ const MyCheckBox = ({
       heightImage={`${size}px`}
       alt={`icon-MyCheckBox-${alt}`}
       className={`transition-all duration-500 cursor-pointer select-none ${className}`}
-      onClick={onClick}
+      onClick={() => onClick(!value)}
     />
   ) : (
     <div
       style={{ width: size }}
-      onClick={onClick}
+      onClick={() => onClick(!value)}
       className={`cursor-pointer aspect-square rounded-md border-2 border-green-500 ${className}`}
     />
   )

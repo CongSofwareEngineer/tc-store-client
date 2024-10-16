@@ -28,6 +28,16 @@ const MyImage = ({
   positionImg = 'relative',
   ...props
 }: ImageType) => {
+  // const getClassWH = (value: string) => {
+  //   try {
+  //     if (value.includes('px')) {
+  //       return `[${value}]`
+  //     }
+  //     return value
+  //   } catch (error) {
+  //     return value
+  //   }
+  // }
   return (
     <ImageCustom
       $positionImg={positionImg}

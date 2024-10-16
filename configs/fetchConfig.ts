@@ -1,5 +1,4 @@
-import { COOKIE_KEY, REQUEST_TYPE } from '@/constant/app'
-import { getCookie } from '@/services/CookeisService'
+import { REQUEST_TYPE } from '@/constant/app'
 import { decryptData, encryptData } from '@/utils/crypto'
 import axios from 'axios'
 
@@ -53,10 +52,12 @@ const fetchConfig = async ({
     .request(config)
     .then(async (response) => {
       if (response.status === 200) {
-        let data = response?.data?.data ?? response?.data ?? response
+        let data = response?.data?.data || response?.data || response
+
         if (method !== REQUEST_TYPE.GET) {
           data = decryptData(data)
         }
+
         return {
           data: data,
           messages: 'success',

@@ -13,20 +13,10 @@ import useMedia from '@/hook/useMedia'
 import useUserData from '@/hook/useUserData'
 import ServerApi from '@/services/serverApi'
 import { encryptData } from '@/utils/crypto'
-import { showNotificationError } from '@/utils/functions'
+import { showNotificationError } from '@/utils/notification'
 import { Checkbox } from 'antd'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-
-const ContainerRegister = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  height: 100%;
-  max-width: 1000px;
-  margin: auto;
-`
 
 const RegisterScreen = () => {
   useAos(1000)
@@ -93,7 +83,7 @@ const RegisterScreen = () => {
   }
 
   return (
-    <ContainerRegister>
+    <div className="h-full max-w-[1000px] relative flex justify-center m-auto">
       <div className="w-full flex justify-between h-full items-center">
         {!isMobile && (
           <div
@@ -189,7 +179,7 @@ const RegisterScreen = () => {
           </div>
         </div>
       </div>
-    </ContainerRegister>
+    </div>
   )
 }
 

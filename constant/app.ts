@@ -69,7 +69,7 @@ export enum FilterAPI {
 
 export const PAGE_SIZE_LIMIT = 12
 
-export const OptionPayment = {
+export const OPTIONS_PAYMENT = {
   momo: 'momo',
   banking: 'banking',
   delivery: 'delivery',
@@ -96,3 +96,6 @@ export enum FILTER_BILL {
 export const DATE_START_FILTER = dayjs(
   new Date(Date.now()).setDate(new Date().getDate() - 1)
 )
+
+export const LIST_PAGE_REQUIRE_LOGIN = ['/my-cart', '/my-page']
+export const LIST_PAGE_NO_FOOTER = ['/my-cart', '/contact', '/register']

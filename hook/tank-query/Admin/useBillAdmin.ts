@@ -2,7 +2,7 @@ import { PAGE_SIZE_LIMIT } from '@/constant/app'
 import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery'
 import useUserData from '@/hook/useUserData'
 import ClientApi from '@/services/clientApi'
-import ServerApi from '@/services/serverApi'
+import { isObject } from '@/utils/functions'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 
@@ -15,22 +15,15 @@ const getData = async ({
 }): Promise<TypeHookReactQuery> => {
   try {
     const query = queryKey[1]
-    const dateTime = queryKey[2]
-    const { type = null } = query
-    console.log({ type, dateTime })
-
     let queryUrl = `?page=${pageParam}&limit=${PAGE_SIZE_LIMIT}`
-    // if (type) {
-    //   queryUrl += `&type=${type[0]}`
-    // }
-    if (dateTime) {
-      queryUrl += `&date=${dateTime}`
+    if (isObject(query)) {
+      for (const key in query) {
+        queryUrl += `&${key}=${query[key]?.toString()}`
+      }
     }
 
-    console.log({ queryUrl })
-
     const dataServer = await ClientApi.fetchData({
-      url: `bill/all${queryUrl}`,
+      url: `bill/admin/all${queryUrl}`,
     })
 
     return {
@@ -38,8 +31,6 @@ const getData = async ({
       page: pageParam,
     }
   } catch (error) {
-    console.log({ error })
-
     return {
       data: [],
       page: pageParam,
@@ -47,11 +38,11 @@ const getData = async ({
   }
 }
 
-const useBillAdmin = (query: any = [], dateTime = '') => {
+const useBillAdmin = (queries: Record<string, (string | null)[]> | null) => {
   const { isLogin } = useUserData()
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: [QUERY_KEY.BillAdmin, query, dateTime],
+      queryKey: [QUERY_KEY.BillAdmin, queries],
       queryFn: getData,
       enabled: !!isLogin,
       initialPageParam: 1,

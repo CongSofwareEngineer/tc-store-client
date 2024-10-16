@@ -1,7 +1,7 @@
 import useBase64Img from '@/hook/useBase64Img'
 import useLanguage from '@/hook/useLanguage'
 import useTypeFile from '@/hook/useTypeFile'
-import { showNotificationError } from '@/utils/functions'
+import { showNotificationError } from '@/utils/notification'
 import { Upload } from 'antd'
 import ImgCrop from 'antd-img-crop'
 import { isEqual } from 'lodash'
@@ -13,6 +13,7 @@ type Props = {
   handleUpload: (file: any) => Promise<void> | void
   maxSizeOutputKB?: number
   listData?: any[]
+  fullQuality?: boolean
 }
 const UploadImage = ({
   children = <></>,
@@ -21,9 +22,10 @@ const UploadImage = ({
   handleUpload,
   maxSizeOutputKB = 15,
   listData = [],
+  fullQuality = false,
 }: Props) => {
   const { translate } = useLanguage()
-  const { getBase64 } = useBase64Img(maxSizeOutputKB)
+  const { getBase64, getBase64Full } = useBase64Img(maxSizeOutputKB)
   const { typeFile: typeFileBase } = useTypeFile()
 
   const handleLoadFile = (file: any) => {
@@ -34,7 +36,11 @@ const UploadImage = ({
         handleUpload(data)
       }
     }
-    getBase64(file, callBack)
+    if (fullQuality) {
+      getBase64Full(file, callBack)
+    } else {
+      getBase64(file, callBack)
+    }
   }
 
   return (

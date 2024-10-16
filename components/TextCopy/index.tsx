@@ -1,4 +1,4 @@
-import { copyToClipboard } from '@/utils/functions'
+import { copyToClipboard } from '@/utils/notification'
 import { CopyOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 import React from 'react'
@@ -15,7 +15,7 @@ const TextCopy = ({ textView = '', value = '', isLink = false }: Props) => {
           {value || textView}
         </Link>
       ) : (
-        <span>{value || textView}</span>
+        <span>{textView || value}</span>
       )}
       <CopyOutlined onClick={() => copyToClipboard(value || textView)} />
     </div>

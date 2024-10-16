@@ -48,6 +48,7 @@
     "exitSDT": "SĐT đã tồn tại"
   },
   "textPopular": {
+    "copied": "Đã sao chép",
     "feeback": "Đánh giá",
     "updating": "Đang cập nhật",
     "notData": "Chưa có dữ liệu",
@@ -78,7 +79,7 @@
     "addressShip": "Địa chỉ ship hàng",
     "nameProduct": "Tên",
     "totalMoney": "Tổng tiền",
-    "discount": "Giảm gía",
+    "disCount": "Giảm gía",
     "comment": "Bình luận",
     "freeShip_des": "Free ship trong 15km",
     "viewMore": "Xem thêm",
@@ -98,7 +99,8 @@
     "cost": "Giá gốc",
     "point": "Điểm tích lũy",
     "dateStart": "Ngày bắt đầu",
-    "dateEnd": "Ngày kết thúc"
+    "dateEnd": "Ngày kết thúc",
+    "nest": "Yến"
   },
   "addCart": {
     "addSuccess": "Đã thêm vào giỏ hàng",
@@ -310,5 +312,8 @@
   "contactMe": {
     "contactSuccess": "Bạn đã liên hệ thành công",
     "contactFail": "Hệ thống bào trì, bạn hãy liên hệ ngày mai"
+  },
+  "feeback": {
+    "title": "ĐÁNH GIÁ CỦA BẠN VỀ SẢN PHẨM"
   }
 }

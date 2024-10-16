@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useLayoutEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Header from '../Header'
 import 'react-toastify/dist/ReactToastify.css'
 import { useAppDispatch, useAppSelector } from '@/redux/store'
@@ -17,12 +17,12 @@ import {
 } from '@/constant/app'
 import useAos from '@/hook/useAos'
 import { fetchProvinces } from '@/redux/provincesSlice'
-import useMedia from '@/hook/useMedia'
 import { deleteCookie, setCookie } from '@/services/CookeisService'
 import ObserverService from '@/services/observer'
 import { SLICE } from '@/constant/redux'
 import secureLocalStorage from 'react-secure-storage'
 import { setUserData } from '@/redux/userDataSlice'
+import { decryptData } from '@/utils/crypto'
 
 const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
   ssr: true,
@@ -45,26 +45,44 @@ const ClientRender = ({
   useCheckPatchName()
   const dispatch = useAppDispatch()
   const { reLogin } = useUserData()
-  const { isClient } = useMedia()
+  const isClientRef = useRef(false)
 
-  useEffect(() => {
-    isClient && reLogin()
-  }, [isClient])
-
-  useLayoutEffect(() => {
+  if (!isClientRef.current) {
+    const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
+    if (dataSecure) {
+      const dataDecode = decryptData(dataSecure.toString())
+      dispatch(setUserData(JSON.parse(dataDecode)))
+    }
     dispatch(setMenuCategory(menuCategory))
     dispatch(fetchProvinces())
+    setTimeout(() => {
+      reLogin()
+    }, 200)
+    isClientRef.current = true
+  }
+
+  useEffect(() => {
     const updateCookies = (auth: string) => {
       setCookie(COOKIE_KEY.Auth, auth, COOKIE_EXPIRED.ExpiredAuth)
     }
-    ObserverService.on(OBSERVER_KEY.LogOut, () => {
+    const handleLogout = (isReload = true) => {
       secureLocalStorage.removeItem(SLICE.UserData)
       deleteCookie(COOKIE_KEY.Auth)
       deleteCookie(COOKIE_KEY.AuthRefresh)
       dispatch(setUserData(null))
-    })
+
+      if (isReload) {
+        window.location.href = '/'
+      }
+    }
+
+    ObserverService.on(OBSERVER_KEY.LogOut, handleLogout)
     ObserverService.on(OBSERVER_KEY.UpdateCookieAuth, updateCookies)
-    return () => ObserverService.removeListener(OBSERVER_KEY.LogOut)
+
+    return () => {
+      ObserverService.removeListener(OBSERVER_KEY.LogOut)
+      ObserverService.removeListener(OBSERVER_KEY.UpdateCookieAuth)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

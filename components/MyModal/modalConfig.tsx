@@ -15,9 +15,7 @@ const ModalConfig = ({ config, closeModal }: ModalPropsType) => {
       keyboard={config?.overClickClose}
       maskClosable={config?.overClickClose}
     >
-      <div
-        className={`w-full h-full max-h-[calc(90vh-70px)] overflow-y-auto ${config?.classContent}`}
-      >
+      <div className={`w-full h-full  overflow-y-auto ${config?.classContent}`}>
         {config?.content}
       </div>
     </Modal>

@@ -9,7 +9,8 @@ import { decryptData } from '@/utils/crypto'
 import {
   showNotificationError,
   showNotificationSuccess,
-} from '@/utils/functions'
+} from '@/utils/notification'
+
 import { Checkbox, Input } from 'antd'
 import { isEmpty } from 'lodash'
 import React, { useEffect, useState } from 'react'

@@ -1,16 +1,18 @@
 import MyImage from '@/components/MyImage'
+import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
-import { detectImg, formatPrice } from '@/utils/functions'
+import { detectImg, formatPrice, numberWithCommas } from '@/utils/functions'
 import React from 'react'
 
 const ItemDetail = ({ data }: { data: any }) => {
   const { isMobile } = useMedia()
+  const { translate } = useLanguage()
 
   const renderAddress = () => {
     if (data.addressShip.addressDetail) {
       return (
         <div className="flex gap-1">
-          <span className="text-nowrap">Address :</span>
+          {/* <span className="text-nowrap">Address :</span> */}
           <div>{`${
             data.addressShip.addressDetail
           } (${data.addressShip.address.replaceAll('---', ', ')})`}</div>
@@ -47,23 +49,31 @@ const ItemDetail = ({ data }: { data: any }) => {
               />
             </div>
             <div className="flex flex-col gap-2 flex-1">
-              <div className="flex gap-2 text-medium font-bold">
+              <div className="text-green-500 flex gap-2 text-medium font-bold">
                 {e.more_data.name}
               </div>
               <div className="flex gap-2 ">
-                <span className="font-bold">Amount :</span>
+                <span className="font-bold">
+                  {translate('textPopular.amount')}:
+                </span>
                 <span>{e.amount}</span>
               </div>
               <div className="flex gap-2 ">
-                <span className="font-bold">Price :</span>
-                <span className="text-green-500 font-bold">
-                  {formatPrice(e.more_data.price)}
+                <span className="font-bold">
+                  {translate('productDetail.price')} :
                 </span>
+                <span>{formatPrice(e.more_data.price)}</span>
               </div>
             </div>
           </div>
         )
       })}
+
+      <div className="flex justify-end w-full">
+        <div className="text-green-500 font-bold text-medium">
+          {`${numberWithCommas(data?.totalBill || '0')} VNĐ`}
+        </div>
+      </div>
     </div>
   )
 }

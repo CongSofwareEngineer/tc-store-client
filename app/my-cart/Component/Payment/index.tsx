@@ -3,18 +3,13 @@ import { PaymentPageType } from '../../type'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
-import {
-  delayTime,
-  numberWithCommas,
-  showNotificationError,
-} from '@/utils/functions'
+import { numberWithCommas } from '@/utils/functions'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import { BodyAddBill } from '@/constant/firebase'
 import MyForm from '@/components/Form/MyForm'
 import BtnBack from './Component/BtnBack'
 import BillFinal from './Component/BillFinal'
 import ContentForm from './Component/ContentForm'
-import OptionPayment from './Component/OptionPayment'
 import useOptionPayment from '@/hook/useOptionPayment'
 import ViewListOther from './Component/ViewListOther'
 import { FILTER_BILL, REQUEST_TYPE } from '@/constant/app'
@@ -23,8 +18,10 @@ import useModalDrawer from '@/hook/useModalDrawer'
 import ModalSuccess from '@/components/ModalSuccess'
 import ClientApi from '@/services/clientApi'
 import { useRouter } from 'next/navigation'
+import OptionsPayemnt from './Component/OptionsPayemnt'
+import { showNotificationError } from '@/utils/notification'
 
-const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
+const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
   const { translate } = useLanguage()
   const { userData } = useUserData()
   const { refreshQuery } = useRefreshQuery()
@@ -37,19 +34,17 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
   const { onChangeOptions, listOptions, optionSelected } = useOptionPayment()
 
   useEffect(() => {
-    if (userData) {
-      const initData = {
-        sdt: userData?.sdt,
-        name: userData?.name,
-        addressShip: userData?.addressShipper[0] || '',
-        linkContact: userData?.linkContact || '',
-        gmail: userData?.gmail || '',
-        noteBil: '',
-      }
-      setFormData(initData)
-      if (userData?.addressShipper && Array.isArray(userData?.addressShipper)) {
-        setListAddressShip(userData?.addressShipper)
-      }
+    const initData = {
+      sdt: userData?.sdt || '',
+      name: userData?.name,
+      addressShip: userData?.addressShipper[0] || '',
+      linkContact: userData?.linkContact || '',
+      gmail: userData?.gmail || '',
+      noteBil: '',
+    }
+    setFormData(initData)
+    if (userData?.addressShipper && Array.isArray(userData?.addressShipper)) {
+      setListAddressShip(userData?.addressShipper)
     }
   }, [userData, dataCart])
 
@@ -86,90 +81,92 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
     refreshQuery(QUERY_KEY.MyCartUser)
     refreshQuery(QUERY_KEY.GetProductByID)
   }
-  console.log({ dataCart })
+
+  const getItemForShow = (e: any) => {
+    if (e?.moreConfig) {
+      return e?.moreConfig
+    }
+    return e.more_data || {}
+  }
 
   const handleSubmit = async () => {
-    try {
-      setLoading(true)
-      let totalBill = 0
-      const listBill: any[] = []
-      const listNewSoldProduct: any[] = []
-      dataCart.forEach((e) => {
-        totalBill += e.amount * e.more_data.price
+    setLoading(true)
+    let totalBill = 0
+    const listBill: any[] = []
+    const listNewSoldProduct: any[] = []
+    dataCart.forEach((e) => {
+      if (e.selected) {
+        totalBill += e.amount * getItemForShow(e).price
         const itemBill = {
-          _id: e.more_data._id,
-          keyName: e.more_data.keyName,
+          _id: getItemForShow(e)._id,
+          keyName: getItemForShow(e).keyName,
           amount: e.amount,
           idCart: e._id,
         }
         const itemNewSold = {
-          idProduct: e.more_data._id,
-          sold: Number(e.amount) + Number(e.more_data.sold),
+          idProduct: getItemForShow(e)._id,
+          sold: Number(e.amount) + Number(getItemForShow(e).sold),
         }
 
         listNewSoldProduct.push(itemNewSold)
         listBill.push(itemBill)
-      })
-      const bodyAPI: BodyAddBill = {
-        addressShip: formData?.addressShip,
-        discount: 0,
-        idUser: userData?._id,
-        listBill,
-        totalBill: totalBill,
-        sdt: formData?.sdt,
-        status: FILTER_BILL.Processing,
-        listNewSoldProduct,
       }
+    })
+    const bodyAPI: BodyAddBill = {
+      addressShip: formData?.addressShip,
+      discount: 0,
+      idUser: userData?._id,
+      listBill,
+      totalBill: totalBill,
+      sdt: formData?.sdt,
+      status: FILTER_BILL.Processing,
+      listNewSoldProduct,
+    }
 
+    openModalDrawer({
+      content: (
+        <ModalProcess
+          title={translate('confirm.bill.createBill')}
+          des={translate('confirm.bill.createBill_Des')}
+        />
+      ),
+      configModal: {
+        showHeader: false,
+        showBtnClose: false,
+        overClickClose: false,
+      },
+    })
+    const res = await ClientApi.fetchData({
+      url: 'bill/create',
+      body: bodyAPI,
+      method: REQUEST_TYPE.POST,
+    })
+    if (res?.data) {
+      refreshAllData()
       openModalDrawer({
         content: (
-          <ModalProcess
-            title={translate('confirm.bill.createBill')}
-            des={translate('confirm.bill.createBill_Des')}
+          <ModalSuccess
+            showClose
+            title={translate('productDetail.modalBuy.success')}
+            des={translate('productDetail.modalBuy.successDes')}
+            titleSubmit={translate('common.viewBill')}
+            titleClose={translate('common.ok')}
+            callback={() => {
+              route.push('/my-page/bill')
+              closeModalDrawer()
+            }}
           />
         ),
-        configModal: {
-          showHeader: false,
-          showBtnClose: false,
-          overClickClose: false,
-        },
       })
-      const res = await ClientApi.fetchData({
-        url: 'bill/create',
-        body: bodyAPI,
-        method: REQUEST_TYPE.POST,
-      })
-      if (res?.data) {
-        await delayTime(500)
-        refreshAllData()
-        await delayTime(500)
-        openModalDrawer({
-          content: (
-            <ModalSuccess
-              showClose
-              title={translate('productDetail.modalBuy.success')}
-              des={translate('productDetail.modalBuy.successDes')}
-              titleSubmit={translate('common.viewBill')}
-              titleClose={translate('common.ok')}
-              callback={() => {
-                route.push('/my-page/bill')
-                closeModalDrawer()
-              }}
-            />
-          ),
-        })
-      } else {
-        showNotificationError(translate('productDetail.modalBuy.error'))
-      }
-    } finally {
-      setLoading(false)
-      closeModalDrawer()
+      clickBack()
+    } else {
+      showNotificationError(translate('productDetail.modalBuy.error'))
     }
   }
 
   return (
     <div className="w-full mb-7 mt-1">
-      <BtnBack clickBack={clickBack} />
+      {showBack && <BtnBack clickBack={clickBack} />}
       <div className="flex flex-col gap-3 w-full mt-1">
         {formData && (
           <MyForm
@@ -190,7 +187,7 @@ const Payment = ({ dataCart, clickBack }: PaymentPageType) => {
               </div>
 
               <div className="lg:w-[300px] flex flex-col md:gap-6 gap-5">
-                <OptionPayment
+                <OptionsPayemnt
                   onChangeOptions={onChangeOptions}
                   listOptions={listOptions}
                   optionSelected={optionSelected}

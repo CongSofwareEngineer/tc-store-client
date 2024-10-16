@@ -1,22 +1,24 @@
-import lodash from 'lodash'
-import { message, notification } from 'antd'
+// import lodash from 'lodash'
+
 import BigNumber from 'bignumber.js'
-import { toast } from 'react-toastify'
-import moment from 'moment'
 
 export const cloneData = (data: any, defaultValue: any = '') => {
   try {
     if (!data) {
       return data
     }
-    return lodash.cloneDeep(data)
+    return JSON.parse(JSON.stringify(data))
   } catch (error) {
     return defaultValue
   }
 }
 
 export const isEmptyObject = (data: any) => {
-  return lodash.isEmpty(data)
+  try {
+    return Object.keys(data).length > 0
+  } catch (error) {
+    return false
+  }
 }
 
 export const numberWithCommas = (x: any) => {
@@ -41,50 +43,12 @@ export const formatPriceBase = (data: any, discount = 20) => {
       return 0
     }
     const rate = new BigNumber(100).plus(discount).dividedBy(100).toNumber()
+    // const rate = (100 + discount) / 100
     return numberWithCommas(new BigNumber(rate).multipliedBy(data).toNumber())
+    // return numberWithCommas(rate * rate)
   } catch (error) {
     return 0
   }
-}
-
-export const showNotification = (title = null, description = '') => {
-  const params: any = {
-    placement: 'bottomRight',
-    className: 'notification-class',
-    bottom: 54,
-    duration: 5,
-  }
-  if (title) {
-    params.message = title
-  }
-  if (description) {
-    params.description = description
-  }
-  notification.open(params)
-}
-
-export const showNotificationError = (errorMessage = '', autoClose = 5000) => {
-  toast.error(errorMessage, {
-    position: 'top-right',
-    autoClose,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  })
-}
-
-export const showNotificationSuccess = (message = '', autoClose = 5000) => {
-  toast.success(message, {
-    position: 'top-right',
-    autoClose,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  })
 }
 
 export function delayTime(ms = 500) {
@@ -162,7 +126,7 @@ export const processQuery = (data: any[], query: any) => {
 
   const amountQuery = page * limit
   const arr: any[] = []
-  let totalPage = BigNumber(data.length).dividedBy(Number(limit)).toNumber()
+  let totalPage = data.length / limit
 
   if (totalPage <= 1) {
     totalPage = 1
@@ -186,28 +150,11 @@ export const processQuery = (data: any[], query: any) => {
   }
 }
 
-export const copyToClipboard = (text: any): void => {
-  const tmp = document.createElement('input')
-  tmp.value = text
-  document.body.appendChild(tmp)
-  tmp.select()
-  document.execCommand('copy')
-  tmp.remove()
-  message.success({
-    type: 'success',
-    content: 'Copied',
-  })
-}
-
-export const viewExternal = (url: string): void => {
+export const viewExternal = (url: string) => {
   window.open(url, '_blank')
 }
 
-export const formatDateTime = (data: any) => {
-  return moment(data).format('DD / MM /YYYY')
-}
-
-export const detectImg = (src: any): string => {
+export const detectImg = (src: any) => {
   try {
     if (!src) {
       return ''

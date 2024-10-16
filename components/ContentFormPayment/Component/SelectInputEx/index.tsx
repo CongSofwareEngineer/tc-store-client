@@ -1,6 +1,6 @@
 import MyButton from '@/components/MyButton'
 import useLanguage from '@/hook/useLanguage'
-import { showNotificationError } from '@/utils/functions'
+import { showNotificationError } from '@/utils/notification'
 import { PlusOutlined } from '@ant-design/icons'
 import { Form, Input, Select, SelectProps } from 'antd'
 import React, { useRef, useState } from 'react'

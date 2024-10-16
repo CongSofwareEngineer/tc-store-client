@@ -1,4 +1,5 @@
-import { getBase642, showNotificationError } from '../utils/functions'
+import { showNotificationError } from '@/utils/notification'
+import { getBase642, getBase64 as getBase64Base } from '../utils/functions'
 import useLanguage from './useLanguage'
 
 const useBase64Img = (maxSizeOutputKB = 15) => {
@@ -73,8 +74,24 @@ const useBase64Img = (maxSizeOutputKB = 15) => {
     }
   }
 
+  const getBase64Full = async (fileUpload: any, callBack: any) => {
+    try {
+      if (fileUpload.size > 30 * 1048576) {
+        const text = translate('warning.maxSizeFile').replace('{size}', `30 MB`)
+        showNotificationError(text)
+        return
+      }
+
+      getBase64Base(fileUpload, callBack)
+    } catch (error) {
+      showNotificationError(translate('errors.file'))
+      return null
+    }
+  }
+
   return {
     getBase64,
+    getBase64Full,
   }
 }
 

@@ -23,6 +23,13 @@ const ViewListOther = ({ dataCart }: { dataCart: any[] }) => {
     router.push(`/shop/${data?.keyName}`)
   }
 
+  const getItemForShow = (e: any) => {
+    if (e?.moreConfig) {
+      return e?.moreConfig
+    }
+    return e.more_data || {}
+  }
+
   const renderItemMobile = () => {
     return (
       <div className="w-full flex flex-col">
@@ -58,19 +65,19 @@ const ViewListOther = ({ dataCart }: { dataCart: any[] }) => {
                   <MyImage
                     widthImage={'auto'}
                     heightImage={'80px'}
-                    src={detectImg(e.more_data?.imageMain?.toString())}
-                    alt={`item-${e.more_data?.name}`}
+                    src={detectImg(getItemForShow(e)?.imageMain)}
+                    alt={`item-${getItemForShow(e)?.name}`}
                   />
                 </div>
               </div>
               <div className="w-[100px] flex flex-1">
                 <div className="flex flex-col gap-1 w-full">
                   <div className="text-medium font-bold">
-                    {e.more_data?.name}
+                    {getItemForShow(e)?.name}
                   </div>
                   <div className="text-[12px] opacity-60">
                     {`${translate('category')} : ${getLabelCategory(
-                      e.more_data?.category
+                      getItemForShow(e)?.category
                     )}`}
                   </div>
                   <div>{`${translate('textPopular.amount')} : x${
@@ -79,7 +86,8 @@ const ViewListOther = ({ dataCart }: { dataCart: any[] }) => {
                   <div className="flex gap-1">
                     <span>{translate('textPopular.totalMoney')} :</span>
                     <span className="font-bold text-green-700">
-                      {numberWithCommas(e.amount * e.more_data?.price)} VNĐ
+                      {numberWithCommas(e.amount * getItemForShow(e)?.price)}{' '}
+                      VNĐ
                     </span>
                   </div>
                 </div>
@@ -127,8 +135,8 @@ const ViewListOther = ({ dataCart }: { dataCart: any[] }) => {
                   <MyImage
                     widthImage={'auto'}
                     heightImage={'80px'}
-                    src={detectImg(e.more_data?.imageMain?.toString())}
-                    alt={`item-${e.more_data?.name}`}
+                    src={detectImg(getItemForShow(e)?.imageMain)}
+                    alt={`item-${getItemForShow(e)?.name}`}
                   />
                 </div>
               </div>
@@ -136,13 +144,14 @@ const ViewListOther = ({ dataCart }: { dataCart: any[] }) => {
                 <div className="flex flex-col gap-1">
                   <div
                     className="font-semibold   cursor-pointer md:hover:underline"
-                    onClick={() => handleClickName(e.more_data)}
+                    onClick={() => handleClickName(getItemForShow(e))}
                   >
-                    {e.more_data?.name}
+                    {getItemForShow(e)?.name}
                   </div>
                   <div className="opacity-80 text-xs ">
                     {`${translate('category')} : ${
-                      getLabelCategory(e.more_data?.category) || 'typeProduct'
+                      getLabelCategory(getItemForShow(e)?.category) ||
+                      'typeProduct'
                     }`}
                   </div>
                 </div>
@@ -150,16 +159,16 @@ const ViewListOther = ({ dataCart }: { dataCart: any[] }) => {
               <div className="w-[20%] ">
                 <div className="  text-green-800 flex flex-col  justify-items-start items-center gap-2">
                   <span className="line-through text-xs">
-                    {numberWithCommas(e.more_data?.price * 1.2)}
+                    {numberWithCommas(getItemForShow(e)?.price * 1.2)}
                   </span>
                   <div className=" text-green-800">
-                    {numberWithCommas(e.more_data?.price)}
+                    {numberWithCommas(getItemForShow(e)?.price)}
                   </div>
                 </div>
               </div>
               <div className="w-[10%] text-center">{`x${e.amount}`}</div>
               <div className="w-[20%] text-green-500 font-bold text-center">
-                {numberWithCommas(e.amount * e.more_data?.price)} VNĐ
+                {numberWithCommas(e.amount * getItemForShow(e)?.price)} VNĐ
               </div>
             </div>
           )

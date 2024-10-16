@@ -1,17 +1,30 @@
 import { QUERY_KEY } from '@/constant/reactQuery'
 import ClientApi from '@/services/clientApi'
 import { useQuery } from '@tanstack/react-query'
+import useUserData from '../useUserData'
+import { getCookie } from '@/services/CookeisService'
+import { COOKIE_KEY } from '@/constant/app'
 const getData = async ({ queryKey }: any) => {
-  const lengthCart = await ClientApi.fetchData({
-    url: `/cart/length-cart/${queryKey[1]}`,
-  })
+  const isLogin = queryKey[2]
+  if (isLogin) {
+    const lengthCart = await ClientApi.fetchData({
+      url: `/cart/length-cart/${queryKey[1]}`,
+    })
 
-  return lengthCart?.data || { lengthCart: 0 }
+    return lengthCart?.data || { lengthCart: 0 }
+  } else {
+    const data = await getCookie(COOKIE_KEY.MyCart)
+
+    if (Array.isArray(data)) {
+      return { lengthCart: data.length }
+    }
+  }
+  return { lengthCart: 0 }
 }
 const useLengthCart = (id = '') => {
+  const { isLogin } = useUserData()
   const { data, isLoading } = useQuery({
-    queryKey: [QUERY_KEY.LengthCartUser, id],
-    enabled: !!id,
+    queryKey: [QUERY_KEY.LengthCartUser, id, isLogin],
     queryFn: getData,
   })
   return {

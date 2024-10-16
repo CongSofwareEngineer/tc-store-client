@@ -4,6 +4,7 @@ import React from 'react'
 import moment from 'moment'
 import Link from 'next/link'
 import {
+  ellipsisText,
   formatPrice,
   formatPriceBase,
   numberWithCommas,
@@ -15,6 +16,7 @@ import ViewDetailBill from '../ViewDetailBill'
 import ModalCancelOrder from '../ModalCancelOrder'
 import TextCopy from '@/components/TextCopy'
 import MyButton from '@/components/MyButton'
+import ModalFeeback from '../ModalFeeback'
 type Props = {
   data: { [key: string]: any }
 }
@@ -100,7 +102,13 @@ const Item = ({ data }: Props) => {
 
   const handleFeeback = (item: any) => {
     openModalDrawer({
-      content: <ModalCancelOrder data={item} />,
+      content: <ModalFeeback data={item} />,
+      useDrawer: true,
+      title: (
+        <div className="text-medium font-bold">
+          {translate('textPopular.feeback')}
+        </div>
+      ),
     })
   }
 
@@ -118,7 +126,7 @@ const Item = ({ data }: Props) => {
         ) : (
           <>
             {data.status === FILTER_BILL.Processing && (
-              <div className="flex w-full justify-center">
+              <div className="flex md:w-full justify-center">
                 <MyButton
                   type="primary"
                   size="small"
@@ -130,7 +138,7 @@ const Item = ({ data }: Props) => {
               </div>
             )}
             {data.status === FILTER_BILL.DeliverySuccess && (
-              <div className="flex w-full justify-center">
+              <div className="flex  md:w-full justify-center">
                 <MyButton
                   size="small"
                   className="text-[13px]"
@@ -146,7 +154,7 @@ const Item = ({ data }: Props) => {
       <div className="flex flex-col lg:gap-3 gap-2 flex-1">
         <div className="flex gap-2 w-full text-[11px]">
           <span>{`${translate('myBill.idOrder')} : `}</span>
-          <TextCopy value={data._id} />
+          <TextCopy value={data._id} textView={ellipsisText(data._id, 4, 3)} />
         </div>
         {isMobile && (
           <>
