@@ -20,7 +20,8 @@ import { REQUEST_TYPE } from '@/constant/app'
 import {
   showNotificationError,
   showNotificationSuccess,
-} from '@/utils/functions'
+} from '@/utils/notification'
+
 const ModalProcess = dynamic(() => import('@/components/ModalProcess'), {
   ssr: true,
 })
