@@ -293,6 +293,15 @@ const Passkey = () => {
       },
       'https://pass.w3w.app/'
     )
+
+    window.parent.postMessage(
+      {
+        jsonrpc,
+        id,
+        data,
+      },
+      'http://localhost:30002/'
+    )
   }
 
   const receiveDAPPMessage = async (event: any) => {
