@@ -282,7 +282,16 @@ const Passkey = () => {
         id,
         data,
       },
-      'http://localhost:30002'
+      'https://airdropband.w3w.app/'
+    )
+
+    window.parent.postMessage(
+      {
+        jsonrpc,
+        id,
+        data,
+      },
+      'https://pass.w3w.app/'
     )
   }
 
