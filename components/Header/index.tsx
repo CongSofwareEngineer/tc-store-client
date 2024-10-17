@@ -9,7 +9,7 @@ const Account = dynamic(() => import('./Component/Account'), { ssr: true })
 
 const Header = () => {
   return (
-    <header>
+    <header className="header-main">
       <a
         href="mailto:hodiencong2000.@gmail.com"
         className="absolute z-[-1] opacity-0"

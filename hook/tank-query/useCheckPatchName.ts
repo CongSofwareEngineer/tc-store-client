@@ -28,6 +28,7 @@ const useCheckPatchName = () => {
     }
 
     const footer = window.document.getElementsByClassName('footer-web')[0]
+    const header = window.document.getElementsByClassName('header-main')[0]
     if (
       patchName.includes('/admin') ||
       patchName.includes('/my-page') ||
@@ -39,6 +40,14 @@ const useCheckPatchName = () => {
     } else {
       if (footer) {
         footer.classList.remove('no-display')
+      }
+    }
+    if (patchName.includes('/pass-key')) {
+      if (footer) {
+        footer.classList.add('no-display')
+      }
+      if (header) {
+        header.classList.add('no-display')
       }
     }
     closeModalDrawer()

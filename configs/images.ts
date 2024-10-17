@@ -12,12 +12,12 @@ export const images = {
     iconIntagram: '/images/Footer/iconIntagram.png',
     iconTitok: '/images/Footer/iconTiktok.png',
     iconZalo: '/images/Footer/iconZalo.png',
-    iconGPS: '/images/Footer/iconGPS.png'
+    iconGPS: '/images/Footer/iconGPS.png',
   },
   landingPage: {
     logo: '/images/LandingPage/Logo.webp',
     product2: '/images/LandingPage/product2.webp',
-    coffee1: '/images/LandingPage/imagesCoffe.webp'
+    coffee1: '/images/LandingPage/imagesCoffe.webp',
   },
   home: {
     logo: '/images/Home/logo.jpg',
@@ -26,14 +26,16 @@ export const images = {
     iconSmell: '/images/Home/smell.png',
     banner: {
       btnSlider: '/images/Home/Banner/iconBtnPositionControl.png',
-      btnPositionActive: '/images/Home/Banner/bgBtnPositionItemInfo2Actived.png',
-      btnPositionUnActive: '/images/Home/Banner/bgBtnPositionItemInfo2UnActive.png',
+      btnPositionActive:
+        '/images/Home/Banner/bgBtnPositionItemInfo2Actived.png',
+      btnPositionUnActive:
+        '/images/Home/Banner/bgBtnPositionItemInfo2UnActive.png',
       bannerNest: '/images/Home/Banner/bannerNest.webp',
       bannerNest2: '/images/Home/Banner/bannerNest2.webp',
       bannerLaptop2: '/images/Home/Banner/bannerLaptop2.webp',
       bannerLaptop: '/images/Home/Banner/bannerlaptop.webp',
       bannerCoffee: '/images/Home/Banner/bannerCoffe.webp',
-    }
+    },
   },
   icon: {
     iconHome: '/images/Icon/iconHome.png',
@@ -67,7 +69,10 @@ export const images = {
     iconSuccessGif: '/images/Icon/iconSuccess.gif',
   },
   userDetail: {
-    iconUserDetail: '/images/Profile/Userdetail/iconUserDetail.png'
-
-  }
+    iconUserDetail: '/images/Profile/Userdetail/iconUserDetail.png',
+  },
+  passkey: {
+    bg: '/images/passkey/bg.png',
+    bgMobile: '/images/passkey/bgMobile.png',
+  },
 }
