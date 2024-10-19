@@ -48,6 +48,8 @@ const ClientRender = ({
   const isClientRef = useRef(false)
 
   if (!isClientRef.current) {
+    console.log({ menuCategory })
+
     const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
     if (dataSecure) {
       const dataDecode = decryptData(dataSecure.toString())
