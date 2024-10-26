@@ -104,7 +104,7 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
           />
           {Object.values(LANGUAGE_SUPPORT).map((value) => {
             return (
-              <div className="flex flex-col  w-full gap-2 mt-2">
+              <div key={value} className="flex flex-col  w-full gap-2 mt-2">
                 <div>{`${translate('language')} : ${uppercase(value)}`}</div>
                 <MyInput
                   value={formData?.lang[value] || ''}

@@ -16,6 +16,10 @@ const getData = async ({
     queryUrl += `?isShow=${isShow}`
   }
 
+  if (typeof isShow !== 'undefined') {
+    queryUrl += `?isShow=${isShow}`
+  }
+
   const dataServer = await ClientApi.fetchData({
     url: queryUrl,
   })
