@@ -86,7 +86,7 @@ export const viewport: Viewport = {
 
 const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
   const menuCategory = await ClientApi.fetchData({
-    url: 'category/all',
+    url: 'category/all?isShow=true',
     isAthu: false,
   })
 

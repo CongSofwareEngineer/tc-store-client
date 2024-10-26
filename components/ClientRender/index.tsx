@@ -17,7 +17,7 @@ import {
 } from '@/constant/app'
 import useAos from '@/hook/useAos'
 import { fetchProvinces } from '@/redux/provincesSlice'
-import { deleteCookie, setCookie } from '@/services/CookeisService'
+import { deleteCookie, setCookie } from '@/services/CookiesService'
 import ObserverService from '@/services/observer'
 import { SLICE } from '@/constant/redux'
 import secureLocalStorage from 'react-secure-storage'

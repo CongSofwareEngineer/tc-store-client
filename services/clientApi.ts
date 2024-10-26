@@ -1,5 +1,5 @@
 import { COOKIE_KEY, OBSERVER_KEY, REQUEST_TYPE } from '@/constant/app'
-import { getCookie, setCookie } from './CookeisService'
+import { getCookie, setCookie } from './CookiesService'
 import fetchConfig from '@/configs/fetchConfig'
 import ObserverService from './observer'
 

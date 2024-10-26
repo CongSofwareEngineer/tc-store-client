@@ -209,3 +209,19 @@ export function isObject(value: any): boolean {
     return false
   }
 }
+
+export function lowercase(value: any) {
+  try {
+    return value.toLowerCase()
+  } catch (error) {
+    return value
+  }
+}
+
+export function uppercase(value: any) {
+  try {
+    return value.toUpperCase()
+  } catch (error) {
+    return value
+  }
+}

@@ -52,7 +52,7 @@ const useSearchBaseAdmin = (param?: Props) => {
 
   useEffect(() => {
     const getCategory = () => {
-      const initdata = {
+      const initData = {
         label:
           CategoryMenu[0]?.lang?.[Language.locale || 'vn'].toString() || '',
         value: CategoryMenu[0]?.keyName.toString() || '',
@@ -61,14 +61,14 @@ const useSearchBaseAdmin = (param?: Props) => {
         const dataLan = CategoryMenu.find(
           (e) => e.keyName === queries?.['category'][0]!
         )
-        initdata.label =
+        initData.label =
           dataLan?.lang?.[Language.locale || 'vn'].toString() ||
           queries?.['category'][0]!
-        initdata.value =
+        initData.value =
           dataLan?.keyName.toString() || queries?.['category'][0]!
       }
 
-      return initdata
+      return initData
     }
     if (isClient) {
       const initData = {
@@ -90,7 +90,7 @@ const useSearchBaseAdmin = (param?: Props) => {
     return () => setFormData(null)
   }, [CategoryMenu, Language, queries, isClient])
 
-  const clearSearcch = () => {
+  const clearSearch = () => {
     const initData = {
       category: '',
       id: '',
@@ -105,6 +105,7 @@ const useSearchBaseAdmin = (param?: Props) => {
     setFormData(initData)
     router.push(pathPage)
   }
+  console.log({ formDataSreach: formData, config })
 
   const handleSubmit = () => {
     let query = ''
@@ -143,6 +144,9 @@ const useSearchBaseAdmin = (param?: Props) => {
         }
       }
     })
+    console.log('====================================')
+    console.log({ query })
+    console.log('====================================')
 
     router.push(`${pathPage}?${query}`)
   }
@@ -218,7 +222,7 @@ const useSearchBaseAdmin = (param?: Props) => {
               <MyButton
                 type="primary"
                 className=" mt-2"
-                onClick={() => clearSearcch()}
+                onClick={() => clearSearch()}
               >
                 {'Clean'}
               </MyButton>

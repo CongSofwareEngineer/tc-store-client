@@ -4,7 +4,7 @@ import useUserData from '../useUserData'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import ClientApi from '@/services/clientApi'
-import { getCookie } from '@/services/CookeisService'
+import { getCookie } from '@/services/CookiesService'
 
 const getData = async ({
   queryKey,

@@ -12,7 +12,7 @@ import {
   OBSERVER_KEY,
   REQUEST_TYPE,
 } from '@/constant/app'
-import { deleteCookie, setCookie } from '@/services/CookeisService'
+import { deleteCookie, setCookie } from '@/services/CookiesService'
 import ClientApi from '@/services/clientApi'
 import ObserverService from '@/services/observer'
 import {

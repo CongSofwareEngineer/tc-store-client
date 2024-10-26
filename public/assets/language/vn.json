@@ -1,4 +1,5 @@
 {
+  "language": "Ngôn ngữ",
   "common": {
     "updateFeedback": "Cập nhật đánh giá",
     "feedback": "Đánh giá",
@@ -48,6 +49,7 @@
     "exitSDT": "SĐT đã tồn tại"
   },
   "textPopular": {
+    "showScreen": "Hiện thị Website",
     "copied": "Đã sao chép",
     "feeback": "Đánh giá",
     "updating": "Đang cập nhật",

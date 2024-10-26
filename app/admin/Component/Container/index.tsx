@@ -61,6 +61,10 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
       title: translate('textPopular.product'),
       url: '/admin/product',
     },
+    {
+      title: translate('menuProduct.category'),
+      url: '/admin/category',
+    },
   ]
 
   return (

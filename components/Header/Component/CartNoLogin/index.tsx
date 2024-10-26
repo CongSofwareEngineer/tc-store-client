@@ -8,7 +8,7 @@ import { COOKIE_KEY } from '@/constant/app'
 import useMyCart from '@/hook/tank-query/useMyCart'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
-import { setCookie } from '@/services/CookeisService'
+import { setCookie } from '@/services/CookiesService'
 import {
   cloneData,
   detectImg,

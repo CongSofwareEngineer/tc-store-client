@@ -2,7 +2,7 @@ import { COOKIE_KEY, OBSERVER_KEY, REQUEST_TYPE } from '@/constant/app'
 import { encryptData } from '@/utils/crypto'
 import { pareResponseDataClient } from '@/utils/serverNext'
 import axios from 'axios'
-import { getCookie } from './CookeisService'
+import { getCookie } from './CookiesService'
 import ObserverService from './observer'
 
 type TypeParma = {

@@ -15,7 +15,7 @@ import {
   formatPriceBase,
 } from '@/utils/functions'
 import { QUERY_KEY } from '@/constant/reactQuery'
-import { getCookie, setCookie } from '@/services/CookeisService'
+import { getCookie, setCookie } from '@/services/CookiesService'
 import BtnBack from '@/components/BtnBack'
 import useGetProductByID from '@/hook/tank-query/useGetProductByID'
 import MyImage from '@/components/MyImage'

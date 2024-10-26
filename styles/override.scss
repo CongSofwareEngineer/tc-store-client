@@ -75,6 +75,13 @@ p {
 .ant-upload {
   width: 100%;
 }
+.ant-checkbox-checked {
+  .ant-checkbox-inner {
+    background-color: #29a200 !important;
+    border-color: #29a200 !important;
+  }
+}
+
 /* Chrome, Safari, Edge, Opera */
 // input::-webkit-outer-spin-button,
 // input::-webkit-inner-spin-button {

@@ -47,7 +47,12 @@ type InputFormType = {
 
 const CheckBoxForm = ({ label, name, classFromItem = '' }: InputFormType) => {
   return (
-    <FormItem className={classFromItem} label={label} name={name}>
+    <FormItem
+      valuePropName="checked"
+      className={classFromItem}
+      label={label}
+      name={name}
+    >
       <Checkbox />
     </FormItem>
   )

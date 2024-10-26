@@ -45,6 +45,10 @@ const AntdProvider = ({ children }: { children: React.ReactNode }) => {
             padding: 24,
             paddingMD: 0,
           },
+          Checkbox: {
+            colorBgBase: 'green',
+            colorBgTextHover: 'green',
+          },
         },
         hashed: false,
       }}
