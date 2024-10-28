@@ -1,37 +1,37 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { PaymentPageType } from '../../type'
-import useLanguage from '@/hook/useLanguage'
-import useUserData from '@/hook/useUserData'
-import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
-import { numberWithCommas } from '@/utils/functions'
-import { QUERY_KEY } from '@/constant/reactQuery'
-import { BodyAddBill } from '@/constant/firebase'
-import MyForm from '@/components/Form/MyForm'
-import BtnBack from './Component/BtnBack'
-import BillFinal from './Component/BillFinal'
-import ContentForm from './Component/ContentForm'
-import useOptionPayment from '@/hook/useOptionPayment'
-import ViewListOther from './Component/ViewListOther'
-import { FILTER_BILL, REQUEST_TYPE } from '@/constant/app'
-import ModalProcess from '@/components/ModalProcess'
-import useModalDrawer from '@/hook/useModalDrawer'
-import ModalSuccess from '@/components/ModalSuccess'
-import ClientApi from '@/services/clientApi'
-import { useRouter } from 'next/navigation'
-import OptionsPayemnt from './Component/OptionsPayemnt'
-import { showNotificationError } from '@/utils/notification'
+import React, { useEffect, useMemo, useState } from 'react';
+import { PaymentPageType } from '../../type';
+import useLanguage from '@/hook/useLanguage';
+import useUserData from '@/hook/useUserData';
+import useRefreshQuery from '@/hook/tank-query/useRefreshQuery';
+import { numberWithCommas } from '@/utils/functions';
+import { QUERY_KEY } from '@/constant/reactQuery';
+import { BodyAddBill } from '@/constant/firebase';
+import MyForm from '@/components/Form/MyForm';
+import BtnBack from './Component/BtnBack';
+import BillFinal from './Component/BillFinal';
+import ContentForm from './Component/ContentForm';
+import useOptionPayment from '@/hook/useOptionPayment';
+import ViewListOrder from './Component/ViewListOrder';
+import { FILTER_BILL, REQUEST_TYPE } from '@/constant/app';
+import ModalProcess from '@/components/ModalProcess';
+import useModalDrawer from '@/hook/useModalDrawer';
+import ModalSuccess from '@/components/ModalSuccess';
+import ClientApi from '@/services/clientApi';
+import { useRouter } from 'next/navigation';
+import OptionsPayemnt from './Component/OptionsPayemnt';
+import { showNotificationError } from '@/utils/notification';
 
 const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
-  const { translate } = useLanguage()
-  const { userData } = useUserData()
-  const { refreshQuery } = useRefreshQuery()
-  const { openModalDrawer, closeModalDrawer } = useModalDrawer()
-  const route = useRouter()
+  const { translate } = useLanguage();
+  const { userData } = useUserData();
+  const { refreshQuery } = useRefreshQuery();
+  const { openModalDrawer, closeModalDrawer } = useModalDrawer();
+  const route = useRouter();
 
-  const [formData, setFormData] = useState<Record<string, any> | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [listAddressShip, setListAddressShip] = useState<string[]>([])
-  const { onChangeOptions, listOptions, optionSelected } = useOptionPayment()
+  const [formData, setFormData] = useState<Record<string, any> | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [listAddressShip, setListAddressShip] = useState<string[]>([]);
+  const { onChangeOptions, listOptions, optionSelected } = useOptionPayment();
 
   useEffect(() => {
     const initData = {
@@ -41,19 +41,19 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
       linkContact: userData?.linkContact || '',
       gmail: userData?.gmail || '',
       noteBil: '',
-    }
-    setFormData(initData)
+    };
+    setFormData(initData);
     if (userData?.addressShipper && Array.isArray(userData?.addressShipper)) {
-      setListAddressShip(userData?.addressShipper)
+      setListAddressShip(userData?.addressShipper);
     }
-  }, [userData, dataCart])
+  }, [userData, dataCart]);
 
   const isValidSubmit = useMemo(() => {
     if (!formData?.addressShip) {
-      return false
+      return false;
     }
-    return !!formData?.addressShip.addressDetail
-  }, [formData])
+    return !!formData?.addressShip.addressDetail;
+  }, [formData]);
 
   const onChangeAddressShip = (item: any) => {
     setFormData({
@@ -61,57 +61,57 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
       addressShip: {
         ...item,
       },
-    })
-  }
+    });
+  };
 
   const getTotalPayBill = (plusFee = false) => {
-    let total = 0
+    let total = 0;
     dataCart.forEach((e) => {
       if (e.selected) {
         if (e?.selected) {
-          total = Number(e.amount) * Number(e.price) + total
+          total = Number(e.amount) * Number(e.price) + total;
         }
       }
-    })
-    return numberWithCommas(total + (plusFee ? 30000 : 0))
-  }
+    });
+    return numberWithCommas(total + (plusFee ? 30000 : 0));
+  };
 
   const refreshAllData = () => {
-    refreshQuery(QUERY_KEY.LengthCartUser)
-    refreshQuery(QUERY_KEY.MyCartUser)
-    refreshQuery(QUERY_KEY.GetProductByID)
-  }
+    refreshQuery(QUERY_KEY.LengthCartUser);
+    refreshQuery(QUERY_KEY.MyCartUser);
+    refreshQuery(QUERY_KEY.GetProductByID);
+  };
 
   const getItemForShow = (e: any) => {
     if (e?.moreConfig) {
-      return e?.moreConfig
+      return e?.moreConfig;
     }
-    return e.more_data || {}
-  }
+    return e.more_data || {};
+  };
 
   const handleSubmit = async () => {
-    setLoading(true)
-    let totalBill = 0
-    const listBill: any[] = []
-    const listNewSoldProduct: any[] = []
+    setLoading(true);
+    let totalBill = 0;
+    const listBill: any[] = [];
+    const listNewSoldProduct: any[] = [];
     dataCart.forEach((e) => {
       if (e.selected) {
-        totalBill += e.amount * getItemForShow(e).price
+        totalBill += e.amount * getItemForShow(e).price;
         const itemBill = {
           _id: getItemForShow(e)._id,
           keyName: getItemForShow(e).keyName,
           amount: e.amount,
           idCart: e._id,
-        }
+        };
         const itemNewSold = {
           idProduct: getItemForShow(e)._id,
           sold: Number(e.amount) + Number(getItemForShow(e).sold),
-        }
+        };
 
-        listNewSoldProduct.push(itemNewSold)
-        listBill.push(itemBill)
+        listNewSoldProduct.push(itemNewSold);
+        listBill.push(itemBill);
       }
-    })
+    });
     const bodyAPI: BodyAddBill = {
       addressShip: formData?.addressShip,
       discount: 0,
@@ -121,7 +121,9 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
       sdt: formData?.sdt,
       status: FILTER_BILL.Processing,
       listNewSoldProduct,
-    }
+    };
+
+    setLoading(false);
 
     openModalDrawer({
       content: (
@@ -135,14 +137,14 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
         showBtnClose: false,
         overClickClose: false,
       },
-    })
+    });
     const res = await ClientApi.fetchData({
       url: 'bill/create',
       body: bodyAPI,
       method: REQUEST_TYPE.POST,
-    })
+    });
     if (res?.data) {
-      refreshAllData()
+      refreshAllData();
       openModalDrawer({
         content: (
           <ModalSuccess
@@ -152,17 +154,17 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
             titleSubmit={translate('common.viewBill')}
             titleClose={translate('common.ok')}
             callback={() => {
-              route.push('/my-page/bill')
-              closeModalDrawer()
+              route.push('/my-page/bill');
+              closeModalDrawer();
             }}
           />
         ),
-      })
-      clickBack()
+      });
+      clickBack();
     } else {
-      showNotificationError(translate('productDetail.modalBuy.error'))
+      showNotificationError(translate('productDetail.modalBuy.error'));
     }
-  }
+  };
 
   return (
     <div className="w-full mb-7 mt-1">
@@ -183,7 +185,7 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
                   setListAddressShip={setListAddressShip}
                   onChange={onChangeAddressShip}
                 />
-                <ViewListOther dataCart={dataCart} />
+                <ViewListOrder dataCart={dataCart} />
               </div>
 
               <div className="lg:w-[300px] flex flex-col md:gap-6 gap-5">
@@ -204,7 +206,7 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Payment
+export default Payment;

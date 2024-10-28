@@ -1,36 +1,36 @@
-import MyForm from '@/components/Form/MyForm'
-import { detectImg } from '@/utils/functions'
-import React, { useEffect, useState } from 'react'
+import MyForm from '@/components/Form/MyForm';
+import { detectImg } from '@/utils/functions';
+import React, { useEffect, useState } from 'react';
 
-import CategoryForm from '@/components/CategoryForm'
-import useLanguage from '@/hook/useLanguage'
-import { CameraOutlined, CloseCircleOutlined } from '@ant-design/icons'
-import { Image } from 'antd'
-import useTypeFile from '@/hook/useTypeFile'
-import useCheckForm from '@/hook/useCheckForm'
-import { REQUEST_TYPE } from '@/constant/app'
-import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
-import { QUERY_KEY } from '@/constant/reactQuery'
-import useModalDrawer from '@/hook/useModalDrawer'
-import ClientApi from '@/services/clientApi'
-import { isEqual } from 'lodash'
-import UploadImage from '@/components/UploadImg'
-import InputForm from '@/components/Form/InputForm'
-import ButtonForm from '@/components/Form/ButtonForm'
+import CategoryForm from '@/components/CategoryForm';
+import useLanguage from '@/hook/useLanguage';
+import { CameraOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { Image } from 'antd';
+import useTypeFile from '@/hook/useTypeFile';
+import useCheckForm from '@/hook/useCheckForm';
+import { REQUEST_TYPE } from '@/constant/app';
+import useRefreshQuery from '@/hook/tank-query/useRefreshQuery';
+import { QUERY_KEY } from '@/constant/reactQuery';
+import useModalDrawer from '@/hook/useModalDrawer';
+import ClientApi from '@/services/clientApi';
+import { isEqual } from 'lodash';
+import UploadImage from '@/components/UploadImg';
+import InputForm from '@/components/Form/InputForm';
+import ButtonForm from '@/components/Form/ButtonForm';
 import {
   showNotificationError,
   showNotificationSuccess,
-} from '@/utils/notification'
+} from '@/utils/notification';
 
 const ProductConfig = ({ item }: { item: any }) => {
-  const { translate } = useLanguage()
-  const { typeFile } = useTypeFile({ typeAndroid: '.png,.jpg,.jpeg' })
-  const { checkIsNumber } = useCheckForm()
-  const { refreshQuery } = useRefreshQuery()
-  const { closeModalDrawer } = useModalDrawer()
+  const { translate } = useLanguage();
+  const { typeFile } = useTypeFile({ typeAndroid: '.png,.jpg,.jpeg' });
+  const { checkIsNumber } = useCheckForm();
+  const { refreshQuery } = useRefreshQuery();
+  const { closeModalDrawer } = useModalDrawer();
 
-  const [formData, setFormData] = useState<{ [key: string]: any } | null>(null)
-  const [loading, setLoading] = useState(false)
+  const [formData, setFormData] = useState<{ [key: string]: any } | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const initData = {
@@ -53,61 +53,61 @@ const ProductConfig = ({ item }: { item: any }) => {
       typeProduct: item?.typeProduct || 'water',
       weight: item?.weight || '',
       category: item?.category || 'water',
-    }
-    setFormData(initData)
-  }, [item])
+    };
+    setFormData(initData);
+  }, [item]);
 
   useEffect(() => {
     setFormData((pre) => ({
       ...pre,
       keyName: formData?.name.replaceAll(' ', '-'),
-    }))
-  }, [formData?.name])
+    }));
+  }, [formData?.name]);
 
   const handleDeleteMoreImg = (index: number) => {
     const newList = formData?.imageMore?.filter(
       (_: any, indexFilter: number) => indexFilter !== index
-    )
-    setFormData({ ...formData, imageMore: newList })
-  }
+    );
+    setFormData({ ...formData, imageMore: newList });
+  };
 
   const handleSubmit = async () => {
-    setLoading(true)
-    let data
+    setLoading(true);
+    let data;
     if (item) {
-      const dataEdit: Record<string, any> = {}
+      const dataEdit: Record<string, any> = {};
       Object.keys(item).forEach((key) => {
         if (formData![key] && !isEqual(formData![key], item[key])) {
-          dataEdit[key] = formData![key]
+          dataEdit[key] = formData![key];
         }
-      })
+      });
       if (Object.keys(dataEdit).length > 0) {
         data = await ClientApi.fetchData({
           url: `/product/update/${item._id}`,
           method: REQUEST_TYPE.POST,
           body: dataEdit,
-        })
+        });
       }
-      console.log({ dataEdit, formData })
+      console.log({ dataEdit, formData });
     } else {
       data = await ClientApi.fetchData({
         url: '/product/create',
         method: REQUEST_TYPE.POST,
         body: formData,
-      })
+      });
     }
 
     if (data?.data) {
       showNotificationSuccess(
         translate(item ? 'success.update' : 'success.create')
-      )
-      refreshQuery(QUERY_KEY.GetListProductAdmin)
-      closeModalDrawer()
+      );
+      refreshQuery(QUERY_KEY.GetListProductAdmin);
+      closeModalDrawer();
     } else {
-      showNotificationError(translate('errors.create'))
+      showNotificationError(translate('errors.create'));
     }
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   return formData ? (
     <MyForm
@@ -247,7 +247,7 @@ const ProductConfig = ({ item }: { item: any }) => {
                         />
                       </div>
                     </div>
-                  )
+                  );
                 })}
             </div>
           </div>
@@ -281,7 +281,7 @@ const ProductConfig = ({ item }: { item: any }) => {
     </MyForm>
   ) : (
     <></>
-  )
-}
+  );
+};
 
-export default ProductConfig
+export default ProductConfig;

@@ -42,7 +42,7 @@ const CartNoLogin = () => {
     let total = 0
     listArr.forEach((item: DataItemType) => {
       if (item?.selected) {
-        total += item.amount * item.moreConfig?.price
+        total += item.amount * item.more_data?.price
       }
     })
     return numberWithCommas(total)
@@ -116,7 +116,7 @@ const CartNoLogin = () => {
       >
         <div className="flex flex-col gap-2 self-stretch justify-center align-middle">
           <MyCheckBox
-            alt={item.moreConfig?.keyName}
+            alt={item.more_data?.keyName}
             onClick={(e: boolean) => selectedItem(index, e)}
             value={!!item?.selected}
           />
@@ -127,30 +127,30 @@ const CartNoLogin = () => {
         </div>
         <div className="md:w-[120px] w-[100px] aspect-square relative overflow-hidden">
           <MyImage
-            src={detectImg(item.moreConfig?.imageMain)}
-            alt={`cart-${item.moreConfig?.name}`}
+            src={detectImg(item.more_data?.imageMain)}
+            alt={`cart-${item.more_data?.name}`}
             widthImage="100%"
             heightImage="auto"
           />
         </div>
         <div className="flex flex-1 flex-col self-stretch gap-1">
-          <Link href={`/shop/${item.moreConfig?.keyName}`}>
+          <Link href={`/shop/${item.more_data?.keyName}`}>
             <p className="font-bold text-black hover:underline">
-              {item.moreConfig?.name}
+              {item.more_data?.name}
             </p>
           </Link>
           <div className="text-[11px] opacity-75">
             {`
               ${translate('category')} :
-             ${getLabelCategory(item.moreConfig?.category)}
+             ${getLabelCategory(item.more_data?.category)}
             `}
           </div>
           <div className="line-through font-medium">
-            {formatPriceBase(item.moreConfig?.price, item.moreConfig?.disCount)}
+            {formatPriceBase(item.more_data?.price, item.more_data?.disCount)}
           </div>
           <div className="text-green-500 font-bold mb-2">
             {`
-                ${numberWithCommas(item.moreConfig?.price)}
+                ${numberWithCommas(item.more_data?.price)}
                 VNĐ
               `}
           </div>

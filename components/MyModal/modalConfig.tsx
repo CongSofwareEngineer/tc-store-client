@@ -1,6 +1,6 @@
-import React from 'react'
-import { ModalPropsType } from './type'
-import { Modal } from 'antd'
+import React from 'react';
+import { ModalPropsType } from './type';
+import { Modal } from 'antd';
 
 const ModalConfig = ({ config, closeModal }: ModalPropsType) => {
   return config?.content ? (
@@ -15,13 +15,15 @@ const ModalConfig = ({ config, closeModal }: ModalPropsType) => {
       keyboard={config?.overClickClose}
       maskClosable={config?.overClickClose}
     >
-      <div className={`w-full h-full  overflow-y-auto ${config?.classContent}`}>
+      <div
+        className={`w-full h-full max-h-[90dvh]  overflow-y-auto ${config?.classContent}`}
+      >
         {config?.content}
       </div>
     </Modal>
   ) : (
     <></>
-  )
-}
+  );
+};
 
-export default ModalConfig
+export default ModalConfig;
