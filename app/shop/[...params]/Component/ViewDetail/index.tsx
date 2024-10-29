@@ -1,85 +1,85 @@
-import dynamic from 'next/dynamic';
-import React, { useMemo, useState } from 'react';
-import { ItemDetailType } from '../../type';
-import useAos from '@/hook/useAos';
-import useMedia from '@/hook/useMedia';
-import { DataAddCart } from '@/constant/mongoDB';
-import { COOKIE_KEY, REQUEST_TYPE } from '@/constant/app';
-import useRefreshQuery from '@/hook/tank-query/useRefreshQuery';
-import useLanguage from '@/hook/useLanguage';
-import useUserData from '@/hook/useUserData';
+import dynamic from 'next/dynamic'
+import React, { useMemo, useState } from 'react'
+import { ItemDetailType } from '../../type'
+import useAos from '@/hook/useAos'
+import useMedia from '@/hook/useMedia'
+import { DataAddCart } from '@/constant/mongoDB'
+import { COOKIE_KEY, REQUEST_TYPE } from '@/constant/app'
+import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
+import useLanguage from '@/hook/useLanguage'
+import useUserData from '@/hook/useUserData'
 import {
   delayTime,
   detectImg,
   formatPrice,
   formatPriceBase,
-} from '@/utils/functions';
-import { QUERY_KEY } from '@/constant/reactQuery';
-import { getCookie, setCookie } from '@/services/CookiesService';
-import BtnBack from '@/components/BtnBack';
-import useGetProductByID from '@/hook/tank-query/useGetProductByID';
-import MyImage from '@/components/MyImage';
-import InfoItemDetail from '@/components/InfoItemDetail';
-import SubAndPlus from '@/components/SubAndPlus';
+} from '@/utils/functions'
+import { QUERY_KEY } from '@/constant/reactQuery'
+import { getCookie, setCookie } from '@/services/CookiesService'
+import BtnBack from '@/components/BtnBack'
+import useGetProductByID from '@/hook/tank-query/useGetProductByID'
+import MyImage from '@/components/MyImage'
+import InfoItemDetail from '@/components/InfoItemDetail'
+import SubAndPlus from '@/components/SubAndPlus'
 
-import { images } from '@/configs/images';
-import MyButton from '@/components/MyButton';
-import ClientApi from '@/services/clientApi';
-import { Tabs, TabsProps } from 'antd';
-import { DataItemType } from '@/app/my-cart/type';
-import { showNotificationSuccess } from '@/utils/notification';
+import { images } from '@/configs/images'
+import MyButton from '@/components/MyButton'
+import ClientApi from '@/services/clientApi'
+import { Tabs, TabsProps } from 'antd'
+import { DataItemType } from '@/app/my-cart/type'
+import { showNotificationSuccess } from '@/utils/notification'
 
 const Comment = dynamic(() => import('@/components/Comment'), {
   ssr: false,
-});
+})
 
 const InfoDetail = dynamic(() => import('../InfoDetail'), {
   ssr: false,
-});
+})
 
 type Props = {
-  productDetail: ItemDetailType;
-  isPayment: boolean;
-  amountBuy: number;
-  setIsPayment: (e: any) => void;
-  setAmountBuy: (e: any) => void;
-};
+  productDetail: ItemDetailType
+  isPayment: boolean
+  amountBuy: number
+  setIsPayment: (e: any) => void
+  setAmountBuy: (e: any) => void
+}
 const ViewDetail = ({
   productDetail,
   amountBuy = 0,
   setIsPayment,
   setAmountBuy,
 }: Props) => {
-  useAos(500);
-  const { isMobile } = useMedia();
-  const { refreshQuery } = useRefreshQuery();
-  const { translate } = useLanguage();
-  const { userData, isLogin } = useUserData();
-  const { data } = useGetProductByID(productDetail?.id);
+  useAos(500)
+  const { isMobile } = useMedia()
+  const { refreshQuery } = useRefreshQuery()
+  const { translate } = useLanguage()
+  const { userData, isLogin } = useUserData()
+  const { data } = useGetProductByID(productDetail?.id)
   const dataItem = useMemo(
     () => data?.data ?? productDetail,
     [data, productDetail]
-  );
+  )
 
-  const [loadingAddCart, setLoadingAddCart] = useState(false);
+  const [loadingAddCart, setLoadingAddCart] = useState(false)
 
   const handleBuy = () => {
-    setIsPayment(true);
-  };
+    setIsPayment(true)
+  }
 
   const handleAddCartLogin = async (body: DataAddCart) => {
     const listCartUser = await ClientApi.fetchData({
       url: `/cart/details/${body.idUser}/${body.idProduct}`,
-    });
+    })
 
-    const dataExited = listCartUser?.data[0];
+    const dataExited = listCartUser?.data[0]
 
     if (!dataExited) {
       await ClientApi.fetchData({
         url: 'cart/create',
         body,
         method: REQUEST_TYPE.POST,
-      });
+      })
     } else {
       await ClientApi.fetchData({
         url: `cart/update-cart/${dataExited._id}`,
@@ -87,44 +87,44 @@ const ViewDetail = ({
           amount: Number(dataExited.amount) + Number(amountBuy),
         },
         method: REQUEST_TYPE.POST,
-      });
+      })
     }
-  };
+  }
 
   const addCartNoLogin = async (body: DataItemType) => {
-    const dataCart = await getCookie(COOKIE_KEY.MyCart);
-    const arrTemp: Array<DataItemType> = [];
+    const dataCart = await getCookie(COOKIE_KEY.MyCart)
+    const arrTemp: Array<DataItemType> = []
     if (Array.isArray(dataCart)) {
-      let isExited = false;
+      let isExited = false
       dataCart.forEach((e: DataItemType) => {
-        const itemTemp = e;
+        const itemTemp = e
         if (itemTemp.idProduct === body.idProduct) {
-          itemTemp.amount = itemTemp.amount + body.amount;
-          itemTemp.date = body.date;
-          isExited = true;
+          itemTemp.amount = itemTemp.amount + body.amount
+          itemTemp.date = body.date
+          isExited = true
         }
-        arrTemp.push(itemTemp);
-      });
+        arrTemp.push(itemTemp)
+      })
       if (!isExited) {
-        arrTemp.push(body);
+        arrTemp.push(body)
       }
     } else {
-      arrTemp.push(body);
+      arrTemp.push(body)
     }
-    await setCookie(COOKIE_KEY.MyCart, arrTemp);
-  };
+    await setCookie(COOKIE_KEY.MyCart, arrTemp)
+  }
 
   const handleAddCart = async () => {
     try {
-      setLoadingAddCart(true);
+      setLoadingAddCart(true)
       const body: DataAddCart = {
         amount: amountBuy,
         idProduct: dataItem._id?.toString(),
         moreConfig: {},
-      };
+      }
       if (isLogin) {
-        body.idUser = userData?._id;
-        await handleAddCartLogin(body);
+        body.idUser = userData?._id
+        await handleAddCartLogin(body)
       } else {
         const bodyOther: DataItemType = {
           amount: Number(body.amount),
@@ -132,8 +132,8 @@ const ViewDetail = ({
           keyNameProduct: dataItem.keyName,
           selected: true,
           id: '',
-        };
-        bodyOther.date = new Date().getTime().toFixed();
+        }
+        bodyOther.date = new Date().getTime().toFixed()
         bodyOther.more_data = {
           imageMain: dataItem.imageMain,
           name: dataItem.name,
@@ -143,18 +143,18 @@ const ViewDetail = ({
           disCount: dataItem.disCount,
           _id: dataItem._id,
           sold: dataItem.sold,
-        };
-        await addCartNoLogin(bodyOther);
+        }
+        await addCartNoLogin(bodyOther)
       }
-      refreshQuery(QUERY_KEY.LengthCartUser);
-      refreshQuery(QUERY_KEY.MyCartUser);
-      await delayTime(500);
-      setLoadingAddCart(false);
-      showNotificationSuccess(translate('addCart.addSuccess'));
+      refreshQuery(QUERY_KEY.LengthCartUser)
+      refreshQuery(QUERY_KEY.MyCartUser)
+      await delayTime(500)
+      setLoadingAddCart(false)
+      showNotificationSuccess(translate('addCart.addSuccess'))
     } finally {
-      setLoadingAddCart(false);
+      setLoadingAddCart(false)
     }
-  };
+  }
 
   const renderMoreInfo = () => {
     const items: TabsProps['items'] = [
@@ -168,9 +168,9 @@ const ViewDetail = ({
         label: translate('textPopular.comment'),
         children: <Comment dataItem={dataItem} />,
       },
-    ];
-    return <Tabs className="p-0" items={items} />;
-  };
+    ]
+    return <Tabs className="p-0" items={items} />
+  }
   const renderDesktop = () => {
     return (
       <div className="flex flex-col">
@@ -238,8 +238,8 @@ const ViewDetail = ({
           {renderMoreInfo()}
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   const renderMobile = () => {
     return (
@@ -312,10 +312,10 @@ const ViewDetail = ({
           {renderMoreInfo()}
         </div>
       </div>
-    );
-  };
+    )
+  }
 
-  return isMobile ? renderMobile() : renderDesktop();
-};
+  return isMobile ? renderMobile() : renderDesktop()
+}
 
-export default ViewDetail;
+export default ViewDetail

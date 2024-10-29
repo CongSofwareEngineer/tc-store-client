@@ -1,105 +1,105 @@
-'use client';
-import React, { useEffect, useRef } from 'react';
-import Header from '../Header';
-import 'react-toastify/dist/ReactToastify.css';
-import { useAppDispatch, useAppSelector } from '@/redux/store';
-import { setMenuCategory } from '@/redux/categoryMenuSlice';
-import useCheckPatchName from '@/hook/tank-query/useCheckPatchName';
-import Footer from '../Footer';
-import dynamic from 'next/dynamic';
-import useUserData from '@/hook/useUserData';
-import moment from 'moment';
+'use client'
+import React, { useEffect, useRef } from 'react'
+import Header from '../Header'
+import 'react-toastify/dist/ReactToastify.css'
+import { useAppDispatch, useAppSelector } from '@/redux/store'
+import { setMenuCategory } from '@/redux/categoryMenuSlice'
+import useCheckPatchName from '@/hook/tank-query/useCheckPatchName'
+import Footer from '../Footer'
+import dynamic from 'next/dynamic'
+import useUserData from '@/hook/useUserData'
+import moment from 'moment'
 import {
   COOKIE_EXPIRED,
   COOKIE_KEY,
   LANGUAGE_SUPPORT,
   OBSERVER_KEY,
-} from '@/constant/app';
-import useAos from '@/hook/useAos';
-import { fetchProvinces } from '@/redux/provincesSlice';
-import { deleteCookie, setCookie } from '@/services/CookiesService';
-import ObserverService from '@/services/observer';
-import { SLICE } from '@/constant/redux';
-import secureLocalStorage from 'react-secure-storage';
-import { setUserData } from '@/redux/userDataSlice';
-import { decryptData } from '@/utils/crypto';
+} from '@/constant/app'
+import useAos from '@/hook/useAos'
+import { fetchProvinces } from '@/redux/provincesSlice'
+import { deleteCookie, setCookie } from '@/services/CookiesService'
+import ObserverService from '@/services/observer'
+import { SLICE } from '@/constant/redux'
+import secureLocalStorage from 'react-secure-storage'
+import { setUserData } from '@/redux/userDataSlice'
+import { decryptData } from '@/utils/crypto'
+import useMedia from '@/hook/useMedia'
 
 const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
   ssr: true,
-});
+})
 
 const ToastNoti = dynamic(() => import('../ToastNoti'), {
   ssr: false,
-});
+})
 
 const ClientRender = ({
   children,
   menuCategory,
 }: {
-  children: React.ReactNode;
-  menuCategory: any[];
+  children: React.ReactNode
+  menuCategory: any[]
 }) => {
-  const { Language } = useAppSelector((state) => state.app);
+  const { Language } = useAppSelector((state) => state.app)
 
-  useAos();
-  useCheckPatchName();
-  const dispatch = useAppDispatch();
-  const { reLogin } = useUserData();
-  const isClientRef = useRef(false);
+  useAos()
+  useCheckPatchName()
+  const dispatch = useAppDispatch()
+  const { reLogin } = useUserData()
+  const isClientRef = useRef(false)
+  const { isClient } = useMedia()
 
-  if (!isClientRef.current && typeof window !== 'undefined') {
-    console.log({ menuCategory });
-
-    const dataSecure = secureLocalStorage.getItem(SLICE.UserData);
+  if (!isClientRef.current) {
+    const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
     if (dataSecure) {
-      const dataDecode = decryptData(dataSecure.toString());
-      dispatch(setUserData(JSON.parse(dataDecode)));
+      const dataDecode = decryptData(dataSecure.toString())
+      dispatch(setUserData(JSON.parse(dataDecode)))
     }
-    dispatch(setMenuCategory(menuCategory));
-    dispatch(fetchProvinces());
+    dispatch(setMenuCategory(menuCategory))
+    dispatch(fetchProvinces())
     setTimeout(() => {
-      reLogin();
-    }, 200);
-    isClientRef.current = true;
+      reLogin()
+    }, 200)
+    isClientRef.current = true
   }
 
   useEffect(() => {
     const updateCookies = (auth: string) => {
-      setCookie(COOKIE_KEY.Auth, auth, COOKIE_EXPIRED.ExpiredAuth);
-    };
+      setCookie(COOKIE_KEY.Auth, auth, COOKIE_EXPIRED.ExpiredAuth)
+    }
     const handleLogout = (isReload = true) => {
-      secureLocalStorage.removeItem(SLICE.UserData);
-      deleteCookie(COOKIE_KEY.Auth);
-      deleteCookie(COOKIE_KEY.AuthRefresh);
-      dispatch(setUserData(null));
+      secureLocalStorage.removeItem(SLICE.UserData)
+      deleteCookie(COOKIE_KEY.Auth)
+      deleteCookie(COOKIE_KEY.AuthRefresh)
+      dispatch(setUserData(null))
 
       if (isReload) {
-        window.location.href = '/';
+        window.location.href = '/'
       }
-    };
+    }
 
-    ObserverService.on(OBSERVER_KEY.LogOut, handleLogout);
-    ObserverService.on(OBSERVER_KEY.UpdateCookieAuth, updateCookies);
+    ObserverService.on(OBSERVER_KEY.LogOut, handleLogout)
+    ObserverService.on(OBSERVER_KEY.UpdateCookieAuth, updateCookies)
 
     return () => {
-      ObserverService.removeListener(OBSERVER_KEY.LogOut);
-      ObserverService.removeListener(OBSERVER_KEY.UpdateCookieAuth);
-    };
+      ObserverService.removeListener(OBSERVER_KEY.LogOut)
+      ObserverService.removeListener(OBSERVER_KEY.UpdateCookieAuth)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   useEffect(() => {
     switch (Language?.locale) {
       case LANGUAGE_SUPPORT.VN:
         // moment.locale('vi')
-        break;
+        break
 
       default:
-        moment.locale('vi');
-        break;
+        moment.locale('vi')
+        break
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [Language]);
+  }, [Language])
 
   return (
     <>
@@ -114,9 +114,9 @@ const ClientRender = ({
       </main>
       <Footer />
       <LoadingFirstPage />
-      <ToastNoti />
+      {isClient && <ToastNoti />}
     </>
-  );
-};
+  )
+}
 
-export default ClientRender;
+export default ClientRender

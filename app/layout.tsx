@@ -86,7 +86,7 @@ export const viewport: Viewport = {
 
 const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
   const menuCategory = await ClientApi.fetchData({
-    url: `category/all?isShow=true&timestamp=${new Date().getTime()}`,
+    url: `category/all?isShow=true`,
     isAthu: false,
   })
 
