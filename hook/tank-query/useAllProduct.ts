@@ -23,9 +23,7 @@ const getAllProduct = async ({
   if (name) {
     queryUrl += `&name=${name.toString()}`
   }
-  const dataServer = await ClientApi.fetchData({
-    url: `product/all${queryUrl}`,
-  })
+  const dataServer = await ClientApi.getProducts(queryUrl)
 
   return {
     data: dataServer?.data || [],

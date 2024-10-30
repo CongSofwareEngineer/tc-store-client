@@ -33,15 +33,10 @@ const useUserData = () => {
         pass,
       })
     )
-
-    const data = await ClientApi.fetchData({
-      url: `user/login`,
-      method: REQUEST_TYPE.POST,
-      body: {
-        data: dataBody,
-      },
-      isAthu: false,
-    })
+    const body = {
+      data: dataBody,
+    }
+    const data = await ClientApi.login(body)
 
     if (data?.data) {
       dispatch(setUserData(data?.data))

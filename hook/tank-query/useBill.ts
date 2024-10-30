@@ -18,16 +18,14 @@ const getData = async ({
   const { type = null } = query
   console.log({ type, dateTime })
 
-  let queryUrl = `?page=${pageParam}&limit=${PAGE_SIZE_LIMIT}`
+  let queryUrl = `${queryKey[1]}?page=${pageParam}&limit=${PAGE_SIZE_LIMIT}`
   if (type) {
     queryUrl += `&status=${type[0]}`
   }
   if (dateTime) {
     queryUrl += `&date=${dateTime}`
   }
-  const dataServer = await ClientApi.fetchData({
-    url: `bill/detail/${queryKey[1]}${queryUrl}`,
-  })
+  const dataServer = await ClientApi.getBills(queryUrl)
 
   return {
     data: dataServer?.data || [],

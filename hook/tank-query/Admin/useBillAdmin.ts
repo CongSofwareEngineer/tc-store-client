@@ -1,7 +1,7 @@
 import { PAGE_SIZE_LIMIT } from '@/constant/app'
 import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery'
 import useUserData from '@/hook/useUserData'
-import ClientApi from '@/services/clientApi'
+import AdminApi from '@/services/adminApi'
 import { isObject } from '@/utils/functions'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
@@ -22,9 +22,7 @@ const getData = async ({
       }
     }
 
-    const dataServer = await ClientApi.fetchData({
-      url: `bill/admin/all${queryUrl}`,
-    })
+    const dataServer = await AdminApi.getBills(queryUrl)
 
     return {
       data: dataServer?.data || [],

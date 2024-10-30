@@ -1,4 +1,6 @@
-import { REQUEST_TYPE } from '@/constant/app'
+import { COOKIE_KEY, OBSERVER_KEY, REQUEST_TYPE } from '@/constant/app'
+import { getCookie, setCookie } from '@/services/CookiesService'
+import ObserverService from '@/services/observer'
 import { decryptData, encryptData } from '@/utils/crypto'
 import axios from 'axios'
 
@@ -8,7 +10,69 @@ export type ServerAPIReqType = {
   auth?: string
   method?: REQUEST_TYPE
   timeOut?: number
-  isAthu?: boolean
+  isAuth?: boolean
+}
+
+export type ClientAPITypeParam = {
+  url?: string
+  body?: any
+  auth?: string
+  method?: REQUEST_TYPE
+  timeOut?: number
+  isAuth?: boolean
+}
+
+export const fetchData = async (
+  param: ClientAPITypeParam
+): Promise<{
+  data: any
+  error?: any
+  messages: any
+}> => {
+  try {
+    let auth: string | null = ''
+    const config: ClientAPITypeParam = {
+      isAuth: true,
+      method: REQUEST_TYPE.GET,
+      ...param,
+    }
+
+    if (config.method !== REQUEST_TYPE.GET && config.isAuth) {
+      auth = await getCookie(COOKIE_KEY.Auth)
+
+      if (!auth && config.isAuth) {
+        const authRefresh = await getCookie(COOKIE_KEY.AuthRefresh)
+
+        if (!authRefresh) {
+          ObserverService.emit(OBSERVER_KEY.LogOut)
+          return {
+            data: null,
+            messages: 'fail',
+            error: 'login expired',
+          }
+        }
+        const newAuth = await fetchConfig({
+          url: 'auth/refresh',
+          isAuth: false,
+          auth: authRefresh.toString(),
+          method: REQUEST_TYPE.POST,
+        })
+        console.log({ newAuth })
+
+        if (newAuth?.data?.token) {
+          auth = newAuth?.data?.token
+          setCookie(COOKIE_KEY.Auth, newAuth?.data?.token)
+        }
+      }
+    }
+    return fetchConfig({ ...config, auth: auth || '' })
+  } catch (error) {
+    return {
+      data: null,
+      messages: 'fail',
+      error: 'server_error',
+    }
+  }
 }
 
 const fetchConfig = async ({

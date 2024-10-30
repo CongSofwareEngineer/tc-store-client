@@ -15,7 +15,7 @@ export async function hasCookie(key: COOKIE_KEY) {
 export async function getCookie<T>(key: COOKIE_KEY): Promise<T | null> {
   try {
     const data = cookies().get(key)?.value || null
-    return data ? JSON.parse((data)) : null
+    return data ? JSON.parse(data) : null
   } catch (error) {
     console.error(error)
     return null
@@ -24,9 +24,8 @@ export async function getCookie<T>(key: COOKIE_KEY): Promise<T | null> {
 
 export async function setCookie(key: COOKIE_KEY, value: any, expired?: number) {
   try {
-
     cookies().set(key, JSON.stringify(value), {
-      expires: expired
+      expires: expired,
     })
     return true
   } catch (error) {

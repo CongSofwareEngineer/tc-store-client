@@ -6,7 +6,6 @@ import MyImage from '@/components/MyImage'
 import MyLoading from '@/components/MyLoading'
 import RateForm from '@/components/Form/RateForm'
 import UploadImage from '@/components/UploadImg'
-import { REQUEST_TYPE } from '@/constant/app'
 import { DataAddComment } from '@/constant/mongoDB'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
@@ -50,9 +49,9 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
         listImg: [],
       }
       if (userData) {
-        const res = await ClientApi.fetchData({
-          url: `/comment/detail/${dataItem._id}/${userData?.sdt}`,
-        })
+        const res = await ClientApi.getComments(
+          `${dataItem._id}/${userData?.sdt}`
+        )
         if (res?.data) {
           initData.listImg = res.data.listImg
           initData.note = res.data.note
@@ -91,17 +90,9 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
     let res
 
     if (dataExited) {
-      res = await ClientApi.fetchData({
-        url: `comment/update/${dataExited?._id}`,
-        method: REQUEST_TYPE.POST,
-        body: getDataToUpdate(),
-      })
+      res = await ClientApi.updateComment(dataExited?._id, getDataToUpdate())
     } else {
-      res = await ClientApi.fetchData({
-        url: 'comment/create',
-        method: REQUEST_TYPE.POST,
-        body: body,
-      })
+      res = await ClientApi.createComment(body)
     }
     if (res?.data) {
       closeModalDrawer()

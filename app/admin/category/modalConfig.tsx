@@ -10,6 +10,7 @@ import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useTypeFile from '@/hook/useTypeFile'
+import AdminApi from '@/services/adminApi'
 import ClientApi from '@/services/clientApi'
 import { detectImg, uppercase } from '@/utils/functions'
 import { showNotificationSuccess } from '@/utils/notification'
@@ -59,17 +60,9 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
           dataBody.imgOld = data.icon
         }
 
-        res = await ClientApi.fetchData({
-          url: `/category/update/${data._id}`,
-          method: REQUEST_TYPE.PUT,
-          body: dataBody,
-        })
+        res = await AdminApi.updateCategories(data._id, dataBody)
       } else {
-        res = await ClientApi.fetchData({
-          url: `/category/create`,
-          method: REQUEST_TYPE.POST,
-          body: formData,
-        })
+        res = await AdminApi.createCategories(formData)
       }
 
       if (res?.data) {

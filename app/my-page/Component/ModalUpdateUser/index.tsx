@@ -74,13 +74,10 @@ const ModalUpdateUser = ({ keyType, callBack, initValue }: PropsType) => {
     if (callBack) {
       await callBack(valueNew?.toString())
     } else {
-      const res = await ClientApi.fetchData({
-        url: `user/update/${userData?._id}`,
-        method: REQUEST_TYPE.POST,
-        body: {
-          [keyType]: valueNew,
-        },
-      })
+      const body = {
+        [keyType]: valueNew,
+      }
+      const res = await ClientApi.updateUser(userData?._id, body)
 
       if (!res?.error) {
         await refreshLogin()

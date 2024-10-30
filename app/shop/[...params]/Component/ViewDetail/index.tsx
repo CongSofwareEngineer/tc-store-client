@@ -68,26 +68,20 @@ const ViewDetail = ({
   }
 
   const handleAddCartLogin = async (body: DataAddCart) => {
-    const listCartUser = await ClientApi.fetchData({
-      url: `/cart/details/${body.idUser}/${body.idProduct}`,
-    })
+    const listCartUser = await ClientApi.getCartDetail(
+      body.idUser!,
+      body.idProduct!
+    )
 
     const dataExited = listCartUser?.data[0]
 
     if (!dataExited) {
-      await ClientApi.fetchData({
-        url: 'cart/create',
-        body,
-        method: REQUEST_TYPE.POST,
-      })
+      await ClientApi.createMyCart(body)
     } else {
-      await ClientApi.fetchData({
-        url: `cart/update-cart/${dataExited._id}`,
-        body: {
-          amount: Number(dataExited.amount) + Number(amountBuy),
-        },
-        method: REQUEST_TYPE.POST,
-      })
+      const body = {
+        amount: Number(dataExited.amount) + Number(amountBuy),
+      }
+      await ClientApi.updateMyCart(dataExited._id, body)
     }
   }
 

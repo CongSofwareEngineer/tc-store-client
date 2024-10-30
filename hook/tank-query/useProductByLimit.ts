@@ -11,9 +11,7 @@ const getData = async ({
   const queryUrl = `?page=1&limit=${
     queryKey[2]
   }&category=${queryKey[1].toString()}`
-  const dataServer = await ClientApi.fetchData({
-    url: `product/all${queryUrl}`,
-  })
+  const dataServer = await ClientApi.getProducts(queryUrl)
 
   return {
     data: dataServer?.data || [],

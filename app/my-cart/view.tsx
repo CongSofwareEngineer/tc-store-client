@@ -4,11 +4,7 @@ import useMyCart from '@/hook/tank-query/useMyCart'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import { useEffect, useState } from 'react'
-import {
-  PAGE_SIZE_LIMIT,
-  REQUEST_TYPE,
-  TYPE_LOADING_GET_DATA,
-} from '@/constant/app'
+import { PAGE_SIZE_LIMIT, TYPE_LOADING_GET_DATA } from '@/constant/app'
 import { cloneData, numberWithCommas } from '@/utils/functions'
 import ListItemCart from './Component/ListItemCart'
 // import Payment from './Component/Payment'
@@ -78,10 +74,7 @@ const MyCartScreen = () => {
 
   const handleDelete = async (index: number) => {
     const dataRemove = listCartFormat[index]
-    await ClientApi.fetchData({
-      url: `/cart/delete/${dataRemove._id}`,
-      method: REQUEST_TYPE.DELETE,
-    })
+    await ClientApi.deleteCart(dataRemove._id)
     refreshQuery(QUERY_KEY.MyCartUser)
   }
 

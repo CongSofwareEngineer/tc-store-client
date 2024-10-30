@@ -7,9 +7,7 @@ import { COOKIE_KEY } from '@/constant/app'
 const getData = async ({ queryKey }: any) => {
   const isLogin = queryKey[2]
   if (isLogin) {
-    const lengthCart = await ClientApi.fetchData({
-      url: `/cart/length-cart/${queryKey[1]}`,
-    })
+    const lengthCart = await ClientApi.getLengthCart(queryKey[1])
 
     return lengthCart?.data || { lengthCart: 0 }
   } else {

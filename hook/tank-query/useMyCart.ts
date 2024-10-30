@@ -15,10 +15,9 @@ const getData = async ({
 }): Promise<TypeHookReactQuery> => {
   const isLogin = queryKey[3]
   if (isLogin) {
-    const queryUrl = `?page=${pageParam}&limit=${queryKey[2]}`
-    const dataServer = await ClientApi.fetchData({
-      url: `cart/detail/${queryKey[1]}${queryUrl}`,
-    })
+    const queryUrl = `${queryKey[1]}?page=${pageParam}&limit=${queryKey[2]}`
+    const dataServer = await ClientApi.getMyCart(queryUrl)
+
     return {
       data: dataServer?.data || [],
       page: pageParam,

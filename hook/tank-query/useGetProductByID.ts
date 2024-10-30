@@ -2,9 +2,7 @@ import { QUERY_KEY } from '@/constant/reactQuery'
 import ClientApi from '@/services/clientApi'
 import { useQuery } from '@tanstack/react-query'
 const getData = async ({ queryKey }: any) => {
-  const data = await ClientApi.fetchData({
-    url: `/product/detail/${queryKey[1]}`,
-  })
+  const data = await ClientApi.getProductById(queryKey[1])
   return data?.data || null
 }
 const useGetProductByID = (id = '') => {

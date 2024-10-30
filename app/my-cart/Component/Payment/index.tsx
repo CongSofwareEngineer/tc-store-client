@@ -12,11 +12,11 @@ import BillFinal from './Component/BillFinal'
 import ContentForm from './Component/ContentForm'
 import useOptionPayment from '@/hook/useOptionPayment'
 import ViewListOrder from './Component/ViewListOrder'
-import { FILTER_BILL, REQUEST_TYPE } from '@/constant/app'
+import { FILTER_BILL } from '@/constant/app'
 import ModalProcess from '@/components/ModalProcess'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalSuccess from '@/components/ModalSuccess'
-import ClientApi, { ClientAPITypeParam } from '@/services/clientApi'
+import ClientApi from '@/services/clientApi'
 import { useRouter } from 'next/navigation'
 import OptionsPayemnt from './Component/OptionsPayemnt'
 import { showNotificationError } from '@/utils/notification'
@@ -139,16 +139,12 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
       listNewSoldProduct,
     }
 
-    const config: ClientAPITypeParam = {
-      url: 'bill/create',
-      body: bodyAPI,
-      method: REQUEST_TYPE.POST,
+    let res: any = null
+    if (isLogin) {
+      res = await ClientApi.buy(bodyAPI)
+    } else {
+      res = await ClientApi.buyNoLogin(bodyAPI)
     }
-    if (!isLogin) {
-      config.isAthu = false
-    }
-
-    const res = await ClientApi.fetchData(config)
 
     if (res?.data) {
       refreshAllData()

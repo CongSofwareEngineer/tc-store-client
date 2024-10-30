@@ -23,6 +23,7 @@ import {
   showNotificationError,
   showNotificationSuccess,
 } from '@/utils/notification'
+import AdminApi from '@/services/adminApi'
 
 const CategoryAdminScreen = () => {
   const { renderContent } = useSearchBaseAdmin({
@@ -43,10 +44,7 @@ const CategoryAdminScreen = () => {
   const handleDelete = (item: any) => {
     const callback = async () => {
       try {
-        const res = await ClientApi.fetchData({
-          url: `category/delete/${item._id}`,
-          method: REQUEST_TYPE.DELETE,
-        })
+        const res = await AdminApi.deleteCategories(item._id)
         if (res?.data) {
           showNotificationSuccess(translate('success.delete'))
           refreshQuery(QUERY_KEY.GetCategoryAdmin)

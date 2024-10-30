@@ -1,6 +1,5 @@
 import ModalProcess from '@/components/ModalProcess'
 import MyImage from '@/components/MyImage'
-import { REQUEST_TYPE } from '@/constant/app'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
@@ -35,13 +34,7 @@ const Avatar = () => {
         public_id: userData?.avatar,
       }
 
-      const res = await ClientApi.fetchData({
-        url: `user/update-avatar/${userData?._id}`,
-        body: {
-          file: bodyAPI,
-        },
-        method: REQUEST_TYPE.POST,
-      })
+      const res = await ClientApi.updateAvatar(userData?._id, bodyAPI)
 
       if (res?.data) {
         refreshLogin()

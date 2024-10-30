@@ -15,12 +15,12 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { DataAddContact } from '@/constant/mongoDB'
-import ClientApi from '@/services/clientApi'
-import { REQUEST_TYPE } from '@/constant/app'
+
 import {
   showNotificationError,
   showNotificationSuccess,
 } from '@/utils/notification'
+import ClientApi from '@/services/clientApi'
 
 const ModalProcess = dynamic(() => import('@/components/ModalProcess'), {
   ssr: true,
@@ -67,11 +67,7 @@ const ContactScreen = () => {
         overClickClose: false,
       },
     })
-    const res = await ClientApi.fetchData({
-      url: 'contact-me/create',
-      body: dataAPI,
-      method: REQUEST_TYPE.POST,
-    })
+    const res = await ClientApi.createContact(dataAPI)
     console.log('====================================')
     console.log({ res })
     console.log('====================================')

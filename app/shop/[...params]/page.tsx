@@ -6,10 +6,7 @@ import { notFound } from 'next/navigation'
 import ClientApi from '@/services/clientApi'
 
 const getCoffeeDetail = async (keyName: string): Promise<ItemDetailType> => {
-  const data = await ClientApi.fetchData({
-    url: `product/detail-keyName/${keyName}`,
-    isAthu: false,
-  })
+  const data = await ClientApi.getProductByKeyName(keyName)
 
   return data.data
 }

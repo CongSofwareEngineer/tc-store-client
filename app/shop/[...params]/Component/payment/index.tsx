@@ -121,11 +121,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         },
       })
 
-      const res = await ClientApi.fetchData({
-        url: 'bill/create',
-        body: bodyBill,
-        method: REQUEST_TYPE.POST,
-      })
+      const res = await ClientApi.buy(bodyBill)
 
       if (res?.data) {
         openModalDrawer({

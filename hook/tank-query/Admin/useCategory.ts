@@ -1,5 +1,5 @@
 import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery'
-import ClientApi from '@/services/clientApi'
+import AdminApi from '@/services/adminApi'
 import { useQuery } from '@tanstack/react-query'
 
 const getData = async ({
@@ -20,9 +20,7 @@ const getData = async ({
     queryUrl += `?isShow=${isShow}`
   }
 
-  const dataServer = await ClientApi.fetchData({
-    url: queryUrl,
-  })
+  const dataServer = await AdminApi.getCategories(queryUrl)
 
   return {
     data: dataServer?.data || [],
