@@ -4,7 +4,7 @@ import { images } from '@/configs/images'
 import useLanguage from '@/hook/useLanguage'
 import React from 'react'
 
-const OptionsPayemnt = ({
+const OptionsPayment = ({
   listOptions,
   onChangeOptions,
   optionSelected,
@@ -73,4 +73,4 @@ const OptionsPayemnt = ({
   )
 }
 
-export default OptionsPayemnt
+export default OptionsPayment

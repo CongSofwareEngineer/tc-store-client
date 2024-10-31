@@ -18,7 +18,7 @@ import useModalDrawer from '@/hook/useModalDrawer'
 import ModalSuccess from '@/components/ModalSuccess'
 import ClientApi from '@/services/clientApi'
 import { useRouter } from 'next/navigation'
-import OptionsPayemnt from './Component/OptionsPayemnt'
+import OptionsPayment from './Component/OptionsPayment'
 import { showNotificationError } from '@/utils/notification'
 
 const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
@@ -131,7 +131,7 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
     const bodyAPI: BodyAddBill = {
       addressShip: formData?.addressShip,
       discount: 0,
-      idUser: userData?._id,
+      idUser: userData?._id || undefined,
       listBill,
       totalBill: totalBill,
       sdt: formData?.sdt,
@@ -192,7 +192,7 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
               </div>
 
               <div className="lg:w-[300px] flex flex-col md:gap-6 gap-5">
-                <OptionsPayemnt
+                <OptionsPayment
                   onChangeOptions={onChangeOptions}
                   listOptions={listOptions}
                   optionSelected={optionSelected}
