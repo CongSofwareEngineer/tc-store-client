@@ -1,5 +1,5 @@
 import { generateMetaBase } from '@/utils/serverNext'
-import { ResolvingMetadata } from 'next'
+import { NextPage, ResolvingMetadata } from 'next'
 import ShopScreen from './view'
 import { Suspense } from 'react'
 
@@ -13,7 +13,7 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
   return metaData
 }
 
-const ShopPage = async () => {
+const ShopPage: NextPage = () => {
   return (
     <Suspense>
       <ShopScreen />

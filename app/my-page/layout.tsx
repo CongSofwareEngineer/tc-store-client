@@ -1,5 +1,5 @@
 import { generateMetaBase } from '@/utils/serverNext'
-import { ResolvingMetadata } from 'next'
+import { NextPage, ResolvingMetadata } from 'next'
 import Container from './Component/Container'
 import { PropsWithChildren } from 'react'
 
@@ -12,7 +12,7 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
   return metaData
 }
 
-const MyPageLayout = ({ children }: PropsWithChildren) => {
+const MyPageLayout: NextPage = ({ children }: PropsWithChildren) => {
   return <Container>{children}</Container>
 }
 

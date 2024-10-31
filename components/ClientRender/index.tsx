@@ -24,6 +24,7 @@ import secureLocalStorage from 'react-secure-storage'
 import { setUserData } from '@/redux/userDataSlice'
 import { decryptData } from '@/utils/crypto'
 import useMedia from '@/hook/useMedia'
+import { useRouter } from 'next/navigation'
 
 const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
   ssr: true,
@@ -48,6 +49,7 @@ const ClientRender = ({
   const { reLogin } = useUserData()
   const isClientRef = useRef(false)
   const { isClient } = useMedia()
+  const router = useRouter()
 
   if (!isClientRef.current) {
     const dataSecure = secureLocalStorage.getItem(SLICE.UserData)

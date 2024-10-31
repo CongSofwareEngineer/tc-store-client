@@ -8,6 +8,7 @@ import useMedia from '@/hook/useMedia'
 import InfoHome from './(ComponentHome)/InfoHome'
 import Banner from './(ComponentHome)/Banner'
 import useAos from '@/hook/useAos'
+import { NextPage } from 'next'
 const ListProduct = dynamic(() => import('./(ComponentHome)/ListProduct'), {
   ssr: false,
 })
@@ -15,7 +16,7 @@ const ListProduct = dynamic(() => import('./(ComponentHome)/ListProduct'), {
 //   ssr: true,
 // })
 
-const Home = () => {
+const Home: NextPage = () => {
   useAos(1000)
   const { translate } = useLanguage()
   const { isMobile } = useMedia()

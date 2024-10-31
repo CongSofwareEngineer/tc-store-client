@@ -1,5 +1,5 @@
 import { generateMetaBase } from '@/utils/serverNext'
-import { ResolvingMetadata } from 'next'
+import { NextPage, ResolvingMetadata } from 'next'
 import RegisterScreen from './view'
 
 export async function generateMetadata(_: any, parent: ResolvingMetadata) {
@@ -11,7 +11,7 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
   return metaData
 }
 
-const RegisterPage = () => {
+const RegisterPage: NextPage = () => {
   return <RegisterScreen />
 }
 

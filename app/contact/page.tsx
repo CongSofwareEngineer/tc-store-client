@@ -1,6 +1,6 @@
 import React from 'react'
 import { generateMetaBase } from '@/utils/serverNext'
-import { ResolvingMetadata } from 'next'
+import { NextPage, ResolvingMetadata } from 'next'
 import ContactScreen from './view'
 
 export async function generateMetadata(_: any, parent: ResolvingMetadata) {
@@ -11,7 +11,7 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
   })
   return metaData
 }
-const ContactLayout = () => {
+const ContactLayout: NextPage = () => {
   return <ContactScreen />
 }
 

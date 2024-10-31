@@ -29,7 +29,11 @@ export async function generateMetadata(
   })
   return metaData
 }
-const ShopPageDetail = async ({ params }: any) => {
+const ShopPageDetail = async ({
+  params,
+}: {
+  params: Record<string, string[]>
+}) => {
   const productDetail = await getCoffeeDetail(params.params[0])
   if (!productDetail) {
     return notFound()
