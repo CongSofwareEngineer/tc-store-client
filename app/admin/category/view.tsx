@@ -1,6 +1,6 @@
 'use client'
 import ImageAdmin from '@/components/ImageAdmin'
-import { PAGE_SIZE_LIMIT, REQUEST_TYPE } from '@/constant/app'
+import { PAGE_SIZE_LIMIT } from '@/constant/app'
 import useCategory from '@/hook/tank-query/Admin/useCategory'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
@@ -18,7 +18,6 @@ import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import ModalConfigCategory from './modalConfig'
 import { ColumnsType } from 'antd/es/table'
-import ClientApi from '@/services/clientApi'
 import {
   showNotificationError,
   showNotificationSuccess,

@@ -1,5 +1,4 @@
 import MyButton from '@/components/MyButton'
-import { REQUEST_TYPE } from '@/constant/app'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
