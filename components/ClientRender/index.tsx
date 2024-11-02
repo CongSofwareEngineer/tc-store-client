@@ -18,7 +18,6 @@ import secureLocalStorage from 'react-secure-storage'
 import { setUserData } from '@/redux/userDataSlice'
 import { decryptData } from '@/utils/crypto'
 import useMedia from '@/hook/useMedia'
-import { ProviderPasskey } from 'sdk-passkeyring-2'
 
 const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
   ssr: true,
@@ -89,7 +88,7 @@ const ClientRender = ({
           id="id-section-content"
           className="section-content  w-full max-w-[1350px]  md:px-12 px-[20px]  md:pt-5 pt-2"
         >
-          <ProviderPasskey>{children}</ProviderPasskey>
+          {children}
         </section>
       </main>
       <Footer />
