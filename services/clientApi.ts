@@ -30,7 +30,7 @@ const ClientApi = {
   },
   getCategory: async () => {
     return fetchData({
-      url: `category/all?isShow=true`,
+      url: `category/all?isShow=true&timeStamp=${new Date().getDate()}`,
       isAuth: false,
     })
   },
