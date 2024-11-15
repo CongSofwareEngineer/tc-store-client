@@ -21,6 +21,8 @@ const ShopDetailScreen = ({
   const { data } = useGetProductByID(productDetail?.id)
   const dataItem = data?.data ?? productDetail
 
+  console.log({ dataItem })
+
   useEffect(() => {
     setIsPayment(false)
   }, [isLogin])

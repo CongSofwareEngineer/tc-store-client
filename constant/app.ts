@@ -53,6 +53,7 @@ export enum COOKIE_EXPIRED {
 export enum LOCAL_STORAGE_KEY {
   'User' = 'User',
   'MyCart' = 'MyCart',
+  'IsFirstPermissionNoti' = 'IsFirstPermissionNoti',
   'ListSDTBuy' = 'ListSDTBuy',
 }
 

@@ -17,13 +17,15 @@ import { SLICE } from '@/constant/redux'
 import secureLocalStorage from 'react-secure-storage'
 import { setUserData } from '@/redux/userDataSlice'
 import { decryptData } from '@/utils/crypto'
-import useMedia from '@/hook/useMedia'
 
 const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
   ssr: true,
 })
 
 const ToastNoti = dynamic(() => import('../ToastNoti'), {
+  ssr: false,
+})
+const Notification = dynamic(() => import('../Notification'), {
   ssr: false,
 })
 
@@ -39,7 +41,6 @@ const ClientRender = ({
   const dispatch = useAppDispatch()
   const { reLogin } = useUserData()
   const isClientRef = useRef(false)
-  const { isClient } = useMedia()
 
   if (!isClientRef.current) {
     const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
@@ -93,7 +94,8 @@ const ClientRender = ({
       </main>
       <Footer />
       <LoadingFirstPage />
-      {isClient && <ToastNoti />}
+      <ToastNoti />
+      <Notification />
     </>
   )
 }

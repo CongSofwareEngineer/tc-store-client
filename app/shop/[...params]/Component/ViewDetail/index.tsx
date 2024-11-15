@@ -25,15 +25,14 @@ import SubAndPlus from '@/components/SubAndPlus'
 import { images } from '@/configs/images'
 import MyButton from '@/components/MyButton'
 import ClientApi from '@/services/clientApi'
-import { Tabs, TabsProps } from 'antd'
 import { DataItemType } from '@/app/my-cart/type'
 import { showNotificationSuccess } from '@/utils/notification'
 
-const Comment = dynamic(() => import('@/components/Comment'), {
+const MoreInfo = dynamic(() => import('../MoreInfo'), {
   ssr: false,
 })
 
-const InfoDetail = dynamic(() => import('../InfoDetail'), {
+const ImageMore = dynamic(() => import('../ImgMore'), {
   ssr: false,
 })
 
@@ -150,21 +149,6 @@ const ViewDetail = ({
     }
   }
 
-  const renderMoreInfo = () => {
-    const items: TabsProps['items'] = [
-      {
-        key: 'info',
-        label: translate('textPopular.infor'),
-        children: <InfoDetail dataItem={dataItem} />,
-      },
-      {
-        key: 'Comment',
-        label: translate('textPopular.comment'),
-        children: <Comment dataItem={dataItem} />,
-      },
-    ]
-    return <Tabs className="p-0" items={items} />
-  }
   const renderDesktop = () => {
     return (
       <div className="flex flex-col">
@@ -172,7 +156,7 @@ const ViewDetail = ({
         <div className="w-full flex gap-6 bg-white rounded-xl p-6">
           <div
             data-aos="fade-right"
-            className="min-w-[300px] max-w-[450px] w-[50%] p-5 overflow-hidden aspect-square"
+            className="relative min-w-[300px] max-w-[450px] w-[50%] p-5 overflow-hidden "
           >
             <MyImage
               src={detectImg(dataItem.imageMain || '')}
@@ -180,6 +164,7 @@ const ViewDetail = ({
               widthImage="100%"
               heightImage="auto"
             />
+            <ImageMore data={dataItem} />
           </div>
           <div
             className="flex-1 flex flex-col gap-2 justify-center  "
@@ -229,7 +214,7 @@ const ViewDetail = ({
         </div>
 
         <div data-aos="fade-up" className="w-full bg-white rounded-xl p-6 mt-6">
-          {renderMoreInfo()}
+          <MoreInfo data={dataItem} />
         </div>
       </div>
     )
@@ -240,10 +225,7 @@ const ViewDetail = ({
       <div className="flex flex-col gap-2">
         <BtnBack title={['Shopp', dataItem.name]} url={['/shop']} />
         <div className="pt-8 pb-2 shadow-lg shadow-yellow-50 bg-white   w-full flex flex-col justify-center items-center">
-          <div
-            data-aos="fade-right"
-            className="w-[80%]  aspect-square overflow-hidden "
-          >
+          <div data-aos="fade-right" className="w-[80%]  overflow-hidden ">
             <MyImage
               src={detectImg(
                 dataItem.imageMain || images.userDetail.iconUserDetail
@@ -252,6 +234,7 @@ const ViewDetail = ({
               widthImage="100%"
               heightImage="auto"
             />
+            <ImageMore data={dataItem} />
           </div>
           <div
             data-aos="fade-right"
@@ -303,7 +286,7 @@ const ViewDetail = ({
           data-aos="fade-right"
           className=" shadow-yellow-50 bg-white p-5 md:pr-5 pr-3 w-full flex flex-col gap-2 mt-2"
         >
-          {renderMoreInfo()}
+          <MoreInfo data={dataItem} />
         </div>
       </div>
     )

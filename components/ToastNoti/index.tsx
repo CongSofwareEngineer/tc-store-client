@@ -8,7 +8,7 @@ const ToastNoti = () => {
   return (
     <ToastContainer
       className={'mb-3'}
-      style={{ marginTop: isMobile ? 65 : 0 }}
+      style={{ marginTop: isMobile ? 65 : 42 }}
     />
   )
 }

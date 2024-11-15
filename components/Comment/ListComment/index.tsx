@@ -1,10 +1,11 @@
 import ImageAdmin from '@/components/ImageAdmin'
 import { ItemDetailType } from '@/components/InfoItemDetail/type'
 import LoadingGetData from '@/components/LoadingGetData'
+import MyImage from '@/components/MyImage'
 import MyLoadMore from '@/components/MyLoadMore'
 import { TYPE_LOADING_GET_DATA } from '@/constant/app'
 import useComment from '@/hook/tank-query/useComment'
-import { ellipsisText } from '@/utils/functions'
+import { detectAvatar, ellipsisText } from '@/utils/functions'
 import { Rate } from 'antd'
 import React from 'react'
 
@@ -30,10 +31,10 @@ const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
                 className="flex gap-4 pb-3 border-b-[1px] mt-1 border-b-gray-200"
               >
                 <div className="aspect-square h-fit rounded-lg relative overflow-hidden w-[20%] md:min-w-[80px] min-w-[50px]  max-w-[100px]">
-                  <ImageAdmin
-                    src={e.user[0]?.avatar}
+                  <MyImage
+                    src={detectAvatar(e.user[0]?.avatar)}
                     alt={e.sdt}
-                    className="w-full"
+                    widthImage="100%"
                   />
                 </div>
                 <div className="flex flex-col gap-1">
