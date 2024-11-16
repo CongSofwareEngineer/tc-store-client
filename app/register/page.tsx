@@ -6,7 +6,7 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
   const dataBase = await parent
   const metaData = generateMetaBase({
     dataBase,
-    title: 'Đâng ký',
+    title: 'Đăng ký | TC Store',
   })
   return metaData
 }

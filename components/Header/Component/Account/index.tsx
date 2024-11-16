@@ -22,7 +22,7 @@ const Account = () => {
 
   const handleLogin = () => {
     if (isLogin) {
-      ObserverService.emit(OBSERVER_KEY.LogOut)
+      ObserverService.emit(OBSERVER_KEY.LogOut, false)
     } else {
       openModalDrawer({
         content: <ModalLogin />,

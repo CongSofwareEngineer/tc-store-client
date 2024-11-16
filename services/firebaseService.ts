@@ -18,7 +18,6 @@ export const FirebaseServices = {
     storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
     messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGINGSENDER_ID,
     appId: process.env.NEXT_PUBLIC_FIREBASE_APPID,
-    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
   },
   initFirebase: () => {
     return getApps().length === 0
@@ -44,9 +43,12 @@ export const FirebaseServices = {
     const firebaseUrl = encodeURIComponent(
       JSON.stringify(FirebaseServices.config)
     )
-    const registration = await navigator.serviceWorker.getRegistration(
-      `/firebase-messaging-sw.js?FirebaseServices=${firebaseUrl}`
+
+    const registration = await navigator.serviceWorker.register(
+      `/firebase-messaging-sw.js?firebaseConfig=${firebaseUrl}`
     )
+    console.log({ registration })
+
     return await FirebaseServices.recursiveCreateToken(
       callback,
       registration,
@@ -67,6 +69,13 @@ export const FirebaseServices = {
           name: 'notifications',
         })
         if (permission.state === 'granted') {
+          const config = {
+            vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VERIFIED_API_KEY,
+            serviceWorkerRegistration: registration,
+          }
+          console.log('====================================')
+          console.log({ config })
+          console.log('====================================')
           const token = await getToken(FirebaseServices.createMessage(), {
             vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VERIFIED_API_KEY,
             serviceWorkerRegistration: registration,

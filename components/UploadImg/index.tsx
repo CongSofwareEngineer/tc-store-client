@@ -1,3 +1,4 @@
+import { MAX_PIXEL_REDUCE } from '@/constant/app'
 import useBase64Img from '@/hook/useBase64Img'
 import useLanguage from '@/hook/useLanguage'
 import useTypeFile from '@/hook/useTypeFile'
@@ -9,23 +10,28 @@ import React from 'react'
 type Props = {
   typeFile?: string
   children?: React.ReactNode
-  disbale?: boolean
+  disabled?: boolean
   handleUpload: (file: any) => Promise<void> | void
   maxSizeOutputKB?: number
   listData?: any[]
   fullQuality?: boolean
+  maxPixelReduce?: Number
 }
 const UploadImage = ({
   children = <></>,
-  disbale = false,
+  disabled = false,
   typeFile = '',
   handleUpload,
   maxSizeOutputKB = 15,
   listData = [],
   fullQuality = false,
+  maxPixelReduce = MAX_PIXEL_REDUCE,
 }: Props) => {
   const { translate } = useLanguage()
-  const { getBase64, getBase64Full } = useBase64Img(maxSizeOutputKB)
+  const { getBase64, getBase64Full } = useBase64Img(
+    maxSizeOutputKB,
+    maxPixelReduce
+  )
   const { typeFile: typeFileBase } = useTypeFile()
 
   const handleLoadFile = (file: any) => {
@@ -53,14 +59,14 @@ const UploadImage = ({
     >
       <Upload
         className="w-full flex justify-center items-center"
-        disabled={disbale}
+        disabled={disabled}
         showUploadList={false}
         accept={typeFile || typeFileBase}
       >
         <label
           className="cursor-pointer   edit-avatar flex w-full items-center justify-center gap-2 w-ful "
           htmlFor="avatar"
-          style={{ opacity: disbale ? 0.5 : 1 }}
+          style={{ opacity: disabled ? 0.5 : 1 }}
         >
           {children}
         </label>

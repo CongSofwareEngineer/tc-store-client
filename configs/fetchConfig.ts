@@ -44,7 +44,7 @@ export const fetchData = async (
         const authRefresh = await getCookie(COOKIE_KEY.AuthRefresh)
 
         if (!authRefresh) {
-          ObserverService.emit(OBSERVER_KEY.LogOut)
+          ObserverService.emit(OBSERVER_KEY.LogOut, false)
           return {
             data: null,
             messages: 'fail',

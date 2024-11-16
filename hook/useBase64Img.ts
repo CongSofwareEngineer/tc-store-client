@@ -1,8 +1,9 @@
 import { showNotificationError } from '@/utils/notification'
 import { getBase642, getBase64 as getBase64Base } from '../utils/functions'
 import useLanguage from './useLanguage'
+import { MAX_PIXEL_REDUCE } from '@/constant/app'
 
-const useBase64Img = (maxSizeOutputKB = 15) => {
+const useBase64Img = (maxSizeOutputKB = 15, maxScale = MAX_PIXEL_REDUCE) => {
   const { translate } = useLanguage()
 
   const reduceImageSize = (
@@ -21,13 +22,15 @@ const useBase64Img = (maxSizeOutputKB = 15) => {
         const context = canvas.getContext('2d')
 
         // Adjust canvas size to reduce the dimensions of the image
-        const MAX_WIDTH = 200 // Adjust width as needed
+        const MAX_WIDTH: any = maxScale // Adjust width as needed
         const scaleSize = MAX_WIDTH / imgElement.width
         canvas.width = MAX_WIDTH
         canvas.height = imgElement.height * scaleSize
         context?.drawImage(imgElement, 0, 0, canvas.width, canvas.height)
 
         const compressImage = (currentQuality: any) => {
+          console.log({ maxSizeInKB })
+
           canvas.toBlob(
             (blob: any) => {
               if (blob.size / 1024 < maxSizeInKB) {

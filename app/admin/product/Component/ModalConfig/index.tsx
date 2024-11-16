@@ -206,14 +206,14 @@ const ProductConfig = ({ item }: { item: any }) => {
               <UploadImage
                 typeFile={typeFile}
                 listData={formData?.imageMore || []}
-                fullQuality
                 handleUpload={(e) =>
                   setFormData({
                     ...formData,
                     imageMore: [...formData.imageMore, e],
                   })
                 }
-                maxSizeOutputKB={300}
+                maxSizeOutputKB={500}
+                maxPixelReduce={500}
               >
                 <div className="flex w-full gap-2 justify-center items-center">
                   <CameraOutlined />

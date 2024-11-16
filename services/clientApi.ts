@@ -131,5 +131,12 @@ const ClientApi = {
       body,
     })
   },
+  updateTokenNotification: async (token: string) => {
+    return fetchData({
+      url: 'token-noti/create',
+      method: REQUEST_TYPE.POST,
+      body: { token },
+    })
+  },
 }
 export default ClientApi

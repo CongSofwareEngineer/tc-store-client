@@ -98,5 +98,7 @@ export const DATE_START_FILTER = dayjs(
   new Date(Date.now()).setDate(new Date().getDate() - 1)
 )
 
+export const MAX_PIXEL_REDUCE = 300 as Number
+
 export const LIST_PAGE_REQUIRE_LOGIN = ['/my-cart', '/my-page']
 export const LIST_PAGE_NO_FOOTER = ['/my-cart', '/contact', '/register']

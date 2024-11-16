@@ -9,17 +9,33 @@ const NotificationClient: NextPage = () => {
   const { userData, isLogin } = useUserData()
 
   useEffect(() => {
+    const addListener = () => {
+      if (getDataLocal(LOCAL_STORAGE_KEY.IsFirstPermissionNoti, null)) {
+        FirebaseServices.addListenMessage((e) => {
+          console.log('====================================')
+          console.log({ e })
+          console.log('====================================')
+        })
+      }
+    }
+
     const getData = async () => {
+      FirebaseServices.initFirebase()
       const isSupport = await FirebaseServices.isSupportedNotification()
+
       if (isSupport) {
         if (
-          getDataLocal(LOCAL_STORAGE_KEY.IsFirstPermissionNoti) === 'undefined'
+          getDataLocal(LOCAL_STORAGE_KEY.IsFirstPermissionNoti, null) === null
         ) {
           Notification.requestPermission()
             .then(async (permission: any) => {
               // If the user accepts, let's create a notification
               if (permission === 'granted') {
                 saveDataLocal(LOCAL_STORAGE_KEY.IsFirstPermissionNoti, true)
+                FirebaseServices.createToken(async (token) => {
+                  console.log({ token })
+                  addListener()
+                })
               }
               if (permission === 'denied') {
                 saveDataLocal(LOCAL_STORAGE_KEY.IsFirstPermissionNoti, false)
@@ -35,8 +51,17 @@ const NotificationClient: NextPage = () => {
     }
 
     if (isLogin && !!userData?.isAdmin) {
-      getData()
+      // getData()
+      // addListener()
+
+      FirebaseServices.createToken(async (token) => {
+        console.log({ token })
+        addListener()
+      })
+    } else {
+      console.log('getData4 ')
     }
+    console.log('getData3 ')
   }, [userData, isLogin])
 
   return <></>

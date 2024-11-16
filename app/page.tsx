@@ -12,6 +12,10 @@ import { NextPage } from 'next'
 const ListProduct = dynamic(() => import('./(ComponentHome)/ListProduct'), {
   ssr: false,
 })
+const SocialMedia = dynamic(() => import('./(ComponentHome)/SocialMedia'), {
+  ssr: false,
+})
+
 // const Banner = dynamic(() => import('./(ComponentHome)/Banner'), {
 //   ssr: true,
 // })
@@ -37,6 +41,7 @@ const Home: NextPage = () => {
           <ListProduct title={translate('textPopular.nest')} type={'nest'} />
           <ListProduct title={translate('home.water')} type={FilterAPI.Water} />
         </div>
+        <SocialMedia />
       </div>
     )
   }
