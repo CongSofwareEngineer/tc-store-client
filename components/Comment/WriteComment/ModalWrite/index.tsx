@@ -191,7 +191,7 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
             {renderListImg()}
             <UploadImage
               handleUpload={handleUpload}
-              disbale={formData?.listImg?.length >= 2}
+              disabled={formData?.listImg?.length >= 2}
               listData={formData?.listImg || []}
               maxSizeOutputKB={15}
             >
