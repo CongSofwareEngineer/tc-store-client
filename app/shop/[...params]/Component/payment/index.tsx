@@ -25,7 +25,7 @@ import { FILTER_BILL, LOCAL_STORAGE_KEY } from '@/constant/app'
 import ModalSuccess from '@/components/ModalSuccess'
 import { useRouter } from 'next/navigation'
 import ClientApi from '@/services/clientApi'
-import OptionsPayemnt from '@/app/my-cart/Component/Payment/Component/OptionsPayment'
+import OptionsPayment from '@/app/my-cart/Component/Payment/Component/OptionsPayment'
 import { showNotificationError } from '@/utils/notification'
 
 const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
@@ -189,7 +189,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
               </div>
 
               <div className="lg:w-[350px] flex flex-col md:gap-6 gap-5">
-                <OptionsPayemnt
+                <OptionsPayment
                   onChangeOptions={onChangeOptions}
                   listOptions={listOptions}
                   optionSelected={optionSelected}
