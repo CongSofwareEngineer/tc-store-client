@@ -6,13 +6,8 @@ import secureLocalStorage from 'react-secure-storage'
 import { decryptData, encryptData } from '@/utils/crypto'
 import { SLICE } from '@/constant/redux'
 import useModalDrawer from './useModalDrawer'
-import {
-  COOKIE_EXPIRED,
-  COOKIE_KEY,
-  OBSERVER_KEY,
-  REQUEST_TYPE,
-} from '@/constant/app'
-import { deleteCookie, setCookie } from '@/services/CookiesService'
+import { COOKIE_EXPIRED, COOKIE_KEY, OBSERVER_KEY } from '@/constant/app'
+import { setCookie } from '@/services/CookiesService'
 import ClientApi from '@/services/clientApi'
 import ObserverService from '@/services/observer'
 import {
