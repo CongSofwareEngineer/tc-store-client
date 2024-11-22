@@ -70,6 +70,21 @@ const ProductConfig = ({ item }: { item: any }) => {
     setFormData({ ...formData, imageMore: newList })
   }
 
+  const getImgDelete = (): string[] => {
+    const list = []
+    if (item?.imageMain !== formData?.imageMain) {
+      list.push(item?.imageMain)
+    }
+    item?.imageMore.forEach((e: string) => {
+      const isExited = formData?.imageMore?.find((eForm: any) => eForm === e)
+      if (!isExited) {
+        list.push(e)
+      }
+    })
+
+    return list
+  }
+
   const handleSubmit = async () => {
     setLoading(true)
     let data
@@ -81,6 +96,7 @@ const ProductConfig = ({ item }: { item: any }) => {
         }
       })
       if (Object.keys(dataEdit).length > 0) {
+        dataEdit.imageDelete = getImgDelete()
         data = await AdminApi.updateProduct(item._id, dataEdit)
       }
       console.log({ dataEdit, formData })
