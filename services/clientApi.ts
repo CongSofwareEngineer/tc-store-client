@@ -24,10 +24,13 @@ const ClientApi = {
     })
   },
   updateAvatar: async (id: string | undefined, file: any) => {
+    const publicId = file.public_id
+    delete file.public_id
     return fetchData({
       url: `user/update-avatar/${id}`,
       body: {
         file: file,
+        publicId,
       },
       method: REQUEST_TYPE.POST,
     })

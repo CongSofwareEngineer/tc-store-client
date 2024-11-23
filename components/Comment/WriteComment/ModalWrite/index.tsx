@@ -25,8 +25,8 @@ import {
 } from '@/utils/notification'
 
 const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
-  const [loading, setloading] = useState(false)
-  const [loadingGetData, setloadingGetData] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [loadingGetData, setLoadingGetData] = useState(true)
   const [formData, setFormData] = useState<{ [key: string]: any } | null>(null)
   const [dataExited, setDataExited] = useState<{ [key: string]: any } | null>(
     null
@@ -60,7 +60,7 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
         }
       }
       setFormData(initData)
-      setloadingGetData(false)
+      setLoadingGetData(false)
     }
     getData()
   }, [userData, dataItem])
@@ -78,7 +78,7 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
   }
 
   const handleSubmit = async () => {
-    setloading(true)
+    setLoading(true)
     const body: DataAddComment = {
       idProduct: formData?.idProduct,
       listImg: formData?.listImg,
@@ -102,7 +102,7 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
     } else {
       showNotificationError(translate('comment.feedbackFaild'))
     }
-    setloading(false)
+    setLoading(false)
   }
 
   const handleUpload = async (file: any) => {
@@ -193,7 +193,8 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
               handleUpload={handleUpload}
               disabled={formData?.listImg?.length >= 2}
               listData={formData?.listImg || []}
-              maxSizeOutputKB={15}
+              maxSizeOutputKB={200}
+              maxPixelReduce={400}
             >
               <div className="flex gap-2 item-center w-full">
                 <CameraOutlined

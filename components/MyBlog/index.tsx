@@ -100,8 +100,8 @@ const MyBlog = ({
               src: fileImg?.base64 || null,
               alt: file.name,
               sizes: {
-                width: 500,
-                height: 500,
+                width: 300,
+                height: 300,
               },
             }
           },

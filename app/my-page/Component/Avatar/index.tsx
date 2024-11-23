@@ -1,10 +1,11 @@
 import ModalProcess from '@/components/ModalProcess'
 import MyImage from '@/components/MyImage'
+import useBase64Img from '@/hook/useBase64Img'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
 import ClientApi from '@/services/clientApi'
-import { detectAvatar, getBase64 } from '@/utils/functions'
+import { detectAvatar } from '@/utils/functions'
 import {
   showNotificationError,
   showNotificationSuccess,
@@ -20,8 +21,10 @@ const Avatar = () => {
   const { closeModalDrawer, openModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
 
+  const { getBase64 } = useBase64Img(300, 200)
+
   const onChangeAvatar = async (file: any) => {
-    const callBack = async (data: any) => {
+    const callBack = async () => {
       openModalDrawer({
         content: <ModalProcess title={translate('textPopular.updating')} />,
         configModal: {
@@ -29,8 +32,10 @@ const Avatar = () => {
           showBtnClose: false,
         },
       })
+      const fileScale = await getBase64(file)
+
       const bodyAPI = {
-        ...data,
+        ...fileScale,
         public_id: userData?.avatar,
       }
 

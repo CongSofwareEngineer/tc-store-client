@@ -57,7 +57,7 @@ const useBase64Img = (maxSizeOutputKB = 15, maxScale = MAX_PIXEL_REDUCE) => {
 
   const getBase64 = async (
     fileUpload: any,
-    callBack: any
+    callBack?: any
   ): Promise<{
     base64: string
     name: string
@@ -75,10 +75,13 @@ const useBase64Img = (maxSizeOutputKB = 15, maxScale = MAX_PIXEL_REDUCE) => {
 
         reduceImageSize(fileUpload, maxSizeOutputKB, 1, (file: any) => {
           getBase642(file, async (base64: any) => {
-            callBack({
-              base64: base64,
-              name: fileUpload.name,
-            })
+            if (callBack) {
+              callBack({
+                base64: base64,
+                name: fileUpload.name,
+              })
+            }
+
             resolve({
               base64: base64,
               name: fileUpload.name,
