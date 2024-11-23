@@ -95,7 +95,7 @@ const MyBlog = ({
           async onUpload(file) {
             const fileImg = await getBase64(file, () => {})
 
-            // await ClientApi.uploadImg(fileImg, pathFile)
+            await ClientApi.uploadImg(fileImg, pathFile)
             return {
               src: fileImg?.base64 || null,
               alt: file.name,
