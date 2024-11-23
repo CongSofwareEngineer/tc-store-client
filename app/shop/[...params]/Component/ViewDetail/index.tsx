@@ -29,7 +29,7 @@ import { DataItemType } from '@/app/my-cart/type'
 import { showNotificationSuccess } from '@/utils/notification'
 
 const MoreInfo = dynamic(() => import('../MoreInfo'), {
-  ssr: false,
+  ssr: true,
 })
 
 const ImageMore = dynamic(() => import('../ImgMore'), {

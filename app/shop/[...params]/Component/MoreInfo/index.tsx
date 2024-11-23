@@ -1,9 +1,30 @@
 import React from 'react'
 import { ItemDetailType } from '../../type'
-import InfoDetail from '../InfoDetail'
 import { Tabs, TabsProps } from 'antd'
-import Comment from '@/components/Comment'
 import useLanguage from '@/hook/useLanguage'
+import dynamic from 'next/dynamic'
+import { LoadingOutlined } from '@ant-design/icons'
+const MyBlog = dynamic(() => import('@/components/MyBlog'), {
+  ssr: true,
+  loading: () => {
+    return (
+      <div className="flex text-green-600   py-2 justify-center">
+        <LoadingOutlined style={{ fontSize: 36 }} />
+      </div>
+    )
+  },
+})
+
+const Comment = dynamic(() => import('@/components/Comment'), {
+  ssr: true,
+  loading: () => {
+    return (
+      <div className="flex text-green-600   py-2 justify-center">
+        <LoadingOutlined style={{ fontSize: 36 }} />
+      </div>
+    )
+  },
+})
 
 const MoreInfo = ({ data }: { data: ItemDetailType }) => {
   const { translate } = useLanguage()
@@ -12,7 +33,7 @@ const MoreInfo = ({ data }: { data: ItemDetailType }) => {
     {
       key: 'info',
       label: translate('textPopular.infor'),
-      children: <InfoDetail dataItem={data} />,
+      children: <MyBlog value={JSON.parse(data?.des2 || '{}')} disabled />,
     },
     {
       key: 'Comment',

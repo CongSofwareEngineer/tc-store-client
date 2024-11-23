@@ -2,8 +2,19 @@ import { REQUEST_TYPE } from '@/constant/app'
 import { ClientAPITypeParam, fetchData } from '@/configs/fetchConfig'
 import { BodyAddBill } from '@/constant/firebase'
 import { encryptData } from '@/utils/crypto'
+import { PATH_IMG } from '@/constant/mongoDB'
 
 const ClientApi = {
+  uploadImg: async (file: any, path: PATH_IMG) => {
+    return fetchData({
+      url: `/upload-image/upload`,
+      method: REQUEST_TYPE.POST,
+      body: {
+        file,
+        path,
+      },
+    })
+  },
   login: async (body: any) => {
     return fetchData({
       url: `user/login`,
