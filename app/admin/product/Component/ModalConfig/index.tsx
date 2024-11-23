@@ -21,6 +21,7 @@ import {
 } from '@/utils/notification'
 import AdminApi from '@/services/adminApi'
 import MyBlog from '@/components/MyBlog'
+import { PATH_IMG } from '@/constant/mongoDB'
 
 const ProductConfig = ({ item }: { item: any }) => {
   const { translate } = useLanguage()
@@ -273,9 +274,10 @@ const ProductConfig = ({ item }: { item: any }) => {
           required
           typeBtn="area"
         />
-        <div className="w-full md:mt-16">
+        <div className="w-full md:mt-16 min-h-[300px]">
           <div className="font-bold">Info detail : </div>
           <MyBlog
+            pathFile={PATH_IMG.Products}
             value={formData?.des2}
             setValue={(e) => setFormData({ ...formData, des2: e })}
           />

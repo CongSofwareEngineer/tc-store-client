@@ -55,19 +55,34 @@ const useBase64Img = (maxSizeOutputKB = 15, maxScale = MAX_PIXEL_REDUCE) => {
     }
   }
 
-  const getBase64 = async (fileUpload: any, callBack: any) => {
+  const getBase64 = async (
+    fileUpload: any,
+    callBack: any
+  ): Promise<{
+    base64: string
+    name: string
+  } | null> => {
     try {
-      if (fileUpload.size > 30 * 1048576) {
-        const text = translate('warning.maxSizeFile').replace('{size}', `30 MB`)
-        showNotificationError(text)
-        return
-      }
+      return new Promise((resolve) => {
+        if (fileUpload.size > 30 * 1048576) {
+          const text = translate('warning.maxSizeFile').replace(
+            '{size}',
+            `30 MB`
+          )
+          showNotificationError(text)
+          return
+        }
 
-      reduceImageSize(fileUpload, maxSizeOutputKB, 1, (file: any) => {
-        getBase642(file, async (base64: any) => {
-          callBack({
-            base64: base64,
-            name: fileUpload.name,
+        reduceImageSize(fileUpload, maxSizeOutputKB, 1, (file: any) => {
+          getBase642(file, async (base64: any) => {
+            callBack({
+              base64: base64,
+              name: fileUpload.name,
+            })
+            resolve({
+              base64: base64,
+              name: fileUpload.name,
+            })
           })
         })
       })

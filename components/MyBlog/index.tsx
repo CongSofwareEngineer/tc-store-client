@@ -28,92 +28,7 @@ import LinkTool, { DefaultLinkToolRender } from '@yoopta/link-tool'
 import YooptaEditor, { createYooptaEditor } from '@yoopta/editor'
 import ClientApi from '@/services/clientApi'
 import { PATH_IMG } from '@/constant/mongoDB'
-import { detectImg, getBase64 } from '@/utils/functions'
-
-const plugins = [
-  Paragraph,
-  Table,
-  Divider.extend({
-    elementProps: {
-      divider: (props: any) => ({
-        ...props,
-        color: '#007aff',
-      }),
-    },
-  }),
-  Accordion,
-  HeadingOne,
-  HeadingTwo,
-  HeadingThree,
-  Blockquote,
-  Callout,
-  NumberedList,
-  BulletedList,
-  TodoList,
-  Code,
-  Link,
-  Embed,
-  Image.extend({
-    options: {
-      optimizations: {
-        provider: 'cloudinary',
-      },
-      async onUpload(file) {
-        console.log({ file })
-        const base64 = await getBase64(file, () => {})
-        const fileImg = {
-          base64,
-          name: file.name,
-        }
-        const data = await ClientApi.uploadImg(fileImg, PATH_IMG.Products)
-        const dataImg = data?.data
-
-        return {
-          src: detectImg(dataImg?.public_id),
-          alt: 'cloudinary',
-          sizes: {
-            width: 500,
-            height: 500,
-          },
-        }
-      },
-    },
-    events: {
-      async onDestroy(file) {
-        console.log('====================================')
-        console.log({ file })
-        console.log('====================================')
-      },
-    },
-  }),
-  // Video.extend({
-  //   options: {
-  //     onUpload: async (file) => {
-  //       const data = await uploadToCloudinary(file, 'video');
-  //       return {
-  //         src: data.secure_url,
-  //         alt: 'cloudinary',
-  //         sizes: {
-  //           width: data.width,
-  //           height: data.height,
-  //         },
-  //       };
-  //     },
-  //     onUploadPoster: async (file) => {
-  //       const image = await uploadToCloudinary(file, 'image');
-  //       return image.secure_url;
-  //     },
-  //   },
-  // }),
-  // File.extend({
-  //   options: {
-  //     onUpload: async (file) => {
-  //       const response = await uploadToCloudinary(file, 'auto');
-  //       return { src: response.secure_url, format: response.format, name: response.name, size: response.bytes };
-  //     },
-  //   },
-  // }),
-]
+import useBase64Img from '@/hook/useBase64Img'
 
 const TOOLS = {
   ActionMenu: {
@@ -136,13 +51,91 @@ const MyBlog = ({
   value,
   setValue = () => {},
   disabled = false,
+  pathFile = PATH_IMG.Products,
 }: {
   value: any
   setValue?: (e: any) => void
   disabled?: boolean
+  pathFile?: PATH_IMG
 }) => {
   const editor = useMemo(() => createYooptaEditor(), [])
   const selectionRef = useRef(null)
+
+  const { getBase64 } = useBase64Img(500, 500)
+
+  const plugins = useMemo(() => {
+    return [
+      Paragraph,
+      Table,
+      Divider.extend({
+        elementProps: {
+          divider: (props: any) => ({
+            ...props,
+            color: '#007aff',
+          }),
+        },
+      }),
+      Accordion,
+      HeadingOne,
+      HeadingTwo,
+      HeadingThree,
+      Blockquote,
+      Callout,
+      NumberedList,
+      BulletedList,
+      TodoList,
+      Code,
+      Link,
+      Embed,
+      Image.extend({
+        options: {
+          optimizations: {
+            provider: 'cloudinary',
+          },
+          async onUpload(file) {
+            const fileImg = await getBase64(file, () => {})
+
+            // await ClientApi.uploadImg(fileImg, pathFile)
+            return {
+              src: fileImg?.base64 || null,
+              alt: file.name,
+              sizes: {
+                width: 500,
+                height: 500,
+              },
+            }
+          },
+        },
+      }),
+      // Video.extend({
+      //   options: {
+      //     onUpload: async (file) => {
+      //       const data = await uploadToCloudinary(file, 'video');
+      //       return {
+      //         src: data.secure_url,
+      //         alt: 'cloudinary',
+      //         sizes: {
+      //           width: data.width,
+      //           height: data.height,
+      //         },
+      //       };
+      //     },
+      //     onUploadPoster: async (file) => {
+      //       const image = await uploadToCloudinary(file, 'image');
+      //       return image.secure_url;
+      //     },
+      //   },
+      // }),
+      // File.extend({
+      //   options: {
+      //     onUpload: async (file) => {
+      //       const response = await uploadToCloudinary(file, 'auto');
+      //       return { src: response.secure_url, format: response.format, name: response.name, size: response.bytes };
+      //     },
+      //   },
+      // }),
+    ]
+  }, [])
 
   const onChange = (newValue: any): any => {
     setValue(newValue)
@@ -160,7 +153,7 @@ const MyBlog = ({
           value={value}
           onChange={onChange}
           autoFocus
-          className="!relative !w-full !pb-2"
+          className="!relative !h-full !w-full !pb-2 cursor-pointer"
           readOnly={disabled}
         />
       </div>
