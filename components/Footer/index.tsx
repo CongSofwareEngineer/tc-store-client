@@ -42,7 +42,7 @@ const Footer = () => {
       <SocialMediaShare />
       <div className="flex flex-col w-full items-center justify-center">
         <div className=" w-full max-w-[1350px] md:p-[50px] p-[20px]  pb-10 ">
-          <h3 className="text-medium font-bold mb-2">Thông tin vẻ Shop</h3>
+          <p className="text-medium font-bold mb-2">Thông tin vẻ Shop</p>
           <div className="flex md:flex-row flex-col w-full justify-between md:gap-0 gap-4">
             <div className="flex flex-col md:gap-3 gap-2 md:w-[48%] w-full">
               <Item

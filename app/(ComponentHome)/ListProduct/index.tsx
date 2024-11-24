@@ -66,7 +66,7 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
           href={`shop?${FilterAPI.Category}=${type || 'all'}`}
           className="text-medium cursor-pointer hover:font-semibold hover:text-green-600"
         >
-          {translate('textPopular.viewMore')}
+          <span> {translate('textPopular.viewMore')}</span>
           <RightOutlined className="text-sm ml-2" />
         </Link>
       ),
