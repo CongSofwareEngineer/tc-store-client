@@ -11,10 +11,15 @@ const Header = () => {
   return (
     <header className="header-main">
       <a
+        aria-label="mailto:hodiencong2000.@gmail.com"
         href="mailto:hodiencong2000.@gmail.com"
         className="absolute z-[-1] opacity-0"
       />
-      <a href="tel:0932225405" className="absolute z-[-1] opacity-0" />
+      <a
+        aria-label="tel:0932225405"
+        href="tel:0932225405"
+        className="absolute z-[-1] opacity-0"
+      />
       <div className="w-full h-14 " />
       <div className="w-full h-14 fixed z-10 inset-0 ">
         <div className="border-b-2 border-green-300 w-full flex m-auto justify-center items-center bg-white">
