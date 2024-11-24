@@ -10,34 +10,17 @@ import {
   numberWithCommas,
 } from '@/utils/functions'
 import { useAppSelector } from '@/redux/store'
-import { FILTER_BILL } from '@/constant/app'
+import { COLOR, FILTER_BILL } from '@/constant/app'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ViewDetailBill from '../ViewDetailBill'
 import ModalCancelOrder from '../ModalCancelOrder'
 import TextCopy from '@/components/TextCopy'
-import MyButton from '@/components/MyButton'
-import ModalFeeback from '../ModalFeeback'
+import { Button } from 'antd'
+
 type Props = {
   data: { [key: string]: any }
 }
 
-moment.locale('vi')
-moment.updateLocale('vi', {
-  monthsShort: [
-    'Tháng 1',
-    'Tháng 2',
-    'Tháng 3',
-    'Tháng 4',
-    'Tháng 5',
-    'Tháng 6',
-    'Tháng 7',
-    'Tháng 8',
-    'Tháng 9',
-    'Tháng 10',
-    'Tháng 11',
-    'Tháng 12',
-  ],
-})
 const Item = ({ data }: Props) => {
   const { isMobile } = useMedia(1000)
   const { translate } = useLanguage()
@@ -68,13 +51,13 @@ const Item = ({ data }: Props) => {
   const getColorStatus = (key: FILTER_BILL) => {
     switch (key) {
       case FILTER_BILL.Processing:
-        return 'red'
+        return COLOR.red
 
       case FILTER_BILL.Delivering:
-        return '#0056ff'
+        return COLOR.blue1
 
       default:
-        return '#22c55e'
+        return COLOR.green1
     }
   }
 
@@ -100,18 +83,6 @@ const Item = ({ data }: Props) => {
     })
   }
 
-  const handleFeeback = (item: any) => {
-    openModalDrawer({
-      content: <ModalFeeback data={item} />,
-      useDrawer: true,
-      title: (
-        <div className="text-medium font-bold">
-          {translate('textPopular.feeback')}
-        </div>
-      ),
-    })
-  }
-
   return (
     <div className="w-full justify-center items-center flex gap-3 mt-1 border-b-2 border-gray-200 p-2">
       <div className="w-[20%] min-w-[100px] text-center flex flex-col gap-2">
@@ -127,31 +98,20 @@ const Item = ({ data }: Props) => {
           <>
             {data.status === FILTER_BILL.Processing && (
               <div className="flex md:w-full justify-center">
-                <MyButton
+                <Button
                   type="primary"
                   size="small"
                   className="text-[13px]"
                   onClick={() => handleCancelOrder(data)}
                 >
                   {translate('common.cancelOrder')}
-                </MyButton>
-              </div>
-            )}
-            {data.status === FILTER_BILL.DeliverySuccess && (
-              <div className="flex  md:w-full justify-center">
-                <MyButton
-                  size="small"
-                  className="text-[13px]"
-                  onClick={() => handleFeeback(data)}
-                >
-                  {translate('textPopular.feeback')}
-                </MyButton>
+                </Button>
               </div>
             )}
           </>
         )}
       </div>
-      <div className="flex flex-col lg:gap-3 gap-2 flex-1">
+      <div className="flex flex-col gap-2 flex-1">
         <div className="flex gap-2 w-full text-[11px]">
           <span>{`${translate('myBill.idOrder')} : `}</span>
           <TextCopy value={data._id} textView={ellipsisText(data._id, 4, 3)} />
@@ -179,28 +139,17 @@ const Item = ({ data }: Props) => {
               <span>{getAddressShip(data)}</span>
             </span>
             <div className="w-fill flex gap-3">
-              <MyButton size="small" onClick={() => handleViewDetail(data)}>
+              <Button size="small" onClick={() => handleViewDetail(data)}>
                 {translate('textPopular.viewDetail')}
-              </MyButton>
+              </Button>
               {data.status === FILTER_BILL.Processing && (
-                <MyButton
+                <Button
                   size="small"
                   type="primary"
                   onClick={() => handleCancelOrder(data)}
                 >
                   {translate('common.cancelOrder')}
-                </MyButton>
-              )}
-              {data.status === FILTER_BILL.DeliverySuccess && (
-                <div className="flex w-full justify-center">
-                  <MyButton
-                    size="small"
-                    className="text-[13px]"
-                    onClick={() => handleFeeback(data)}
-                  >
-                    {translate('textPopular.feeback')}
-                  </MyButton>
-                </div>
+                </Button>
               )}
             </div>
           </>
@@ -262,9 +211,9 @@ const Item = ({ data }: Props) => {
           >
             {getStatus(data.status)}
           </div>
-          <MyButton onClick={() => handleViewDetail(data)}>
+          <Button onClick={() => handleViewDetail(data)}>
             {translate('common.view')}
-          </MyButton>
+          </Button>
         </>
       )}
     </div>

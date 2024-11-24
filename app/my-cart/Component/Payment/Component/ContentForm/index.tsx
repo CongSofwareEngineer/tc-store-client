@@ -1,11 +1,11 @@
 import { ContentFormType } from '@/app/my-cart/type'
 import InputAreaForm from '@/components/Form/InputAreaForm'
 import InputForm from '@/components/Form/InputForm'
-import MyImage from '@/components/MyImage'
 import OptionVnLocation from '@/components/OptionVnLocation'
 import { images } from '@/configs/images'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
+import Image from 'next/image'
 import React from 'react'
 
 const ContentForm = ({ onChange = () => {} }: ContentFormType) => {
@@ -16,11 +16,11 @@ const ContentForm = ({ onChange = () => {} }: ContentFormType) => {
     <div className="bg-white flex flex-col w-full border-[1px] shadow-gray1 border-gray-300  px-4 pt-4 lg:pb-0 pb-3">
       <div className="flex w-full gap-2">
         <div>
-          <MyImage
+          <Image
             src={images.userDetail.iconUserDetail}
             alt="my-cart-infoReceived"
-            widthImage="25px"
-            heightImage="25px"
+            fill
+            className="!relative !w-[25px] !h-[25px]"
           />
         </div>
         <div className="text-medium font-semibold">

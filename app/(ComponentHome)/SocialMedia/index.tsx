@@ -1,8 +1,8 @@
-import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import { NextPage } from 'next'
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const SocialMedia: NextPage = () => {
   return (
@@ -15,18 +15,20 @@ const SocialMedia: NextPage = () => {
     >
       <div className="bg-black/80 flex flex-col py-2 px-2  gap-3 w-12 rounded-r-2xl  rounded-br-2xl">
         <Link target="_blank" href={'https://zalo.me/0392225405'}>
-          <MyImage
+          <Image
+            fill
             src={images.footer.iconZalo}
             alt="https://zalo.me/0392225405"
-            className="hover:scale-110 cursor-pointer"
+            className="hover:scale-110 cursor-pointer !relative !w-full !h-auto"
           />
         </Link>
 
         <Link target="_blank" href={'tel:0392225405'}>
-          <MyImage
+          <Image
+            fill
             src={images.footer.iconNumberPhone}
             alt="tel:0392225405"
-            className="hover:scale-110 cursor-pointer"
+            className="hover:scale-110 cursor-pointer !relative !w-full !h-auto"
           />
         </Link>
         <Link
@@ -34,10 +36,11 @@ const SocialMedia: NextPage = () => {
           target="_blank"
           href={'https://www.facebook.com/profile.php?id=100080400793331'}
         >
-          <MyImage
+          <Image
+            fill
             src={images.footer.iconFace}
             alt="https://www.facebook.com/profile.php?id=100080400793331"
-            className="hover:scale-110 cursor-pointer "
+            className="hover:scale-110 cursor-pointer !relative !w-full !h-auto"
           />
         </Link>
 
@@ -46,10 +49,11 @@ const SocialMedia: NextPage = () => {
           target="_blank"
           href={'https://www.facebook.com/profile.php?id=100080400793331'}
         >
-          <MyImage
+          <Image
+            fill
             src={images.footer.iconIntagram}
             alt="https://www.facebook.com/profile.php?id=100080400793331"
-            className="hover:scale-110 cursor-pointer "
+            className="hover:scale-110 cursor-pointer !relative !w-full !h-auto"
           />
         </Link>
       </div>

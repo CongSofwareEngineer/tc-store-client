@@ -1,6 +1,7 @@
 {
   "language": "Ngôn ngữ",
   "common": {
+    "back": "Trờ về",
     "updateFeedback": "Cập nhật đánh giá",
     "feedback": "Đánh giá",
     "sendFeedback": "Đánh giá",
@@ -49,9 +50,10 @@
     "exitSDT": "SĐT đã tồn tại"
   },
   "textPopular": {
+    "rate": "Đánh giá",
     "showScreen": "Hiện thị Website",
     "copied": "Đã sao chép",
-    "feeback": "Đánh giá",
+    "feedback": "Đánh giá",
     "updating": "Đang cập nhật",
     "notData": "Chưa có dữ liệu",
     "loadMore": "Xem thêm",
@@ -242,14 +244,16 @@
     "login": "Đăng nhập thành công",
     "create": "Tạo mới thành công",
     "delete": "Xóa thành công",
-    "update": "Cập nhật thành công"
+    "update": "Cập nhật thành công",
+    "feedback": "Cảm ơn bạn đã đánh giá"
   },
   "error": {
     "login": "Đăng nhập thất bại",
     "create": "Tạo mới thất bại",
     "delete": "Xóa thất bại",
     "update": "Cập nhật thất bại",
-    "expiredLogin": "Hết hạn đăng nhập"
+    "expiredLogin": "Hết hạn đăng nhập",
+    "feedback": "Đánh giá thất bài"
   },
   "errors": {
     "create": "Tạo mới Thất bại",
@@ -315,7 +319,7 @@
     "contactSuccess": "Bạn đã liên hệ thành công",
     "contactFail": "Hệ thống bào trì, bạn hãy liên hệ ngày mai"
   },
-  "feeback": {
+  "feedback": {
     "title": "ĐÁNH GIÁ CỦA BẠN VỀ SẢN PHẨM"
   }
 }

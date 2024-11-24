@@ -1,8 +1,6 @@
 'use client'
 import { images } from '@/configs/images'
-import useMedia from '@/hook/useMedia'
 import React, { useEffect } from 'react'
-import MyImage from '../MyImage'
 import { CopyOutlined } from '@ant-design/icons'
 import { scrollTop } from '@/utils/functions'
 import { useRouter } from 'next/navigation'
@@ -10,18 +8,17 @@ import SocialMediaShare from '../SocialMediaShare'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { copyToClipboard } from '@/utils/notification'
+import Image from 'next/image'
 const GgMap = dynamic(() => import('./ggMap'), { ssr: true })
 
 const Item = ({ icon, value, link }: any) => {
-  const { isMobile } = useMedia()
-
   return (
     <div className="flex gap-2 items-center">
-      <MyImage
-        widthImage={isMobile ? '20px' : '25px'}
-        heightImage={isMobile ? '20px' : '25px'}
+      <Image
+        fill
         alt={`icon-footer-${value}`}
         src={icon}
+        className="!relative md:!w-[25px] !w-[20px] md:!h-[25px] !h-[20px]"
       />
       <Link
         target="_blank"

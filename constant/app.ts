@@ -98,6 +98,12 @@ export const DATE_START_FILTER = dayjs(
   new Date(Date.now()).setDate(new Date().getDate() - 1)
 )
 
+export const COLOR = {
+  blue1: '#0056ff',
+  green1: '#22c55e',
+  red: 'red',
+}
+
 export const MAX_PIXEL_REDUCE = 300 as Number
 
 export const LIST_PAGE_REQUIRE_LOGIN = ['/my-cart', '/my-page']

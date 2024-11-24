@@ -24,7 +24,7 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
 
   const renderListItem = () => {
     return (
-      <div className="flex gap-3 md:gap-5 overflow-x-auto w-full">
+      <div className="pb-3 flex gap-3 md:gap-5 overflow-x-auto w-full">
         <LoadingGetData
           loading={isLoading}
           type={TYPE_LOADING_GET_DATA.ListProductInHome}

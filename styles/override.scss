@@ -23,8 +23,7 @@
 }
 
 .ant-modal-title {
-  font-size: 18px !important;
-  font-weight: bold;
+  font-weight: bold !important;
   @media screen and (max-width: 768px) {
     font-size: 16px !important;
   }
@@ -79,6 +78,13 @@ p {
   .ant-checkbox-inner {
     background-color: #29a200 !important;
     border-color: #29a200 !important;
+  }
+}
+
+.ant-btn-sm {
+  > span {
+    line-height: 1px !important;
+    font-size: 13px;
   }
 }
 

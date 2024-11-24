@@ -1,6 +1,6 @@
-import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import useAos from '@/hook/useAos'
+import Image from 'next/image'
 import React from 'react'
 
 const InfoHome = () => {
@@ -13,7 +13,12 @@ const InfoHome = () => {
         className="flex gap-4 flex-1 items-center justify-center "
       >
         <div className="w-14 h-14">
-          <MyImage src={image} alt={`info-home-${title}`} heightImage="auto" />
+          <Image
+            fill
+            src={image}
+            alt={`info-home-${title}`}
+            className="!relative !h-auto"
+          />
         </div>
         <div className="flex-1 justify-start items-start">
           <div className="uppercase font-semibold text-medium">{title}</div>

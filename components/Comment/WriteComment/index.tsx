@@ -15,7 +15,7 @@ const WriteComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
     openModalDrawer({
       content: <ModalWrite dataItem={dataItem} />,
       useDrawer: true,
-      title: <div className="text-medium">{translate('feeback.title')}</div>,
+      title: <div className="text-medium">{translate('feedback.title')}</div>,
       configModal: {
         width: '600px',
       },

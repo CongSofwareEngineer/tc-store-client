@@ -1,10 +1,10 @@
 import useLanguage from '@/hook/useLanguage'
 import { useState } from 'react'
-import MyImage from '../MyImage'
 import { images } from '@/configs/images'
 import useModalDrawer from '@/hook/useModalDrawer'
-import useMedia from '@/hook/useMedia'
-import MyButton from '../MyButton'
+import Image from 'next/image'
+import { Button } from 'antd'
+
 type ModalDeleteType = {
   des?: string
   callback?: (param?: any) => Promise<void> | void
@@ -20,7 +20,6 @@ const ModalDelete = ({
   autoClose = true,
 }: ModalDeleteType) => {
   const { translate } = useLanguage()
-  const { isMobile } = useMedia()
   const { closeModalDrawer } = useModalDrawer()
 
   const [loading, setLoading] = useState(false)
@@ -40,29 +39,29 @@ const ModalDelete = ({
       </p>
 
       <div className="m-auto my-2">
-        <MyImage
+        <Image
+          fill
           src={images.icon.iconWarning}
-          heightImage={isMobile ? '70px' : '120px'}
           alt="icon-modal-delete"
-          widthImage="auto"
+          className="!relative !w-auto md:!h-[120px] !h-[70px]"
         />
       </div>
       <div className="text-center mb-2 md:max-w-[90%] m-auto">{des}</div>
       <div className="w-full flex gap-4">
         <div className="flex-1">
-          <MyButton loading={loading} widthBtn="100%" onClick={handleSubmit}>
+          <Button className="w-full" loading={loading} onClick={handleSubmit}>
             {titleConfirm || translate('common.ok')}
-          </MyButton>
+          </Button>
         </div>
         <div className="flex-1">
-          <MyButton
+          <Button
             disabled={loading}
             type="primary"
-            widthBtn="100%"
+            className="w-full"
             onClick={closeModalDrawer}
           >
             {translate('common.close')}
-          </MyButton>
+          </Button>
         </div>
       </div>
     </div>
