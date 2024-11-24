@@ -15,7 +15,6 @@ import DrawerProvider from '@/components/DrawerProvider'
 const inter = Inter({ subsets: ['latin'] })
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import ClientApi from '@/services/clientApi'
-import Script from 'next/script'
 
 const BaseMeta = {
   title: process.env.NEXT_PUBLIC_TITLE,
@@ -104,8 +103,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
               name="google-site-verification"
               content="Sr2q2elTmvBwx7P3aM-ZiaH-3yjcxuGHrMI9H9iCewI"
             />
-            <Script
-              id="GTM-T7S7DKJ4"
+            <script
               dangerouslySetInnerHTML={{
                 __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -114,13 +112,11 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
                   })(window,document,'script','dataLayer','GTM-T7S7DKJ4')`,
               }}
             />
-            <Script
-              id="googletagmanager"
+            <script
               async
               src="https://www.googletagmanager.com/gtag/js?id=G-QH99F8WFPW"
             />
-            <Script
-              id="G-QH99F8WFPW"
+            <script
               dangerouslySetInnerHTML={{
                 __html: ` 
                   window.dataLayer = window.dataLayer || [];
