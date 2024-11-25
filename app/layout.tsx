@@ -31,6 +31,14 @@ export const metadata: Metadata = {
     'TC Store',
     'TC Shop',
     'Cà phê Gia Lai',
+    'yến sào',
+    'laptop',
+    'cây cảnh',
+    'nước hoa',
+    'cà phê',
+    'cửa hàng đa sản phẩm',
+    'mua sắm online',
+    'sản phẩm chất lượng'
   ],
   openGraph: {
     title: BaseMeta.title,
