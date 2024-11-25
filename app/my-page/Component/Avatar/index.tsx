@@ -1,10 +1,10 @@
 import ModalProcess from '@/components/ModalProcess'
-import MyImage from '@/components/MyImage'
+import useBase64Img from '@/hook/useBase64Img'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
 import ClientApi from '@/services/clientApi'
-import { detectAvatar, getBase64 } from '@/utils/functions'
+import { detectAvatar } from '@/utils/functions'
 import {
   showNotificationError,
   showNotificationSuccess,
@@ -12,6 +12,7 @@ import {
 import { EditTwoTone } from '@ant-design/icons'
 import { Upload } from 'antd'
 import ImgCrop from 'antd-img-crop'
+import Image from 'next/image'
 import React, { useMemo } from 'react'
 import { isIOS, isMacOs } from 'react-device-detect'
 
@@ -20,8 +21,10 @@ const Avatar = () => {
   const { closeModalDrawer, openModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
 
+  const { getBase64 } = useBase64Img(300)
+
   const onChangeAvatar = async (file: any) => {
-    const callBack = async (data: any) => {
+    const callBack = async () => {
       openModalDrawer({
         content: <ModalProcess title={translate('textPopular.updating')} />,
         configModal: {
@@ -29,8 +32,10 @@ const Avatar = () => {
           showBtnClose: false,
         },
       })
+      const fileScale = await getBase64(file)
+
       const bodyAPI = {
-        ...data,
+        ...fileScale,
         public_id: userData?.avatar,
       }
 
@@ -57,12 +62,13 @@ const Avatar = () => {
 
   return (
     <div className="w-[150px] min-h-[150px] relative overflow-hidden rounded-[50%]">
-      <MyImage
+      <Image
+        fill
         src={detectAvatar(userData?.avatar?.toString())}
         alt="avatar"
-        widthImage="100%"
-        heightImage="auto"
+        className="!relative !w-full !h-auto"
         priority
+        key={userData?.avatar}
       />
       <div className="absolute-center mt-2">
         <ImgCrop

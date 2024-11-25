@@ -1,8 +1,6 @@
 'use client'
 import { images } from '@/configs/images'
-import useMedia from '@/hook/useMedia'
 import React, { useEffect } from 'react'
-import MyImage from '../MyImage'
 import { CopyOutlined } from '@ant-design/icons'
 import { scrollTop } from '@/utils/functions'
 import { useRouter } from 'next/navigation'
@@ -10,18 +8,17 @@ import SocialMediaShare from '../SocialMediaShare'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { copyToClipboard } from '@/utils/notification'
+import Image from 'next/image'
 const GgMap = dynamic(() => import('./ggMap'), { ssr: true })
 
 const Item = ({ icon, value, link }: any) => {
-  const { isMobile } = useMedia()
-
   return (
     <div className="flex gap-2 items-center">
-      <MyImage
-        widthImage={isMobile ? '20px' : '25px'}
-        heightImage={isMobile ? '20px' : '25px'}
+      <Image
+        fill
         alt={`icon-footer-${value}`}
         src={icon}
+        className="!relative md:!w-[25px] !w-[20px] md:!h-[25px] !h-[20px]"
       />
       <Link
         target="_blank"
@@ -45,7 +42,7 @@ const Footer = () => {
       <SocialMediaShare />
       <div className="flex flex-col w-full items-center justify-center">
         <div className=" w-full max-w-[1350px] md:p-[50px] p-[20px]  pb-10 ">
-          <h3 className="text-medium font-bold mb-2">Thông tin vẻ Shop</h3>
+          <p className="text-medium font-bold mb-2">Thông tin vẻ Shop</p>
           <div className="flex md:flex-row flex-col w-full justify-between md:gap-0 gap-4">
             <div className="flex flex-col md:gap-3 gap-2 md:w-[48%] w-full">
               <Item

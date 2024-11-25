@@ -18,18 +18,18 @@ import { QUERY_KEY } from '@/constant/reactQuery'
 import { getCookie, setCookie } from '@/services/CookiesService'
 import BtnBack from '@/components/BtnBack'
 import useGetProductByID from '@/hook/tank-query/useGetProductByID'
-import MyImage from '@/components/MyImage'
 import InfoItemDetail from '@/components/InfoItemDetail'
 import SubAndPlus from '@/components/SubAndPlus'
 
 import { images } from '@/configs/images'
-import MyButton from '@/components/MyButton'
 import ClientApi from '@/services/clientApi'
 import { DataItemType } from '@/app/my-cart/type'
 import { showNotificationSuccess } from '@/utils/notification'
+import { Button } from 'antd'
+import Image from 'next/image'
 
 const MoreInfo = dynamic(() => import('../MoreInfo'), {
-  ssr: false,
+  ssr: true,
 })
 
 const ImageMore = dynamic(() => import('../ImgMore'), {
@@ -158,11 +158,11 @@ const ViewDetail = ({
             data-aos="fade-right"
             className="relative min-w-[300px] max-w-[450px] w-[50%] p-5 overflow-hidden "
           >
-            <MyImage
+            <Image
               src={detectImg(dataItem.imageMain || '')}
               alt={`img-main--${dataItem.name}`}
-              widthImage="100%"
-              heightImage="auto"
+              fill
+              className="!relative !w-full !h-auto"
             />
             <ImageMore data={dataItem} />
           </div>
@@ -185,30 +185,25 @@ const ViewDetail = ({
               callBackPlus={(e) => setAmountBuy(e)}
             />
             <div className="flex gap-6 mt-4">
-              <MyButton
-                heightBtn="40px"
-                onClick={handleBuy}
-                className="min-w-[30%]"
-              >
+              <Button onClick={handleBuy} className="min-w-[30%] !h-[40px]">
                 {translate('common.buyNow')}
-              </MyButton>
-              <MyButton
-                heightBtn="40px"
+              </Button>
+              <Button
                 type="primary"
                 onClick={handleAddCart}
-                className="min-w-[30%] "
+                className="min-w-[30%] !h-[40px]"
                 loading={loadingAddCart}
               >
                 <div className="flex gap-3 whitespace-nowrap">
-                  <MyImage
+                  <Image
                     src={images.icon.iconCart}
                     alt="btn-add-cart"
-                    widthImage="25px"
-                    heightImage="25px"
+                    fill
+                    className="!relative !w-[25px] !h-[25px]"
                   />
                   <span>{translate('common.addCart')}</span>
                 </div>
-              </MyButton>
+              </Button>
             </div>
           </div>
         </div>
@@ -226,13 +221,13 @@ const ViewDetail = ({
         <BtnBack title={['Shopp', dataItem.name]} url={['/shop']} />
         <div className="pt-8 pb-2 shadow-lg shadow-yellow-50 bg-white   w-full flex flex-col justify-center items-center">
           <div data-aos="fade-right" className="w-[80%]  overflow-hidden ">
-            <MyImage
+            <Image
               src={detectImg(
                 dataItem.imageMain || images.userDetail.iconUserDetail
               )}
               alt={dataItem.des || ''}
-              widthImage="100%"
-              heightImage="auto"
+              className="!relative !w-full !h-auto"
+              fill
             />
             <ImageMore data={dataItem} />
           </div>
@@ -255,14 +250,14 @@ const ViewDetail = ({
               callBackPlus={(e) => setAmountBuy(e)}
             />
             <div className="flex sm:gap-6 gap-2 mt-4 mb-3 sm:flex-row flex-col">
-              <MyButton
+              <Button
                 onClick={handleBuy}
                 className="min-w-[30%] "
                 style={{ height: 40 }}
               >
                 {translate('common.buyNow')}
-              </MyButton>
-              <MyButton
+              </Button>
+              <Button
                 type="primary"
                 onClick={handleAddCart}
                 className="min-w-[30%] "
@@ -270,15 +265,15 @@ const ViewDetail = ({
                 loading={loadingAddCart}
               >
                 <div className="flex gap-3 whitespace-nowrap">
-                  <MyImage
+                  <Image
                     src={images.icon.iconCart}
                     alt="btn-add-cart"
-                    widthImage="25px"
-                    heightImage="25px"
+                    className="!relative !w-[25px] !h-[25px]"
+                    fill
                   />
                   <span>{translate('common.addCart')}</span>
                 </div>
-              </MyButton>
+              </Button>
             </div>
           </div>
         </div>

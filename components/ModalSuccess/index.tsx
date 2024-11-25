@@ -4,7 +4,7 @@ import MyImage from '../MyImage'
 import { images } from '@/configs/images'
 import useMedia from '@/hook/useMedia'
 import useModalDrawer from '@/hook/useModalDrawer'
-import MyButton from '../MyButton'
+import { Button } from 'antd'
 
 type Props = {
   title?: string
@@ -46,22 +46,22 @@ const ModalSuccess = ({
 
       <div className="flex w-full gap-3">
         <div className="flex flex-1">
-          <MyButton
+          <Button
             className="w-full"
             onClick={() => (callback ? callback() : closeModalDrawer())}
           >
             {props.titleSubmit || translate('common.ok')}
-          </MyButton>
+          </Button>
         </div>
         {showClose && (
           <div className="flex flex-1">
-            <MyButton
+            <Button
               className="w-full"
               type="primary"
               onClick={() => closeModalDrawer()}
             >
               {props.titleClose || translate('common.close')}
-            </MyButton>
+            </Button>
           </div>
         )}
       </div>

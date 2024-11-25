@@ -1,4 +1,3 @@
-import MyImage from '../MyImage'
 import { RateCustom, TextPriceBase } from './styled'
 import styles from './style.module.scss'
 import Link from 'next/link'
@@ -12,6 +11,7 @@ import {
 } from '@/utils/functions'
 import MySliderSell from '../MySliderSell'
 import useMedia from '@/hook/useMedia'
+import Image from 'next/image'
 
 type ItemType = {
   item: any
@@ -46,12 +46,12 @@ const ItemProduct = ({
           </div>
         )}
 
-        <div className=" m-auto max-w-[85%] relative w-full aspect-square  overflow-hidden">
-          <MyImage
+        <div className="m-auto max-w-[85%] relative w-full aspect-square  overflow-hidden">
+          <Image
+            fill
             src={detectImg(item?.imageMain || images.userDetail.iconUserDetail)}
             alt={`item-${item?.name || href}`}
-            heightImage="auto  "
-            className="group-hover:scale-110 transform transition duration-300 ease-in-out select-none"
+            className="!relative !h-auto group-hover:scale-110 transform transition duration-300 ease-in-out select-none"
           />
         </div>
         <div className="w-full gap-1 flex flex-col">

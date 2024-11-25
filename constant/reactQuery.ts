@@ -5,6 +5,7 @@ export enum QUERY_KEY {
   GetProductShop = 'GetProductShop',
   GetAllNests = 'GetAllNests',
   GetCommentProduction = 'GetCommentProduction',
+  GetCommentDetail = 'GetCommentDetail',
   LengthCartUser = 'LengthCartUser',
   GetProductByID = 'GetProductByID',
   MyCartUser = 'MyCartUser',

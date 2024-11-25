@@ -17,6 +17,8 @@ const AntdProvider = ({ children }: { children: React.ReactNode }) => {
             defaultActiveBg: '#29a200',
             defaultActiveColor: 'white',
             defaultActiveBorderColor: 'transparent',
+            lineHeightSM: 0,
+            fontSizeSM: 13,
           },
           Select: {},
           Collapse: {
@@ -48,6 +50,9 @@ const AntdProvider = ({ children }: { children: React.ReactNode }) => {
           Checkbox: {
             colorBgBase: 'green',
             colorBgTextHover: 'green',
+          },
+          Modal: {
+            titleFontSize: 18,
           },
         },
         hashed: false,

@@ -1,5 +1,4 @@
 import ModalDelete from '@/components/ModalDelete'
-import MyImage from '@/components/MyImage'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import {
@@ -17,6 +16,7 @@ import { ItemCartType } from '../../type'
 import SubAndPlus from '@/components/SubAndPlus'
 import useModalDrawer from '@/hook/useModalDrawer'
 import MyCheckBox from '@/components/MyCheckBox'
+import Image from 'next/image'
 
 const ItemCart = ({
   data,
@@ -82,12 +82,12 @@ const ItemCart = ({
             onClick={handleDelete}
           />
         </div>
-        <div className="aspect-square w-[120px]">
-          <MyImage
-            widthImage={'100%'}
-            heightImage={'auto'}
+        <div className="aspect-square w-[120px] overflow-hidden">
+          <Image
             src={detectImg(data?.more_data?.imageMain?.toString() || '')}
             alt={`item-${data?.more_data?.keyName}`}
+            fill
+            className="!relative !w-full !h-auto"
           />
         </div>
         <div className="flex flex-col flex-1 gap-1">
@@ -140,12 +140,12 @@ const ItemCart = ({
           </div>
         )}
 
-        <div className="w-[100px] flex ">
-          <MyImage
-            widthImage={'auto'}
-            heightImage={'80px'}
+        <div className="w-[100px] justify-center flex ">
+          <Image
             src={detectImg(data?.more_data?.imageMain?.toString() || '')}
             alt={`item-${data.id}`}
+            fill
+            className="!relative !w-auto !h-[80px]"
           />
         </div>
         <div className="flex flex-1 gap-1 flex-col max-w-[calc(100%-130px)] pr-2">

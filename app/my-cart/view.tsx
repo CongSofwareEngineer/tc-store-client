@@ -13,8 +13,9 @@ import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import LoadingGetData from '@/components/LoadingGetData'
 import Link from 'next/link'
-import MyButton from '@/components/MyButton'
 import dynamic from 'next/dynamic'
+import { Button } from 'antd'
+
 const Payment = dynamic(() => import('./Component/Payment'), { ssr: false })
 const MyCartScreen = () => {
   const [listCartFormat, setListCartFormat] = useState<any[]>([])
@@ -132,13 +133,13 @@ const MyCartScreen = () => {
                 </span>
               </div>
               <div className="border-[1px] border-gray-300 w-full" />
-              <MyButton
+              <Button
                 className="w-full"
                 disabled={Number(calculatePayment()) <= 1}
                 onClick={() => setIsPayment(true)}
               >
                 {`${translate('cart.payment')} (${calculateItemPayment()})`}
-              </MyButton>
+              </Button>
             </div>
           </div>
         )}
@@ -191,14 +192,14 @@ const MyCartScreen = () => {
                 </div>
                 <div className="w-full border-[1px] border-gray-200  relative  " />
 
-                <MyButton
+                <Button
                   disabled={Number(calculatePayment()) <= 1}
                   onClick={() => setIsPayment(true)}
                 >
                   {`${translate('cart.payment')} (${numberWithCommas(
                     calculatePayment()
                   )} VNĐ)`}
-                </MyButton>
+                </Button>
               </div>
             </div>
           </>

@@ -1,6 +1,6 @@
 import React from 'react'
 import useLanguage from '@/hook/useLanguage'
-import MyButton from '../MyButton'
+import { Button } from 'antd'
 
 type Props = {
   hasLoadMore?: boolean
@@ -19,9 +19,9 @@ const MyLoadMore = ({
   const { translate } = useLanguage()
   return !loading && hasLoadMore ? (
     <div className="mt-4 w-full flex justify-center items-center">
-      <MyButton onClick={callback} loading={isFetchingNextPage}>
+      <Button onClick={callback} loading={isFetchingNextPage}>
         {title || translate('textPopular.loadMore')}
-      </MyButton>
+      </Button>
     </div>
   ) : (
     <></>

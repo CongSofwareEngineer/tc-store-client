@@ -24,7 +24,7 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
 
   const renderListItem = () => {
     return (
-      <div className="flex gap-3 md:gap-5 overflow-x-auto w-full">
+      <div className="pb-3 flex gap-3 md:gap-5 overflow-x-auto w-full">
         <LoadingGetData
           loading={isLoading}
           type={TYPE_LOADING_GET_DATA.ListProductInHome}
@@ -66,7 +66,7 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
           href={`shop?${FilterAPI.Category}=${type || 'all'}`}
           className="text-medium cursor-pointer hover:font-semibold hover:text-green-600"
         >
-          {translate('textPopular.viewMore')}
+          <span> {translate('textPopular.viewMore')}</span>
           <RightOutlined className="text-sm ml-2" />
         </Link>
       ),

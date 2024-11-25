@@ -2,11 +2,10 @@ import InputForm from '@/components/Form/InputForm'
 import MyForm from '@/components/Form/MyForm'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
-import { Checkbox, Form } from 'antd'
+import { Button, Checkbox, Form } from 'antd'
 import React, { useLayoutEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import useModalDrawer from '@/hook/useModalDrawer'
-import MyButton from '@/components/MyButton'
 import useCheckForm from '@/hook/useCheckForm'
 
 const ModalLogin: React.FC = () => {
@@ -96,14 +95,14 @@ const ModalLogin: React.FC = () => {
           </div>
 
           <Form.Item style={{ display: 'flex', justifyContent: 'center' }}>
-            <MyButton
+            <Button
               loading={loading}
               size="large"
               htmlType="submit"
               className="w-[150px]"
             >
               {translate('common.ok')}
-            </MyButton>
+            </Button>
           </Form.Item>
         </MyForm>
       )}

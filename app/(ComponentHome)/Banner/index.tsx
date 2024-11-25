@@ -1,7 +1,7 @@
-import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import useAos from '@/hook/useAos'
 import useMedia from '@/hook/useMedia'
+import Image from 'next/image'
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 const ContainerList = styled.div`
@@ -83,18 +83,16 @@ const Banner = () => {
               className="flex flex-shrink-0  relative overflow-hidden w-full h-full"
               key={e.url}
             >
-              <MyImage
-                positionImg={'absolute'}
+              <Image
                 alt={`img-banner-${e.url}`}
                 src={e.url}
-                widthImage="auto"
-                heightImage={'auto'}
+                fill
                 style={{
                   minWidth: '100%',
                   minHeight: '100%',
                   maxWidth: 'unset',
                 }}
-                className="select-none"
+                className="select-none !w-auto !h-auto"
               />
             </div>
           )
@@ -107,13 +105,12 @@ const Banner = () => {
     return (
       <>
         <div className="absolute md:top-[50%] top-[45%] left-3 right-[-20px]">
-          <MyImage
+          <Image
             alt={`icon-btnPre`}
             src={images.home.banner.btnSlider}
-            widthImage="45px"
-            heightImage="auto"
-            className="cursor-pointer hover:scale-110"
+            fill
             onClick={() => handleControl()}
+            className="!relative !w-[45px] !h-auto cursor-pointer hover:scale-110"
           />
         </div>
         <div className="absolute md:bottom-[5vh] bottom-[5vw] flex md:gap-4 gap-3 w-full justify-center items-center">
@@ -124,7 +121,7 @@ const Banner = () => {
                 key={`icon-${indexItem}`}
                 className="  hover:scale-110 cursor-pointer md:w-9 w-8  flex justify-center items-center relative"
               >
-                <MyImage
+                <Image
                   alt={`icon-${index}`}
                   src={
                     images.home.banner[
@@ -133,8 +130,8 @@ const Banner = () => {
                         : 'btnPositionUnActive'
                     ]
                   }
-                  widthImage="100%"
-                  heightImage="auto"
+                  fill
+                  className="!relative !w-full !h-auto "
                 />
                 <div className="absolute-center text-white  text-center">
                   {indexItem + 1}
@@ -144,13 +141,12 @@ const Banner = () => {
           })}
         </div>
         <div className="absolute right-5 md:top-[50%] top-[45%]">
-          <MyImage
+          <Image
             alt={`icon-btnPre`}
             src={images.home.banner.btnSlider}
-            widthImage="45px"
-            heightImage="auto"
-            className="cursor-pointer hover:scale-110 rotate-180"
+            fill
             onClick={() => handleControl(false)}
+            className=" rotate-180 !relative !w-[45px] !h-auto cursor-pointer hover:scale-110"
           />
         </div>
       </>

@@ -1,11 +1,11 @@
 import React from 'react'
 import { InfoBillType } from '../../../type'
-import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import { useRouter } from 'next/navigation'
 import { detectImg, numberWithCommas } from '@/utils/functions'
+import Image from 'next/image'
 
 const InfoBill = ({ data, amountBuy }: InfoBillType) => {
   const { translate } = useLanguage()
@@ -32,9 +32,9 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
         <div className="w-full flex gap-4 relative py-2 items-center">
           <div className="w-[100px] ">
             <div className="flex justify-center mt-2">
-              <MyImage
-                widthImage={'auto'}
-                heightImage={'80px'}
+              <Image
+                fill
+                className="!relative !w-auto !h-[80px]"
                 src={detectImg(data?.imageMain?.toString() || '')}
                 alt={`item-${data?.name}`}
               />
@@ -85,9 +85,9 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
         <div className="w-full flex gap-4 relative py-2 items-center">
           <div className="w-[100px] ">
             <div className="flex justify-center mt-2">
-              <MyImage
-                widthImage={'auto'}
-                heightImage={'80px'}
+              <Image
+                fill
+                className="!relative !w-auto !h-[80px]"
                 src={detectImg(data?.imageMain?.toString() || '')}
                 alt={`item-${data?.name}`}
               />
@@ -131,11 +131,11 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
     <div className="bg-white w-full mt-4 flex flex-col  border-[1px] shadow-gray1 border-gray-300 p-3 px-4 pt-4">
       <div className="flex w-full gap-2">
         <div>
-          <MyImage
+          <Image
+            className="!relative !w-[25px] !h-[25px]"
             src={images.icon.iconCart}
             alt="my-cart-bill"
-            widthImage="25px"
-            heightImage="25px"
+            fill
           />
         </div>
         <div className="text-medium font-semibold">

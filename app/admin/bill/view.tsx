@@ -2,7 +2,6 @@ import MyTable from '@/components/MyTable'
 import TextCopy from '@/components/TextCopy'
 import { FILTER_BILL, PAGE_SIZE_LIMIT, REQUEST_TYPE } from '@/constant/app'
 import useBillAdmin from '@/hook/tank-query/Admin/useBillAdmin'
-import useMedia from '@/hook/useMedia'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useSearchBaseAdmin from '@/hook/useSearchBaseAdmin'
 import { formatPrice } from '@/utils/functions'
@@ -13,13 +12,13 @@ import ServerApi from '@/services/serverApi'
 import useLanguage from '@/hook/useLanguage'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
-import MyButton from '@/components/MyButton'
 import useQuerySearch from '@/hook/useQuerySearch'
 import {
   showNotificationError,
   showNotificationSuccess,
 } from '@/utils/notification'
 import { formatDateTime } from '@/utils/momentFunc'
+import { Button } from 'antd'
 
 const BillAdminScreen = () => {
   const { renderContent } = useSearchBaseAdmin({
@@ -30,7 +29,6 @@ const BillAdminScreen = () => {
   })
   const { queries } = useQuerySearch()
   const { data, isLoading } = useBillAdmin(queries)
-  const { isMobile } = useMedia()
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
   const { refreshQuery } = useRefreshQuery()
@@ -180,30 +178,27 @@ const BillAdminScreen = () => {
 
             <div className="flex gap-5 md:flex-row">
               {record?.status === FILTER_BILL.Processing && (
-                <MyButton
+                <Button
+                  className="md:w-[150px] w-full"
                   onClick={() => handleSubmit(record, FILTER_BILL.Delivering)}
-                  widthBtn={isMobile ? '100%' : '150px'}
                 >
                   {translate('myBill.delivering')}
-                </MyButton>
+                </Button>
               )}
               {record?.status === FILTER_BILL.Delivering && (
-                <MyButton
+                <Button
                   onClick={() =>
                     handleSubmit(record, FILTER_BILL.DeliverySuccess)
                   }
-                  widthBtn={isMobile ? '100%' : '150px'}
+                  className="md:w-[150px] w-full"
                 >
                   {translate('myBill.deliverySuccess')}
-                </MyButton>
+                </Button>
               )}
               <div className="flex md:flex-auto flex-1">
-                <MyButton
-                  onClick={() => handleViewDetail(record)}
-                  type="primary"
-                >
+                <Button onClick={() => handleViewDetail(record)} type="primary">
                   {translate('common.view')}
-                </MyButton>
+                </Button>
               </div>
             </div>
           </div>

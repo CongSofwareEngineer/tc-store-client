@@ -1,7 +1,7 @@
 import ButtonForm from '@/components/Form/ButtonForm'
-import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import useLanguage from '@/hook/useLanguage'
+import Image from 'next/image'
 import React from 'react'
 
 const BillFinal = ({
@@ -21,11 +21,11 @@ const BillFinal = ({
     <div className="bg-white w-full  flex flex-col  border-[1px] shadow-gray1 border-gray-300 md:p-3 px-4 py-4">
       <div className="flex w-full gap-2">
         <div>
-          <MyImage
+          <Image
             src={images.icon.iconBill}
             alt="my-cart-bill"
-            widthImage="25px"
-            heightImage="25px"
+            fill
+            className="!relative !w-[25px] !h-[25px]"
           />
         </div>
         <div className="text-medium font-semibold">

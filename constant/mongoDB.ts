@@ -81,3 +81,12 @@ export enum KEY_OPTION_FILTER_DB {
   Cart = 'Cart',
   Comment = 'Comment',
 }
+
+export enum PATH_IMG {
+  MyService = 'my-services',
+  Users = 'users',
+  Comment = 'comment',
+  Products = 'products',
+  ContactMe = 'contact-me',
+  Category = 'category',
+}

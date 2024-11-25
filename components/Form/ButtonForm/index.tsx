@@ -1,10 +1,9 @@
-import { Form } from 'antd'
+import { Button, Form } from 'antd'
 import React from 'react'
 
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import styled from 'styled-components'
-import MyButton from '@/components/MyButton'
 const FormItem = styled(Form.Item)`
   .ant-form-item-row {
     width: 100%;
@@ -40,24 +39,24 @@ const ButtonForm = ({
       className={`w-full flex justify-center items-center gap-4 mt-2 ${className}`}
     >
       <FormItem className={`flex flex-1 ${classNameItem}`}>
-        <MyButton
+        <Button
           disabled={disabledSubmit}
           className={`w-full m-auto ${classBtnSubmit}`}
           loading={loading}
           htmlType="submit"
         >
           {titleSubmit || translate('cart.payment')}
-        </MyButton>
+        </Button>
       </FormItem>
       {!disableClose && (
-        <MyButton
+        <Button
           disabled={loading}
           className={`flex flex-1 w-[150px] ${classBtnCancel}`}
           onClick={closeModalDrawer}
           type="primary"
         >
           {titleClose || translate('common.close')}
-        </MyButton>
+        </Button>
       )}
     </div>
   )

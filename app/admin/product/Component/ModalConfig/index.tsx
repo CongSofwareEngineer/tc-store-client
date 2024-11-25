@@ -20,6 +20,8 @@ import {
   showNotificationSuccess,
 } from '@/utils/notification'
 import AdminApi from '@/services/adminApi'
+import MyBlog from '@/components/MyBlog'
+import { PATH_IMG } from '@/constant/mongoDB'
 
 const ProductConfig = ({ item }: { item: any }) => {
   const { translate } = useLanguage()
@@ -41,7 +43,7 @@ const ProductConfig = ({ item }: { item: any }) => {
       imageMore: item?.imageMore || [],
       imageMain: item?.imageMain || '',
       des: item?.des || '',
-      des2: item?.des2 || '',
+      des2: item?.des2 ? JSON.parse(item?.des2) : {},
       name: item?.name || '',
       keyName: item?.keyName || '',
       linkShoppe: item?.linkShoppe || '',
@@ -97,11 +99,16 @@ const ProductConfig = ({ item }: { item: any }) => {
       })
       if (Object.keys(dataEdit).length > 0) {
         dataEdit.imageDelete = getImgDelete()
+        dataEdit.des2 = JSON.stringify(dataEdit.des2)
         data = await AdminApi.updateProduct(item._id, dataEdit)
       }
       console.log({ dataEdit, formData })
     } else {
-      data = await AdminApi.createProduct(formData)
+      const body = {
+        ...formData,
+        des2: JSON.stringify(formData?.des2),
+      }
+      data = await AdminApi.createProduct(body)
     }
 
     if (data?.data) {
@@ -121,7 +128,7 @@ const ProductConfig = ({ item }: { item: any }) => {
       onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
       formData={formData}
       onFinish={handleSubmit}
-      className="!overflow-auto gap-2"
+      className="!overflow-auto gap-2 md:max-h-[85vh]"
     >
       <div className="flex flex-col gap-2 w-full flex-1 overflow-y-auto ">
         <div className="flex gap-4 w-full">
@@ -267,16 +274,14 @@ const ProductConfig = ({ item }: { item: any }) => {
           required
           typeBtn="area"
         />
-        <div className="w-full md:mt-10" />
-
-        <InputForm
-          classFromItem="w-full"
-          name="des2"
-          label="des2"
-          required
-          typeBtn="area"
-          rows={6}
-        />
+        <div className="w-full md:mt-16 min-h-[300px]">
+          <div className="font-bold">Info detail : </div>
+          <MyBlog
+            pathFile={PATH_IMG.Products}
+            value={formData?.des2}
+            setValue={(e) => setFormData({ ...formData, des2: e })}
+          />
+        </div>
       </div>
 
       <div className="flex flex-1 w-full">

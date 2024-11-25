@@ -1,34 +1,34 @@
-import MyImage from '@/components/MyImage';
-import { images } from '@/configs/images';
-import useLanguage from '@/hook/useLanguage';
-import useMedia from '@/hook/useMedia';
-import { detectImg, numberWithCommas } from '@/utils/functions';
-import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import { images } from '@/configs/images'
+import useLanguage from '@/hook/useLanguage'
+import useMedia from '@/hook/useMedia'
+import { detectImg, numberWithCommas } from '@/utils/functions'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 
 const ViewListOrder = ({ dataCart }: { dataCart: any[] }) => {
-  const { isMobile } = useMedia();
-  const { translate, getLabelCategory } = useLanguage();
-  const router = useRouter();
+  const { isMobile } = useMedia()
+  const { translate, getLabelCategory } = useLanguage()
+  const router = useRouter()
 
-  const [listDataValid, setListDataValid] = useState<any[]>([]);
+  const [listDataValid, setListDataValid] = useState<any[]>([])
 
   useEffect(() => {
-    const arrTemp = dataCart.filter((e) => e?.selected);
-    console.log({ arrTemp });
-    setListDataValid(arrTemp);
-  }, [dataCart]);
+    const arrTemp = dataCart.filter((e) => e?.selected)
+    console.log({ arrTemp })
+    setListDataValid(arrTemp)
+  }, [dataCart])
 
   const handleClickName = (data: any) => {
-    router.push(`/shop/${data?.keyName}`);
-  };
+    router.push(`/shop/${data?.keyName}`)
+  }
 
   const getItemForShow = (e: any) => {
     if (e?.moreConfig) {
-      return e?.moreConfig;
+      return e?.moreConfig
     }
-    return e.more_data || {};
-  };
+    return e.more_data || {}
+  }
 
   const renderItemMobile = () => {
     return (
@@ -54,9 +54,9 @@ const ViewListOrder = ({ dataCart }: { dataCart: any[] }) => {
               >
                 <div className="w-[100px] ">
                   <div className="flex justify-center mt-2">
-                    <MyImage
-                      widthImage={'auto'}
-                      heightImage={'80px'}
+                    <Image
+                      fill
+                      className="!relative !w-auto !h-[80px]"
                       src={detectImg(getItemForShow(e)?.imageMain)}
                       alt={`item-${getItemForShow(e)?.name}`}
                     />
@@ -85,12 +85,12 @@ const ViewListOrder = ({ dataCart }: { dataCart: any[] }) => {
                   </div>
                 </div>
               </div>
-            );
+            )
           })}
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   const renderItemDesktop = () => {
     return (
@@ -125,9 +125,9 @@ const ViewListOrder = ({ dataCart }: { dataCart: any[] }) => {
               >
                 <div className="w-[100px] ">
                   <div className="flex justify-center mt-2">
-                    <MyImage
-                      widthImage={'auto'}
-                      heightImage={'80px'}
+                    <Image
+                      className="!relative !h-[80px] !w-auto"
+                      fill
                       src={detectImg(getItemForShow(e)?.imageMain)}
                       alt={`item-${getItemForShow(e)?.name}`}
                     />
@@ -164,22 +164,22 @@ const ViewListOrder = ({ dataCart }: { dataCart: any[] }) => {
                   {numberWithCommas(e.amount * getItemForShow(e)?.price)} VNĐ
                 </div>
               </div>
-            );
+            )
           })}
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   return (
     <div className="bg-white w-full mt-4 flex flex-col  border-[1px] shadow-gray1 border-gray-300 p-3 px-4 pt-4">
       <div className="flex w-full gap-2">
         <div>
-          <MyImage
+          <Image
             src={images.icon.iconCart}
             alt="my-cart-bill"
-            widthImage="25px"
-            heightImage="25px"
+            fill
+            className="!relative !w-[25px] !h-[25px]"
           />
         </div>
         <div className="text-medium font-semibold">
@@ -191,7 +191,7 @@ const ViewListOrder = ({ dataCart }: { dataCart: any[] }) => {
         {isMobile ? renderItemMobile() : renderItemDesktop()}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ViewListOrder;
+export default ViewListOrder

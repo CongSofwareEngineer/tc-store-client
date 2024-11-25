@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect, useRef } from 'react'
 import Header from '../Header'
-import 'react-toastify/dist/ReactToastify.css'
 import { useAppDispatch } from '@/redux/store'
 import { setMenuCategory } from '@/redux/categoryMenuSlice'
 import useCheckPatchName from '@/hook/tank-query/useCheckPatchName'

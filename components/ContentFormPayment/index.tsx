@@ -3,10 +3,10 @@ import useUserData from '@/hook/useUserData'
 import React, { useEffect, useState } from 'react'
 import useLanguage from '@/hook/useLanguage'
 import { images } from '@/configs/images'
-import MyImage from '../MyImage'
 import OptionVnLocation from '../OptionVnLocation'
 import InputAreaForm from '../Form/InputAreaForm'
 import InputForm from '../Form/InputForm'
+import Image from 'next/image'
 
 const ContentFormPayment = ({
   onChange,
@@ -30,11 +30,11 @@ const ContentFormPayment = ({
     <div className="bg-white flex flex-col w-full border-[1px] shadow-gray1 border-gray-300  px-4 pt-4 lg:pb-0 pb-3">
       <div className="flex w-full gap-2">
         <div>
-          <MyImage
+          <Image
             src={images.userDetail.iconUserDetail}
             alt="my-cart-infoReceived"
-            widthImage="25px"
-            heightImage="25px"
+            fill
+            className="!relative !w-[25px] !h-[25px]"
           />
         </div>
         <div className="text-medium font-semibold">
