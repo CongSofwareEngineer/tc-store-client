@@ -23,10 +23,10 @@ import {
   showNotificationError,
   showNotificationSuccess,
 } from '@/utils/notification'
+import useCommentDetail from '@/hook/tank-query/useCommentDetail'
 
 const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
   const [loading, setLoading] = useState(false)
-  const [loadingGetData, setLoadingGetData] = useState(true)
   const [formData, setFormData] = useState<{ [key: string]: any } | null>(null)
   const [dataExited, setDataExited] = useState<{ [key: string]: any } | null>(
     null
@@ -37,6 +37,9 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
   const { checkNumberPhone } = useCheckForm()
   const { refreshQuery } = useRefreshQuery()
   const { closeModalDrawer } = useModalDrawer()
+  const { data: dataApi, isLoading: loadingApi } = useCommentDetail(
+    dataItem._id
+  )
 
   useEffect(() => {
     const getData = async () => {
@@ -48,22 +51,16 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
         rate: 5,
         listImg: [],
       }
-      if (userData) {
-        const res = await ClientApi.getComments(
-          `${dataItem._id}/${userData?.sdt}`
-        )
-        if (res?.data) {
-          initData.listImg = res.data.listImg
-          initData.note = res.data.note
-          initData.rate = res.data.rate
-          setDataExited(res.data)
-        }
+      if (userData && dataApi) {
+        initData.listImg = dataApi.listImg
+        initData.note = dataApi.note
+        initData.rate = dataApi.rate
+        setDataExited(dataApi)
       }
       setFormData(initData)
-      setLoadingGetData(false)
     }
     getData()
-  }, [userData, dataItem])
+  }, [userData, dataItem, dataApi])
 
   const getDataToUpdate = () => {
     const data: { [key: string]: any } = {}
@@ -149,8 +146,8 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
 
   return (
     <div className="flex flex-col gap-3 w-full justify-center items-center">
-      {loadingGetData && <MyLoading />}
-      {!loadingGetData && formData && (
+      {loadingApi && <MyLoading />}
+      {!loadingApi && formData && (
         <MyForm
           onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
           className="w-full gap-0"
