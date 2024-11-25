@@ -92,7 +92,7 @@ const MyBlog = ({
           optimizations: {
             provider: 'cloudinary',
           },
-          async onUpload(file) {
+          async onUpload(file: File) {
             const fileImg = await getBase64(file, () => {})
 
             await ClientApi.uploadImg(fileImg, pathFile)

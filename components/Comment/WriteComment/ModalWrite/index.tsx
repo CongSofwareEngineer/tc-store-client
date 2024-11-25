@@ -74,6 +74,15 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
         }
       }
     }
+
+    data.listImgDelete = dataExited?.listImg.filter((e: any) => {
+      const isExited = formData?.listImg.find((eApi: any) => {
+        return eApi === e
+      })
+
+      return !isExited
+    })
+
     return data
   }
 

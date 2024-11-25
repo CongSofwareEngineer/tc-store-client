@@ -58,6 +58,7 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
 
   const getDataToUpdate = () => {
     const dataFile: { [key: string]: any } = {}
+
     if (des !== dataGetApi?.note) {
       dataFile.note = des
     }
@@ -65,9 +66,16 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
       dataFile.rate = rate
     }
 
-    if (listImgFeeBack !== dataGetApi?.listImg) {
-      dataFile.listImg = listImgFeeBack
-    }
+    dataFile.listImg = listImgFeeBack
+
+    dataFile.listImgDelete = dataGetApi?.listImg.filter((e: any) => {
+      const isExited = listImgFeeBack.find((eApi) => {
+        return eApi === e
+      })
+
+      return !isExited
+    })
+
     return dataFile
   }
 
