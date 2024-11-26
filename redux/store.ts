@@ -44,6 +44,7 @@ export const makeStore = () => {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
       }),
+    devTools: process.env.NODE_ENV === 'production',
   })
   if (isClient) {
     return storeRedux
