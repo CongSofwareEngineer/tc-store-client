@@ -1,48 +1,35 @@
-import { FILTER_BILL, PAGE_SIZE_LIMIT } from '@/constant/app'
+import { PAGE_SIZE_LIMIT } from '@/constant/app'
 import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery'
-import AdminApi from '@/services/adminApi'
 import ClientApi from '@/services/clientApi'
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 
 const getData = async ({
   queryKey,
-  pageParam = 1,
+  pageParam,
 }: {
   queryKey: any
-  pageParam: any
+  pageParam: number
 }): Promise<TypeHookReactQuery> => {
   const query = queryKey[2]
-  const limit = queryKey[1]
-  const { dateEnd, dateStart, sdt, status } = query
+  const { name } = query
 
-  let queryUrl = `?page=${pageParam}&limit=${limit}`
+  let queryUrl = `?page=${pageParam}&limit=${queryKey[1]}&category=nest`
 
-  if (dateEnd) {
-    queryUrl += `&dateEnd=${dateEnd[0]}`
+  if (name) {
+    queryUrl += `&name=${name.toString()}`
   }
-  if (dateStart) {
-    queryUrl += `&dateStart=${dateStart[0]}`
-  }
-  if (sdt) {
-    queryUrl += `&sdt=${sdt}`
-  }
-  if (status && status !== FILTER_BILL.All) {
-    queryUrl += `&status=${status}`
-  }
-
-  const dataServer = await AdminApi.getRevenue(queryUrl)
+  const dataServer = await ClientApi.getProducts(queryUrl)
 
   return {
     data: dataServer?.data || [],
-    page: 1,
+    page: pageParam,
   }
 }
-
-const useRevenue = (pageSize = PAGE_SIZE_LIMIT, query: any) => {
+const useNests = (pageSize = PAGE_SIZE_LIMIT, query: any) => {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: [QUERY_KEY.RevenueAdmin, pageSize, query],
+      queryKey: [QUERY_KEY.GetNests, pageSize, query],
       initialPageParam: 1,
       queryFn: getData,
       getNextPageParam: (lastPage: { data: any; page: number }) => {
@@ -70,4 +57,4 @@ const useRevenue = (pageSize = PAGE_SIZE_LIMIT, query: any) => {
   }
 }
 
-export default useRevenue
+export default useNests

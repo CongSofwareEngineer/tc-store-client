@@ -30,6 +30,9 @@ const Nav = () => {
         <LinkCustom $isSelected={pathname === '/shop'} href={'/shop'}>
           {translate('header.shop')}
         </LinkCustom>
+        <LinkCustom $isSelected={pathname === '/nests'} href={'/nests'}>
+          {translate('textPopular.nest')}
+        </LinkCustom>
         <LinkCustom $isSelected={pathname === '/contact'} href={'/contact'}>
           {translate('header.contact')}
         </LinkCustom>

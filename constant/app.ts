@@ -14,6 +14,7 @@ export enum TYPE_LOADING_GET_DATA {
   MyCart = 'MyCart',
   ShopDetail = 'ShopDetail',
   MyProfile = 'MyProfile',
+  ShopNests = 'ShopNests',
   ListProductInHome = 'ListProductInHome',
 }
 

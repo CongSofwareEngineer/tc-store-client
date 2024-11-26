@@ -20,7 +20,7 @@ import ModalViewBillDetail from './Component/ModalViewBillDetail'
 import { ColumnsType } from 'antd/es/table'
 
 const RevenueScreen: NextPage = () => {
-  const { renderContent } = useSearchBaseAdmin({
+  const { renderContent, formData } = useSearchBaseAdmin({
     admin: false,
     category: false,
     keyName: false,
