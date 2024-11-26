@@ -23,8 +23,8 @@ export async function generateMetadata(
   const metaData = generateMetaBase({
     dataBase: dataBase?.value,
     image: data?.value?.imageMain,
-    title: data?.value?.name,
-    des: data?.value?.des,
+    title: data?.value?.titleSeo || data?.value?.name,
+    des: data?.value?.desSeo || data?.value?.des,
     override: true,
   })
   return metaData
