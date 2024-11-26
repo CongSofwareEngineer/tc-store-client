@@ -199,11 +199,11 @@ const RevenueScreen: NextPage = () => {
         data={data || []}
         limit={PAGE_SIZE_LIMIT}
         total={20}
-        extra={
-          <Button onClick={() => handleUpdate()}>
-            {translate('common.addNew')}
-          </Button>
-        }
+        // extra={
+        //   <Button onClick={() => handleUpdate()}>
+        //     {translate('common.addNew')}
+        //   </Button>
+        // }
       />
     </div>
   )

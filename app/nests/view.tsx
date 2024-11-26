@@ -1,9 +1,8 @@
 'use client'
 import useLanguage from '@/hook/useLanguage'
-import React, { useLayoutEffect } from 'react'
+import React from 'react'
 import ItemNest from './Component/Item'
 import useQuerySearch from '@/hook/useQuerySearch'
-import { useRouter } from 'next/navigation'
 import { PAGE_SIZE_LIMIT, TYPE_LOADING_GET_DATA } from '@/constant/app'
 import useNests from '@/hook/tank-query/useNests'
 import LoadingGetData from '@/components/LoadingGetData'
@@ -14,7 +13,6 @@ const PageNestsScreen = () => {
   const { data, isLoading, loadMore, hasNextPage, isFetchingNextPage } =
     useNests(PAGE_SIZE_LIMIT, queries)
   const { translate } = useLanguage()
-  const router = useRouter()
 
   return (
     <div className="w-full flex flex-col gap-4">
