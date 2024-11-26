@@ -12,6 +12,8 @@ export enum QUERY_KEY {
   MyBillUser = 'MyBillUser',
   AllProvincesVn = 'AllProvincesVn',
   BillAdmin = 'BillAdmin',
+  RevenueAdmin = 'RevenueAdmin',
+  GetNests = 'GetNests',
 }
 
 export type TypeHookReactQuery = {

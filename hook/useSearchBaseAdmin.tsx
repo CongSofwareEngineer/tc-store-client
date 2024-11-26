@@ -11,12 +11,12 @@ import { useAppSelector } from '@/redux/store'
 import useMedia from './useMedia'
 import { isObject } from '@/utils/functions'
 import useQuerySearch from './useQuerySearch'
-import MyRangePicker from '@/components/MyRangePicker'
 import MyDatePickerForm from '@/components/Form/MyDatePickerForm'
 import dayjs from 'dayjs'
 import MyButton from '@/components/MyButton'
+import StatusFormBill from '@/components/Form/StatusFormBill'
+import { FILTER_BILL } from '@/constant/app'
 
-const dateStart = moment(Date.now()).add(-7, 'days')
 type Props = {
   dateStart?: boolean
   dateEnd?: boolean
@@ -76,7 +76,7 @@ const useSearchBaseAdmin = (param?: Props) => {
         id: '',
         sdt: '',
         keyName: '',
-        status: '',
+        status: FILTER_BILL.All,
         oneDate: moment().format('YYYY-MM-DD'),
         admin: false,
         dateStart: dayjs(
@@ -105,7 +105,6 @@ const useSearchBaseAdmin = (param?: Props) => {
     setFormData(initData)
     router.push(pathPage)
   }
-  console.log({ formDataSreach: formData, config })
 
   const handleSubmit = () => {
     let query = ''
@@ -144,10 +143,6 @@ const useSearchBaseAdmin = (param?: Props) => {
         }
       }
     })
-    console.log('====================================')
-    console.log({ query })
-    console.log('====================================')
-
     router.push(`${pathPage}?${query}`)
   }
 
@@ -187,6 +182,14 @@ const useSearchBaseAdmin = (param?: Props) => {
               {config.category && (
                 <div className="md:w-[48%] w-full">
                   <CategoryForm label="category" name="category" />
+                </div>
+              )}
+              {config.status && (
+                <div className="md:w-[48%] w-full">
+                  <StatusFormBill
+                    label={translate('textPopular.status')}
+                    name="status"
+                  />
                 </div>
               )}
               {config.admin && (

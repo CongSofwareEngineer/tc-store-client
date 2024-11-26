@@ -1,5 +1,6 @@
 // import lodash from 'lodash'
 
+import { COLOR, FILTER_BILL } from '@/constant/app'
 import BigNumber from 'bignumber.js'
 
 export const cloneData = (data: any, defaultValue: any = '') => {
@@ -223,5 +224,18 @@ export function uppercase(value: any) {
     return value.toUpperCase()
   } catch (error) {
     return value
+  }
+}
+
+export const getColorStatus = (key: FILTER_BILL) => {
+  switch (key) {
+    case FILTER_BILL.Processing:
+      return COLOR.red
+
+    case FILTER_BILL.Delivering:
+      return COLOR.blue1
+
+    default:
+      return COLOR.green1
   }
 }

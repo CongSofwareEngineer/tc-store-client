@@ -49,6 +49,11 @@ const AdminApi = {
       body,
     })
   },
+  getRevenue: async (queryUrl: string) => {
+    return fetchData({
+      url: `/revenue/admin/limit${queryUrl}`,
+    })
+  },
 }
 
 export default AdminApi

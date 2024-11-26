@@ -1,31 +1,5 @@
-import { COLOR_CONFIG } from '@/constant/app'
 import useLanguage from '@/hook/useLanguage'
 import React, { AriaAttributes } from 'react'
-import styled from 'styled-components'
-const ContainerMySliderSell = styled.div`
-  position: relative;
-  background-color: rgba(6, 191, 123, 0.2);
-  border-radius: 8px;
-  width: 100%;
-`
-const SellMySliderSell = styled.div<{ width: any }>`
-  width: ${(props) => props.width}%;
-  position: absolute;
-  z-index: 1;
-  background-color: ${COLOR_CONFIG.green1};
-  height: 100%;
-  top: 0;
-  left: 0;
-  border-radius: 8px;
-`
-const TextMySliderSell = styled.div`
-  text-align: center;
-  position: relative;
-  z-index: 2;
-  @media screen and (max-width: 768px) {
-    font-size: 12px;
-  }
-`
 
 type MySliderSellType = {
   total?: number
@@ -40,16 +14,26 @@ const MySliderSell = ({
   className,
   ...props
 }: MySliderSellType) => {
-  const width = (sell / total) * 100
+  let width = (sell / total) * 100
+  if (width < 3) {
+    width = 2
+  }
+
   const { translate } = useLanguage()
 
   return (
-    <ContainerMySliderSell className={className} {...props}>
-      <TextMySliderSell>
+    <div
+      className={`relative rounded-lg py-1 w-full bg-[#06bf7b33] ${className}`}
+      {...props}
+    >
+      <div className="text-center relative z-[2] md:text-[13px] text-xs">
         {text || translate('productDetail.sold')}
-      </TextMySliderSell>
-      <SellMySliderSell width={width} />
-    </ContainerMySliderSell>
+      </div>
+      <div
+        style={{ width: `${width}%` }}
+        className={`absolute top-0 z-[1] left-0 rounded-lg bg-[#66FF33] h-full`}
+      />
+    </div>
   )
 }
 
