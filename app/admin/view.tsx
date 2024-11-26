@@ -18,9 +18,10 @@ import { NextPage } from 'next'
 import React from 'react'
 import ModalViewBillDetail from './Component/ModalViewBillDetail'
 import { ColumnsType } from 'antd/es/table'
+import GraphRevenue from './Component/GraphRevenue'
 
 const RevenueScreen: NextPage = () => {
-  const { renderContent, formData } = useSearchBaseAdmin({
+  const { renderContent } = useSearchBaseAdmin({
     admin: false,
     category: false,
     keyName: false,
@@ -45,6 +46,9 @@ const RevenueScreen: NextPage = () => {
     switch (key) {
       case FILTER_BILL.Processing:
         return translate('myBill.processing')
+
+      case FILTER_BILL.Canceled:
+        return translate('common.cancelOrder')
 
       case FILTER_BILL.Delivering:
         return translate('myBill.delivering')
@@ -91,6 +95,10 @@ const RevenueScreen: NextPage = () => {
         dataIndex: 'status',
         filters: [
           {
+            text: getStatus(FILTER_BILL.DeliverySuccess),
+            value: FILTER_BILL.DeliverySuccess,
+          },
+          {
             text: getStatus(FILTER_BILL.Delivering),
             value: FILTER_BILL.Delivering,
           },
@@ -99,8 +107,8 @@ const RevenueScreen: NextPage = () => {
             value: FILTER_BILL.Processing,
           },
           {
-            text: getStatus(FILTER_BILL.DeliverySuccess),
-            value: FILTER_BILL.DeliverySuccess,
+            text: getStatus(FILTER_BILL.Canceled),
+            value: FILTER_BILL.Canceled,
           },
         ],
         onFilter: (value, record) => record.status === value,
@@ -189,7 +197,7 @@ const RevenueScreen: NextPage = () => {
   return (
     <div className="flex flex-col gap-3 w-full">
       {renderContent()}
-
+      <GraphRevenue data={data} />
       <MyTable
         loadMore={loadMore}
         hasMoreData={hasNextPage}
