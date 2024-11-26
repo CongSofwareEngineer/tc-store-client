@@ -31,6 +31,14 @@ export const metadata: Metadata = {
     'TC Store',
     'TC Shop',
     'Cà phê Gia Lai',
+    'yến sào',
+    'laptop',
+    'cây cảnh',
+    'nước hoa',
+    'cà phê',
+    'cửa hàng đa sản phẩm',
+    'mua sắm online',
+    'sản phẩm chất lượng'
   ],
   openGraph: {
     title: BaseMeta.title,
@@ -122,6 +130,22 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
                   gtag('js', new Date());
                 
                   gtag('config', 'G-QH99F8WFPW');`,
+              }}
+            />
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "WebSite",
+                  "name": "TC Store",
+                  "url": "https://tcstore.vercel.app",
+                  "description": "Chào mừng đến với TS Store! Khám phá đa dạng sản phẩm từ yến sào cao cấp, laptop mới nhất, cây cảnh xanh mát, nước hoa sang trọng đến cà phê thơm ngon và các sản phẩm chất lượng khác. Mua sắm dễ dàng, dịch vụ tận tâm và ưu đãi hấp dẫn đang chờ bạn!",
+                  "publisher": {
+                    "@type": "Organization",
+                    "name": "TC Store"
+                  },
+                }),
               }}
             />
           </>
