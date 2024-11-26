@@ -40,6 +40,21 @@ const NavMobile = () => {
       >
         {translate('header.shop')}
       </LinkCustom>
+
+      <LinkCustom
+        onClick={closeModalDrawer}
+        $isSelected={pathname === '/nests'}
+        href={'/nests'}
+      >
+        {translate('textPopular.nest')}
+      </LinkCustom>
+      <LinkCustom
+        onClick={closeModalDrawer}
+        $isSelected={pathname === '/shoes'}
+        href={'/shoes'}
+      >
+        {translate('textPopular.shoes')}
+      </LinkCustom>
       <LinkCustom
         onClick={closeModalDrawer}
         $isSelected={pathname === '/contact'}
