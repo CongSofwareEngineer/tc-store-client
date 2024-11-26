@@ -49,6 +49,7 @@
     "autoprefixer": "^10.4.19",
     "axios": "^1.7.2",
     "bignumber.js": "^9.1.2",
+    "chart.js": "^4.4.6",
     "class-variance-authority": "^0.7.0",
     "cloudinary": "^2.2.0",
     "clsx": "^2.1.1",
