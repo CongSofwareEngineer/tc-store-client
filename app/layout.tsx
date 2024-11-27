@@ -168,12 +168,15 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
       </head>
       <body className={inter.className}>
         {process.env.NEXT_PUBLIC_MODE_PRODUCTION && (
-          <noscript
-            dangerouslySetInnerHTML={{
-              __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T7S7DKJ4"
+          <>
+            <noscript
+              dangerouslySetInnerHTML={{
+                __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T7S7DKJ4"
             height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
-            }}
-          />
+              }}
+            />
+            <GoogleTagManager gtmId="GTM-T7S7DKJ4" />
+          </>
         )}
 
         <ReactQueryProvider>
@@ -196,10 +199,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
         <SpeedInsights />
       </body>
       {process.env.NEXT_PUBLIC_MODE_PRODUCTION && (
-        <>
-          <GoogleAnalytics gaId="G-QH99F8WFPW" />
-          <GoogleTagManager gtmId="GTM-T7S7DKJ4" />
-        </>
+        <GoogleAnalytics gaId="G-QH99F8WFPW" />
       )}
     </html>
   )
