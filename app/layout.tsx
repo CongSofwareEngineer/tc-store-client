@@ -16,6 +16,7 @@ const inter = Inter({ subsets: ['latin'] })
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import ClientApi from '@/services/clientApi'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
+import Script from 'next/script'
 
 const BaseMeta = {
   title: process.env.NEXT_PUBLIC_TITLE,
@@ -146,7 +147,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
                   gtag('config', 'G-QH99F8WFPW');`,
               }}
             /> */}
-            <script
+            <Script
               type="application/ld+json"
               dangerouslySetInnerHTML={{
                 __html: JSON.stringify({
