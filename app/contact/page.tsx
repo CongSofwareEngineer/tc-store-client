@@ -7,9 +7,9 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
   const dataBase = await parent
   const metaData = generateMetaBase({
     dataBase,
-    title: 'Liên Hệ TS Store - Kết Nối Nhanh, Hỗ Trợ Tận Tâm',
+    title: 'Liên Hệ TC Store - Kết Nối Nhanh, Hỗ Trợ Tận Tâm',
     override: true,
-    des: 'Cần tư vấn hoặc giải đáp thắc mắc? Liên hệ TS Store ngay để được hỗ trợ nhanh chóng. Chúng tôi luôn sẵn sàng giúp bạn với các sản phẩm yến sào, laptop, cây cảnh, nước hoa, cà phê và hơn thế nữa!'
+    des: 'Cần tư vấn hoặc giải đáp thắc mắc? Liên hệ TC Store ngay để được hỗ trợ nhanh chóng. Chúng tôi luôn sẵn sàng giúp bạn với các sản phẩm yến sào, laptop, cây cảnh, nước hoa, cà phê và hơn thế nữa!',
   })
   return metaData
 }

@@ -7,7 +7,7 @@ module.exports = {
     let priority = 0.7; // Mặc định tất cả trang sẽ có priority = 0.7
 
     // Đặt priority = 1 cho các trang cụ thể
-    if (['/', '/shop', '/register', '/contact', '/nests'].includes(path)) {
+    if (['/', '/shop', '/register', '/contact', '/nests', '/shoes'].includes(path)) {
       priority = 1.0;
     }
 
