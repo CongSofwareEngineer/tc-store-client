@@ -1,13 +1,12 @@
 import ImageAdmin from '@/components/ImageAdmin'
 import { ItemDetailType } from '@/components/InfoItemDetail/type'
-import LoadingGetData from '@/components/LoadingGetData'
 import MyImage from '@/components/MyImage'
 import MyLoadMore from '@/components/MyLoadMore'
-import { TYPE_LOADING_GET_DATA } from '@/constant/app'
 import useComment from '@/hook/tank-query/useComment'
 import { detectAvatar, ellipsisText } from '@/utils/functions'
 import { Rate } from 'antd'
 import React from 'react'
+import LoadingData from './LoadingData'
 
 const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
   const { data, isLoading, hasNextPage, isFetchingNextPage, loadMore } =
@@ -18,10 +17,7 @@ const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
       <div className="text-medium font-bold">Bình luận</div>
 
       {isLoading ? (
-        <LoadingGetData
-          type={TYPE_LOADING_GET_DATA.CommentUser}
-          loading={isLoading}
-        />
+        <LoadingData loading={isLoading} />
       ) : (
         <div className="flex flex-col gap-2 max-h-[600px] overflow-y-auto">
           {data.map((e) => {

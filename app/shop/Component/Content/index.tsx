@@ -1,10 +1,10 @@
 import ItemProduct from '@/components/ItemProduct'
-import LoadingGetData from '@/components/LoadingGetData'
 import MyLoadMore from '@/components/MyLoadMore'
-import { PAGE_SIZE_LIMIT, TYPE_LOADING_GET_DATA } from '@/constant/app'
+import { PAGE_SIZE_LIMIT } from '@/constant/app'
 import useAllProduct from '@/hook/tank-query/useAllProduct'
 import useQuerySearch from '@/hook/useQuerySearch'
 import React from 'react'
+import LoadingData from '../LoadingData'
 
 const Content = () => {
   const { queries } = useQuerySearch()
@@ -40,7 +40,7 @@ const Content = () => {
         isFetchingNextPage={isFetchingNextPage}
       />
 
-      <LoadingGetData type={TYPE_LOADING_GET_DATA.Shop} loading={isLoading} />
+      <LoadingData loading={isLoading} />
     </>
   )
 }
