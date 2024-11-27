@@ -15,6 +15,7 @@ import DrawerProvider from '@/components/DrawerProvider'
 const inter = Inter({ subsets: ['latin'] })
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import ClientApi from '@/services/clientApi'
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 
 const BaseMeta = {
   title: process.env.NEXT_PUBLIC_TITLE,
@@ -109,7 +110,19 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
               name="google-site-verification"
               content="Sr2q2elTmvBwx7P3aM-ZiaH-3yjcxuGHrMI9H9iCewI"
             />
-            <script
+            {/* <Script
+              async
+              src="https://www.googletagmanager.com/gtag/js?id=G-QH99F8WFPW"
+              id="google-analytics"
+              strategy="afterInteractive"
+            >
+              {` window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                
+                  gtag('config', 'G-QH99F8WFPW');`}
+            </Script> */}
+            {/* <script
               dangerouslySetInnerHTML={{
                 __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -121,8 +134,9 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
             <script
               async
               src="https://www.googletagmanager.com/gtag/js?id=G-QH99F8WFPW"
-            />
-            <script
+            /> */}
+
+            {/* <script
               dangerouslySetInnerHTML={{
                 __html: ` 
                   window.dataLayer = window.dataLayer || [];
@@ -131,7 +145,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
                 
                   gtag('config', 'G-QH99F8WFPW');`,
               }}
-            />
+            /> */}
             <script
               type="application/ld+json"
               dangerouslySetInnerHTML={{
@@ -181,6 +195,12 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
         </ReactQueryProvider>
         <SpeedInsights />
       </body>
+      {process.env.NEXT_PUBLIC_MODE_PRODUCTION && (
+        <>
+          <GoogleAnalytics gaId="G-QH99F8WFPW" />
+          <GoogleTagManager gtmId="GTM-T7S7DKJ4" />
+        </>
+      )}
     </html>
   )
 }
