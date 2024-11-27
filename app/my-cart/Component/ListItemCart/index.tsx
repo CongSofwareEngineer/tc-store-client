@@ -3,10 +3,9 @@ import { ListItemCartType } from '../../type'
 import useMedia from '@/hook/useMedia'
 import TitleItem from '../ItemCart/titleItem'
 import ItemCart from '../ItemCart'
-import MyLoading from '@/components/MyLoading'
 import useLanguage from '@/hook/useLanguage'
-
 import MyCheckBox from '@/components/MyCheckBox'
+import { LoadingOutlined } from '@ant-design/icons'
 
 const ListItemCart = ({
   dataCart,
@@ -34,7 +33,11 @@ const ListItemCart = ({
             />
           </table>
         )}
-        {loading && <MyLoading className="my-5" />}
+        {loading && (
+          <div className="my-5 text-medium">
+            <LoadingOutlined />
+          </div>
+        )}
         {dataCart.map((e, index) => {
           return (
             <ItemCart
@@ -83,7 +86,9 @@ const ListItemCart = ({
         })}
         {loading && (
           <div className="flex justify-center w-full">
-            <MyLoading className="my-5" />
+            <div className="my-5 text-medium">
+              <LoadingOutlined />
+            </div>
           </div>
         )}
       </>
