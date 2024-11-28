@@ -12,12 +12,14 @@ import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import ObserverService from '@/services/observer'
 import { OBSERVER_KEY } from '@/constant/app'
+import Image from 'next/image'
+import { detectAvatar } from '@/utils/functions'
 const CartUser = dynamic(() => import('./cartUser'), { ssr: false })
 const Account = () => {
   const { openModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
   const { isLogin, userData } = useUserData()
-  const { isMobile } = useMedia()
+  const { isMobile } = useMedia(900)
   const route = useRouter()
 
   const handleLogin = () => {
@@ -60,7 +62,15 @@ const Account = () => {
       <div className="flex gap-2 items-center">
         <CartUser />
         {isLogin ? (
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center pr-1">
+            {userData?.avatar && (
+              <Image
+                fill
+                alt="user-avatar"
+                className="!relative !w-6 !h-6 rounded-[50%]"
+                src={detectAvatar(userData?.avatar)}
+              />
+            )}
             <div>{userData?.name}</div>
           </div>
         ) : (
@@ -109,8 +119,19 @@ const Account = () => {
               <CartUser />
 
               <Dropdown menu={{ items }}>
-                <div className="flex gap-3">
-                  {`${userData?.name || userData?.sdt}`}
+                <div className="flex gap-2 items-center ">
+                  {userData?.avatar && (
+                    <Image
+                      fill
+                      alt="user-avatar"
+                      className="!relative !w-6 !h-6 rounded-[50%]"
+                      src={detectAvatar(userData?.avatar)}
+                    />
+                  )}
+
+                  <div className="whitespace-nowrap mr-1 max-w-[120px] text-ellipsis overflow-hidden">
+                    {`${userData?.name || userData?.sdt}`}
+                  </div>
                   <DownOutlined />
                 </div>
               </Dropdown>

@@ -17,8 +17,14 @@ type PropsType = {
   keyType: string
   callBack?: (param?: string) => Promise<void>
   initValue?: string
+  maxLength?: number
 }
-const ModalUpdateUser = ({ keyType, callBack, initValue }: PropsType) => {
+const ModalUpdateUser = ({
+  keyType,
+  callBack,
+  initValue,
+  maxLength = 20,
+}: PropsType) => {
   const { refreshLogin, userData } = useUserData()
   const { closeModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
@@ -128,10 +134,12 @@ const ModalUpdateUser = ({ keyType, callBack, initValue }: PropsType) => {
               rows={2}
               value={valueNew?.toString()}
               onChange={(e) => setValueNew(e.target.value)}
+              maxLength={maxLength}
+              showCount
             />
           )}
         </div>
-        <div className="w-full mt-3">
+        <div className="w-full mt-6">
           <MyButton className="w-full" loading={loading} onClick={handleSubmit}>
             {translate('common.save')}
           </MyButton>

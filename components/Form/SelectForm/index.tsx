@@ -20,6 +20,7 @@ type InputFormType = {
   options: Array<PropsSelectItem> | []
   configSelect?: SelectProps
   validator?: (value?: any) => string | null
+  loading?: boolean
 }
 
 const SelectForm = ({
@@ -30,6 +31,7 @@ const SelectForm = ({
   options = [],
   validator = () => '',
   configSelect,
+  loading = false,
 }: InputFormType) => {
   const { translate } = useLanguage()
   return (
@@ -55,7 +57,12 @@ const SelectForm = ({
         },
       ]}
     >
-      <Select className="w-full" options={options} {...configSelect} />
+      <Select
+        loading={loading}
+        className="w-full"
+        options={options}
+        {...configSelect}
+      />
     </FormItem>
   )
 }

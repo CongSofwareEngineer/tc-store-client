@@ -65,6 +65,10 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
       title: translate('menuProduct.category'),
       url: '/admin/category',
     },
+    {
+      title: translate('admin.subCategories'),
+      url: '/admin/sub-categories',
+    },
   ]
 
   return (

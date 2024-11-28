@@ -13,8 +13,13 @@ import useTypeFile from '@/hook/useTypeFile'
 import AdminApi from '@/services/adminApi'
 import { detectImg, uppercase } from '@/utils/functions'
 import { showNotificationSuccess } from '@/utils/notification'
-import { CameraOutlined } from '@ant-design/icons'
-import { Image } from 'antd'
+import {
+  CameraOutlined,
+  CloseOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons'
+import { Button, Form, Image } from 'antd'
+import FormItemInput from 'antd/es/form/FormItemInput'
 import React, { useEffect, useState } from 'react'
 
 const ModalConfigCategory = ({ data }: { data: any }) => {
@@ -34,10 +39,15 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
         en: '',
       },
       keyName: data?.keyName || '',
+      subCategories: data?.subCategories || [],
       isShow: typeof data?.isShow === 'undefined' ? true : !!data?.isShow,
     }
     setFormData(initData)
   }, [data])
+
+  console.log('====================================')
+  console.log({ formData })
+  console.log('====================================')
 
   const onChangeName = (key: string, value?: string) => {
     setFormData({
@@ -53,15 +63,17 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
     try {
       setLoading(true)
       let res: any = null
+      const dataBody = { ...formData }
+      dataBody.subCategories = dataBody.subCategories.filter((e: any) => !!e)
+
       if (data) {
-        const dataBody = { ...formData }
         if (dataBody?.icon !== data.icon) {
           dataBody.imgOld = data.icon
         }
 
         res = await AdminApi.updateCategories(data._id, dataBody)
       } else {
-        res = await AdminApi.createCategories(formData)
+        res = await AdminApi.createCategories(dataBody)
       }
 
       if (res?.data) {
@@ -94,6 +106,43 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
             required
             disable={!!data}
           />
+          <Form.List name="subCategories">
+            {(fields, { add, remove }) => (
+              <div className="w-full">
+                <div className="grid w-full md:grid-cols-2 grid-cols-1 gap-3">
+                  {fields.map((e, index) => {
+                    return (
+                      <div key={e.name} className="flex gap-2 items-end ">
+                        <div className="flex flex-1">
+                          <InputForm
+                            classFromItem="w-full"
+                            label={`Sub Category ${index + 1}`}
+                            name={e.name}
+                          />
+                        </div>
+
+                        <div className="text-red-500 text-medium relative top-1">
+                          <DeleteOutlined
+                            onClick={() => {
+                              remove(e.name)
+                            }}
+                          />
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+                <Button
+                  type="dashed"
+                  className="mt-5"
+                  onClick={() => add()}
+                  block
+                >
+                  + Add Item
+                </Button>
+              </div>
+            )}
+          </Form.List>
           {Object.values(LANGUAGE_SUPPORT).map((value) => {
             return (
               <div key={value} className="flex flex-col  w-full gap-2 mt-2">

@@ -10,22 +10,22 @@ const getData = async ({
   const query = queryKey[1]
   const { isShow } = query
 
-  let queryUrl = `category/all`
+  let queryUrl = `sub-category/all`
 
   if (typeof isShow !== 'undefined') {
     queryUrl += `?isShow=${isShow}`
   }
-
-  const dataServer = await AdminApi.getCategories(queryUrl)
+  const dataServer = await AdminApi.getCategoryByKey(queryUrl)
 
   return {
     data: dataServer?.data || [],
     page: 1,
   }
 }
-const useCategory = (query: any) => {
+
+const useSubCategories = (query: any) => {
   const { data, isLoading, refetch } = useQuery({
-    queryKey: [QUERY_KEY.GetCategoryAdmin, query],
+    queryKey: [QUERY_KEY.GetSubCategoryAdmin, query],
     queryFn: getData,
   })
 
@@ -36,4 +36,4 @@ const useCategory = (query: any) => {
   }
 }
 
-export default useCategory
+export default useSubCategories

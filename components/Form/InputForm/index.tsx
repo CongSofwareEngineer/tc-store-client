@@ -45,7 +45,7 @@ const FormItem = styled(styled(Form.Item)<{ $configInput: any }>``)`
 `
 type InputFormType = {
   label?: string
-  name?: string
+  name?: any
   message?: string
   required?: boolean
   isPass?: boolean

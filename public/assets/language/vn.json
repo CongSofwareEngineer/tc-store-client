@@ -303,7 +303,8 @@
     "updateSuccess": "Cập nhật thành công"
   },
   "admin": {
-    "revenue": "Doanh thu"
+    "revenue": "Doanh thu",
+    "subCategories": "Danh mục con"
   },
   "comment": {
     "feedbackSuccess": "Cảm ơn bạn đánh giá",

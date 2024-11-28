@@ -25,6 +25,13 @@ const AdminApi = {
   getCategories: async (url: string) => {
     return fetchData({ url })
   },
+  getSubCategories: async (url: string) => {
+    return fetchData({ url })
+  },
+  getCategoryByKey: async (keyParent: string) => {
+    const url = `${keyParent}`
+    return fetchData({ url })
+  },
   getListProducts: async (queryUrl: string) => {
     return fetchData({
       url: `product/admin/all${queryUrl}`,
