@@ -5,11 +5,10 @@ import React from 'react'
 import Link from 'next/link'
 import Item from './Component/Item'
 import useMedia from '@/hook/useMedia'
-import { TYPE_LOADING_GET_DATA } from '@/constant/app'
 import useQuerySearch from '@/hook/useQuerySearch'
 import MyLoadMore from '@/components/MyLoadMore'
-import LoadingGetData from '@/components/LoadingGetData'
 import OptionFilter from './Component/OptionFilter'
+import LoadingData from './Component/LoadingData'
 // import MyDatePicker from '@/components/MyDatePicker'
 
 const BillScreen = () => {
@@ -57,10 +56,7 @@ const BillScreen = () => {
           </div>
         )}
 
-        <LoadingGetData
-          loading={isLoading}
-          type={TYPE_LOADING_GET_DATA.MyBill}
-        />
+        <LoadingData loading={isLoading} />
 
         {!isLoading && data?.length === 0 && (
           <div className="flex gap-3 w-full  mt-3 text-medium">

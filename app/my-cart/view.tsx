@@ -4,17 +4,17 @@ import useMyCart from '@/hook/tank-query/useMyCart'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import { useEffect, useState } from 'react'
-import { PAGE_SIZE_LIMIT, TYPE_LOADING_GET_DATA } from '@/constant/app'
+import { PAGE_SIZE_LIMIT } from '@/constant/app'
 import { cloneData, numberWithCommas } from '@/utils/functions'
 import ListItemCart from './Component/ListItemCart'
 // import Payment from './Component/Payment'
 import ClientApi from '@/services/clientApi'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
-import LoadingGetData from '@/components/LoadingGetData'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { Button } from 'antd'
+import LoadingData from './Component/LoadingData'
 
 const Payment = dynamic(() => import('./Component/Payment'), { ssr: false })
 const MyCartScreen = () => {
@@ -98,13 +98,9 @@ const MyCartScreen = () => {
           title={[translate('header.shop'), translate('header.cart')]}
           url={['/shop']}
         />
+        <LoadingData loading={isLoading} />
 
-        {isLoading ? (
-          <LoadingGetData
-            loading={isLoading}
-            type={TYPE_LOADING_GET_DATA.MyCart}
-          />
-        ) : (
+        {!isLoading && (
           <div className="w-full flex gap-5">
             <div
               style={{ boxShadow: '3px 3px 6px rgba(0,0,0,.0509803922)' }}
@@ -154,12 +150,9 @@ const MyCartScreen = () => {
           title={[translate('header.shop'), translate('header.cart')]}
           url={['/shop']}
         />
-        {isLoading ? (
-          <LoadingGetData
-            loading={isLoading}
-            type={TYPE_LOADING_GET_DATA.MyCart}
-          />
-        ) : (
+        <LoadingData loading={isLoading} />
+
+        {!isLoading && (
           <>
             <div
               style={{ boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px' }}

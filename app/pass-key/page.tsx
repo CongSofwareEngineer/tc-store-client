@@ -1,8 +1,8 @@
 'use client'
-import MyLoading from '@/components/MyLoading'
 import { images } from '@/configs/images'
 import useMedia from '@/hook/useMedia'
 import { ellipsisText, viewExternal } from '@/utils/functions'
+import { Spin } from 'antd'
 import React, { useEffect, useState } from 'react'
 
 const TYPE_METHOD = {
@@ -347,7 +347,7 @@ const Passkey = () => {
       </div>
       {loading && (
         <div className="fixed flex items-center justify-center h-screen w-screen bg-black/30">
-          <MyLoading />
+          <Spin />
         </div>
       )}
 

@@ -3,7 +3,7 @@ import { ListProductType } from './type'
 import ItemProduct from '@/components/ItemProduct'
 import useLanguage from '@/hook/useLanguage'
 import Link from 'next/link'
-import { FilterAPI, TYPE_LOADING_GET_DATA } from '@/constant/app'
+import { FilterAPI } from '@/constant/app'
 import {
   AlignLeftOutlined,
   CaretRightOutlined,
@@ -12,7 +12,7 @@ import {
 import { CollapseCustom } from './styled'
 import useProductByLimit from '@/hook/tank-query/useProductByLimit'
 import { scrollTop } from '@/utils/functions'
-import LoadingGetData from '@/components/LoadingGetData'
+import LoadingData from '../LoadingData'
 
 const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   const { data, isLoading } = useProductByLimit(type, 5)
@@ -25,10 +25,7 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   const renderListItem = () => {
     return (
       <div className="pb-3 flex gap-3 md:gap-5 overflow-x-auto w-full">
-        <LoadingGetData
-          loading={isLoading}
-          type={TYPE_LOADING_GET_DATA.ListProductInHome}
-        />
+        <LoadingData loading={isLoading} />
 
         {Array.isArray(data?.data) &&
           data?.data?.map((item) => {

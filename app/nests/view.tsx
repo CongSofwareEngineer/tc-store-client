@@ -3,10 +3,10 @@ import useLanguage from '@/hook/useLanguage'
 import React from 'react'
 import ItemNest from './Component/Item'
 import useQuerySearch from '@/hook/useQuerySearch'
-import { PAGE_SIZE_LIMIT, TYPE_LOADING_GET_DATA } from '@/constant/app'
+import { PAGE_SIZE_LIMIT } from '@/constant/app'
 import useNests from '@/hook/tank-query/useNests'
-import LoadingGetData from '@/components/LoadingGetData'
 import MyLoadMore from '@/components/MyLoadMore'
+import LoadingData from './Component/LoadingData'
 
 const PageNestsScreen = () => {
   const { queries } = useQuerySearch()
@@ -16,10 +16,7 @@ const PageNestsScreen = () => {
 
   return (
     <div className="w-full flex flex-col gap-4">
-      <LoadingGetData
-        loading={isLoading}
-        type={TYPE_LOADING_GET_DATA.ShopNests}
-      />
+      <LoadingData loading={isLoading} />
       {data?.length > 0 && (
         <div className="w-full grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 md:gap-3 gap-2">
           {data?.map((e, index) => {

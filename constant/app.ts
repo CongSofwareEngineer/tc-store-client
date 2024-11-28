@@ -7,17 +7,6 @@ export enum REQUEST_TYPE {
   PATCH = 'PATCH',
 }
 
-export enum TYPE_LOADING_GET_DATA {
-  MyBill = 'MyBill',
-  Shop = 'Shop',
-  CommentUser = 'CommentUser',
-  MyCart = 'MyCart',
-  ShopDetail = 'ShopDetail',
-  MyProfile = 'MyProfile',
-  ShopNests = 'ShopNests',
-  ListProductInHome = 'ListProductInHome',
-}
-
 export const COLOR_CONFIG = {
   'gray-1': '#333333',
   'gray-3': '#828282',

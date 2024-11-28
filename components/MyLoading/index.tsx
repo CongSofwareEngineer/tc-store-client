@@ -1,6 +1,7 @@
 import React from 'react'
 import MyImage from '../MyImage'
-import MyLottie from '../MyLottie'
+import { LoadingOutlined } from '@ant-design/icons'
+// import MyLottie from '../MyLottie'
 // import MyLottie from '../MyLottie'
 
 type MyLoadingType = {
@@ -14,7 +15,9 @@ const MyLoading = ({ icon, className }: MyLoadingType) => {
       {icon ? (
         <MyImage src={icon} alt="icon loading" />
       ) : (
-        <MyLottie width={200} height={200} />
+        <div className="my-5 text-medium">
+          <LoadingOutlined />
+        </div>
       )}
     </div>
   )
