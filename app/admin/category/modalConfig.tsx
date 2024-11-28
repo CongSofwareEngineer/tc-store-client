@@ -13,13 +13,8 @@ import useTypeFile from '@/hook/useTypeFile'
 import AdminApi from '@/services/adminApi'
 import { detectImg, uppercase } from '@/utils/functions'
 import { showNotificationSuccess } from '@/utils/notification'
-import {
-  CameraOutlined,
-  CloseOutlined,
-  DeleteOutlined,
-} from '@ant-design/icons'
+import { CameraOutlined, DeleteOutlined } from '@ant-design/icons'
 import { Button, Form, Image } from 'antd'
-import FormItemInput from 'antd/es/form/FormItemInput'
 import React, { useEffect, useState } from 'react'
 
 const ModalConfigCategory = ({ data }: { data: any }) => {

@@ -143,7 +143,7 @@ const ProductConfig = ({ item }: { item: any }) => {
             name="category"
           />
         </div>
-        <SelectForm options={} />
+        <SelectForm options={[]} />
 
         <div className="flex gap-4 w-full ">
           <InputForm

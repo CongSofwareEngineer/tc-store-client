@@ -43,7 +43,7 @@ const SubCategoriesScreen = () => {
             },
           ],
           onFilter: (value, record) => record.isShow === value,
-          render: (_: any, record: any) => {
+          render: (_: any) => {
             return <div className="flex flex-col gap-2">{_}</div>
           },
         },
@@ -63,7 +63,7 @@ const SubCategoriesScreen = () => {
           },
         ],
         onFilter: (value, record) => record.isShow === value,
-        render: (_: any, record: any) => {
+        render: (_: any) => {
           return <div className="flex flex-col gap-2">{_}</div>
         },
       },

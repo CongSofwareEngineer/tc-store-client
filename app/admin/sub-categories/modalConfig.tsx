@@ -17,6 +17,7 @@ const SubCategoriesConfig = ({ item }: { item: any }) => {
 
   const [formData, setFormData] = useState<{ [key: string]: any } | null>(null)
   const [loading, setLoading] = useState(false)
+  console.log({ typeFile, refreshQuery, loading, setLoading, closeModalDrawer })
 
   useEffect(() => {
     const initData = {
