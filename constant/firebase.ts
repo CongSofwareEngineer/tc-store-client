@@ -1,5 +1,5 @@
-import { CollectionReference, DocumentData, DocumentReference, Query, WhereFilterOp } from "firebase/firestore/lite"
-import { FILTER_BILL } from "./app"
+import { CollectionReference, DocumentData, DocumentReference, Query, WhereFilterOp } from 'firebase/firestore/lite'
+import { FILTER_BILL } from './app'
 
 export const DataBase = {
   bill: 'Bill',
@@ -15,9 +15,8 @@ export const DataBase = {
   user: 'User',
   landingPageCoffee: 'landingPageCoffee',
   imageDelete: 'ImageDelete',
-  landingPage: 'LandingPage'
+  landingPage: 'LandingPage',
 } as const
-
 
 export const FB_FC = {
   getAllData: 'getAllData',
@@ -32,7 +31,7 @@ export const FB_FC = {
   addData: 'addData',
   updateData: 'updateData',
   deleteData: 'deleteData',
-  upLoadImg: 'upLoadImg'
+  upLoadImg: 'upLoadImg',
 } as const
 
 export type DatabaseQueryType = Query<unknown, DocumentData>
@@ -40,8 +39,7 @@ export type DatabaseCollectionType = CollectionReference<DocumentData, DocumentD
 export type DatabaseDocsType = DocumentReference<DocumentData, DocumentData>
 export type DatabaseType = any
 
-export type QueryData = { key: string, match: WhereFilterOp, value: any }
-
+export type QueryData = { key: string; match: WhereFilterOp; value: any }
 
 // type data body to work fire store
 export type BodyAddCart = {
@@ -55,29 +53,27 @@ export type BodyAddCart = {
 
 export type BodyAddBill = {
   idUser?: string | undefined
-  listBill: { _id: string, keyName?: string, amount: number, idCart?: string }[],
-  addressShip: string,
-  discount: number,
-  sdt: string,
-  iDBanking?: number,
+  listBill: { _id: string; keyName?: string; amount: number; idCart?: string }[]
+  addressShip: string
+  discount: number
+  sdt: string
+  iDBanking?: number
   iDMomo?: number | string
   status: FILTER_BILL
-  abort?: boolean,
-  totalBill: Number,
+  abort?: boolean
+  totalBill: Number
   listNewSoldProduct?: { [key: string]: any }[]
 }
 
-
-
 export type BodyUserData = {
   date?: number
-  sdt?: string,
+  sdt?: string
   isAdmin?: boolean
-  exp?: 0,
+  exp?: 0
   address?: string
   name?: string
   avatar?: string | null
   pass?: string
-  addressShipper: string[],
-  sex: boolean,
+  addressShipper: string[]
+  sex: boolean
 }

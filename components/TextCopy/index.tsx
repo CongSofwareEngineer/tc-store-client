@@ -9,9 +9,9 @@ type Props = {
 }
 const TextCopy = ({ textView = '', value = '', isLink = false }: Props) => {
   return (
-    <div className="flex gap-2">
+    <div className='flex gap-2'>
       {isLink ? (
-        <Link target="_blank" href={value || textView}>
+        <Link target='_blank' href={value || textView}>
           {value || textView}
         </Link>
       ) : (

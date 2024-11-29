@@ -26,7 +26,7 @@ const MyDatePicker = ({
       defaultValue={dayjs(defaultValue, 'DD/MM/YY')}
       className={`w-full ${className}`}
       format={'DD/MM/YY'}
-      lang="vn"
+      lang='vn'
       allowClear={allowClear}
     />
   )

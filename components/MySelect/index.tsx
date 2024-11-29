@@ -32,8 +32,8 @@ const MySelect = ({ option, fullImage = false, ...props }: PropsSelect) => {
 
   const renderItemFullImage = (item: any) => {
     return (
-      <div className="flex flex-col gap-2">
-        <span className="normal-case">{item.label || item.name}</span>
+      <div className='flex flex-col gap-2'>
+        <span className='normal-case'>{item.label || item.name}</span>
         {item?.image && (
           <MyImage
             src={item?.image?.toString()}
@@ -48,18 +48,12 @@ const MySelect = ({ option, fullImage = false, ...props }: PropsSelect) => {
 
   return (
     <Select
-      className="w-max"
+      className='w-max'
       labelRender={renderLabel}
       options={option}
-      notFoundContent={
-        <div className="opacity-100">{translate('textPopular.notData')}</div>
-      }
+      notFoundContent={<div className='opacity-100'>{translate('textPopular.notData')}</div>}
       optionRender={(e) => {
-        return fullImage ? (
-          renderItemFullImage(e)
-        ) : (
-          <span className="normal-case">{e.label}</span>
-        )
+        return fullImage ? renderItemFullImage(e) : <span className='normal-case'>{e.label}</span>
       }}
       {...props}
     />

@@ -86,50 +86,21 @@ type PropsType = {
   InputNumberProps &
   TextAreaProps
 
-const MyInput = ({
-  typeBtn = 0,
-  type = 'string',
-  rows = 2,
-  onChangeText = () => {},
-  ...props
-}: PropsType) => {
+const MyInput = ({ typeBtn = 0, type = 'string', rows = 2, onChangeText = () => {}, ...props }: PropsType) => {
   switch (type) {
     case 'string':
-      return (
-        <InputBase
-          onChange={(e: any) => onChangeText(e.target.value.toString())}
-          $typeBtn={typeBtn}
-          {...props}
-        />
-      )
+      return <InputBase onChange={(e: any) => onChangeText(e.target.value.toString())} $typeBtn={typeBtn} {...props} />
 
     case 'number':
-      return (
-        <InputNumberBase
-          onChange={(e: any) => onChangeText(e)}
-          $typeBtn={typeBtn}
-          {...props}
-        />
-      )
+      return <InputNumberBase onChange={(e: any) => onChangeText(e)} $typeBtn={typeBtn} {...props} />
 
     case 'password':
       return (
-        <InputPassword
-          onChange={(e: any) => onChangeText(e.target.value.toString())}
-          $typeBtn={typeBtn}
-          {...props}
-        />
+        <InputPassword onChange={(e: any) => onChangeText(e.target.value.toString())} $typeBtn={typeBtn} {...props} />
       )
 
     default:
-      return (
-        <InputArea
-          onChange={(e: any) => onChangeText(e.target.value)}
-          $typeBtn={typeBtn}
-          rows={rows}
-          {...props}
-        />
-      )
+      return <InputArea onChange={(e: any) => onChangeText(e.target.value)} $typeBtn={typeBtn} rows={rows} {...props} />
   }
 }
 

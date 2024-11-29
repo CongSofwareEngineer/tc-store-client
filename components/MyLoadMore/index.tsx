@@ -18,7 +18,7 @@ const MyLoadMore = ({
 }: Props) => {
   const { translate } = useLanguage()
   return !loading && hasLoadMore ? (
-    <div className="mt-4 w-full flex justify-center items-center">
+    <div className='mt-4 w-full flex justify-center items-center'>
       <Button onClick={callback} loading={isFetchingNextPage}>
         {title || translate('textPopular.loadMore')}
       </Button>
