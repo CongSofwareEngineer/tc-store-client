@@ -15,7 +15,7 @@ import DrawerProvider from '@/components/DrawerProvider'
 const inter = Inter({ subsets: ['latin'] })
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import ClientApi from '@/services/clientApi'
-import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import Script from 'next/script'
 
 const BaseMeta = {
