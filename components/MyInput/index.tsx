@@ -4,7 +4,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 const { TextArea } = Input
 
-const InputBase = styled(styled(Input)<Record<string, any>>``)`
+const InputBase = styled(Input)<Record<string, any>>`
   ${(props) =>
     props.$typeBtn === 1 &&
     css`
@@ -22,7 +22,7 @@ const InputBase = styled(styled(Input)<Record<string, any>>``)`
     `}
 `
 
-const InputPassword = styled(styled(Input.Password)<Record<string, any>>``)`
+const InputPassword = styled(Input.Password)<Record<string, any>>`
   ${(props) =>
     props.$typeBtn === 1 &&
     css`
@@ -40,7 +40,7 @@ const InputPassword = styled(styled(Input.Password)<Record<string, any>>``)`
     `}
 `
 
-const InputNumberBase = styled(styled(InputNumber)<Record<string, any>>``)`
+const InputNumberBase = styled(InputNumber)<Record<string, any>>`
   width: 100% !important;
   ${(props) =>
     props.$typeBtn === 1 &&

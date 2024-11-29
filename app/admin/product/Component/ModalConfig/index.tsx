@@ -22,6 +22,7 @@ import {
 import AdminApi from '@/services/adminApi'
 import MyBlog from '@/components/MyBlog'
 import { PATH_IMG } from '@/constant/mongoDB'
+import SelectForm from '@/components/Form/SelectForm'
 
 const ProductConfig = ({ item }: { item: any }) => {
   const { translate } = useLanguage()
@@ -54,6 +55,7 @@ const ProductConfig = ({ item }: { item: any }) => {
       typeProduct: item?.typeProduct || 'water',
       weight: item?.weight || '',
       category: item?.category || 'water',
+      subCategories: ['male'],
       desSeo: item?.desSeo || '',
       titleSeo: item?.titleSeo || '',
     }
@@ -141,6 +143,7 @@ const ProductConfig = ({ item }: { item: any }) => {
             name="category"
           />
         </div>
+        <SelectForm options={[]} />
 
         <div className="flex gap-4 w-full ">
           <InputForm
