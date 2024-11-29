@@ -123,7 +123,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
                 
                   gtag('config', 'G-QH99F8WFPW');`}
             </Script> */}
-            {/* <script
+            <script
               dangerouslySetInnerHTML={{
                 __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -132,7 +132,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
                   })(window,document,'script','dataLayer','GTM-T7S7DKJ4')`,
               }}
             />
-            <script
+            {/* <script
               async
               src="https://www.googletagmanager.com/gtag/js?id=G-QH99F8WFPW"
             /> */}
@@ -177,7 +177,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
             height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
               }}
             />
-            <GoogleTagManager gtmId="GTM-T7S7DKJ4" />
+            {/* <GoogleTagManager gtmId="GTM-T7S7DKJ4" /> */}
           </>
         )}
 
