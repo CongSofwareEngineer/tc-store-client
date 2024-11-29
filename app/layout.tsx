@@ -15,7 +15,7 @@ import DrawerProvider from '@/components/DrawerProvider'
 const inter = Inter({ subsets: ['latin'] })
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import ClientApi from '@/services/clientApi'
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import Script from 'next/script'
 
 const BaseMeta = {
@@ -96,6 +96,9 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
   const menuCategory = await ClientApi.getCategory()
   return (
     <html lang="en">
+      {process.env.NEXT_PUBLIC_MODE_PRODUCTION && (
+        <GoogleTagManager gtmId="GTM-T7S7DKJ4" />
+      )}
       <head>
         {/* Google / Search Engine Tags  */}
         <meta itemProp="name" content={process.env.NEXT_PUBLIC_TITLE} />
@@ -111,6 +114,8 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
               name="google-site-verification"
               content="Sr2q2elTmvBwx7P3aM-ZiaH-3yjcxuGHrMI9H9iCewI"
             />
+            {/* <GoogleTagManager gtmId="GTM-T7S7DKJ4" /> */}
+
             {/* <Script
               async
               src="https://www.googletagmanager.com/gtag/js?id=G-QH99F8WFPW"
@@ -123,7 +128,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
                 
                   gtag('config', 'G-QH99F8WFPW');`}
             </Script> */}
-            <script
+            {/* <script
               dangerouslySetInnerHTML={{
                 __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -131,7 +136,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
                   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                   })(window,document,'script','dataLayer','GTM-T7S7DKJ4')`,
               }}
-            />
+            /> */}
             {/* <script
               async
               src="https://www.googletagmanager.com/gtag/js?id=G-QH99F8WFPW"
@@ -177,7 +182,6 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
             height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
               }}
             />
-            {/* <GoogleTagManager gtmId="GTM-T7S7DKJ4" /> */}
           </>
         )}
 
