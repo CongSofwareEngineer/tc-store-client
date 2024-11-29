@@ -1,4 +1,4 @@
 export type ListProductType = {
-  title?: string,
+  title?: string
   type?: string
 }

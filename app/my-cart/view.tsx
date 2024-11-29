@@ -93,47 +93,28 @@ const MyCartScreen = () => {
 
   const renderDesktop = () => {
     return (
-      <div className="w-full">
-        <BtnBack
-          title={[translate('header.shop'), translate('header.cart')]}
-          url={['/shop']}
-        />
+      <div className='w-full'>
+        <BtnBack title={[translate('header.shop'), translate('header.cart')]} url={['/shop']} />
         <LoadingData loading={isLoading} />
 
         {!isLoading && (
-          <div className="w-full flex gap-5">
-            <div
-              style={{ boxShadow: '3px 3px 6px rgba(0,0,0,.0509803922)' }}
-              className="flex-1  border-2 border-gray-300  overflow-y-auto bg-white"
-            >
-              <ListItemCart
-                allSelected={allSelected}
-                dataCart={listCartFormat}
-                callBackClick={handleSelect}
-                callBackDelete={handleDelete}
-                callBackSelectAll={handleSelectAll}
-                loading={isLoading}
-              />
+          <div className='w-full flex gap-5'>
+            <div style={{ boxShadow: '3px 3px 6px rgba(0,0,0,.0509803922)' }} className='flex-1  border-2 border-gray-300  overflow-y-auto bg-white'>
+              <ListItemCart allSelected={allSelected} dataCart={listCartFormat} callBackClick={handleSelect} callBackDelete={handleDelete} callBackSelectAll={handleSelectAll} loading={isLoading} />
               {listCartFormat.length === 0 && (
-                <div className="w-full flex gap-1 mt-3 pl-3">
+                <div className='w-full flex gap-1 mt-3 pl-3'>
                   <span>{translate('textPopular.notData')}</span>
                   <Link href={'/shop'}>{translate('common.buyNow')}</Link>
                 </div>
               )}
             </div>
-            <div className="lg:w-[400px] md:w-[280px] border-2 border-gray-300 bg-white flex flex-col items-center h-fit p-3 gap-3">
-              <div className="w-full flex justify-between">
+            <div className='lg:w-[400px] md:w-[280px] border-2 border-gray-300 bg-white flex flex-col items-center h-fit p-3 gap-3'>
+              <div className='w-full flex justify-between'>
                 <div>{translate('textPopular.provisional')}</div>
-                <span className="font-bold text-green-500">
-                  {`${numberWithCommas(calculatePayment())} VNĐ`}
-                </span>
+                <span className='font-bold text-green-500'>{`${numberWithCommas(calculatePayment())} VNĐ`}</span>
               </div>
-              <div className="border-[1px] border-gray-300 w-full" />
-              <Button
-                className="w-full"
-                disabled={Number(calculatePayment()) <= 1}
-                onClick={() => setIsPayment(true)}
-              >
+              <div className='border-[1px] border-gray-300 w-full' />
+              <Button className='w-full' disabled={Number(calculatePayment()) <= 1} onClick={() => setIsPayment(true)}>
                 {`${translate('cart.payment')} (${calculateItemPayment()})`}
               </Button>
             </div>
@@ -145,53 +126,31 @@ const MyCartScreen = () => {
 
   const renderMobile = () => {
     return (
-      <div className="mt-1">
-        <BtnBack
-          title={[translate('header.shop'), translate('header.cart')]}
-          url={['/shop']}
-        />
+      <div className='mt-1'>
+        <BtnBack title={[translate('header.shop'), translate('header.cart')]} url={['/shop']} />
         <LoadingData loading={isLoading} />
 
         {!isLoading && (
           <>
-            <div
-              style={{ boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px' }}
-              className="mt-1 flex-1  border-[.5px] border-gray-300 bg-white  overflow-y-auto"
-            >
-              <ListItemCart
-                allSelected={allSelected}
-                dataCart={listCartFormat}
-                callBackClick={handleSelect}
-                callBackDelete={handleDelete}
-                callBackSelectAll={handleSelectAll}
-                loading={isLoading}
-              />
+            <div style={{ boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px' }} className='mt-1 flex-1  border-[.5px] border-gray-300 bg-white  overflow-y-auto'>
+              <ListItemCart allSelected={allSelected} dataCart={listCartFormat} callBackClick={handleSelect} callBackDelete={handleDelete} callBackSelectAll={handleSelectAll} loading={isLoading} />
               {listCartFormat.length === 0 && (
-                <div className="w-full flex gap-1 my-2 pl-3">
+                <div className='w-full flex gap-1 my-2 pl-3'>
                   <span>{translate('textPopular.notData')}</span>
                   <Link href={'/shop'}>{translate('common.buyNow')}</Link>
                 </div>
               )}
             </div>
-            <div className="fixed z-[2] w-full bg-white border-gray-300 p-[20px] bottom-0 left-0">
-              <div className="relative flex flex-col gap-2">
-                <div className="flex gap-2 w-full">
-                  <div className="font-semibold">
-                    {translate('textPopular.totalMoney')} :
-                  </div>
-                  <span className="font-bold text-green-700">
-                    {calculatePayment()}
-                  </span>
+            <div className='fixed z-[2] w-full bg-white border-gray-300 p-[20px] bottom-0 left-0'>
+              <div className='relative flex flex-col gap-2'>
+                <div className='flex gap-2 w-full'>
+                  <div className='font-semibold'>{translate('textPopular.totalMoney')} :</div>
+                  <span className='font-bold text-green-700'>{calculatePayment()}</span>
                 </div>
-                <div className="w-full border-[1px] border-gray-200  relative  " />
+                <div className='w-full border-[1px] border-gray-200  relative  ' />
 
-                <Button
-                  disabled={Number(calculatePayment()) <= 1}
-                  onClick={() => setIsPayment(true)}
-                >
-                  {`${translate('cart.payment')} (${numberWithCommas(
-                    calculatePayment()
-                  )} VNĐ)`}
+                <Button disabled={Number(calculatePayment()) <= 1} onClick={() => setIsPayment(true)}>
+                  {`${translate('cart.payment')} (${numberWithCommas(calculatePayment())} VNĐ)`}
                 </Button>
               </div>
             </div>
@@ -201,24 +160,7 @@ const MyCartScreen = () => {
     )
   }
 
-  return (
-    <>
-      {isClient && (
-        <>
-          {isPayment ? (
-            <Payment
-              clickBack={() => setIsPayment(false)}
-              dataCart={listCartFormat}
-            />
-          ) : isMobile ? (
-            renderMobile()
-          ) : (
-            renderDesktop()
-          )}
-        </>
-      )}
-    </>
-  )
+  return <>{isClient && <>{isPayment ? <Payment clickBack={() => setIsPayment(false)} dataCart={listCartFormat} /> : isMobile ? renderMobile() : renderDesktop()}</>}</>
 }
 
 export default MyCartScreen

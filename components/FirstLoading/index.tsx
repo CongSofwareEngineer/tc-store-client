@@ -9,7 +9,7 @@ const FirstLoading = () => {
     setIsClient(true)
   }, [])
   return !isClient ? (
-    <div className="fixed h-screen w-screen inset-0 bg-white flex justify-center items-center">
+    <div className='fixed h-screen w-screen inset-0 bg-white flex justify-center items-center'>
       <Spin style={{ fontSize: 20 }} />
     </div>
   ) : (

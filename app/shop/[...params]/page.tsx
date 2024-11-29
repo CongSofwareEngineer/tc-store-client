@@ -11,14 +11,8 @@ const getCoffeeDetail = async (keyName: string): Promise<ItemDetailType> => {
   return data.data
 }
 
-export async function generateMetadata(
-  { params }: any,
-  parent: ResolvingMetadata
-) {
-  const [dataBase, data]: any[] = await Promise.allSettled([
-    parent,
-    getCoffeeDetail(params.params[0]),
-  ])
+export async function generateMetadata({ params }: any, parent: ResolvingMetadata) {
+  const [dataBase, data]: any[] = await Promise.allSettled([parent, getCoffeeDetail(params.params[0])])
 
   const metaData = generateMetaBase({
     dataBase: dataBase?.value,
@@ -29,11 +23,7 @@ export async function generateMetadata(
   })
   return metaData
 }
-const ShopPageDetail = async ({
-  params,
-}: {
-  params: Record<string, string[]>
-}) => {
+const ShopPageDetail = async ({ params }: { params: Record<string, string[]> }) => {
   const productDetail = await getCoffeeDetail(params.params[0])
   if (!productDetail) {
     return notFound()

@@ -35,26 +35,14 @@ const ButtonForm = ({
   const { closeModalDrawer } = useModalDrawer()
 
   return (
-    <div
-      className={`w-full flex justify-center items-center gap-4 mt-2 ${className}`}
-    >
+    <div className={`w-full flex justify-center items-center gap-4 mt-2 ${className}`}>
       <FormItem className={`flex flex-1 ${classNameItem}`}>
-        <Button
-          disabled={disabledSubmit}
-          className={`w-full m-auto ${classBtnSubmit}`}
-          loading={loading}
-          htmlType="submit"
-        >
+        <Button disabled={disabledSubmit} className={`w-full m-auto ${classBtnSubmit}`} loading={loading} htmlType='submit'>
           {titleSubmit || translate('cart.payment')}
         </Button>
       </FormItem>
       {!disableClose && (
-        <Button
-          disabled={loading}
-          className={`flex flex-1 w-[150px] ${classBtnCancel}`}
-          onClick={closeModalDrawer}
-          type="primary"
-        >
+        <Button disabled={loading} className={`flex flex-1 w-[150px] ${classBtnCancel}`} onClick={closeModalDrawer} type='primary'>
           {titleClose || translate('common.close')}
         </Button>
       )}

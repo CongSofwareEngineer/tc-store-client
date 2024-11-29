@@ -5,13 +5,7 @@ import ClientApi from '@/services/clientApi'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 
-const getData = async ({
-  queryKey,
-  pageParam = 1,
-}: {
-  queryKey: any
-  pageParam: any
-}): Promise<TypeHookReactQuery> => {
+const getData = async ({ queryKey, pageParam = 1 }: { queryKey: any; pageParam: any }): Promise<TypeHookReactQuery> => {
   const query = queryKey[2]
   const limit = queryKey[1]
   const { dateEnd, dateStart, sdt, status } = query
@@ -40,18 +34,17 @@ const getData = async ({
 }
 
 const useRevenue = (pageSize = PAGE_SIZE_LIMIT, query: any) => {
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: [QUERY_KEY.RevenueAdmin, pageSize, query],
-      initialPageParam: 1,
-      queryFn: getData,
-      getNextPageParam: (lastPage: { data: any; page: number }) => {
-        if (lastPage.data.length == pageSize) {
-          return lastPage.page + 1
-        }
-        return null
-      },
-    })
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
+    queryKey: [QUERY_KEY.RevenueAdmin, pageSize, query],
+    initialPageParam: 1,
+    queryFn: getData,
+    getNextPageParam: (lastPage: { data: any; page: number }) => {
+      if (lastPage.data.length == pageSize) {
+        return lastPage.page + 1
+      }
+      return null
+    },
+  })
 
   const dataFinal = useMemo(() => {
     if (!data) {

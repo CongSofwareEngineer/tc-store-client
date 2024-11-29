@@ -71,34 +71,20 @@ const OptionFilter = () => {
   }
 
   return (
-    <div className="flex flex-wrap gap-4 align-middle   ">
-      <div className="flex gap-4 flex-wrap items-center ">
+    <div className='flex flex-wrap gap-4 align-middle   '>
+      <div className='flex gap-4 flex-wrap items-center '>
         {/* <MyDatePicker onChange={(e) => setDateTime(e?.toString() || '')} /> */}
-        <Checkbox
-          onClick={() => onChangeFilter(FILTER_BILL.All)}
-          checked={!isDelivering && !isDeliverySuccess && !isProcessing}
-        >
-          <div className="text-nowrap">{translate('textPopular.all')}</div>
+        <Checkbox onClick={() => onChangeFilter(FILTER_BILL.All)} checked={!isDelivering && !isDeliverySuccess && !isProcessing}>
+          <div className='text-nowrap'>{translate('textPopular.all')}</div>
         </Checkbox>
-        <Checkbox
-          onClick={() => onChangeFilter(FILTER_BILL.DeliverySuccess)}
-          checked={isDeliverySuccess}
-        >
-          <div className="text-nowrap">
-            {translate('myBill.deliverySuccess')}
-          </div>
+        <Checkbox onClick={() => onChangeFilter(FILTER_BILL.DeliverySuccess)} checked={isDeliverySuccess}>
+          <div className='text-nowrap'>{translate('myBill.deliverySuccess')}</div>
         </Checkbox>
-        <Checkbox
-          onClick={() => onChangeFilter(FILTER_BILL.Delivering)}
-          checked={isDelivering}
-        >
-          <div className="text-nowrap">{translate('myBill.delivering')}</div>
+        <Checkbox onClick={() => onChangeFilter(FILTER_BILL.Delivering)} checked={isDelivering}>
+          <div className='text-nowrap'>{translate('myBill.delivering')}</div>
         </Checkbox>
-        <Checkbox
-          onClick={() => onChangeFilter(FILTER_BILL.Processing)}
-          checked={isProcessing}
-        >
-          <div className="text-nowrap">{translate('myBill.processing')}</div>
+        <Checkbox onClick={() => onChangeFilter(FILTER_BILL.Processing)} checked={isProcessing}>
+          <div className='text-nowrap'>{translate('myBill.processing')}</div>
         </Checkbox>
       </div>
     </div>

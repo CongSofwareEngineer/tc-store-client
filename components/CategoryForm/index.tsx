@@ -60,13 +60,7 @@ type Props = {
   disabled?: boolean
 }
 
-const CategoryForm = ({
-  label,
-  name,
-  classFromItem = '',
-  configInput = {},
-  disabled = false,
-}: Props) => {
+const CategoryForm = ({ label, name, classFromItem = '', configInput = {}, disabled = false }: Props) => {
   const { CategoryMenu, Language } = useAppSelector((state) => state.app)
 
   const getMenu = () => {
@@ -87,13 +81,8 @@ const CategoryForm = ({
   }
 
   return CategoryMenu ? (
-    <FormItem
-      $configInput={configInput}
-      className={classFromItem}
-      label={label}
-      name={name}
-    >
-      <MySelect disabled={disabled} option={getMenu()} className="w-full" />
+    <FormItem $configInput={configInput} className={classFromItem} label={label} name={name}>
+      <MySelect disabled={disabled} option={getMenu()} className='w-full' />
     </FormItem>
   ) : (
     <></>

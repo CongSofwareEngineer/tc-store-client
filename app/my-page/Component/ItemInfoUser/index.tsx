@@ -48,22 +48,11 @@ const ItemInfoUser = ({ value, keyType, title }: ItemInfoUserType) => {
     return value
   }
   return (
-    <div
-      onClick={handleUpdate}
-      className="flex md:justify-start justify-between w-full md:gap-2 py-2"
-    >
+    <div onClick={handleUpdate} className='flex md:justify-start justify-between w-full md:gap-2 py-2'>
       <span>{title}</span>
 
-      <span className="flex gap-1 items-center">
-        {keyType === 'sex' ? (
-          <span>
-            {!!value
-              ? translate('textPopular.female')
-              : translate('textPopular.male')}
-          </span>
-        ) : (
-          <span>{getDataEx()}</span>
-        )}
+      <span className='flex gap-1 items-center'>
+        {keyType === 'sex' ? <span>{!!value ? translate('textPopular.female') : translate('textPopular.male')}</span> : <span>{getDataEx()}</span>}
 
         <RightOutlined />
       </span>

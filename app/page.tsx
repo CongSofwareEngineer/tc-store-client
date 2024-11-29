@@ -28,16 +28,16 @@ const Home: NextPage = () => {
   const renderDesktop = () => {
     return (
       <div>
-        <div className="flex  gap-5">
-          <div className="w-[250px]" data-aos="fade-right">
+        <div className='flex  gap-5'>
+          <div className='w-[250px]' data-aos='fade-right'>
             <CategoryHome />
           </div>
           <Banner />
         </div>
-        <div className="w-[90%] m-auto my-14">
+        <div className='w-[90%] m-auto my-14'>
           <InfoHome />
         </div>
-        <div className="w-full flex flex-col gap-4 ">
+        <div className='w-full flex flex-col gap-4 '>
           <ListProduct title={translate('textPopular.nest')} type={'nest'} />
           <ListProduct title={translate('home.water')} type={FilterAPI.Water} />
         </div>
@@ -50,15 +50,12 @@ const Home: NextPage = () => {
     return (
       <div>
         <Banner />
-        <div className="w-[90%] m-auto my-8">
+        <div className='w-[90%] m-auto my-8'>
           <InfoHome />
         </div>
-        <div className="mb-3" />
-        <ListProduct
-          title={translate('home.titleFood')}
-          type={FilterAPI.Food}
-        />
-        <div className="mb-3" />
+        <div className='mb-3' />
+        <ListProduct title={translate('home.titleFood')} type={FilterAPI.Food} />
+        <div className='mb-3' />
         <ListProduct title={translate('home.water')} type={FilterAPI.Water} />
       </div>
     )
@@ -66,9 +63,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <h1 className="absolute opacity-0">
-        TC Store - Cửa hàng thương mãi uy tín nhất Gia Lai
-      </h1>
+      <h1 className='absolute opacity-0'>TC Store - Cửa hàng thương mãi uy tín nhất Gia Lai</h1>
       {isMobile ? renderMobile() : renderDesktop()}
     </>
   )

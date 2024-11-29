@@ -44,7 +44,7 @@ const SubCategoriesScreen = () => {
           ],
           onFilter: (value, record) => record.isShow === value,
           render: (_: any) => {
-            return <div className="flex flex-col gap-2">{_}</div>
+            return <div className='flex flex-col gap-2'>{_}</div>
           },
         },
       ]
@@ -64,7 +64,7 @@ const SubCategoriesScreen = () => {
         ],
         onFilter: (value, record) => record.isShow === value,
         render: (_: any) => {
-          return <div className="flex flex-col gap-2">{_}</div>
+          return <div className='flex flex-col gap-2'>{_}</div>
         },
       },
     ]
@@ -87,20 +87,9 @@ const SubCategoriesScreen = () => {
   }
 
   return (
-    <div className="flex flex-col w-full h-full gap-2">
+    <div className='flex flex-col w-full h-full gap-2'>
       {renderContent()}
-      <MyTable
-        columns={getColumn()}
-        loading={isLoading}
-        data={data?.data || []}
-        limit={PAGE_SIZE_LIMIT}
-        total={20}
-        extra={
-          <Button onClick={() => handleUpdate()}>
-            {translate('common.addNew')}
-          </Button>
-        }
-      />
+      <MyTable columns={getColumn()} loading={isLoading} data={data?.data || []} limit={PAGE_SIZE_LIMIT} total={20} extra={<Button onClick={() => handleUpdate()}>{translate('common.addNew')}</Button>} />
     </div>
   )
 }

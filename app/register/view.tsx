@@ -83,79 +83,35 @@ const RegisterScreen = () => {
   }
 
   return (
-    <div className="h-full max-w-[1000px] relative flex justify-center m-auto">
-      <div className="w-full flex justify-between h-full items-center">
+    <div className='h-full max-w-[1000px] relative flex justify-center m-auto'>
+      <div className='w-full flex justify-between h-full items-center'>
         {!isMobile && (
-          <div
-            data-aos="fade-right"
-            className="flex-1 flex flex-col justify-center items-center max-w-[450px]"
-          >
-            <MyImage
-              alt={'tc-store-logo-register'}
-              className="cursor-pointer max-w-0["
-              onClick={() => router.push('/')}
-              src={images.logoStore}
-            />
+          <div data-aos='fade-right' className='flex-1 flex flex-col justify-center items-center max-w-[450px]'>
+            <MyImage alt={'tc-store-logo-register'} className='cursor-pointer max-w-0[' onClick={() => router.push('/')} src={images.logoStore} />
           </div>
         )}
 
-        <div
-          data-aos="fade-left"
-          className="flex justify-start items-start md:w-fit w-full"
-        >
-          <div className="m-auto flex flex-col md:w-[450px] w-full shadow-md p-8 rounded-[16px] justify-center align-middle bg-white">
-            <h1 className="mb- uppercase font-bold text-center text-[16px]">
-              {translate('register.title')}
-            </h1>
-            <MyForm
-              onValuesChange={(_, value) =>
-                setFormData({ ...formData, ...value })
-              }
-              formData={formData}
-              onFinish={handleSubmit}
-            >
-              <InputForm
-                name="sdt"
-                required
-                validator={checkNumberPhone}
-                label={translate('productDetail.modalBuy.enterNumberPhone')}
-              />
+        <div data-aos='fade-left' className='flex justify-start items-start md:w-fit w-full'>
+          <div className='m-auto flex flex-col md:w-[450px] w-full shadow-md p-8 rounded-[16px] justify-center align-middle bg-white'>
+            <h1 className='mb- uppercase font-bold text-center text-[16px]'>{translate('register.title')}</h1>
+            <MyForm onValuesChange={(_, value) => setFormData({ ...formData, ...value })} formData={formData} onFinish={handleSubmit}>
+              <InputForm name='sdt' required validator={checkNumberPhone} label={translate('productDetail.modalBuy.enterNumberPhone')} />
 
-              <InputForm
-                name="name"
-                required
-                label={translate('productDetail.modalBuy.enterName')}
-              />
+              <InputForm name='name' required label={translate('productDetail.modalBuy.enterName')} />
 
-              <InputForm
-                name="pass"
-                isPass
-                required
-                label={translate('register.enterPassWord')}
-              />
-              <InputForm
-                name="passAgain"
-                isPass
-                required
-                label={translate('register.enterPassWordAgain')}
-              />
-              <div className="flex gap-2 mt-2 ">
+              <InputForm name='pass' isPass required label={translate('register.enterPassWord')} />
+              <InputForm name='passAgain' isPass required label={translate('register.enterPassWordAgain')} />
+              <div className='flex gap-2 mt-2 '>
                 <div>{translate('userDetail.sex')} :</div>
 
-                <Checkbox
-                  checked={formData?.sex}
-                  onChange={() => setFormData({ ...formData, sex: true })}
-                >
+                <Checkbox checked={formData?.sex} onChange={() => setFormData({ ...formData, sex: true })}>
                   {translate('textPopular.male')}
                 </Checkbox>
-                <Checkbox
-                  checked={!formData?.sex}
-                  onChange={() => setFormData({ ...formData, sex: false })}
-                >
+                <Checkbox checked={!formData?.sex} onChange={() => setFormData({ ...formData, sex: false })}>
                   {translate('textPopular.female')}
                 </Checkbox>
               </div>
-              <div className="flex gap-2  md:mt-0 mt-3 md:mb-0 mb-1 relative top-[-5px]">
+              <div className='flex gap-2  md:mt-0 mt-3 md:mb-0 mb-1 relative top-[-5px]'>
                 <div>{translate('register.saveRegister')} :</div>
                 <Checkbox
                   checked={formData?.saveLogin}
@@ -168,13 +124,7 @@ const RegisterScreen = () => {
                 />
               </div>
 
-              <ButtonForm
-                loading={loadingRegister}
-                classNameItem="w-full"
-                className="w-full"
-                disableClose
-                titleSubmit={translate('header.register')}
-              />
+              <ButtonForm loading={loadingRegister} classNameItem='w-full' className='w-full' disableClose titleSubmit={translate('header.register')} />
             </MyForm>
           </div>
         </div>

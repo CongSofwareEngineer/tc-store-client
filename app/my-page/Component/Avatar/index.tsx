@@ -5,10 +5,7 @@ import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
 import ClientApi from '@/services/clientApi'
 import { detectAvatar } from '@/utils/functions'
-import {
-  showNotificationError,
-  showNotificationSuccess,
-} from '@/utils/notification'
+import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import { EditTwoTone } from '@ant-design/icons'
 import { Upload } from 'antd'
 import ImgCrop from 'antd-img-crop'
@@ -61,29 +58,13 @@ const Avatar = () => {
   }, [])
 
   return (
-    <div className="w-[150px] min-h-[150px] relative overflow-hidden rounded-[50%]">
-      <Image
-        fill
-        src={detectAvatar(userData?.avatar?.toString())}
-        alt="avatar"
-        className="!relative !w-full !h-auto"
-        priority
-        key={userData?.avatar}
-      />
-      <div className="absolute-center mt-2">
-        <ImgCrop
-          aspect={1}
-          quality={1}
-          modalOk={translate('common.ok')}
-          modalCancel={translate('common.close')}
-          onModalOk={(file) => onChangeAvatar(file)}
-        >
+    <div className='w-[150px] min-h-[150px] relative overflow-hidden rounded-[50%]'>
+      <Image fill src={detectAvatar(userData?.avatar?.toString())} alt='avatar' className='!relative !w-full !h-auto' priority key={userData?.avatar} />
+      <div className='absolute-center mt-2'>
+        <ImgCrop aspect={1} quality={1} modalOk={translate('common.ok')} modalCancel={translate('common.close')} onModalOk={(file) => onChangeAvatar(file)}>
           <Upload showUploadList={false} accept={typeFile}>
-            <label className="edit-avatar " htmlFor="avatar">
-              <EditTwoTone
-                className="cursor-pointer hover:scale-125"
-                style={{ fontSize: 25, color: 'blue' }}
-              />
+            <label className='edit-avatar ' htmlFor='avatar'>
+              <EditTwoTone className='cursor-pointer hover:scale-125' style={{ fontSize: 25, color: 'blue' }} />
             </label>
           </Upload>
         </ImgCrop>

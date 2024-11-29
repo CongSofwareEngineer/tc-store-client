@@ -32,55 +32,29 @@ const ViewListOrder = ({ dataCart }: { dataCart: any[] }) => {
 
   const renderItemMobile = () => {
     return (
-      <div className="w-full flex flex-col">
-        <div className="w-full flex gap-4 bg-green-100 border-b-2 border-gray-300 py-3 font-bold">
+      <div className='w-full flex flex-col'>
+        <div className='w-full flex gap-4 bg-green-100 border-b-2 border-gray-300 py-3 font-bold'>
           {/* header */}
-          <div className="w-[100px] text-center">
-            {translate('textPopular.image')}
-          </div>
-          <div className="w-[100px]  flex flex-1">
-            {translate('textPopular.infor')}
-          </div>
+          <div className='w-[100px] text-center'>{translate('textPopular.image')}</div>
+          <div className='w-[100px]  flex flex-1'>{translate('textPopular.infor')}</div>
         </div>
-        <div className=" max-h-[400px] overflow-auto flex flex-col">
+        <div className=' max-h-[400px] overflow-auto flex flex-col'>
           {listDataValid.map((e, index) => {
             return (
-              <div
-                key={e._id}
-                className={`w-full flex gap-4 relative py-2 items-center ${
-                  index < listDataValid.length - 1 &&
-                  'border-b-[3px] border-gray-200'
-                }`}
-              >
-                <div className="w-[100px] ">
-                  <div className="flex justify-center mt-2">
-                    <Image
-                      fill
-                      className="!relative !w-auto !h-[80px]"
-                      src={detectImg(getItemForShow(e)?.imageMain)}
-                      alt={`item-${getItemForShow(e)?.name}`}
-                    />
+              <div key={e._id} className={`w-full flex gap-4 relative py-2 items-center ${index < listDataValid.length - 1 && 'border-b-[3px] border-gray-200'}`}>
+                <div className='w-[100px] '>
+                  <div className='flex justify-center mt-2'>
+                    <Image fill className='!relative !w-auto !h-[80px]' src={detectImg(getItemForShow(e)?.imageMain)} alt={`item-${getItemForShow(e)?.name}`} />
                   </div>
                 </div>
-                <div className="w-[100px] flex flex-1">
-                  <div className="flex flex-col gap-1 w-full">
-                    <div className="text-medium font-bold">
-                      {getItemForShow(e)?.name}
-                    </div>
-                    <div className="text-[12px] opacity-60">
-                      {`${translate('category')} : ${getLabelCategory(
-                        getItemForShow(e)?.category
-                      )}`}
-                    </div>
-                    <div>{`${translate('textPopular.amount')} : x${
-                      e.amount
-                    }`}</div>
-                    <div className="flex gap-1">
+                <div className='w-[100px] flex flex-1'>
+                  <div className='flex flex-col gap-1 w-full'>
+                    <div className='text-medium font-bold'>{getItemForShow(e)?.name}</div>
+                    <div className='text-[12px] opacity-60'>{`${translate('category')} : ${getLabelCategory(getItemForShow(e)?.category)}`}</div>
+                    <div>{`${translate('textPopular.amount')} : x${e.amount}`}</div>
+                    <div className='flex gap-1'>
                       <span>{translate('textPopular.totalMoney')} :</span>
-                      <span className="font-bold text-green-700">
-                        {numberWithCommas(e.amount * getItemForShow(e)?.price)}{' '}
-                        VNĐ
-                      </span>
+                      <span className='font-bold text-green-700'>{numberWithCommas(e.amount * getItemForShow(e)?.price)} VNĐ</span>
                     </div>
                   </div>
                 </div>
@@ -94,75 +68,40 @@ const ViewListOrder = ({ dataCart }: { dataCart: any[] }) => {
 
   const renderItemDesktop = () => {
     return (
-      <div className="w-full flex flex-col">
-        <div className="w-full flex gap-4 bg-green-100 border-b-2 border-gray-300 py-3 font-bold">
+      <div className='w-full flex flex-col'>
+        <div className='w-full flex gap-4 bg-green-100 border-b-2 border-gray-300 py-3 font-bold'>
           {/* header */}
-          <div className="w-[100px] text-center">
-            {translate('textPopular.image')}
-          </div>
-          <div className="w-[100px]  flex flex-1">
-            {translate('textPopular.nameProduct')}
-          </div>
-          <div className="w-[20%] text-center">
-            {translate('productDetail.price')}
-          </div>
-          <div className="w-[10%] text-center">
-            {translate('textPopular.amount')}
-          </div>
-          <div className="w-[20%] text-center ">
-            {translate('textPopular.totalMoney')}
-          </div>
+          <div className='w-[100px] text-center'>{translate('textPopular.image')}</div>
+          <div className='w-[100px]  flex flex-1'>{translate('textPopular.nameProduct')}</div>
+          <div className='w-[20%] text-center'>{translate('productDetail.price')}</div>
+          <div className='w-[10%] text-center'>{translate('textPopular.amount')}</div>
+          <div className='w-[20%] text-center '>{translate('textPopular.totalMoney')}</div>
         </div>
-        <div className=" max-h-[400px] overflow-auto flex flex-col">
+        <div className=' max-h-[400px] overflow-auto flex flex-col'>
           {listDataValid.map((e, index) => {
             return (
-              <div
-                key={e._id}
-                className={`w-full flex gap-4 relative py-2 items-center ${
-                  index < listDataValid.length - 1 &&
-                  'border-b-[3px] border-gray-200'
-                }`}
-              >
-                <div className="w-[100px] ">
-                  <div className="flex justify-center mt-2">
-                    <Image
-                      className="!relative !h-[80px] !w-auto"
-                      fill
-                      src={detectImg(getItemForShow(e)?.imageMain)}
-                      alt={`item-${getItemForShow(e)?.name}`}
-                    />
+              <div key={e._id} className={`w-full flex gap-4 relative py-2 items-center ${index < listDataValid.length - 1 && 'border-b-[3px] border-gray-200'}`}>
+                <div className='w-[100px] '>
+                  <div className='flex justify-center mt-2'>
+                    <Image className='!relative !h-[80px] !w-auto' fill src={detectImg(getItemForShow(e)?.imageMain)} alt={`item-${getItemForShow(e)?.name}`} />
                   </div>
                 </div>
-                <div className="w-[100px] flex flex-1">
-                  <div className="flex flex-col gap-1">
-                    <div
-                      className="font-semibold   cursor-pointer md:hover:underline"
-                      onClick={() => handleClickName(getItemForShow(e))}
-                    >
+                <div className='w-[100px] flex flex-1'>
+                  <div className='flex flex-col gap-1'>
+                    <div className='font-semibold   cursor-pointer md:hover:underline' onClick={() => handleClickName(getItemForShow(e))}>
                       {getItemForShow(e)?.name}
                     </div>
-                    <div className="opacity-80 text-xs ">
-                      {`${translate('category')} : ${
-                        getLabelCategory(getItemForShow(e)?.category) ||
-                        'typeProduct'
-                      }`}
-                    </div>
+                    <div className='opacity-80 text-xs '>{`${translate('category')} : ${getLabelCategory(getItemForShow(e)?.category) || 'typeProduct'}`}</div>
                   </div>
                 </div>
-                <div className="w-[20%] ">
-                  <div className="  text-green-800 flex flex-col  justify-items-start items-center gap-2">
-                    <span className="line-through text-xs">
-                      {numberWithCommas(getItemForShow(e)?.price * 1.2)}
-                    </span>
-                    <div className=" text-green-800">
-                      {numberWithCommas(getItemForShow(e)?.price)}
-                    </div>
+                <div className='w-[20%] '>
+                  <div className='  text-green-800 flex flex-col  justify-items-start items-center gap-2'>
+                    <span className='line-through text-xs'>{numberWithCommas(getItemForShow(e)?.price * 1.2)}</span>
+                    <div className=' text-green-800'>{numberWithCommas(getItemForShow(e)?.price)}</div>
                   </div>
                 </div>
-                <div className="w-[10%] text-center">{`x${e.amount}`}</div>
-                <div className="w-[20%] text-green-500 font-bold text-center">
-                  {numberWithCommas(e.amount * getItemForShow(e)?.price)} VNĐ
-                </div>
+                <div className='w-[10%] text-center'>{`x${e.amount}`}</div>
+                <div className='w-[20%] text-green-500 font-bold text-center'>{numberWithCommas(e.amount * getItemForShow(e)?.price)} VNĐ</div>
               </div>
             )
           })}
@@ -172,24 +111,15 @@ const ViewListOrder = ({ dataCart }: { dataCart: any[] }) => {
   }
 
   return (
-    <div className="bg-white w-full mt-4 flex flex-col  border-[1px] shadow-gray1 border-gray-300 p-3 px-4 pt-4">
-      <div className="flex w-full gap-2">
+    <div className='bg-white w-full mt-4 flex flex-col  border-[1px] shadow-gray1 border-gray-300 p-3 px-4 pt-4'>
+      <div className='flex w-full gap-2'>
         <div>
-          <Image
-            src={images.icon.iconCart}
-            alt="my-cart-bill"
-            fill
-            className="!relative !w-[25px] !h-[25px]"
-          />
+          <Image src={images.icon.iconCart} alt='my-cart-bill' fill className='!relative !w-[25px] !h-[25px]' />
         </div>
-        <div className="text-medium font-semibold">
-          {translate('bill.infoBill')}
-        </div>
+        <div className='text-medium font-semibold'>{translate('bill.infoBill')}</div>
       </div>
-      <div className="relative w-full border-[1px] my-3 border-gray-300" />
-      <div className="w-full overflow-y-auto">
-        {isMobile ? renderItemMobile() : renderItemDesktop()}
-      </div>
+      <div className='relative w-full border-[1px] my-3 border-gray-300' />
+      <div className='w-full overflow-y-auto'>{isMobile ? renderItemMobile() : renderItemDesktop()}</div>
     </div>
   )
 }

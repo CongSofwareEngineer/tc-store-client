@@ -3,14 +3,8 @@ import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery'
 import ClientApi from '@/services/clientApi'
 import { useQuery } from '@tanstack/react-query'
 
-const getData = async ({
-  queryKey,
-}: {
-  queryKey: any
-}): Promise<TypeHookReactQuery> => {
-  const queryUrl = `?page=1&limit=${
-    queryKey[2]
-  }&category=${queryKey[1].toString()}`
+const getData = async ({ queryKey }: { queryKey: any }): Promise<TypeHookReactQuery> => {
+  const queryUrl = `?page=1&limit=${queryKey[2]}&category=${queryKey[1].toString()}`
   const dataServer = await ClientApi.getProducts(queryUrl)
 
   return {

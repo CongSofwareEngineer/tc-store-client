@@ -6,7 +6,7 @@ export const CollapseCustom = styled(MyCollapse)`
     margin-top: 20px;
     background-color: transparent !important;
   }
-   .ant-collapse-item-active {
+  .ant-collapse-item-active {
     border-bottom: 0px !important;
   }
 `

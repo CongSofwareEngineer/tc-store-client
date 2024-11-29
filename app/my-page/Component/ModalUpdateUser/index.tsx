@@ -5,26 +5,20 @@ import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
 import ClientApi from '@/services/clientApi'
 import { decryptData } from '@/utils/crypto'
-import {
-  showNotificationError,
-  showNotificationSuccess,
-} from '@/utils/notification'
+import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 
 import { Checkbox, Input } from 'antd'
 import { isEmpty } from 'lodash'
 import React, { useEffect, useState } from 'react'
+
 type PropsType = {
   keyType: string
   callBack?: (param?: string) => Promise<void>
   initValue?: string
   maxLength?: number
 }
-const ModalUpdateUser = ({
-  keyType,
-  callBack,
-  initValue,
-  maxLength = 20,
-}: PropsType) => {
+
+const ModalUpdateUser = ({ keyType, callBack, initValue, maxLength = 20 }: PropsType) => {
   const { refreshLogin, userData } = useUserData()
   const { closeModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
@@ -97,13 +91,11 @@ const ModalUpdateUser = ({
 
   return (
     <div>
-      <div className="flex flex-col gap-1">
-        <div className="md:text-[14px] text-medium font-bold">
-          {translate('textPopular.now')} :
-        </div>
-        <div className="">
+      <div className='flex flex-col gap-1'>
+        <div className='md:text-[14px] text-medium font-bold'>{translate('textPopular.now')} :</div>
+        <div className=''>
           {keyType === 'sex' ? (
-            <div className="flex gap-2">
+            <div className='flex gap-2'>
               <Checkbox checked={!!getOldValue()} disabled>
                 {translate('textPopular.female')}
               </Checkbox>
@@ -116,12 +108,10 @@ const ModalUpdateUser = ({
           )}
         </div>
 
-        <div className="md:text-[14px] text-medium font-bold mt-2">
-          {translate('textPopular.newValue')} :
-        </div>
-        <div className="w-full mt-1">
+        <div className='md:text-[14px] text-medium font-bold mt-2'>{translate('textPopular.newValue')} :</div>
+        <div className='w-full mt-1'>
           {keyType === 'sex' ? (
-            <div className="flex gap-2">
+            <div className='flex gap-2'>
               <Checkbox checked={!!valueNew} onClick={() => setValueNew(true)}>
                 {translate('textPopular.female')}
               </Checkbox>
@@ -130,17 +120,11 @@ const ModalUpdateUser = ({
               </Checkbox>
             </div>
           ) : (
-            <Input.TextArea
-              rows={2}
-              value={valueNew?.toString()}
-              onChange={(e) => setValueNew(e.target.value)}
-              maxLength={maxLength}
-              showCount
-            />
+            <Input.TextArea rows={2} value={valueNew?.toString()} onChange={(e) => setValueNew(e.target.value)} maxLength={maxLength} showCount />
           )}
         </div>
-        <div className="w-full mt-6">
-          <MyButton className="w-full" loading={loading} onClick={handleSubmit}>
+        <div className='w-full mt-6'>
+          <MyButton className='w-full' loading={loading} onClick={handleSubmit}>
             {translate('common.save')}
           </MyButton>
         </div>

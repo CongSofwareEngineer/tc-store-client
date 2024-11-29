@@ -53,19 +53,13 @@ const useSearchBaseAdmin = (param?: Props) => {
   useEffect(() => {
     const getCategory = () => {
       const initData = {
-        label:
-          CategoryMenu[0]?.lang?.[Language.locale || 'vn'].toString() || '',
+        label: CategoryMenu[0]?.lang?.[Language.locale || 'vn'].toString() || '',
         value: CategoryMenu[0]?.keyName.toString() || '',
       }
       if (queries?.['category']) {
-        const dataLan = CategoryMenu.find(
-          (e) => e.keyName === queries?.['category'][0]!
-        )
-        initData.label =
-          dataLan?.lang?.[Language.locale || 'vn'].toString() ||
-          queries?.['category'][0]!
-        initData.value =
-          dataLan?.keyName.toString() || queries?.['category'][0]!
+        const dataLan = CategoryMenu.find((e) => e.keyName === queries?.['category'][0]!)
+        initData.label = dataLan?.lang?.[Language.locale || 'vn'].toString() || queries?.['category'][0]!
+        initData.value = dataLan?.keyName.toString() || queries?.['category'][0]!
       }
 
       return initData
@@ -79,9 +73,7 @@ const useSearchBaseAdmin = (param?: Props) => {
         status: FILTER_BILL.All,
         oneDate: moment().format('YYYY-MM-DD'),
         admin: false,
-        dateStart: dayjs(
-          new Date(Date.now()).setDate(new Date().getDate() - 7)
-        ),
+        dateStart: dayjs(new Date(Date.now()).setDate(new Date().getDate() - 7)),
         dateEnd: dayjs(new Date(Date.now()).setDate(new Date().getDate())),
       }
       setFormData(initData)
@@ -148,85 +140,52 @@ const useSearchBaseAdmin = (param?: Props) => {
 
   const renderContent = () => {
     return (
-      <div className="flex  flex-col gap-3 ">
+      <div className='flex  flex-col gap-3 '>
         {formData && isClient && (
-          <MyForm
-            onValuesChange={(_, value) =>
-              setFormData({ ...formData, ...value })
-            }
-            formData={formData}
-            onFinish={handleSubmit}
-            className="w-full"
-          >
-            <div className="flex justify-between flex-wrap">
+          <MyForm onValuesChange={(_, value) => setFormData({ ...formData, ...value })} formData={formData} onFinish={handleSubmit} className='w-full'>
+            <div className='flex justify-between flex-wrap'>
               {config.keyName && (
-                <div className="md:w-[48%] w-full">
-                  <InputForm
-                    key={'KeyName'}
-                    name="keyName"
-                    label={'Key Name'}
-                  />
+                <div className='md:w-[48%] w-full'>
+                  <InputForm key={'KeyName'} name='keyName' label={'Key Name'} />
                 </div>
               )}
 
               {config.sdt && (
-                <div className="md:w-[48%] w-full">
-                  <InputForm
-                    key={'sdt'}
-                    name="sdt"
-                    label={translate('userDetail.sdt')}
-                  />
+                <div className='md:w-[48%] w-full'>
+                  <InputForm key={'sdt'} name='sdt' label={translate('userDetail.sdt')} />
                 </div>
               )}
 
               {config.category && (
-                <div className="md:w-[48%] w-full">
-                  <CategoryForm label="category" name="category" />
+                <div className='md:w-[48%] w-full'>
+                  <CategoryForm label='category' name='category' />
                 </div>
               )}
               {config.status && (
-                <div className="md:w-[48%] w-full">
-                  <StatusFormBill
-                    label={translate('textPopular.status')}
-                    name="status"
-                  />
+                <div className='md:w-[48%] w-full'>
+                  <StatusFormBill label={translate('textPopular.status')} name='status' />
                 </div>
               )}
               {config.admin && (
-                <div className="md:w-[48%] w-full">
-                  <CheckBoxForm label="Admin" name="admin" />
+                <div className='md:w-[48%] w-full'>
+                  <CheckBoxForm label='Admin' name='admin' />
                 </div>
               )}
 
               {config.dateStart && (
-                <div className="md:w-[48%] w-full">
-                  <MyDatePickerForm
-                    label={translate('textPopular.dateStart')}
-                    name="dateStart"
-                    defaultValue={formData.dateStart}
-                  />
+                <div className='md:w-[48%] w-full'>
+                  <MyDatePickerForm label={translate('textPopular.dateStart')} name='dateStart' defaultValue={formData.dateStart} />
                 </div>
               )}
               {config.dateEnd && (
-                <div className="md:w-[48%] w-full">
-                  <MyDatePickerForm
-                    label={translate('textPopular.dateEnd')}
-                    name="dateEnd"
-                    defaultValue={formData.dateEnd}
-                  />
+                <div className='md:w-[48%] w-full'>
+                  <MyDatePickerForm label={translate('textPopular.dateEnd')} name='dateEnd' defaultValue={formData.dateEnd} />
                 </div>
               )}
             </div>
-            <div className="flex justify-center items-center gap-2 w-full">
-              <ButtonForm
-                disableClose
-                titleSubmit={translate('common.search')}
-              />
-              <MyButton
-                type="primary"
-                className=" mt-2"
-                onClick={() => clearSearch()}
-              >
+            <div className='flex justify-center items-center gap-2 w-full'>
+              <ButtonForm disableClose titleSubmit={translate('common.search')} />
+              <MyButton type='primary' className=' mt-2' onClick={() => clearSearch()}>
                 {'Clean'}
               </MyButton>
             </div>

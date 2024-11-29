@@ -12,16 +12,16 @@ const LoadingData = ({ loading }: LoadingDataProps) => {
   }
 
   return isMobile ? (
-    <div className="flex flex-col gap-3 w-full mt-3 ">
-      <MySkeleton className="w-full h-20  rounded-md" />
-      <MySkeleton className="w-full h-20  rounded-md" />
-      <MySkeleton className="w-full h-20  rounded-md" />
+    <div className='flex flex-col gap-3 w-full mt-3 '>
+      <MySkeleton className='w-full h-20  rounded-md' />
+      <MySkeleton className='w-full h-20  rounded-md' />
+      <MySkeleton className='w-full h-20  rounded-md' />
     </div>
   ) : (
-    <div className="flex flex-col gap-3 w-full mt-3 ">
-      <MySkeleton className="w-full h-20 rounded-md" />
-      <MySkeleton className="w-full h-20 rounded-md" />
-      <MySkeleton className="w-full h-20 rounded-md" />
+    <div className='flex flex-col gap-3 w-full mt-3 '>
+      <MySkeleton className='w-full h-20 rounded-md' />
+      <MySkeleton className='w-full h-20 rounded-md' />
+      <MySkeleton className='w-full h-20 rounded-md' />
     </div>
   )
 }

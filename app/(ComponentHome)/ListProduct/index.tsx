@@ -4,11 +4,7 @@ import ItemProduct from '@/components/ItemProduct'
 import useLanguage from '@/hook/useLanguage'
 import Link from 'next/link'
 import { FilterAPI } from '@/constant/app'
-import {
-  AlignLeftOutlined,
-  CaretRightOutlined,
-  RightOutlined,
-} from '@ant-design/icons'
+import { AlignLeftOutlined, CaretRightOutlined, RightOutlined } from '@ant-design/icons'
 import { CollapseCustom } from './styled'
 import useProductByLimit from '@/hook/tank-query/useProductByLimit'
 import { scrollTop } from '@/utils/functions'
@@ -24,26 +20,15 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
 
   const renderListItem = () => {
     return (
-      <div className="pb-3 flex gap-3 md:gap-5 overflow-x-auto w-full">
+      <div className='pb-3 flex gap-3 md:gap-5 overflow-x-auto w-full'>
         <LoadingData loading={isLoading} />
 
         {Array.isArray(data?.data) &&
           data?.data?.map((item) => {
-            return (
-              <ItemProduct
-                showFeedback
-                showSold
-                key={item.id}
-                item={item}
-                href={`/shop/${item.keyName}`}
-                className={'w-[180px] md:w-[230px] h-[310px] md:h-[350px]'}
-              />
-            )
+            return <ItemProduct showFeedback showSold key={item.id} item={item} href={`/shop/${item.keyName}`} className={'w-[180px] md:w-[230px] h-[310px] md:h-[350px]'} />
           })}
 
-        {Array.isArray(data?.data) && data?.data?.length === 0 && (
-          <div>{translate('warning.noData')}</div>
-        )}
+        {Array.isArray(data?.data) && data?.data?.length === 0 && <div>{translate('warning.noData')}</div>}
       </div>
     )
   }
@@ -53,33 +38,21 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
       key: type,
       expandIcon: <AlignLeftOutlined style={{ fontSize: 20 }} />,
       label: (
-        <div className="flex justify-between items-center">
-          <div className="flex text-medium w-full ">{title}</div>
+        <div className='flex justify-between items-center'>
+          <div className='flex text-medium w-full '>{title}</div>
         </div>
       ),
       children: renderListItem(),
       extra: (
-        <Link
-          href={`shop?${FilterAPI.Category}=${type || 'all'}`}
-          className="text-medium cursor-pointer hover:font-semibold hover:text-green-600"
-        >
+        <Link href={`shop?${FilterAPI.Category}=${type || 'all'}`} className='text-medium cursor-pointer hover:font-semibold hover:text-green-600'>
           <span> {translate('textPopular.viewMore')}</span>
-          <RightOutlined className="text-sm ml-2" />
+          <RightOutlined className='text-sm ml-2' />
         </Link>
       ),
     },
   ]
 
-  return (
-    <CollapseCustom
-      expandIcon={({ isActive }: any) => (
-        <CaretRightOutlined rotate={isActive ? 90 : 0} />
-      )}
-      defaultActiveKey={[type]}
-      items={items}
-      style={{ background: 'transparent' }}
-    />
-  )
+  return <CollapseCustom expandIcon={({ isActive }: any) => <CaretRightOutlined rotate={isActive ? 90 : 0} />} defaultActiveKey={[type]} items={items} style={{ background: 'transparent' }} />
 }
 
 export default ListProduct

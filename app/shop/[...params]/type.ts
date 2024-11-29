@@ -20,6 +20,6 @@ export type PaymentShopType = {
 }
 
 export type InfoBillType = {
-  data?: ItemDetailType,
+  data?: ItemDetailType
   amountBuy: number
 }

@@ -24,42 +24,24 @@ const ViewDetailBill = ({ data }: Props) => {
   }
 
   return (
-    <div className="flex flex-col w-full gap-4">
-      {!isMobile && (
-        <p className="text-[22px] mb-2 font-bold text-center">
-          {translate('textPopular.viewDetail')}
-        </p>
-      )}
+    <div className='flex flex-col w-full gap-4'>
+      {!isMobile && <p className='text-[22px] mb-2 font-bold text-center'>{translate('textPopular.viewDetail')}</p>}
       {data &&
         data?.listBill?.map((e: any) => {
           return (
-            <div
-              key={e._id}
-              className={`flex gap-2 w-full pb-4 border-b-[3px] border-gray-200`}
-            >
-              <div className=" w-[100px]  flex justify-center align-middle overflow-hidden">
-                <Image
-                  fill
-                  alt={`icon-product-bill-${e._id}`}
-                  src={detectImg(e.more_data.imageMain)}
-                  className="!relative !w-full !h-auto"
-                />
+            <div key={e._id} className={`flex gap-2 w-full pb-4 border-b-[3px] border-gray-200`}>
+              <div className=' w-[100px]  flex justify-center align-middle overflow-hidden'>
+                <Image fill alt={`icon-product-bill-${e._id}`} src={detectImg(e.more_data.imageMain)} className='!relative !w-full !h-auto' />
               </div>
-              <div className="flex flex-col gap-2">
-                <p className="font-bold">{e.more_data.name}</p>
+              <div className='flex flex-col gap-2'>
+                <p className='font-bold'>{e.more_data.name}</p>
                 <div>{`${translate('textPopular.amount')} : x${e.amount}`}</div>
-                <div className="text-red-500 font-bold">
-                  <span className="mr-1">
-                    {translate('productDetail.price')} :
-                  </span>
+                <div className='text-red-500 font-bold'>
+                  <span className='mr-1'>{translate('productDetail.price')} :</span>
                   <span>{formatPrice(e.more_data.price)} VNĐ</span>
                 </div>
                 {enableFeedback && (
-                  <Button
-                    onClick={() => handleFeedback(e)}
-                    size="small"
-                    className="w-max"
-                  >
+                  <Button onClick={() => handleFeedback(e)} size='small' className='w-max'>
                     {translate('common.feedback')}
                   </Button>
                 )}
@@ -67,7 +49,7 @@ const ViewDetailBill = ({ data }: Props) => {
             </div>
           )
         })}
-      <div className="text-medium gap-1 flex w-full justify-end font-bold text-green-500 ">
+      <div className='text-medium gap-1 flex w-full justify-end font-bold text-green-500 '>
         <span>{translate('textPopular.totalMoney')} : </span>
         <span>{`${formatPrice(data.totalBill || '0')} VNĐ`}</span>
       </div>

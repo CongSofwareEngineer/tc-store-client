@@ -1,6 +1,6 @@
-import { QUERY_KEY } from "@/constant/reactQuery"
-import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
+import { QUERY_KEY } from '@/constant/reactQuery'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
 
 const getData = async ({ queryKey }: { queryKey: any }): Promise<any> => {
   const url = `https://esgoo.net/api-tinhthanh/${queryKey[1]}/${queryKey[2]}.htm`
@@ -8,17 +8,16 @@ const getData = async ({ queryKey }: { queryKey: any }): Promise<any> => {
   return data?.data?.data || data?.data || []
 }
 
-
 const useAddressShip = (type: any, idItem: any) => {
   const { data, isFetching, isLoading } = useQuery({
     queryKey: [QUERY_KEY.AllProvincesVn, type, idItem],
     queryFn: getData,
-    enabled: !!type && !!idItem
+    enabled: !!type && !!idItem,
   })
 
   return {
     loading: isFetching || isLoading,
-    data
+    data,
   }
 }
 

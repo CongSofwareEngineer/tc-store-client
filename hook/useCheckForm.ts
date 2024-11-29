@@ -23,17 +23,14 @@ const useCheckForm = () => {
     try {
       if (!value) {
         return translate('errors.empty')
-
       }
-      const hasNumbers = /[0-9]/.test(value);
+      const hasNumbers = /[0-9]/.test(value)
       if (hasNumbers) {
         return null
       }
       return translate('errors.inValueNumber')
-
     } catch (error) {
       return translate('errors.inValueNumber')
-
     }
   }
 
@@ -44,9 +41,7 @@ const useCheckForm = () => {
 
     const validEmail = String(email)
       .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
+      .match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
     if (validEmail) {
       return null
     }
@@ -56,13 +51,12 @@ const useCheckForm = () => {
   const checkPassword = (pass: string) => {
     if (!pass) {
       return translate('errors.empty')
-
     }
-    const noSQLInjectionPattern = /(\$|\{|\}|\[|\])/g;
+    const noSQLInjectionPattern = /(\$|\{|\}|\[|\])/g
 
     // Check if the input contains any NoSQL injection patterns
     if (noSQLInjectionPattern.test(pass)) {
-      return translate('errors.invalidPass');
+      return translate('errors.invalidPass')
     }
     return null
   }
@@ -71,7 +65,7 @@ const useCheckForm = () => {
     checkNumberPhone,
     checkEmail,
     checkPassword,
-    checkIsNumber
+    checkIsNumber,
   }
 }
 

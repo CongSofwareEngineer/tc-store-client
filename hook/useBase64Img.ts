@@ -6,12 +6,7 @@ import { MAX_PIXEL_REDUCE } from '@/constant/app'
 const useBase64Img = (maxSizeOutputKB = 15, maxScale = MAX_PIXEL_REDUCE) => {
   const { translate } = useLanguage()
 
-  const reduceImageSize = (
-    imageFile: File,
-    maxSizeInKB = 5,
-    quality = 0.7,
-    callback: any
-  ) => {
+  const reduceImageSize = (imageFile: File, maxSizeInKB = 5, quality = 0.7, callback: any) => {
     const reader = new FileReader()
     reader.readAsDataURL(imageFile)
     reader.onload = (event) => {
@@ -45,7 +40,7 @@ const useBase64Img = (maxSizeOutputKB = 15, maxScale = MAX_PIXEL_REDUCE) => {
               }
             },
             'image/jpeg',
-            currentQuality
+            currentQuality,
           )
         }
 
@@ -57,7 +52,7 @@ const useBase64Img = (maxSizeOutputKB = 15, maxScale = MAX_PIXEL_REDUCE) => {
 
   const getBase64 = async (
     fileUpload: any,
-    callBack?: any
+    callBack?: any,
   ): Promise<{
     base64: string
     name: string
@@ -65,10 +60,7 @@ const useBase64Img = (maxSizeOutputKB = 15, maxScale = MAX_PIXEL_REDUCE) => {
     try {
       return new Promise((resolve) => {
         if (fileUpload.size > 30 * 1048576) {
-          const text = translate('warning.maxSizeFile').replace(
-            '{size}',
-            `30 MB`
-          )
+          const text = translate('warning.maxSizeFile').replace('{size}', `30 MB`)
           showNotificationError(text)
           return
         }

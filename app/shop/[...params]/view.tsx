@@ -8,11 +8,7 @@ import { useEffect } from 'react'
 import useAos from '@/hook/useAos'
 import ViewDetail from './Component/ViewDetail'
 
-const ShopDetailScreen = ({
-  productDetail,
-}: {
-  productDetail: ItemDetailType
-}) => {
+const ShopDetailScreen = ({ productDetail }: { productDetail: ItemDetailType }) => {
   const [amountBuy, setAmountBuy] = useState(1)
   const [isPayment, setIsPayment] = useState(false)
 
@@ -28,19 +24,9 @@ const ShopDetailScreen = ({
   }, [isLogin])
 
   return isPayment ? (
-    <PaymentShop
-      callBack={() => setIsPayment(false)}
-      data={dataItem}
-      amount={amountBuy}
-    />
+    <PaymentShop callBack={() => setIsPayment(false)} data={dataItem} amount={amountBuy} />
   ) : (
-    <ViewDetail
-      amountBuy={amountBuy}
-      isPayment={isPayment}
-      productDetail={dataItem}
-      setAmountBuy={setAmountBuy}
-      setIsPayment={setIsPayment}
-    />
+    <ViewDetail amountBuy={amountBuy} isPayment={isPayment} productDetail={dataItem} setAmountBuy={setAmountBuy} setIsPayment={setIsPayment} />
   )
 }
 

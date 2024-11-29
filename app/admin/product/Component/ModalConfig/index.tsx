@@ -15,10 +15,7 @@ import { isEqual } from 'lodash'
 import UploadImage from '@/components/UploadImg'
 import InputForm from '@/components/Form/InputForm'
 import ButtonForm from '@/components/Form/ButtonForm'
-import {
-  showNotificationError,
-  showNotificationSuccess,
-} from '@/utils/notification'
+import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import AdminApi from '@/services/adminApi'
 import MyBlog from '@/components/MyBlog'
 import { PATH_IMG } from '@/constant/mongoDB'
@@ -63,9 +60,7 @@ const ProductConfig = ({ item }: { item: any }) => {
   }, [item])
 
   const handleDeleteMoreImg = (index: number) => {
-    const newList = formData?.imageMore?.filter(
-      (_: any, indexFilter: number) => indexFilter !== index
-    )
+    const newList = formData?.imageMore?.filter((_: any, indexFilter: number) => indexFilter !== index)
     setFormData({ ...formData, imageMore: newList })
   }
 
@@ -112,9 +107,7 @@ const ProductConfig = ({ item }: { item: any }) => {
     }
 
     if (data?.data) {
-      showNotificationSuccess(
-        translate(item ? 'success.update' : 'success.create')
-      )
+      showNotificationSuccess(translate(item ? 'success.update' : 'success.create'))
       refreshQuery(QUERY_KEY.GetListProductAdmin)
       closeModalDrawer()
     } else {
@@ -124,124 +117,56 @@ const ProductConfig = ({ item }: { item: any }) => {
   }
 
   return formData ? (
-    <MyForm
-      onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
-      formData={formData}
-      onFinish={handleSubmit}
-      className="!overflow-auto gap-2 md:max-h-[85vh]"
-    >
-      <div className="flex flex-col gap-4 w-full flex-1 overflow-y-auto ">
-        <div className="flex gap-4 w-full">
-          <InputForm
-            classFromItem="w-full"
-            name="name"
-            label={translate('header.name')}
-            required
-          />
-          <CategoryForm
-            label={translate('menuProduct.category')}
-            name="category"
-          />
+    <MyForm onValuesChange={(_, value) => setFormData({ ...formData, ...value })} formData={formData} onFinish={handleSubmit} className='!overflow-auto gap-2 md:max-h-[85vh]'>
+      <div className='flex flex-col gap-4 w-full flex-1 overflow-y-auto '>
+        <div className='flex gap-4 w-full'>
+          <InputForm classFromItem='w-full' name='name' label={translate('header.name')} required />
+          <CategoryForm label={translate('menuProduct.category')} name='category' />
         </div>
         <SelectForm options={[]} />
 
-        <div className="flex gap-4 w-full ">
-          <InputForm
-            classFromItem="w-full"
-            name="keyName"
-            label={translate('header.name')}
-            required
-          />
-          <InputForm
-            classFromItem="w-full"
-            name="titleSeo"
-            label="titleSeo"
-            required
-          />
+        <div className='flex gap-4 w-full '>
+          <InputForm classFromItem='w-full' name='keyName' label={translate('header.name')} required />
+          <InputForm classFromItem='w-full' name='titleSeo' label='titleSeo' required />
         </div>
 
-        <div className="flex gap-4 w-full ">
-          <InputForm
-            classFromItem="w-full"
-            name="linkFacebook"
-            label="linkFacebook"
-          />
+        <div className='flex gap-4 w-full '>
+          <InputForm classFromItem='w-full' name='linkFacebook' label='linkFacebook' />
 
-          <InputForm
-            classFromItem="w-full"
-            name="linkShoppe"
-            label="linkShoppe"
-          />
+          <InputForm classFromItem='w-full' name='linkShoppe' label='linkShoppe' />
         </div>
 
-        <div className="flex gap-4 w-full">
-          <InputForm
-            classFromItem="w-full"
-            name="cost"
-            label={translate('textPopular.cost')}
-            required
-            typeBtn="number"
-            validator={checkIsNumber}
-          />
+        <div className='flex gap-4 w-full'>
+          <InputForm classFromItem='w-full' name='cost' label={translate('textPopular.cost')} required typeBtn='number' validator={checkIsNumber} />
 
-          <InputForm
-            classFromItem="w-full"
-            name="price"
-            label={translate('productDetail.price')}
-            required
-            typeBtn="number"
-            validator={checkIsNumber}
-          />
+          <InputForm classFromItem='w-full' name='price' label={translate('productDetail.price')} required typeBtn='number' validator={checkIsNumber} />
         </div>
-        <div className="flex gap-4 w-full">
-          <InputForm
-            classFromItem="w-full"
-            name="disCount"
-            label={translate('textPopular.disCount')}
-            required
-            typeBtn="number"
-            validator={checkIsNumber}
-          />
+        <div className='flex gap-4 w-full'>
+          <InputForm classFromItem='w-full' name='disCount' label={translate('textPopular.disCount')} required typeBtn='number' validator={checkIsNumber} />
 
-          <InputForm
-            classFromItem="w-full"
-            name="weight"
-            label={translate('productDetail.weight')}
-            required
-            disable={!!item}
-          />
+          <InputForm classFromItem='w-full' name='weight' label={translate('productDetail.weight')} required disable={!!item} />
         </div>
-        <div className="flex gap-3 justify-between  mt-2">
-          <div className="flex flex-col  w-[150px]   justify-between items-center">
-            <div className="w-[100px]">
-              <UploadImage
-                maxSizeOutputKB={500}
-                typeFile={typeFile}
-                fullQuality
-                handleUpload={(e) => setFormData({ ...formData, imageMain: e })}
-              >
-                <div className="flex gap-2">
+        <div className='flex gap-3 justify-between  mt-2'>
+          <div className='flex flex-col  w-[150px]   justify-between items-center'>
+            <div className='w-[100px]'>
+              <UploadImage maxSizeOutputKB={500} typeFile={typeFile} fullQuality handleUpload={(e) => setFormData({ ...formData, imageMain: e })}>
+                <div className='flex gap-2'>
                   <CameraOutlined />
                   <span>Hình chính</span>
                 </div>
               </UploadImage>
             </div>
 
-            <div className="w-[150px] flex justify-center ">
+            <div className='w-[150px] flex justify-center '>
               {(formData?.imageMain?.base64 || formData?.imageMain) && (
-                <div className="w-[100px] aspect-square overflow-hidden">
-                  <Image
-                    alt="img-main"
-                    src={detectImg(
-                      formData?.imageMain?.base64 || formData?.imageMain
-                    )}
-                  />
+                <div className='w-[100px] aspect-square overflow-hidden'>
+                  <Image alt='img-main' src={detectImg(formData?.imageMain?.base64 || formData?.imageMain)} />
                 </div>
               )}
             </div>
           </div>
-          <div className="w-[calc(100%-200px)] h-full flex flex-col  gap-3 justify-between items-center">
-            <div className="w-full">
+          <div className='w-[calc(100%-200px)] h-full flex flex-col  gap-3 justify-between items-center'>
+            <div className='w-full'>
               <UploadImage
                 typeFile={typeFile}
                 listData={formData?.imageMore || []}
@@ -254,27 +179,20 @@ const ProductConfig = ({ item }: { item: any }) => {
                 maxSizeOutputKB={500}
                 maxPixelReduce={500}
               >
-                <div className="flex w-full gap-2 justify-center items-center">
+                <div className='flex w-full gap-2 justify-center items-center'>
                   <CameraOutlined />
                   <span>Hình phụ</span>
                 </div>
               </UploadImage>
             </div>
-            <div className="flex flex-nowrap gap-3 overflow-scroll w-full ">
+            <div className='flex flex-nowrap gap-3 overflow-scroll w-full '>
               {formData?.imageMore &&
                 formData?.imageMore.map((e: any, index: number) => {
                   return (
-                    <div className="w-[100px]" key={detectImg(e?.base64 || e)}>
-                      <div className="w-[100px] relative">
-                        <Image
-                          className="w-[100px]"
-                          alt={`img-moew-${e?.name}`}
-                          src={detectImg(e?.base64 || e)}
-                        />
-                        <CloseCircleOutlined
-                          onClick={() => handleDeleteMoreImg(index)}
-                          className="absolute right-0 top-0 text-[18px] cursor-pointer "
-                        />
+                    <div className='w-[100px]' key={detectImg(e?.base64 || e)}>
+                      <div className='w-[100px] relative'>
+                        <Image className='w-[100px]' alt={`img-moew-${e?.name}`} src={detectImg(e?.base64 || e)} />
+                        <CloseCircleOutlined onClick={() => handleDeleteMoreImg(index)} className='absolute right-0 top-0 text-[18px] cursor-pointer ' />
                       </div>
                     </div>
                   )
@@ -283,37 +201,18 @@ const ProductConfig = ({ item }: { item: any }) => {
           </div>
         </div>
 
-        <InputForm
-          classFromItem="w-full"
-          name="desSeo"
-          label="desSeo"
-          required
-          typeBtn="area"
-        />
-        <div className="w-ful mt-10" />
+        <InputForm classFromItem='w-full' name='desSeo' label='desSeo' required typeBtn='area' />
+        <div className='w-ful mt-10' />
 
-        <InputForm
-          classFromItem="w-full"
-          name="des"
-          label="des"
-          required
-          typeBtn="area"
-        />
-        <div className="w-full md:mt-16 min-h-[300px]">
-          <div className="font-bold">Info detail : </div>
-          <MyBlog
-            pathFile={PATH_IMG.Products}
-            value={formData?.des2}
-            setValue={(e) => setFormData({ ...formData, des2: e })}
-          />
+        <InputForm classFromItem='w-full' name='des' label='des' required typeBtn='area' />
+        <div className='w-full md:mt-16 min-h-[300px]'>
+          <div className='font-bold'>Info detail : </div>
+          <MyBlog pathFile={PATH_IMG.Products} value={formData?.des2} setValue={(e) => setFormData({ ...formData, des2: e })} />
         </div>
       </div>
 
-      <div className="flex flex-1 w-full">
-        <ButtonForm
-          titleSubmit={translate(item ? 'common.update' : 'common.create')}
-          loading={loading}
-        />
+      <div className='flex flex-1 w-full'>
+        <ButtonForm titleSubmit={translate(item ? 'common.update' : 'common.create')} loading={loading} />
       </div>
     </MyForm>
   ) : (

@@ -25,20 +25,14 @@ const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
         <Drawer
           onClose={closeDrawer}
           style={{
-            maxHeight:
-              config.placement === 'right' || config.placement === 'left'
-                ? 'unset'
-                : '95dvh',
+            maxHeight: config.placement === 'right' || config.placement === 'left' ? 'unset' : '95dvh',
           }}
           {...config}
         >
           <div
-            className="flex flex-col w-full"
+            className='flex flex-col w-full'
             style={{
-              maxHeight:
-                config.placement === 'right' || config.placement === 'left'
-                  ? 'calc(100dvh - 100px)'
-                  : 'calc(95dvh - 100px)',
+              maxHeight: config.placement === 'right' || config.placement === 'left' ? 'calc(100dvh - 100px)' : 'calc(95dvh - 100px)',
             }}
           >
             {config.content ?? <></>}

@@ -2,11 +2,7 @@ import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery'
 import AdminApi from '@/services/adminApi'
 import { useQuery } from '@tanstack/react-query'
 
-const getData = async ({
-  queryKey,
-}: {
-  queryKey: any
-}): Promise<TypeHookReactQuery> => {
+const getData = async ({ queryKey }: { queryKey: any }): Promise<TypeHookReactQuery> => {
   const query = queryKey[1]
   const { isShow } = query
 

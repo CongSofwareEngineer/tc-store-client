@@ -72,30 +72,23 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
   ]
 
   return (
-    <div className="md:fixed  w-screen   flex md:flex-row flex-col h-full max-h-[calc(100vh-56px)]">
+    <div className='md:fixed  w-screen   flex md:flex-row flex-col h-full max-h-[calc(100vh-56px)]'>
       {isLogin && isClient && (
         <>
           {!isMobile ? (
-            <div className="w-[200px] flex flex-col p-3 gap-2 bg-[#000000d6]">
-              <div className="w-full">
-                <MyImage
-                  alt="logo-admin"
-                  src={images.logo}
-                  widthImage="100%"
-                  heightImage="auto"
-                />
+            <div className='w-[200px] flex flex-col p-3 gap-2 bg-[#000000d6]'>
+              <div className='w-full'>
+                <MyImage alt='logo-admin' src={images.logo} widthImage='100%' heightImage='auto' />
               </div>
               {LIST_MENU.map((e) => {
                 return (
-                  <div key={e.url} className="flex gap-3 items-center">
+                  <div key={e.url} className='flex gap-3 items-center'>
                     <TagFilled style={{ color: 'white' }} />
                     <Link
                       href={e.url}
-                      className="capitalize text-medium hover:underline text-white"
+                      className='capitalize text-medium hover:underline text-white'
                       style={{
-                        fontWeight: patchName.includes(e.url)
-                          ? 'bold'
-                          : 'normal',
+                        fontWeight: patchName.includes(e.url) ? 'bold' : 'normal',
                       }}
                     >
                       {e.title}
@@ -105,17 +98,12 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
               })}
             </div>
           ) : (
-            <div className="flex w-full gap-4   pt-4  px-5 ">
-              <div className="flex w-full gap-3  overflow-x-auto  pt-4 pb-3  ">
+            <div className='flex w-full gap-4   pt-4  px-5 '>
+              <div className='flex w-full gap-3  overflow-x-auto  pt-4 pb-3  '>
                 {LIST_MENU.map((e) => {
                   return (
-                    <div key={e.url} className="w-auto">
-                      <Link
-                        href={e.url}
-                        className={`${
-                          patchName === e.url ? 'font-bold underline' : ''
-                        } text-nowrap bg-green-100 p-4 py-1 min-w-[50px] border-[1px] border-blue-300 rounded-lg text-black`}
-                      >
+                    <div key={e.url} className='w-auto'>
+                      <Link href={e.url} className={`${patchName === e.url ? 'font-bold underline' : ''} text-nowrap bg-green-100 p-4 py-1 min-w-[50px] border-[1px] border-blue-300 rounded-lg text-black`}>
                         {e.title}
                       </Link>
                     </div>
@@ -124,9 +112,7 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
               </div>
             </div>
           )}
-          <div className="flex flex-1 md:p-4 p-5 md:max-w-[calc(100vw-212px)]">
-            {children}
-          </div>
+          <div className='flex flex-1 md:p-4 p-5 md:max-w-[calc(100vw-212px)]'>{children}</div>
         </>
       )}
     </div>

@@ -43,15 +43,7 @@ type InputFormType = {
   validator?: (value?: any) => string | null
 }
 
-const InputAreaForm = ({
-  label,
-  name,
-  message,
-  required = false,
-  rows = 3,
-  validator = () => '',
-  className = '',
-}: InputFormType) => {
+const InputAreaForm = ({ label, name, message, required = false, rows = 3, validator = () => '', className = '' }: InputFormType) => {
   const { translate } = useLanguage()
   return (
     <FormItem
@@ -70,9 +62,7 @@ const InputAreaForm = ({
               return Promise.reject(new Error(errorCheck))
             }
             if (!value) {
-              return Promise.reject(
-                new Error(message || translate('errors.empty'))
-              )
+              return Promise.reject(new Error(message || translate('errors.empty')))
             }
 
             return Promise.resolve(null)
@@ -80,7 +70,7 @@ const InputAreaForm = ({
         },
       ]}
     >
-      <MyInput type={'area'} rows={rows} className="w-full" />
+      <MyInput type={'area'} rows={rows} className='w-full' />
     </FormItem>
   )
 }

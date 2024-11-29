@@ -13,22 +13,13 @@ const GraphRevenue = ({ data }: { data: any }) => {
       total += e.totalBill
     })
     return (
-      <div className="flex gap-2 w-full items-center">
-        <div className="w-[60px] aspect-square">
-          <Image
-            className="!relative !w-full !h-auto"
-            alt="iconBill"
-            src={images.icon.iconBill}
-            fill
-          />
+      <div className='flex gap-2 w-full items-center'>
+        <div className='w-[60px] aspect-square'>
+          <Image className='!relative !w-full !h-auto' alt='iconBill' src={images.icon.iconBill} fill />
         </div>
         <div>
-          <div className="text-lg text-green-500">
-            {numberWithCommas(total)}
-          </div>
-          <div className="text-lg text-green-500">
-            {translate('textPopular.totalMoney')}
-          </div>
+          <div className='text-lg text-green-500'>{numberWithCommas(total)}</div>
+          <div className='text-lg text-green-500'>{translate('textPopular.totalMoney')}</div>
         </div>
       </div>
     )
@@ -42,22 +33,13 @@ const GraphRevenue = ({ data }: { data: any }) => {
       })
     })
     return (
-      <div className="flex gap-2 w-full">
-        <div className="w-[30px] aspect-square">
-          <Image
-            className="!relative !w-full !h-auto"
-            alt="iconBill"
-            src={images.icon.iconBill}
-            fill
-          />
+      <div className='flex gap-2 w-full'>
+        <div className='w-[30px] aspect-square'>
+          <Image className='!relative !w-full !h-auto' alt='iconBill' src={images.icon.iconBill} fill />
         </div>
         <div>
-          <div className="text-lg text-green-500">
-            {numberWithCommas(total)}
-          </div>
-          <div className="text-lg text-green-500">
-            {translate('textPopular.totalMoney')}
-          </div>
+          <div className='text-lg text-green-500'>{numberWithCommas(total)}</div>
+          <div className='text-lg text-green-500'>{translate('textPopular.totalMoney')}</div>
         </div>
       </div>
     )
@@ -65,30 +47,21 @@ const GraphRevenue = ({ data }: { data: any }) => {
 
   const renderTotalAmountUserBuy = () => {
     return (
-      <div className="flex gap-2 w-full">
-        <div className="w-[30px] aspect-square">
-          <Image
-            className="!relative !w-full !h-auto"
-            alt="iconBill"
-            src={images.icon.iconBill}
-            fill
-          />
+      <div className='flex gap-2 w-full'>
+        <div className='w-[30px] aspect-square'>
+          <Image className='!relative !w-full !h-auto' alt='iconBill' src={images.icon.iconBill} fill />
         </div>
         <div>
-          <div className="text-lg text-green-500">
-            {numberWithCommas(data.length)}
-          </div>
-          <div className="text-lg text-green-500">
-            {translate('textPopular.totalMoney')}
-          </div>
+          <div className='text-lg text-green-500'>{numberWithCommas(data.length)}</div>
+          <div className='text-lg text-green-500'>{translate('textPopular.totalMoney')}</div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex items-center flex-col gap-3">
-      <div className="grid md:grid-cols-3 grid-cols-1 gap-3 w-full">
+    <div className='flex items-center flex-col gap-3'>
+      <div className='grid md:grid-cols-3 grid-cols-1 gap-3 w-full'>
         {renderTotal()}
         {renderTotalAmountSell()}
         {renderTotalAmountUserBuy()}

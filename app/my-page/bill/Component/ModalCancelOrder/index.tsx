@@ -7,10 +7,7 @@ import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ServerApi from '@/services/serverApi'
 import { delayTime } from '@/utils/functions'
-import {
-  showNotificationError,
-  showNotificationSuccess,
-} from '@/utils/notification'
+import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import React, { useState } from 'react'
 
 const ModalCancelOrder = ({ data }: { data: any }) => {
@@ -39,28 +36,15 @@ const ModalCancelOrder = ({ data }: { data: any }) => {
   }
 
   return (
-    <div className="flex flex-col gap-2 w-full items-center">
-      <p className="text-medium font-bold">
-        {translate('myBill.cancelOrder.cancelOrder')}
-      </p>
-      <div className="w-full font-medium">
-        {translate('textPopular.reason')}:
-      </div>
-      <MyInput
-        type="area"
-        rows={3}
-        onChangeText={(e) => setTextWhy(e?.toString() || '')}
-      />
-      <div className="flex gap-3 w-full mt-4">
-        <MyButton
-          disabled={!textWhy}
-          className={'w-full'}
-          loading={loading}
-          onClick={handleSubmit}
-        >
+    <div className='flex flex-col gap-2 w-full items-center'>
+      <p className='text-medium font-bold'>{translate('myBill.cancelOrder.cancelOrder')}</p>
+      <div className='w-full font-medium'>{translate('textPopular.reason')}:</div>
+      <MyInput type='area' rows={3} onChangeText={(e) => setTextWhy(e?.toString() || '')} />
+      <div className='flex gap-3 w-full mt-4'>
+        <MyButton disabled={!textWhy} className={'w-full'} loading={loading} onClick={handleSubmit}>
           {translate('common.submit')}
         </MyButton>
-        <MyButton className="w-full" type="primary" onClick={closeModalDrawer}>
+        <MyButton className='w-full' type='primary' onClick={closeModalDrawer}>
           {translate('common.close')}
         </MyButton>
       </div>

@@ -5,33 +5,31 @@ const useMedia = (maxWidth = 768) => {
   const [isClient, setIsClient] = useState(false)
 
   useLayoutEffect(() => {
-    let mounted = true;
-    const mql = window.matchMedia(`(max-width: ${maxWidth}px)`);
+    let mounted = true
+    const mql = window.matchMedia(`(max-width: ${maxWidth}px)`)
     const onChange = () => {
       if (!mounted) {
-        return;
+        return
       }
-      setIsMobile(!!mql.matches);
-    };
+      setIsMobile(!!mql.matches)
+    }
 
-    mql.addEventListener('change', onChange);
-    setIsMobile(mql.matches);
+    mql.addEventListener('change', onChange)
+    setIsMobile(mql.matches)
 
     return () => {
-      mounted = false;
-      mql.removeEventListener('change', onChange);
-    };
-
+      mounted = false
+      mql.removeEventListener('change', onChange)
+    }
   }, [maxWidth])
 
   useLayoutEffect(() => {
     setIsClient(true)
   }, [])
 
-
   return {
     isMobile: isMobile || false,
-    isClient
+    isClient,
   }
 }
 

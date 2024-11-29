@@ -49,29 +49,15 @@ const SubCategoriesConfig = ({ item }: { item: any }) => {
 
   return (
     formData && (
-      <MyForm
-        onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
-        formData={formData}
-        onFinish={handleSubmit}
-        className="!overflow-auto gap-2"
-      >
-        <div className="flex flex-col gap-2 w-full flex-1 overflow-y-auto ">
-          <InputForm
-            classFromItem="w-full "
-            name="keyName"
-            label={'keyName'}
-            required
-            disable={!!item}
-          />
+      <MyForm onValuesChange={(_, value) => setFormData({ ...formData, ...value })} formData={formData} onFinish={handleSubmit} className='!overflow-auto gap-2'>
+        <div className='flex flex-col gap-2 w-full flex-1 overflow-y-auto '>
+          <InputForm classFromItem='w-full ' name='keyName' label={'keyName'} required disable={!!item} />
 
           {Object.values(LANGUAGE_SUPPORT).map((value) => {
             return (
-              <div key={value} className="flex flex-col  w-full gap-2 mt-2">
+              <div key={value} className='flex flex-col  w-full gap-2 mt-2'>
                 <div>{`${translate('language')} : ${uppercase(value)}`}</div>
-                <MyInput
-                  value={formData?.lang[value] || ''}
-                  onChangeText={(e) => onChangeName(value, e?.toString())}
-                />
+                <MyInput value={formData?.lang[value] || ''} onChangeText={(e) => onChangeName(value, e?.toString())} />
               </div>
             )
           })}

@@ -1,23 +1,22 @@
-import { PAGE_SIZE_LIMIT } from '@/constant/app';
-import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery';
-import ServerApi from '@/services/serverApi';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { useMemo } from 'react';
+import { PAGE_SIZE_LIMIT } from '@/constant/app'
+import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery'
+import ServerApi from '@/services/serverApi'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { useMemo } from 'react'
 
-const getData = async ({ queryKey, pageParam = 1 }: { queryKey: any, pageParam: any }): Promise<TypeHookReactQuery> => {
+const getData = async ({ queryKey, pageParam = 1 }: { queryKey: any; pageParam: any }): Promise<TypeHookReactQuery> => {
   const queryUrl = `?page=${pageParam}&limit=${queryKey[2]}`
   const dataServer = await ServerApi.requestBase({
-    url: `/cart/all${queryUrl}`
+    url: `/cart/all${queryUrl}`,
   })
 
   return {
-    "data": dataServer?.data || [],
-    "page": pageParam,
+    data: dataServer?.data || [],
+    page: pageParam,
   }
 }
 
 const useCartAdmin = (pageSize = PAGE_SIZE_LIMIT) => {
-
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: [QUERY_KEY.MyCartUser, pageSize],
     queryFn: getData,
@@ -38,12 +37,11 @@ const useCartAdmin = (pageSize = PAGE_SIZE_LIMIT) => {
     return dataFormat
   }, [data])
 
-
   return {
     data: dataFinal,
     isLoading: isFetchingNextPage || isLoading,
     loadMore: fetchNextPage,
-    hasNextPage
+    hasNextPage,
   }
 }
 

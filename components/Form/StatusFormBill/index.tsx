@@ -62,13 +62,7 @@ type Props = {
   disabled?: boolean
 }
 
-const StatusFormBill = ({
-  label,
-  name,
-  classFromItem = '',
-  configInput = {},
-  disabled = false,
-}: Props) => {
+const StatusFormBill = ({ label, name, classFromItem = '', configInput = {}, disabled = false }: Props) => {
   const { translate } = useLanguage()
 
   const getStatus = (key: string) => {
@@ -113,13 +107,8 @@ const StatusFormBill = ({
     },
   ]
   return (
-    <FormItem
-      $configInput={configInput}
-      className={classFromItem}
-      label={label}
-      name={name}
-    >
-      <MySelect disabled={disabled} option={menu} className="w-full" />
+    <FormItem $configInput={configInput} className={classFromItem} label={label} name={name}>
+      <MySelect disabled={disabled} option={menu} className='w-full' />
     </FormItem>
   )
 }

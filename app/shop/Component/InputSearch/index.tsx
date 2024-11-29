@@ -35,14 +35,8 @@ const InputSearch = () => {
   return (
     <Input
       onPressEnter={handlePressSearch}
-      className="w-full"
-      suffix={
-        <SearchOutlined
-          className="cursor-pointer hover:scale-105"
-          placeholder={translate('textPopular.searchNameProduct')}
-          onClick={handleSearch}
-        />
-      }
+      className='w-full'
+      suffix={<SearchOutlined className='cursor-pointer hover:scale-105' placeholder={translate('textPopular.searchNameProduct')} onClick={handleSearch} />}
       value={nameSearch}
       onChange={(e) => setNameSearch(e.target.value)}
     />

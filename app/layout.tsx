@@ -95,25 +95,17 @@ export const viewport: Viewport = {
 const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
   const menuCategory = await ClientApi.getCategory()
   return (
-    <html lang="en">
-      {process.env.NEXT_PUBLIC_MODE_PRODUCTION && (
-        <GoogleTagManager gtmId="GTM-T7S7DKJ4" />
-      )}
+    <html lang='en'>
+      {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <GoogleTagManager gtmId='GTM-T7S7DKJ4' />}
       <head>
         {/* Google / Search Engine Tags  */}
-        <meta itemProp="name" content={process.env.NEXT_PUBLIC_TITLE} />
-        <meta
-          itemProp="description"
-          content={process.env.NEXT_PUBLIC_TITLE_DES}
-        />
-        <meta itemProp="image" content={'/favicon.ico'} />
+        <meta itemProp='name' content={process.env.NEXT_PUBLIC_TITLE} />
+        <meta itemProp='description' content={process.env.NEXT_PUBLIC_TITLE_DES} />
+        <meta itemProp='image' content={'/favicon.ico'} />
 
         {process.env.NEXT_PUBLIC_MODE_PRODUCTION && (
           <>
-            <meta
-              name="google-site-verification"
-              content="Sr2q2elTmvBwx7P3aM-ZiaH-3yjcxuGHrMI9H9iCewI"
-            />
+            <meta name='google-site-verification' content='Sr2q2elTmvBwx7P3aM-ZiaH-3yjcxuGHrMI9H9iCewI' />
             {/* <GoogleTagManager gtmId="GTM-T7S7DKJ4" /> */}
 
             {/* <Script
@@ -153,8 +145,8 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
               }}
             /> */}
             <Script
-              id="schema"
-              type="application/ld+json"
+              id='schema'
+              type='application/ld+json'
               dangerouslySetInnerHTML={{
                 __html: JSON.stringify({
                   '@context': 'https://schema.org',
@@ -192,9 +184,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
                 <ReduxProvider>
                   <MyModalProvider>
                     <DrawerProvider>
-                      <ClientRender menuCategory={menuCategory?.data || []}>
-                        {children}
-                      </ClientRender>
+                      <ClientRender menuCategory={menuCategory?.data || []}>{children}</ClientRender>
                     </DrawerProvider>
                   </MyModalProvider>
                 </ReduxProvider>
@@ -204,9 +194,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
         </ReactQueryProvider>
         <SpeedInsights />
       </body>
-      {process.env.NEXT_PUBLIC_MODE_PRODUCTION && (
-        <GoogleAnalytics gaId="G-QH99F8WFPW" />
-      )}
+      {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <GoogleAnalytics gaId='G-QH99F8WFPW' />}
     </html>
   )
 }

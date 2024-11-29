@@ -37,16 +37,7 @@ type SelectInputExType = {
   validator?: (value?: any) => string | null
 }
 
-const SelectInputEx = ({
-  label,
-  name,
-  message,
-  required = false,
-  options,
-  callBackAdd = () => {},
-  validator = () => '',
-  loadingNewAddressShip = false,
-}: SelectInputExType) => {
+const SelectInputEx = ({ label, name, message, required = false, options, callBackAdd = () => {}, validator = () => '', loadingNewAddressShip = false }: SelectInputExType) => {
   const { translate } = useLanguage()
   const inputRef = useRef(null)
 
@@ -77,9 +68,7 @@ const SelectInputEx = ({
               return Promise.reject(new Error(errorCheck))
             }
             if (!value) {
-              return Promise.reject(
-                new Error(message || translate('errors.empty'))
-              )
+              return Promise.reject(new Error(message || translate('errors.empty')))
             }
 
             return Promise.resolve(null)
@@ -92,21 +81,16 @@ const SelectInputEx = ({
         dropdownRender={(menu: any) => (
           <>
             {menu}
-            <div className="flex md:flex-row flex-col gap-2 mt-2">
+            <div className='flex md:flex-row flex-col gap-2 mt-2'>
               <Input
                 placeholder={translate('textPopular.address')}
                 ref={inputRef}
                 value={newValue}
                 onChange={(e) => setNewValue(e.target.value)}
                 onKeyDown={(e) => e.stopPropagation()}
-                className="flex-1"
+                className='flex-1'
               />
-              <MyButton
-                loading={loadingNewAddressShip || isLoading}
-                type="text"
-                icon={<PlusOutlined />}
-                onClick={handleAddNew}
-              >
+              <MyButton loading={loadingNewAddressShip || isLoading} type='text' icon={<PlusOutlined />} onClick={handleAddNew}>
                 {translate('common.addAddress')}
               </MyButton>
             </div>

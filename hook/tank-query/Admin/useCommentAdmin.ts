@@ -1,11 +1,10 @@
- 
 const useCommentAdmin = () => {
   return {
     data: [],
-    isLoading:false,
+    isLoading: false,
     loadMore: false,
     hasNextPage: false,
-    isFetchingNextPage: false
+    isFetchingNextPage: false,
   }
 }
 

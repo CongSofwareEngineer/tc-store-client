@@ -52,13 +52,11 @@ const DATA_FAKE = {
 
       slug: 'egglegamewallet',
 
-      headerLogo:
-        'https://ipfs.pantograph.app/ipfs/QmPx1yrumZjkakCa9uR2tpnSiV6qHgAR94Ddherv5rWrRV?filename=header.png',
+      headerLogo: 'https://ipfs.pantograph.app/ipfs/QmPx1yrumZjkakCa9uR2tpnSiV6qHgAR94Ddherv5rWrRV?filename=header.png',
 
       bodyColor: '#000000',
 
-      footerImage:
-        'https://ipfs.pantograph.app/ipfs/QmPVBQskVHKFohyvWwZByja8ZWe7rxgfEWyPecdusU9e5f?filename=fotterlogo.png',
+      footerImage: 'https://ipfs.pantograph.app/ipfs/QmPVBQskVHKFohyvWwZByja8ZWe7rxgfEWyPecdusU9e5f?filename=fotterlogo.png',
 
       footerVideo: '',
 
@@ -72,11 +70,9 @@ const DATA_FAKE = {
         cn: 'https://www.bacoor.io/',
       },
 
-      backupCard:
-        'https://ipfs.pantograph.app/ipfs/QmNkor9qsRa8Aj2Ubt4RMduuGr1F6JA2afAJUk8VC57xMk?filename=Backupcard_hw.png',
+      backupCard: 'https://ipfs.pantograph.app/ipfs/QmNkor9qsRa8Aj2Ubt4RMduuGr1F6JA2afAJUk8VC57xMk?filename=Backupcard_hw.png',
 
-      mainCard:
-        'https://ipfs.pantograph.app/ipfs/QmXeAiUcTsfbPLoX3JyEzNJybUttMHkYuWqiin18e2v9Ja?filename=mainncard_passkey_01.png',
+      mainCard: 'https://ipfs.pantograph.app/ipfs/QmXeAiUcTsfbPLoX3JyEzNJybUttMHkYuWqiin18e2v9Ja?filename=mainncard_passkey_01.png',
 
       defaultTokens: [],
 
@@ -104,8 +100,7 @@ const DATA_FAKE = {
         },
       ],
 
-      logoSettingScreen:
-        'https://ipfs.pantograph.app/ipfs/QmVToAdHu7DZ8nwPkAwAPQ8mYRYafFqaSsShDzP8Zk81SE?filename=back.png',
+      logoSettingScreen: 'https://ipfs.pantograph.app/ipfs/QmVToAdHu7DZ8nwPkAwAPQ8mYRYafFqaSsShDzP8Zk81SE?filename=back.png',
 
       defaultNFTs: [],
 
@@ -113,15 +108,13 @@ const DATA_FAKE = {
 
       tabLineColor: ['#FFFFFF'],
 
-      notiDataIcon:
-        'https://ipfs.pantograph.app/ipfs/QmWdV4p9FvAUKEnGHefwsYxUrtY8qyEX61xbHdGXworS8k?filename=icon%20NOTI.png',
+      notiDataIcon: 'https://ipfs.pantograph.app/ipfs/QmWdV4p9FvAUKEnGHefwsYxUrtY8qyEX61xbHdGXworS8k?filename=icon%20NOTI.png',
 
       accountUrl: 'https://pass.w3w.app',
 
       isDefaultEncryptGroup: true,
 
-      groupIcon:
-        'https://ipfs.pantograph.app/ipfs/QmWdV4p9FvAUKEnGHefwsYxUrtY8qyEX61xbHdGXworS8k?filename=icon%20NOTI.png',
+      groupIcon: 'https://ipfs.pantograph.app/ipfs/QmWdV4p9FvAUKEnGHefwsYxUrtY8qyEX61xbHdGXworS8k?filename=icon%20NOTI.png',
 
       groupType: 'passkey-wallet',
 
@@ -139,22 +132,17 @@ const DATA_FAKE = {
 
           contractAddress: '0x59817ce454ceefb53ea7e0e23d18ebe1970d4e7c',
 
-          thumbnail:
-            'https://ipfs.pantograph.app/ipfs/QmbJiRGNv7A6zLXFVZBpmvJKE4aWZcYXgr1RJuSXYuTynu?filename=bacoor-token.png',
+          thumbnail: 'https://ipfs.pantograph.app/ipfs/QmbJiRGNv7A6zLXFVZBpmvJKE4aWZcYXgr1RJuSXYuTynu?filename=bacoor-token.png',
         },
       ],
 
-      bodyImageDesktop:
-        'https://ipfs.pantograph.app/ipfs/QmbWFUmd2HZa8qTxdmSpUBVbZyVCvcu2FT2Bs5kktLYDk4?filename=Desk-nhat.png',
+      bodyImageDesktop: 'https://ipfs.pantograph.app/ipfs/QmbWFUmd2HZa8qTxdmSpUBVbZyVCvcu2FT2Bs5kktLYDk4?filename=Desk-nhat.png',
 
-      bodyImageMobile:
-        'https://ipfs.pantograph.app/ipfs/QmVPcX1BZp2hrAE38JyCwPTqMEfqGNQvish8knk9GLPHv3?filename=mobile-nhat.png',
+      bodyImageMobile: 'https://ipfs.pantograph.app/ipfs/QmVPcX1BZp2hrAE38JyCwPTqMEfqGNQvish8knk9GLPHv3?filename=mobile-nhat.png',
 
-      bodyImageActivateEmailDesktop:
-        'https://ipfs.pantograph.app/ipfs/QmbWFUmd2HZa8qTxdmSpUBVbZyVCvcu2FT2Bs5kktLYDk4?filename=Desk-nhat.png',
+      bodyImageActivateEmailDesktop: 'https://ipfs.pantograph.app/ipfs/QmbWFUmd2HZa8qTxdmSpUBVbZyVCvcu2FT2Bs5kktLYDk4?filename=Desk-nhat.png',
 
-      bodyImageActivateEmailMobile:
-        'https://ipfs.pantograph.app/ipfs/QmVPcX1BZp2hrAE38JyCwPTqMEfqGNQvish8knk9GLPHv3?filename=mobile-nhat.png',
+      bodyImageActivateEmailMobile: 'https://ipfs.pantograph.app/ipfs/QmVPcX1BZp2hrAE38JyCwPTqMEfqGNQvish8knk9GLPHv3?filename=mobile-nhat.png',
 
       typeTemplate: 1,
 
@@ -179,8 +167,7 @@ const DATA_FAKE = {
 
         contractAddress: '0x933cFC527ebeAd4dBed29a32878FB7FbD57C0622',
 
-        thumbnail:
-          'https://ipfs.pantograph.app/ipfs/QmNw3BHqKj116kqMdjKqRFiXEiMCQhbhGGfakQzT2e6v7z?filename=TOKEN_E.png',
+        thumbnail: 'https://ipfs.pantograph.app/ipfs/QmNw3BHqKj116kqMdjKqRFiXEiMCQhbhGGfakQzT2e6v7z?filename=TOKEN_E.png',
 
         isSpecialTokens: true,
 
@@ -191,11 +178,9 @@ const DATA_FAKE = {
 
       payMaster: true,
 
-      bodyImageReceiveLinkDesktop:
-        'https://ipfs.pantograph.app/ipfs/Qmb1bkhbVhuyyg2rfX23gN5nqemK6ATFtvvfR26XmTXyPs?filename=bacoor-email-DT.jpg',
+      bodyImageReceiveLinkDesktop: 'https://ipfs.pantograph.app/ipfs/Qmb1bkhbVhuyyg2rfX23gN5nqemK6ATFtvvfR26XmTXyPs?filename=bacoor-email-DT.jpg',
 
-      bodyImageReceiveLinkMobile:
-        'https://ipfs.pantograph.app/ipfs/QmdUgkMtnqVD9b6hWUnSFd3ZkwvQoPSjjA8b4CdQpNQHrh?filename=bacoor-email-mb.jpg',
+      bodyImageReceiveLinkMobile: 'https://ipfs.pantograph.app/ipfs/QmdUgkMtnqVD9b6hWUnSFd3ZkwvQoPSjjA8b4CdQpNQHrh?filename=bacoor-email-mb.jpg',
 
       scanOn: true,
 
@@ -223,18 +208,9 @@ const DATA_FAKE = {
 }
 console.log({ DATA_FAKE })
 
-const Button = ({
-  children,
-  onClick,
-}: {
-  children: React.ReactNode
-  onClick?: any
-}) => {
+const Button = ({ children, onClick }: { children: React.ReactNode; onClick?: any }) => {
   return (
-    <div
-      onClick={onClick}
-      className="bg-[#3D0415] border-2 border-white/20 cursor-pointer h-fit py-2 px-4 text-white rounded-lg"
-    >
+    <div onClick={onClick} className='bg-[#3D0415] border-2 border-white/20 cursor-pointer h-fit py-2 px-4 text-white rounded-lg'>
       {/* logout */}
       {children}
     </div>
@@ -269,7 +245,7 @@ const Passkey = () => {
       jsonrpc: '2.0',
       id: TYPE_METHOD.idle,
       data: '',
-    }
+    },
   ) => {
     const { jsonrpc = '2.0', id = TYPE_METHOD.idle, data = null } = message
     if (id !== TYPE_METHOD.idle && id !== TYPE_METHOD.logout) {
@@ -282,7 +258,7 @@ const Passkey = () => {
         id,
         data,
       },
-      'https://airdropband.w3w.app/'
+      'https://airdropband.w3w.app/',
     )
 
     window.parent.postMessage(
@@ -291,7 +267,7 @@ const Passkey = () => {
         id,
         data,
       },
-      'https://pass.w3w.app/'
+      'https://pass.w3w.app/',
     )
 
     window.parent.postMessage(
@@ -300,7 +276,7 @@ const Passkey = () => {
         id,
         data,
       },
-      'http://localhost:30002/'
+      'http://localhost:30002/',
     )
   }
 
@@ -338,21 +314,18 @@ const Passkey = () => {
   }, [])
 
   return (
-    <div className="w-full h-full bg-green-300 fixed inset-0">
-      <div className="absolute inset-0 w-full h-full">
-        <img
-          src={images.passkey[isMobile ? 'bgMobile' : 'bg']}
-          className="min-w-full min-h-full max-w-none max-h-none"
-        />
+    <div className='w-full h-full bg-green-300 fixed inset-0'>
+      <div className='absolute inset-0 w-full h-full'>
+        <img src={images.passkey[isMobile ? 'bgMobile' : 'bg']} className='min-w-full min-h-full max-w-none max-h-none' />
       </div>
       {loading && (
-        <div className="fixed flex items-center justify-center h-screen w-screen bg-black/30">
+        <div className='fixed flex items-center justify-center h-screen w-screen bg-black/30'>
           <Spin />
         </div>
       )}
 
-      <div className="w-full h-full relative flex flex-col md:p-12 p-5 md:mt-5 mt-12">
-        <div className="flex justify-end w-full">
+      <div className='w-full h-full relative flex flex-col md:p-12 p-5 md:mt-5 mt-12'>
+        <div className='flex justify-end w-full'>
           {Object.keys(dataParent).length > 0 ? (
             <Button
               onClick={() => {
@@ -365,7 +338,7 @@ const Passkey = () => {
               {ellipsisText(dataParent?.moreData?.userGroupData?.address, 4, 5)}
             </Button>
           ) : (
-            <div className="flex justify-end w-full">
+            <div className='flex justify-end w-full'>
               <Button onClick={handleConnect}>Connect</Button>
             </div>
           )}
@@ -373,7 +346,7 @@ const Passkey = () => {
         {/* <div>{JSON.stringify(dataReceived)}</div> */}
 
         {Object.keys(dataParent).length > 0 && (
-          <div className="flex w-full gap-4 flex-wrap  mt-6 justify-center align-middle flex-1">
+          <div className='flex w-full gap-4 flex-wrap  mt-6 justify-center align-middle flex-1'>
             <Button
               onClick={() => {
                 setDataParent({})

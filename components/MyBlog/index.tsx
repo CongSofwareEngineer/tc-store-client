@@ -8,21 +8,12 @@ import Link from '@yoopta/link'
 import Callout from '@yoopta/callout'
 import Accordion from '@yoopta/accordion'
 import { NumberedList, BulletedList, TodoList } from '@yoopta/lists'
-import {
-  Bold,
-  Italic,
-  CodeMark,
-  Underline,
-  Strike,
-  Highlight,
-} from '@yoopta/marks'
+import { Bold, Italic, CodeMark, Underline, Strike, Highlight } from '@yoopta/marks'
 import { HeadingOne, HeadingThree, HeadingTwo } from '@yoopta/headings'
 import Code from '@yoopta/code'
 import Table from '@yoopta/table'
 import Divider from '@yoopta/divider'
-import ActionMenuList, {
-  DefaultActionMenuRender,
-} from '@yoopta/action-menu-list'
+import ActionMenuList, { DefaultActionMenuRender } from '@yoopta/action-menu-list'
 import Toolbar, { DefaultToolbarRender } from '@yoopta/toolbar'
 import LinkTool, { DefaultLinkToolRender } from '@yoopta/link-tool'
 import YooptaEditor, { createYooptaEditor } from '@yoopta/editor'
@@ -47,17 +38,7 @@ const TOOLS = {
 
 const MARKS = [Bold, Italic, CodeMark, Underline, Strike, Highlight]
 
-const MyBlog = ({
-  value,
-  setValue = () => {},
-  disabled = false,
-  pathFile = PATH_IMG.Products,
-}: {
-  value: any
-  setValue?: (e: any) => void
-  disabled?: boolean
-  pathFile?: PATH_IMG
-}) => {
+const MyBlog = ({ value, setValue = () => {}, disabled = false, pathFile = PATH_IMG.Products }: { value: any; setValue?: (e: any) => void; disabled?: boolean; pathFile?: PATH_IMG }) => {
   const editor = useMemo(() => createYooptaEditor(), [])
   const selectionRef = useRef(null)
 
@@ -142,20 +123,9 @@ const MyBlog = ({
   }
 
   return (
-    <div className="flex flex-col   w-full  relative">
-      <div className="w-full" ref={selectionRef}>
-        <YooptaEditor
-          editor={editor}
-          plugins={plugins}
-          tools={TOOLS}
-          marks={MARKS}
-          selectionBoxRoot={selectionRef}
-          value={value}
-          onChange={onChange}
-          autoFocus
-          className="!relative !h-full !w-full !pb-2 cursor-pointer"
-          readOnly={disabled}
-        />
+    <div className='flex flex-col   w-full  relative'>
+      <div className='w-full' ref={selectionRef}>
+        <YooptaEditor editor={editor} plugins={plugins} tools={TOOLS} marks={MARKS} selectionBoxRoot={selectionRef} value={value} onChange={onChange} autoFocus className='!relative !h-full !w-full !pb-2 cursor-pointer' readOnly={disabled} />
       </div>
     </div>
   )

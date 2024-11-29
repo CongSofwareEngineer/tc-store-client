@@ -49,7 +49,7 @@ const Account = () => {
 
   const renderTitleDrawer = () => {
     return (
-      <div className="flex flex-col   w-full">
+      <div className='flex flex-col   w-full'>
         <span>{userData?.name}</span>
         {/* <div className="bg-black w-[2px] h-[14px]" /> */}
         <span>{userData?.sdt}</span>
@@ -59,28 +59,16 @@ const Account = () => {
 
   const renderMobile = () => {
     return (
-      <div className="flex gap-2 items-center">
+      <div className='flex gap-2 items-center'>
         <CartUser />
         {isLogin ? (
-          <div className="flex gap-2 items-center pr-1">
-            {userData?.avatar && (
-              <Image
-                fill
-                alt="user-avatar"
-                className="!relative !w-6 !h-6 rounded-[50%]"
-                src={detectAvatar(userData?.avatar)}
-              />
-            )}
+          <div className='flex gap-2 items-center pr-1'>
+            {userData?.avatar && <Image fill alt='user-avatar' className='!relative !w-6 !h-6 rounded-[50%]' src={detectAvatar(userData?.avatar)} />}
             <div>{userData?.name}</div>
           </div>
         ) : (
-          <div
-            onClick={handleLogin}
-            className="rounded h-full cursor-pointer w-24  flex justify-center items-center"
-          >
-            <span className="text-black underline">
-              {translate('common.login')}
-            </span>
+          <div onClick={handleLogin} className='rounded h-full cursor-pointer w-24  flex justify-center items-center'>
+            <span className='text-black underline'>{translate('common.login')}</span>
           </div>
         )}
         <MenuOutlined onClick={handleViewMenu} style={{ fontSize: 20 }} />
@@ -93,10 +81,7 @@ const Account = () => {
       {
         key: '1',
         label: (
-          <div
-            onClick={() => route.push('/my-page')}
-            className="cursor-pointer"
-          >
+          <div onClick={() => route.push('/my-page')} className='cursor-pointer'>
             {translate('myProfile.myProfile')}
           </div>
         ),
@@ -104,7 +89,7 @@ const Account = () => {
       {
         key: '2',
         label: (
-          <div onClick={handleLogin} className="cursor-pointer">
+          <div onClick={handleLogin} className='cursor-pointer'>
             {translate('common.logOut')}
           </div>
         ),
@@ -112,45 +97,28 @@ const Account = () => {
     ]
 
     return (
-      <div className="h-full fex gap-2 items-center">
-        <div className="rounded h-full cursor-pointer  flex justify-center items-center">
+      <div className='h-full fex gap-2 items-center'>
+        <div className='rounded h-full cursor-pointer  flex justify-center items-center'>
           {isLogin ? (
-            <div className="flex gap-4 items-center">
+            <div className='flex gap-4 items-center'>
               <CartUser />
 
               <Dropdown menu={{ items }}>
-                <div className="flex gap-2 items-center ">
-                  {userData?.avatar && (
-                    <Image
-                      fill
-                      alt="user-avatar"
-                      className="!relative !w-6 !h-6 rounded-[50%]"
-                      src={detectAvatar(userData?.avatar)}
-                    />
-                  )}
+                <div className='flex gap-2 items-center '>
+                  {userData?.avatar && <Image fill alt='user-avatar' className='!relative !w-6 !h-6 rounded-[50%]' src={detectAvatar(userData?.avatar)} />}
 
-                  <div className="whitespace-nowrap mr-1 max-w-[120px] text-ellipsis overflow-hidden">
-                    {`${userData?.name || userData?.sdt}`}
-                  </div>
+                  <div className='whitespace-nowrap mr-1 max-w-[120px] text-ellipsis overflow-hidden'>{`${userData?.name || userData?.sdt}`}</div>
                   <DownOutlined />
                 </div>
               </Dropdown>
             </div>
           ) : (
-            <div className="flex gap-2 items-center">
+            <div className='flex gap-2 items-center'>
               <CartUser />
-              <span
-                onClick={handleLogin}
-                className="text-black underline  w-24 "
-              >
+              <span onClick={handleLogin} className='text-black underline  w-24 '>
                 {translate('common.login')}
               </span>
-              {isLogin && (
-                <MenuOutlined
-                  onClick={handleViewMenu}
-                  style={{ fontSize: 20 }}
-                />
-              )}
+              {isLogin && <MenuOutlined onClick={handleViewMenu} style={{ fontSize: 20 }} />}
             </div>
           )}
         </div>

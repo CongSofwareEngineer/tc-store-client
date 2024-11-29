@@ -5,7 +5,7 @@ import ListComment from './ListComment'
 
 const Comment = ({ dataItem }: { dataItem: ItemDetailType }) => {
   return (
-    <div className="w-full md:mt-4 mt-3 flex flex-col gap-3">
+    <div className='w-full md:mt-4 mt-3 flex flex-col gap-3'>
       <WriteComment dataItem={dataItem} />
       <ListComment dataItem={dataItem} />
     </div>

@@ -7,10 +7,7 @@ type PropsType = {
   listAddressShip: string[]
   setListAddressShip: (param: string[]) => void
 }
-const OptionAddressShip = ({
-  listAddressShip,
-  setListAddressShip,
-}: PropsType) => {
+const OptionAddressShip = ({ listAddressShip, setListAddressShip }: PropsType) => {
   const { isLogin, refreshLogin } = useUserData()
   const { translate } = useLanguage()
 
@@ -35,7 +32,7 @@ const OptionAddressShip = ({
     <SelectInputEx
       required
       callBackAdd={(e) => handleAddAddress(e)}
-      name="addressShip"
+      name='addressShip'
       label={translate('productDetail.modalBuy.enterAddress')}
       options={getOptions()}
       configSelect={{
@@ -44,13 +41,8 @@ const OptionAddressShip = ({
     />
   ) : (
     <>
-      <InputForm
-        required
-        name="addressShip"
-        label={translate('textPopular.addressShip')}
-        classFromItem="w-full"
-      />
-      <div className="md:mb-4" />
+      <InputForm required name='addressShip' label={translate('textPopular.addressShip')} classFromItem='w-full' />
+      <div className='md:mb-4' />
     </>
   )
 }

@@ -7,11 +7,7 @@ import useMedia from '@/hook/useMedia'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useQuerySearch from '@/hook/useQuerySearch'
 import useSearchBaseAdmin from '@/hook/useSearchBaseAdmin'
-import {
-  ellipsisText,
-  getColorStatus,
-  numberWithCommas,
-} from '@/utils/functions'
+import { ellipsisText, getColorStatus, numberWithCommas } from '@/utils/functions'
 import { formatDateTime } from '@/utils/momentFunc'
 import { Button } from 'antd'
 import { NextPage } from 'next'
@@ -31,8 +27,7 @@ const RevenueScreen: NextPage = () => {
   const { isMobile } = useMedia(568)
   const { translate } = useLanguage()
   const { openModalDrawer } = useModalDrawer()
-  const { data, isLoading, hasNextPage, isFetchingNextPage, loadMore } =
-    useRevenue(PAGE_SIZE_LIMIT, queries)
+  const { data, isLoading, hasNextPage, isFetchingNextPage, loadMore } = useRevenue(PAGE_SIZE_LIMIT, queries)
 
   const handleViewDetail = (item: any) => {
     openModalDrawer({
@@ -114,10 +109,7 @@ const RevenueScreen: NextPage = () => {
         onFilter: (value, record) => record.status === value,
         render: (status: any) => {
           return (
-            <div
-              className="font-bold whitespace-nowrap"
-              style={{ color: getColorStatus(status) }}
-            >
+            <div className='font-bold whitespace-nowrap' style={{ color: getColorStatus(status) }}>
               {getStatus(status)}
             </div>
           )
@@ -129,9 +121,7 @@ const RevenueScreen: NextPage = () => {
         key: 'totalBill',
         dataIndex: 'totalBill',
         render: (totalBill: any) => {
-          return (
-            <div className="text-green-500">{numberWithCommas(totalBill)}</div>
-          )
+          return <div className='text-green-500'>{numberWithCommas(totalBill)}</div>
         },
       },
       {
@@ -139,11 +129,7 @@ const RevenueScreen: NextPage = () => {
         key: 'discount',
         dataIndex: 'discount',
         render: (discount: any) => {
-          return (
-            <div className="text-green-500 whitespace-nowrap">
-              {numberWithCommas(discount)}
-            </div>
-          )
+          return <div className='text-green-500 whitespace-nowrap'>{numberWithCommas(discount)}</div>
         },
       },
       {
@@ -151,11 +137,7 @@ const RevenueScreen: NextPage = () => {
         key: 'date',
         dataIndex: 'date',
         render: (date: any) => {
-          return (
-            <div className="whitespace-nowrap">
-              {formatDateTime(parseInt(date))}
-            </div>
-          )
+          return <div className='whitespace-nowrap'>{formatDateTime(parseInt(date))}</div>
         },
       },
       {
@@ -164,11 +146,9 @@ const RevenueScreen: NextPage = () => {
         dataIndex: 'addressShip',
         render: (addressShip: any) => {
           return (
-            <div className="flex gap-1">
+            <div className='flex gap-1'>
               {/* <span className="text-nowrap">Address :</span> */}
-              <div>{`${
-                addressShip.addressDetail
-              } (${addressShip.address.replaceAll('---', ', ')})`}</div>
+              <div>{`${addressShip.addressDetail} (${addressShip.address.replaceAll('---', ', ')})`}</div>
             </div>
           )
         },
@@ -180,9 +160,9 @@ const RevenueScreen: NextPage = () => {
         fixed: 'right',
         render: (_: any, record: any) => {
           return (
-            <div className="flex gap-2 flex-col">
+            <div className='flex gap-2 flex-col'>
               {/* <Button>{translate('common.update')}</Button> */}
-              <Button onClick={() => handleViewDetail(record)} type="primary">
+              <Button onClick={() => handleViewDetail(record)} type='primary'>
                 {translate('textPopular.viewDetail')}
               </Button>
             </div>
@@ -195,7 +175,7 @@ const RevenueScreen: NextPage = () => {
   }
 
   return (
-    <div className="flex flex-col gap-3 w-full">
+    <div className='flex flex-col gap-3 w-full'>
       {renderContent()}
       <GraphRevenue data={data} />
       <MyTable

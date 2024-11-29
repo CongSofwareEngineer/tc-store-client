@@ -8,12 +8,7 @@ import { COOKIE_KEY } from '@/constant/app'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
-import {
-  delayTime,
-  detectImg,
-  formatPrice,
-  formatPriceBase,
-} from '@/utils/functions'
+import { delayTime, detectImg, formatPrice, formatPriceBase } from '@/utils/functions'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import { getCookie, setCookie } from '@/services/CookiesService'
 import BtnBack from '@/components/BtnBack'
@@ -43,22 +38,14 @@ type Props = {
   setIsPayment: (e: any) => void
   setAmountBuy: (e: any) => void
 }
-const ViewDetail = ({
-  productDetail,
-  amountBuy = 0,
-  setIsPayment,
-  setAmountBuy,
-}: Props) => {
+const ViewDetail = ({ productDetail, amountBuy = 0, setIsPayment, setAmountBuy }: Props) => {
   useAos(500)
   const { isMobile } = useMedia()
   const { refreshQuery } = useRefreshQuery()
   const { translate } = useLanguage()
   const { userData, isLogin } = useUserData()
   const { data } = useGetProductByID(productDetail?.id)
-  const dataItem = useMemo(
-    () => data?.data ?? productDetail,
-    [data, productDetail]
-  )
+  const dataItem = useMemo(() => data?.data ?? productDetail, [data, productDetail])
 
   const [loadingAddCart, setLoadingAddCart] = useState(false)
 
@@ -67,10 +54,7 @@ const ViewDetail = ({
   }
 
   const handleAddCartLogin = async (body: DataAddCart) => {
-    const listCartUser = await ClientApi.getCartDetail(
-      body.idUser!,
-      body.idProduct!
-    )
+    const listCartUser = await ClientApi.getCartDetail(body.idUser!, body.idProduct!)
 
     const dataExited = listCartUser?.data[0]
 
@@ -151,56 +135,26 @@ const ViewDetail = ({
 
   const renderDesktop = () => {
     return (
-      <div className="flex flex-col">
+      <div className='flex flex-col'>
         <BtnBack title={['Shop', dataItem.name]} url={['/shop']} />
-        <div className="w-full flex gap-6 bg-white rounded-xl p-6">
-          <div
-            data-aos="fade-right"
-            className="relative min-w-[300px] max-w-[450px] w-[50%] p-5 overflow-hidden "
-          >
-            <Image
-              src={detectImg(dataItem.imageMain || '')}
-              alt={`img-main--${dataItem.name}`}
-              fill
-              className="!relative !w-full !h-auto"
-            />
+        <div className='w-full flex gap-6 bg-white rounded-xl p-6'>
+          <div data-aos='fade-right' className='relative min-w-[300px] max-w-[450px] w-[50%] p-5 overflow-hidden '>
+            <Image src={detectImg(dataItem.imageMain || '')} alt={`img-main--${dataItem.name}`} fill className='!relative !w-full !h-auto' />
             <ImageMore data={dataItem} />
           </div>
-          <div
-            className="flex-1 flex flex-col gap-2 justify-center  "
-            data-aos="fade-left"
-          >
-            <h1 className="text-title font-bold">{dataItem.name}</h1>
+          <div className='flex-1 flex flex-col gap-2 justify-center  ' data-aos='fade-left'>
+            <h1 className='text-title font-bold'>{dataItem.name}</h1>
             <InfoItemDetail data={dataItem} />
-            <div className="text-medium  line-through">
-              {formatPriceBase(dataItem.price, dataItem.discount)} VNĐ
-            </div>
-            <div className="text-title font-bold text-green-500">
-              {`${formatPrice(Number(dataItem.price || '0') * amountBuy)} VNĐ`}
-            </div>
-            <SubAndPlus
-              callBackSub={(e) => setAmountBuy(e)}
-              value={amountBuy}
-              maxAmount={dataItem.amount - dataItem.sold}
-              callBackPlus={(e) => setAmountBuy(e)}
-            />
-            <div className="flex gap-6 mt-4">
-              <Button onClick={handleBuy} className="min-w-[30%] !h-[40px]">
+            <div className='text-medium  line-through'>{formatPriceBase(dataItem.price, dataItem.discount)} VNĐ</div>
+            <div className='text-title font-bold text-green-500'>{`${formatPrice(Number(dataItem.price || '0') * amountBuy)} VNĐ`}</div>
+            <SubAndPlus callBackSub={(e) => setAmountBuy(e)} value={amountBuy} maxAmount={dataItem.amount - dataItem.sold} callBackPlus={(e) => setAmountBuy(e)} />
+            <div className='flex gap-6 mt-4'>
+              <Button onClick={handleBuy} className='min-w-[30%] !h-[40px]'>
                 {translate('common.buyNow')}
               </Button>
-              <Button
-                type="primary"
-                onClick={handleAddCart}
-                className="min-w-[30%] !h-[40px]"
-                loading={loadingAddCart}
-              >
-                <div className="flex gap-3 whitespace-nowrap">
-                  <Image
-                    src={images.icon.iconCart}
-                    alt="btn-add-cart"
-                    fill
-                    className="!relative !w-[25px] !h-[25px]"
-                  />
+              <Button type='primary' onClick={handleAddCart} className='min-w-[30%] !h-[40px]' loading={loadingAddCart}>
+                <div className='flex gap-3 whitespace-nowrap'>
+                  <Image src={images.icon.iconCart} alt='btn-add-cart' fill className='!relative !w-[25px] !h-[25px]' />
                   <span>{translate('common.addCart')}</span>
                 </div>
               </Button>
@@ -208,7 +162,7 @@ const ViewDetail = ({
           </div>
         </div>
 
-        <div data-aos="fade-up" className="w-full bg-white rounded-xl p-6 mt-6">
+        <div data-aos='fade-up' className='w-full bg-white rounded-xl p-6 mt-6'>
           <MoreInfo data={dataItem} />
         </div>
       </div>
@@ -217,70 +171,33 @@ const ViewDetail = ({
 
   const renderMobile = () => {
     return (
-      <div className="flex flex-col gap-2">
+      <div className='flex flex-col gap-2'>
         <BtnBack title={['Shopp', dataItem.name]} url={['/shop']} />
-        <div className="pt-8 pb-2 shadow-lg shadow-yellow-50 bg-white   w-full flex flex-col justify-center items-center">
-          <div data-aos="fade-right" className="w-[80%]  overflow-hidden ">
-            <Image
-              src={detectImg(
-                dataItem.imageMain || images.userDetail.iconUserDetail
-              )}
-              alt={dataItem.des || ''}
-              className="!relative !w-full !h-auto"
-              fill
-            />
+        <div className='pt-8 pb-2 shadow-lg shadow-yellow-50 bg-white   w-full flex flex-col justify-center items-center'>
+          <div data-aos='fade-right' className='w-[80%]  overflow-hidden '>
+            <Image src={detectImg(dataItem.imageMain || images.userDetail.iconUserDetail)} alt={dataItem.des || ''} className='!relative !w-full !h-auto' fill />
             <ImageMore data={dataItem} />
           </div>
-          <div
-            data-aos="fade-right"
-            className="w-full flex-col gap-2 px-5 pt-5"
-          >
-            <h1 className="text-title font-bold">{dataItem.name}</h1>
+          <div data-aos='fade-right' className='w-full flex-col gap-2 px-5 pt-5'>
+            <h1 className='text-title font-bold'>{dataItem.name}</h1>
             <InfoItemDetail data={dataItem} />
-            <div className="text-medium  line-through">
-              {formatPriceBase(dataItem?.price, dataItem?.discount)} VNĐ
-            </div>
-            <div className="text-title font-bold text-green-500">
-              {`${formatPrice(Number(dataItem?.price || '0') * amountBuy)} VNĐ`}
-            </div>
-            <SubAndPlus
-              callBackSub={(e) => setAmountBuy(e)}
-              value={amountBuy}
-              maxAmount={dataItem.amount - dataItem.sold}
-              callBackPlus={(e) => setAmountBuy(e)}
-            />
-            <div className="flex sm:gap-6 gap-2 mt-4 mb-3 sm:flex-row flex-col">
-              <Button
-                onClick={handleBuy}
-                className="min-w-[30%] "
-                style={{ height: 40 }}
-              >
+            <div className='text-medium  line-through'>{formatPriceBase(dataItem?.price, dataItem?.discount)} VNĐ</div>
+            <div className='text-title font-bold text-green-500'>{`${formatPrice(Number(dataItem?.price || '0') * amountBuy)} VNĐ`}</div>
+            <SubAndPlus callBackSub={(e) => setAmountBuy(e)} value={amountBuy} maxAmount={dataItem.amount - dataItem.sold} callBackPlus={(e) => setAmountBuy(e)} />
+            <div className='flex sm:gap-6 gap-2 mt-4 mb-3 sm:flex-row flex-col'>
+              <Button onClick={handleBuy} className='min-w-[30%] ' style={{ height: 40 }}>
                 {translate('common.buyNow')}
               </Button>
-              <Button
-                type="primary"
-                onClick={handleAddCart}
-                className="min-w-[30%] "
-                style={{ height: 40 }}
-                loading={loadingAddCart}
-              >
-                <div className="flex gap-3 whitespace-nowrap">
-                  <Image
-                    src={images.icon.iconCart}
-                    alt="btn-add-cart"
-                    className="!relative !w-[25px] !h-[25px]"
-                    fill
-                  />
+              <Button type='primary' onClick={handleAddCart} className='min-w-[30%] ' style={{ height: 40 }} loading={loadingAddCart}>
+                <div className='flex gap-3 whitespace-nowrap'>
+                  <Image src={images.icon.iconCart} alt='btn-add-cart' className='!relative !w-[25px] !h-[25px]' fill />
                   <span>{translate('common.addCart')}</span>
                 </div>
               </Button>
             </div>
           </div>
         </div>
-        <div
-          data-aos="fade-right"
-          className=" shadow-yellow-50 bg-white p-5 md:pr-5 pr-3 w-full flex flex-col gap-2 mt-2"
-        >
+        <div data-aos='fade-right' className=' shadow-yellow-50 bg-white p-5 md:pr-5 pr-3 w-full flex flex-col gap-2 mt-2'>
           <MoreInfo data={dataItem} />
         </div>
       </div>

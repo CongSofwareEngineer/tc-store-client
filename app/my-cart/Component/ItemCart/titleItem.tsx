@@ -10,25 +10,17 @@ const TR = styled.tr.attrs({ className: 'border-b-2 border-gray-300' })`
     padding-bottom: 12px;
   }
 `
-const TitleItem = ({
-  callBack = () => {},
-  dataCart,
-  noEdit = false,
-  allSelected = false,
-}: TitleItemType) => {
+const TitleItem = ({ callBack = () => {}, dataCart, noEdit = false, allSelected = false }: TitleItemType) => {
   const { isMobile } = useMedia()
   const { translate } = useLanguage()
 
   const renderDesktop = () => {
     return (
-      <thead className="bg-green-100">
+      <thead className='bg-green-100'>
         <TR>
           {!noEdit && (
             <th>
-              <Checkbox
-                checked={allSelected}
-                onChange={() => callBack(!allSelected)}
-              />
+              <Checkbox checked={allSelected} onChange={() => callBack(!allSelected)} />
             </th>
           )}
 
@@ -45,15 +37,12 @@ const TitleItem = ({
 
   const renderMobile = () => {
     return (
-      <thead className="bg-green-100">
+      <thead className='bg-green-100'>
         <TR>
-          <th colSpan={3} className="p-2 w-5">
-            <div className="w-full flex justify-between">
+          <th colSpan={3} className='p-2 w-5'>
+            <div className='w-full flex justify-between'>
               {!noEdit && (
-                <Checkbox
-                  checked={allSelected}
-                  onChange={() => callBack(!allSelected)}
-                >
+                <Checkbox checked={allSelected} onChange={() => callBack(!allSelected)}>
                   {translate('textPopular.all')}
                 </Checkbox>
               )}

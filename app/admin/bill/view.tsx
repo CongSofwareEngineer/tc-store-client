@@ -13,10 +13,7 @@ import useLanguage from '@/hook/useLanguage'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import useQuerySearch from '@/hook/useQuerySearch'
-import {
-  showNotificationError,
-  showNotificationSuccess,
-} from '@/utils/notification'
+import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import { formatDateTime } from '@/utils/momentFunc'
 import { Button } from 'antd'
 
@@ -60,7 +57,7 @@ const BillAdminScreen = () => {
       closeModalDrawer()
     }
     openModalDrawer({
-      content: <ModalDelete title="Do you Delivery Bill" callback={callBack} />,
+      content: <ModalDelete title='Do you Delivery Bill' callback={callBack} />,
     })
   }
 
@@ -90,11 +87,7 @@ const BillAdminScreen = () => {
       useDrawer: true,
       configDrawer: {
         placement: 'bottom',
-        title: (
-          <p className="text-center text-medium font-bold ">
-            {translate('bill.infoBill')}
-          </p>
-        ),
+        title: <p className='text-center text-medium font-bold '>{translate('bill.infoBill')}</p>,
         height: 'auto',
       },
     })
@@ -103,31 +96,15 @@ const BillAdminScreen = () => {
   const renderStatus = (status: string) => {
     switch (status) {
       case FILTER_BILL.Processing:
-        return (
-          <span className="text-blue-700 font-bold">
-            {translate('myBill.processing')}
-          </span>
-        )
+        return <span className='text-blue-700 font-bold'>{translate('myBill.processing')}</span>
       case FILTER_BILL.Delivering:
-        return (
-          <span className="text-green-500 font-bold">
-            {translate('myBill.delivering')}
-          </span>
-        )
+        return <span className='text-green-500 font-bold'>{translate('myBill.delivering')}</span>
 
       case FILTER_BILL.Canceled:
-        return (
-          <span className="text-red-500 font-bold">
-            {translate('common.cancelBill')}
-          </span>
-        )
+        return <span className='text-red-500 font-bold'>{translate('common.cancelBill')}</span>
 
       default:
-        return (
-          <span className="text-green-500 font-bold">
-            {translate('myBill.deliverySuccess')}
-          </span>
-        )
+        return <span className='text-green-500 font-bold'>{translate('myBill.deliverySuccess')}</span>
     }
   }
 
@@ -138,65 +115,45 @@ const BillAdminScreen = () => {
       dataIndex: '_id',
       render: (_: any, record: any) => {
         return (
-          <div className="flex flex-col gap-2">
-            <div className="flex gap-2">
-              <span className="font-bold">{`${translate(
-                'bill.dateBuy'
-              )} :`}</span>
-              <span className="text-nowrap">
-                {formatDateTime(parseInt(record?.date))}
-              </span>{' '}
+          <div className='flex flex-col gap-2'>
+            <div className='flex gap-2'>
+              <span className='font-bold'>{`${translate('bill.dateBuy')} :`}</span>
+              <span className='text-nowrap'>{formatDateTime(parseInt(record?.date))}</span>{' '}
             </div>
-            <div className="flex gap-2">
-              <span className="font-bold">ID: </span>
+            <div className='flex gap-2'>
+              <span className='font-bold'>ID: </span>
               <TextCopy textView={record._id} />
             </div>
-            <div className="flex gap-2">
-              <span className="font-bold">SĐT :</span>
+            <div className='flex gap-2'>
+              <span className='font-bold'>SĐT :</span>
               <TextCopy textView={record.sdt} />
             </div>
-            <div className="flex gap-2">
-              <span className="font-bold">{`${translate(
-                'textPopular.amount'
-              )} :`}</span>
+            <div className='flex gap-2'>
+              <span className='font-bold'>{`${translate('textPopular.amount')} :`}</span>
               <span>{getAmountBuy(record)}</span>
             </div>
-            <div className="flex gap-2">
-              <span className="font-bold">{`${translate(
-                'textPopular.status'
-              )} :`}</span>
+            <div className='flex gap-2'>
+              <span className='font-bold'>{`${translate('textPopular.status')} :`}</span>
               {renderStatus(record.status)}
             </div>
-            <div className="flex gap-2">
-              <span className="font-bold">{`${translate(
-                'textPopular.totalMoney'
-              )} :`}</span>
-              <span className="text-green-500 font-bold">
-                {formatPrice(record?.totalBill || '0')}
-              </span>
+            <div className='flex gap-2'>
+              <span className='font-bold'>{`${translate('textPopular.totalMoney')} :`}</span>
+              <span className='text-green-500 font-bold'>{formatPrice(record?.totalBill || '0')}</span>
             </div>
 
-            <div className="flex gap-5 md:flex-row">
+            <div className='flex gap-5 md:flex-row'>
               {record?.status === FILTER_BILL.Processing && (
-                <Button
-                  className="md:w-[150px] w-full"
-                  onClick={() => handleSubmit(record, FILTER_BILL.Delivering)}
-                >
+                <Button className='md:w-[150px] w-full' onClick={() => handleSubmit(record, FILTER_BILL.Delivering)}>
                   {translate('myBill.delivering')}
                 </Button>
               )}
               {record?.status === FILTER_BILL.Delivering && (
-                <Button
-                  onClick={() =>
-                    handleSubmit(record, FILTER_BILL.DeliverySuccess)
-                  }
-                  className="md:w-[150px] w-full"
-                >
+                <Button onClick={() => handleSubmit(record, FILTER_BILL.DeliverySuccess)} className='md:w-[150px] w-full'>
                   {translate('myBill.deliverySuccess')}
                 </Button>
               )}
-              <div className="flex md:flex-auto flex-1">
-                <Button onClick={() => handleViewDetail(record)} type="primary">
+              <div className='flex md:flex-auto flex-1'>
+                <Button onClick={() => handleViewDetail(record)} type='primary'>
                   {translate('common.view')}
                 </Button>
               </div>
@@ -207,15 +164,9 @@ const BillAdminScreen = () => {
     },
   ]
   return (
-    <div className="flex flex-col gap-3 w-full">
+    <div className='flex flex-col gap-3 w-full'>
       {renderContent()}
-      <MyTable
-        columns={columns}
-        loading={isLoading}
-        data={data || []}
-        limit={PAGE_SIZE_LIMIT}
-        total={20}
-      />
+      <MyTable columns={columns} loading={isLoading} data={data || []} limit={PAGE_SIZE_LIMIT} total={20} />
     </div>
   )
 }

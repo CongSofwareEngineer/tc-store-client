@@ -79,10 +79,7 @@ const Banner = () => {
       <ContainerList style={{ transform: `translateX(${-index * 100}%)` }}>
         {listBanner.map((e) => {
           return (
-            <div
-              className="flex flex-shrink-0  relative overflow-hidden w-full h-full"
-              key={e.url}
-            >
+            <div className='flex flex-shrink-0  relative overflow-hidden w-full h-full' key={e.url}>
               <Image
                 alt={`img-banner-${e.url}`}
                 src={e.url}
@@ -92,7 +89,7 @@ const Banner = () => {
                   minHeight: '100%',
                   maxWidth: 'unset',
                 }}
-                className="select-none !w-auto !h-auto"
+                className='select-none !w-auto !h-auto'
               />
             </div>
           )
@@ -104,59 +101,27 @@ const Banner = () => {
   const renderControl = () => {
     return (
       <>
-        <div className="absolute md:top-[50%] top-[45%] left-3 right-[-20px]">
-          <Image
-            alt={`icon-btnPre`}
-            src={images.home.banner.btnSlider}
-            fill
-            onClick={() => handleControl()}
-            className="!relative !w-[45px] !h-auto cursor-pointer hover:scale-110"
-          />
+        <div className='absolute md:top-[50%] top-[45%] left-3 right-[-20px]'>
+          <Image alt={`icon-btnPre`} src={images.home.banner.btnSlider} fill onClick={() => handleControl()} className='!relative !w-[45px] !h-auto cursor-pointer hover:scale-110' />
         </div>
-        <div className="absolute md:bottom-[5vh] bottom-[5vw] flex md:gap-4 gap-3 w-full justify-center items-center">
+        <div className='absolute md:bottom-[5vh] bottom-[5vw] flex md:gap-4 gap-3 w-full justify-center items-center'>
           {listBanner.map((_, indexItem) => {
             return (
-              <div
-                onClick={() => setIndex(indexItem)}
-                key={`icon-${indexItem}`}
-                className="  hover:scale-110 cursor-pointer md:w-9 w-8  flex justify-center items-center relative"
-              >
-                <Image
-                  alt={`icon-${index}`}
-                  src={
-                    images.home.banner[
-                      indexItem === index
-                        ? 'btnPositionActive'
-                        : 'btnPositionUnActive'
-                    ]
-                  }
-                  fill
-                  className="!relative !w-full !h-auto "
-                />
-                <div className="absolute-center text-white  text-center">
-                  {indexItem + 1}
-                </div>
+              <div onClick={() => setIndex(indexItem)} key={`icon-${indexItem}`} className='  hover:scale-110 cursor-pointer md:w-9 w-8  flex justify-center items-center relative'>
+                <Image alt={`icon-${index}`} src={images.home.banner[indexItem === index ? 'btnPositionActive' : 'btnPositionUnActive']} fill className='!relative !w-full !h-auto ' />
+                <div className='absolute-center text-white  text-center'>{indexItem + 1}</div>
               </div>
             )
           })}
         </div>
-        <div className="absolute right-5 md:top-[50%] top-[45%]">
-          <Image
-            alt={`icon-btnPre`}
-            src={images.home.banner.btnSlider}
-            fill
-            onClick={() => handleControl(false)}
-            className=" rotate-180 !relative !w-[45px] !h-auto cursor-pointer hover:scale-110"
-          />
+        <div className='absolute right-5 md:top-[50%] top-[45%]'>
+          <Image alt={`icon-btnPre`} src={images.home.banner.btnSlider} fill onClick={() => handleControl(false)} className=' rotate-180 !relative !w-[45px] !h-auto cursor-pointer hover:scale-110' />
         </div>
       </>
     )
   }
   return (
-    <div
-      className="w-full overflow-hidden relative"
-      data-aos={isMobile ? '' : 'fade-left'}
-    >
+    <div className='w-full overflow-hidden relative' data-aos={isMobile ? '' : 'fade-left'}>
       {renderListImg()}
       {renderControl()}
     </div>

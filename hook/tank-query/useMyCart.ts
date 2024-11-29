@@ -6,13 +6,7 @@ import { useMemo } from 'react'
 import ClientApi from '@/services/clientApi'
 import { getCookie } from '@/services/CookiesService'
 
-const getData = async ({
-  queryKey,
-  pageParam = 1,
-}: {
-  queryKey: any
-  pageParam: any
-}): Promise<TypeHookReactQuery> => {
+const getData = async ({ queryKey, pageParam = 1 }: { queryKey: any; pageParam: any }): Promise<TypeHookReactQuery> => {
   const isLogin = queryKey[3]
   if (isLogin) {
     const queryUrl = `${queryKey[1]}?page=${pageParam}&limit=${queryKey[2]}`
@@ -42,18 +36,17 @@ const getData = async ({
 const useMyCart = (pageSize = PAGE_SIZE_LIMIT) => {
   const { userData, isLogin } = useUserData()
 
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: [QUERY_KEY.MyCartUser, userData?._id, pageSize, isLogin],
-      queryFn: getData,
-      initialPageParam: 1,
-      getNextPageParam: (lastPage: { data: any; page: number }) => {
-        if (lastPage?.data?.length == pageSize) {
-          return lastPage.page + 1
-        }
-        return null
-      },
-    })
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
+    queryKey: [QUERY_KEY.MyCartUser, userData?._id, pageSize, isLogin],
+    queryFn: getData,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage: { data: any; page: number }) => {
+      if (lastPage?.data?.length == pageSize) {
+        return lastPage.page + 1
+      }
+      return null
+    },
+  })
 
   const dataFinal = useMemo(() => {
     if (!data) {

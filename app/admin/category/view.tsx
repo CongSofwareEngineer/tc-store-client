@@ -18,10 +18,7 @@ import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import ModalConfigCategory from './modalConfig'
 import { ColumnsType } from 'antd/es/table'
-import {
-  showNotificationError,
-  showNotificationSuccess,
-} from '@/utils/notification'
+import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import AdminApi from '@/services/adminApi'
 
 const CategoryAdminScreen = () => {
@@ -93,8 +90,8 @@ const CategoryAdminScreen = () => {
 
   const renderItem = (name: string, value: any) => {
     return (
-      <div className="flex gap-2 w-full items-center">
-        <span className="font-bold text-blue-900 text-nowrap">{`${name} :`}</span>
+      <div className='flex gap-2 w-full items-center'>
+        <span className='font-bold text-blue-900 text-nowrap'>{`${name} :`}</span>
         <span>{value}</span>
       </div>
     )
@@ -115,58 +112,41 @@ const CategoryAdminScreen = () => {
         onFilter: (value, record) => record.isShow === value,
         render: (_: any, record: any) => {
           return (
-            <div className="flex flex-col gap-2">
+            <div className='flex flex-col gap-2'>
               {isMobile && (
-                <div className="aspect-square md:w-[200px] w-[100px] overflow-hidden m-auto">
+                <div className='aspect-square md:w-[200px] w-[100px] overflow-hidden m-auto'>
                   <ImageAdmin src={detectImg(record.icon)} />
                 </div>
               )}
-              <div className="flex gap-4 w-full items-center">
+              <div className='flex gap-4 w-full items-center'>
                 {!isMobile && (
-                  <div className="aspect-square md:w-[200px] w-[100px] overflow-hidden m-auto">
+                  <div className='aspect-square md:w-[200px] w-[100px] overflow-hidden m-auto'>
                     <ImageAdmin src={detectImg(record.icon)} />
                   </div>
                 )}
-                <div className="flex flex-1 flex-col gap-2">
+                <div className='flex flex-1 flex-col gap-2'>
                   {renderItem(translate('header.name'), getName(record.lang))}
                   {renderItem('Key name', <TextCopy value={record.keyName} />)}
-                  {renderItem(
-                    translate('textPopular.showScreen'),
-                    renderShowScreen(record.isShow)
-                  )}
+                  {renderItem(translate('textPopular.showScreen'), renderShowScreen(record.isShow))}
                 </div>
 
                 {!isMobile && (
-                  <div className="md:w-[100px] w-full flex flex-col justify-center items-center gap-4">
-                    <Button
-                      onClick={() => handleUpdate(record)}
-                      className="w-full"
-                    >
+                  <div className='md:w-[100px] w-full flex flex-col justify-center items-center gap-4'>
+                    <Button onClick={() => handleUpdate(record)} className='w-full'>
                       {translate('common.update')}
                     </Button>
-                    <Button
-                      onClick={() => handleDelete(record)}
-                      className="w-full"
-                      type="primary"
-                    >
+                    <Button onClick={() => handleDelete(record)} className='w-full' type='primary'>
                       {translate('common.delete')}
                     </Button>
                   </div>
                 )}
               </div>
               {isMobile && (
-                <div className="md:w-[100px] w-full flex flex-col justify-center items-center gap-4">
-                  <Button
-                    onClick={() => handleUpdate(record)}
-                    className="w-full"
-                  >
+                <div className='md:w-[100px] w-full flex flex-col justify-center items-center gap-4'>
+                  <Button onClick={() => handleUpdate(record)} className='w-full'>
                     {translate('common.update')}
                   </Button>
-                  <Button
-                    onClick={() => handleDelete(record)}
-                    className="w-full"
-                    type="primary"
-                  >
+                  <Button onClick={() => handleDelete(record)} className='w-full' type='primary'>
                     {translate('common.delete')}
                   </Button>
                 </div>
@@ -177,24 +157,11 @@ const CategoryAdminScreen = () => {
       },
     ]
 
-    return (
-      <MyTable
-        columns={columns}
-        loading={isLoading}
-        data={data?.data || []}
-        limit={PAGE_SIZE_LIMIT}
-        total={20}
-        extra={
-          <Button onClick={() => handleUpdate(null)}>
-            {translate('common.addNew')}
-          </Button>
-        }
-      />
-    )
+    return <MyTable columns={columns} loading={isLoading} data={data?.data || []} limit={PAGE_SIZE_LIMIT} total={20} extra={<Button onClick={() => handleUpdate(null)}>{translate('common.addNew')}</Button>} />
   }
 
   return (
-    <div className="flex flex-col w-full h-full gap-2">
+    <div className='flex flex-col w-full h-full gap-2'>
       {renderContent()}
       {renderTable()}
     </div>

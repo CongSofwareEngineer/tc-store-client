@@ -19,27 +19,20 @@ import { CameraOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import { Image } from 'antd'
 import { isEqual } from 'lodash'
 import React, { useEffect, useState } from 'react'
-import {
-  showNotificationError,
-  showNotificationSuccess,
-} from '@/utils/notification'
+import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import useCommentDetail from '@/hook/tank-query/useCommentDetail'
 
 const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState<{ [key: string]: any } | null>(null)
-  const [dataExited, setDataExited] = useState<{ [key: string]: any } | null>(
-    null
-  )
+  const [dataExited, setDataExited] = useState<{ [key: string]: any } | null>(null)
 
   const { isLogin, userData } = useUserData()
   const { translate } = useLanguage()
   const { checkNumberPhone } = useCheckForm()
   const { refreshQuery } = useRefreshQuery()
   const { closeModalDrawer } = useModalDrawer()
-  const { data: dataApi, isLoading: loadingApi } = useCommentDetail(
-    dataItem._id
-  )
+  const { data: dataApi, isLoading: loadingApi } = useCommentDetail(dataItem._id)
 
   useEffect(() => {
     const getData = async () => {
@@ -116,27 +109,18 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
   }
 
   const deleteImg = (index: number) => {
-    const data = formData?.listImg.filter(
-      (_: any, indexFilter: number) => indexFilter !== index
-    )
+    const data = formData?.listImg.filter((_: any, indexFilter: number) => indexFilter !== index)
     setFormData((prev) => ({ ...prev, listImg: data }))
   }
 
   const renderListImg = () => {
     return (
       formData?.listImg?.length > 0 && (
-        <div className="flex gap-3">
+        <div className='flex gap-3'>
           {formData?.listImg?.map((item: any, index: number) => (
-            <div key={`img-${index}`} className="relative w-[70px] ">
-              <Image
-                alt="img"
-                className="w-[70px]"
-                src={detectImg(item?.base64 || item)}
-              />
-              <CloseCircleOutlined
-                onClick={() => deleteImg(index)}
-                className="absolute text-[20px] z-10 cursor-pointer right-0 top-0"
-              />
+            <div key={`img-${index}`} className='relative w-[70px] '>
+              <Image alt='img' className='w-[70px]' src={detectImg(item?.base64 || item)} />
+              <CloseCircleOutlined onClick={() => deleteImg(index)} className='absolute text-[20px] z-10 cursor-pointer right-0 top-0' />
             </div>
           ))}
         </div>
@@ -145,81 +129,33 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
   }
 
   return (
-    <div className="flex flex-col gap-3 w-full justify-center items-center">
+    <div className='flex flex-col gap-3 w-full justify-center items-center'>
       {loadingApi && <MyLoading />}
       {!loadingApi && formData && (
-        <MyForm
-          onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
-          className="w-full gap-0"
-          formData={formData}
-          onFinish={handleSubmit}
-        >
-          <div className="flex gap-2 w-full">
-            <div className="w-[100px] aspect-square overflow-hidden">
-              <MyImage
-                alt="avatar-product"
-                src={detectImg(dataItem.imageMain)}
-              />
+        <MyForm onValuesChange={(_, value) => setFormData({ ...formData, ...value })} className='w-full gap-0' formData={formData} onFinish={handleSubmit}>
+          <div className='flex gap-2 w-full'>
+            <div className='w-[100px] aspect-square overflow-hidden'>
+              <MyImage alt='avatar-product' src={detectImg(dataItem.imageMain)} />
             </div>
-            <div className="flex flex-1 flex-col gap-2 h-auto justify-center">
-              <p className="text-medium font-bold">{dataItem.name}</p>
-              <RateForm name="rate" />
+            <div className='flex flex-1 flex-col gap-2 h-auto justify-center'>
+              <p className='text-medium font-bold'>{dataItem.name}</p>
+              <RateForm name='rate' />
             </div>
           </div>
-          <InputForm
-            typeBtn="string"
-            required
-            name={'name'}
-            label={translate('header.name')}
-            classFromItem="w-full"
-            disable={!!isLogin}
-          />
-          <InputForm
-            typeBtn="string"
-            required
-            name={'sdt'}
-            label={translate('userDetail.sdt')}
-            classFromItem="w-full"
-            validator={checkNumberPhone}
-            disable={!!isLogin}
-          />
-          <InputForm
-            name={'note'}
-            required
-            typeBtn="area"
-            label={translate('textPopular.note')}
-            classFromItem="w-full"
-            showCount
-            maxLength={200}
-          />
+          <InputForm typeBtn='string' required name={'name'} label={translate('header.name')} classFromItem='w-full' disable={!!isLogin} />
+          <InputForm typeBtn='string' required name={'sdt'} label={translate('userDetail.sdt')} classFromItem='w-full' validator={checkNumberPhone} disable={!!isLogin} />
+          <InputForm name={'note'} required typeBtn='area' label={translate('textPopular.note')} classFromItem='w-full' showCount maxLength={200} />
 
-          <div className="flex flex-col w-full gap-2 mt-10">
+          <div className='flex flex-col w-full gap-2 mt-10'>
             {renderListImg()}
-            <UploadImage
-              handleUpload={handleUpload}
-              disabled={formData?.listImg?.length >= 2}
-              listData={formData?.listImg || []}
-              maxSizeOutputKB={200}
-              maxPixelReduce={400}
-            >
-              <div className="flex gap-2 item-center w-full">
-                <CameraOutlined
-                  className="cursor-pointer"
-                  style={{ fontSize: 25, color: 'blue' }}
-                />
+            <UploadImage handleUpload={handleUpload} disabled={formData?.listImg?.length >= 2} listData={formData?.listImg || []} maxSizeOutputKB={200} maxPixelReduce={400}>
+              <div className='flex gap-2 item-center w-full'>
+                <CameraOutlined className='cursor-pointer' style={{ fontSize: 25, color: 'blue' }} />
                 <span>{translate('comment.uploadImg_des')}</span>
               </div>
             </UploadImage>
 
-            <ButtonForm
-              loading={loading}
-              classNameItem="w-full "
-              className="w-full mt-4"
-              disableClose
-              titleSubmit={translate(
-                dataExited ? 'common.updateFeedback' : 'common.sendFeedback'
-              )}
-            />
+            <ButtonForm loading={loading} classNameItem='w-full ' className='w-full mt-4' disableClose titleSubmit={translate(dataExited ? 'common.updateFeedback' : 'common.sendFeedback')} />
           </div>
         </MyForm>
       )}

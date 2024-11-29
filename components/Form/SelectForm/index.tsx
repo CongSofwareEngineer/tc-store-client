@@ -23,16 +23,7 @@ type InputFormType = {
   loading?: boolean
 }
 
-const SelectForm = ({
-  label,
-  name,
-  message,
-  required = false,
-  options = [],
-  validator = () => '',
-  configSelect,
-  loading = false,
-}: InputFormType) => {
+const SelectForm = ({ label, name, message, required = false, options = [], validator = () => '', configSelect, loading = false }: InputFormType) => {
   const { translate } = useLanguage()
   return (
     <FormItem
@@ -47,9 +38,7 @@ const SelectForm = ({
               return Promise.reject(new Error(errorCheck))
             }
             if (!value) {
-              return Promise.reject(
-                new Error(message || translate('errors.empty'))
-              )
+              return Promise.reject(new Error(message || translate('errors.empty')))
             }
 
             return Promise.resolve(null)
@@ -57,12 +46,7 @@ const SelectForm = ({
         },
       ]}
     >
-      <Select
-        loading={loading}
-        className="w-full"
-        options={options}
-        {...configSelect}
-      />
+      <Select loading={loading} className='w-full' options={options} {...configSelect} />
     </FormItem>
   )
 }

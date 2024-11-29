@@ -87,36 +87,21 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
 
   return (
     formData && (
-      <MyForm
-        onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
-        formData={formData}
-        onFinish={handleSubmit}
-        className="!overflow-auto gap-2"
-      >
-        <div className="flex flex-col gap-2 w-full flex-1 overflow-y-auto ">
-          <InputForm
-            classFromItem="w-full "
-            name="keyName"
-            label={'keyName'}
-            required
-            disable={!!data}
-          />
-          <Form.List name="subCategories">
+      <MyForm onValuesChange={(_, value) => setFormData({ ...formData, ...value })} formData={formData} onFinish={handleSubmit} className='!overflow-auto gap-2'>
+        <div className='flex flex-col gap-2 w-full flex-1 overflow-y-auto '>
+          <InputForm classFromItem='w-full ' name='keyName' label={'keyName'} required disable={!!data} />
+          <Form.List name='subCategories'>
             {(fields, { add, remove }) => (
-              <div className="w-full">
-                <div className="grid w-full md:grid-cols-2 grid-cols-1 gap-3">
+              <div className='w-full'>
+                <div className='grid w-full md:grid-cols-2 grid-cols-1 gap-3'>
                   {fields.map((e, index) => {
                     return (
-                      <div key={e.name} className="flex gap-2 items-end ">
-                        <div className="flex flex-1">
-                          <InputForm
-                            classFromItem="w-full"
-                            label={`Sub Category ${index + 1}`}
-                            name={e.name}
-                          />
+                      <div key={e.name} className='flex gap-2 items-end '>
+                        <div className='flex flex-1'>
+                          <InputForm classFromItem='w-full' label={`Sub Category ${index + 1}`} name={e.name} />
                         </div>
 
-                        <div className="text-red-500 text-medium relative top-1">
+                        <div className='text-red-500 text-medium relative top-1'>
                           <DeleteOutlined
                             onClick={() => {
                               remove(e.name)
@@ -127,12 +112,7 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
                     )
                   })}
                 </div>
-                <Button
-                  type="dashed"
-                  className="mt-5"
-                  onClick={() => add()}
-                  block
-                >
+                <Button type='dashed' className='mt-5' onClick={() => add()} block>
                   + Add Item
                 </Button>
               </div>
@@ -140,46 +120,28 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
           </Form.List>
           {Object.values(LANGUAGE_SUPPORT).map((value) => {
             return (
-              <div key={value} className="flex flex-col  w-full gap-2 mt-2">
+              <div key={value} className='flex flex-col  w-full gap-2 mt-2'>
                 <div>{`${translate('language')} : ${uppercase(value)}`}</div>
-                <MyInput
-                  value={formData?.lang[value] || ''}
-                  onChangeText={(e) => onChangeName(value, e?.toString())}
-                />
+                <MyInput value={formData?.lang[value] || ''} onChangeText={(e) => onChangeName(value, e?.toString())} />
               </div>
             )
           })}
 
-          <CheckBoxForm
-            classFromItem="w-full"
-            name="isShow"
-            label={translate('textPopular.showScreen')}
-          />
-          <div className="flex justify-center">
-            <div className="flex flex-col  w-[150px] h-[150px]   justify-between items-center">
-              <UploadImage
-                maxSizeOutputKB={200}
-                typeFile={typeFile}
-                handleUpload={(e) => setFormData({ ...formData, icon: e })}
-              >
-                <div className="flex gap-2">
+          <CheckBoxForm classFromItem='w-full' name='isShow' label={translate('textPopular.showScreen')} />
+          <div className='flex justify-center'>
+            <div className='flex flex-col  w-[150px] h-[150px]   justify-between items-center'>
+              <UploadImage maxSizeOutputKB={200} typeFile={typeFile} handleUpload={(e) => setFormData({ ...formData, icon: e })}>
+                <div className='flex gap-2'>
                   <CameraOutlined />
                   <span>Icon</span>
                 </div>
               </UploadImage>
-              <Image
-                className="mt-3"
-                alt="img-main"
-                src={detectImg(formData?.icon?.base64 || formData?.icon)}
-              />
+              <Image className='mt-3' alt='img-main' src={detectImg(formData?.icon?.base64 || formData?.icon)} />
             </div>
           </div>
 
-          <div className="flex flex-1 w-full mt-10">
-            <ButtonForm
-              titleSubmit={translate(data ? 'common.update' : 'common.create')}
-              loading={loading}
-            />
+          <div className='flex flex-1 w-full mt-10'>
+            <ButtonForm titleSubmit={translate(data ? 'common.update' : 'common.create')} loading={loading} />
           </div>
         </div>
       </MyForm>

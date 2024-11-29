@@ -95,9 +95,7 @@ const InputForm = ({
               return Promise.reject(new Error(errorCheck))
             }
             if (!value) {
-              return Promise.reject(
-                new Error(message || translate('errors.empty'))
-              )
+              return Promise.reject(new Error(message || translate('errors.empty')))
             }
 
             return Promise.resolve(null)
@@ -105,14 +103,7 @@ const InputForm = ({
         },
       ]}
     >
-      <MyInput
-        disabled={disable}
-        rows={rows}
-        type={isPass ? 'password' : typeBtn}
-        className="w-full"
-        maxLength={maxLength}
-        showCount={showCount}
-      />
+      <MyInput disabled={disable} rows={rows} type={isPass ? 'password' : typeBtn} className='w-full' maxLength={maxLength} showCount={showCount} />
     </FormItem>
   )
 }

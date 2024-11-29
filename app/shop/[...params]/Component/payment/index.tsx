@@ -8,13 +8,7 @@ import BillFinal from '@/app/my-cart/Component/Payment/Component/BillFinal'
 import MyForm from '@/components/Form/MyForm'
 import ContentFormPayment from '@/components/ContentFormPayment'
 import BtnBackUI from '@/components/BtnBackUI'
-import {
-  delayTime,
-  getDataLocal,
-  numberWithCommas,
-  saveDataLocal,
-  scrollTop,
-} from '@/utils/functions'
+import { delayTime, getDataLocal, numberWithCommas, saveDataLocal, scrollTop } from '@/utils/functions'
 import InfoBill from './InfoBill'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import { BodyAddBill } from '@/constant/firebase'
@@ -108,12 +102,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
       saveDataNoLogin(bodyBill)
 
       openModalDrawer({
-        content: (
-          <ModalProcess
-            title={translate('confirm.bill.createBill')}
-            des={translate('confirm.bill.createBill_Des')}
-          />
-        ),
+        content: <ModalProcess title={translate('confirm.bill.createBill')} des={translate('confirm.bill.createBill_Des')} />,
         configModal: {
           showHeader: false,
           showBtnClose: false,
@@ -153,55 +142,26 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
       setLoading(false)
     }
     openModalDrawer({
-      content: (
-        <ModalDelete
-          autoClose={false}
-          callback={callBack}
-          title={translate('confirm.bill.confirm')}
-          des={translate('confirm.bill.confirm_des')}
-          titleConfirm={translate('common.submit')}
-        />
-      ),
+      content: <ModalDelete autoClose={false} callback={callBack} title={translate('confirm.bill.confirm')} des={translate('confirm.bill.confirm_des')} titleConfirm={translate('common.submit')} />,
     })
   }
 
   return (
-    <div className="w-full md:mb-7 mb-10 mt-1">
-      <BtnBackUI
-        clickBack={callBack}
-        titlePageMain={translate('header.shop')}
-        titlePage={data?.name}
-      />
-      <div className="flex flex-col gap-3 w-full mt-1">
+    <div className='w-full md:mb-7 mb-10 mt-1'>
+      <BtnBackUI clickBack={callBack} titlePageMain={translate('header.shop')} titlePage={data?.name} />
+      <div className='flex flex-col gap-3 w-full mt-1'>
         {formData && (
-          <MyForm
-            onFinish={handleSubmit}
-            formData={formData}
-            onValuesChange={(_, value) =>
-              setFormData({ ...formData, ...value })
-            }
-          >
+          <MyForm onFinish={handleSubmit} formData={formData} onValuesChange={(_, value) => setFormData({ ...formData, ...value })}>
             {/* lg:max-h-[calc(100vh-126px)] hide-scroll */}
-            <div className="flex lg:flex-row flex-col lg:gap-6 gap-5">
-              <div className="flex flex-1 h-full overflow-y-auto  flex-col lg:max-w-[calc(100%-300px)]">
+            <div className='flex lg:flex-row flex-col lg:gap-6 gap-5'>
+              <div className='flex flex-1 h-full overflow-y-auto  flex-col lg:max-w-[calc(100%-300px)]'>
                 <ContentFormPayment onChange={onChangeAddressShip} />
                 <InfoBill data={data} amountBuy={amount} />
               </div>
 
-              <div className="lg:w-[350px] flex flex-col md:gap-6 gap-5">
-                <OptionsPayment
-                  onChangeOptions={onChangeOptions}
-                  listOptions={listOptions}
-                  optionSelected={optionSelected}
-                />
-                <BillFinal
-                  disabledSubmit={!isValidSubmit}
-                  loading={loading}
-                  totalBill={numberWithCommas(amount * data?.price)}
-                  totalBillFeeShip={numberWithCommas(
-                    amount * data?.price + 30000
-                  )}
-                />
+              <div className='lg:w-[350px] flex flex-col md:gap-6 gap-5'>
+                <OptionsPayment onChangeOptions={onChangeOptions} listOptions={listOptions} optionSelected={optionSelected} />
+                <BillFinal disabledSubmit={!isValidSubmit} loading={loading} totalBill={numberWithCommas(amount * data?.price)} totalBillFeeShip={numberWithCommas(amount * data?.price + 30000)} />
               </div>
             </div>
           </MyForm>

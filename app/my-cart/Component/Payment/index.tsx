@@ -92,12 +92,7 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
   const handleSubmit = async () => {
     setLoading(true)
     openModalDrawer({
-      content: (
-        <ModalProcess
-          title={translate('confirm.bill.createBill')}
-          des={translate('confirm.bill.createBill_Des')}
-        />
-      ),
+      content: <ModalProcess title={translate('confirm.bill.createBill')} des={translate('confirm.bill.createBill_Des')} />,
       configModal: {
         showHeader: false,
         showBtnClose: false,
@@ -170,39 +165,20 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
   }
 
   return (
-    <div className="w-full mb-7 mt-1">
+    <div className='w-full mb-7 mt-1'>
       {showBack && <BtnBack clickBack={clickBack} />}
-      <div className="flex flex-col gap-3 w-full mt-1">
+      <div className='flex flex-col gap-3 w-full mt-1'>
         {formData && (
-          <MyForm
-            onFinish={handleSubmit}
-            formData={formData}
-            onValuesChange={(_, value) =>
-              setFormData({ ...formData, ...value })
-            }
-          >
-            <div className="flex lg:flex-row flex-col lg:gap-6 gap-5">
-              <div className="flex flex-1 flex-col lg:max-w-[calc(100%-300px)]">
-                <ContentForm
-                  listAddressShip={listAddressShip}
-                  setListAddressShip={setListAddressShip}
-                  onChange={onChangeAddressShip}
-                />
+          <MyForm onFinish={handleSubmit} formData={formData} onValuesChange={(_, value) => setFormData({ ...formData, ...value })}>
+            <div className='flex lg:flex-row flex-col lg:gap-6 gap-5'>
+              <div className='flex flex-1 flex-col lg:max-w-[calc(100%-300px)]'>
+                <ContentForm listAddressShip={listAddressShip} setListAddressShip={setListAddressShip} onChange={onChangeAddressShip} />
                 <ViewListOrder dataCart={dataCart} />
               </div>
 
-              <div className="lg:w-[300px] flex flex-col md:gap-6 gap-5">
-                <OptionsPayment
-                  onChangeOptions={onChangeOptions}
-                  listOptions={listOptions}
-                  optionSelected={optionSelected}
-                />
-                <BillFinal
-                  disabledSubmit={!isValidSubmit}
-                  loading={loading}
-                  totalBill={getTotalPayBill()}
-                  totalBillFeeShip={getTotalPayBill(true)}
-                />
+              <div className='lg:w-[300px] flex flex-col md:gap-6 gap-5'>
+                <OptionsPayment onChangeOptions={onChangeOptions} listOptions={listOptions} optionSelected={optionSelected} />
+                <BillFinal disabledSubmit={!isValidSubmit} loading={loading} totalBill={getTotalPayBill()} totalBillFeeShip={getTotalPayBill(true)} />
               </div>
             </div>
           </MyForm>

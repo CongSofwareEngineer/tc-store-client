@@ -12,7 +12,7 @@ const useTypeFile = (props?: Props) => {
     return props?.typeAndroid || '.png,.jpg,.jpeg,.gif'
   }, [props])
   return {
-    typeFile
+    typeFile,
   }
 }
 

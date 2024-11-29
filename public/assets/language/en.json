@@ -1,59 +1,59 @@
 {
-  "common":{
-    "login":"Login",
-    "close":"Close",
-    "Send":"send",
-    "buy":"Buy",
-    "buyNow":"Buy Now",
-    "addCart":"Add Cart"
+  "common": {
+    "login": "Login",
+    "close": "Close",
+    "Send": "send",
+    "buy": "Buy",
+    "buyNow": "Buy Now",
+    "addCart": "Add Cart"
   },
-  "textPopular":{
-    "address":"address",
-    "hash":"Hash",
-    "time":"time",
-    "logOut":"Log out",
-    "tokenId":"Token ID",
-    "nameChain":"Chain",
-    "description":"Description",
-    "amount":"Amount",
-    "freeShip":"Free ship ",
-    "freeShip_des":"Free ship in since 15km"
+  "textPopular": {
+    "address": "address",
+    "hash": "Hash",
+    "time": "time",
+    "logOut": "Log out",
+    "tokenId": "Token ID",
+    "nameChain": "Chain",
+    "description": "Description",
+    "amount": "Amount",
+    "freeShip": "Free ship ",
+    "freeShip_des": "Free ship in since 15km"
   },
-  "mintNFT":{
-    "addNewImg":"Add new image",
-    "mintNFT":"Mint NFT",
-    "coursers":"Coursers",
-    "student":"Student"
+  "mintNFT": {
+    "addNewImg": "Add new image",
+    "mintNFT": "Mint NFT",
+    "coursers": "Coursers",
+    "student": "Student"
   },
-  "myProfile":{
-    "myProfile":" My profile"
+  "myProfile": {
+    "myProfile": " My profile"
   },
-  "header":{
-    "coffee":"Coffee Shop",
-    "pod":"pod Shop",
-    "cart":"Cart",
-    "myProfile":"My profile",
-    "contact":"Contact",
-    "about":"About"
+  "header": {
+    "coffee": "Coffee Shop",
+    "pod": "pod Shop",
+    "cart": "Cart",
+    "myProfile": "My profile",
+    "contact": "Contact",
+    "about": "About"
   },
-  "footer":{
-    "aboutContact":"About Contract"
+  "footer": {
+    "aboutContact": "About Contract"
   },
-  "coffeeDetail":{
-    "numberLike":"Number Like",
-    "price":"Price",
-    "weight":"Weight",
-    "sold":"Sold",
-    "totalNumber":"Total number"
+  "coffeeDetail": {
+    "numberLike": "Number Like",
+    "price": "Price",
+    "weight": "Weight",
+    "sold": "Sold",
+    "totalNumber": "Total number"
   },
-  "confirm":{
-    "mintNFT":{
-      "confirm":"Confirm mint NFT",
-      "confirm_des":"Waiting confirm your transaction",
-      "start":"Your transaction has started",
-      "start_des":"Waiting success your transaction",
-      "success":"Your transaction success",
-      "success_des":"Your transaction success. You can view transaction in scan"
+  "confirm": {
+    "mintNFT": {
+      "confirm": "Confirm mint NFT",
+      "confirm_des": "Waiting confirm your transaction",
+      "start": "Your transaction has started",
+      "start_des": "Waiting success your transaction",
+      "success": "Your transaction success",
+      "success_des": "Your transaction success. You can view transaction in scan"
     }
   },
   "errors": {

@@ -10,10 +10,7 @@ import { COOKIE_EXPIRED, COOKIE_KEY, OBSERVER_KEY } from '@/constant/app'
 import { setCookie } from '@/services/CookiesService'
 import ClientApi from '@/services/clientApi'
 import ObserverService from '@/services/observer'
-import {
-  showNotificationError,
-  showNotificationSuccess,
-} from '@/utils/notification'
+import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 
 const useUserData = () => {
   const dispatch = useAppDispatch()
@@ -26,7 +23,7 @@ const useUserData = () => {
       JSON.stringify({
         sdt,
         pass,
-      })
+      }),
     )
     const body = {
       data: dataBody,
@@ -35,16 +32,8 @@ const useUserData = () => {
 
     if (data?.data) {
       dispatch(setUserData(data?.data))
-      setCookie(
-        COOKIE_KEY.Auth,
-        data?.data.auth?.toString(),
-        COOKIE_EXPIRED.ExpiredAuth
-      )
-      setCookie(
-        COOKIE_KEY.AuthRefresh,
-        data?.data.authRefresh?.toString(),
-        COOKIE_EXPIRED.ExpiredAuthRefresh
-      )
+      setCookie(COOKIE_KEY.Auth, data?.data.auth?.toString(), COOKIE_EXPIRED.ExpiredAuth)
+      setCookie(COOKIE_KEY.AuthRefresh, data?.data.authRefresh?.toString(), COOKIE_EXPIRED.ExpiredAuthRefresh)
     }
     return data?.data || null
   }

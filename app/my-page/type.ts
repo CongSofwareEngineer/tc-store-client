@@ -7,4 +7,4 @@ export type ItemInfoUserType = {
 export type FormDataBaseUserType = {
   name?: string | undefined
   pass: string | undefined
-} 
+}

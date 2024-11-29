@@ -28,13 +28,7 @@ const Notification = dynamic(() => import('../Notification'), {
   ssr: false,
 })
 
-const ClientRender = ({
-  children,
-  menuCategory,
-}: {
-  children: React.ReactNode
-  menuCategory: any[]
-}) => {
+const ClientRender = ({ children, menuCategory }: { children: React.ReactNode; menuCategory: any[] }) => {
   useAos()
   useCheckPatchName()
   const dispatch = useAppDispatch()
@@ -83,11 +77,8 @@ const ClientRender = ({
   return (
     <>
       <Header />
-      <main className="main-content w-full flex justify-center min-h-[calc(100vh-56px)]">
-        <section
-          id="id-section-content"
-          className="section-content  w-full max-w-[1350px]  md:px-12 px-[20px]  md:pt-5 pt-2"
-        >
+      <main className='main-content w-full flex justify-center min-h-[calc(100vh-56px)]'>
+        <section id='id-section-content' className='section-content  w-full max-w-[1350px]  md:px-12 px-[20px]  md:pt-5 pt-2'>
           {children}
         </section>
       </main>

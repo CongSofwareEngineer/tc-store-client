@@ -24,7 +24,7 @@ const useLanguage = () => {
         return ''
       }
     },
-    [Language]
+    [Language],
   )
 
   const getLabelCategory = (key: string) => {
