@@ -1,5 +1,5 @@
 import useAddressShip from '@/hook/useAddressShip'
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import MySelect from '../MySelect'
 import { useAppSelector } from '@/redux/store'
 import useLanguage from '@/hook/useLanguage'
@@ -13,16 +13,10 @@ const OptionVnLocation = ({ callback }: { callback: any }) => {
 
   const { Provinces } = useAppSelector((state) => state.app)
   const { translate } = useLanguage()
-  const { data: listDistrict, loading: loadingDistrict } = useAddressShip(
-    2,
-    provence?.id || provence
-  )
-  const { data: listWards, loading: loadingWard } = useAddressShip(
-    3,
-    districts?.id
-  )
+  const { data: listDistrict, loading: loadingDistrict } = useAddressShip(2, provence?.id || provence)
+  const { data: listWards, loading: loadingWard } = useAddressShip(3, districts?.id)
 
-  const getOption = useCallback((list: any) => {
+  const getOption = (list: any) => {
     return list.map((e: any) => {
       return {
         label: e.full_name,
@@ -30,103 +24,91 @@ const OptionVnLocation = ({ callback }: { callback: any }) => {
         name: e.full_name,
       }
     })
-  }, [])
+  }
 
-  const onChangeProvince = useCallback(
-    (id: string) => {
-      setDistricts(null)
-      setWard(null)
-      const data = Provinces.find((e) => e.id === id)
-      setProvence(data)
-    },
-    [Provinces]
-  )
+  const onChangeProvince = (id: string) => {
+    setDistricts(null)
+    setWard(null)
+    const data = Provinces.find((e) => e.id === id)
+    setProvence(data)
+  }
 
-  const onChangeDistrict = useCallback(
-    (id: string) => {
-      setWard(null)
-      const data = listDistrict.find((e: any) => e.id === id)
-      setDistricts(data)
-    },
-    [listDistrict]
-  )
+  const onChangeDistrict = (id: string) => {
+    setWard(null)
+    const data = listDistrict.find((e: any) => e.id === id)
+    setDistricts(data)
+  }
 
-  const onChangeWard = useCallback(
-    (id: string) => {
-      const data = listWards.find((e: any) => e.id === id)
-      setWard(data)
-    },
-    [listWards]
-  )
+  const onChangeWard = (id: string) => {
+    const data = listWards.find((e: any) => e.id === id)
+    setWard(data)
+  }
 
-  const onChangeNote = useCallback(
-    (note: string) => {
-      const dataAddress = `${ward.full_name}---${districts.full_name}---${provence.full_name}`
-      setAddressDetail(note!.toString())
-      callback({
-        addressDetail: note,
-        address: dataAddress,
-      })
-    },
-    [provence, districts, ward, callback]
-  )
+  const onChangeNote = (note: string) => {
+    const dataAddress = `${ward.full_name}---${districts.full_name}---${provence.full_name}`
+    setAddressDetail(note!.toString())
+    callback({
+      addressDetail: note,
+      address: dataAddress,
+    })
+  }
 
   return (
-    <div className="w-full flex flex-col gap-4">
-      <div className="flex flex-col gap-2 w-full md:flex-row">
-        <div className="w-full flex flex-col gap-2">
+    <div className='w-full flex flex-col gap-4'>
+      <div className='flex flex-col gap-2 w-full md:flex-row'>
+        <div className='w-full flex flex-col gap-2'>
           <div>{translate('textPopular.province')}</div>
           <MySelect
             value={provence?.id}
             placeholder={translate('textPopular.province')}
-            optionFilterProp="label"
+            optionFilterProp='label'
             showSearch
             fullImage
-            className="w-full"
+            className='w-full'
             option={getOption(Provinces)}
             onChange={onChangeProvince}
           />
         </div>
 
-        <div className="w-full flex flex-col gap-2">
+        <div className='w-full flex flex-col gap-2'>
           <div>{translate('textPopular.district')}</div>
           <MySelect
             loading={loadingDistrict}
             value={districts?.id}
             placeholder={translate('textPopular.district')}
-            optionFilterProp="label"
+            optionFilterProp='label'
             showSearch
             fullImage
-            className="w-full"
+            className='w-full'
             option={getOption(listDistrict || [])}
             onChange={onChangeDistrict}
           />
         </div>
 
-        <div className="w-full flex flex-col gap-2">
+        <div className='w-full flex flex-col gap-2'>
           <div>{translate('textPopular.ward')}</div>
 
           <MySelect
             loading={loadingWard}
             value={ward?.id}
             placeholder={translate('textPopular.ward')}
-            optionFilterProp="label"
+            optionFilterProp='label'
             showSearch
             fullImage
-            className="w-full"
+            className='w-full'
             option={getOption(listWards || [])}
             onChange={onChangeWard}
           />
         </div>
       </div>
-      <div className="w-full flex flex-col gap-2">
+      <div className='w-full flex flex-col gap-2'>
         <div>{translate('textPopular.addressDetail')}</div>
         <MyInput
           disabled={!districts || !provence || !ward}
           value={addressDetail}
           onChangeText={(e) => onChangeNote(e?.toString() || '')}
-          type="string"
-          className="w-full"
+          type='string'
+          className='w-full'
         />
       </div>
     </div>

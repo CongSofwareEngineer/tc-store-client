@@ -4,9 +4,9 @@ import { useQuery } from '@tanstack/react-query'
 
 const getData = async ({ queryKey }: { queryKey: any }): Promise<TypeHookReactQuery> => {
   const query = queryKey[1]
-  const { isShow } = query
+  const { isShow } = query || {}
 
-  let queryUrl = `sub-category/all`
+  let queryUrl = `sub-categories/all`
 
   if (typeof isShow !== 'undefined') {
     queryUrl += `?isShow=${isShow}`
@@ -19,7 +19,7 @@ const getData = async ({ queryKey }: { queryKey: any }): Promise<TypeHookReactQu
   }
 }
 
-const useSubCategories = (query: any) => {
+const useSubCategories = (query?: any) => {
   const { data, isLoading, refetch } = useQuery({
     queryKey: [QUERY_KEY.GetSubCategoryAdmin, query],
     queryFn: getData,

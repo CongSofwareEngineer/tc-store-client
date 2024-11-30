@@ -2,6 +2,13 @@ import { fetchData } from '@/configs/fetchConfig'
 import { REQUEST_TYPE } from '@/constant/app'
 
 const AdminApi = {
+  createSubCategories: async (body: any) => {
+    return fetchData({
+      url: `/sub-categories/create`,
+      method: REQUEST_TYPE.POST,
+      body,
+    })
+  },
   createCategories: async (body: any) => {
     return fetchData({
       url: `/category/create`,

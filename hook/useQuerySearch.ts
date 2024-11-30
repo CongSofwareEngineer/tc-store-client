@@ -1,5 +1,5 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import queryString from 'query-string'
 import { cloneData } from '@/utils/functions'
 
@@ -32,33 +32,30 @@ const useQuerySearch = () => {
     setCurrentQueries(window.location.search)
   }, [searchParam, router, pathPage])
 
-  const updateQuery = useCallback(
-    (key: string, value: string | string[] | number | number[], isReplace = true) => {
-      const searchPareClone = cloneData(queries)
+  const updateQuery = (key: string, value: string | string[] | number | number[], isReplace = true) => {
+    const searchPareClone = cloneData(queries)
 
-      if (searchPareClone[key]) {
-        if (!searchPareClone[key].includes(value?.toString())) {
-          if (isReplace) {
-            searchPareClone[key] = [value]
-          } else {
-            searchPareClone[key].push(value)
-          }
+    if (searchPareClone[key]) {
+      if (!searchPareClone[key].includes(value?.toString())) {
+        if (isReplace) {
+          searchPareClone[key] = [value]
         } else {
-          searchPareClone[key] = searchPareClone[key].filter((e: string) => e !== value?.toString())
+          searchPareClone[key].push(value)
         }
       } else {
-        searchPareClone[key] = [value]
+        searchPareClone[key] = searchPareClone[key].filter((e: string) => e !== value?.toString())
       }
+    } else {
+      searchPareClone[key] = [value]
+    }
 
-      const stringified = queryString.stringify(searchPareClone, { arrayFormat: 'comma' })
-      router.push(`${pathPage}?${stringified}`)
-    },
-    [queries, pathPage, router],
-  )
+    const stringified = queryString.stringify(searchPareClone, { arrayFormat: 'comma' })
+    router.push(`${pathPage}?${stringified}`)
+  }
 
-  const clearAll = useCallback(() => {
+  const clearAll = () => {
     router.push(pathPage)
-  }, [pathPage, router])
+  }
 
   return {
     queries,

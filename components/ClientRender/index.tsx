@@ -78,7 +78,10 @@ const ClientRender = ({ children, menuCategory }: { children: React.ReactNode; m
     <>
       <Header />
       <main className='main-content w-full flex justify-center min-h-[calc(100vh-56px)]'>
-        <section id='id-section-content' className='section-content  w-full max-w-[1350px]  md:px-12 px-[20px]  md:pt-5 pt-2'>
+        <section
+          id='id-section-content'
+          className='section-content  w-full max-w-[1350px]  md:px-12 px-[20px]  md:pt-5 pt-2'
+        >
           {children}
         </section>
       </main>

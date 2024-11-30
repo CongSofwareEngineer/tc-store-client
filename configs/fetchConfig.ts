@@ -23,7 +23,7 @@ export type ClientAPITypeParam = {
 }
 
 export const fetchData = async (
-  param: ClientAPITypeParam
+  param: ClientAPITypeParam,
 ): Promise<{
   data: any
   error?: any

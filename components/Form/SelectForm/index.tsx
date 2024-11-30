@@ -17,13 +17,28 @@ type InputFormType = {
   name?: string
   message?: string
   required?: boolean
-  options: Array<PropsSelectItem> | []
+  options: Array<PropsSelectItem> | undefined
   configSelect?: SelectProps
   validator?: (value?: any) => string | null
   loading?: boolean
+  showSearch?: boolean
+  optionFilterProp?: string
+  mode?: any
 }
 
-const SelectForm = ({ label, name, message, required = false, options = [], validator = () => '', configSelect, loading = false }: InputFormType) => {
+const SelectForm = ({
+  label,
+  name,
+  message,
+  required = false,
+  options = [],
+  validator = () => '',
+  configSelect,
+  loading = false,
+  showSearch = false,
+  optionFilterProp = 'any',
+  mode = null,
+}: InputFormType) => {
   const { translate } = useLanguage()
   return (
     <FormItem
@@ -46,7 +61,15 @@ const SelectForm = ({ label, name, message, required = false, options = [], vali
         },
       ]}
     >
-      <Select loading={loading} className='w-full' options={options} {...configSelect} />
+      <Select
+        mode={mode}
+        showSearch={showSearch}
+        optionFilterProp={optionFilterProp}
+        loading={loading}
+        className='w-full'
+        options={options}
+        {...configSelect}
+      />
     </FormItem>
   )
 }

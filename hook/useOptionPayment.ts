@@ -1,7 +1,6 @@
-import { useMemo, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import useLanguage from './useLanguage'
 import { OPTIONS_PAYMENT } from '@/constant/app'
-import { useCallback } from 'react'
 import { images } from '@/configs/images'
 import { delayTime } from '@/utils/functions'
 import useUserData from './useUserData'
@@ -28,52 +27,47 @@ const useOptionPayment = (defaultValue?: OptionType) => {
     }
   }, [defaultValue])
 
-  const listOptions = useMemo(() => {
-    return [
-      {
-        name: 'Momo',
-        value: OPTIONS_PAYMENT.momo,
-        icon: images.icon.iconMomo,
-        disabled: true || !isLogin,
-      },
-      {
-        name: translate('optionPayment.onDelivery'),
-        value: OPTIONS_PAYMENT.delivery,
-      },
-      {
-        name: translate('optionPayment.banking'),
-        value: OPTIONS_PAYMENT.banking,
-        disabled: true || !isLogin,
-      },
-    ]
-  }, [translate, isLogin])
-
-  const handlePayment = useCallback(
-    async (data: any) => {
-      console.log({ handlePayment: data, optionSelected })
-      let result
-      switch (optionSelected.value) {
-        case OPTIONS_PAYMENT.momo:
-          console.log('====================================')
-          console.log('cash by momo')
-          await delayTime(3000)
-          console.log('====================================')
-          result = true
-          break
-
-        case OPTIONS_PAYMENT.banking:
-          console.log('====================================')
-          console.log('cash by banking')
-          await delayTime(3000)
-
-          console.log('====================================')
-          result = true
-          break
-      }
-      return result
+  const listOptions = [
+    {
+      name: 'Momo',
+      value: OPTIONS_PAYMENT.momo,
+      icon: images.icon.iconMomo,
+      disabled: true || !isLogin,
     },
-    [optionSelected],
-  )
+    {
+      name: translate('optionPayment.onDelivery'),
+      value: OPTIONS_PAYMENT.delivery,
+    },
+    {
+      name: translate('optionPayment.banking'),
+      value: OPTIONS_PAYMENT.banking,
+      disabled: true || !isLogin,
+    },
+  ]
+
+  const handlePayment = async (data: any) => {
+    console.log({ handlePayment: data, optionSelected })
+    let result
+    switch (optionSelected.value) {
+      case OPTIONS_PAYMENT.momo:
+        console.log('====================================')
+        console.log('cash by momo')
+        await delayTime(3000)
+        console.log('====================================')
+        result = true
+        break
+
+      case OPTIONS_PAYMENT.banking:
+        console.log('====================================')
+        console.log('cash by banking')
+        await delayTime(3000)
+
+        console.log('====================================')
+        result = true
+        break
+    }
+    return result
+  }
 
   return {
     listOptions,

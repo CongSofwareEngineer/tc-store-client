@@ -1,12 +1,17 @@
+import ButtonForm from '@/components/Form/ButtonForm'
+import CheckBoxForm from '@/components/Form/CheckBoxForm'
 import InputForm from '@/components/Form/InputForm'
 import MyForm from '@/components/Form/MyForm'
 import MyInput from '@/components/MyInput'
 import { LANGUAGE_SUPPORT } from '@/constant/app'
+import { QUERY_KEY } from '@/constant/reactQuery'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useTypeFile from '@/hook/useTypeFile'
+import AdminApi from '@/services/adminApi'
 import { uppercase } from '@/utils/functions'
+import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import React, { useEffect, useState } from 'react'
 
 const SubCategoriesConfig = ({ item }: { item: any }) => {
@@ -45,11 +50,38 @@ const SubCategoriesConfig = ({ item }: { item: any }) => {
     })
   }
 
-  const handleSubmit = async () => {}
+  const handleSubmit = async () => {
+    try {
+      setLoading(true)
+      let res
+      if (item) {
+        // res =await AdminApi.updateCategories()
+      } else {
+        res = await AdminApi.createSubCategories(formData)
+      }
+
+      if (res?.data) {
+        showNotificationSuccess(translate(item ? 'success.update' : 'success.create'))
+        refreshQuery(QUERY_KEY.GetSubCategoryAdmin)
+        closeModalDrawer()
+      } else {
+        showNotificationError(translate(item ? 'error.update' : 'errors.create'))
+      }
+      console.log({ formData })
+    } catch (error) {
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     formData && (
-      <MyForm onValuesChange={(_, value) => setFormData({ ...formData, ...value })} formData={formData} onFinish={handleSubmit} className='!overflow-auto gap-2'>
+      <MyForm
+        onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
+        formData={formData}
+        onFinish={handleSubmit}
+        className='!overflow-auto gap-2'
+      >
         <div className='flex flex-col gap-2 w-full flex-1 overflow-y-auto '>
           <InputForm classFromItem='w-full ' name='keyName' label={'keyName'} required disable={!!item} />
 
@@ -61,6 +93,11 @@ const SubCategoriesConfig = ({ item }: { item: any }) => {
               </div>
             )
           })}
+        </div>
+        <CheckBoxForm name='isShow' label={translate('textPopular.showScreen')} />
+
+        <div className='flex flex-1 w-full'>
+          <ButtonForm titleSubmit={translate(item ? 'common.update' : 'common.create')} loading={loading} />
         </div>
       </MyForm>
     )

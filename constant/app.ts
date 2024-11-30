@@ -32,12 +32,8 @@ export enum COOKIE_KEY {
 }
 
 export enum COOKIE_EXPIRED {
-  'ExpiredAuth' = Number(
-    new Date().setHours(new Date().getHours() + 2).toFixed()
-  ) - 20000,
-  'ExpiredAuthRefresh' = Number(
-    new Date().setDate(new Date().getDate() + 15).toFixed()
-  ) - 20000,
+  'ExpiredAuth' = Number(new Date().setHours(new Date().getHours() + 2).toFixed()) - 20000,
+  'ExpiredAuthRefresh' = Number(new Date().setDate(new Date().getDate() + 15).toFixed()) - 20000,
 }
 
 export enum LOCAL_STORAGE_KEY {
@@ -56,6 +52,7 @@ export enum FilterAPI {
   Fashion = 'fashion',
   Electronic = 'electronic',
   Category = 'category',
+  SubCategory = 'subCategories',
 }
 
 export const PAGE_SIZE_LIMIT = 12
@@ -84,9 +81,7 @@ export enum FILTER_BILL {
   'Canceled' = 'canceled',
 }
 
-export const DATE_START_FILTER = dayjs(
-  new Date(Date.now()).setDate(new Date().getDate() - 1)
-)
+export const DATE_START_FILTER = dayjs(new Date(Date.now()).setDate(new Date().getDate() - 1))
 
 export const COLOR = {
   blue1: '#0056ff',
@@ -106,4 +101,20 @@ export enum PATH_IMG {
   Products = 'products',
   ContactMe = 'contact-me',
   Category = 'category',
+}
+
+export enum MODE_SELECT {
+  multiple = 'multiple',
+  tags = 'tags',
+}
+
+export const DEFAULT_SIZE = {
+  Shoes: {
+    minSize: 29,
+    maxSize: 45,
+  },
+  Price: {
+    min: 100000,
+    max: 5000000,
+  },
 }

@@ -1,6 +1,6 @@
 import MyForm from '@/components/Form/MyForm'
 import { detectImg } from '@/utils/functions'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import CategoryForm from '@/components/CategoryForm'
 import useLanguage from '@/hook/useLanguage'
@@ -20,17 +20,39 @@ import AdminApi from '@/services/adminApi'
 import MyBlog from '@/components/MyBlog'
 import { PATH_IMG } from '@/constant/mongoDB'
 import SelectForm from '@/components/Form/SelectForm'
+import useSubCategories from '@/hook/tank-query/Admin/useSubCategories'
+import { MODE_SELECT } from '@/constant/app'
+import { PropsSelectItem } from '@/components/MySelect'
 
 const ProductConfig = ({ item }: { item: any }) => {
-  const { translate } = useLanguage()
+  const { translate, lang } = useLanguage()
   const { typeFile } = useTypeFile({ typeAndroid: '.png,.jpg,.jpeg' })
   const { checkIsNumber } = useCheckForm()
   const { refreshQuery } = useRefreshQuery()
   const { closeModalDrawer } = useModalDrawer()
+  const { data: dataSubCategories, isLoading: loadingSubCategories } = useSubCategories()
 
   const [formData, setFormData] = useState<{ [key: string]: any } | null>(null)
   const [loading, setLoading] = useState(false)
 
+  const optionSubCategories = useMemo(() => {
+    if (Array.isArray(dataSubCategories?.data)) {
+      const listTemp = dataSubCategories?.data
+        .filter((e) => e.keyName.startsWith('shoes'))
+        .map((e) => {
+          return {
+            value: e.keyName,
+            label: e?.lang?.[lang],
+            name: e.keyName,
+          }
+        })
+      return listTemp
+    }
+    return []
+  }, [dataSubCategories])
+  console.log('====================================')
+  console.log({ item })
+  console.log('====================================')
   useEffect(() => {
     const initData = {
       cost: item?.cost || 0,
@@ -52,7 +74,7 @@ const ProductConfig = ({ item }: { item: any }) => {
       typeProduct: item?.typeProduct || 'water',
       weight: item?.weight || '',
       category: item?.category || 'water',
-      subCategories: ['male'],
+      subCategories: item?.subCategories || [],
       desSeo: item?.desSeo || '',
       titleSeo: item?.titleSeo || '',
     }
@@ -91,6 +113,7 @@ const ProductConfig = ({ item }: { item: any }) => {
       })
       dataEdit.titleSeo = formData?.titleSeo
       dataEdit.desSeo = formData?.desSeo
+      dataEdit.subCategories = formData?.subCategories
 
       if (Object.keys(dataEdit).length > 0) {
         dataEdit.imageDelete = getImgDelete()
@@ -111,19 +134,33 @@ const ProductConfig = ({ item }: { item: any }) => {
       refreshQuery(QUERY_KEY.GetListProductAdmin)
       closeModalDrawer()
     } else {
-      showNotificationError(translate('errors.create'))
+      showNotificationError(translate(item ? 'error.update' : 'errors.create'))
     }
     setLoading(false)
   }
+  console.log({ formData })
 
-  return formData ? (
-    <MyForm onValuesChange={(_, value) => setFormData({ ...formData, ...value })} formData={formData} onFinish={handleSubmit} className='!overflow-auto gap-2 md:max-h-[85vh]'>
+  return !loadingSubCategories && formData ? (
+    <MyForm
+      onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
+      formData={formData}
+      onFinish={handleSubmit}
+      className='!overflow-auto gap-2 md:max-h-[85vh]'
+    >
       <div className='flex flex-col gap-4 w-full flex-1 overflow-y-auto '>
         <div className='flex gap-4 w-full'>
           <InputForm classFromItem='w-full' name='name' label={translate('header.name')} required />
           <CategoryForm label={translate('menuProduct.category')} name='category' />
         </div>
-        <SelectForm options={[]} />
+        <SelectForm
+          required
+          name='subCategories'
+          label={translate('admin.subCategories')}
+          showSearch
+          optionFilterProp='label'
+          options={optionSubCategories}
+          mode={MODE_SELECT.multiple}
+        />
 
         <div className='flex gap-4 w-full '>
           <InputForm classFromItem='w-full' name='keyName' label={translate('header.name')} required />
@@ -137,19 +174,51 @@ const ProductConfig = ({ item }: { item: any }) => {
         </div>
 
         <div className='flex gap-4 w-full'>
-          <InputForm classFromItem='w-full' name='cost' label={translate('textPopular.cost')} required typeBtn='number' validator={checkIsNumber} />
+          <InputForm
+            classFromItem='w-full'
+            name='cost'
+            label={translate('textPopular.cost')}
+            required
+            typeBtn='number'
+            validator={checkIsNumber}
+          />
 
-          <InputForm classFromItem='w-full' name='price' label={translate('productDetail.price')} required typeBtn='number' validator={checkIsNumber} />
+          <InputForm
+            classFromItem='w-full'
+            name='price'
+            label={translate('productDetail.price')}
+            required
+            typeBtn='number'
+            validator={checkIsNumber}
+          />
         </div>
         <div className='flex gap-4 w-full'>
-          <InputForm classFromItem='w-full' name='disCount' label={translate('textPopular.disCount')} required typeBtn='number' validator={checkIsNumber} />
+          <InputForm
+            classFromItem='w-full'
+            name='disCount'
+            label={translate('textPopular.disCount')}
+            required
+            typeBtn='number'
+            validator={checkIsNumber}
+          />
 
-          <InputForm classFromItem='w-full' name='weight' label={translate('productDetail.weight')} required disable={!!item} />
+          <InputForm
+            classFromItem='w-full'
+            name='weight'
+            label={translate('productDetail.weight')}
+            required
+            disable={!!item}
+          />
         </div>
         <div className='flex gap-3 justify-between  mt-2'>
           <div className='flex flex-col  w-[150px]   justify-between items-center'>
             <div className='w-[100px]'>
-              <UploadImage maxSizeOutputKB={500} typeFile={typeFile} fullQuality handleUpload={(e) => setFormData({ ...formData, imageMain: e })}>
+              <UploadImage
+                maxSizeOutputKB={500}
+                typeFile={typeFile}
+                fullQuality
+                handleUpload={(e) => setFormData({ ...formData, imageMain: e })}
+              >
                 <div className='flex gap-2'>
                   <CameraOutlined />
                   <span>Hình chính</span>
@@ -192,7 +261,10 @@ const ProductConfig = ({ item }: { item: any }) => {
                     <div className='w-[100px]' key={detectImg(e?.base64 || e)}>
                       <div className='w-[100px] relative'>
                         <Image className='w-[100px]' alt={`img-moew-${e?.name}`} src={detectImg(e?.base64 || e)} />
-                        <CloseCircleOutlined onClick={() => handleDeleteMoreImg(index)} className='absolute right-0 top-0 text-[18px] cursor-pointer ' />
+                        <CloseCircleOutlined
+                          onClick={() => handleDeleteMoreImg(index)}
+                          className='absolute right-0 top-0 text-[18px] cursor-pointer '
+                        />
                       </div>
                     </div>
                   )
@@ -207,7 +279,11 @@ const ProductConfig = ({ item }: { item: any }) => {
         <InputForm classFromItem='w-full' name='des' label='des' required typeBtn='area' />
         <div className='w-full md:mt-16 min-h-[300px]'>
           <div className='font-bold'>Info detail : </div>
-          <MyBlog pathFile={PATH_IMG.Products} value={formData?.des2} setValue={(e) => setFormData({ ...formData, des2: e })} />
+          <MyBlog
+            pathFile={PATH_IMG.Products}
+            value={formData?.des2}
+            setValue={(e) => setFormData({ ...formData, des2: e })}
+          />
         </div>
       </div>
 

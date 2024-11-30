@@ -1,6 +1,6 @@
 import { ModalContext } from '@/components/MyModal'
 import { ConfigModal } from '@/components/MyModal/type'
-import { useContext, useCallback } from 'react'
+import { useContext } from 'react'
 import useMedia from './useMedia'
 
 import React from 'react'
@@ -20,42 +20,39 @@ const useModalDrawer = () => {
   const { closeDrawer, openDrawer, config: configDrawer } = useContext(DrawerContext)
   const { isMobile } = useMedia()
 
-  const openModalDrawer = useCallback(
-    (config: UseModalType) => {
-      const configDrawerBase: ConfigMyDrawerType = {
-        content: config.content,
-        placement: 'bottom',
-        height: 'auto',
-        ...config.configDrawer,
-        title: config.configDrawer?.title || config?.title,
-      }
+  const openModalDrawer = (config: UseModalType) => {
+    const configDrawerBase: ConfigMyDrawerType = {
+      content: config.content,
+      placement: 'bottom',
+      height: 'auto',
+      ...config.configDrawer,
+      title: config.configDrawer?.title || config?.title,
+    }
 
-      if (config.onlyDrawer) {
+    if (config.onlyDrawer) {
+      openDrawer(configDrawerBase)
+    } else {
+      if (isMobile && config.useDrawer) {
         openDrawer(configDrawerBase)
       } else {
-        if (isMobile && config.useDrawer) {
-          openDrawer(configDrawerBase)
-        } else {
-          open({
-            ...config.configModal,
-            title: config.configModal?.title || config.title,
-            content: config.content,
-            showBtnClose: config?.configModal?.showBtnClose === false ? false : config?.configModal?.overClickClose,
-            open: true,
-          })
-        }
+        open({
+          ...config.configModal,
+          title: config.configModal?.title || config.title,
+          content: config.content,
+          showBtnClose: config?.configModal?.showBtnClose === false ? false : config?.configModal?.overClickClose,
+          open: true,
+        })
       }
-    },
-    [open, isMobile, openDrawer],
-  )
+    }
+  }
 
-  const closeModalDrawer = useCallback(() => {
+  const closeModalDrawer = () => {
     if (configDrawer.open) {
       closeDrawer()
     } else {
       closeModal()
     }
-  }, [closeModal, closeDrawer, configDrawer])
+  }
 
   return {
     openModalDrawer,

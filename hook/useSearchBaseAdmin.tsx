@@ -142,7 +142,12 @@ const useSearchBaseAdmin = (param?: Props) => {
     return (
       <div className='flex  flex-col gap-3 '>
         {formData && isClient && (
-          <MyForm onValuesChange={(_, value) => setFormData({ ...formData, ...value })} formData={formData} onFinish={handleSubmit} className='w-full'>
+          <MyForm
+            onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
+            formData={formData}
+            onFinish={handleSubmit}
+            className='w-full'
+          >
             <div className='flex justify-between flex-wrap'>
               {config.keyName && (
                 <div className='md:w-[48%] w-full'>
@@ -174,12 +179,20 @@ const useSearchBaseAdmin = (param?: Props) => {
 
               {config.dateStart && (
                 <div className='md:w-[48%] w-full'>
-                  <MyDatePickerForm label={translate('textPopular.dateStart')} name='dateStart' defaultValue={formData.dateStart} />
+                  <MyDatePickerForm
+                    label={translate('textPopular.dateStart')}
+                    name='dateStart'
+                    defaultValue={formData.dateStart}
+                  />
                 </div>
               )}
               {config.dateEnd && (
                 <div className='md:w-[48%] w-full'>
-                  <MyDatePickerForm label={translate('textPopular.dateEnd')} name='dateEnd' defaultValue={formData.dateEnd} />
+                  <MyDatePickerForm
+                    label={translate('textPopular.dateEnd')}
+                    name='dateEnd'
+                    defaultValue={formData.dateEnd}
+                  />
                 </div>
               )}
             </div>

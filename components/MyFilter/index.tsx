@@ -10,9 +10,18 @@ type MyFilterType = {
   classNameHeader?: string
   classNameContent?: string
   disableShowClear?: boolean
+  callbackCleanAll?: () => void
 }
 
-const MyFilter = ({ titleHeader = '', children = null, className = '', classNameHeader = '', disableShowClear = false, classNameContent = '' }: MyFilterType) => {
+const MyFilter = ({
+  titleHeader = '',
+  children = null,
+  className = '',
+  classNameHeader = '',
+  disableShowClear = false,
+  classNameContent = '',
+  callbackCleanAll = () => {},
+}: MyFilterType) => {
   const { translate } = useLanguage()
   const { clearAll, queries } = useQuerySearch()
 
@@ -33,15 +42,24 @@ const MyFilter = ({ titleHeader = '', children = null, className = '', className
     }
   }, [queries])
 
+  const handleCleanAll = () => {
+    callbackCleanAll()
+    clearAll()
+  }
+
   return (
-    <div className={`bg-white border-zinc-500 border-[1px] w-full  flex flex-col md:rounded-xl rounded-lg overflow-hidden ${className}`}>
-      <div className={`border-b-[1px] border-zinc-500 w-full flex justify-between items-center  p-3 bg-green-200  ${classNameHeader}`}>
+    <div
+      className={`bg-white border-zinc-500 border-[1px] w-full  flex flex-col md:rounded-xl rounded-lg overflow-hidden ${className}`}
+    >
+      <div
+        className={`border-b-[1px] border-zinc-500 w-full flex justify-between items-center  p-3 bg-green-200  ${classNameHeader}`}
+      >
         <div className='flex items-center gap-2'>
           <AlignLeftOutlined style={{ fontSize: 20 }} />
           <div className='text-medium '>{titleHeader || translate('menuProduct.category')}</div>
         </div>
         {!disableShowClear && (
-          <div onClick={clearAll} className='hover:underline hover:font-medium cursor-pointer'>
+          <div onClick={handleCleanAll} className='hover:underline hover:font-medium cursor-pointer'>
             {`${translate('common.clearAll')} (${getNumberQuery})`}
           </div>
         )}

@@ -54,6 +54,9 @@ const AntdProvider = ({ children }: { children: React.ReactNode }) => {
           Modal: {
             titleFontSize: 18,
           },
+          Slider: {
+            trackBg: '#2ed569',
+          },
         },
         hashed: false,
       }}
