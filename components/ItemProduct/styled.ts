@@ -20,6 +20,9 @@ export const TextPrice = styled.span`
   display: flex;
   font-weight: 600;
   justify-content: space-between;
+  @media screen and (max-width: 1200px) {
+    font-size: 20px;
+  }
   @media screen and (max-width: 768px) {
     font-size: 16px;
   }

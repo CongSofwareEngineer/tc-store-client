@@ -1,17 +1,30 @@
 import React from 'react'
-import Media from 'react-media'
 import { ItemDetailType } from './type'
+import { TYPE_PRODUCT_EX } from '@/constant/mongoDB'
+import dynamic from 'next/dynamic'
 import { Rate } from 'antd'
+import useMedia from '@/hook/useMedia'
 import useLanguage from '@/hook/useLanguage'
 import { numberWithCommas } from '@/utils/functions'
 
 const InfoItemDetail = ({ data }: { data: ItemDetailType }) => {
+  const { isMobile } = useMedia()
   const { translate } = useLanguage()
+
+  const getTypeProduct = () => {
+    if (data?.category === 'shoes') {
+      return TYPE_PRODUCT_EX.shoes
+    }
+    // if (data?.category === 'nests') {
+    //   return TYPE_PRODUCT_EX.nests
+    // }
+    return TYPE_PRODUCT_EX.normal
+  }
 
   const renderItemDes = (title: string, des?: any) => {
     return des ? (
-      <div className="flex md:gap-3 gap-[10px]">
-        <span className="font-bold whitespace-nowrap">{`${title} :`}</span>
+      <div className='flex md:gap-3 gap-[10px]'>
+        <span className='font-bold whitespace-nowrap'>{`${title} :`}</span>
         <span>{typeof des === 'number' ? numberWithCommas(des) : des}</span>
       </div>
     ) : (
@@ -21,56 +34,35 @@ const InfoItemDetail = ({ data }: { data: ItemDetailType }) => {
 
   const renderDesktop = () => {
     return (
-      <div className="w-full flex flex-col gap-2  ">
-        <div className="flex gap-1 items-center">
+      <div className='w-full flex flex-col gap-2  '>
+        <div className='flex gap-1 items-center'>
           <Rate disabled defaultValue={4.5} style={{ fontSize: 18 }} />
         </div>
         {renderItemDes(translate('textPopular.description'), data.des)}
         {renderItemDes(translate('productDetail.sold'), Number(data.sold))}
-        {renderItemDes(translate('productDetail.weight'), data.weight)}
-        {renderItemDes(
-          translate('productDetail.totalNumber'),
-          Number(data.amount)
-        )}
-        {renderItemDes(
-          translate('textPopular.freeShip'),
-          'Free ship trong 20 KM'
-        )}
+        {getTypeProduct() === TYPE_PRODUCT_EX.normal && renderItemDes(translate('productDetail.weight'), data.weight)}
+        {renderItemDes(translate('productDetail.totalNumber'), Number(data.amount))}
+        {renderItemDes(translate('textPopular.freeShip'), 'Free ship trong 20 KM')}
       </div>
     )
   }
 
   const renderMobile = () => {
     return (
-      <div className="w-full flex flex-col gap-2 ">
-        <div className="flex gap-1 items-center">
+      <div className='w-full flex flex-col gap-2 '>
+        <div className='flex gap-1 items-center'>
           <Rate disabled defaultValue={4.5} style={{ fontSize: 18 }} />
         </div>
         {renderItemDes(translate('textPopular.description'), data.des)}
         {renderItemDes(translate('productDetail.sold'), Number(data.sold))}
-        {renderItemDes(translate('productDetail.weight'), data.weight)}
-        {renderItemDes(
-          translate('productDetail.totalNumber'),
-          Number(data.amount)
-        )}
-        {renderItemDes(
-          translate('textPopular.freeShip'),
-          'Free ship trong 20 KM'
-        )}
+        {getTypeProduct() === TYPE_PRODUCT_EX.normal && renderItemDes(translate('productDetail.weight'), data.weight)}
+        {renderItemDes(translate('productDetail.totalNumber'), Number(data.amount))}
+        {renderItemDes(translate('textPopular.freeShip'), 'Free ship trong 20 KM')}
       </div>
     )
   }
 
-  return (
-    <Media query="(min-width: 768px)">
-      {(match) => {
-        if (match) {
-          return renderDesktop()
-        }
-        return renderMobile()
-      }}
-    </Media>
-  )
+  return isMobile ? renderMobile() : renderDesktop()
 }
 
 export default InfoItemDetail

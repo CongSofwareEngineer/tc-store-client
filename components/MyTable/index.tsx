@@ -19,6 +19,8 @@ type Props = {
   hasMoreData?: boolean
   isFetchingNextPage?: boolean
   loadMore?: () => any
+  classCard?: string
+  className?: string
 }
 const MyTable = ({
   data = [],
@@ -29,19 +31,12 @@ const MyTable = ({
   hasMoreData = false,
   isFetchingNextPage = false,
   loadMore,
+  classCard = '',
+  className = '',
 }: Props) => {
   return (
-    <CardCustom
-      extra={extra}
-      title={`Total : ${total || 0}`}
-      className="w-full overflow-x-auto  "
-    >
-      <Table
-        loading={loading}
-        columns={columns}
-        dataSource={data}
-        pagination={false}
-      />
+    <CardCustom extra={extra} title={`Total : ${total || 0}`} className={`w-full overflow-x-auto  ${classCard}`}>
+      <Table loading={loading} columns={columns} dataSource={data} pagination={false} className={className} />
       <MyLoadMore
         hasLoadMore={hasMoreData}
         isFetchingNextPage={isFetchingNextPage}

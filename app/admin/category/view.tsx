@@ -157,11 +157,22 @@ const CategoryAdminScreen = () => {
       },
     ]
 
-    return <MyTable columns={columns} loading={isLoading} data={data?.data || []} limit={PAGE_SIZE_LIMIT} total={20} extra={<Button onClick={() => handleUpdate(null)}>{translate('common.addNew')}</Button>} />
+    return (
+      <div>
+        <MyTable
+          columns={columns}
+          loading={isLoading}
+          data={data?.data || []}
+          limit={PAGE_SIZE_LIMIT}
+          total={20}
+          extra={<Button onClick={() => handleUpdate(null)}>{translate('common.addNew')}</Button>}
+        />
+      </div>
+    )
   }
 
   return (
-    <div className='flex flex-col w-full h-full gap-2'>
+    <div className='flex flex-col w-full gap-2 overflow-y-auto'>
       {renderContent()}
       {renderTable()}
     </div>

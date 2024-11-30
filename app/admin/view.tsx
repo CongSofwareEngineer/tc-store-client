@@ -175,24 +175,26 @@ const RevenueScreen: NextPage = () => {
   }
 
   return (
-    <div className='flex flex-col gap-3 w-full'>
+    <div className='flex flex-col gap-3 w-full overflow-y-auto '>
       {renderContent()}
       <GraphRevenue data={data} />
-      <MyTable
-        loadMore={loadMore}
-        hasMoreData={hasNextPage}
-        isFetchingNextPage={isFetchingNextPage}
-        columns={getColumns()}
-        loading={isLoading}
-        data={data || []}
-        limit={PAGE_SIZE_LIMIT}
-        total={20}
-        // extra={
-        //   <Button onClick={() => handleUpdate()}>
-        //     {translate('common.addNew')}
-        //   </Button>
-        // }
-      />
+      <div>
+        <MyTable
+          loadMore={loadMore}
+          hasMoreData={hasNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+          columns={getColumns()}
+          loading={isLoading}
+          data={data || []}
+          limit={PAGE_SIZE_LIMIT}
+          total={20}
+          // extra={
+          //   <Button onClick={() => handleUpdate()}>
+          //     {translate('common.addNew')}
+          //   </Button>
+          // }
+        />
+      </div>
     </div>
   )
 }

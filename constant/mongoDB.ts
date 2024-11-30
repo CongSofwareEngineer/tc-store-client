@@ -38,6 +38,13 @@ export type BodyAddBill = {
   listNewSoldProduct?: { [key: string]: any }[]
 }
 
+export const TYPE_PRODUCT_EX = {
+  shoes: 'shoes',
+  nests: 'nests',
+  laptop: 'laptop',
+  normal: 'normal',
+}
+
 const FILTER_BASE_DB = {
   page: 'page',
   limit: 'limit',

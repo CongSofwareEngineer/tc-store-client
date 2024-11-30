@@ -38,7 +38,7 @@ const ProductConfig = ({ item }: { item: any }) => {
   const optionSubCategories = useMemo(() => {
     if (Array.isArray(dataSubCategories?.data)) {
       const listTemp = dataSubCategories?.data
-        .filter((e) => e.keyName.startsWith('shoes'))
+        .filter((e) => e.keyName.startsWith(formData?.category))
         .map((e) => {
           return {
             value: e.keyName,
@@ -49,10 +49,8 @@ const ProductConfig = ({ item }: { item: any }) => {
       return listTemp
     }
     return []
-  }, [dataSubCategories])
-  console.log('====================================')
-  console.log({ item })
-  console.log('====================================')
+  }, [dataSubCategories, formData?.category])
+
   useEffect(() => {
     const initData = {
       cost: item?.cost || 0,
