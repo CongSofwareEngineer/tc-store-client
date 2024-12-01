@@ -30,7 +30,7 @@ const getAllProduct = async ({
 
 const useShoesShop = (query: any, pageSize = PAGE_SIZE_LIMIT) => {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: [QUERY_KEY.GetAllProduct, pageSize, query],
+    queryKey: [QUERY_KEY.GetShoesShop, pageSize, query],
     initialPageParam: 1,
     queryFn: getAllProduct,
     getNextPageParam: (lastPage: { data: any; page: number }) => {
