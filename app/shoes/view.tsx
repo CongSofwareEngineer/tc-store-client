@@ -27,7 +27,15 @@ const ShoesScreen = () => {
         {data.length > 0 && (
           <div className='mt-2  w-full grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3   2xl:grid-cols-4 gap-3 md:gap-6'>
             {data.map((item: any) => {
-              return <ItemProduct showFeedback showSold key={item.id} item={item} href={`/shop/${item.keyName}`} />
+              return (
+                <ItemProduct
+                  showFeedback
+                  showSold
+                  key={`shoes-${item.id}`}
+                  item={item}
+                  href={`/shop/${item.keyName}`}
+                />
+              )
             })}
           </div>
         )}

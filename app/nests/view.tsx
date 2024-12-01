@@ -25,10 +25,17 @@ const PageNestsScreen = () => {
       )}
 
       {data?.length === 0 && !isLoading && (
-        <div className='w-full grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 md:gap-3 gap-2'>{data?.length === 0 && <div>{translate('warning.noData')}</div>}</div>
+        <div className='w-full grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 md:gap-3 gap-2'>
+          {data?.length === 0 && <div>{translate('warning.noData')}</div>}
+        </div>
       )}
 
-      <MyLoadMore callback={loadMore} hasLoadMore={hasNextPage} isFetchingNextPage={isFetchingNextPage} loading={isLoading} />
+      <MyLoadMore
+        callback={loadMore}
+        hasLoadMore={hasNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+        loading={isLoading}
+      />
     </div>
   )
 }

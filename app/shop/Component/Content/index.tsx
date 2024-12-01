@@ -15,7 +15,7 @@ const Content = () => {
       {data.length > 0 && (
         <div className='mt-2  w-full grid grid-cols-2 sm:grid-cols-3  lg:grid-cols-4   gap-3 xl:gap-6 md:gap-4'>
           {data.map((item: any) => {
-            return <ItemProduct showFeedback showSold key={item.id} item={item} href={`/shop/${item.keyName}`} />
+            return <ItemProduct showFeedback showSold key={`shop-${item.id}`} item={item} href={`/shop/${item.keyName}`} />
           })}
         </div>
       )}
