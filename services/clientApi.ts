@@ -23,6 +23,14 @@ const ClientApi = {
       isAuth: false,
     })
   },
+  register: async (body: any) => {
+    return fetchData({
+      url: `user/register`,
+      method: REQUEST_TYPE.POST,
+      body,
+      isAuth: false,
+    })
+  },
   updateAvatar: async (id: string | undefined, file: any) => {
     const publicId = file.public_id
     delete file.public_id

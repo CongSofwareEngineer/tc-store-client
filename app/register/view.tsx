@@ -4,14 +4,13 @@ import InputForm from '@/components/Form/InputForm'
 import MyForm from '@/components/Form/MyForm'
 import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
-import { REQUEST_TYPE } from '@/constant/app'
 import { BodyUserData } from '@/constant/firebase'
 import useAos from '@/hook/useAos'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import useUserData from '@/hook/useUserData'
-import ServerApi from '@/services/serverApi'
+import ClientApi from '@/services/clientApi'
 import { encryptData } from '@/utils/crypto'
 import { showNotificationError } from '@/utils/notification'
 import { Checkbox } from 'antd'
@@ -64,14 +63,7 @@ const RegisterScreen = () => {
         address: '',
       }
 
-      const newData = await ServerApi.requestBase({
-        url: '/user/register',
-        body: bodyUser,
-        encode: true,
-        method: REQUEST_TYPE.POST,
-        checkAuth: false,
-      })
-      console.log({ newData })
+      const newData = await ClientApi.register(bodyUser)
 
       if (!newData?.data) {
         showNotificationError(translate('register.exitSDT'))
@@ -87,15 +79,29 @@ const RegisterScreen = () => {
       <div className='w-full flex justify-between h-full items-center'>
         {!isMobile && (
           <div data-aos='fade-right' className='flex-1 flex flex-col justify-center items-center max-w-[450px]'>
-            <MyImage alt={'tc-store-logo-register'} className='cursor-pointer max-w-0[' onClick={() => router.push('/')} src={images.logoStore} />
+            <MyImage
+              alt={'tc-store-logo-register'}
+              className='cursor-pointer max-w-0['
+              onClick={() => router.push('/')}
+              src={images.logoStore}
+            />
           </div>
         )}
 
         <div data-aos='fade-left' className='flex justify-start items-start md:w-fit w-full'>
           <div className='m-auto flex flex-col md:w-[450px] w-full shadow-md p-8 rounded-[16px] justify-center align-middle bg-white'>
             <h1 className='mb- uppercase font-bold text-center text-[16px]'>{translate('register.title')}</h1>
-            <MyForm onValuesChange={(_, value) => setFormData({ ...formData, ...value })} formData={formData} onFinish={handleSubmit}>
-              <InputForm name='sdt' required validator={checkNumberPhone} label={translate('productDetail.modalBuy.enterNumberPhone')} />
+            <MyForm
+              onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
+              formData={formData}
+              onFinish={handleSubmit}
+            >
+              <InputForm
+                name='sdt'
+                required
+                validator={checkNumberPhone}
+                label={translate('productDetail.modalBuy.enterNumberPhone')}
+              />
 
               <InputForm name='name' required label={translate('productDetail.modalBuy.enterName')} />
 
@@ -124,7 +130,13 @@ const RegisterScreen = () => {
                 />
               </div>
 
-              <ButtonForm loading={loadingRegister} classNameItem='w-full' className='w-full' disableClose titleSubmit={translate('header.register')} />
+              <ButtonForm
+                loading={loadingRegister}
+                classNameItem='w-full'
+                className='w-full'
+                disableClose
+                titleSubmit={translate('header.register')}
+              />
             </MyForm>
           </div>
         </div>
