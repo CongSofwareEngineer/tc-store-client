@@ -23,6 +23,7 @@ import SelectForm from '@/components/Form/SelectForm'
 import useSubCategories from '@/hook/tank-query/Admin/useSubCategories'
 import { MODE_SELECT } from '@/constant/app'
 import { PropsSelectItem } from '@/components/MySelect'
+import AttributeAdmin from '@/components/AttributeAdmin/inde'
 
 const ProductConfig = ({ item }: { item: any }) => {
   const { translate, lang } = useLanguage()
@@ -75,6 +76,7 @@ const ProductConfig = ({ item }: { item: any }) => {
       subCategories: item?.subCategories || [],
       desSeo: item?.desSeo || '',
       titleSeo: item?.titleSeo || '',
+      attributes: item?.attributes || {},
     }
     setFormData(initData)
   }, [item])
@@ -273,6 +275,7 @@ const ProductConfig = ({ item }: { item: any }) => {
 
         <InputForm classFromItem='w-full' name='desSeo' label='desSeo' required typeBtn='area' />
         <div className='w-ful mt-10' />
+        <AttributeAdmin data={formData?.attributes} onChange={(e) => setFormData({ ...formData, attributes: e })} />
 
         <InputForm classFromItem='w-full' name='des' label='des' required typeBtn='area' />
         <div className='w-full md:mt-16 min-h-[300px]'>

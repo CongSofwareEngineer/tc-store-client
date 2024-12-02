@@ -7,13 +7,14 @@ import useMedia from '@/hook/useMedia'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useQuerySearch from '@/hook/useQuerySearch'
 import useSearchBaseAdmin from '@/hook/useSearchBaseAdmin'
-import { detectImg, numberWithCommas } from '@/utils/functions'
-import { Button } from 'antd'
+import { detectImg, ellipsisText, numberWithCommas } from '@/utils/functions'
+import { Button, TableColumnType } from 'antd'
 import React from 'react'
 import ProductConfig from './Component/ModalConfig'
 import useLanguage from '@/hook/useLanguage'
 import Link from 'next/link'
 import useListProductAdmin from '@/hook/tank-query/Admin/useListProductAdmin'
+import { ColumnsType } from 'antd/es/table'
 
 const ProductAdminScreen = () => {
   const { renderContent } = useSearchBaseAdmin({
@@ -55,46 +56,58 @@ const ProductAdminScreen = () => {
     )
   }
 
-  const renderTable = () => {
-    const columns = [
-      {
-        title: '_id',
-        key: '_id',
-        dataIndex: '_id',
-        render: (_: any, record: any) => {
-          return (
-            <div className='flex flex-col gap-2'>
-              {isMobile && (
-                <div className='aspect-square md:w-[200px] w-[100px] overflow-hidden m-auto'>
-                  <ImageAdmin src={detectImg(record.imageMain)} />
-                </div>
-              )}
-
-              {isMobile && (
-                <Link className='text-medium font-bold' href={`/shop/${record.keyName}`}>
-                  <p className='text-medium font-bold'>{record.name}</p>
-                </Link>
-              )}
-              <div className='flex gap-4 w-full'>
-                {!isMobile && (
+  const getColumns = () => {
+    if (isMobile) {
+      return [
+        {
+          title: '_id',
+          key: '_id',
+          dataIndex: '_id',
+          render: (_: any, record: any) => {
+            return (
+              <div className='flex flex-col gap-2'>
+                {isMobile && (
                   <div className='aspect-square md:w-[200px] w-[100px] overflow-hidden m-auto'>
                     <ImageAdmin src={detectImg(record.imageMain)} />
                   </div>
                 )}
-                <div className='flex flex-1 flex-col'>
+
+                {isMobile && (
+                  <Link className='text-medium font-bold' href={`/shop/${record.keyName}`}>
+                    <p className='text-medium font-bold'>{record.name}</p>
+                  </Link>
+                )}
+                <div className='flex gap-4 w-full'>
                   {!isMobile && (
-                    <Link className='text-medium font-bold' href={`/shop/${record.keyName}`}>
-                      <p className='text-medium font-bold'>{record.name}</p>
-                    </Link>
+                    <div className='aspect-square md:w-[200px] w-[100px] overflow-hidden m-auto'>
+                      <ImageAdmin src={detectImg(record.imageMain)} />
+                    </div>
                   )}
-                  {renderItem(translate('menuProduct.category'), <TextCopy value={record.category} />)}
-                  {renderItem(translate('productDetail.price'), numberWithCommas(record.price))}
-                  {renderItem(translate('textPopular.cost'), numberWithCommas(record.cost))}
-                  {renderItem(translate('textPopular.amount'), numberWithCommas(record.amount))}
-                  {renderItem(translate('productDetail.sold'), numberWithCommas(record.sold))}
+                  <div className='flex flex-1 flex-col'>
+                    {!isMobile && (
+                      <Link className='text-medium font-bold' href={`/shop/${record.keyName}`}>
+                        <p className='text-medium font-bold'>{record.name}</p>
+                      </Link>
+                    )}
+                    {renderItem(translate('menuProduct.category'), <TextCopy value={record.category} />)}
+                    {renderItem(translate('productDetail.price'), numberWithCommas(record.price))}
+                    {renderItem(translate('textPopular.cost'), numberWithCommas(record.cost))}
+                    {renderItem(translate('textPopular.amount'), numberWithCommas(record.amount))}
+                    {renderItem(translate('productDetail.sold'), numberWithCommas(record.sold))}
+                  </div>
+                  {!isMobile && (
+                    <div className='md:w-[100px] w-full flex flex-col justify-center items-center gap-4'>
+                      <Button onClick={() => handleUpdate(record)} className='w-full'>
+                        {translate('common.update')}
+                      </Button>
+                      <Button className='w-full' type='primary'>
+                        {translate('common.delete')}
+                      </Button>
+                    </div>
+                  )}
                 </div>
-                {!isMobile && (
-                  <div className='md:w-[100px] w-full flex flex-col justify-center items-center gap-4'>
+                {isMobile && (
+                  <div className='w-full flex  justify-center items-center gap-4'>
                     <Button onClick={() => handleUpdate(record)} className='w-full'>
                       {translate('common.update')}
                     </Button>
@@ -104,28 +117,92 @@ const ProductAdminScreen = () => {
                   </div>
                 )}
               </div>
-              {isMobile && (
-                <div className='w-full flex  justify-center items-center gap-4'>
-                  <Button onClick={() => handleUpdate(record)} className='w-full'>
-                    {translate('common.update')}
-                  </Button>
-                  <Button className='w-full' type='primary'>
-                    {translate('common.delete')}
-                  </Button>
-                </div>
-              )}
-            </div>
-          )
+            )
+          },
         },
+      ]
+    }
+    const columns: ColumnsType = [
+      // {
+      //   title: '_id',
+      //   key: '_id',
+      //   dataIndex: '_id',
+      //   render: (id: string) => <TextCopy textView={ellipsisText(id, 3, 4)} value='id' />,
+      // },
+      {
+        title: 'imageMain',
+        key: 'imageMain',
+        dataIndex: 'imageMain',
+        fixed: 'left',
+        render: (src?: string) => <ImageAdmin src={src || ''} className='!w-[100px] !h-[100px] overflow-hidden' />,
+      },
+      {
+        title: translate('textPopular.nameProduct'),
+        key: 'name',
+        dataIndex: 'name',
+        render: (name: string) => <TextCopy textView={ellipsisText(name)} value='id' />,
+      },
+
+      {
+        title: translate('textPopular.amount'),
+        key: 'amount',
+        dataIndex: 'amount',
+        render: (amount: string) => <span>{numberWithCommas(amount)}</span>,
+      },
+      {
+        title: translate('productDetail.price'),
+        key: 'price',
+        dataIndex: 'price',
+        render: (price: string) => <span>{numberWithCommas(price)}</span>,
+      },
+
+      {
+        title: 'Gía nhập',
+        key: 'cost',
+        dataIndex: 'cost',
+        render: (cost: string) => <span>{numberWithCommas(cost)}</span>,
+      },
+      {
+        title: translate('productDetail.sold'),
+        key: 'sold',
+        dataIndex: 'sold',
+        render: (sold: string) => <span>{numberWithCommas(sold)}</span>,
+      },
+      {
+        title: translate('textPopular.disCount'),
+        key: 'disCount',
+        dataIndex: 'disCount',
+        render: (disCount: string) => <span>{numberWithCommas(disCount)}</span>,
+      },
+      {
+        title: '',
+        key: 'disCount',
+        dataIndex: 'disCount',
+        fixed: 'right',
+        render: (_: any, record: any) => (
+          <div className='w-full flex flex-col justify-center items-center gap-4'>
+            <Button onClick={() => handleUpdate(record)} className='w-full'>
+              {translate('common.update')}
+            </Button>
+            <Button className='w-full' type='primary'>
+              {translate('common.delete')}
+            </Button>
+          </div>
+        ),
       },
     ]
+    return columns
+  }
+
+  const renderTable = () => {
+    console.log({ data })
 
     return (
       <MyTable
         loadMore={loadMore}
         hasMoreData={hasNextPage}
         isFetchingNextPage={isFetchingNextPage}
-        columns={columns}
+        columns={getColumns()}
         loading={isLoading}
         data={data || []}
         limit={PAGE_SIZE_LIMIT}
