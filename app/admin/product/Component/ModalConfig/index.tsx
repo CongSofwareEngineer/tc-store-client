@@ -275,6 +275,7 @@ const ProductConfig = ({ item }: { item: any }) => {
 
         <InputForm classFromItem='w-full' name='desSeo' label='desSeo' required typeBtn='area' />
         <div className='w-ful mt-10' />
+        <div>attributes</div>
         <AttributeAdmin data={formData?.attributes} onChange={(e) => setFormData({ ...formData, attributes: e })} />
 
         <InputForm classFromItem='w-full' name='des' label='des' required typeBtn='area' />

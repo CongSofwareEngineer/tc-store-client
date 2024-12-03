@@ -39,7 +39,7 @@ const ObjAndArr = ({ data, onChangeValue }: IEditItemAttributesProps) => {
               <PlusCircleOutlined onClick={handleAdd} />
             </div>
           </div>
-          <div className='grid md:grid-cols-2 grid-cols-1 gap-3'>
+          <div className='grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-3'>
             {data.value.map((e: any, index: number) => {
               return (
                 <div className='flex gap-1 justify-center items-center'>

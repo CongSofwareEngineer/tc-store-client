@@ -1,13 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import ObjAndArr from './ObjAndArr'
 import { cloneData } from '@/utils/functions'
-
+import styled from 'styled-components'
+import { Collapse } from 'antd'
+import { CaretRightOutlined } from '@ant-design/icons'
+import { COLOR_CONFIG } from '@/constant/app'
 export type TypeHandle = 'add' | 'update' | 'delete'
 export type TypeValue = 'arr' | 'object' | 'string'
 export type IAttributeAdminProps = {
   data: any
   onChange: (type: TypeHandle, param?: any) => void
 }
+
+const CollapseCustom = styled(Collapse)`
+  border: 1px solid ${COLOR_CONFIG['gray-5']} !important;
+  overflow: hidden;
+  .ant-collapse-header {
+    background-color: #fbfbfb;
+  }
+  .ant-collapse-content {
+    padding: 12px;
+  }
+  .ant-collapse-item {
+    border-bottom: 0px !important;
+  }
+`
 const AttributeAdmin = ({ data, onChange }: IAttributeAdminProps) => {
   const [dataAttributes, setDataAttributes] = useState<any[]>([])
 
@@ -90,14 +107,35 @@ const AttributeAdmin = ({ data, onChange }: IAttributeAdminProps) => {
     }
   }
 
+  const items = [
+    {
+      key: 'item.value',
+      label: <div>Attribute </div>,
+      children: (
+        <div className='flex flex-col gap-2'>
+          {dataAttributes.map((e, index) => {
+            if (Array.isArray(e.value)) {
+              return <ObjAndArr data={e} onChangeValue={(type, value) => onChangeValue('arr', type, value, index)} />
+            }
+            return <div> coming soon</div>
+          })}
+        </div>
+      ),
+    },
+  ]
+
   return (
     <div className='flex flex-col gap-2 w-full'>
-      {dataAttributes.map((e, index) => {
+      {/* {dataAttributes.map((e, index) => {
         if (Array.isArray(e.value)) {
           return <ObjAndArr data={e} onChangeValue={(type, value) => onChangeValue('arr', type, value, index)} />
         }
         return <div> coming soon</div>
-      })}
+      })} */}
+      <CollapseCustom
+        expandIcon={({ isActive }: any) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+        items={items}
+      />
     </div>
   )
 }
