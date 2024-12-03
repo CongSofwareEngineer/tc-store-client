@@ -22,7 +22,6 @@ import { PATH_IMG } from '@/constant/mongoDB'
 import SelectForm from '@/components/Form/SelectForm'
 import useSubCategories from '@/hook/tank-query/Admin/useSubCategories'
 import { MODE_SELECT } from '@/constant/app'
-import { PropsSelectItem } from '@/components/MySelect'
 import AttributeAdmin from '@/components/AttributeAdmin/inde'
 
 const ProductConfig = ({ item }: { item: any }) => {
@@ -81,6 +80,8 @@ const ProductConfig = ({ item }: { item: any }) => {
     setFormData(initData)
   }, [item])
 
+  console.log({ formData })
+
   const handleDeleteMoreImg = (index: number) => {
     const newList = formData?.imageMore?.filter((_: any, indexFilter: number) => indexFilter !== index)
     setFormData({ ...formData, imageMore: newList })
@@ -118,6 +119,36 @@ const ProductConfig = ({ item }: { item: any }) => {
       if (Object.keys(dataEdit).length > 0) {
         dataEdit.imageDelete = getImgDelete()
         dataEdit.des2 = JSON.stringify(dataEdit.des2)
+        dataEdit.attributes = {
+          sizes: [
+            {
+              size: 38,
+              colors: [
+                {
+                  color: 'white',
+                  amount: 5,
+                },
+                {
+                  color: 'black',
+                  amount: 3,
+                },
+              ],
+            },
+            {
+              size: 39,
+              colors: [
+                {
+                  color: 'white',
+                  amount: 4,
+                },
+                {
+                  color: 'black',
+                  amount: 2,
+                },
+              ],
+            },
+          ],
+        }
         data = await AdminApi.updateProduct(item._id, dataEdit)
       }
       console.log({ dataEdit, formData })
@@ -276,7 +307,11 @@ const ProductConfig = ({ item }: { item: any }) => {
         <InputForm classFromItem='w-full' name='desSeo' label='desSeo' required typeBtn='area' />
         <div className='w-ful mt-10' />
         <div>attributes</div>
-        <AttributeAdmin data={formData?.attributes} onChange={(e) => setFormData({ ...formData, attributes: e })} />
+        <AttributeAdmin
+          typeProduct={formData?.category}
+          data={formData?.attributes}
+          onChange={(e) => setFormData({ ...formData, attributes: e })}
+        />
 
         <InputForm classFromItem='w-full' name='des' label='des' required typeBtn='area' />
         <div className='w-full md:mt-16 min-h-[300px]'>

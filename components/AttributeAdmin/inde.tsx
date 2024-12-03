@@ -2,14 +2,19 @@ import React, { useEffect, useState } from 'react'
 import ObjAndArr from './ObjAndArr'
 import { cloneData } from '@/utils/functions'
 import styled from 'styled-components'
-import { Collapse } from 'antd'
-import { CaretRightOutlined } from '@ant-design/icons'
+import { Button, Collapse } from 'antd'
 import { COLOR_CONFIG } from '@/constant/app'
+import { ITYPE_PRODUCT, TYPE_PRODUCT } from '@/constant/admin'
+import ArrObject from './ArrObject'
+import AttributeShoes from './Shoes'
+import useLanguage from '@/hook/useLanguage'
+import { Noto_Sans_Gunjala_Gondi } from 'next/font/google'
 export type TypeHandle = 'add' | 'update' | 'delete'
 export type TypeValue = 'arr' | 'object' | 'string'
 export type IAttributeAdminProps = {
   data: any
   onChange: (type: TypeHandle, param?: any) => void
+  typeProduct?: string
 }
 
 const CollapseCustom = styled(Collapse)`
@@ -25,12 +30,14 @@ const CollapseCustom = styled(Collapse)`
     border-bottom: 0px !important;
   }
 `
-const AttributeAdmin = ({ data, onChange }: IAttributeAdminProps) => {
+const AttributeAdmin = ({ data, onChange, typeProduct = 'shoes' }: IAttributeAdminProps) => {
+  const { translate } = useLanguage()
   const [dataAttributes, setDataAttributes] = useState<any[]>([])
 
   useEffect(() => {
     const listTemp: any[] = []
-    Object.entries(data).map(([key, value]) => {
+
+    Object.entries(data).forEach(([key, value]: any[]) => {
       listTemp.push({
         key,
         value,
@@ -107,18 +114,52 @@ const AttributeAdmin = ({ data, onChange }: IAttributeAdminProps) => {
     }
   }
 
+  const convertArrToStringValue = (params: any[]) => {
+    const objTemp: any = {}
+    params.forEach((e) => {
+      objTemp[e.key] = e.value
+    })
+    onChange(objTemp)
+  }
+
+  const onChangeValueData = (index: number, params: any) => {
+    const dataAttributeClone = cloneData(dataAttributes)
+    dataAttributeClone[index] = params
+    setDataAttributes(dataAttributeClone)
+    convertArrToStringValue(dataAttributeClone)
+  }
+
   const items = [
     {
-      key: 'item.value',
+      key: 'Attribute',
       label: <div>Attribute </div>,
       children: (
         <div className='flex flex-col gap-2'>
           {dataAttributes.map((e, index) => {
-            if (Array.isArray(e.value)) {
-              return <ObjAndArr data={e} onChangeValue={(type, value) => onChangeValue('arr', type, value, index)} />
+            switch (typeProduct) {
+              case TYPE_PRODUCT.shoes:
+                return (
+                  <AttributeShoes
+                    onChange={(param) => onChangeValueData(index, param)}
+                    key={`item-${index}`}
+                    data={e}
+                  />
+                )
+
+              default:
+                return <div> coming soon</div>
             }
-            return <div> coming soon</div>
           })}
+          <div className='flex gap-3 w-[300px]'>
+            <div className='flex flex-1'>
+              <Button className='flex-1'>Add new</Button>
+            </div>
+            <div className='flex flex-1'>
+              <Button type='primary' className='flex-1'>
+                {translate('common.delete')}
+              </Button>
+            </div>
+          </div>
         </div>
       ),
     },
@@ -126,16 +167,21 @@ const AttributeAdmin = ({ data, onChange }: IAttributeAdminProps) => {
 
   return (
     <div className='flex flex-col gap-2 w-full'>
-      {/* {dataAttributes.map((e, index) => {
-        if (Array.isArray(e.value)) {
-          return <ObjAndArr data={e} onChangeValue={(type, value) => onChangeValue('arr', type, value, index)} />
-        }
-        return <div> coming soon</div>
-      })} */}
-      <CollapseCustom
-        expandIcon={({ isActive }: any) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-        items={items}
-      />
+      <CollapseCustom items={items} />
+      {/* <div className='flex flex-col gap-2'>
+        {dataAttributes.map((e, index) => {
+          // if (Array.isArray(e.value)) {
+          //   return <ObjAndArr data={e} onChangeValue={(type, value) => onChangeValue('arr', type, value, index)} />
+          // }
+          switch (typeAttributes) {
+            case 'arrObject':
+              return <ArrObject data={e} />
+
+            default:
+              return <div> coming soon</div>
+          }
+        })}
+      </div> */}
     </div>
   )
 }

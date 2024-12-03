@@ -38,7 +38,7 @@ export type BodyAddBill = {
   listNewSoldProduct?: { [key: string]: any }[]
 }
 
-export const TYPE_PRODUCT_EX = {
+export const ITYPE_PRODUCT_EX = {
   shoes: 'shoes',
   nests: 'nests',
   laptop: 'laptop',

@@ -23,7 +23,7 @@ const MyModalProvider = ({ children }: { children: React.ReactNode }) => {
   const { isClient } = useMedia()
 
   const closeModal = () => {
-    setConfig({ ...config, width: '500px', content: null, open: false })
+    setConfig({ ...config, width: '500px', className: '', content: null, open: false })
   }
 
   const openModal = (config: ConfigModal) => {

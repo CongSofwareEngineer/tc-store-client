@@ -38,8 +38,7 @@ const ProductAdminScreen = () => {
       useDrawer: true,
       title: item ? `Update ${item.name}` : 'Create',
       configModal: {
-        width: 'auto',
-        classContent: 'max-w-[1200px] w-[85dvw]',
+        className: '!max-w-[1200px] !w-[85dvw]',
       },
       configDrawer: {
         height: 'auto',

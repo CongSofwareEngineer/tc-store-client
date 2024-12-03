@@ -1,7 +1,10 @@
 import { Collapse, CollapseProps } from 'antd'
 import React from 'react'
+
+export type ItemCollapseProps = CollapseProps['items']
+
 type CollapseType = {
-  items: any
+  items: ItemCollapseProps
   defaultActiveKey?: Array<string>
   onChange?: any
   className?: string
