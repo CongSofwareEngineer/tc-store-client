@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { cloneData } from '@/utils/functions'
 import styled from 'styled-components'
-import { Button, Collapse } from 'antd'
+import { Button, Collapse, Input } from 'antd'
 import { COLOR_CONFIG } from '@/constant/app'
 import { TYPE_PRODUCT } from '@/constant/admin'
 import AttributeShoes from './Shoes'
@@ -33,7 +33,6 @@ const AttributeAdmin = ({ data, onChange, typeProduct = 'shoes' }: IAttributeAdm
 
   useEffect(() => {
     const listTemp: any[] = []
-
     Object.entries(data).forEach(([key, value]: any[]) => {
       listTemp.push({
         key,
@@ -43,79 +42,12 @@ const AttributeAdmin = ({ data, onChange, typeProduct = 'shoes' }: IAttributeAdm
     setDataAttributes(listTemp)
   }, [])
 
-  const handleSubmitValue = (type: TypeValue, value: any) => {
-    const ob: any = {}
-    switch (type) {
-      case 'arr':
-        value.forEach((e: any) => {
-          if (!ob[e.key]) {
-            ob[e.key] = e.value
-          }
-        })
-
-        break
-
-      default:
-        break
-    }
-
-    onChange(ob)
-  }
-
-  const onChangeValue = (typeValue: TypeValue, type: TypeHandle, param?: any, index?: number) => {
-    const dataClone = cloneData(dataAttributes)
-
-    switch (type) {
-      case 'add':
-        switch (typeValue) {
-          case 'arr':
-            const nameKey = dataClone[index!].value.length + 1
-            dataClone[index!].value.push(`new-${nameKey}`)
-            setDataAttributes(dataClone)
-            handleSubmitValue('arr', dataClone)
-            break
-
-          default:
-            break
-        }
-        break
-
-      case 'update':
-        switch (typeValue) {
-          case 'arr':
-            dataClone[index!].value = param
-            setDataAttributes(dataClone)
-            handleSubmitValue('arr', dataClone)
-            break
-
-          default:
-            break
-        }
-        break
-
-      default:
-        switch (typeValue) {
-          case 'arr':
-            dataClone[index!].value = dataClone[index!].value.filter(
-              (_: any, indexFilter: number) => indexFilter !== param,
-            )
-            setDataAttributes(dataClone)
-            handleSubmitValue('arr', dataClone)
-            break
-
-          default:
-            break
-        }
-
-        break
-    }
-  }
-
   const convertArrToStringValue = (params: any[]) => {
     const objTemp: any = {}
     params.forEach((e) => {
       objTemp[e.key] = e.value
     })
+
     onChange(objTemp)
   }
 
@@ -138,7 +70,7 @@ const AttributeAdmin = ({ data, onChange, typeProduct = 'shoes' }: IAttributeAdm
                 return (
                   <AttributeShoes
                     onChange={(param) => onChangeValueData(index, param)}
-                    key={`item-${index}`}
+                    keyIndex={`item-${index}`}
                     data={e}
                   />
                 )

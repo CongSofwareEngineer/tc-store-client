@@ -10,16 +10,16 @@ import ModalDelete from '@/components/ModalDelete'
 export type IEditItemAttributesProps = {
   data: any
   onChange: (param?: any) => void
+  keyIndex?: string
 }
 
-const AttributeShoes = ({ data, onChange }: IEditItemAttributesProps) => {
+const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesProps) => {
   const { translate } = useLanguage()
   const { openModal } = useModalAdmin()
 
   const onChangeValueData = (indexParent: number, index: number, key: string, value: any) => {
     const dataClone = cloneData(data)
     dataClone.value[indexParent].colors[index][key] = value
-    console.log({ dataClone })
     onChange(dataClone)
   }
 
@@ -38,16 +38,72 @@ const AttributeShoes = ({ data, onChange }: IEditItemAttributesProps) => {
 
   const handleAddValueData = (indexParent: number) => {
     const dataClone = cloneData(data)
-
     dataClone.value[indexParent].colors.push({
       color: `color-${dataClone.value[indexParent].colors.length}`,
       amount: '1',
     })
-
     onChange(dataClone)
   }
 
-  const onChangeKeyData = () => {}
+  const handleDeleteKeyValueData = (index: number) => {
+    const callBack = () => {
+      const dataClone = cloneData(data)
+      dataClone.value = dataClone.value.filter((_: any, indexFilter: number) => index !== indexFilter)
+      onChange(dataClone)
+    }
+    openModal({
+      body: <ModalDelete isAdmin callback={callBack} />,
+    })
+  }
+
+  const onChangeKeyData = (indexParent: number, value: string) => {
+    const dataClone = cloneData(data)
+    dataClone.value[indexParent].size = value
+    onChange(dataClone)
+  }
+
+  const onChangeKey = (value: string) => {
+    const dataClone = cloneData(data)
+    dataClone.key = value
+    onChange(dataClone)
+  }
+
+  const handleAddNewKey = () => {
+    const dataClone = cloneData(data)
+    dataClone.value.push({
+      size: 0,
+      colors: [
+        {
+          color: 'none',
+          amount: 1,
+        },
+      ],
+    })
+    onChange(dataClone)
+  }
+
+  const handleDeleteKey = (value: any) => {
+    const callBack = () => {
+      const dataClone = cloneData(data)
+      dataClone.value.push({
+        size: 0,
+        colors: [
+          {
+            color: 'none',
+            amount: 1,
+          },
+        ],
+      })
+      onChange(dataClone)
+    }
+    const dataClone = cloneData(data)
+    // onChange({})
+    console.log({ value, dataClone })
+
+    // openModal({
+    //   body: <ModalDelete isAdmin callback={callBack} />,
+    // })
+  }
 
   const renderValue = (val: any, index: number) => {
     const key = val['size']
@@ -59,12 +115,12 @@ const AttributeShoes = ({ data, onChange }: IEditItemAttributesProps) => {
         children: (
           <div className='flex flex-col gap-2'>
             <div className='flex gap-2 items-center'>
-              <Input className='!w-[200px]' value={key} />
+              <Input className='!w-[200px]' value={key} onChange={(e) => onChangeKeyData(index, e.target.value)} />
               <div className='text-green-600 text-xl'>
                 <PlusCircleOutlined onClick={() => handleAddValueData(index)} className='cursor-pointer' />
               </div>
               <div className='text-red-500 text-xl'>
-                <DeleteOutlined className='cursor-pointer' />
+                <DeleteOutlined onClick={() => handleDeleteKeyValueData(index)} className='cursor-pointer' />
               </div>
             </div>
             <div>List data :</div>
@@ -105,18 +161,19 @@ const AttributeShoes = ({ data, onChange }: IEditItemAttributesProps) => {
   const renderKey = () => {
     const items: ItemCollapseProps = [
       {
-        key: data.key,
+        key: keyIndex,
         label: <div>{data.key} </div>,
         children: (
           <div className='flex flex-col gap-2'>
-            <div className='flex gap-3 w-[300px]'>
-              <div className='flex flex-1'>
-                <Button className='flex-1'>Add new</Button>
+            <div className='flex items-center gap-2'>
+              <div className='w-[300px]'>
+                <Input value={data.key} onChange={(e) => onChangeKey(e.target.value)} />
               </div>
-              <div className='flex flex-1'>
-                <Button type='primary' className='flex-1'>
-                  {translate('common.delete')}
-                </Button>
+              <div className='text-green-600 text-xl'>
+                <PlusCircleOutlined onClick={handleAddNewKey} className='cursor-pointer' />
+              </div>
+              <div className='text-red-500 text-xl'>
+                <DeleteOutlined onClick={() => handleDeleteKey(data.key)} className='cursor-pointer' />
               </div>
             </div>
             {data.value.map((e: any, index: number) => {

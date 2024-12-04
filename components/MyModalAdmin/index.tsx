@@ -14,7 +14,15 @@ const MyModalAdmin = () => {
       >
         {ModalAdmin.showBtnClose && (
           <div className='absolute z-10 text-xl right-5 top-5 flex justify-end'>
-            <CloseOutlined className='cursor-pointer' onClick={closeModal} />
+            <CloseOutlined
+              className='cursor-pointer'
+              onClick={() => {
+                closeModal()
+                if (ModalAdmin?.callBackAfter) {
+                  ModalAdmin.callBackAfter()
+                }
+              }}
+            />
           </div>
         )}
 
