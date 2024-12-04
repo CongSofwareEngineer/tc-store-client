@@ -28,6 +28,10 @@ const Notification = dynamic(() => import('../Notification'), {
   ssr: false,
 })
 
+const MyModalAdmin = dynamic(() => import('../MyModalAdmin'), {
+  ssr: false,
+})
+
 const ClientRender = ({ children, menuCategory }: { children: React.ReactNode; menuCategory: any[] }) => {
   useAos()
   useCheckPatchName()
@@ -89,6 +93,7 @@ const ClientRender = ({ children, menuCategory }: { children: React.ReactNode; m
       <LoadingFirstPage />
       <ToastNoti />
       <Notification />
+      <MyModalAdmin />
     </>
   )
 }

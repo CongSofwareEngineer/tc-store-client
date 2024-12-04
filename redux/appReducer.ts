@@ -5,6 +5,7 @@ import connectedChainReducer from './connectedChainSlice'
 import languageReducer from './languageSlice'
 import categoryMenuSlice from './categoryMenuSlice'
 import provincesSlice from './provincesSlice'
+import modalAdminSlice from './modalAdminSlice'
 import { SLICE } from '@/constant/redux'
 
 export default combineReducers({
@@ -14,4 +15,5 @@ export default combineReducers({
   [SLICE.CategoryMenu]: categoryMenuSlice,
   [SLICE.ConnectedChain]: connectedChainReducer,
   [SLICE.Provinces]: provincesSlice,
+  [SLICE.ModalAdmin]: modalAdminSlice,
 })

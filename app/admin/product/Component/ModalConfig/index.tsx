@@ -169,14 +169,13 @@ const ProductConfig = ({ item }: { item: any }) => {
     }
     setLoading(false)
   }
-  console.log({ formData })
 
   return !loadingSubCategories && formData ? (
     <MyForm
       onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
       formData={formData}
       onFinish={handleSubmit}
-      className='!overflow-auto gap-2 md:max-h-[85vh]'
+      className='!overflow-auto !w-full gap-2 md:max-h-[85vh]'
     >
       <div className='flex flex-col gap-4 w-full flex-1 overflow-y-auto '>
         <div className='flex gap-4 w-full'>

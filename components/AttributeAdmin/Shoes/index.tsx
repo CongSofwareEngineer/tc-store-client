@@ -1,10 +1,11 @@
 import React from 'react'
-import { TypeHandle } from '../inde'
 import MyCollapse, { ItemCollapseProps } from '@/components/MyCollapse'
 import { Button, Input } from 'antd'
 import useLanguage from '@/hook/useLanguage'
 import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import { cloneData } from '@/utils/functions'
+import useModalAdmin from '@/hook/useModalAdmin'
+import ModalDelete from '@/components/ModalDelete'
 
 export type IEditItemAttributesProps = {
   data: any
@@ -13,6 +14,7 @@ export type IEditItemAttributesProps = {
 
 const AttributeShoes = ({ data, onChange }: IEditItemAttributesProps) => {
   const { translate } = useLanguage()
+  const { openModal } = useModalAdmin()
 
   const onChangeValueData = (indexParent: number, index: number, key: string, value: any) => {
     const dataClone = cloneData(data)
@@ -21,7 +23,31 @@ const AttributeShoes = ({ data, onChange }: IEditItemAttributesProps) => {
     onChange(dataClone)
   }
 
-  const onChangeKeyData = (params) => {}
+  const handleDeleteValueData = (indexParent: number, index: number) => {
+    const callBack = () => {
+      const dataClone = cloneData(data)
+      dataClone.value[indexParent].colors = dataClone.value[indexParent].colors.filter(
+        (_: any, indexFilter: number) => indexFilter !== index,
+      )
+      onChange(dataClone)
+    }
+    openModal({
+      body: <ModalDelete isAdmin callback={callBack} />,
+    })
+  }
+
+  const handleAddValueData = (indexParent: number) => {
+    const dataClone = cloneData(data)
+
+    dataClone.value[indexParent].colors.push({
+      color: `color-${dataClone.value[indexParent].colors.length}`,
+      amount: '1',
+    })
+
+    onChange(dataClone)
+  }
+
+  const onChangeKeyData = () => {}
 
   const renderValue = (val: any, index: number) => {
     const key = val['size']
@@ -35,7 +61,7 @@ const AttributeShoes = ({ data, onChange }: IEditItemAttributesProps) => {
             <div className='flex gap-2 items-center'>
               <Input className='!w-[200px]' value={key} />
               <div className='text-green-600 text-xl'>
-                <PlusCircleOutlined />
+                <PlusCircleOutlined onClick={() => handleAddValueData(index)} className='cursor-pointer' />
               </div>
               <div className='text-red-500 text-xl'>
                 <DeleteOutlined className='cursor-pointer' />
@@ -59,9 +85,12 @@ const AttributeShoes = ({ data, onChange }: IEditItemAttributesProps) => {
                       value={valeDetail['amount']}
                     />
                   </div>
-                  <div className='flex text-red-600 flex-col justify-center items-center h-full'>
-                    <div className='pb-4' />
-                    <DeleteOutlined className='cursor-pointer' />
+                  <div className='flex text-xl text-red-600 flex-col justify-center items-center h-full'>
+                    <div className='pb-6 ' />
+                    <DeleteOutlined
+                      onClick={() => handleDeleteValueData(index, indexDetail)}
+                      className='cursor-pointer'
+                    />
                   </div>
                 </div>
               )

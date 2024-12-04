@@ -4,6 +4,7 @@ import { images } from '@/configs/images'
 import useModalDrawer from '@/hook/useModalDrawer'
 import Image from 'next/image'
 import { Button } from 'antd'
+import useModalAdmin from '@/hook/useModalAdmin'
 
 type ModalDeleteType = {
   des?: string
@@ -11,6 +12,7 @@ type ModalDeleteType = {
   title?: string
   titleConfirm?: string
   autoClose?: boolean
+  isAdmin?: boolean
 }
 const ModalDelete = ({
   des = '',
@@ -18,9 +20,11 @@ const ModalDelete = ({
   titleConfirm = '',
   callback = () => {},
   autoClose = true,
+  isAdmin = false,
 }: ModalDeleteType) => {
   const { translate } = useLanguage()
   const { closeModalDrawer } = useModalDrawer()
+  const { closeModal } = useModalAdmin()
 
   const [loading, setLoading] = useState(false)
 
@@ -30,7 +34,13 @@ const ModalDelete = ({
       await callback()
     }
     setLoading(false)
-    autoClose && closeModalDrawer()
+    if (autoClose) {
+      if (isAdmin) {
+        closeModal()
+      } else {
+        closeModalDrawer()
+      }
+    }
   }
   return (
     <div className='w-full flex flex-col gap-2'>
@@ -52,7 +62,12 @@ const ModalDelete = ({
           </Button>
         </div>
         <div className='flex-1'>
-          <Button disabled={loading} type='primary' className='w-full' onClick={closeModalDrawer}>
+          <Button
+            disabled={loading}
+            type='primary'
+            className='w-full'
+            onClick={() => (isAdmin ? closeModal() : closeModalDrawer())}
+          >
             {translate('common.close')}
           </Button>
         </div>
