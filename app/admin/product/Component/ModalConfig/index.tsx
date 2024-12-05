@@ -1,6 +1,6 @@
 import MyForm from '@/components/Form/MyForm'
 import { detectImg } from '@/utils/functions'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import CategoryForm from '@/components/CategoryForm'
 import useLanguage from '@/hook/useLanguage'
@@ -19,9 +19,6 @@ import { showNotificationError, showNotificationSuccess } from '@/utils/notifica
 import AdminApi from '@/services/adminApi'
 import MyBlog from '@/components/MyBlog'
 import { PATH_IMG } from '@/constant/mongoDB'
-import SelectForm from '@/components/Form/SelectForm'
-import useSubCategories from '@/hook/tank-query/Admin/useSubCategories'
-import { MODE_SELECT } from '@/constant/app'
 import AttributeAdmin from '@/components/AttributeAdmin/inde'
 
 const ProductConfig = ({ item }: { item: any }) => {
@@ -30,26 +27,9 @@ const ProductConfig = ({ item }: { item: any }) => {
   const { checkIsNumber } = useCheckForm()
   const { refreshQuery } = useRefreshQuery()
   const { closeModalDrawer } = useModalDrawer()
-  const { data: dataSubCategories, isLoading: loadingSubCategories } = useSubCategories()
 
   const [formData, setFormData] = useState<{ [key: string]: any } | null>(null)
   const [loading, setLoading] = useState(false)
-
-  const optionSubCategories = useMemo(() => {
-    if (Array.isArray(dataSubCategories?.data)) {
-      const listTemp = dataSubCategories?.data
-        .filter((e) => e.keyName.startsWith(formData?.category))
-        .map((e) => {
-          return {
-            value: e.keyName,
-            label: e?.lang?.[lang],
-            name: e.keyName,
-          }
-        })
-      return listTemp
-    }
-    return []
-  }, [dataSubCategories, formData?.category])
 
   useEffect(() => {
     const initData = {
@@ -72,7 +52,6 @@ const ProductConfig = ({ item }: { item: any }) => {
       typeProduct: item?.typeProduct || 'water',
       weight: item?.weight || '',
       category: item?.category || 'water',
-      subCategories: item?.subCategories || [],
       desSeo: item?.desSeo || '',
       titleSeo: item?.titleSeo || '',
       attributes: item?.attributes || {},
@@ -114,41 +93,11 @@ const ProductConfig = ({ item }: { item: any }) => {
       })
       dataEdit.titleSeo = formData?.titleSeo
       dataEdit.desSeo = formData?.desSeo
-      dataEdit.subCategories = formData?.subCategories
 
       if (Object.keys(dataEdit).length > 0) {
         dataEdit.imageDelete = getImgDelete()
         dataEdit.des2 = JSON.stringify(dataEdit.des2)
-        dataEdit.attributes = {
-          sizes: [
-            {
-              size: 38,
-              colors: [
-                {
-                  color: 'white',
-                  amount: 5,
-                },
-                {
-                  color: 'black',
-                  amount: 3,
-                },
-              ],
-            },
-            {
-              size: 39,
-              colors: [
-                {
-                  color: 'white',
-                  amount: 4,
-                },
-                {
-                  color: 'black',
-                  amount: 2,
-                },
-              ],
-            },
-          ],
-        }
+
         data = await AdminApi.updateProduct(item._id, dataEdit)
       }
       console.log({ dataEdit, formData })
@@ -170,7 +119,7 @@ const ProductConfig = ({ item }: { item: any }) => {
     setLoading(false)
   }
 
-  return !loadingSubCategories && formData ? (
+  return formData ? (
     <MyForm
       onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
       formData={formData}
@@ -178,26 +127,17 @@ const ProductConfig = ({ item }: { item: any }) => {
       className='!overflow-auto !w-full gap-2 md:max-h-[85vh]'
     >
       <div className='flex flex-col gap-4 w-full flex-1 overflow-y-auto '>
-        <div className='flex gap-4 w-full'>
+        <div className='flex gap-4 w-full md:flex-row flex-col'>
           <InputForm classFromItem='w-full' name='name' label={translate('header.name')} required />
           <CategoryForm label={translate('menuProduct.category')} name='category' />
         </div>
-        <SelectForm
-          required
-          name='subCategories'
-          label={translate('admin.subCategories')}
-          showSearch
-          optionFilterProp='label'
-          options={optionSubCategories}
-          mode={MODE_SELECT.multiple}
-        />
 
-        <div className='flex gap-4 w-full '>
+        <div className='flex gap-4 w-full md:flex-row flex-col '>
           <InputForm classFromItem='w-full' name='keyName' label={translate('header.name')} required />
-          <InputForm classFromItem='w-full' name='titleSeo' label='titleSeo' required />
+          <InputForm classFromItem='w-full' name='titleSeo' label={translate('admin.titleSeo')} required />
         </div>
 
-        <div className='flex gap-4 w-full '>
+        <div className='flex gap-4 w-full md:flex-row flex-col '>
           <InputForm classFromItem='w-full' name='linkFacebook' label='linkFacebook' />
 
           <InputForm classFromItem='w-full' name='linkShoppe' label='linkShoppe' />
@@ -251,7 +191,7 @@ const ProductConfig = ({ item }: { item: any }) => {
               >
                 <div className='flex gap-2'>
                   <CameraOutlined />
-                  <span>Hình chính</span>
+                  <span>{translate('admin.imageMain')}</span>
                 </div>
               </UploadImage>
             </div>
@@ -280,7 +220,7 @@ const ProductConfig = ({ item }: { item: any }) => {
               >
                 <div className='flex w-full gap-2 justify-center items-center'>
                   <CameraOutlined />
-                  <span>Hình phụ</span>
+                  <span>{translate('admin.imageThumbnail')}</span>
                 </div>
               </UploadImage>
             </div>
@@ -303,9 +243,8 @@ const ProductConfig = ({ item }: { item: any }) => {
           </div>
         </div>
 
-        <InputForm classFromItem='w-full' name='desSeo' label='desSeo' required typeBtn='area' />
-        <div className='w-ful mt-10' />
-        <div>attributes</div>
+        <InputForm classFromItem='w-full' name='desSeo' label={translate('admin.desSeo')} required typeBtn='area' />
+        <div className='w-ful md:mt-10' />
         <AttributeAdmin
           typeProduct={formData?.category}
           data={formData?.attributes}
@@ -314,7 +253,7 @@ const ProductConfig = ({ item }: { item: any }) => {
 
         <InputForm classFromItem='w-full' name='des' label='des' required typeBtn='area' />
         <div className='w-full md:mt-16 min-h-[300px]'>
-          <div className='font-bold'>Info detail : </div>
+          <div className='font-bold'>{`${translate('admin.infoDetail')} :`} </div>
           <MyBlog
             pathFile={PATH_IMG.Products}
             value={formData?.des2}

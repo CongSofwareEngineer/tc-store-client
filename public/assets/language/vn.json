@@ -50,6 +50,7 @@
     "exitSDT": "SĐT đã tồn tại"
   },
   "textPopular": {
+    "attribute": "Thuộc tính",
     "size": "Size",
     "shoes": "Giày dép",
     "rate": "Đánh giá",
@@ -305,7 +306,12 @@
   },
   "admin": {
     "revenue": "Doanh thu",
-    "subCategories": "Danh mục con"
+    "subCategories": "Danh mục con",
+    "desSeo": "Đoạn văn mô tả để SEO web (tối đa 40 ký tự)",
+    "titleSeo": "Đoạn văn mô tả tiêu đề để SEO web (tối đa 24 ký tự)",
+    "infoDetail": "Thông tin chi tiết",
+    "imageMain": "HÌnh chính",
+    "imageThumbnail": "Hình phụ"
   },
   "comment": {
     "feedbackSuccess": "Cảm ơn bạn đánh giá",

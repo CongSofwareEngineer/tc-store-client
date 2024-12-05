@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { cloneData } from '@/utils/functions'
 import styled from 'styled-components'
-import { Button, Collapse, Input } from 'antd'
+import { Button, Collapse } from 'antd'
 import { COLOR_CONFIG } from '@/constant/app'
 import { TYPE_PRODUCT } from '@/constant/admin'
 import AttributeShoes from './Shoes'
@@ -52,8 +52,33 @@ const AttributeAdmin = ({ data, onChange, typeProduct = 'shoes' }: IAttributeAdm
   }
 
   const onChangeValueData = (index: number, params: any) => {
+    let dataAttributeClone = cloneData(dataAttributes)
+    if (params) {
+      dataAttributeClone[index] = params
+      setDataAttributes(dataAttributeClone)
+      convertArrToStringValue(dataAttributeClone)
+    } else {
+      dataAttributeClone = dataAttributeClone.filter((_: any, indexFilter: number) => {
+        return indexFilter !== index
+      })
+
+      setDataAttributes(dataAttributeClone)
+      convertArrToStringValue(dataAttributeClone)
+    }
+  }
+
+  const handleAddNewData = () => {
     const dataAttributeClone = cloneData(dataAttributes)
-    dataAttributeClone[index] = params
+    const newData = {
+      key: `newKey${dataAttributeClone.length}`,
+      value: [
+        {
+          size: 38,
+          colors: [],
+        },
+      ],
+    }
+    dataAttributeClone.push(newData)
     setDataAttributes(dataAttributeClone)
     convertArrToStringValue(dataAttributeClone)
   }
@@ -61,7 +86,7 @@ const AttributeAdmin = ({ data, onChange, typeProduct = 'shoes' }: IAttributeAdm
   const items = [
     {
       key: 'Attribute',
-      label: <div>Attribute </div>,
+      label: <div>{translate('textPopular.attribute')} </div>,
       children: (
         <div className='flex flex-col gap-2'>
           {dataAttributes.map((e, index) => {
@@ -72,6 +97,7 @@ const AttributeAdmin = ({ data, onChange, typeProduct = 'shoes' }: IAttributeAdm
                     onChange={(param) => onChangeValueData(index, param)}
                     keyIndex={`item-${index}`}
                     data={e}
+                    indexData={index}
                   />
                 )
 
@@ -79,15 +105,17 @@ const AttributeAdmin = ({ data, onChange, typeProduct = 'shoes' }: IAttributeAdm
                 return <div> coming soon</div>
             }
           })}
-          <div className='flex gap-3 w-[300px]'>
+          <div className='flex gap-3 w-[300px] mt-2'>
             <div className='flex flex-1'>
-              <Button className='flex-1'>Add new</Button>
+              <Button onClick={handleAddNewData} className='flex-1'>
+                Add new
+              </Button>
             </div>
-            <div className='flex flex-1'>
+            {/* <div className='flex flex-1'>
               <Button type='primary' className='flex-1'>
                 {translate('common.delete')}
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
       ),
