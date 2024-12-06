@@ -1,22 +1,68 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import MyCollapse, { ItemCollapseProps } from '@/components/MyCollapse'
-import { Button, Input } from 'antd'
+import { Button, Input, Select } from 'antd'
 import useLanguage from '@/hook/useLanguage'
-import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons'
+import { DeleteOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { cloneData } from '@/utils/functions'
 import useModalAdmin from '@/hook/useModalAdmin'
 import ModalDelete from '@/components/ModalDelete'
+import { VALUE_KEY_DEFAULT } from '@/constant/admin'
+import { PropsSelectItem } from '@/components/MySelect'
 
 export type IEditItemAttributesProps = {
   data: any
   onChange: (param?: any) => void
   keyIndex?: string
-  indexData: number
 }
 
-const AttributeShoes = ({ data, onChange, keyIndex = '', indexData = 0 }: IEditItemAttributesProps) => {
+const SelectHasAdd = ({ value, onChange, handleAddNew, options }: any) => {
+  const { translate } = useLanguage()
+  const inputRef = useRef(null)
+  const [newValue, setNewValue] = useState('')
+
+  const handleAddNewItem = async () => {
+    setNewValue('')
+    handleAddNew(newValue)
+  }
+
+  return (
+    <Select
+      className='min-w-[200px]'
+      value={value}
+      onChange={(e) => onChange(e)}
+      options={options}
+      dropdownRender={(menu: any) => (
+        <>
+          {menu}
+          <div className='flex flex-col gap-2 mt-2'>
+            <Input
+              // placeholder={translate('textPopular.size')}
+              ref={inputRef}
+              value={newValue}
+              onChange={(e) => setNewValue(e.target.value)}
+              onKeyDown={(e) => e.stopPropagation()}
+              className='flex-1'
+            />
+            <Button type='text' icon={<PlusOutlined />} onClick={handleAddNewItem}>
+              {translate('common.addNew')}
+            </Button>
+          </div>
+        </>
+      )}
+    />
+  )
+}
+
+const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesProps) => {
   const { translate } = useLanguage()
   const { openModal } = useModalAdmin()
+
+  const [optionKeyValues, setOptionKeyValues] = useState<PropsSelectItem[]>(
+    VALUE_KEY_DEFAULT.sizes.map((e) => ({
+      label: translate(`admin.color.${e}`),
+      value: e,
+    })),
+  )
 
   const onChangeValueData = (indexParent: number, index: number, key: string, value: any) => {
     const dataClone = cloneData(data)
@@ -117,10 +163,22 @@ const AttributeShoes = ({ data, onChange, keyIndex = '', indexData = 0 }: IEditI
                 <div key={`valeDetail-${indexDetail}`} className='flex gap-2 items-center'>
                   <div className='flex flex-col gap-1'>
                     <div>{`Color ${indexDetail + 1}`}</div>
-                    <Input
+                    <SelectHasAdd
+                      options={optionKeyValues}
+                      value={valeDetail['color']}
+                      onChange={(e: string) => onChangeValueData(index, indexDetail, 'color', e)}
+                      handleAddNew={(e: string) => {
+                        const dataTemp: PropsSelectItem = {
+                          label: e,
+                          value: e,
+                        }
+                        setOptionKeyValues([...optionKeyValues, dataTemp])
+                      }}
+                    />
+                    {/* <Input
                       onChange={(e) => onChangeValueData(index, indexDetail, 'color', e.target.value)}
                       value={valeDetail['color']}
-                    />
+                    /> */}
                   </div>
                   <div className='flex flex-col gap-1'>
                     <div>{translate('textPopular.amount')}</div>

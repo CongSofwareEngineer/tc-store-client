@@ -17,3 +17,7 @@ export enum TYPE_PRODUCT {
   normal = 'normal',
   laptop = 'laptop',
 }
+
+export const VALUE_KEY_DEFAULT = {
+  sizes: ['red', 'white', 'black', 'yellow', 'pink', 'brown', 'orange'],
+} as const

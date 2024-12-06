@@ -19,7 +19,7 @@ import { showNotificationError, showNotificationSuccess } from '@/utils/notifica
 import AdminApi from '@/services/adminApi'
 import MyBlog from '@/components/MyBlog'
 import { PATH_IMG } from '@/constant/mongoDB'
-import AttributeAdmin from '@/components/AttributeAdmin/inde'
+import AttributeAdmin from '@/components/AttributeAdmin'
 
 const ProductConfig = ({ item }: { item: any }) => {
   const { translate, lang } = useLanguage()

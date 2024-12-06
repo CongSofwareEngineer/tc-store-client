@@ -97,7 +97,6 @@ const AttributeAdmin = ({ data, onChange, typeProduct = 'shoes' }: IAttributeAdm
                     onChange={(param) => onChangeValueData(index, param)}
                     keyIndex={`item-${index}`}
                     data={e}
-                    indexData={index}
                   />
                 )
 

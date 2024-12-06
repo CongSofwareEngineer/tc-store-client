@@ -311,7 +311,16 @@
     "titleSeo": "Đoạn văn mô tả tiêu đề để SEO web (tối đa 24 ký tự)",
     "infoDetail": "Thông tin chi tiết",
     "imageMain": "HÌnh chính",
-    "imageThumbnail": "Hình phụ"
+    "imageThumbnail": "Hình phụ",
+    "color": {
+      "red": "Đỏ",
+      "pink": "Hồng",
+      "brown": "Nâu",
+      "orange": "Cam",
+      "yellow": "Vàng",
+      "black": "Đen",
+      "white": "Trắng"
+    }
   },
   "comment": {
     "feedbackSuccess": "Cảm ơn bạn đánh giá",
