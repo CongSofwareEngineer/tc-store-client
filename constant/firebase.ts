@@ -63,6 +63,7 @@ export type BodyAddBill = {
   abort?: boolean
   totalBill: Number
   listNewSoldProduct?: { [key: string]: any }[]
+  configBill?: { [key: string]: any }
 }
 
 export type BodyUserData = {

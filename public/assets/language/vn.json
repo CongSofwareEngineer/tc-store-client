@@ -107,7 +107,8 @@
     "point": "Điểm tích lũy",
     "dateStart": "Ngày bắt đầu",
     "dateEnd": "Ngày kết thúc",
-    "nest": "Yến"
+    "nest": "Yến",
+    "color": "Màu"
   },
   "addCart": {
     "addSuccess": "Đã thêm vào giỏ hàng",
