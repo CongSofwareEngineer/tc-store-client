@@ -6,6 +6,7 @@ import useMedia from '@/hook/useMedia'
 import { useRouter } from 'next/navigation'
 import { detectImg, numberWithCommas } from '@/utils/functions'
 import Image from 'next/image'
+import MyImage from '@/components/MyImage'
 
 const InfoBill = ({ data, amountBuy }: InfoBillType) => {
   const { translate } = useLanguage()
@@ -84,9 +85,8 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
         {/* content */}
         <div className='w-full flex gap-4 relative py-2 items-center'>
           <div className='w-[100px] '>
-            <div className='flex justify-center mt-2'>
-              <Image
-                fill
+            <div className='relative flex justify-center mt-2'>
+              <MyImage
                 className='!relative !w-auto !h-[80px]'
                 src={detectImg(data?.imageMain?.toString() || '')}
                 alt={`item-${data?.name}`}

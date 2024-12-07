@@ -53,7 +53,7 @@ export type BodyAddCart = {
 
 export type BodyAddBill = {
   idUser?: string | undefined
-  listBill: { _id: string; keyName?: string; amount: number; idCart?: string }[]
+  listBill: { _id: string; keyName?: string; amount: number; idCart?: string; [key: string]: any }[]
   addressShip: string
   discount: number
   sdt: string

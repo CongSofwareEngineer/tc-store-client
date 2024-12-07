@@ -1,3 +1,4 @@
+import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
@@ -41,20 +42,33 @@ const ViewListOrder = ({ dataCart }: { dataCart: any[] }) => {
         <div className=' max-h-[400px] overflow-auto flex flex-col'>
           {listDataValid.map((e, index) => {
             return (
-              <div key={e._id} className={`w-full flex gap-4 relative py-2 items-center ${index < listDataValid.length - 1 && 'border-b-[3px] border-gray-200'}`}>
+              <div
+                key={e._id}
+                className={`w-full flex gap-4 relative py-2 items-center ${
+                  index < listDataValid.length - 1 && 'border-b-[3px] border-gray-200'
+                }`}
+              >
                 <div className='w-[100px] '>
-                  <div className='flex justify-center mt-2'>
-                    <Image fill className='!relative !w-auto !h-[80px]' src={detectImg(getItemForShow(e)?.imageMain)} alt={`item-${getItemForShow(e)?.name}`} />
+                  <div className='relative flex justify-center mt-2'>
+                    <MyImage
+                      className='!relative !w-auto !h-[80px]'
+                      src={detectImg(getItemForShow(e)?.imageMain)}
+                      alt={`item-${getItemForShow(e)?.name}`}
+                    />
                   </div>
                 </div>
                 <div className='w-[100px] flex flex-1'>
                   <div className='flex flex-col gap-1 w-full'>
                     <div className='text-medium font-bold'>{getItemForShow(e)?.name}</div>
-                    <div className='text-[12px] opacity-60'>{`${translate('category')} : ${getLabelCategory(getItemForShow(e)?.category)}`}</div>
+                    <div className='text-[12px] opacity-60'>{`${translate('category')} : ${getLabelCategory(
+                      getItemForShow(e)?.category,
+                    )}`}</div>
                     <div>{`${translate('textPopular.amount')} : x${e.amount}`}</div>
                     <div className='flex gap-1'>
                       <span>{translate('textPopular.totalMoney')} :</span>
-                      <span className='font-bold text-green-700'>{numberWithCommas(e.amount * getItemForShow(e)?.price)} VNĐ</span>
+                      <span className='font-bold text-green-700'>
+                        {numberWithCommas(e.amount * getItemForShow(e)?.price)} VNĐ
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -80,18 +94,33 @@ const ViewListOrder = ({ dataCart }: { dataCart: any[] }) => {
         <div className=' max-h-[400px] overflow-auto flex flex-col'>
           {listDataValid.map((e, index) => {
             return (
-              <div key={e._id} className={`w-full flex gap-4 relative py-2 items-center ${index < listDataValid.length - 1 && 'border-b-[3px] border-gray-200'}`}>
+              <div
+                key={e._id}
+                className={`w-full flex gap-4 relative py-2 items-center ${
+                  index < listDataValid.length - 1 && 'border-b-[3px] border-gray-200'
+                }`}
+              >
                 <div className='w-[100px] '>
-                  <div className='flex justify-center mt-2'>
-                    <Image className='!relative !h-[80px] !w-auto' fill src={detectImg(getItemForShow(e)?.imageMain)} alt={`item-${getItemForShow(e)?.name}`} />
+                  <div className='relative flex justify-center mt-2'>
+                    <MyImage
+                      className='!relative !h-[80px] !w-auto'
+                      fill
+                      src={detectImg(getItemForShow(e)?.imageMain)}
+                      alt={`item-${getItemForShow(e)?.name}`}
+                    />
                   </div>
                 </div>
                 <div className='w-[100px] flex flex-1'>
                   <div className='flex flex-col gap-1'>
-                    <div className='font-semibold   cursor-pointer md:hover:underline' onClick={() => handleClickName(getItemForShow(e))}>
+                    <div
+                      className='font-semibold   cursor-pointer md:hover:underline'
+                      onClick={() => handleClickName(getItemForShow(e))}
+                    >
                       {getItemForShow(e)?.name}
                     </div>
-                    <div className='opacity-80 text-xs '>{`${translate('category')} : ${getLabelCategory(getItemForShow(e)?.category) || 'typeProduct'}`}</div>
+                    <div className='opacity-80 text-xs '>{`${translate('category')} : ${
+                      getLabelCategory(getItemForShow(e)?.category) || 'typeProduct'
+                    }`}</div>
                   </div>
                 </div>
                 <div className='w-[20%] '>
@@ -101,7 +130,9 @@ const ViewListOrder = ({ dataCart }: { dataCart: any[] }) => {
                   </div>
                 </div>
                 <div className='w-[10%] text-center'>{`x${e.amount}`}</div>
-                <div className='w-[20%] text-green-500 font-bold text-center'>{numberWithCommas(e.amount * getItemForShow(e)?.price)} VNĐ</div>
+                <div className='w-[20%] text-green-500 font-bold text-center'>
+                  {numberWithCommas(e.amount * getItemForShow(e)?.price)} VNĐ
+                </div>
               </div>
             )
           })}

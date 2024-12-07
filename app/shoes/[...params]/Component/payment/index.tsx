@@ -86,6 +86,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
             amount: amount,
             _id: data?._id!,
             keyName: data?.keyName,
+            configBill: data?.configBill || {},
           },
         ],
         status: FILTER_BILL.Processing,
@@ -96,52 +97,51 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
             idProduct: data?._id,
           },
         ],
-        configBill: data?.configBill || {},
       }
       console.log({ bodyBill })
 
       saveDataNoLogin(bodyBill)
 
-      openModalDrawer({
-        content: (
-          <ModalProcess title={translate('confirm.bill.createBill')} des={translate('confirm.bill.createBill_Des')} />
-        ),
-        configModal: {
-          showHeader: false,
-          showBtnClose: false,
-          overClickClose: false,
-        },
-      })
+      // openModalDrawer({
+      //   content: (
+      //     <ModalProcess title={translate('confirm.bill.createBill')} des={translate('confirm.bill.createBill_Des')} />
+      //   ),
+      //   configModal: {
+      //     showHeader: false,
+      //     showBtnClose: false,
+      //     overClickClose: false,
+      //   },
+      // })
 
-      const res = await ClientApi.buy(bodyBill)
+      // const res = await ClientApi.buy(bodyBill)
 
-      if (res?.data) {
-        await Promise.all([
-          refreshQuery(QUERY_KEY.MyCartUser),
-          refreshQuery(QUERY_KEY.GetProductByID),
-          refreshQuery(QUERY_KEY.MyBillUser),
-          refreshQuery(QUERY_KEY.LengthCartUser),
-        ])
+      // if (res?.data) {
+      //   await Promise.all([
+      //     refreshQuery(QUERY_KEY.MyCartUser),
+      //     refreshQuery(QUERY_KEY.GetProductByID),
+      //     refreshQuery(QUERY_KEY.MyBillUser),
+      //     refreshQuery(QUERY_KEY.LengthCartUser),
+      //   ])
 
-        openModalDrawer({
-          content: (
-            <ModalSuccess
-              showClose
-              title={translate('productDetail.modalBuy.success')}
-              des={translate('productDetail.modalBuy.successDes')}
-              titleSubmit={translate('common.viewBill')}
-              titleClose={translate('common.ok')}
-              callback={() => {
-                route.push('/my-page/bill')
-                closeModalDrawer()
-              }}
-            />
-          ),
-        })
-      } else {
-        showNotificationError(translate('productDetail.modalBuy.error'))
-        closeModalDrawer()
-      }
+      //   openModalDrawer({
+      //     content: (
+      //       <ModalSuccess
+      //         showClose
+      //         title={translate('productDetail.modalBuy.success')}
+      //         des={translate('productDetail.modalBuy.successDes')}
+      //         titleSubmit={translate('common.viewBill')}
+      //         titleClose={translate('common.ok')}
+      //         callback={() => {
+      //           route.push('/my-page/bill')
+      //           closeModalDrawer()
+      //         }}
+      //       />
+      //     ),
+      //   })
+      // } else {
+      //   showNotificationError(translate('productDetail.modalBuy.error'))
+      //   closeModalDrawer()
+      // }
 
       setLoading(false)
     }

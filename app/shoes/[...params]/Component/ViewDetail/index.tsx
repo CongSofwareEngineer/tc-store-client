@@ -22,6 +22,7 @@ import { showNotificationSuccess } from '@/utils/notification'
 import { Button } from 'antd'
 import Image from 'next/image'
 import Attributes from '../Attributes'
+import MyImage from '@/components/MyImage'
 
 const MoreInfo = dynamic(() => import('../MoreInfo'), {
   ssr: true,
@@ -137,10 +138,9 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
         <BtnBack title={['Shop', productDetail.name]} url={['/shop']} />
         <div className='w-full flex gap-6 bg-white rounded-xl p-6'>
           <div data-aos='fade-right' className='relative min-w-[300px] max-w-[450px] w-[50%] p-5 overflow-hidden '>
-            <Image
+            <MyImage
               src={detectImg(productDetail.imageMain || '')}
               alt={`img-main--${productDetail.name}`}
-              fill
               className='!relative !w-full !h-auto'
             />
             <ImageMore data={productDetail} />

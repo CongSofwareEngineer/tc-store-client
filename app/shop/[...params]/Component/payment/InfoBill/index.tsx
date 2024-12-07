@@ -6,6 +6,7 @@ import useMedia from '@/hook/useMedia'
 import { useRouter } from 'next/navigation'
 import { detectImg, numberWithCommas } from '@/utils/functions'
 import Image from 'next/image'
+import MyImage from '@/components/MyImage'
 
 const InfoBill = ({ data, amountBuy }: InfoBillType) => {
   const { translate } = useLanguage()
@@ -27,8 +28,12 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
         {/* content */}
         <div className='w-full flex gap-4 relative py-2 items-center'>
           <div className='w-[100px] '>
-            <div className='flex justify-center mt-2'>
-              <Image fill className='!relative !w-auto !h-[80px]' src={detectImg(data?.imageMain?.toString() || '')} alt={`item-${data?.name}`} />
+            <div className='relative flex justify-center mt-2'>
+              <MyImage
+                className='!relative !w-auto !h-[80px]'
+                src={detectImg(data?.imageMain?.toString() || '')}
+                alt={`item-${data?.name}`}
+              />
             </div>
           </div>
           <div className='w-[100px] flex flex-1'>
@@ -61,8 +66,12 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
         {/* content */}
         <div className='w-full flex gap-4 relative py-2 items-center'>
           <div className='w-[100px] '>
-            <div className='flex justify-center mt-2'>
-              <Image fill className='!relative !w-auto !h-[80px]' src={detectImg(data?.imageMain?.toString() || '')} alt={`item-${data?.name}`} />
+            <div className='relative flex justify-center mt-2'>
+              <MyImage
+                className='!relative !w-auto !h-[80px]'
+                src={detectImg(data?.imageMain?.toString() || '')}
+                alt={`item-${data?.name}`}
+              />
             </div>
           </div>
           <div className='w-[100px] flex flex-1'>
@@ -70,7 +79,9 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
               <div className='font-semibold   cursor-pointer md:hover:underline' onClick={handleClickName}>
                 {data?.name}
               </div>
-              <div className='opacity-80 text-xs '>{`${translate('category')} : ${data?.typeProduct || 'typeProduct'}`}</div>
+              <div className='opacity-80 text-xs '>{`${translate('category')} : ${
+                data?.typeProduct || 'typeProduct'
+              }`}</div>
             </div>
           </div>
           <div className='w-[20%] '>
@@ -80,7 +91,9 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
             </div>
           </div>
           <div className='w-[10%] text-center'>{`x${amountBuy}`}</div>
-          <div className='w-[20%] text-green-500 font-bold text-center'>{numberWithCommas(amountBuy * data?.price)} VNĐ</div>
+          <div className='w-[20%] text-green-500 font-bold text-center'>
+            {numberWithCommas(amountBuy * data?.price)} VNĐ
+          </div>
         </div>
       </div>
     )
