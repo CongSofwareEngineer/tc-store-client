@@ -2,7 +2,7 @@ import ButtonForm from '@/components/Form/ButtonForm'
 import { ItemDetailType } from '@/components/InfoItemDetail/type'
 import InputForm from '@/components/Form/InputForm'
 import MyForm from '@/components/Form/MyForm'
-import MyImage from '@/components/MyImage'
+import ImageNext from 'next/image'
 import MyLoading from '@/components/MyLoading'
 import RateForm from '@/components/Form/RateForm'
 import UploadImage from '@/components/UploadImg'
@@ -94,10 +94,9 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
       res = await ClientApi.createComment(body)
     }
     if (res?.data) {
+      await Promise.all([refreshQuery(QUERY_KEY.GetProductByID), refreshQuery(QUERY_KEY.GetCommentProduction)])
       closeModalDrawer()
       showNotificationSuccess(translate('comment.feedbackSuccess'))
-      refreshQuery(QUERY_KEY.GetProductByID)
-      refreshQuery(QUERY_KEY.GetCommentProduction)
     } else {
       showNotificationError(translate('comment.feedbackFaild'))
     }
@@ -119,8 +118,11 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
         <div className='flex gap-3'>
           {formData?.listImg?.map((item: any, index: number) => (
             <div key={`img-${index}`} className='relative w-[70px] '>
-              <Image alt='img' className='w-[70px]' src={detectImg(item?.base64 || item)} />
-              <CloseCircleOutlined onClick={() => deleteImg(index)} className='absolute text-[20px] z-10 cursor-pointer right-0 top-0' />
+              <ImageNext alt='img' className='!relative !h-auto !-[70px]' src={detectImg(item?.base64 || item)} fill />
+              <CloseCircleOutlined
+                onClick={() => deleteImg(index)}
+                className='absolute text-[20px] z-10 cursor-pointer right-0 top-0'
+              />
             </div>
           ))}
         </div>
@@ -132,30 +134,70 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
     <div className='flex flex-col gap-3 w-full justify-center items-center'>
       {loadingApi && <MyLoading />}
       {!loadingApi && formData && (
-        <MyForm onValuesChange={(_, value) => setFormData({ ...formData, ...value })} className='w-full gap-0' formData={formData} onFinish={handleSubmit}>
+        <MyForm
+          onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
+          className='w-full gap-0'
+          formData={formData}
+          onFinish={handleSubmit}
+        >
           <div className='flex gap-2 w-full'>
             <div className='w-[100px] aspect-square overflow-hidden'>
-              <MyImage alt='avatar-product' src={detectImg(dataItem.imageMain)} />
+              <Image alt='avatar-product' src={detectImg(dataItem.imageMain)} />
             </div>
             <div className='flex flex-1 flex-col gap-2 h-auto justify-center'>
               <p className='text-medium font-bold'>{dataItem.name}</p>
               <RateForm name='rate' />
             </div>
           </div>
-          <InputForm typeBtn='string' required name={'name'} label={translate('header.name')} classFromItem='w-full' disable={!!isLogin} />
-          <InputForm typeBtn='string' required name={'sdt'} label={translate('userDetail.sdt')} classFromItem='w-full' validator={checkNumberPhone} disable={!!isLogin} />
-          <InputForm name={'note'} required typeBtn='area' label={translate('textPopular.note')} classFromItem='w-full' showCount maxLength={200} />
+          <InputForm
+            typeBtn='string'
+            required
+            name={'name'}
+            label={translate('header.name')}
+            classFromItem='w-full'
+            disable={!!isLogin}
+          />
+          <InputForm
+            typeBtn='string'
+            required
+            name={'sdt'}
+            label={translate('userDetail.sdt')}
+            classFromItem='w-full'
+            validator={checkNumberPhone}
+            disable={!!isLogin}
+          />
+          <InputForm
+            name={'note'}
+            required
+            typeBtn='area'
+            label={translate('textPopular.note')}
+            classFromItem='w-full'
+            showCount
+            maxLength={200}
+          />
 
           <div className='flex flex-col w-full gap-2 mt-10'>
             {renderListImg()}
-            <UploadImage handleUpload={handleUpload} disabled={formData?.listImg?.length >= 2} listData={formData?.listImg || []} maxSizeOutputKB={200} maxPixelReduce={400}>
+            <UploadImage
+              handleUpload={handleUpload}
+              disabled={formData?.listImg?.length >= 2}
+              listData={formData?.listImg || []}
+              maxSizeOutputKB={200}
+              maxPixelReduce={400}
+            >
               <div className='flex gap-2 item-center w-full'>
                 <CameraOutlined className='cursor-pointer' style={{ fontSize: 25, color: 'blue' }} />
                 <span>{translate('comment.uploadImg_des')}</span>
               </div>
             </UploadImage>
 
-            <ButtonForm loading={loading} classNameItem='w-full ' className='w-full mt-4' disableClose titleSubmit={translate(dataExited ? 'common.updateFeedback' : 'common.sendFeedback')} />
+            <ButtonForm
+              loading={loading}
+              classNameItem='w-full '
+              className='w-full mt-4'
+              disableClose
+              titleSubmit={translate(dataExited ? 'common.updateFeedback' : 'common.sendFeedback')}
+            />
           </div>
         </MyForm>
       )}

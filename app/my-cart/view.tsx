@@ -76,7 +76,7 @@ const MyCartScreen = () => {
   const handleDelete = async (index: number) => {
     const dataRemove = listCartFormat[index]
     await ClientApi.deleteCart(dataRemove._id)
-    refreshQuery(QUERY_KEY.MyCartUser)
+    await refreshQuery(QUERY_KEY.MyCartUser)
   }
 
   const handleSelectAll = (isSelect = false) => {
@@ -99,8 +99,18 @@ const MyCartScreen = () => {
 
         {!isLoading && (
           <div className='w-full flex gap-5'>
-            <div style={{ boxShadow: '3px 3px 6px rgba(0,0,0,.0509803922)' }} className='flex-1  border-2 border-gray-300  overflow-y-auto bg-white'>
-              <ListItemCart allSelected={allSelected} dataCart={listCartFormat} callBackClick={handleSelect} callBackDelete={handleDelete} callBackSelectAll={handleSelectAll} loading={isLoading} />
+            <div
+              style={{ boxShadow: '3px 3px 6px rgba(0,0,0,.0509803922)' }}
+              className='flex-1  border-2 border-gray-300  overflow-y-auto bg-white'
+            >
+              <ListItemCart
+                allSelected={allSelected}
+                dataCart={listCartFormat}
+                callBackClick={handleSelect}
+                callBackDelete={handleDelete}
+                callBackSelectAll={handleSelectAll}
+                loading={isLoading}
+              />
               {listCartFormat.length === 0 && (
                 <div className='w-full flex gap-1 mt-3 pl-3'>
                   <span>{translate('textPopular.notData')}</span>
@@ -132,8 +142,18 @@ const MyCartScreen = () => {
 
         {!isLoading && (
           <>
-            <div style={{ boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px' }} className='mt-1 flex-1  border-[.5px] border-gray-300 bg-white  overflow-y-auto'>
-              <ListItemCart allSelected={allSelected} dataCart={listCartFormat} callBackClick={handleSelect} callBackDelete={handleDelete} callBackSelectAll={handleSelectAll} loading={isLoading} />
+            <div
+              style={{ boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px' }}
+              className='mt-1 flex-1  border-[.5px] border-gray-300 bg-white  overflow-y-auto'
+            >
+              <ListItemCart
+                allSelected={allSelected}
+                dataCart={listCartFormat}
+                callBackClick={handleSelect}
+                callBackDelete={handleDelete}
+                callBackSelectAll={handleSelectAll}
+                loading={isLoading}
+              />
               {listCartFormat.length === 0 && (
                 <div className='w-full flex gap-1 my-2 pl-3'>
                   <span>{translate('textPopular.notData')}</span>
@@ -160,7 +180,21 @@ const MyCartScreen = () => {
     )
   }
 
-  return <>{isClient && <>{isPayment ? <Payment clickBack={() => setIsPayment(false)} dataCart={listCartFormat} /> : isMobile ? renderMobile() : renderDesktop()}</>}</>
+  return (
+    <>
+      {isClient && (
+        <>
+          {isPayment ? (
+            <Payment clickBack={() => setIsPayment(false)} dataCart={listCartFormat} />
+          ) : isMobile ? (
+            renderMobile()
+          ) : (
+            renderDesktop()
+          )}
+        </>
+      )}
+    </>
+  )
 }
 
 export default MyCartScreen

@@ -98,6 +98,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         ],
         configBill: data?.configBill || {},
       }
+      console.log({ bodyBill })
 
       saveDataNoLogin(bodyBill)
 
@@ -115,6 +116,13 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
       const res = await ClientApi.buy(bodyBill)
 
       if (res?.data) {
+        await Promise.all([
+          refreshQuery(QUERY_KEY.MyCartUser),
+          refreshQuery(QUERY_KEY.GetProductByID),
+          refreshQuery(QUERY_KEY.MyBillUser),
+          refreshQuery(QUERY_KEY.LengthCartUser),
+        ])
+
         openModalDrawer({
           content: (
             <ModalSuccess
@@ -130,12 +138,6 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
             />
           ),
         })
-        await delayTime(500)
-        refreshQuery(QUERY_KEY.MyCartUser)
-        refreshQuery(QUERY_KEY.GetProductByID)
-        refreshQuery(QUERY_KEY.MyBillUser)
-        refreshQuery(QUERY_KEY.LengthCartUser)
-        await delayTime(500)
       } else {
         showNotificationError(translate('productDetail.modalBuy.error'))
         closeModalDrawer()

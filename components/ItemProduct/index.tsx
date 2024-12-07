@@ -7,6 +7,7 @@ import { detectImg, formatPrice, formatPriceBase, numberWithCommas } from '@/uti
 import MySliderSell from '../MySliderSell'
 import useMedia from '@/hook/useMedia'
 import Image from 'next/image'
+import MyImage from '../MyImage'
 
 type ItemType = {
   item: any
@@ -40,8 +41,7 @@ const ItemProduct = ({
         )}
 
         <div className='m-auto max-w-[85%] relative w-full aspect-square  overflow-hidden'>
-          <Image
-            fill
+          <MyImage
             src={detectImg(item?.imageMain || images.userDetail.iconUserDetail)}
             alt={`item-${item?.name || href}`}
             className='!relative !h-auto group-hover:scale-110 transform transition duration-300 ease-in-out select-none'

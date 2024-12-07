@@ -102,7 +102,9 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
       saveDataNoLogin(bodyBill)
 
       openModalDrawer({
-        content: <ModalProcess title={translate('confirm.bill.createBill')} des={translate('confirm.bill.createBill_Des')} />,
+        content: (
+          <ModalProcess title={translate('confirm.bill.createBill')} des={translate('confirm.bill.createBill_Des')} />
+        ),
         configModal: {
           showHeader: false,
           showBtnClose: false,
@@ -113,6 +115,13 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
       const res = await ClientApi.buy(bodyBill)
 
       if (res?.data) {
+        await Promise.all([
+          refreshQuery(QUERY_KEY.MyCartUser),
+          refreshQuery(QUERY_KEY.GetProductByID),
+          refreshQuery(QUERY_KEY.MyBillUser),
+          refreshQuery(QUERY_KEY.LengthCartUser),
+        ])
+
         openModalDrawer({
           content: (
             <ModalSuccess
@@ -128,12 +137,6 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
             />
           ),
         })
-        await delayTime(500)
-        refreshQuery(QUERY_KEY.MyCartUser)
-        refreshQuery(QUERY_KEY.GetProductByID)
-        refreshQuery(QUERY_KEY.MyBillUser)
-        refreshQuery(QUERY_KEY.LengthCartUser)
-        await delayTime(500)
       } else {
         showNotificationError(translate('productDetail.modalBuy.error'))
         closeModalDrawer()
@@ -142,7 +145,15 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
       setLoading(false)
     }
     openModalDrawer({
-      content: <ModalDelete autoClose={false} callback={callBack} title={translate('confirm.bill.confirm')} des={translate('confirm.bill.confirm_des')} titleConfirm={translate('common.submit')} />,
+      content: (
+        <ModalDelete
+          autoClose={false}
+          callback={callBack}
+          title={translate('confirm.bill.confirm')}
+          des={translate('confirm.bill.confirm_des')}
+          titleConfirm={translate('common.submit')}
+        />
+      ),
     })
   }
 
@@ -151,7 +162,11 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
       <BtnBackUI clickBack={callBack} titlePageMain={translate('header.shop')} titlePage={data?.name} />
       <div className='flex flex-col gap-3 w-full mt-1'>
         {formData && (
-          <MyForm onFinish={handleSubmit} formData={formData} onValuesChange={(_, value) => setFormData({ ...formData, ...value })}>
+          <MyForm
+            onFinish={handleSubmit}
+            formData={formData}
+            onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
+          >
             {/* lg:max-h-[calc(100vh-126px)] hide-scroll */}
             <div className='flex lg:flex-row flex-col lg:gap-6 gap-5'>
               <div className='flex flex-1 h-full overflow-y-auto  flex-col lg:max-w-[calc(100%-300px)]'>
@@ -160,8 +175,17 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
               </div>
 
               <div className='lg:w-[350px] flex flex-col md:gap-6 gap-5'>
-                <OptionsPayment onChangeOptions={onChangeOptions} listOptions={listOptions} optionSelected={optionSelected} />
-                <BillFinal disabledSubmit={!isValidSubmit} loading={loading} totalBill={numberWithCommas(amount * data?.price)} totalBillFeeShip={numberWithCommas(amount * data?.price + 30000)} />
+                <OptionsPayment
+                  onChangeOptions={onChangeOptions}
+                  listOptions={listOptions}
+                  optionSelected={optionSelected}
+                />
+                <BillFinal
+                  disabledSubmit={!isValidSubmit}
+                  loading={loading}
+                  totalBill={numberWithCommas(amount * data?.price)}
+                  totalBillFeeShip={numberWithCommas(amount * data?.price + 30000)}
+                />
               </div>
             </div>
           </MyForm>

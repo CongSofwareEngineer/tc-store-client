@@ -62,7 +62,7 @@ const SubCategoriesConfig = ({ item }: { item: any }) => {
 
       if (res?.data) {
         showNotificationSuccess(translate(item ? 'success.update' : 'success.create'))
-        refreshQuery(QUERY_KEY.GetSubCategoryAdmin)
+        await refreshQuery(QUERY_KEY.GetSubCategoryAdmin)
         closeModalDrawer()
       } else {
         showNotificationError(translate(item ? 'error.update' : 'errors.create'))

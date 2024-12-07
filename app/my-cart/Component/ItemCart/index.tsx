@@ -11,7 +11,8 @@ import { ItemCartType } from '../../type'
 import SubAndPlus from '@/components/SubAndPlus'
 import useModalDrawer from '@/hook/useModalDrawer'
 import MyCheckBox from '@/components/MyCheckBox'
-import Image from 'next/image'
+import { images } from '@/configs/images'
+import MyImage from '@/components/MyImage'
 
 const ItemCart = ({ data, callBack, noBorder = false, callBackDelete, noEdit = false }: ItemCartType) => {
   const { translate, getLabelCategory } = useLanguage()
@@ -60,14 +61,23 @@ const ItemCart = ({ data, callBack, noBorder = false, callBackDelete, noEdit = f
           <MyCheckBox alt={data?.more_data?.keyName} onClick={selectedItem} value={!!data?.selected} />
           <DeleteOutlined style={{ color: 'red', fontSize: 25 }} onClick={handleDelete} />
         </div>
-        <div className='aspect-square w-[120px] overflow-hidden'>
-          <Image src={detectImg(data?.more_data?.imageMain?.toString() || '')} alt={`item-${data?.more_data?.keyName}`} fill className='!relative !w-full !h-auto' />
+        <div className='relative aspect-square w-[120px] overflow-hidden'>
+          <MyImage
+            src={detectImg(data?.more_data?.imageMain?.toString() || '')}
+            alt={`item-${data?.more_data?.keyName}`}
+            className='!relative !w-full !h-auto'
+          />
         </div>
         <div className='flex flex-col flex-1 gap-1'>
-          <div onClick={() => router.push(`/shop/${data?.more_data.keyName}`)} className='text-medium font-medium mb-1 hover:underline cursor-pointer '>
+          <div
+            onClick={() => router.push(`/shop/${data?.more_data.keyName}`)}
+            className='text-medium font-medium mb-1 hover:underline cursor-pointer '
+          >
             {data?.more_data?.name}
           </div>
-          <div className='opacity-80 text-xs '>{`${translate('category')} : ${getLabelCategory(data?.more_data?.category) || 'typeProduct'}`}</div>
+          <div className='opacity-80 text-xs '>{`${translate('category')} : ${
+            getLabelCategory(data?.more_data?.category) || 'typeProduct'
+          }`}</div>
           <div className='flex w-full gap-2 items-center'>
             <div className=' text-green-800 font-medium'>{numberWithCommas(data?.more_data.price)} đ</div>
             <div className='line-through font-medium'>{numberWithCommas(data?.more_data.price * 1.2)}</div>
@@ -75,7 +85,12 @@ const ItemCart = ({ data, callBack, noBorder = false, callBackDelete, noEdit = f
 
           <div className='w-full flex items-center justify-between'>
             <div className='font-bold text-green-500'>{numberWithCommas(data.amount * data?.more_data.price)} VNĐ</div>
-            <SubAndPlus isSquare value={data?.amount || 1} callBackPlus={() => onChangeAmountBuy()} callBackSub={() => onChangeAmountBuy(false)} />
+            <SubAndPlus
+              isSquare
+              value={data?.amount || 1}
+              callBackPlus={() => onChangeAmountBuy()}
+              callBackSub={() => onChangeAmountBuy(false)}
+            />
           </div>
         </div>
       </div>
@@ -93,15 +108,30 @@ const ItemCart = ({ data, callBack, noBorder = false, callBackDelete, noEdit = f
         )}
 
         <div className='w-[100px] justify-center flex '>
-          <Image src={detectImg(data?.more_data?.imageMain?.toString() || '')} alt={`item-${data.id}`} fill className='!relative !w-auto !h-[80px]' />
+          <MyImage
+            src={detectImg(data?.more_data?.imageMain?.toString() || '')}
+            alt={`item-${data.id}`}
+            className='!relative !w-auto !h-[80px]'
+          />
         </div>
         <div className='flex flex-1 gap-1 flex-col max-w-[calc(100%-130px)] pr-2'>
           <div className='w-full'>
             <p className='text-medium font-semibold whitespace-nowrap overflow-hidden text-ellipsis '>{data.name}</p>
-            <span className='text-[12px] opacity-70 line-through'>{formatPriceBase(data.price, data.discount)} VNĐ</span>
+            <span className='text-[12px] opacity-70 line-through'>
+              {formatPriceBase(data.price, data.discount)} VNĐ
+            </span>
           </div>
           <div className='w-full flex justify-between items-baseline'>
-            {noEdit ? <div>{`x${data.amount}`}</div> : <SubAndPlus isSquare value={data?.amount || 1} callBackPlus={() => onChangeAmountBuy()} callBackSub={() => onChangeAmountBuy(false)} />}
+            {noEdit ? (
+              <div>{`x${data.amount}`}</div>
+            ) : (
+              <SubAndPlus
+                isSquare
+                value={data?.amount || 1}
+                callBackPlus={() => onChangeAmountBuy()}
+                callBackSub={() => onChangeAmountBuy(false)}
+              />
+            )}
 
             <div className='font-bold  text-green-800'>{`${numberWithCommas(data.amount * data.price)} VNĐ`}</div>
           </div>

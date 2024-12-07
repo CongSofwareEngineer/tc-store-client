@@ -1,7 +1,7 @@
+import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import useAos from '@/hook/useAos'
 import useMedia from '@/hook/useMedia'
-import Image from 'next/image'
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 const ContainerList = styled.div`
@@ -80,10 +80,9 @@ const Banner = () => {
         {listBanner.map((e) => {
           return (
             <div className='flex flex-shrink-0  relative overflow-hidden w-full h-full' key={e.url}>
-              <Image
+              <MyImage
                 alt={`img-banner-${e.url}`}
                 src={e.url}
-                fill
                 style={{
                   minWidth: '100%',
                   minHeight: '100%',
@@ -102,20 +101,38 @@ const Banner = () => {
     return (
       <>
         <div className='absolute md:top-[50%] top-[45%] left-3 right-[-20px]'>
-          <Image alt={`icon-btnPre`} src={images.home.banner.btnSlider} fill onClick={() => handleControl()} className='!relative !w-[45px] !h-auto cursor-pointer hover:scale-110' />
+          <MyImage
+            alt={`icon-btnPre`}
+            src={images.home.banner.btnSlider}
+            onClick={() => handleControl()}
+            className='!relative !w-[45px] !h-auto cursor-pointer hover:scale-110'
+          />
         </div>
         <div className='absolute md:bottom-[5vh] bottom-[5vw] flex md:gap-4 gap-3 w-full justify-center items-center'>
           {listBanner.map((_, indexItem) => {
             return (
-              <div onClick={() => setIndex(indexItem)} key={`icon-${indexItem}`} className='  hover:scale-110 cursor-pointer md:w-9 w-8  flex justify-center items-center relative'>
-                <Image alt={`icon-${index}`} src={images.home.banner[indexItem === index ? 'btnPositionActive' : 'btnPositionUnActive']} fill className='!relative !w-full !h-auto ' />
+              <div
+                onClick={() => setIndex(indexItem)}
+                key={`icon-${indexItem}`}
+                className='  hover:scale-110 cursor-pointer md:w-9 w-8  flex justify-center items-center relative'
+              >
+                <MyImage
+                  alt={`icon-${index}`}
+                  src={images.home.banner[indexItem === index ? 'btnPositionActive' : 'btnPositionUnActive']}
+                  className='!relative !w-full !h-auto '
+                />
                 <div className='absolute-center text-white  text-center'>{indexItem + 1}</div>
               </div>
             )
           })}
         </div>
         <div className='absolute right-5 md:top-[50%] top-[45%]'>
-          <Image alt={`icon-btnPre`} src={images.home.banner.btnSlider} fill onClick={() => handleControl(false)} className=' rotate-180 !relative !w-[45px] !h-auto cursor-pointer hover:scale-110' />
+          <MyImage
+            alt={`icon-btnPre`}
+            src={images.home.banner.btnSlider}
+            onClick={() => handleControl(false)}
+            className=' rotate-180 !relative !w-[45px] !h-auto cursor-pointer hover:scale-110'
+          />
         </div>
       </>
     )

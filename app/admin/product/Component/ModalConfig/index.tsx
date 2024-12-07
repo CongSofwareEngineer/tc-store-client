@@ -111,7 +111,7 @@ const ProductConfig = ({ item }: { item: any }) => {
 
     if (data?.data) {
       showNotificationSuccess(translate(item ? 'success.update' : 'success.create'))
-      refreshQuery(QUERY_KEY.GetListProductAdmin)
+      await refreshQuery(QUERY_KEY.GetListProductAdmin)
       closeModalDrawer()
     } else {
       showNotificationError(translate(item ? 'error.update' : 'errors.create'))
@@ -215,8 +215,8 @@ const ProductConfig = ({ item }: { item: any }) => {
                     imageMore: [...formData.imageMore, e],
                   })
                 }
-                maxSizeOutputKB={500}
-                maxPixelReduce={500}
+                maxSizeOutputKB={200}
+                maxPixelReduce={200}
               >
                 <div className='flex w-full gap-2 justify-center items-center'>
                   <CameraOutlined />

@@ -1,7 +1,7 @@
 import { OptionPaymentType } from '@/app/my-cart/type'
-import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import useLanguage from '@/hook/useLanguage'
+import Image from 'next/image'
 import React from 'react'
 
 const OptionsPayment = ({ listOptions, onChangeOptions, optionSelected }: OptionPaymentType) => {
@@ -18,7 +18,12 @@ const OptionsPayment = ({ listOptions, onChangeOptions, optionSelected }: Option
     <div className='bg-white w-full  flex flex-col   border-[1px] shadow-gray1 border-gray-300 md:p-3 px-4 py-4'>
       <div className='flex w-full gap-2'>
         <div>
-          <MyImage src={images.icon.iconOptionPayment} alt='icon-optionPayment-bill' widthImage='25px' heightImage='25px' />
+          <Image
+            fill
+            src={images.icon.iconOptionPayment}
+            alt='icon-optionPayment-bill'
+            className='!relative !w-[25px] !h-[25px]'
+          />
         </div>
 
         <div className='text-medium font-semibold'>{translate('optionPayment.paymentMethod')}</div>
@@ -28,12 +33,17 @@ const OptionsPayment = ({ listOptions, onChangeOptions, optionSelected }: Option
         {listOptions.map((e, index) => {
           return (
             <div className='relative flex gap-2 items-center' key={`option-payment-${index}`}>
-              <div onClick={() => onChangeOptions(e)} className='cursor-pointer flex gap-2  md:text-[16px] text-[14px] items-center'>
-                <MyImage heightImage='20px' widthImage='20px' src={getIcon(e.value)} alt={`checkbox-${e.name}`} />
-                {e.icon && <MyImage heightImage='18px' widthImage='18px' src={e.icon} alt={`icon-${e.name}`} />}
+              <div
+                onClick={() => onChangeOptions(e)}
+                className='cursor-pointer flex gap-2  md:text-[16px] text-[14px] items-center'
+              >
+                <Image fill src={getIcon(e.value)} alt={`checkbox-${e.name}`} className='!relative !w-5 !h-5' />
+                {e.icon && <Image fill src={e.icon} alt={`icon-${e.name}`} className='!relative !w-[18px] !h-[18px]' />}
                 <span>{e.name}</span>
               </div>
-              {e.disabled && <div className='bg-white absolute w-full h-full inset-0 opacity-60 z-10 cursor-no-drop ' />}
+              {e.disabled && (
+                <div className='bg-white absolute w-full h-full inset-0 opacity-60 z-10 cursor-no-drop ' />
+              )}
             </div>
           )
         })}

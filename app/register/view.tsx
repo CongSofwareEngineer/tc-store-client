@@ -2,7 +2,7 @@
 import ButtonForm from '@/components/Form/ButtonForm'
 import InputForm from '@/components/Form/InputForm'
 import MyForm from '@/components/Form/MyForm'
-import MyImage from '@/components/MyImage'
+
 import { images } from '@/configs/images'
 import { BodyUserData } from '@/constant/firebase'
 import useAos from '@/hook/useAos'
@@ -14,6 +14,7 @@ import ClientApi from '@/services/clientApi'
 import { encryptData } from '@/utils/crypto'
 import { showNotificationError } from '@/utils/notification'
 import { Checkbox } from 'antd'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
@@ -79,9 +80,10 @@ const RegisterScreen = () => {
       <div className='w-full flex justify-between h-full items-center'>
         {!isMobile && (
           <div data-aos='fade-right' className='flex-1 flex flex-col justify-center items-center max-w-[450px]'>
-            <MyImage
+            <Image
+              fill
               alt={'tc-store-logo-register'}
-              className='cursor-pointer max-w-0['
+              className='cursor-pointer !relative !w-full !h-auto'
               onClick={() => router.push('/')}
               src={images.logoStore}
             />

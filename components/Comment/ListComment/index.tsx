@@ -1,12 +1,13 @@
 import ImageAdmin from '@/components/ImageAdmin'
 import { ItemDetailType } from '@/components/InfoItemDetail/type'
-import MyImage from '@/components/MyImage'
+
 import MyLoadMore from '@/components/MyLoadMore'
 import useComment from '@/hook/tank-query/useComment'
 import { detectAvatar, ellipsisText } from '@/utils/functions'
 import { Rate } from 'antd'
 import React from 'react'
 import LoadingData from './LoadingData'
+import Image from 'next/image'
 
 const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
   const { data, isLoading, hasNextPage, isFetchingNextPage, loadMore } = useComment(dataItem?._id)
@@ -23,7 +24,7 @@ const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
             return (
               <div key={e?.sdt} className='flex gap-4 pb-3 border-b-[1px] mt-1 border-b-gray-200'>
                 <div className='aspect-square h-fit rounded-lg relative overflow-hidden w-[20%] md:min-w-[80px] min-w-[50px]  max-w-[100px]'>
-                  <MyImage src={detectAvatar(e.user[0]?.avatar)} alt={e.sdt} widthImage='100%' />
+                  <Image src={detectAvatar(e.user[0]?.avatar)} alt={e.sdt} fill className='!relative !w-full !h-auto' />
                 </div>
                 <div className='flex flex-col gap-1'>
                   <p className='font-bold'>{e.name}</p>

@@ -11,13 +11,13 @@ import ButtonForm from '@/components/Form/ButtonForm'
 import BigNumber from 'bignumber.js'
 import { numberWithCommas } from '@/utils/functions'
 import useCheckForm from '@/hook/useCheckForm'
-import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import ListItemCart from '../ListItemCart'
 import useModalDrawer from '@/hook/useModalDrawer'
 import { FILTER_BILL } from '@/constant/app'
 import SelectInputEx from '@/components/ContentFormPayment/Component/SelectInputEx'
 import { showNotificationSuccess } from '@/utils/notification'
+import Image from 'next/image'
 
 const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
   const { userData, isLogin } = useUserData()
@@ -61,9 +61,8 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
     return numberWithCommas(total + (plusFee ? 30000 : 0))
   }
 
-  const handleClose = () => {
-    refreshQuery(QUERY_KEY.LengthCartUser)
-    refreshQuery(QUERY_KEY.MyCartUser)
+  const handleClose = async () => {
+    await Promise.all([refreshQuery(QUERY_KEY.LengthCartUser), refreshQuery(QUERY_KEY.MyCartUser)])
     closeModalDrawer()
   }
 
@@ -119,11 +118,20 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
   return (
     <div className='flex flex-col gap-3 w-full'>
       {formData && (
-        <MyForm onFinish={handleSubmit} formData={formData} onValuesChange={(_, value) => setFormData({ ...formData, ...value })}>
+        <MyForm
+          onFinish={handleSubmit}
+          formData={formData}
+          onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
+        >
           <div className='bg-white flex flex-col w-full border-[1px] shadow-gray1 border-gray-300  px-4 pt-4 pb-6'>
             <div className='flex w-full gap-2'>
               <div>
-                <MyImage src={images.userDetail.iconUserDetail} alt='my-cart-infoReceived' widthImage='25px' heightImage='25px' />
+                <Image
+                  fill
+                  className='!relative !w-[25px] !h-[25px]'
+                  src={images.userDetail.iconUserDetail}
+                  alt='my-cart-infoReceived'
+                />
               </div>
               <div className='text-medium font-semibold'>{translate('bill.infoReceived')}</div>
             </div>
@@ -132,7 +140,13 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
 
             <div className='flex md:gap-6 gap-3 flex-col md:grid md:grid-cols-2 '>
               <div className='flex flex-1'>
-                <InputForm validator={checkNumberPhone} required name='sdt' label={translate('userDetail.sdt')} classFromItem='w-full' />
+                <InputForm
+                  validator={checkNumberPhone}
+                  required
+                  name='sdt'
+                  label={translate('userDetail.sdt')}
+                  classFromItem='w-full'
+                />
               </div>
               <div className='flex flex-1'>
                 <InputForm required name='name' label={translate('userDetail.name')} classFromItem='w-full' />
@@ -152,14 +166,19 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
                   }}
                 />
               ) : (
-                <InputForm required name='addressShip' label={translate('productDetail.modalBuy.enterAddress')} classFromItem='w-full' />
+                <InputForm
+                  required
+                  name='addressShip'
+                  label={translate('productDetail.modalBuy.enterAddress')}
+                  classFromItem='w-full'
+                />
               )}
             </div>
           </div>
           <div className='bg-white w-full mt-4 flex flex-col  border-[1px] shadow-gray1 border-gray-300 md:p-3 px-4 pt-4'>
             <div className='flex w-full gap-2'>
               <div>
-                <MyImage src={images.icon.iconCart} alt='my-cart-bill' widthImage='25px' heightImage='25px' />
+                <Image fill className='!relative !w-[25px] !h-[25px]' src={images.icon.iconCart} alt='my-cart-bill' />
               </div>
               <div className='text-medium font-semibold'>{translate('bill.infoBill')}</div>
             </div>
@@ -171,7 +190,7 @@ const ModalPayment = ({ dataCart, callBack }: ModalPaymentType) => {
           <div className='bg-white w-full mt-4 flex flex-col  border-[1px] shadow-gray1 border-gray-300 md:p-3 px-4 py-4'>
             <div className='flex w-full gap-2'>
               <div>
-                <MyImage src={images.icon.iconBill} alt='my-cart-bill' widthImage='25px' heightImage='25px' />
+                <Image fill className='!relative !w-[25px] !h-[25px]' src={images.icon.iconBill} alt='my-cart-bill' />
               </div>
               <div className='text-medium font-semibold'>{translate('bill.detailPayment')}</div>
             </div>

@@ -1,10 +1,10 @@
 'use client'
-import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import useUserData from '@/hook/useUserData'
 import { TagFilled } from '@ant-design/icons'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
@@ -78,7 +78,7 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
           {!isMobile ? (
             <div className='w-[200px] flex flex-col p-3 gap-2 bg-[#000000d6]'>
               <div className='w-full'>
-                <MyImage alt='logo-admin' src={images.logo} widthImage='100%' heightImage='auto' />
+                <Image fill alt='logo-admin' src={images.logo} className='!relative !w-full !h-auto' />
               </div>
               {LIST_MENU.map((e) => {
                 return (
@@ -103,7 +103,12 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
                 {LIST_MENU.map((e) => {
                   return (
                     <div key={e.url} className='w-auto'>
-                      <Link href={e.url} className={`${patchName === e.url ? 'font-bold underline' : ''} text-nowrap bg-green-100 p-4 py-1 min-w-[50px] border-[1px] border-blue-300 rounded-lg text-black`}>
+                      <Link
+                        href={e.url}
+                        className={`${
+                          patchName === e.url ? 'font-bold underline' : ''
+                        } text-nowrap bg-green-100 p-4 py-1 min-w-[50px] border-[1px] border-blue-300 rounded-lg text-black`}
+                      >
                         {e.title}
                       </Link>
                     </div>

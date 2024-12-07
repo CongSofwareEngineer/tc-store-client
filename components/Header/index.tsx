@@ -4,6 +4,7 @@ import { images } from '@/configs/images'
 import MyImage from '../MyImage'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 const Nav = dynamic(() => import('./Component/Nav'), { ssr: true })
 const Account = dynamic(() => import('./Component/Account'), { ssr: true })
 
@@ -15,11 +16,7 @@ const Header = () => {
         href='mailto:hodiencong2000.@gmail.com'
         className='absolute z-[-1] opacity-0'
       />
-      <a
-        aria-label='tel:0932225405'
-        href='tel:0932225405'
-        className='absolute z-[-1] opacity-0'
-      />
+      <a aria-label='tel:0932225405' href='tel:0932225405' className='absolute z-[-1] opacity-0' />
       <div className='w-full h-14 ' />
       <div className='w-full h-14 fixed z-10 inset-0 '>
         <div className='border-b-2 border-green-300 w-full flex m-auto justify-center items-center bg-white'>
@@ -29,13 +26,7 @@ const Header = () => {
           >
             <div className='h-full relative '>
               <Link href={'/'}>
-                <MyImage
-                  src={images.logo}
-                  alt='logo-tcstore'
-                  fill
-                  widthImage={'auto'}
-                  heightImage='100%'
-                />
+                <Image src={images.logo} alt='logo-tcstore' fill className='!relative !w-auto !h-full' />
               </Link>
             </div>
             <Nav />

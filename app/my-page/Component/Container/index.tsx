@@ -1,5 +1,5 @@
 'use client'
-import MyImage from '@/components/MyImage'
+
 import { images } from '@/configs/images'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
@@ -11,6 +11,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { PropsWithChildren } from 'react'
 import Avatar from '../Avatar'
+import Image from 'next/image'
 const Container = ({ children }: PropsWithChildren) => {
   const { isMobile, isClient } = useMedia()
   const { translate } = useLanguage()
@@ -40,7 +41,12 @@ const Container = ({ children }: PropsWithChildren) => {
           color: 'black',
         }}
       >
-        <MyImage src={icon} alt={`icon-menu-my-profile-${name}`} widthImage={isMobile ? '20px' : '25px'} heightImage={isMobile ? '20px' : '25px'} />
+        <Image
+          src={icon}
+          alt={`icon-menu-my-profile-${name}`}
+          fill
+          className='!relative md:!w-[25px] md:!h-[25px] !w-5 !h-5'
+        />
         <span>{name}</span>
       </Link>
     )

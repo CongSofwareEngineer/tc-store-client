@@ -1,4 +1,5 @@
 export const images = {
+  bgWhiteBlur: '/images/CoffeeDetail/bgWhiteBlur.avif',
   logo: '/logo_tc_store.png',
   logoStore: '/logo_tc_store.png',
   footer: {
@@ -26,10 +27,8 @@ export const images = {
     iconSmell: '/images/Home/smell.png',
     banner: {
       btnSlider: '/images/Home/Banner/iconBtnPositionControl.png',
-      btnPositionActive:
-        '/images/Home/Banner/bgBtnPositionItemInfo2Actived.png',
-      btnPositionUnActive:
-        '/images/Home/Banner/bgBtnPositionItemInfo2UnActive.png',
+      btnPositionActive: '/images/Home/Banner/bgBtnPositionItemInfo2Actived.png',
+      btnPositionUnActive: '/images/Home/Banner/bgBtnPositionItemInfo2UnActive.png',
       bannerNest: '/images/Home/Banner/bannerNest.webp',
       bannerNest2: '/images/Home/Banner/bannerNest2.webp',
       bannerLaptop2: '/images/Home/Banner/bannerLaptop2.webp',

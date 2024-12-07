@@ -78,24 +78,36 @@ const MyProfile = () => {
               <span className='w-[140px]'>{translate('userDetail.name')}</span>
               <div className='flex flex-1 gap-2 items-end'>
                 <MyInput className='w-[90%]' typeBtn={1} value={userData?.name} />
-                <EditOutlined onClick={() => handleEditName('name')} className='text-xl cursor-pointer hover:scale-110 ml-1' style={{ color: 'green' }} />
+                <EditOutlined
+                  onClick={() => handleEditName('name')}
+                  className='text-xl cursor-pointer hover:scale-110 ml-1'
+                  style={{ color: 'green' }}
+                />
               </div>
             </div>
             <div className='flex gap-2'>
               <span className='w-[140px]'>{translate('userDetail.pass')}</span>
               <div className='flex flex-1 gap-2 items-end'>
                 <MyInput className='w-[90%]' typeBtn={1} type='password' value={userData?.pass} disabled />
-                <EditOutlined onClick={() => handleEditName('pass')} className='text-xl cursor-pointer hover:scale-110 ml-1' style={{ color: 'green' }} />
+                <EditOutlined
+                  onClick={() => handleEditName('pass')}
+                  className='text-xl cursor-pointer hover:scale-110 ml-1'
+                  style={{ color: 'green' }}
+                />
               </div>
             </div>
             <div className='flex gap-2'>
               <span className='w-[140px]'>{translate('userDetail.sex')}</span>
               <div className='flex flex-1 gap-2 items-end'>
                 <div className='flex gap-2 items-end'>
-                  <MyCheckBox value={!userData?.sex} />
+                  <MyCheckBox className='!w-[22px] !h-[22px]' value={!userData?.sex} />
                   <span>{translate(!!userData?.sex ? 'textPopular.female' : 'textPopular.male')}</span>
                 </div>
-                <EditOutlined onClick={() => handleEditName('sex')} className='text-xl cursor-pointer hover:scale-110 ml-1' style={{ color: 'green' }} />
+                <EditOutlined
+                  onClick={() => handleEditName('sex')}
+                  className='text-xl cursor-pointer hover:scale-110 ml-1'
+                  style={{ color: 'green' }}
+                />
               </div>
             </div>
             <div className='flex gap-2'>

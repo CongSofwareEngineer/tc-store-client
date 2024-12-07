@@ -83,7 +83,7 @@ const fetchConfig = async ({
   timeOut = 70000,
 }: ServerAPIReqType): Promise<{ data: any; error?: any; messages: any }> => {
   const config: any = {
-    baseURL: 'https://tc-store-server.fra1.zeabur.app/',
+    baseURL: 'http://localhost:3001/',
     url,
     // cache: isCache ? 'force-cache' : 'no-store',
     method,

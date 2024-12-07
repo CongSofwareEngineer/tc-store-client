@@ -6,7 +6,6 @@ import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ServerApi from '@/services/serverApi'
-import { delayTime } from '@/utils/functions'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import React, { useState } from 'react'
 
@@ -25,8 +24,7 @@ const ModalCancelOrder = ({ data }: { data: any }) => {
       method: REQUEST_TYPE.DELETE,
     })
     if (res.data) {
-      refreshQuery(QUERY_KEY.MyBillUser)
-      await delayTime(1000)
+      await refreshQuery(QUERY_KEY.MyBillUser)
       showNotificationSuccess(translate('myBill.cancelOrder.cancelSuccess'))
     } else {
       showNotificationError(translate('myBill.cancelOrder.cancelEror'))

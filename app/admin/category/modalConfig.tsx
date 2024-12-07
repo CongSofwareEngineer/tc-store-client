@@ -77,7 +77,7 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
         } else {
           showNotificationSuccess(translate('success.create'))
         }
-        refreshQuery(QUERY_KEY.GetCategoryAdmin)
+        await refreshQuery(QUERY_KEY.GetCategoryAdmin)
         closeModalDrawer()
       }
     } finally {
@@ -87,7 +87,12 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
 
   return (
     formData && (
-      <MyForm onValuesChange={(_, value) => setFormData({ ...formData, ...value })} formData={formData} onFinish={handleSubmit} className='!overflow-auto gap-2'>
+      <MyForm
+        onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
+        formData={formData}
+        onFinish={handleSubmit}
+        className='!overflow-auto gap-2'
+      >
         <div className='flex flex-col gap-2 w-full flex-1 overflow-y-auto '>
           <InputForm classFromItem='w-full ' name='keyName' label={'keyName'} required disable={!!data} />
           <Form.List name='subCategories'>
@@ -130,7 +135,11 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
           <CheckBoxForm classFromItem='w-full' name='isShow' label={translate('textPopular.showScreen')} />
           <div className='flex justify-center'>
             <div className='flex flex-col  w-[150px] h-[150px]   justify-between items-center'>
-              <UploadImage maxSizeOutputKB={200} typeFile={typeFile} handleUpload={(e) => setFormData({ ...formData, icon: e })}>
+              <UploadImage
+                maxSizeOutputKB={200}
+                typeFile={typeFile}
+                handleUpload={(e) => setFormData({ ...formData, icon: e })}
+              >
                 <div className='flex gap-2'>
                   <CameraOutlined />
                   <span>Icon</span>

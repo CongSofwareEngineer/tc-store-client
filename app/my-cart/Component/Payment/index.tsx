@@ -76,10 +76,12 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
     return numberWithCommas(total + (plusFee ? 30000 : 0))
   }
 
-  const refreshAllData = () => {
-    refreshQuery(QUERY_KEY.LengthCartUser)
-    refreshQuery(QUERY_KEY.MyCartUser)
-    refreshQuery(QUERY_KEY.GetProductByID)
+  const refreshAllData = async () => {
+    await Promise.all([
+      refreshQuery(QUERY_KEY.LengthCartUser),
+      refreshQuery(QUERY_KEY.MyCartUser),
+      refreshQuery(QUERY_KEY.GetProductByID),
+    ])
   }
 
   const getItemForShow = (e: any) => {
@@ -92,7 +94,9 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
   const handleSubmit = async () => {
     setLoading(true)
     openModalDrawer({
-      content: <ModalProcess title={translate('confirm.bill.createBill')} des={translate('confirm.bill.createBill_Des')} />,
+      content: (
+        <ModalProcess title={translate('confirm.bill.createBill')} des={translate('confirm.bill.createBill_Des')} />
+      ),
       configModal: {
         showHeader: false,
         showBtnClose: false,
@@ -142,7 +146,7 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
     }
 
     if (res?.data) {
-      refreshAllData()
+      await refreshAllData()
       openModalDrawer({
         content: (
           <ModalSuccess
@@ -169,16 +173,33 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
       {showBack && <BtnBack clickBack={clickBack} />}
       <div className='flex flex-col gap-3 w-full mt-1'>
         {formData && (
-          <MyForm onFinish={handleSubmit} formData={formData} onValuesChange={(_, value) => setFormData({ ...formData, ...value })}>
+          <MyForm
+            onFinish={handleSubmit}
+            formData={formData}
+            onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
+          >
             <div className='flex lg:flex-row flex-col lg:gap-6 gap-5'>
               <div className='flex flex-1 flex-col lg:max-w-[calc(100%-300px)]'>
-                <ContentForm listAddressShip={listAddressShip} setListAddressShip={setListAddressShip} onChange={onChangeAddressShip} />
+                <ContentForm
+                  listAddressShip={listAddressShip}
+                  setListAddressShip={setListAddressShip}
+                  onChange={onChangeAddressShip}
+                />
                 <ViewListOrder dataCart={dataCart} />
               </div>
 
               <div className='lg:w-[300px] flex flex-col md:gap-6 gap-5'>
-                <OptionsPayment onChangeOptions={onChangeOptions} listOptions={listOptions} optionSelected={optionSelected} />
-                <BillFinal disabledSubmit={!isValidSubmit} loading={loading} totalBill={getTotalPayBill()} totalBillFeeShip={getTotalPayBill(true)} />
+                <OptionsPayment
+                  onChangeOptions={onChangeOptions}
+                  listOptions={listOptions}
+                  optionSelected={optionSelected}
+                />
+                <BillFinal
+                  disabledSubmit={!isValidSubmit}
+                  loading={loading}
+                  totalBill={getTotalPayBill()}
+                  totalBillFeeShip={getTotalPayBill(true)}
+                />
               </div>
             </div>
           </MyForm>

@@ -1,8 +1,7 @@
 import { Select, SelectProps } from 'antd'
-// import React, { PropsWithChildren } from 'react'
 import React from 'react'
-import MyImage from '../MyImage'
 import useLanguage from '@/hook/useLanguage'
+import Image from 'next/image'
 
 export type PropsSelectItem = {
   label: string | number
@@ -35,11 +34,11 @@ const MySelect = ({ option, fullImage = false, ...props }: PropsSelect) => {
       <div className='flex flex-col gap-2'>
         <span className='normal-case'>{item.label || item.name}</span>
         {item?.image && (
-          <MyImage
+          <Image
+            fill
+            className='!relative !w-[100px] !h-[100px]'
             src={item?.image?.toString()}
             alt={`select-item-${item.label || item.name}`}
-            width={100}
-            height={100}
           />
         )}
       </div>

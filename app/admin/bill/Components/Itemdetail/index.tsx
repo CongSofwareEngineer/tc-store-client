@@ -1,7 +1,7 @@
-import MyImage from '@/components/MyImage'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import { detectImg, formatPrice, numberWithCommas } from '@/utils/functions'
+import Image from 'next/image'
 import React from 'react'
 
 const ItemDetail = ({ data }: { data: any }) => {
@@ -32,9 +32,17 @@ const ItemDetail = ({ data }: { data: any }) => {
 
       {data?.listBill.map((e: any) => {
         return (
-          <div className={`flex gap-4 w-full justify-center items-center border-b-2 border-gray-300 pb-5 pt-5`} key={e._id}>
+          <div
+            className={`flex gap-4 w-full justify-center items-center border-b-2 border-gray-300 pb-5 pt-5`}
+            key={e._id}
+          >
             <div className='w-[150px] aspect-square overflow-hidden'>
-              <MyImage alt={`img-product`} src={detectImg(e?.more_data?.imageMain)} widthImage='100%' heightImage='auto' />
+              <Image
+                fill
+                alt={`img-product`}
+                src={detectImg(e?.more_data?.imageMain)}
+                className='!relative !w-full !h-auto'
+              />
             </div>
             <div className='flex flex-col gap-2 flex-1'>
               <div className='text-green-500 flex gap-2 text-medium font-bold'>{e.more_data.name}</div>

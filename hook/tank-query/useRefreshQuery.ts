@@ -4,12 +4,12 @@ import { useQueryClient } from '@tanstack/react-query'
 const useRefreshQuery = () => {
   const queryClient = useQueryClient()
 
-  const refreshQuery = (key: QUERY_KEY) => {
-    queryClient.invalidateQueries({ queryKey: [key] })
+  const refreshQuery = async (key: QUERY_KEY) => {
+    await queryClient.invalidateQueries({ queryKey: [key] })
   }
 
-  const refreshListQuery = (listKey: QUERY_KEY[]) => {
-    queryClient.invalidateQueries({ queryKey: listKey })
+  const refreshListQuery = async (listKey: QUERY_KEY[]) => {
+    await queryClient.invalidateQueries({ queryKey: listKey })
   }
 
   return { refreshQuery, refreshListQuery }

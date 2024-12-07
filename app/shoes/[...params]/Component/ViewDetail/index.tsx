@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { ItemDetailType } from '../../type'
 import useAos from '@/hook/useAos'
 import useMedia from '@/hook/useMedia'
@@ -8,11 +8,10 @@ import { COOKIE_KEY } from '@/constant/app'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
-import { cloneData, delayTime, detectImg, formatPrice, formatPriceBase } from '@/utils/functions'
+import { detectImg, formatPrice, formatPriceBase } from '@/utils/functions'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import { getCookie, setCookie } from '@/services/CookiesService'
 import BtnBack from '@/components/BtnBack'
-import useGetProductByID from '@/hook/tank-query/useGetProductByID'
 import InfoItemDetail from '@/components/InfoItemDetail'
 import SubAndPlus from '@/components/SubAndPlus'
 
@@ -124,9 +123,7 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
         }
         await addCartNoLogin(bodyOther)
       }
-      refreshQuery(QUERY_KEY.LengthCartUser)
-      refreshQuery(QUERY_KEY.MyCartUser)
-      await delayTime(500)
+      await Promise.all([refreshQuery(QUERY_KEY.LengthCartUser), refreshQuery(QUERY_KEY.MyCartUser)])
       setLoadingAddCart(false)
       showNotificationSuccess(translate('addCart.addSuccess'))
     } finally {

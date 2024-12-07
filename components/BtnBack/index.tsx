@@ -3,6 +3,7 @@ import Link from 'next/link'
 import MyImage from '../MyImage'
 import { images } from '@/configs/images'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 type BtnBackType = {
   children?: React.ReactNode | undefined
@@ -17,7 +18,13 @@ const BtnBack = ({ title, url = [], onClick = null }: BtnBackType) => {
 
   return (
     <div className='flex w-full align-middle justify-start gap-1 mb-3 md:mb-6 items-center '>
-      <MyImage onClick={() => (onClick ? onClick() : router.back())} src={images.icon.iconBack} widthImage={'25px'} heightImage={'25px'} alt={'TC Store Icon Back page '} className='cursor-pointer' />
+      <Image
+        fill
+        onClick={() => (onClick ? onClick() : router.back())}
+        src={images.icon.iconBack}
+        alt={'TC Store Icon Back page '}
+        className='!relative !w-[25px] !h-[25px] cursor-pointer'
+      />
       <div className='ml-2 flex gap-1'>
         {typeof title === 'string' ? (
           <div className='md:text-[16px] text-[14px] '>{title}</div>
@@ -25,7 +32,11 @@ const BtnBack = ({ title, url = [], onClick = null }: BtnBackType) => {
           title?.map((item, index) => {
             if (url[index]) {
               return (
-                <Link className='cursor-pointer hover:underline text-[16px] text-blue-700 flex gap-1' href={url[index]} key={item}>
+                <Link
+                  className='cursor-pointer hover:underline text-[16px] text-blue-700 flex gap-1'
+                  href={url[index]}
+                  key={item}
+                >
                   <span>{item}</span>
                   <RightOutlined className='black' />
                 </Link>

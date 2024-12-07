@@ -43,7 +43,7 @@ const CategoryAdminScreen = () => {
         const res = await AdminApi.deleteCategories(item._id)
         if (res?.data) {
           showNotificationSuccess(translate('success.delete'))
-          refreshQuery(QUERY_KEY.GetCategoryAdmin)
+          await refreshQuery(QUERY_KEY.GetCategoryAdmin)
         } else {
           showNotificationError(translate('error.delete'))
         }

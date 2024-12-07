@@ -1,4 +1,3 @@
-import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import useLengthCart from '@/hook/tank-query/useLengthCart'
 import useMedia from '@/hook/useMedia'
@@ -10,6 +9,7 @@ import CartNoLogin from '../CartNoLogin'
 import useLanguage from '@/hook/useLanguage'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
+import Image from 'next/image'
 
 const CartUser = () => {
   const router = useRouter()
@@ -41,8 +41,12 @@ const CartUser = () => {
   }
   return (
     <div className='relative' onClick={handleClick}>
-      {data?.lengthCart > 0 && <span className='text-[11px] leading-[21px] text-center rounded-[50%] absolute w-[20px] h-[20px] z-[1] top-[-7px] right-[13px] bg-[#00ffb4]'>{data?.lengthCart}</span>}
-      <MyImage src={images.icon.iconCart} alt='my-cart' widthImage='25px' heightImage='25px' />
+      {data?.lengthCart > 0 && (
+        <span className='text-[11px] leading-[21px] text-center rounded-[50%] absolute w-[20px] h-[20px] z-[1] top-[-7px] right-[13px] bg-[#00ffb4]'>
+          {data?.lengthCart}
+        </span>
+      )}
+      <Image fill src={images.icon.iconCart} alt='my-cart' className='!relative !w-[25px] !h-[25px' />
     </div>
   )
 }

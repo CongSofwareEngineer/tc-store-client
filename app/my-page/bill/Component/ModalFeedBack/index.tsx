@@ -1,4 +1,3 @@
-import MyImage from '@/components/MyImage'
 import MyInput from '@/components/MyInput'
 import MyLoading from '@/components/MyLoading'
 import UploadImage from '@/components/UploadImg'
@@ -14,6 +13,7 @@ import { detectImg } from '@/utils/functions'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import { ArrowLeftOutlined, CameraOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import { Button, Image, Rate } from 'antd'
+import ImageNext from 'next/image'
 import React, { useEffect, useState } from 'react'
 import ViewDetailBill from '../ViewDetailBill'
 
@@ -90,9 +90,9 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
       }
 
       if (res?.data) {
+        await refreshQuery(QUERY_KEY.MyBillUser)
         showNotificationSuccess(translate('success.feedback'))
         closeModalDrawer()
-        refreshQuery(QUERY_KEY.MyBillUser)
       } else {
         showNotificationError(translate('error.feedback'))
       }
@@ -133,7 +133,10 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
         {listImgFeeBack.map((item: any, index: number) => (
           <div key={`img-${index}`} className='relative w-[70px] '>
             <Image alt='img' className='w-[70px]' src={detectImg(item?.base64 || item)} />
-            <CloseCircleOutlined onClick={() => deleteImg(index)} className='absolute text-[20px] z-10 cursor-pointer right-0 top-0' />
+            <CloseCircleOutlined
+              onClick={() => deleteImg(index)}
+              className='absolute text-[20px] z-10 cursor-pointer right-0 top-0'
+            />
           </div>
         ))}
       </div>
@@ -158,7 +161,7 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
       </div>
       <div className='flex gap-2'>
         <div className='md:w-[100px] w-[80px] aspect-square'>
-          <MyImage src={detectImg(data?.more_data?.imageMain)} alt={data.keyName} />
+          <ImageNext src={detectImg(data?.more_data?.imageMain)} alt={data.keyName} fill className='!relative ' />
         </div>
         <div className='flex flex-col gap-2'>
           <div className='font-bold text-lg'>{data?.more_data?.name}</div>
@@ -169,7 +172,13 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
       <div className='mt-2 mb-1'>{`${translate('textPopular.note')} :`}</div>
       <MyInput onChangeText={(e) => setDes(e.toString())} type='area' rows={3} showCount value={des} maxLength={150} />
       <div className='mb-3' />
-      <UploadImage handleUpload={handleUpload} disabled={listImgFeeBack.length >= 2} listData={listImgFeeBack} maxSizeOutputKB={200} maxPixelReduce={400}>
+      <UploadImage
+        handleUpload={handleUpload}
+        disabled={listImgFeeBack.length >= 2}
+        listData={listImgFeeBack}
+        maxSizeOutputKB={200}
+        maxPixelReduce={400}
+      >
         <div className='flex gap-2 item-center w-full mb-2'>
           <CameraOutlined className='cursor-pointer' style={{ fontSize: 25, color: 'blue' }} />
           <span>{translate('comment.uploadImg_des')}</span>
