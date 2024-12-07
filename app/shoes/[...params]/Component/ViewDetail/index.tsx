@@ -20,7 +20,6 @@ import ClientApi from '@/services/clientApi'
 import { DataItemType } from '@/app/my-cart/type'
 import { showNotificationSuccess } from '@/utils/notification'
 import { Button } from 'antd'
-import Image from 'next/image'
 import Attributes from '../Attributes'
 import MyImage from '@/components/MyImage'
 
@@ -54,16 +53,16 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
     setIsPayment(true)
   }
 
-  const handleAddCartLogin = async (body: DataAddCart) => {
-    const listCartUser = await ClientApi.getCartDetail(body.idUser!, body.idProduct!)
+  const handleAddCartLogin = async (data: DataAddCart) => {
+    const listCartUser = await ClientApi.getCartDetail(data.idUser!, data.idProduct!)
 
     const dataExited = listCartUser?.data[0]
-
     if (!dataExited) {
-      await ClientApi.createMyCart(body)
+      await ClientApi.createMyCart(data)
     } else {
-      const body = {
+      const body: DataAddCart = {
         amount: Number(dataExited.amount) + Number(amountBuy),
+        configBill: data.configBill,
       }
       await ClientApi.updateMyCart(dataExited._id, body)
     }
@@ -89,6 +88,7 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
     } else {
       arrTemp.push(body)
     }
+
     await setCookie(COOKIE_KEY.MyCart, arrTemp)
   }
 
@@ -98,7 +98,7 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
       const body: DataAddCart = {
         amount: amountBuy,
         idProduct: productDetail._id?.toString(),
-        moreConfig: {},
+        configBill: productDetail.configBill,
       }
       if (isLogin) {
         body.idUser = userData?._id
@@ -110,6 +110,7 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
           keyNameProduct: productDetail?.keyName!,
           selected: true,
           id: '',
+          configBill: productDetail.configBill,
         }
         bodyOther.date = new Date().getTime().toFixed()
         bodyOther.more_data = {
@@ -168,7 +169,7 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
               </Button>
               <Button type='primary' onClick={handleAddCart} className='min-w-[30%] !h-[40px]' loading={loadingAddCart}>
                 <div className='flex gap-3 whitespace-nowrap'>
-                  <Image src={images.icon.iconCart} alt='btn-add-cart' fill className='!relative !w-[25px] !h-[25px]' />
+                  <MyImage src={images.icon.iconCart} alt='btn-add-cart' className='!relative !w-[25px] !h-[25px]' />
                   <span>{translate('common.addCart')}</span>
                 </div>
               </Button>
@@ -189,11 +190,10 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
         <BtnBack title={['Shopp', productDetail.name]} url={['/shop']} />
         <div className='pt-8 pb-2 shadow-lg shadow-yellow-50 bg-white   w-full flex flex-col justify-center items-center'>
           <div data-aos='fade-right' className='w-[80%]  overflow-hidden '>
-            <Image
+            <MyImage
               src={detectImg(productDetail.imageMain || images.userDetail.iconUserDetail)}
               alt={productDetail.des || ''}
               className='!relative !w-full !h-auto'
-              fill
             />
             <ImageMore data={productDetail} />
           </div>
@@ -224,7 +224,7 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
                 loading={loadingAddCart}
               >
                 <div className='flex gap-3 whitespace-nowrap'>
-                  <Image src={images.icon.iconCart} alt='btn-add-cart' className='!relative !w-[25px] !h-[25px]' fill />
+                  <MyImage src={images.icon.iconCart} alt='btn-add-cart' className='!relative !w-[25px] !h-[25px]' />
                   <span>{translate('common.addCart')}</span>
                 </div>
               </Button>

@@ -31,6 +31,27 @@ const ViewListOrder = ({ dataCart }: { dataCart: any[] }) => {
     return e.more_data || {}
   }
 
+  const renderConfigBill = (item: any) => {
+    return (
+      Object.entries(item?.configBill || {}).length > 1 && (
+        <div className='flex   flex-row   gap-3'>
+          {Object.entries(item?.configBill).map(([key, value], index: number) => {
+            const keyLocal: any = `textPopular.${key}`
+            const valueLocal: any = `admin.${key}.${value}`
+            return (
+              <div className='flex gap-1 text-xs'>
+                <div>{translate(keyLocal) || key}</div>
+                <span>:</span>
+                <div>{translate(valueLocal) || value}</div>
+                {index + 1 < Object.entries(item?.configBill || {}).length && <span>,</span>}
+              </div>
+            )
+          })}
+        </div>
+      )
+    )
+  }
+
   const renderItemMobile = () => {
     return (
       <div className='w-full flex flex-col'>
@@ -63,6 +84,7 @@ const ViewListOrder = ({ dataCart }: { dataCart: any[] }) => {
                     <div className='text-[12px] opacity-60'>{`${translate('category')} : ${getLabelCategory(
                       getItemForShow(e)?.category,
                     )}`}</div>
+                    {renderConfigBill(e)}
                     <div>{`${translate('textPopular.amount')} : x${e.amount}`}</div>
                     <div className='flex gap-1'>
                       <span>{translate('textPopular.totalMoney')} :</span>
@@ -121,6 +143,7 @@ const ViewListOrder = ({ dataCart }: { dataCart: any[] }) => {
                     <div className='opacity-80 text-xs '>{`${translate('category')} : ${
                       getLabelCategory(getItemForShow(e)?.category) || 'typeProduct'
                     }`}</div>
+                    {renderConfigBill(e)}
                   </div>
                 </div>
                 <div className='w-[20%] '>

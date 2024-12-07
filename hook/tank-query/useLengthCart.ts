@@ -24,7 +24,6 @@ const useLengthCart = (id = '') => {
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_KEY.LengthCartUser, id, isLogin],
     queryFn: getData,
-    enabled: isLogin,
   })
   return {
     data,

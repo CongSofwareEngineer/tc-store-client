@@ -97,7 +97,7 @@ const ViewDetail = ({ productDetail, amountBuy = 0, setIsPayment, setAmountBuy }
       const body: DataAddCart = {
         amount: amountBuy,
         idProduct: dataItem._id?.toString(),
-        moreConfig: {},
+        configBill: dataItem?.configBill || {},
       }
       if (isLogin) {
         body.idUser = userData?._id
@@ -109,6 +109,7 @@ const ViewDetail = ({ productDetail, amountBuy = 0, setIsPayment, setAmountBuy }
           keyNameProduct: dataItem.keyName,
           selected: true,
           id: '',
+          configBill: dataItem?.configBill || {},
         }
         bodyOther.date = new Date().getTime().toFixed()
         bodyOther.more_data = {

@@ -5,7 +5,6 @@ import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import { useRouter } from 'next/navigation'
 import { detectImg, numberWithCommas } from '@/utils/functions'
-import Image from 'next/image'
 import MyImage from '@/components/MyImage'
 
 const InfoBill = ({ data, amountBuy }: InfoBillType) => {
@@ -47,8 +46,7 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
         <div className='w-full flex gap-4 relative py-2 items-center'>
           <div className='w-[100px] '>
             <div className='flex justify-center mt-2'>
-              <Image
-                fill
+              <MyImage
                 className='!relative !w-auto !h-[80px]'
                 src={detectImg(data?.imageMain?.toString() || '')}
                 alt={`item-${data?.name}`}
@@ -59,7 +57,7 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
             <div className='flex flex-col gap-1 w-full'>
               <div className='text-medium font-bold'>{data?.name}</div>
               <div className='text-[12px] opacity-60'>{renderConfigBill()}</div>
-              <div>{`${translate('textPopular.amount')} : ${amountBuy}`}</div>
+              <div>{`${translate('textPopular.amount')} : x${amountBuy}`}</div>
               <div className='flex gap-1'>
                 <span>{translate('textPopular.totalMoney')} :</span>
                 <span className='font-bold text-green-700'>{numberWithCommas(amountBuy * data?.price)} VNĐ</span>
@@ -123,7 +121,7 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
     <div className='bg-white w-full mt-4 flex flex-col  border-[1px] shadow-gray1 border-gray-300 p-3 px-4 pt-4'>
       <div className='flex w-full gap-2'>
         <div>
-          <Image className='!relative !w-[25px] !h-[25px]' src={images.icon.iconCart} alt='my-cart-bill' fill />
+          <MyImage className='!relative !w-[25px] !h-[25px]' src={images.icon.iconCart} alt='my-cart-bill' />
         </div>
         <div className='text-medium font-semibold'>{translate('bill.infoBill')}</div>
       </div>

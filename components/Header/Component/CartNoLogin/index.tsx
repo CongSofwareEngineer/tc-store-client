@@ -98,6 +98,27 @@ const CartNoLogin = () => {
     return total
   }
 
+  const renderConfigBill = (item: any) => {
+    return (
+      Object.entries(item?.configBill || {}).length > 1 && (
+        <div className='flex   flex-row   gap-3'>
+          {Object.entries(item?.configBill).map(([key, value], index: number) => {
+            const keyLocal: any = `textPopular.${key}`
+            const valueLocal: any = `admin.${key}.${value}`
+            return (
+              <div className='flex gap-1 text-xs'>
+                <div>{translate(keyLocal) || key}</div>
+                <span>:</span>
+                <div>{translate(valueLocal) || value}</div>
+                {index + 1 < Object.entries(item?.configBill || {}).length && <span>,</span>}
+              </div>
+            )
+          })}
+        </div>
+      )
+    )
+  }
+
   const renderItem = (item: DataItemType, index: number) => {
     return (
       <div
@@ -124,12 +145,7 @@ const CartNoLogin = () => {
           <Link href={`/shop/${item.more_data?.keyName}`}>
             <p className='font-bold text-black hover:underline'>{item.more_data?.name}</p>
           </Link>
-          <div className='text-[11px] opacity-75'>
-            {`
-              ${translate('category')} :
-             ${getLabelCategory(item.more_data?.category)}
-            `}
-          </div>
+          {renderConfigBill(item)}
           <div className='line-through font-medium'>
             {formatPriceBase(item.more_data?.price, item.more_data?.disCount)}
           </div>

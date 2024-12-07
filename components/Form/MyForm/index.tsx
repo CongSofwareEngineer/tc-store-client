@@ -19,13 +19,15 @@ const FormCustom = styled(Form)`
 `
 type FormPropsType = {
   children?: React.ReactNode | null
-  formData?: Record<string, any>
+  formData?: Record<string, any> | null
 } & FormProps
 const MyForm = ({ formData, children, ...props }: FormPropsType) => {
-  return (
+  return formData ? (
     <FormCustom initialValues={formData} {...props}>
       {children}
     </FormCustom>
+  ) : (
+    <></>
   )
 }
 
