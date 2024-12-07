@@ -4,7 +4,6 @@ import MyFilter from '@/components/MyFilter'
 import MyFilterCheckBox from '@/components/MyFilterCheckBox'
 import MyLoading from '@/components/MyLoading'
 import { DEFAULT_SIZE, FilterAPI } from '@/constant/app'
-import useSubCategories from '@/hook/tank-query/Admin/useSubCategories'
 import useLanguage from '@/hook/useLanguage'
 import useQuerySearch from '@/hook/useQuerySearch'
 import { AlignLeftOutlined, CaretRightOutlined } from '@ant-design/icons'
@@ -16,7 +15,6 @@ const MenuShoes = () => {
 
   const { translate, lang } = useLanguage()
   const { queries, updateQuery } = useQuerySearch()
-  const { data, isLoading } = useSubCategories(null)
 
   const menuShoes = [
     {
@@ -94,20 +92,14 @@ const MenuShoes = () => {
 
   return (
     <MyFilter callbackCleanAll={handleCleanAll} titleHeader={translate('menuProduct.category')}>
-      {isLoading ? (
-        <MyLoading />
-      ) : (
-        <>
-          <MyFilterCheckBox
-            data={menuShoes}
-            titleFilter={translate('menuProduct.product')}
-            typeChecked={FilterAPI.Sex}
-            isReplace={false}
-          />
-          {renderSlider()}
-          <FilterRangePrice stepRange={100000} />
-        </>
-      )}
+      <MyFilterCheckBox
+        data={menuShoes}
+        titleFilter={translate('menuProduct.product')}
+        typeChecked={FilterAPI.Sex}
+        isReplace={false}
+      />
+      {renderSlider()}
+      <FilterRangePrice stepRange={100000} />
     </MyFilter>
   )
 }
