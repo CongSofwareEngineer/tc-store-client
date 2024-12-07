@@ -23,9 +23,6 @@ import OptionsPayment from '@/app/my-cart/Component/Payment/Component/OptionsPay
 import { showNotificationError } from '@/utils/notification'
 
 const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
-  console.log('====================================')
-  console.log('ernder')
-  console.log('====================================')
   const { translate } = useLanguage()
   const route = useRouter()
   const { userData, isLogin } = useUserData()
@@ -98,6 +95,8 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
           {
             sold: amount + data?.sold,
             idProduct: data?._id,
+            configBill: data?.configBill || {},
+            category: data?.category,
           },
         ],
       }

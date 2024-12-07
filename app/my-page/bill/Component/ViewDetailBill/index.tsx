@@ -7,6 +7,7 @@ import ModalFeedBack from '../ModalFeedBack'
 import { FILTER_BILL } from '@/constant/app'
 import { Button } from 'antd'
 import MyImage from '@/components/MyImage'
+import ConfigBill from '@/components/ConfigBill'
 type Props = {
   data?: any
 }
@@ -40,6 +41,7 @@ const ViewDetailBill = ({ data }: Props) => {
               <div className='flex flex-col gap-2'>
                 <p className='font-bold'>{e.more_data.name}</p>
                 <div>{`${translate('textPopular.amount')} : x${e.amount}`}</div>
+                <ConfigBill item={e} />
                 <div className='text-red-500 font-bold'>
                   <span className='mr-1'>{translate('productDetail.price')} :</span>
                   <span>{formatPrice(e.more_data.price)} VNĐ</span>

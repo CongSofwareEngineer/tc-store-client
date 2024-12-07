@@ -20,6 +20,7 @@ import AdminApi from '@/services/adminApi'
 import MyBlog from '@/components/MyBlog'
 import { PATH_IMG } from '@/constant/mongoDB'
 import AttributeAdmin from '@/components/AttributeAdmin'
+import { TYPE_PRODUCT } from '@/constant/admin'
 
 const ProductConfig = ({ item }: { item: any }) => {
   const { translate, lang } = useLanguage()
@@ -59,7 +60,17 @@ const ProductConfig = ({ item }: { item: any }) => {
     setFormData(initData)
   }, [item])
 
-  console.log({ formData })
+  useEffect(() => {
+    if (!item) {
+      switch (formData?.category) {
+        case TYPE_PRODUCT.shoes:
+          break
+
+        default:
+          break
+      }
+    }
+  }, [formData?.category, item])
 
   const handleDeleteMoreImg = (index: number) => {
     const newList = formData?.imageMore?.filter((_: any, indexFilter: number) => indexFilter !== index)

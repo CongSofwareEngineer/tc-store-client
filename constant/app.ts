@@ -53,6 +53,7 @@ export enum FilterAPI {
   Electronic = 'electronic',
   Category = 'category',
   SubCategory = 'subCategories',
+  Sex = 'sex',
 }
 
 export const PAGE_SIZE_LIMIT = 12

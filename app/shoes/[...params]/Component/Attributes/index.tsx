@@ -12,7 +12,7 @@ const Attributes = ({ data, onChange = () => {} }: IAttributes) => {
   const { translate } = useLanguage()
   const configBill = data?.configBill
   const optionSizes: number[] = useMemo(() => {
-    const listSize = data.attributes.sizes.map((e: any) => {
+    const listSize = data?.attributes.sizes.map((e: any) => {
       return Number(e.size)
     })
     return listSize

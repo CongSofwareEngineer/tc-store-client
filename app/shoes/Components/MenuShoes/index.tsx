@@ -18,23 +18,16 @@ const MenuShoes = () => {
   const { queries, updateQuery } = useQuerySearch()
   const { data, isLoading } = useSubCategories(null)
 
-  const menuShoes = useMemo(() => {
-    if (Array.isArray(data?.data)) {
-      const listTemp = data?.data
-        .filter((e) => {
-          return e.keyName.startsWith('shoes') && !e.keyName.includes('Size')
-        })
-        .map((e) => {
-          return {
-            value: e.keyName,
-            label: e?.lang?.[lang],
-            name: e?.lang?.[lang],
-          }
-        })
-      return listTemp
-    }
-    return []
-  }, [data])
+  const menuShoes = [
+    {
+      value: 'male',
+      label: translate('textPopular.male'),
+    },
+    {
+      value: 'female',
+      label: translate('textPopular.female'),
+    },
+  ]
 
   useEffect(() => {
     let minSize = DEFAULT_SIZE.Shoes.minSize
@@ -108,7 +101,7 @@ const MenuShoes = () => {
           <MyFilterCheckBox
             data={menuShoes}
             titleFilter={translate('menuProduct.product')}
-            typeChecked={FilterAPI.SubCategory}
+            typeChecked={FilterAPI.Sex}
             isReplace={false}
           />
           {renderSlider()}

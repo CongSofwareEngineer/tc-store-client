@@ -7,7 +7,9 @@ const MyImage = (props: ImageProps) => {
   return (
     <>
       <Image {...props} onLoad={() => setIsLoaded(true)} fill />
-      {!isLoaded && <Image fill quality={10} src={'/images/CoffeeDetail/bgWhiteBlur.avif'} alt='image-loading-blur' />}
+      {!isLoaded && (
+        <Image fill quality={10} src={'/images/CoffeeDetail/bgWhiteBlur.avif'} alt='image-loading-blur' priority />
+      )}
     </>
   )
 }

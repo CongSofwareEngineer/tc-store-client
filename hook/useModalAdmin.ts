@@ -15,7 +15,7 @@ const useModalAdmin = () => {
       height = '',
       callBackAfter = () => {},
       classNameContent = '',
-      overClickClose = true,
+      overClickClose = false,
       showBtnClose = true,
     } = param
     dispatch(

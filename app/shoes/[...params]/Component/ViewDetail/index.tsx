@@ -206,6 +206,8 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
             <div className='text-title font-bold text-green-500'>{`${formatPrice(
               Number(productDetail?.price || '0') * amountBuy,
             )} VNĐ`}</div>
+            <Attributes onChange={onChangeData} data={productDetail} />
+            <div className='mb-3' />
             <SubAndPlus
               callBackSub={(e) => setAmountBuy(e)}
               value={amountBuy}

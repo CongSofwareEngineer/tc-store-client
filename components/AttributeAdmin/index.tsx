@@ -6,6 +6,9 @@ import { COLOR_CONFIG } from '@/constant/app'
 import { TYPE_PRODUCT } from '@/constant/admin'
 import AttributeShoes from './Shoes'
 import useLanguage from '@/hook/useLanguage'
+import OptionAddNew from './OptionAddNew'
+import useModalAdmin from '@/hook/useModalAdmin'
+
 export type TypeHandle = 'add' | 'update' | 'delete'
 export type TypeValue = 'arr' | 'object' | 'string'
 export type IAttributeAdminProps = {
@@ -29,6 +32,7 @@ const CollapseCustom = styled(Collapse)`
 `
 const AttributeAdmin = ({ data, onChange, typeProduct = 'shoes' }: IAttributeAdminProps) => {
   const { translate } = useLanguage()
+  const { openModal } = useModalAdmin()
   const [dataAttributes, setDataAttributes] = useState<any[]>([])
 
   useEffect(() => {
@@ -68,21 +72,43 @@ const AttributeAdmin = ({ data, onChange, typeProduct = 'shoes' }: IAttributeAdm
   }
 
   const handleAddNewData = () => {
-    const dataAttributeClone = cloneData(dataAttributes)
-    const newData = {
-      key: `newKey${dataAttributeClone.length}`,
-      value: [
-        {
-          size: 38,
-          colors: [],
-        },
-      ],
-    }
-    dataAttributeClone.push(newData)
-    setDataAttributes(dataAttributeClone)
-    convertArrToStringValue(dataAttributeClone)
-  }
+    const callBack = (type: 1 | 2 = 1) => {
+      const dataAttributeClone = cloneData(dataAttributes)
+      const newData: any = {}
+      console.log({ type })
 
+      if (type === 2) {
+        switch (typeProduct) {
+          case TYPE_PRODUCT.shoes:
+            newData.key = `newKey${dataAttributeClone.length}`
+            newData.value = [
+              {
+                size: 38,
+                colors: [],
+              },
+            ]
+            break
+        }
+      } else {
+        switch (typeProduct) {
+          case TYPE_PRODUCT.shoes:
+            newData.key = `newKey${dataAttributeClone.length}`
+            newData.value = []
+            break
+        }
+      }
+
+      dataAttributeClone.push(newData)
+      setDataAttributes(dataAttributeClone)
+      convertArrToStringValue(dataAttributeClone)
+    }
+
+    openModal({
+      body: <OptionAddNew onchange={callBack} />,
+      title: 'Option add a new',
+    })
+  }
+  console.log({ dataAttributes })
   const items = [
     {
       key: 'Attribute',
@@ -93,11 +119,13 @@ const AttributeAdmin = ({ data, onChange, typeProduct = 'shoes' }: IAttributeAdm
             switch (typeProduct) {
               case TYPE_PRODUCT.shoes:
                 return (
-                  <AttributeShoes
-                    onChange={(param) => onChangeValueData(index, param)}
-                    keyIndex={`item-${index}`}
-                    data={e}
-                  />
+                  <div className='flex flex-col gap-2 w-full' key={`attribute-${index}`}>
+                    <AttributeShoes
+                      onChange={(param) => onChangeValueData(index, param)}
+                      keyIndex={`item-${index}`}
+                      data={e}
+                    />
+                  </div>
                 )
 
               default:

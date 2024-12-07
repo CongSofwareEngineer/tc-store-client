@@ -1,5 +1,6 @@
 import Payment from '@/app/my-cart/Component/Payment'
 import { DataItemType } from '@/app/my-cart/type'
+import ConfigBill from '@/components/ConfigBill'
 import ModalDelete from '@/components/ModalDelete'
 import MyCheckBox from '@/components/MyCheckBox'
 
@@ -98,27 +99,6 @@ const CartNoLogin = () => {
     return total
   }
 
-  const renderConfigBill = (item: any) => {
-    return (
-      Object.entries(item?.configBill || {}).length > 1 && (
-        <div className='flex   flex-row   gap-3'>
-          {Object.entries(item?.configBill).map(([key, value], index: number) => {
-            const keyLocal: any = `textPopular.${key}`
-            const valueLocal: any = `admin.${key}.${value}`
-            return (
-              <div className='flex gap-1 text-xs'>
-                <div>{translate(keyLocal) || key}</div>
-                <span>:</span>
-                <div>{translate(valueLocal) || value}</div>
-                {index + 1 < Object.entries(item?.configBill || {}).length && <span>,</span>}
-              </div>
-            )
-          })}
-        </div>
-      )
-    )
-  }
-
   const renderItem = (item: DataItemType, index: number) => {
     return (
       <div
@@ -145,7 +125,7 @@ const CartNoLogin = () => {
           <Link href={`/shop/${item.more_data?.keyName}`}>
             <p className='font-bold text-black hover:underline'>{item.more_data?.name}</p>
           </Link>
-          {renderConfigBill(item)}
+          <ConfigBill item={item} />
           <div className='line-through font-medium'>
             {formatPriceBase(item.more_data?.price, item.more_data?.disCount)}
           </div>

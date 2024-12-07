@@ -3,11 +3,12 @@ import MyCollapse, { ItemCollapseProps } from '@/components/MyCollapse'
 import { Button, Input, Select } from 'antd'
 import useLanguage from '@/hook/useLanguage'
 import { DeleteOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons'
-import { cloneData } from '@/utils/functions'
+import { cloneData, isObject } from '@/utils/functions'
 import useModalAdmin from '@/hook/useModalAdmin'
 import ModalDelete from '@/components/ModalDelete'
 import { VALUE_KEY_DEFAULT } from '@/constant/admin'
 import { PropsSelectItem } from '@/components/MySelect'
+import Sex from '../Sex'
 
 export type IEditItemAttributesProps = {
   data: any
@@ -64,18 +65,27 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
     })),
   )
 
-  const onChangeValueData = (indexParent: number, index: number, key: string, value: any) => {
+  const onChangeValueData = (indexParent: number, index: number, key: string, value: any, isObj = true) => {
     const dataClone = cloneData(data)
-    dataClone.value[indexParent].colors[index][key] = value
+    if (isObj) {
+      dataClone.value[indexParent].colors[index][key] = value
+    } else {
+      dataClone.value[indexParent] = value
+    }
     onChange(dataClone)
   }
 
-  const handleDeleteValueData = (indexParent: number, index: number) => {
+  const handleDeleteValueData = (indexParent: number, index: number, isObj = true) => {
     const callBack = () => {
       const dataClone = cloneData(data)
-      dataClone.value[indexParent].colors = dataClone.value[indexParent].colors.filter(
-        (_: any, indexFilter: number) => indexFilter !== index,
-      )
+      if (isObj) {
+        dataClone.value[indexParent].colors = dataClone.value[indexParent].colors.filter(
+          (_: any, indexFilter: number) => indexFilter !== index,
+        )
+      } else {
+        dataClone.value = dataClone.value.filter((_: any, indexFilter: number) => indexParent !== indexFilter)
+      }
+
       onChange(dataClone)
     }
     openModal({
@@ -111,21 +121,32 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
 
   const onChangeKey = (value: string) => {
     const dataClone = cloneData(data)
+    console.log({ dataClone })
+
     dataClone.key = value
     onChange(dataClone)
   }
 
   const handleAddNewKey = () => {
     const dataClone = cloneData(data)
-    dataClone.value.push({
-      size: 0,
-      colors: [
-        {
-          color: 'none',
-          amount: 1,
-        },
-      ],
-    })
+    const isObj = dataClone.value.some((e: any) => isObject(e))
+
+    if (isObj) {
+      const newData = optionKeyValues.map((e) => {
+        return {
+          color: e.value,
+          amount: 10,
+          sold: 0,
+        }
+      })
+      dataClone.value.push({
+        size: 0,
+        colors: newData,
+      })
+    } else {
+      dataClone.value.push('new value')
+    }
+
     onChange(dataClone)
   }
 
@@ -175,10 +196,6 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
                         setOptionKeyValues([...optionKeyValues, dataTemp])
                       }}
                     />
-                    {/* <Input
-                      onChange={(e) => onChangeValueData(index, indexDetail, 'color', e.target.value)}
-                      value={valeDetail['color']}
-                    /> */}
                   </div>
                   <div className='flex flex-col gap-1'>
                     <div>{translate('textPopular.amount')}</div>
@@ -205,6 +222,24 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
     return <MyCollapse items={items} className='!bg-[#f3efef]' />
   }
 
+  const renderValueArr = (val: any, index: number) => {
+    return (
+      <div className='flex flex-col gap-1'>
+        <div>{`Value ${index + 1} :`}</div>
+        <div className='flex items-center gap-2'>
+          <Input
+            value={val}
+            onChange={(e) => onChangeValueData(index, 0, '', e.target.value, false)}
+            className='max-w-[250px]'
+          />
+          <div className='flex text-xl text-red-600 flex-col justify-center items-center h-full'>
+            <DeleteOutlined onClick={() => handleDeleteValueData(index, 0, false)} className='cursor-pointer' />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   const renderKey = () => {
     const items: ItemCollapseProps = [
       {
@@ -223,9 +258,12 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
                 <DeleteOutlined onClick={() => handleDeleteKey()} className='cursor-pointer' />
               </div>
             </div>
-            <div className='flex flex-col gap-2 w-full'>
+            <div className='flex flex-col mt-2 gap-2 w-full'>
               {data.value.map((e: any, index: number) => {
-                return renderValue(e, index)
+                if (isObject(e)) {
+                  return renderValue(e, index)
+                }
+                return renderValueArr(e, index)
               })}
             </div>
           </div>
