@@ -28,7 +28,7 @@ const SelectHasAdd = ({ value, onChange, handleAddNew, options }: any) => {
 
   return (
     <Select
-      className='min-w-[200px]'
+      className='md:min-w-[200px] min-w-[150px]'
       value={value}
       onChange={(e) => onChange(e)}
       options={options}
