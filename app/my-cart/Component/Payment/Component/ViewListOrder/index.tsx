@@ -61,9 +61,10 @@ const ViewListOrder = ({ dataCart }: { dataCart: any[] }) => {
                 <div className='w-[100px] flex flex-1'>
                   <div className='flex flex-col gap-1 w-full'>
                     <div className='text-medium font-bold'>{getItemForShow(e)?.name}</div>
-                    <div className='text-[12px] opacity-60'>{`${translate('category')} : ${getLabelCategory(
-                      getItemForShow(e)?.category,
-                    )}`}</div>
+                    <div className='w-full flex  gap-1'>
+                      <div className='text-[12px] opacity-60'>{`${translate('category')} :`}</div>
+                      <div className='text-[12px] opacity-60'>{`${getLabelCategory(getItemForShow(e)?.category)}`}</div>
+                    </div>
                     <ConfigBill item={e} />
 
                     <div>{`${translate('textPopular.amount')} : x${e.amount}`}</div>

@@ -9,6 +9,7 @@ import { CollapseCustom } from './styled'
 import useProductByLimit from '@/hook/tank-query/useProductByLimit'
 import { scrollTop } from '@/utils/functions'
 import LoadingData from '../LoadingData'
+import { TYPE_PRODUCT } from '@/constant/admin'
 
 const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   const { data, isLoading } = useProductByLimit(type, 5)
@@ -17,6 +18,13 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   useEffect(() => {
     scrollTop()
   }, [])
+
+  const getUrl = () => {
+    if (type === TYPE_PRODUCT.shoes) {
+      return 'shoes'
+    }
+    return `shop?${FilterAPI.Category}=${type || 'all'}`
+  }
 
   const renderListItem = () => {
     return (
@@ -54,7 +62,8 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
       children: renderListItem(),
       extra: (
         <Link
-          href={`shop?${FilterAPI.Category}=${type || 'all'}`}
+          onClick={(event) => event.stopPropagation()}
+          href={getUrl()}
           className='text-medium cursor-pointer hover:font-semibold hover:text-green-600'
         >
           <span> {translate('textPopular.viewMore')}</span>

@@ -64,7 +64,15 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <h1 className='absolute opacity-0'>TC Store - Cửa hàng thương mãi uy tín nhất Gia Lai</h1>
+      <h1 className='absolute opacity-0'>
+        TC Store - Cửa Hàng Đa Dạng Sản Phẩm: Giày Dép, Yến Sào, Laptop, Cà Phê & Nhiều Mặt Hàng Khác
+      </h1>
+      <h2 className='absolute opacity-0'>Sản Phẩm Nổi Bật Tại TC Store</h2>
+      <h2 className='absolute opacity-0'>Giày Dép Thời Trang - Phong Cách & Chất Lượng</h2>
+      <h2 className='absolute opacity-0'>Yến Sào Cao Cấp - Bổ Dưỡng Cho Sức Khỏe</h2>
+      <h2 className='absolute opacity-0'>Laptop Hiện Đại - Công Nghệ Hàng Đầu</h2>
+      <h2 className='absolute opacity-0'>Cà Phê Nguyên Chất - Hương Vị Tự Nhiên</h2>
+      <h2 className='absolute opacity-0'>Mua Sắm Nhiều Mặt Hàng Khác Tại TC Store</h2>
       {isMobile ? renderMobile() : renderDesktop()}
     </>
   )

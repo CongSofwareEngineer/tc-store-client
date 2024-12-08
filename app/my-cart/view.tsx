@@ -165,7 +165,7 @@ const MyCartScreen = () => {
               <div className='relative flex flex-col gap-2'>
                 <div className='flex gap-2 w-full'>
                   <div className='font-semibold'>{translate('textPopular.totalMoney')} :</div>
-                  <span className='font-bold text-green-700'>{calculatePayment()}</span>
+                  <span className='font-bold text-green-700'>{numberWithCommas(calculatePayment())} VNĐ</span>
                 </div>
                 <div className='w-full border-[1px] border-gray-200  relative  ' />
 

@@ -26,7 +26,7 @@ const useLanguage = () => {
   const getLabelCategory = (key: string) => {
     try {
       const data = CategoryMenu.find((e) => e.keyName === key)
-      return data?.lang?.[Language.locale]
+      return data?.lang?.[Language.locale] || key
     } catch (error) {
       return key
     }

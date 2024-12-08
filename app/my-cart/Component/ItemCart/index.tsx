@@ -11,8 +11,8 @@ import { ItemCartType } from '../../type'
 import SubAndPlus from '@/components/SubAndPlus'
 import useModalDrawer from '@/hook/useModalDrawer'
 import MyCheckBox from '@/components/MyCheckBox'
-import { images } from '@/configs/images'
 import MyImage from '@/components/MyImage'
+import ConfigBill from '@/components/ConfigBill'
 
 const ItemCart = ({ data, callBack, noBorder = false, callBackDelete, noEdit = false }: ItemCartType) => {
   const { translate, getLabelCategory } = useLanguage()
@@ -29,9 +29,7 @@ const ItemCart = ({ data, callBack, noBorder = false, callBackDelete, noEdit = f
     }
     callBack(dataClone)
   }
-  console.log('====================================')
-  console.log({ data })
-  console.log('====================================')
+
   const onChangeAmountBuy = (isPlus = true) => {
     const dataClone = cloneData(data)
     if (isPlus) {
@@ -101,13 +99,13 @@ const ItemCart = ({ data, callBack, noBorder = false, callBackDelete, noEdit = f
     return (
       <div className='flex gap-2 w-full pb-4 pt-2 pl-3 relative'>
         {!noEdit && (
-          <div className='h-auto flex flex-col justify-around  items-end'>
+          <div className='h-auto flex justify-center flex-col gap-3  items-end'>
             <Checkbox checked={!!data?.selected} onClick={selectedItem} />
             <DeleteOutlined style={{ color: 'red', fontSize: 18 }} onClick={handleDelete} />
           </div>
         )}
 
-        <div className='w-[100px] justify-center flex '>
+        <div className='w-[100px] relative justify-center flex m-auto'>
           <MyImage
             src={detectImg(data?.more_data?.imageMain?.toString() || '')}
             alt={`item-${data.id}`}
@@ -115,12 +113,22 @@ const ItemCart = ({ data, callBack, noBorder = false, callBackDelete, noEdit = f
           />
         </div>
         <div className='flex flex-1 gap-1 flex-col max-w-[calc(100%-130px)] pr-2'>
+          <div
+            onClick={() => router.push(`/shop/${data?.more_data.keyName}`)}
+            className=' font-bold   hover:underline cursor-pointer '
+          >
+            {data?.more_data?.name}
+          </div>
+
+          <ConfigBill item={data} />
+
           <div className='w-full'>
             <p className='text-medium font-semibold whitespace-nowrap overflow-hidden text-ellipsis '>{data.name}</p>
             <span className='text-[12px] opacity-70 line-through'>
-              {formatPriceBase(data.price, data.discount)} VNĐ
+              {formatPriceBase(data.more_data.price, data.more_data.discount)} VNĐ
             </span>
           </div>
+
           <div className='w-full flex justify-between items-baseline'>
             {noEdit ? (
               <div>{`x${data.amount}`}</div>
@@ -132,9 +140,8 @@ const ItemCart = ({ data, callBack, noBorder = false, callBackDelete, noEdit = f
                 callBackSub={() => onChangeAmountBuy(false)}
               />
             )}
-
-            <div className='font-bold  text-green-800'>{`${numberWithCommas(data.amount * data.price)} VNĐ`}</div>
           </div>
+          <div className='font-bold  text-green-500'> {numberWithCommas(data.amount * data.more_data.price)} VNĐ</div>
         </div>
 
         {!noBorder && <div className='w-[90%] border-[1px] border-gray-200 absolute bottom-2 left-[5%] ' />}

@@ -69,7 +69,7 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
     dataCart.forEach((e) => {
       if (e.selected) {
         if (e?.selected) {
-          total = Number(e.amount) * Number(e.price) + total
+          total = Number(e.amount) * Number(e.more_data.price) + total
         }
       }
     })
