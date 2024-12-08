@@ -8,7 +8,15 @@ const MyImage = (props: ImageProps) => {
     <>
       <Image {...props} onLoad={() => setIsLoaded(true)} fill />
       {!isLoaded && (
-        <Image fill quality={10} src={'/images/CoffeeDetail/bgWhiteBlur.avif'} alt='image-loading-blur' priority />
+        <Image
+          fill
+          quality={10}
+          src={
+            'https://ipfsgw.bountykinds.com/ipfs/QmZnHddnniAY7TQYyitKZpXwCdYQj47927a75ypixxCQAS?filename=bgWhiteBlur.avif'
+          }
+          alt='image-loading-blur'
+          priority
+        />
       )}
     </>
   )

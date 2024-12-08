@@ -74,6 +74,13 @@ const ClientApi = {
     }
     return fetchData(config)
   },
+  deleteBill: async (idBill: string) => {
+    const config: ClientAPITypeParam = {
+      url: `bill/delete/${idBill}`,
+      method: REQUEST_TYPE.DELETE,
+    }
+    return fetchData(config)
+  },
   getMyCart: async (queryUrl: string) => {
     return fetchData({
       url: `cart/detail/${queryUrl}`,

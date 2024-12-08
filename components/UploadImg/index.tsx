@@ -28,13 +28,15 @@ const UploadImage = ({
   maxPixelReduce = MAX_PIXEL_REDUCE,
 }: Props) => {
   const { translate } = useLanguage()
-  const { getBase64, getBase64Full } = useBase64Img(
-    maxSizeOutputKB,
-    maxPixelReduce
-  )
+  const { getBase64, getBase64Full } = useBase64Img(maxSizeOutputKB, maxPixelReduce)
   const { typeFile: typeFileBase } = useTypeFile()
 
   const handleLoadFile = (file: any) => {
+    if (!typeFileBase.includes(file.type)) {
+      const text = `${translate('error.supportTypeFile')} ${typeFileBase}`
+      showNotificationError(text)
+      return
+    }
     const callBack = (data: any) => {
       if (listData.some((e) => isEqual(e, data))) {
         showNotificationError(translate('errors.existFile'))
@@ -58,14 +60,14 @@ const UploadImage = ({
       onModalOk={(file) => handleLoadFile(file)}
     >
       <Upload
-        className="w-full flex justify-center items-center"
+        className='w-full flex justify-center items-center'
         disabled={disabled}
         showUploadList={false}
         accept={typeFile || typeFileBase}
       >
         <label
-          className="   edit-avatar flex w-full items-center justify-center gap-2 w-ful "
-          htmlFor="avatar"
+          className='   edit-avatar flex w-full items-center justify-center gap-2 w-ful '
+          htmlFor='avatar'
           style={{
             opacity: disabled ? 0.5 : 1,
             cursor: disabled ? 'not-allowed' : 'pointer',

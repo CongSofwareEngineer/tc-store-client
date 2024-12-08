@@ -1,3 +1,4 @@
+import useDebounce from '@/hook/useDebounce'
 import useLanguage from '@/hook/useLanguage'
 import { SearchOutlined } from '@ant-design/icons'
 import { Input } from 'antd'
@@ -11,10 +12,19 @@ const InputSearch = () => {
   const searchParam = useSearchParams()
 
   const [nameSearch, setNameSearch] = useState('')
+  const nameSearchDebounce = useDebounce(nameSearch)
 
   useEffect(() => {
     setNameSearch(searchParam.get('name') || '')
   }, [searchParam])
+
+  useEffect(() => {
+    if (nameSearchDebounce) {
+      router.push(`${pathname}?name=${nameSearch}`)
+    } else {
+      router.push(pathname)
+    }
+  }, [nameSearchDebounce])
 
   const handleSearch = () => {
     if (!nameSearch) {
@@ -36,7 +46,13 @@ const InputSearch = () => {
     <Input
       onPressEnter={handlePressSearch}
       className='w-full'
-      suffix={<SearchOutlined className='cursor-pointer hover:scale-105' placeholder={translate('textPopular.searchNameProduct')} onClick={handleSearch} />}
+      suffix={
+        <SearchOutlined
+          className='cursor-pointer hover:scale-105'
+          placeholder={translate('textPopular.searchNameProduct')}
+          onClick={handleSearch}
+        />
+      }
       value={nameSearch}
       onChange={(e) => setNameSearch(e.target.value)}
     />

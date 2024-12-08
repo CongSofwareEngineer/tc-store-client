@@ -15,12 +15,13 @@ import { BodyAddBill } from '@/constant/firebase'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalProcess from '@/components/ModalProcess'
 import ModalDelete from '@/components/ModalDelete'
-import { FILTER_BILL, LOCAL_STORAGE_KEY } from '@/constant/app'
+import { DEFAULT_RATE_EXP_USER, FILTER_BILL, LOCAL_STORAGE_KEY } from '@/constant/app'
 import ModalSuccess from '@/components/ModalSuccess'
 import { useRouter } from 'next/navigation'
 import ClientApi from '@/services/clientApi'
 import OptionsPayment from '@/app/my-cart/Component/Payment/Component/OptionsPayment'
 import { showNotificationError } from '@/utils/notification'
+import BigNumber from 'bignumber.js'
 
 const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const { translate } = useLanguage()
@@ -75,6 +76,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const handleSubmit = async () => {
     const callBack = async () => {
       setLoading(true)
+      const totalBill = data?.price * amount
 
       const bodyBill: BodyAddBill = {
         addressShip: formData?.addressShip,
@@ -90,7 +92,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
           },
         ],
         status: FILTER_BILL.Processing,
-        totalBill: data?.price * amount,
+        totalBill: totalBill,
         listNewSoldProduct: [
           {
             sold: amount + data?.sold,
@@ -99,6 +101,16 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
             category: data?.category,
           },
         ],
+      }
+
+      if (isLogin) {
+        const expUser = BigNumber(totalBill)
+          .multipliedBy(DEFAULT_RATE_EXP_USER)
+          .plus(userData?.exp || 0)
+          .decimalPlaces(0)
+          .toNumber()
+
+        bodyBill.expUser = expUser
       }
 
       saveDataNoLogin(bodyBill)

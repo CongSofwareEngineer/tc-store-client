@@ -286,13 +286,15 @@ const ProductConfig = ({ item }: { item: any }) => {
         />
 
         <InputForm classFromItem='w-full' name='des' label='des' required typeBtn='area' />
-        <div className='w-full md:mt-16 min-h-[300px]'>
-          <div className='font-bold mb-2'>{`${translate('admin.infoDetail')} :`} </div>
-          <MyBlog
-            pathFile={PATH_IMG.Products}
-            value={formData?.des2}
-            setValue={(e) => setFormData({ ...formData, des2: e })}
-          />
+        <div className='w-full flex flex-col gap-2 md:mt-16 min-h-[300px]'>
+          <div className='font-bold  '>{`${translate('admin.infoDetail')} :`} </div>
+          <div className='w-full flex flex-1 bg-slate-50'>
+            <MyBlog
+              pathFile={PATH_IMG.Products}
+              value={formData?.des2}
+              setValue={(e) => setFormData({ ...formData, des2: e })}
+            />
+          </div>
         </div>
       </div>
 

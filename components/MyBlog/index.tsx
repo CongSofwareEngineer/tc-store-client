@@ -134,7 +134,7 @@ const MyBlog = ({
 
   return (
     <div className='flex flex-col flex-1  h-full  w-full  relative'>
-      <div className='w-full h-full p-2 min-h-10 bg-slate-50' ref={selectionRef}>
+      <div className='w-full h-full p-2 min-h-10 ' ref={selectionRef}>
         <YooptaEditor
           editor={editor}
           plugins={plugins}

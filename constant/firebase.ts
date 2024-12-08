@@ -64,6 +64,7 @@ export type BodyAddBill = {
   totalBill: Number
   listNewSoldProduct?: { [key: string]: any }[]
   configBill?: { [key: string]: any }
+  expUser?: number
 }
 
 export type BodyUserData = {

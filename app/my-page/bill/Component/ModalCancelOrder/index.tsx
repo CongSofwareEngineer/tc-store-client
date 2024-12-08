@@ -1,11 +1,10 @@
 import MyButton from '@/components/MyButton'
 import MyInput from '@/components/MyInput'
-import { REQUEST_TYPE } from '@/constant/app'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
-import ServerApi from '@/services/serverApi'
+import ClientApi from '@/services/clientApi'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import React, { useState } from 'react'
 
@@ -19,10 +18,7 @@ const ModalCancelOrder = ({ data }: { data: any }) => {
 
   const handleSubmit = async () => {
     setLoading(true)
-    const res = await ServerApi.requestBase({
-      url: `bill/delete/${data._id}`,
-      method: REQUEST_TYPE.DELETE,
-    })
+    const res = await ClientApi.deleteBill(data._id)
     if (res.data) {
       await refreshQuery(QUERY_KEY.MyBillUser)
       showNotificationSuccess(translate('myBill.cancelOrder.cancelSuccess'))

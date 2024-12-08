@@ -119,3 +119,5 @@ export const DEFAULT_SIZE = {
     max: 5000000,
   },
 }
+
+export const DEFAULT_RATE_EXP_USER = 0.01

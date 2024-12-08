@@ -67,11 +67,6 @@ const MyProfile = () => {
                 {userData?.sdt}
                 <CopyOutlined onClick={() => copyToClipboard(userData?.sdt)} />
               </div>
-              {/* <EditOutlined
-                onClick={() => handleEditName('sdt')}
-                className="text-xl cursor-pointer hover:scale-110"
-                style={{ color: 'green' }}
-              /> */}
             </div>
 
             <div className='flex gap-2'>
@@ -113,7 +108,9 @@ const MyProfile = () => {
             <div className='flex gap-2'>
               <span className='w-[140px]'>{translate('textPopular.point')}</span>
               <div className='flex flex-1 gap-2 items-end'>
-                <span>{numberWithCommas(userData?.point || 0)}</span>
+                <span>{numberWithCommas(userData?.exp || 0)}</span>
+                <span>≈</span>
+                <span>{numberWithCommas(userData?.exp || 0)} VNĐ</span>
               </div>
             </div>
           </div>

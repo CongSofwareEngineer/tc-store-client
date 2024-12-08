@@ -51,7 +51,6 @@ const Account = () => {
     return (
       <div className='flex flex-col   w-full'>
         <span>{userData?.name}</span>
-        {/* <div className="bg-black w-[2px] h-[14px]" /> */}
         <span>{userData?.sdt}</span>
       </div>
     )
@@ -63,7 +62,14 @@ const Account = () => {
         <CartUser />
         {isLogin ? (
           <div className='flex gap-2 items-center pr-1'>
-            {userData?.avatar && <Image fill alt='user-avatar' className='!relative !w-6 !h-6 rounded-[50%]' src={detectAvatar(userData?.avatar)} />}
+            {userData?.avatar && (
+              <Image
+                fill
+                alt='user-avatar'
+                className='!relative !w-6 !h-6 rounded-[50%]'
+                src={detectAvatar(userData?.avatar)}
+              />
+            )}
             <div>{userData?.name}</div>
           </div>
         ) : (
@@ -105,9 +111,19 @@ const Account = () => {
 
               <Dropdown menu={{ items }}>
                 <div className='flex gap-2 items-center '>
-                  {userData?.avatar && <Image fill alt='user-avatar' className='!relative !w-6 !h-6 rounded-[50%]' src={detectAvatar(userData?.avatar)} />}
+                  {userData?.avatar && (
+                    <Image
+                      fill
+                      alt='user-avatar'
+                      className='!relative !w-6 !h-6 rounded-[50%]'
+                      src={detectAvatar(userData?.avatar)}
+                      key={detectAvatar(userData?.avatar)}
+                    />
+                  )}
 
-                  <div className='whitespace-nowrap mr-1 max-w-[120px] text-ellipsis overflow-hidden'>{`${userData?.name || userData?.sdt}`}</div>
+                  <div className='whitespace-nowrap mr-1 max-w-[120px] text-ellipsis overflow-hidden'>{`${
+                    userData?.name || userData?.sdt
+                  }`}</div>
                   <DownOutlined />
                 </div>
               </Dropdown>

@@ -254,6 +254,7 @@
     "feedback": "Cảm ơn bạn đã đánh giá"
   },
   "error": {
+    "supportTypeFile": "Hệ thống chỉ hộ trợ file",
     "login": "Đăng nhập thất bại",
     "create": "Tạo mới thất bại",
     "delete": "Xóa thất bại",

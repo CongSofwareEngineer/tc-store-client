@@ -16,13 +16,13 @@ const ContentFormPayment = ({ onChange }: { onChange: (param: any) => void }) =>
   const { translate } = useLanguage()
 
   const [listAddressShip, setListAddressShip] = useState<string[]>([])
-  console.log({ listAddressShip })
 
   useEffect(() => {
     if (userData?.addressShipper && Array.isArray(userData?.addressShipper)) {
       setListAddressShip(() => userData?.addressShipper)
     }
   }, [userData])
+  console.log({ listAddressShip })
 
   return (
     <div className='bg-white flex flex-col w-full border-[1px] shadow-gray1 border-gray-300  px-4 pt-4 lg:pb-0 pb-3'>

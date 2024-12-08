@@ -13,7 +13,6 @@ const ShoesScreen = () => {
   useAos(1000)
   const { queries } = useQuerySearch()
   const { data, isLoading, hasNextPage, loadMore, isFetchingNextPage } = useShoesShop(queries)
-  console.log({ queries })
 
   return (
     <div className='w-full flex md:flex-row flex-col  md:gap-6 gap-3  h-full justify-star md:mt-3'>
