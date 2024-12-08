@@ -76,7 +76,7 @@ const MyCartScreen = () => {
   const handleDelete = async (index: number) => {
     const dataRemove = listCartFormat[index]
     await ClientApi.deleteCart(dataRemove._id)
-    await refreshQuery(QUERY_KEY.MyCartUser)
+    await Promise.all([refreshQuery(QUERY_KEY.MyCartUser), refreshQuery(QUERY_KEY.LengthCartUser)])
   }
 
   const handleSelectAll = (isSelect = false) => {

@@ -77,11 +77,7 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
   }
 
   const refreshAllData = async () => {
-    await Promise.all([
-      refreshQuery(QUERY_KEY.LengthCartUser),
-      refreshQuery(QUERY_KEY.MyCartUser),
-      refreshQuery(QUERY_KEY.GetProductByID),
-    ])
+    await Promise.all([refreshQuery(QUERY_KEY.LengthCartUser), refreshQuery(QUERY_KEY.MyCartUser)])
   }
 
   const getItemForShow = (e: any) => {
