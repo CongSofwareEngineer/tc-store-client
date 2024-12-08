@@ -54,6 +54,7 @@ export enum FilterAPI {
   Category = 'category',
   SubCategory = 'subCategories',
   Sex = 'sex',
+  Shoes = 'shoes',
 }
 
 export const PAGE_SIZE_LIMIT = 12

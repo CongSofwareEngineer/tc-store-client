@@ -38,8 +38,9 @@ const Home: NextPage = () => {
           <InfoHome />
         </div>
         <div className='w-full flex flex-col gap-4 '>
+          <ListProduct title={translate('textPopular.shoes')} type={FilterAPI.Shoes} />
+
           <ListProduct title={translate('textPopular.nest')} type={'nest'} />
-          <ListProduct title={translate('home.water')} type={FilterAPI.Water} />
         </div>
         <SocialMedia />
       </div>
@@ -54,9 +55,9 @@ const Home: NextPage = () => {
           <InfoHome />
         </div>
         <div className='mb-3' />
-        <ListProduct title={translate('home.titleFood')} type={FilterAPI.Food} />
+        <ListProduct title={translate('textPopular.shoes')} type={FilterAPI.Shoes} />
         <div className='mb-3' />
-        <ListProduct title={translate('home.water')} type={FilterAPI.Water} />
+        <ListProduct title={translate('textPopular.nest')} type={'nest'} />
       </div>
     )
   }

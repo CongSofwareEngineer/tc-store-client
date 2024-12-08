@@ -25,7 +25,16 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
 
         {Array.isArray(data?.data) &&
           data?.data?.map((item) => {
-            return <ItemProduct showFeedback showSold key={item.id} item={item} href={`/shop/${item.keyName}`} className={'w-[180px] md:w-[230px] h-[310px] md:h-[350px]'} />
+            return (
+              <ItemProduct
+                showFeedback
+                showSold
+                key={item.id}
+                item={item}
+                href={`/shop/${item.keyName}`}
+                className={'w-[180px] md:w-[230px]   md:h-[350px]'}
+              />
+            )
           })}
 
         {Array.isArray(data?.data) && data?.data?.length === 0 && <div>{translate('warning.noData')}</div>}
@@ -44,7 +53,10 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
       ),
       children: renderListItem(),
       extra: (
-        <Link href={`shop?${FilterAPI.Category}=${type || 'all'}`} className='text-medium cursor-pointer hover:font-semibold hover:text-green-600'>
+        <Link
+          href={`shop?${FilterAPI.Category}=${type || 'all'}`}
+          className='text-medium cursor-pointer hover:font-semibold hover:text-green-600'
+        >
           <span> {translate('textPopular.viewMore')}</span>
           <RightOutlined className='text-sm ml-2' />
         </Link>
@@ -52,7 +64,14 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
     },
   ]
 
-  return <CollapseCustom expandIcon={({ isActive }: any) => <CaretRightOutlined rotate={isActive ? 90 : 0} />} defaultActiveKey={[type]} items={items} style={{ background: 'transparent' }} />
+  return (
+    <CollapseCustom
+      expandIcon={({ isActive }: any) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+      defaultActiveKey={[type]}
+      items={items}
+      style={{ background: 'transparent' }}
+    />
+  )
 }
 
 export default ListProduct
