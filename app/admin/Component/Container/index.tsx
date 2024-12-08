@@ -2,12 +2,14 @@
 import { images } from '@/configs/images'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
+import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
-import { TagFilled } from '@ant-design/icons'
+import { MenuOutlined, TagFilled } from '@ant-design/icons'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
+import MenuMobile from '../MenuMobile'
 
 const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
   const { isMobile, isClient } = useMedia()
@@ -15,6 +17,7 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
   const patchName = usePathname()
   const { isLogin } = useUserData()
   const router = useRouter()
+  const { openModalDrawer } = useModalDrawer()
 
   useEffect(() => {
     const sectionMain = window.document.getElementById('id-section-content')
@@ -71,6 +74,17 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
     },
   ]
 
+  const handleMenuMobile = () => {
+    openModalDrawer({
+      content: <MenuMobile />,
+      onlyDrawer: true,
+      configDrawer: {
+        placement: 'right',
+        width: '50dvw',
+      },
+    })
+  }
+
   return (
     <div className='md:fixed  w-screen   flex md:flex-row flex-col h-full max-h-[calc(100vh-56px)]'>
       {isLogin && isClient && (
@@ -99,21 +113,9 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
             </div>
           ) : (
             <div className='flex w-full gap-4   pt-4  px-5 '>
-              <div className='flex w-full gap-3  overflow-x-auto  pt-4 pb-3  '>
-                {LIST_MENU.map((e) => {
-                  return (
-                    <div key={e.url} className='w-auto'>
-                      <Link
-                        href={e.url}
-                        className={`${
-                          patchName === e.url ? 'font-bold underline' : ''
-                        } text-nowrap bg-green-100 p-4 py-1 min-w-[50px] border-[1px] border-blue-300 rounded-lg text-black`}
-                      >
-                        {e.title}
-                      </Link>
-                    </div>
-                  )
-                })}
+              <div className='flex gap-1' onClick={handleMenuMobile}>
+                <MenuOutlined style={{ fontSize: 20 }} />
+                <div>Menu</div>
               </div>
             </div>
           )}
