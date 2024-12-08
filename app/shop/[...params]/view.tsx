@@ -10,7 +10,7 @@ import ViewDetail from './Component/ViewDetail'
 import dynamic from 'next/dynamic'
 import { LoadingOutlined } from '@ant-design/icons'
 const PaymentShop = dynamic(() => import('./Component/payment'), {
-  ssr: false,
+  ssr: true,
   loading: () => {
     return (
       <div className='flex text-green-600 h-full items-center   py-2 justify-center'>

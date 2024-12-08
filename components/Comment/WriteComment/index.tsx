@@ -5,11 +5,13 @@ import ModalWrite from './ModalWrite'
 import { ItemDetailType } from '@/components/InfoItemDetail/type'
 import useMedia from '@/hook/useMedia'
 import useLanguage from '@/hook/useLanguage'
+import useComment from '@/hook/tank-query/useComment'
 
 const WriteComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
   const { openModalDrawer } = useModalDrawer()
   const { isMobile } = useMedia()
   const { translate } = useLanguage()
+  const { data } = useComment(dataItem?._id)
 
   const handleWrite = () => {
     openModalDrawer({
@@ -24,10 +26,10 @@ const WriteComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
   return (
     <div className='flex md:flex-row flex-col md:gap-10 gap-5 justify-between'>
       <div className='flex flex-col gap-2 justify-center md:items-center'>
-        <div className='text-medium font-bold'>Đánh giá sản phẩm</div>
+        <div className='text-medium font-bold'>{translate('textPopular.feedbackProduct')}</div>
         <div className='text-[30px] font-bold text-green-500'>5.0/5</div>
         <Rate disabled defaultValue={5} style={{ fontSize: isMobile ? 15 : 18 }} />
-        <div className='opacity-75'> (23 đánh giá)</div>
+        <div className='opacity-75'> {`(${data?.length || 0} ${translate('textPopular.rate')} )`}</div>
       </div>
       <div className='flex flex-col gap-2 justify-center'>
         <div className='flex gap-2 w-full'>

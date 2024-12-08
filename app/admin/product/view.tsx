@@ -36,7 +36,7 @@ const ProductAdminScreen = () => {
     openModalDrawer({
       content: <ProductConfig item={item} />,
       useDrawer: true,
-      title: item ? `Update ${item.name}` : 'Create',
+      title: item ? `${translate('common.update')} ${item.name}` : translate('common.create'),
       configModal: {
         className: '!max-w-[1200px] !w-[85dvw]',
       },
@@ -123,12 +123,14 @@ const ProductAdminScreen = () => {
       ]
     }
     const columns: ColumnsType = [
-      // {
-      //   title: '_id',
-      //   key: '_id',
-      //   dataIndex: '_id',
-      //   render: (id: string) => <TextCopy textView={ellipsisText(id, 3, 4)} value='id' />,
-      // },
+      {
+        title: 'STT',
+        key: '_id',
+        dataIndex: '_id',
+        render: (id: string, record: any, index: number) => {
+          return <span>{index + 1}</span>
+        },
+      },
       {
         title: 'imageMain',
         key: 'imageMain',
@@ -195,8 +197,6 @@ const ProductAdminScreen = () => {
   }
 
   const renderTable = () => {
-    console.log({ data })
-
     return (
       <MyTable
         loadMore={loadMore}

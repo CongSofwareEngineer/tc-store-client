@@ -1,5 +1,4 @@
 import React from 'react'
-import { ItemDetailType } from '../../type'
 import { Tabs, TabsProps } from 'antd'
 import useLanguage from '@/hook/useLanguage'
 import dynamic from 'next/dynamic'
@@ -26,7 +25,7 @@ const Comment = dynamic(() => import('@/components/Comment'), {
   },
 })
 
-const MoreInfo = ({ data }: { data: ItemDetailType }) => {
+const MoreInfo = ({ data }: { data: any }) => {
   const { translate } = useLanguage()
 
   const items: TabsProps['items'] = [

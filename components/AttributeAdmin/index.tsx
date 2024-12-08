@@ -44,7 +44,7 @@ const AttributeAdmin = ({ data, onChange, typeProduct = 'shoes' }: IAttributeAdm
       })
     })
     setDataAttributes(listTemp)
-  }, [])
+  }, [data])
 
   const convertArrToStringValue = (params: any[]) => {
     const objTemp: any = {}

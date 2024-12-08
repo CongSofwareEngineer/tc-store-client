@@ -13,6 +13,7 @@ type ModalDeleteType = {
   titleConfirm?: string
   autoClose?: boolean
   isAdmin?: boolean
+  disableCancel?: boolean
 }
 const ModalDelete = ({
   des = '',
@@ -21,6 +22,7 @@ const ModalDelete = ({
   callback = () => {},
   autoClose = true,
   isAdmin = false,
+  disableCancel = false,
 }: ModalDeleteType) => {
   const { translate } = useLanguage()
   const { closeModalDrawer } = useModalDrawer()
@@ -54,23 +56,30 @@ const ModalDelete = ({
           className='!relative !w-auto md:!h-[120px] !h-[70px]'
         />
       </div>
-      <div className='text-center mb-2 md:max-w-[90%] m-auto'>{des}</div>
+      <div
+        className='text-center mb-2 md:max-w-[90%] m-auto'
+        dangerouslySetInnerHTML={{
+          __html: des,
+        }}
+      />
       <div className='w-full flex gap-4'>
         <div className='flex-1'>
           <Button className='w-full' loading={loading} onClick={handleSubmit}>
             {titleConfirm || translate('common.ok')}
           </Button>
         </div>
-        <div className='flex-1'>
-          <Button
-            disabled={loading}
-            type='primary'
-            className='w-full'
-            onClick={() => (isAdmin ? closeModal() : closeModalDrawer())}
-          >
-            {translate('common.close')}
-          </Button>
-        </div>
+        {!disableCancel && (
+          <div className='flex-1'>
+            <Button
+              disabled={loading}
+              type='primary'
+              className='w-full'
+              onClick={() => (isAdmin ? closeModal() : closeModalDrawer())}
+            >
+              {translate('common.close')}
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   )

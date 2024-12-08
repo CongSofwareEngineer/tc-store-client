@@ -1,6 +1,7 @@
 {
   "language": "Ngôn ngữ",
   "common": {
+    "continue": "Tiếp tục",
     "back": "Trờ về",
     "updateFeedback": "Cập nhật đánh giá",
     "feedback": "Đánh giá",
@@ -50,6 +51,7 @@
     "exitSDT": "SĐT đã tồn tại"
   },
   "textPopular": {
+    "feedbackProduct": "Đánh giá sản phẩm",
     "attribute": "Thuộc tính",
     "size": "Size",
     "shoes": "Giày dép",
@@ -306,6 +308,10 @@
     "updateSuccess": "Cập nhật thành công"
   },
   "admin": {
+    "bill": {
+      "doYouWantChangeDelivering": "Xác nhận giao hàng",
+      "doYouWantChangeDeliverySuccess": "Đã giao thành công "
+    },
     "revenue": "Doanh thu",
     "subCategories": "Danh mục con",
     "desSeo": "Đoạn văn mô tả để SEO web (tối đa 40 ký tự)",
@@ -340,5 +346,9 @@
   },
   "feedback": {
     "title": "ĐÁNH GIÁ CỦA BẠN VỀ SẢN PHẨM"
+  },
+  "pingServer": {
+    "title": "Hệ thống đang cập nhật",
+    "des": "Hệ thống cập nhật khoảng 5 phút, xin lỗi bạn với sự bất tiện này. </br> Bạn có thể nhất tiếp tục để xem trang web"
   }
 }

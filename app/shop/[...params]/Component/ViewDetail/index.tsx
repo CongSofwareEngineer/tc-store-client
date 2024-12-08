@@ -23,11 +23,11 @@ import { showNotificationSuccess } from '@/utils/notification'
 import { Button } from 'antd'
 import Image from 'next/image'
 
-const MoreInfo = dynamic(() => import('../MoreInfo'), {
+const MoreInfo = dynamic(() => import('@/components/MoreInfo'), {
   ssr: true,
 })
 
-const ImageMore = dynamic(() => import('../ImgMore'), {
+const ImageMore = dynamic(() => import('@/components/ImgMoreProduct'), {
   ssr: false,
 })
 

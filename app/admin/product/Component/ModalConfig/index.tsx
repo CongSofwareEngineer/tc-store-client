@@ -1,5 +1,5 @@
 import MyForm from '@/components/Form/MyForm'
-import { detectImg } from '@/utils/functions'
+import { cloneData, detectImg } from '@/utils/functions'
 import React, { useEffect, useState } from 'react'
 
 import CategoryForm from '@/components/CategoryForm'
@@ -20,7 +20,7 @@ import AdminApi from '@/services/adminApi'
 import MyBlog from '@/components/MyBlog'
 import { PATH_IMG } from '@/constant/mongoDB'
 import AttributeAdmin from '@/components/AttributeAdmin'
-import { TYPE_PRODUCT } from '@/constant/admin'
+import { SEX, TYPE_PRODUCT, VALUE_KEY_DEFAULT } from '@/constant/admin'
 
 const ProductConfig = ({ item }: { item: any }) => {
   const { translate, lang } = useLanguage()
@@ -61,12 +61,35 @@ const ProductConfig = ({ item }: { item: any }) => {
   }, [item])
 
   useEffect(() => {
-    if (!item) {
+    const dataClone = cloneData(formData)
+
+    if (!item && dataClone) {
       switch (formData?.category) {
         case TYPE_PRODUCT.shoes:
+          const arrColors = VALUE_KEY_DEFAULT.sizes.map((e) => ({
+            color: e,
+            sold: 0,
+            amount: 10,
+          }))
+
+          dataClone.attributes = {
+            sex: [SEX.female, SEX.male],
+            sizes: [
+              {
+                size: '38',
+                colors: arrColors,
+              },
+            ],
+          }
+
+          setFormData(dataClone)
+
           break
 
         default:
+          dataClone.attributes = {}
+          setFormData(dataClone)
+
           break
       }
     }
@@ -130,7 +153,7 @@ const ProductConfig = ({ item }: { item: any }) => {
     setLoading(false)
   }
 
-  return formData ? (
+  return (
     <MyForm
       onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
       formData={formData}
@@ -223,7 +246,7 @@ const ProductConfig = ({ item }: { item: any }) => {
                 handleUpload={(e) =>
                   setFormData({
                     ...formData,
-                    imageMore: [...formData.imageMore, e],
+                    imageMore: [...formData?.imageMore, e],
                   })
                 }
                 maxSizeOutputKB={200}
@@ -264,7 +287,7 @@ const ProductConfig = ({ item }: { item: any }) => {
 
         <InputForm classFromItem='w-full' name='des' label='des' required typeBtn='area' />
         <div className='w-full md:mt-16 min-h-[300px]'>
-          <div className='font-bold'>{`${translate('admin.infoDetail')} :`} </div>
+          <div className='font-bold mb-2'>{`${translate('admin.infoDetail')} :`} </div>
           <MyBlog
             pathFile={PATH_IMG.Products}
             value={formData?.des2}
@@ -277,8 +300,6 @@ const ProductConfig = ({ item }: { item: any }) => {
         <ButtonForm titleSubmit={translate(item ? 'common.update' : 'common.create')} loading={loading} />
       </div>
     </MyForm>
-  ) : (
-    <></>
   )
 }
 

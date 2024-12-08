@@ -1,6 +1,5 @@
 import ImageAdmin from '@/components/ImageAdmin'
 import { ItemDetailType } from '@/components/InfoItemDetail/type'
-
 import MyLoadMore from '@/components/MyLoadMore'
 import useComment from '@/hook/tank-query/useComment'
 import { detectAvatar, ellipsisText } from '@/utils/functions'
@@ -8,18 +7,21 @@ import { Rate } from 'antd'
 import React from 'react'
 import LoadingData from './LoadingData'
 import Image from 'next/image'
+import useLanguage from '@/hook/useLanguage'
 
 const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
+  const { translate } = useLanguage()
   const { data, isLoading, hasNextPage, isFetchingNextPage, loadMore } = useComment(dataItem?._id)
 
   return (
     <div className='flex flex-col gap-2'>
-      <div className='text-medium font-bold'>Bình luận</div>
+      <div className='text-medium font-bold'>{translate('textPopular.comment')}:</div>
 
       {isLoading ? (
         <LoadingData loading={isLoading} />
       ) : (
         <div className='flex flex-col gap-2 max-h-[600px] overflow-y-auto'>
+          {data.length === 0 && <div>{translate('textPopular.notData')}</div>}
           {data.map((e) => {
             return (
               <div key={e?.sdt} className='flex gap-4 pb-3 border-b-[1px] mt-1 border-b-gray-200'>

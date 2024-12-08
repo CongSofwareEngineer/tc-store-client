@@ -23,11 +23,11 @@ import { Button } from 'antd'
 import Attributes from '../Attributes'
 import MyImage from '@/components/MyImage'
 
-const MoreInfo = dynamic(() => import('../MoreInfo'), {
+const MoreInfo = dynamic(() => import('@/components/MoreInfo'), {
   ssr: true,
 })
 
-const ImageMore = dynamic(() => import('../ImgMore'), {
+const ImageMore = dynamic(() => import('@/components/ImgMoreProduct'), {
   ssr: false,
 })
 

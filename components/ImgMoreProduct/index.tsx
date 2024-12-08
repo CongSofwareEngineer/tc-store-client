@@ -1,9 +1,8 @@
 import React from 'react'
-import { ItemDetailType } from '../../type'
 import { detectImg } from '@/utils/functions'
 import { Image } from 'antd'
 
-const ImageMore = ({ data }: { data: ItemDetailType }) => {
+const ImgMoreProduct = ({ data }: { data: any }) => {
   return data?.imageMore?.length > 1 ? (
     // <div className="absolute bottom-0 ">
     <div className='mt-2'>
@@ -28,4 +27,4 @@ const ImageMore = ({ data }: { data: ItemDetailType }) => {
   )
 }
 
-export default ImageMore
+export default ImgMoreProduct

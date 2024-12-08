@@ -69,6 +69,14 @@ const RevenueScreen: NextPage = () => {
     }
     const columns: ColumnsType = [
       {
+        title: 'STT',
+        key: '_id',
+        dataIndex: '_id',
+        render: (id: string, record: any, index: number) => {
+          return <span>{index + 1}</span>
+        },
+      },
+      {
         title: 'Id',
         key: '_id',
         dataIndex: '_id',

@@ -24,7 +24,12 @@ const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
 const ToastNoti = dynamic(() => import('../ToastNoti'), {
   ssr: false,
 })
+
 const Notification = dynamic(() => import('../Notification'), {
+  ssr: false,
+})
+
+const CheckPingServer = dynamic(() => import('../CheckPingServer'), {
   ssr: false,
 })
 
@@ -94,6 +99,7 @@ const ClientRender = ({ children, menuCategory }: { children: React.ReactNode; m
       <ToastNoti />
       <Notification />
       <MyModalAdmin />
+      <CheckPingServer />
     </>
   )
 }

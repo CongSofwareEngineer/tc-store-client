@@ -87,7 +87,11 @@ p {
     font-size: 13px;
   }
 }
-
+.ant-btn-dashed {
+  background: #fe0000ad !important;
+  border-style: none !important;
+  color: white !important;
+}
 /* Chrome, Safari, Edge, Opera */
 // input::-webkit-outer-spin-button,
 // input::-webkit-inner-spin-button {

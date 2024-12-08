@@ -21,3 +21,8 @@ export enum TYPE_PRODUCT {
 export const VALUE_KEY_DEFAULT = {
   sizes: ['red', 'white', 'black', 'yellow', 'pink', 'brown', 'orange'],
 } as const
+
+export const SEX = {
+  male: 'male',
+  female: 'female',
+} as const

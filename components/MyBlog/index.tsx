@@ -38,7 +38,17 @@ const TOOLS = {
 
 const MARKS = [Bold, Italic, CodeMark, Underline, Strike, Highlight]
 
-const MyBlog = ({ value, setValue = () => {}, disabled = false, pathFile = PATH_IMG.Products }: { value: any; setValue?: (e: any) => void; disabled?: boolean; pathFile?: PATH_IMG }) => {
+const MyBlog = ({
+  value,
+  setValue = () => {},
+  disabled = false,
+  pathFile = PATH_IMG.Products,
+}: {
+  value: any
+  setValue?: (e: any) => void
+  disabled?: boolean
+  pathFile?: PATH_IMG
+}) => {
   const editor = useMemo(() => createYooptaEditor(), [])
   const selectionRef = useRef(null)
 
@@ -123,9 +133,20 @@ const MyBlog = ({ value, setValue = () => {}, disabled = false, pathFile = PATH_
   }
 
   return (
-    <div className='flex flex-col   w-full  relative'>
-      <div className='w-full' ref={selectionRef}>
-        <YooptaEditor editor={editor} plugins={plugins} tools={TOOLS} marks={MARKS} selectionBoxRoot={selectionRef} value={value} onChange={onChange} autoFocus className='!relative !h-full !w-full !pb-2 cursor-pointer' readOnly={disabled} />
+    <div className='flex flex-col flex-1  h-full  w-full  relative'>
+      <div className='w-full h-full p-2 min-h-10 bg-slate-50' ref={selectionRef}>
+        <YooptaEditor
+          editor={editor}
+          plugins={plugins}
+          tools={TOOLS}
+          marks={MARKS}
+          selectionBoxRoot={selectionRef}
+          value={value}
+          onChange={onChange}
+          autoFocus
+          className='!relative !h-full !w-full !pb-2 cursor-pointer'
+          readOnly={disabled}
+        />
       </div>
     </div>
   )

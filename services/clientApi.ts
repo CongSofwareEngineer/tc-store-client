@@ -5,6 +5,9 @@ import { encryptData } from '@/utils/crypto'
 import { PATH_IMG } from '@/constant/mongoDB'
 
 const ClientApi = {
+  pingServer: async () => {
+    return fetchData({ url: `/auth/ping` })
+  },
   uploadImg: async (file: any, path: PATH_IMG) => {
     return fetchData({
       url: `/upload-image/upload`,
