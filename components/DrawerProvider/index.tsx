@@ -3,6 +3,7 @@ import { Drawer } from 'antd'
 import React, { useState } from 'react'
 import { ConfigMyDrawerType, DrawerContext, defaultConfig } from './config'
 import useMedia from '@/hook/useMedia'
+import { isIOS } from 'react-device-detect'
 
 const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
   const [config, setConfig] = useState<ConfigMyDrawerType>(defaultConfig)
@@ -39,6 +40,7 @@ const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
             }}
           >
             {config.content ?? <></>}
+            {isIOS && <div className='w-full mb-1' />}
           </div>
         </Drawer>
       )}
