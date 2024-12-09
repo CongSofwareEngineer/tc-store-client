@@ -12,7 +12,7 @@ import BillFinal from './Component/BillFinal'
 import ContentForm from './Component/ContentForm'
 import useOptionPayment from '@/hook/useOptionPayment'
 import ViewListOrder from './Component/ViewListOrder'
-import { FILTER_BILL } from '@/constant/app'
+import { DEFAULT_RATE_EXP_USER, FILTER_BILL } from '@/constant/app'
 import ModalProcess from '@/components/ModalProcess'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalSuccess from '@/components/ModalSuccess'
@@ -20,6 +20,7 @@ import ClientApi from '@/services/clientApi'
 import { useRouter } from 'next/navigation'
 import OptionsPayment from './Component/OptionsPayment'
 import { showNotificationError } from '@/utils/notification'
+import ModalDelete from '@/components/ModalDelete'
 
 const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
   const { translate } = useLanguage()
@@ -88,80 +89,99 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
   }
 
   const handleSubmit = async () => {
-    setLoading(true)
-    openModalDrawer({
-      content: (
-        <ModalProcess title={translate('confirm.bill.createBill')} des={translate('confirm.bill.createBill_Des')} />
-      ),
-      configModal: {
-        showHeader: false,
-        showBtnClose: false,
-        overClickClose: false,
-      },
-    })
-
-    let totalBill = 0
-    const listBill: any[] = []
-    const listNewSoldProduct: any[] = []
-
-    dataCart.forEach((e) => {
-      if (e.selected) {
-        totalBill += e.amount * getItemForShow(e).price
-        const itemBill = {
-          _id: getItemForShow(e)._id,
-          keyName: getItemForShow(e).keyName,
-          amount: e.amount,
-          idCart: e._id,
-        }
-        const itemNewSold = {
-          idProduct: getItemForShow(e)._id,
-          sold: Number(e.amount) + Number(getItemForShow(e).sold),
-        }
-
-        listNewSoldProduct.push(itemNewSold)
-        listBill.push(itemBill)
-      }
-    })
-
-    const bodyAPI: BodyAddBill = {
-      addressShip: formData?.addressShip,
-      discount: 0,
-      idUser: userData?._id || undefined,
-      listBill,
-      totalBill: totalBill,
-      sdt: formData?.sdt,
-      status: FILTER_BILL.Processing,
-      listNewSoldProduct,
-    }
-
-    let res: any = null
-    if (isLogin) {
-      res = await ClientApi.buy(bodyAPI)
-    } else {
-      res = await ClientApi.buyNoLogin(bodyAPI)
-    }
-
-    if (res?.data) {
-      await refreshAllData()
+    const callBack = async () => {
+      setLoading(true)
       openModalDrawer({
         content: (
-          <ModalSuccess
-            showClose
-            title={translate('productDetail.modalBuy.success')}
-            des={translate('productDetail.modalBuy.successDes')}
-            titleSubmit={translate('common.viewBill')}
-            titleClose={translate('common.ok')}
-            callback={() => {
-              route.push('/my-page/bill')
-              closeModalDrawer()
-            }}
-          />
+          <ModalProcess title={translate('confirm.bill.createBill')} des={translate('confirm.bill.createBill_Des')} />
         ),
+        configModal: {
+          showHeader: false,
+          showBtnClose: false,
+          overClickClose: false,
+        },
       })
-      clickBack()
-    } else {
-      showNotificationError(translate('productDetail.modalBuy.error'))
+
+      let totalBill = 0
+      const listBill: any[] = []
+      const listNewSoldProduct: any[] = []
+
+      dataCart.forEach((e) => {
+        if (e.selected) {
+          totalBill += e.amount * getItemForShow(e).price
+          const itemBill = {
+            _id: getItemForShow(e)._id,
+            keyName: getItemForShow(e).keyName,
+            amount: e.amount,
+            idCart: e._id,
+            configBill: e?.configBill || {},
+          }
+          const itemNewSold = {
+            idProduct: getItemForShow(e)._id,
+            sold: Number(e.amount) + Number(getItemForShow(e).sold),
+          }
+
+          listNewSoldProduct.push(itemNewSold)
+          listBill.push(itemBill)
+        }
+      })
+
+      const bodyAPI: BodyAddBill = {
+        addressShip: formData?.addressShip,
+        discount: 0,
+        idUser: userData?._id || undefined,
+        listBill,
+        totalBill: totalBill,
+        sdt: formData?.sdt,
+        status: FILTER_BILL.Processing,
+        listNewSoldProduct,
+      }
+
+      if (isLogin) {
+        const expUser = totalBill * DEFAULT_RATE_EXP_USER + (userData?.exp || 0)
+        bodyAPI.expUser = expUser
+      }
+
+      let res: any = null
+      if (isLogin) {
+        res = await ClientApi.buy(bodyAPI)
+      } else {
+        res = await ClientApi.buyNoLogin(bodyAPI)
+      }
+
+      if (res?.data) {
+        await refreshAllData()
+        openModalDrawer({
+          content: (
+            <ModalSuccess
+              showClose
+              title={translate('productDetail.modalBuy.success')}
+              des={translate('productDetail.modalBuy.successDes')}
+              titleSubmit={translate('common.viewBill')}
+              titleClose={translate('common.ok')}
+              callback={() => {
+                route.push('/my-page/bill')
+                closeModalDrawer()
+              }}
+            />
+          ),
+        })
+        clickBack()
+      } else {
+        showNotificationError(translate('productDetail.modalBuy.error'))
+      }
     }
+    openModalDrawer({
+      content: (
+        <ModalDelete
+          autoClose={false}
+          callback={callBack}
+          title={translate('confirm.bill.confirm')}
+          des={translate('confirm.bill.confirm_des')}
+          titleConfirm={translate('common.submit')}
+        />
+      ),
+    })
   }
 
   return (

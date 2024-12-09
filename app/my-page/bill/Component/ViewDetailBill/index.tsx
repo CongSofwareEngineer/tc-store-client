@@ -17,6 +17,12 @@ const ViewDetailBill = ({ data }: Props) => {
   const { openModalDrawer } = useModalDrawer()
   const enableFeedback = data?.status === FILTER_BILL.DeliverySuccess
 
+  const getAddressShip = (item: any) => {
+    const address = { ...item.addressShip }
+    address.address = address.address.replaceAll('---', ' ')
+    return `${address.addressDetail} (${address.address})`
+  }
+
   const handleFeedback = (item: any) => {
     openModalDrawer({
       content: <ModalFeedBack item={data} data={item} />,
@@ -27,6 +33,13 @@ const ViewDetailBill = ({ data }: Props) => {
   return (
     <div className='flex flex-col w-full gap-4'>
       {!isMobile && <p className='text-[22px] mb-2 font-bold text-center'>{translate('textPopular.viewDetail')}</p>}
+      {isMobile && (
+        <div className='flex gap-1'>
+          <div>{translate('textPopular.address')}</div>
+          <div>:</div>
+          <div>{getAddressShip(data)}</div>
+        </div>
+      )}
       {data &&
         data?.listBill?.map((e: any) => {
           return (
@@ -42,12 +55,12 @@ const ViewDetailBill = ({ data }: Props) => {
                 <p className='font-bold'>{e.more_data.name}</p>
                 <div>{`${translate('textPopular.amount')} : x${e.amount}`}</div>
                 <ConfigBill item={e} />
-                <div className='text-red-500 font-bold'>
+                <div className='text-green-700 font-bold'>
                   <span className='mr-1'>{translate('productDetail.price')} :</span>
                   <span>{formatPrice(e.more_data.price)} VNĐ</span>
                 </div>
                 {enableFeedback && (
-                  <Button onClick={() => handleFeedback(e)} size='small' className='w-max'>
+                  <Button type='primary' onClick={() => handleFeedback(e)} size='small' className='w-max'>
                     {translate('common.feedback')}
                   </Button>
                 )}

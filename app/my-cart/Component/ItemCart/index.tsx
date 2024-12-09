@@ -73,9 +73,13 @@ const ItemCart = ({ data, callBack, noBorder = false, callBackDelete, noEdit = f
           >
             {data?.more_data?.name}
           </div>
-          <div className='opacity-80 text-xs '>{`${translate('category')} : ${
-            getLabelCategory(data?.more_data?.category) || 'typeProduct'
-          }`}</div>
+          <div className='opacity-80 text-xs flex gap-1 items-center '>
+            <span>{translate('category')}</span>
+            <span>:</span>
+            <span>{getLabelCategory(data?.more_data?.category)}</span>
+          </div>
+          <ConfigBill item={data} />
+
           <div className='flex w-full gap-2 items-center'>
             <div className=' text-green-800 font-medium'>{numberWithCommas(data?.more_data.price)} đ</div>
             <div className='line-through font-medium'>{numberWithCommas(data?.more_data.price * 1.2)}</div>

@@ -3,7 +3,7 @@ import useMedia from '@/hook/useMedia'
 import React from 'react'
 import moment from 'moment'
 import Link from 'next/link'
-import { ellipsisText, formatPrice, formatPriceBase, numberWithCommas } from '@/utils/functions'
+import { detectImg, ellipsisText, formatPrice, numberWithCommas } from '@/utils/functions'
 import { useAppSelector } from '@/redux/store'
 import { COLOR, FILTER_BILL } from '@/constant/app'
 import useModalDrawer from '@/hook/useModalDrawer'
@@ -11,6 +11,10 @@ import ViewDetailBill from '../ViewDetailBill'
 import ModalCancelOrder from '../ModalCancelOrder'
 import TextCopy from '@/components/TextCopy'
 import { Button } from 'antd'
+import MyImage from '@/components/MyImage'
+import ConfigBill from '@/components/ConfigBill'
+import { TYPE_PRODUCT } from '@/constant/admin'
+import styles from './style.module.scss'
 
 type Props = {
   data: { [key: string]: any }
@@ -78,109 +82,132 @@ const Item = ({ data }: Props) => {
     })
   }
 
-  return (
-    <div className='w-full justify-center items-center flex gap-3 mt-1 border-b-2 border-gray-200 p-2'>
-      <div className='w-[20%] min-w-[100px] text-center flex flex-col gap-2'>
-        <div> {moment(Number(data.date)).format('DD/MM/YYYY')}</div>
-        {isMobile ? (
-          <div className=' text-center font-bold' style={{ color: getColorStatus(data.status) }}>
-            {getStatus(data.status)}
+  const getRouteProduct = (product: any) => {
+    console.log({ product })
+    if (product.more_data.category === TYPE_PRODUCT.shoes) {
+      return `/shoes/${product.more_data.keyName}`
+    }
+    return `/shop/${product.more_data.keyName}`
+  }
+
+  const renderDesktop = () => {
+    return (
+      <div className={`shadow-md mb-1  p-4 flex flex-col gap-2 w-full bg-slate-50 ${styles['item-coffee']}`}>
+        <div className='flex justify-between w-full'>
+          <div className='flex gap-2  '>
+            <span>{`${translate('myBill.idOrder')} : `}</span>
+            <TextCopy value={data._id} textView={ellipsisText(data._id)} />
           </div>
-        ) : (
-          <>
-            {data.status === FILTER_BILL.Processing && (
-              <div className='flex md:w-full justify-center'>
-                <Button type='primary' size='small' className='text-[13px]' onClick={() => handleCancelOrder(data)}>
-                  {translate('common.cancelOrder')}
-                </Button>
-              </div>
-            )}
-          </>
-        )}
-      </div>
-      <div className='flex flex-col gap-2 flex-1'>
-        <div className='flex gap-2 w-full text-[11px]'>
-          <span>{`${translate('myBill.idOrder')} : `}</span>
-          <TextCopy value={data._id} textView={ellipsisText(data._id, 4, 3)} />
+          <div className='flex gap-2 '>
+            <div className=' text-center font-bold' style={{ color: getColorStatus(data.status) }}>
+              {getStatus(data.status)}
+            </div>
+            <span>|</span>
+            <div> {moment(Number(data.date)).format('DD/MM/YYYY')}</div>
+          </div>
         </div>
-        {isMobile && (
-          <>
-            <div className='flex gap-1'>
-              <span className='text-nowrap font-bold'>{translate('textPopular.totalMoney')}:</span>
-              <span className='text-nowrap text-red-500 font-bold'>
-                <span>{`${numberWithCommas(data.totalBill || '0')} VNĐ`}</span>
-              </span>
-            </div>
-            <div className='flex gap-1 '>
-              <div className='font-bold'>{translate('textPopular.amount')}:</div>
-              <div>{`x${data?.listBill?.length || 1}`}</div>
-            </div>
-            <span className='flex gap-1 text-[12px] '>
-              <span className='text-nowrap font-bold'>{translate('header.address')} :</span>
-              <span>{getAddressShip(data)}</span>
-            </span>
-            <div className='w-fill flex gap-3'>
-              <Button size='small' onClick={() => handleViewDetail(data)}>
-                {translate('textPopular.viewDetail')}
-              </Button>
-              {data.status === FILTER_BILL.Processing && (
-                <Button size='small' type='primary' onClick={() => handleCancelOrder(data)}>
-                  {translate('common.cancelOrder')}
-                </Button>
-              )}
-            </div>
-          </>
-        )}
+        <div className='flex gap-1'>
+          <div>{translate('textPopular.address')}</div>
+          <div>:</div>
+          <div>{getAddressShip(data)}</div>
+        </div>
         {data?.listBill?.map((e: any) => {
           return (
-            <div key={e._id} className='flex flex-col gap-1 '>
-              {!isMobile && (
-                <>
-                  <div className='flex items-baseline gap-2'>
-                    <Link className='text-black font-bold cursor-pointer hover:underline ' href={`/shop/${e?.more_data?.keyName}`}>
-                      {e?.more_data.name}
-                    </Link>
-                    {!isMobile && (
-                      <span className='flex '>
-                        <span>{getTypeProduct(e.more_data.category)}</span>
-                      </span>
-                    )}
-                  </div>
-                  <div className=' text-xs flex gap-1'>
-                    <span>{translate('textPopular.amount')}:</span>
-                    <span>{`x${e.amount}`}</span>
-                  </div>
-                  <div className='flex gap-1 flex-wrap'>
-                    <div>{translate('productDetail.price')}:</div>
-
-                    <div className='text-green-500 lg:font-bold text-nowrap'>{`${formatPrice(e?.more_data?.price || '0')} VNĐ`}</div>
-                    <div className='text-green-500 line-through ml-2 text-nowrap '>{`(${formatPriceBase(e?.more_data?.price || '0')} VNĐ)`}</div>
-                  </div>
-                </>
-              )}
+            <div key={e._id} className='flex mt-2 gap-2 px-3'>
+              <div className='w-[70px]  rounded-md aspect-square overflow-auto flex justify-center items-center'>
+                <MyImage className='!relative ' alt={e.more_data.name} src={detectImg(e.more_data.imageMain)} />
+              </div>
+              <div className='flex justify-between flex-1 gap-2'>
+                <div className='flex flex-col gap-1'>
+                  <Link href={getRouteProduct(e)}>
+                    <span className='hover:underline text-black font-bold '>{e.more_data.name}</span>
+                  </Link>
+                  <ConfigBill item={e} />
+                  <div className=' text-sm text-green-600'>{`${formatPrice(e.more_data.price)} VNĐ`}</div>
+                </div>
+                <div>x{e.amount}</div>
+              </div>
             </div>
           )
         })}
-        {!isMobile && (
-          <span className='flex gap-1 text-[12px] opacity-70 '>
-            <span className='text-nowrap  '>{translate('header.address')} :</span>
-            <span>{getAddressShip(data)}</span>
-          </span>
-        )}
+
+        <div className='w-[calc(100%+32px)] left-[-16px] relative border-[1px] border-gray-200 my-2' />
+        <div className='flex w-full justify-end gap-1 px-3'>
+          <span>{translate('bill.totalBill')}</span>
+          <span>:</span>
+          <span className='text-green-600 font-bold'>{`${numberWithCommas(data.totalBill || '0')} VNĐ`}</span>
+        </div>
+        <div className='flex w-full justify-end gap-2 mt-1 px-3'>
+          {data.status === FILTER_BILL.Processing && (
+            <Button type='primary' onClick={() => handleCancelOrder(data)}>
+              {translate('common.cancelOrder')}
+            </Button>
+          )}
+          <Button className='w-[80px]' onClick={() => handleViewDetail(data)}>
+            {translate('common.view')}
+          </Button>
+        </div>
       </div>
-      {!isMobile && (
-        <>
-          <div className='w-[15%] text-end'>
-            <span>{`${numberWithCommas(data.totalBill || '0')} VNĐ`}</span>
+    )
+  }
+
+  const renderMobile = () => {
+    return (
+      <div className={`w-full shadow-md  flex flex-col md:gap-2 gap-1 py-3 bg-slate-50 ${styles['item-coffee']}`}>
+        <div className='justify-between w-full flex px-3'>
+          <div className='flex gap-2  '>
+            <span>{`${translate('myBill.idOrder')} : `}</span>
+            <TextCopy value={data._id} textView={ellipsisText(data._id, 4, 3)} />
           </div>
-          <div className='w-[100px] text-center font-bold' style={{ color: getColorStatus(data.status) }}>
+          <div className=' text-center font-bold' style={{ color: getColorStatus(data.status) }}>
             {getStatus(data.status)}
           </div>
-          <Button onClick={() => handleViewDetail(data)}>{translate('common.view')}</Button>
-        </>
-      )}
-    </div>
-  )
+        </div>
+        <div className='flex items-center gap-1 text-[11px] px-3'>
+          <span>{translate('bill.dateBuy')}</span>
+          <span>:</span>
+          <div> {moment(Number(data.date)).format('DD/MM/YYYY')}</div>
+        </div>
+
+        {data?.listBill?.map((e: any) => {
+          return (
+            <div key={e._id} className='flex mt-2 gap-2 px-3'>
+              <div className='w-[70px]  rounded-md aspect-square overflow-auto flex justify-center items-center'>
+                <MyImage className='!relative ' alt={e.more_data.name} src={detectImg(e.more_data.imageMain)} />
+              </div>
+              <div className='flex justify-between flex-1 gap-2'>
+                <div className='flex flex-col gap-1'>
+                  <div>{e.more_data.name}</div>
+                  <ConfigBill item={e} />
+                  <div className=' text-sm text-green-600'>{`${formatPrice(e.more_data.price)} VNĐ`}</div>
+                </div>
+                <div>x{e.amount}</div>
+              </div>
+            </div>
+          )
+        })}
+        <div className='w-full border-[1px] border-gray-200 my-2' />
+
+        <div className='flex w-full justify-end gap-1 px-3'>
+          <span>{translate('bill.totalBill')}</span>
+          <span>:</span>
+          <span className='text-green-600 font-bold'>{`${numberWithCommas(data.totalBill || '0')} VNĐ`}</span>
+        </div>
+        <div className='flex w-full justify-end gap-2 mt-1 px-3'>
+          {data.status === FILTER_BILL.Processing && (
+            <Button type='primary' onClick={() => handleCancelOrder(data)}>
+              {translate('common.cancelOrder')}
+            </Button>
+          )}
+          <Button className='w-[80px]' onClick={() => handleViewDetail(data)}>
+            {translate('common.view')}
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
+  return isMobile ? renderMobile() : renderDesktop()
 }
 
 export default Item

@@ -6,7 +6,6 @@ import { images } from '@/configs/images'
 import { detectImg, formatPrice, formatPriceBase, numberWithCommas } from '@/utils/functions'
 import MySliderSell from '../MySliderSell'
 import useMedia from '@/hook/useMedia'
-import Image from 'next/image'
 import MyImage from '../MyImage'
 
 type ItemType = {

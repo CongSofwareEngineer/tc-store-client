@@ -133,7 +133,7 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
   return (
     <div className='flex flex-col gap-3 w-full justify-center items-center'>
       {loadingApi && <MyLoading />}
-      {!loadingApi && formData && (
+      {!loadingApi && (
         <MyForm
           onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
           className='w-full gap-0'
