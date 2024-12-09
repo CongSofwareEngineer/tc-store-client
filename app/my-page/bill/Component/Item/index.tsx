@@ -114,7 +114,7 @@ const Item = ({ data }: Props) => {
         {data?.listBill?.map((e: any) => {
           return (
             <div key={e._id} className='flex mt-2 gap-2 px-3'>
-              <div className='w-[70px]  rounded-md aspect-square overflow-auto flex justify-center items-center'>
+              <div className='w-[70px]  rounded-md aspect-square overflow-hidden relative flex justify-center items-center'>
                 <MyImage className='!relative ' alt={e.more_data.name} src={detectImg(e.more_data.imageMain)} />
               </div>
               <div className='flex justify-between flex-1 gap-2'>
@@ -172,7 +172,7 @@ const Item = ({ data }: Props) => {
         {data?.listBill?.map((e: any) => {
           return (
             <div key={e._id} className='flex mt-2 gap-2 px-3'>
-              <div className='w-[70px]  rounded-md aspect-square overflow-auto flex justify-center items-center'>
+              <div className='w-[70px]  rounded-md aspect-square overflow-hidden relative flex justify-center items-center'>
                 <MyImage className='!relative ' alt={e.more_data.name} src={detectImg(e.more_data.imageMain)} />
               </div>
               <div className='flex justify-between flex-1 gap-2'>

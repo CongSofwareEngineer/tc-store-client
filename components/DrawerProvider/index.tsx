@@ -1,6 +1,6 @@
 'use client'
 import { Drawer } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ConfigMyDrawerType, DrawerContext, defaultConfig } from './config'
 import useMedia from '@/hook/useMedia'
 import { isIOS } from 'react-device-detect'
@@ -8,6 +8,15 @@ import { isIOS } from 'react-device-detect'
 const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
   const [config, setConfig] = useState<ConfigMyDrawerType>(defaultConfig)
   const { isClient } = useMedia()
+
+  useEffect(() => {
+    if (config.content) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'auto'
+    }
+  }, [config])
+
   const closeDrawer = () => {
     if (config?.afterClose) {
       config.afterClose()

@@ -35,7 +35,7 @@ const ViewDetailBill = ({ data }: Props) => {
       {!isMobile && <p className='text-[22px] mb-2 font-bold text-center'>{translate('textPopular.viewDetail')}</p>}
       {isMobile && (
         <div className='flex gap-1'>
-          <div>{translate('textPopular.address')}</div>
+          <div className='whitespace-nowrap'>{translate('textPopular.address')}</div>
           <div>:</div>
           <div>{getAddressShip(data)}</div>
         </div>
@@ -44,7 +44,7 @@ const ViewDetailBill = ({ data }: Props) => {
         data?.listBill?.map((e: any) => {
           return (
             <div key={e._id} className={`flex gap-2 w-full pb-4 border-b-[3px] border-gray-200`}>
-              <div className=' w-[100px]  flex justify-center align-middle overflow-hidden'>
+              <div className='aspect-square w-[100px]  flex justify-center align-middle  relative rounded-md overflow-hidden'>
                 <MyImage
                   alt={`icon-product-bill-${e._id}`}
                   src={detectImg(e.more_data.imageMain)}

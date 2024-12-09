@@ -140,9 +140,13 @@ const MyProfile = () => {
           <ItemInfoUser value={!!userData?.sex} title={translate('userDetail.sex')} keyType='sex' />
           <div className='relative w-full border-[.5px] my-3 border-gray-300' />
 
-          <div className='flex gap-2 justify-between w-full py-2 pr-2'>
-            <span>{translate('textPopular.point')}</span>
-            <div>{numberWithCommas(userData?.point || 0)}</div>
+          <div className='flex gap-2 flex-nowrap  justify-between w-full py-2 pr-2'>
+            <span className='whitespace-nowrap'>{translate('textPopular.point')}</span>
+            <div className='flex flex-nowrap overflow-hidden text-ellipsis  gap-2 items-end'>
+              <span>{numberWithCommas(userData?.exp || 0)}</span>
+              <span>≈</span>
+              <span>{numberWithCommas(userData?.exp || 0)} VNĐ</span>
+            </div>
           </div>
           <div className='relative w-full border-[.5px] my-3 mb-0 border-gray-300' />
         </div>
