@@ -1,7 +1,6 @@
 'use client'
 import React from 'react'
 import { images } from '@/configs/images'
-import MyImage from '../MyImage'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'

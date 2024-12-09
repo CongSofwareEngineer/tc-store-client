@@ -25,79 +25,44 @@ const NavMobile = () => {
     closeModalDrawer()
   }
   return (
-    <div className="flex flex-1  flex-col gap-3 ml-2">
-      <LinkCustom
-        onClick={closeModalDrawer}
-        $isSelected={pathname === '/' || pathname === ''}
-        href={'/'}
-      >
-        {translate('header.home')}
-      </LinkCustom>
-      <LinkCustom
-        onClick={closeModalDrawer}
-        $isSelected={pathname === '/shop'}
-        href={'/shop'}
-      >
-        {translate('header.shop')}
-      </LinkCustom>
-
-      <LinkCustom
-        onClick={closeModalDrawer}
-        $isSelected={pathname === '/nests'}
-        href={'/nests'}
-      >
-        {translate('textPopular.nest')}
-      </LinkCustom>
-      <LinkCustom
-        onClick={closeModalDrawer}
-        $isSelected={pathname === '/shoes'}
-        href={'/shoes'}
-      >
-        {translate('textPopular.shoes')}
-      </LinkCustom>
-      <LinkCustom
-        onClick={closeModalDrawer}
-        $isSelected={pathname === '/contact'}
-        href={'/contact'}
-      >
-        {translate('header.contact')}
-      </LinkCustom>
-      {isLogin ? (
-        <LinkCustom
-          onClick={closeModalDrawer}
-          $isSelected={pathname === '/my-cart'}
-          href={'/my-cart'}
-        >
-          {translate('header.cart')}
-        </LinkCustom>
-      ) : (
-        <LinkCustom
-          onClick={closeModalDrawer}
-          $isSelected={pathname === '/register'}
-          href={'/register'}
-        >
-          {translate('header.register')}
-        </LinkCustom>
-      )}
-
+    <div className='flex flex-1  flex-col gap-3 ml-2'>
       {isLogin && (
-        <LinkCustom
-          onClick={closeModalDrawer}
-          $isSelected={pathname.includes('/my-page')}
-          href={'/my-page'}
-        >
+        <LinkCustom onClick={closeModalDrawer} $isSelected={pathname.includes('/my-page')} href={'/my-page'}>
           {translate('myProfile.myProfile')}
         </LinkCustom>
       )}
-      {isLogin && (
-        <div onClick={handleLogOut}>{translate('common.logOut')}</div>
-      )}
+      <LinkCustom onClick={closeModalDrawer} $isSelected={pathname === '/' || pathname === ''} href={'/'}>
+        {translate('header.home')}
+      </LinkCustom>
+      <LinkCustom onClick={closeModalDrawer} $isSelected={pathname === '/shop'} href={'/shop'}>
+        {translate('header.shop')}
+      </LinkCustom>
 
+      <LinkCustom onClick={closeModalDrawer} $isSelected={pathname === '/nests'} href={'/nests'}>
+        {translate('textPopular.nest')}
+      </LinkCustom>
+      <LinkCustom onClick={closeModalDrawer} $isSelected={pathname === '/shoes'} href={'/shoes'}>
+        {translate('textPopular.shoes')}
+      </LinkCustom>
+      <LinkCustom onClick={closeModalDrawer} $isSelected={pathname === '/contact'} href={'/contact'}>
+        {translate('header.contact')}
+      </LinkCustom>
+      {isLogin ? (
+        <LinkCustom onClick={closeModalDrawer} $isSelected={pathname === '/my-cart'} href={'/my-cart'}>
+          {translate('header.cart')}
+        </LinkCustom>
+      ) : (
+        <LinkCustom onClick={closeModalDrawer} $isSelected={pathname === '/register'} href={'/register'}>
+          {translate('header.register')}
+        </LinkCustom>
+      )}
       {!!userData?.isAdmin && (
         <LinkCustom $isSelected={pathname.includes('/admin')} href={'/admin'}>
           Admin
         </LinkCustom>
       )}
+
+      {isLogin && <div onClick={handleLogOut}>{translate('common.logOut')}</div>}
     </div>
   )
 }

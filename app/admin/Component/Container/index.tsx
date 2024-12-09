@@ -2,14 +2,12 @@
 import { images } from '@/configs/images'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
-import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
-import { MenuOutlined, TagFilled } from '@ant-design/icons'
+import { TagFilled } from '@ant-design/icons'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
-import MenuMobile from '../MenuMobile'
 
 const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
   const { isMobile, isClient } = useMedia()
@@ -17,7 +15,6 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
   const patchName = usePathname()
   const { isLogin } = useUserData()
   const router = useRouter()
-  const { openModalDrawer } = useModalDrawer()
 
   useEffect(() => {
     const sectionMain = window.document.getElementById('id-section-content')
@@ -26,7 +23,7 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
       if (sectionMain) {
         sectionMain.classList.add('container-admin')
       }
-      if (header) {
+      if (header && !isMobile) {
         header.classList.add('container-admin')
       }
     }
@@ -35,7 +32,7 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
       sectionMain && sectionMain.classList.remove('container-admin')
       header && header.classList.remove('container-admin')
     }
-  }, [patchName])
+  }, [patchName, isMobile])
 
   useEffect(() => {
     if (!isLogin) {
@@ -74,22 +71,11 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
     },
   ]
 
-  const handleMenuMobile = () => {
-    openModalDrawer({
-      content: <MenuMobile />,
-      onlyDrawer: true,
-      configDrawer: {
-        placement: 'right',
-        width: '50dvw',
-      },
-    })
-  }
-
   return (
     <div className='md:fixed  w-screen   flex md:flex-row flex-col h-full max-h-[calc(100vh-56px)]'>
       {isLogin && isClient && (
         <>
-          {!isMobile ? (
+          {!isMobile && (
             <div className='w-[200px] flex flex-col p-3 gap-2 bg-[#000000d6]'>
               <div className='w-full'>
                 <Image fill alt='logo-admin' src={images.logo} className='!relative !w-full !h-auto' />
@@ -110,13 +96,6 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
                   </div>
                 )
               })}
-            </div>
-          ) : (
-            <div className='flex w-full gap-4   pt-4  px-5 '>
-              <div className='flex gap-1' onClick={handleMenuMobile}>
-                <MenuOutlined style={{ fontSize: 20 }} />
-                <div>Menu</div>
-              </div>
             </div>
           )}
           <div className='flex flex-1 md:p-4 p-5 md:max-w-[calc(100vw-212px)]'>{children}</div>

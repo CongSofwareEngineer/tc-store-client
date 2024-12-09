@@ -140,9 +140,28 @@ const BillAdminScreen = () => {
     if (isMobile) {
       const columns = [
         {
-          title: '_id',
-          key: '_id',
-          dataIndex: '_id',
+          title: translate('textPopular.infor'),
+          key: 'status',
+          dataIndex: 'status',
+          filters: [
+            {
+              text: getStatus(FILTER_BILL.DeliverySuccess),
+              value: FILTER_BILL.DeliverySuccess,
+            },
+            {
+              text: getStatus(FILTER_BILL.Delivering),
+              value: FILTER_BILL.Delivering,
+            },
+            {
+              text: getStatus(FILTER_BILL.Processing),
+              value: FILTER_BILL.Processing,
+            },
+            {
+              text: getStatus(FILTER_BILL.Canceled),
+              value: FILTER_BILL.Canceled,
+            },
+          ],
+          onFilter: (value: any, record: any) => record.status === value,
           render: (_: any, record: any) => {
             return (
               <div className='flex flex-col gap-2'>

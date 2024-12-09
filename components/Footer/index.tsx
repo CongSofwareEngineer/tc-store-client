@@ -53,11 +53,7 @@ const Footer = () => {
                 link='https://zalo.me/0392225405'
                 type={'zalo'}
               />
-              <Item
-                icon={images.footer.iconFace}
-                value={'Facebook'}
-                link='https://www.facebook.com/profile.php?id=100080400793331'
-              />
+              <Item icon={images.footer.iconFace} value={'Facebook'} link='https://www.facebook.com/tcstore.gl' />
               <Item
                 icon={images.footer.iconGithub}
                 value={'CongSofwareEngineer'}

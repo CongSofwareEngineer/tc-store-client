@@ -14,8 +14,6 @@ const ShopScreen = () => {
 
   return (
     <div className='w-full flex md:flex-row flex-col  md:gap-6 gap-3  h-full justify-star md:mt-3'>
-      <h1 className='absolute opacity-0'>Shop tc store - Uy tín nhất Gia Lai</h1>
-      <h2 className='absolute opacity-0'>Shop với rất nhiều sản phẩm chất lượng và uy tí</h2>
       <div className='md:w-[250px] w-full' data-aos='fade-right'>
         <MenuCategory />
       </div>
