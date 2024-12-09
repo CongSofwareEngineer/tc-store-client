@@ -11,7 +11,7 @@ const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
     if (config?.afterClose) {
       config.afterClose()
     }
-    setConfig({ ...config, width: '500px', content: null, open: false })
+    setConfig({ ...config, content: null, open: false })
   }
 
   const openDrawer = (config?: ConfigMyDrawerType) => {
@@ -32,7 +32,10 @@ const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
           <div
             className='flex flex-col w-full'
             style={{
-              maxHeight: config.placement === 'right' || config.placement === 'left' ? 'calc(100dvh - 100px)' : 'calc(95dvh - 100px)',
+              maxHeight:
+                config.placement === 'right' || config.placement === 'left'
+                  ? 'calc(100dvh - 100px)'
+                  : 'calc(95dvh - 100px)',
             }}
           >
             {config.content ?? <></>}

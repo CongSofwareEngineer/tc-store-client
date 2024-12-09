@@ -44,8 +44,6 @@ const ViewDetail = ({ productDetail, amountBuy = 0, setIsPayment, setAmountBuy }
   const { refreshQuery } = useRefreshQuery()
   const { translate } = useLanguage()
   const { userData, isLogin } = useUserData()
-  const { data } = useGetProductByID(productDetail?.id)
-  const dataItem = useMemo(() => data?.data ?? productDetail, [data, productDetail])
 
   const [loadingAddCart, setLoadingAddCart] = useState(false)
 
@@ -96,8 +94,8 @@ const ViewDetail = ({ productDetail, amountBuy = 0, setIsPayment, setAmountBuy }
       setLoadingAddCart(true)
       const body: DataAddCart = {
         amount: amountBuy,
-        idProduct: dataItem._id?.toString(),
-        configBill: dataItem?.configBill || {},
+        idProduct: productDetail._id?.toString(),
+        configBill: productDetail?.configBill || {},
       }
       if (isLogin) {
         body.idUser = userData?._id
@@ -106,21 +104,21 @@ const ViewDetail = ({ productDetail, amountBuy = 0, setIsPayment, setAmountBuy }
         const bodyOther: DataItemType = {
           amount: Number(body.amount),
           idProduct: body.idProduct!.toString(),
-          keyNameProduct: dataItem.keyName,
+          keyNameProduct: productDetail.keyName!,
           selected: true,
           id: '',
-          configBill: dataItem?.configBill || {},
+          configBill: productDetail?.configBill || {},
         }
         bodyOther.date = new Date().getTime().toFixed()
         bodyOther.more_data = {
-          imageMain: dataItem.imageMain,
-          name: dataItem.name,
-          keyName: dataItem.keyName,
-          price: dataItem.price,
-          category: dataItem.category,
-          disCount: dataItem.disCount,
-          _id: dataItem._id,
-          sold: dataItem.sold,
+          imageMain: productDetail.imageMain,
+          name: productDetail.name,
+          keyName: productDetail.keyName,
+          price: productDetail.price,
+          category: productDetail.category,
+          disCount: productDetail.disCount,
+          _id: productDetail._id,
+          sold: productDetail.sold,
         }
         await addCartNoLogin(bodyOther)
       }
@@ -135,28 +133,30 @@ const ViewDetail = ({ productDetail, amountBuy = 0, setIsPayment, setAmountBuy }
   const renderDesktop = () => {
     return (
       <div className='flex flex-col'>
-        <BtnBack title={['Shop', dataItem.name]} url={['/shop']} />
+        <BtnBack title={['Shop', productDetail.name]} url={['/shop']} />
         <div className='w-full flex gap-6 bg-white rounded-xl p-6'>
           <div data-aos='fade-right' className='relative min-w-[300px] max-w-[450px] w-[50%] p-5 overflow-hidden '>
             <Image
-              src={detectImg(dataItem.imageMain || '')}
-              alt={`img-main--${dataItem.name}`}
+              src={detectImg(productDetail.imageMain || '')}
+              alt={`img-main--${productDetail.name}`}
               fill
               className='!relative !w-full !h-auto'
             />
-            <ImageMore data={dataItem} />
+            <ImageMore data={productDetail} />
           </div>
           <div className='flex-1 flex flex-col gap-2 justify-center  ' data-aos='fade-left'>
-            <h1 className='text-title font-bold'>{dataItem.name}</h1>
-            <InfoItemDetail data={dataItem} />
-            <div className='text-medium  line-through'>{formatPriceBase(dataItem.price, dataItem.discount)} VNĐ</div>
+            <h1 className='text-title font-bold'>{productDetail.name}</h1>
+            <InfoItemDetail data={productDetail} />
+            <div className='text-medium  line-through'>
+              {formatPriceBase(productDetail.price, productDetail.discount)} VNĐ
+            </div>
             <div className='text-title font-bold text-green-500'>{`${formatPrice(
-              Number(dataItem.price || '0') * amountBuy,
+              Number(productDetail.price || '0') * amountBuy,
             )} VNĐ`}</div>
             <SubAndPlus
               callBackSub={(e) => setAmountBuy(e)}
               value={amountBuy}
-              maxAmount={dataItem.amount - dataItem.sold}
+              maxAmount={productDetail.amount - productDetail.sold}
               callBackPlus={(e) => setAmountBuy(e)}
             />
             <div className='flex gap-6 mt-4'>
@@ -174,7 +174,7 @@ const ViewDetail = ({ productDetail, amountBuy = 0, setIsPayment, setAmountBuy }
         </div>
 
         <div data-aos='fade-up' className='w-full bg-white rounded-xl p-6 mt-6'>
-          <MoreInfo data={dataItem} />
+          <MoreInfo data={productDetail} />
         </div>
       </div>
     )
@@ -183,28 +183,30 @@ const ViewDetail = ({ productDetail, amountBuy = 0, setIsPayment, setAmountBuy }
   const renderMobile = () => {
     return (
       <div className='flex flex-col gap-2'>
-        <BtnBack title={['Shopp', dataItem.name]} url={['/shop']} />
+        <BtnBack title={['Shopp', productDetail.name]} url={['/shop']} />
         <div className='pt-8 pb-2 shadow-lg shadow-yellow-50 bg-white   w-full flex flex-col justify-center items-center'>
           <div data-aos='fade-right' className='w-[80%]  overflow-hidden '>
             <Image
-              src={detectImg(dataItem.imageMain || images.userDetail.iconUserDetail)}
-              alt={dataItem.des || ''}
+              src={detectImg(productDetail.imageMain || images.userDetail.iconUserDetail)}
+              alt={productDetail.des || ''}
               className='!relative !w-full !h-auto'
               fill
             />
-            <ImageMore data={dataItem} />
+            <ImageMore data={productDetail} />
           </div>
           <div data-aos='fade-right' className='w-full flex-col gap-2 px-5 pt-5'>
-            <h1 className='text-title font-bold'>{dataItem.name}</h1>
-            <InfoItemDetail data={dataItem} />
-            <div className='text-medium  line-through'>{formatPriceBase(dataItem?.price, dataItem?.discount)} VNĐ</div>
+            <h1 className='text-title font-bold'>{productDetail.name}</h1>
+            <InfoItemDetail data={productDetail} />
+            <div className='text-medium  line-through'>
+              {formatPriceBase(productDetail?.price, productDetail?.discount)} VNĐ
+            </div>
             <div className='text-title font-bold text-green-500'>{`${formatPrice(
-              Number(dataItem?.price || '0') * amountBuy,
+              Number(productDetail?.price || '0') * amountBuy,
             )} VNĐ`}</div>
             <SubAndPlus
               callBackSub={(e) => setAmountBuy(e)}
               value={amountBuy}
-              maxAmount={dataItem.amount - dataItem.sold}
+              maxAmount={productDetail.amount - productDetail.sold}
               callBackPlus={(e) => setAmountBuy(e)}
             />
             <div className='flex sm:gap-6 gap-2 mt-4 mb-3 sm:flex-row flex-col'>
@@ -230,7 +232,7 @@ const ViewDetail = ({ productDetail, amountBuy = 0, setIsPayment, setAmountBuy }
           data-aos='fade-right'
           className=' shadow-yellow-50 bg-white p-5 md:pr-5 pr-3 w-full flex flex-col gap-2 mt-2'
         >
-          <MoreInfo data={dataItem} />
+          <MoreInfo data={productDetail} />
         </div>
       </div>
     )

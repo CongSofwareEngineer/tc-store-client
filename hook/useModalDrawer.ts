@@ -25,8 +25,17 @@ const useModalDrawer = () => {
       content: config.content,
       placement: 'bottom',
       height: 'auto',
+      width: '500px',
       ...config.configDrawer,
       title: config.configDrawer?.title || config?.title,
+    }
+
+    const configModalBase: ConfigModal = {
+      ...config.configModal,
+      title: config.configModal?.title || config.title,
+      content: config.content,
+      showBtnClose: config?.configModal?.showBtnClose === false ? false : config?.configModal?.overClickClose,
+      open: true,
     }
 
     if (config.onlyDrawer) {
@@ -35,13 +44,7 @@ const useModalDrawer = () => {
       if (isMobile && config.useDrawer) {
         openDrawer(configDrawerBase)
       } else {
-        open({
-          ...config.configModal,
-          title: config.configModal?.title || config.title,
-          content: config.content,
-          showBtnClose: config?.configModal?.showBtnClose === false ? false : config?.configModal?.overClickClose,
-          open: true,
-        })
+        open(configModalBase)
       }
     }
   }
