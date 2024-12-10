@@ -6,7 +6,7 @@ import useLanguage from '@/hook/useLanguage'
 import MyInput from '../MyInput'
 import { isEmpty } from 'lodash'
 
-const OptionVnLocation = ({ callback, value = [] }: { callback: any; value?: any }) => {
+const OptionVnLocation = ({ callback, value = [] }: { callback: any; value?: string[] }) => {
   const [provence, setProvence] = useState<any>(null)
   const [districts, setDistricts] = useState<any>(null)
   const [ward, setWard] = useState<any>(null)
