@@ -27,8 +27,8 @@ const BillScreen = () => {
       <div className='flex flex-col'>
         {data.length > 0 && (
           <div className='flex gap-3 w-full flex-col mb-10'>
-            {data.map((e) => {
-              return <Item data={e} key={e?._id} />
+            {data.map((e, index) => {
+              return <Item indexData={index} data={e} key={e?._id} />
             })}
           </div>
         )}
