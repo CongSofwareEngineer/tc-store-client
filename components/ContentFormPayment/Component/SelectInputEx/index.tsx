@@ -1,8 +1,7 @@
-import MyButton from '@/components/MyButton'
 import useLanguage from '@/hook/useLanguage'
 import { showNotificationError } from '@/utils/notification'
 import { PlusOutlined } from '@ant-design/icons'
-import { Form, Input, Select, SelectProps } from 'antd'
+import { Button, Form, Input, Select, SelectProps } from 'antd'
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 
@@ -37,7 +36,16 @@ type SelectInputExType = {
   validator?: (value?: any) => string | null
 }
 
-const SelectInputEx = ({ label, name, message, required = false, options, callBackAdd = () => {}, validator = () => '', loadingNewAddressShip = false }: SelectInputExType) => {
+const SelectInputEx = ({
+  label,
+  name,
+  message,
+  required = false,
+  options,
+  callBackAdd = () => {},
+  validator = () => '',
+  loadingNewAddressShip = false,
+}: SelectInputExType) => {
   const { translate } = useLanguage()
   const inputRef = useRef(null)
 
@@ -90,9 +98,14 @@ const SelectInputEx = ({ label, name, message, required = false, options, callBa
                 onKeyDown={(e) => e.stopPropagation()}
                 className='flex-1'
               />
-              <MyButton loading={loadingNewAddressShip || isLoading} type='text' icon={<PlusOutlined />} onClick={handleAddNew}>
+              <Button
+                loading={loadingNewAddressShip || isLoading}
+                type='text'
+                icon={<PlusOutlined />}
+                onClick={handleAddNew}
+              >
                 {translate('common.addAddress')}
-              </MyButton>
+              </Button>
             </div>
           </>
         )}

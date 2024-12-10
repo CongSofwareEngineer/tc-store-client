@@ -1,6 +1,6 @@
 import MyTable from '@/components/MyTable'
 import TextCopy from '@/components/TextCopy'
-import { FILTER_BILL, PAGE_SIZE_LIMIT, REQUEST_TYPE } from '@/constant/app'
+import { FILTER_BILL, PAGE_SIZE_LIMIT } from '@/constant/app'
 import useBillAdmin from '@/hook/tank-query/Admin/useBillAdmin'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useSearchBaseAdmin from '@/hook/useSearchBaseAdmin'
@@ -18,7 +18,8 @@ import { formatDateTime } from '@/utils/momentFunc'
 import { Button } from 'antd'
 import useMedia from '@/hook/useMedia'
 import { ColumnsType } from 'antd/es/table'
-import { DeleteOutlined, EditOutlined, EyeOutlined, FolderViewOutlined, UploadOutlined } from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
+import { DEFAULT_RATE_EXP_USER } from '../../../constant/app'
 
 const BillAdminScreen = () => {
   const { renderContent } = useSearchBaseAdmin({
@@ -43,21 +44,22 @@ const BillAdminScreen = () => {
   }
 
   const handleSubmit = (item: any) => {
-    console.log({ item })
     let title = translate('admin.bill.doYouWantChangeDelivering')
     let status = FILTER_BILL.Delivering
+
     if (item.status === FILTER_BILL.Delivering) {
       status = FILTER_BILL.DeliverySuccess
       title = translate('admin.bill.doYouWantChangeDeliverySuccess')
     }
+
     const callBack = async () => {
-      const res = await ServerApi.requestBase({
-        url: `bill/update/${item._id}`,
-        body: {
-          status,
-        },
-        method: REQUEST_TYPE.POST,
-      })
+      const body = {
+        status,
+        idUser: item.idUser,
+        exp: item.totalBill * DEFAULT_RATE_EXP_USER,
+      }
+
+      const res = await ServerApi.updateBill(item._id, body)
 
       if (res?.data) {
         showNotificationSuccess(translate('myPage.updateSuccess'))

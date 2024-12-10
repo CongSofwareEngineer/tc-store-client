@@ -8,12 +8,15 @@ import { FILTER_BILL } from '@/constant/app'
 import { Button } from 'antd'
 import MyImage from '@/components/MyImage'
 import ConfigBill from '@/components/ConfigBill'
+import { useRouter } from 'next/navigation'
+import { TYPE_PRODUCT } from '@/constant/admin'
 type Props = {
   data?: any
 }
 const ViewDetailBill = ({ data }: Props) => {
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
+  const route = useRouter()
   const { openModalDrawer } = useModalDrawer()
   const enableFeedback = data?.status === FILTER_BILL.DeliverySuccess
 
@@ -30,6 +33,14 @@ const ViewDetailBill = ({ data }: Props) => {
     })
   }
 
+  const handleRoute = (e: any) => {
+    if (e.more_data.category == TYPE_PRODUCT.shoes) {
+      route.push(`/shoes/${e.more_data.keyName}`)
+    } else {
+      route.push(`/shop/${e.more_data.keyName}`)
+    }
+  }
+
   return (
     <div className='flex flex-col w-full gap-4'>
       {!isMobile && <p className='text-[22px] mb-2 font-bold text-center'>{translate('textPopular.viewDetail')}</p>}
@@ -43,7 +54,7 @@ const ViewDetailBill = ({ data }: Props) => {
       {data &&
         data?.listBill?.map((e: any) => {
           return (
-            <div key={e._id} className={`flex gap-2 w-full pb-4 border-b-[3px] border-gray-200`}>
+            <div key={e._id} className={`flex gap-2 w-full pb-4 border-b-[2px] border-gray-200`}>
               <div className='aspect-square w-[100px]  flex justify-center align-middle  relative rounded-md overflow-hidden'>
                 <MyImage
                   alt={`icon-product-bill-${e._id}`}
@@ -51,19 +62,28 @@ const ViewDetailBill = ({ data }: Props) => {
                   className='!relative !w-full !h-auto'
                 />
               </div>
-              <div className='flex flex-col gap-2'>
-                <p className='font-bold'>{e.more_data.name}</p>
+              <div className='flex flex-col md:gap-2 gap-1'>
+                <p onClick={() => handleRoute(e)} className='font-bold'>
+                  {e.more_data.name}
+                </p>
                 <div>{`${translate('textPopular.amount')} : x${e.amount}`}</div>
                 <ConfigBill item={e} />
                 <div className='text-green-700 font-bold'>
                   <span className='mr-1'>{translate('productDetail.price')} :</span>
                   <span>{formatPrice(e.more_data.price)} VNĐ</span>
                 </div>
-                {enableFeedback && (
-                  <Button type='primary' onClick={() => handleFeedback(e)} size='small' className='w-max'>
-                    {translate('common.feedback')}
-                  </Button>
-                )}
+                <div className='flex gap-2 items-center'>
+                  {enableFeedback && (
+                    <Button type='primary' onClick={() => handleFeedback(e)} size='small' className='w-max'>
+                      {translate('common.feedback')}
+                    </Button>
+                  )}
+                  {data?.status !== FILTER_BILL.Processing && (
+                    <Button onClick={() => handleRoute(e)} size='small' className='w-max'>
+                      {translate('common.buyAgain')}
+                    </Button>
+                  )}
+                </div>
               </div>
             </div>
           )

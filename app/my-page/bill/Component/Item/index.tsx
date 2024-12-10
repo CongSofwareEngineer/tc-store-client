@@ -4,7 +4,6 @@ import React from 'react'
 import moment from 'moment'
 import Link from 'next/link'
 import { detectImg, ellipsisText, formatPrice, numberWithCommas } from '@/utils/functions'
-import { useAppSelector } from '@/redux/store'
 import { COLOR, FILTER_BILL } from '@/constant/app'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ViewDetailBill from '../ViewDetailBill'
@@ -24,15 +23,6 @@ const Item = ({ data }: Props) => {
   const { isMobile } = useMedia(1000)
   const { translate } = useLanguage()
   const { openModalDrawer } = useModalDrawer()
-  const { CategoryMenu, Language } = useAppSelector((state) => state.app)
-
-  const getTypeProduct = (keyType: string) => {
-    const data = CategoryMenu.find((e) => e.keyName === keyType)
-    if (data) {
-      return `(${data.lang?.[Language?.locale!]})`
-    }
-    return ''
-  }
 
   const getStatus = (key: string) => {
     switch (key) {
@@ -83,7 +73,6 @@ const Item = ({ data }: Props) => {
   }
 
   const getRouteProduct = (product: any) => {
-    console.log({ product })
     if (product.more_data.category === TYPE_PRODUCT.shoes) {
       return `/shoes/${product.more_data.keyName}`
     }
@@ -173,7 +162,7 @@ const Item = ({ data }: Props) => {
           return (
             <div key={e._id} className='flex mt-2 gap-2 px-3'>
               <div className='w-[70px]  rounded-md aspect-square overflow-hidden relative flex justify-center items-center'>
-                <MyImage className='!relative ' alt={e.more_data.name} src={detectImg(e.more_data.imageMain)} />
+                <MyImage className='!relative !h-auto ' alt={e.more_data.name} src={detectImg(e.more_data.imageMain)} />
               </div>
               <div className='flex justify-between flex-1 gap-2'>
                 <div className='flex flex-col gap-1'>

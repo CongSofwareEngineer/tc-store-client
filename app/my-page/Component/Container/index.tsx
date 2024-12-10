@@ -86,7 +86,7 @@ const Container = ({ children }: PropsWithChildren) => {
     )
   }
 
-  return <>{isClient && (isMobile ? renderMobile() : renderDesktop())}</>
+  return <>{isLogin && (isMobile ? renderMobile() : renderDesktop())}</>
 }
 
 export default Container

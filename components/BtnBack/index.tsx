@@ -25,7 +25,7 @@ const BtnBack = ({ title, url = [], onClick = null }: BtnBackType) => {
         alt={'TC Store Icon Back page '}
         className='!relative !w-[25px] !h-[25px] cursor-pointer'
       />
-      <div className='ml-2 flex gap-1'>
+      <div className='ml-2 flex gap-1 flex-1 overflow-hidden text-ellipsis'>
         {typeof title === 'string' ? (
           <div className='md:text-[16px] text-[14px] '>{title}</div>
         ) : (
@@ -33,7 +33,7 @@ const BtnBack = ({ title, url = [], onClick = null }: BtnBackType) => {
             if (url[index]) {
               return (
                 <Link
-                  className='cursor-pointer hover:underline text-[16px] text-blue-700 flex gap-1'
+                  className='cursor-pointer flex-nowrap hover:underline md:text-[16px] text-sm  text-blue-700 flex gap-1'
                   href={url[index]}
                   key={item}
                 >
@@ -43,8 +43,11 @@ const BtnBack = ({ title, url = [], onClick = null }: BtnBackType) => {
               )
             }
             return (
-              <div className=' text-[16px] ' key={item}>
-                {item}
+              <div
+                className=' md:text-[16px] text-sm flex flex-1  whitespace-nowrap overflow-hidden text-ellipsis'
+                key={item}
+              >
+                <span>{item}</span>
               </div>
             )
           })

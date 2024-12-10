@@ -1,8 +1,8 @@
-import MyButton from '@/components/MyButton'
 import MyInput from '@/components/MyInput'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
 import { encryptData } from '@/utils/crypto'
+import { Button } from 'antd'
 import React, { useState, useMemo } from 'react'
 
 const ModalEnterPassAgain = ({ callBack }: { callBack: () => void }) => {
@@ -23,9 +23,9 @@ const ModalEnterPassAgain = ({ callBack }: { callBack: () => void }) => {
         <MyInput type='password' value={passAgain} onChangeText={(e) => setPassAgain(e?.toString() || '')} />
         <span className='text-xs text-red-600 h-4'>{isValidPass && translate('warning.inValidPassWordAgain')}</span>
         <div className='flex justify-center w-full mt-2'>
-          <MyButton onClick={callBack} disabled={isValidPass} className='w-[150px]'>
+          <Button onClick={callBack} disabled={isValidPass} className='w-full'>
             {translate('common.ok')}
-          </MyButton>
+          </Button>
         </div>
       </div>
     </div>

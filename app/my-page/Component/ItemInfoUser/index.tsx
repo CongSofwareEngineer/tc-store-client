@@ -4,6 +4,7 @@ import { RightOutlined } from '@ant-design/icons'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalUpdateUser from '../ModalUpdateUser'
+import ModalEnterPassAgain from '../ModalEnterPassAgain'
 
 const ItemInfoUser = ({ value, keyType, title }: ItemInfoUserType) => {
   const { translate } = useLanguage()
@@ -25,16 +26,26 @@ const ItemInfoUser = ({ value, keyType, title }: ItemInfoUserType) => {
   }
 
   const handleUpdate = () => {
-    openModalDrawer({
-      content: <ModalUpdateUser keyType={keyType?.toString() || ''} />,
-      useDrawer: true,
-      title: `${translate('common.edit')} ${getLanguage()}`,
-      configDrawer: {
-        height: '300px',
-        placement: 'bottom',
-        maskClosable: false,
-      },
-    })
+    const callback = () => {
+      openModalDrawer({
+        content: <ModalUpdateUser keyType={keyType?.toString() || ''} />,
+        useDrawer: true,
+        title: `${translate('common.edit')} ${getLanguage()}`,
+        configDrawer: {
+          height: '300px',
+          placement: 'bottom',
+          maskClosable: false,
+        },
+      })
+    }
+
+    if (keyType === 'pass') {
+      openModalDrawer({
+        content: <ModalEnterPassAgain callBack={callback} />,
+      })
+    } else {
+      callback()
+    }
   }
 
   const getDataEx = () => {
@@ -52,7 +63,11 @@ const ItemInfoUser = ({ value, keyType, title }: ItemInfoUserType) => {
       <span>{title}</span>
 
       <span className='flex gap-1 items-center'>
-        {keyType === 'sex' ? <span>{!!value ? translate('textPopular.female') : translate('textPopular.male')}</span> : <span>{getDataEx()}</span>}
+        {keyType === 'sex' ? (
+          <span>{!!value ? translate('textPopular.female') : translate('textPopular.male')}</span>
+        ) : (
+          <span>{getDataEx()}</span>
+        )}
 
         <RightOutlined />
       </span>

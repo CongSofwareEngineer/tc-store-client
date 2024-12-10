@@ -52,7 +52,7 @@ const MyFilter = ({
       className={`bg-white border-zinc-500 border-[1px] w-full  flex flex-col md:rounded-xl rounded-lg overflow-hidden ${className}`}
     >
       <div
-        className={`border-b-[1px] border-zinc-500 w-full flex justify-between items-center  p-3 bg-green-200  ${classNameHeader}`}
+        className={`border-b-[1px] border-zinc-500 w-full flex justify-between items-center  md:py-3 py-2 px-3 bg-green-200  ${classNameHeader}`}
       >
         <div className='flex items-center gap-2'>
           <AlignLeftOutlined style={{ fontSize: 20 }} />

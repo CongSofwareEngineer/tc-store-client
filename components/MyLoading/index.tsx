@@ -15,8 +15,8 @@ const MyLoading = ({ icon, className }: MyLoadingType) => {
       {icon ? (
         <Image className='!relative' fill src={icon} alt='icon loading' />
       ) : (
-        <div className='my-5 text-medium'>
-          <LoadingOutlined />
+        <div className='my-5 text-2xl text-green-500'>
+          <LoadingOutlined style={{ fontSize: 36 }} />
         </div>
       )}
     </div>

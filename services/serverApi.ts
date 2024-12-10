@@ -32,16 +32,12 @@ const ServerApi = {
         checkAuth,
       }
 
-      const [auth, authRefresh] = await Promise.all([
-        getCookie(COOKIE_KEY.Auth),
-        getCookie(COOKIE_KEY.AuthRefresh),
-      ])
+      const [auth, authRefresh] = await Promise.all([getCookie(COOKIE_KEY.Auth), getCookie(COOKIE_KEY.AuthRefresh)])
 
       if (
         param.checkAuth &&
         !authRefresh &&
-        (param.method === REQUEST_TYPE.POST ||
-          param.method === REQUEST_TYPE.DELETE)
+        (param.method === REQUEST_TYPE.POST || param.method === REQUEST_TYPE.DELETE)
       ) {
         ObserverService.emit(OBSERVER_KEY.LogOut)
         return {
@@ -89,6 +85,15 @@ const ServerApi = {
       url: `all-cart/${idUser}${query}`,
     })
     return res.data
+  },
+
+  updateBill: async (idBill: string, body: any) => {
+    const res = await ServerApi.requestBase({
+      url: `bill/update/${idBill}`,
+      body,
+      method: REQUEST_TYPE.POST,
+    })
+    return res
   },
 }
 export default ServerApi

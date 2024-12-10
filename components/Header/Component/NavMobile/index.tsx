@@ -3,6 +3,15 @@ import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
 import ObserverService from '@/services/observer'
+import {
+  ContactsOutlined,
+  HighlightOutlined,
+  HomeOutlined,
+  LoginOutlined,
+  ShopOutlined,
+  ShoppingCartOutlined,
+  UserOutlined,
+} from '@ant-design/icons'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
@@ -14,6 +23,29 @@ const LinkCustom = styled(styled(Link)<{ $isSelected?: Boolean }>``).attrs({
   font-weight: ${(props) => (props.$isSelected ? '700 !important' : 'nonce')};
 `
 
+const LinkRoute = ({ text, icon, path }: { text?: string; icon?: React.ReactNode; path: string }) => {
+  const pathname = usePathname()
+  const { closeModalDrawer } = useModalDrawer()
+
+  const checkSelected = () => {
+    if (pathname === '/' || pathname === '') {
+      return pathname === path
+    }
+    if (path === '/') {
+      return false
+    }
+    return pathname.includes(path)
+  }
+  return (
+    <LinkCustom onClick={closeModalDrawer} $isSelected={checkSelected()} href={path}>
+      <span className='flex gap-2 items-center'>
+        {icon && <span className='text-green-500 text-base'>{icon}</span>}
+
+        <span>{text}</span>
+      </span>
+    </LinkCustom>
+  )
+}
 const NavMobile = () => {
   const { isLogin, userData } = useUserData()
   const { translate } = useLanguage()
@@ -24,45 +56,39 @@ const NavMobile = () => {
     ObserverService.emit(OBSERVER_KEY.LogOut)
     closeModalDrawer()
   }
-  return (
-    <div className='flex flex-1  flex-col gap-3 ml-2'>
-      {isLogin && (
-        <LinkCustom onClick={closeModalDrawer} $isSelected={pathname.includes('/my-page')} href={'/my-page'}>
-          {translate('myProfile.myProfile')}
-        </LinkCustom>
-      )}
-      <LinkCustom onClick={closeModalDrawer} $isSelected={pathname === '/' || pathname === ''} href={'/'}>
-        {translate('header.home')}
-      </LinkCustom>
-      <LinkCustom onClick={closeModalDrawer} $isSelected={pathname === '/shop'} href={'/shop'}>
-        {translate('header.shop')}
-      </LinkCustom>
 
-      <LinkCustom onClick={closeModalDrawer} $isSelected={pathname === '/nests'} href={'/nests'}>
-        {translate('textPopular.nest')}
-      </LinkCustom>
-      <LinkCustom onClick={closeModalDrawer} $isSelected={pathname === '/shoes'} href={'/shoes'}>
-        {translate('textPopular.shoes')}
-      </LinkCustom>
-      <LinkCustom onClick={closeModalDrawer} $isSelected={pathname === '/contact'} href={'/contact'}>
-        {translate('header.contact')}
-      </LinkCustom>
+  return (
+    <div className='flex flex-1  flex-col gap-3'>
+      {isLogin && <LinkRoute path='/my-page' icon={<UserOutlined />} text={translate('myProfile.myProfile')} />}
+      <LinkRoute path='/' icon={<HomeOutlined />} text={translate('header.home')} />
+
+      <LinkRoute path='/shop' icon={<ShopOutlined />} text={translate('header.shop')} />
+
+      <LinkRoute path='/nests' icon={<ShopOutlined />} text={translate('textPopular.nest')} />
+
+      <LinkRoute path='/shoes' icon={<ShopOutlined />} text={translate('textPopular.shoes')} />
+
+      <LinkRoute path='/contact' icon={<ContactsOutlined />} text={translate('header.contact')} />
+
       {isLogin ? (
-        <LinkCustom onClick={closeModalDrawer} $isSelected={pathname === '/my-cart'} href={'/my-cart'}>
-          {translate('header.cart')}
-        </LinkCustom>
+        <LinkRoute path='/cart' icon={<ShoppingCartOutlined />} text={translate('header.cart')} />
       ) : (
-        <LinkCustom onClick={closeModalDrawer} $isSelected={pathname === '/register'} href={'/register'}>
-          {translate('header.register')}
-        </LinkCustom>
+        <LinkRoute path='/register' icon={<HighlightOutlined />} text={translate('header.register')} />
       )}
+      {isLogin && (
+        <div onClick={handleLogOut} className='flex gap-2 items-center'>
+          <span className='text-green-500 text-base'>
+            <LoginOutlined />
+          </span>
+          <span>{translate('common.logOut')}</span>
+        </div>
+      )}
+
       {!!userData?.isAdmin && (
         <LinkCustom $isSelected={pathname.includes('/admin')} href={'/admin'}>
           Admin
         </LinkCustom>
       )}
-
-      {isLogin && <div onClick={handleLogOut}>{translate('common.logOut')}</div>}
     </div>
   )
 }

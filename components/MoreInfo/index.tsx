@@ -2,26 +2,18 @@ import React from 'react'
 import { Tabs, TabsProps } from 'antd'
 import useLanguage from '@/hook/useLanguage'
 import dynamic from 'next/dynamic'
-import { LoadingOutlined } from '@ant-design/icons'
+import MyLoading from '../MyLoading'
 const MyBlog = dynamic(() => import('@/components/MyBlog'), {
   ssr: true,
   loading: () => {
-    return (
-      <div className='flex text-green-600   py-2 justify-center'>
-        <LoadingOutlined style={{ fontSize: 36 }} />
-      </div>
-    )
+    return <MyLoading />
   },
 })
 
 const Comment = dynamic(() => import('@/components/Comment'), {
   ssr: true,
   loading: () => {
-    return (
-      <div className='flex text-green-600   py-2 justify-center'>
-        <LoadingOutlined style={{ fontSize: 36 }} />
-      </div>
-    )
+    return <MyLoading />
   },
 })
 

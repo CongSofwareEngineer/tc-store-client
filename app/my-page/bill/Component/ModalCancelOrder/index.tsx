@@ -1,4 +1,3 @@
-import MyButton from '@/components/MyButton'
 import MyInput from '@/components/MyInput'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
@@ -6,6 +5,7 @@ import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ClientApi from '@/services/clientApi'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
+import { Button } from 'antd'
 import React, { useState } from 'react'
 
 const ModalCancelOrder = ({ data }: { data: any }) => {
@@ -35,12 +35,12 @@ const ModalCancelOrder = ({ data }: { data: any }) => {
       <div className='w-full font-medium'>{translate('textPopular.reason')}:</div>
       <MyInput type='area' rows={3} onChangeText={(e) => setTextWhy(e?.toString() || '')} />
       <div className='flex gap-3 w-full mt-4'>
-        <MyButton disabled={!textWhy} className={'w-full'} loading={loading} onClick={handleSubmit}>
+        <Button disabled={!textWhy} className={'!w-full'} loading={loading} onClick={handleSubmit}>
           {translate('common.submit')}
-        </MyButton>
-        <MyButton className='w-full' type='primary' onClick={closeModalDrawer}>
+        </Button>
+        <Button className='!w-full' type='primary' onClick={closeModalDrawer}>
           {translate('common.close')}
-        </MyButton>
+        </Button>
       </div>
     </div>
   )

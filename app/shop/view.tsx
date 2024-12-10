@@ -1,13 +1,9 @@
 'use client'
 import React from 'react'
 import useAos from '@/hook/useAos'
-import dynamic from 'next/dynamic'
 import MenuCategory from './Component/MenuCategory'
-
-const Content = dynamic(() => import('./Component/Content'), { ssr: false })
-const InputSearch = dynamic(() => import('./Component/InputSearch'), {
-  ssr: false,
-})
+import InputSearch from './Component/InputSearch'
+import Content from './Component/Content'
 
 const ShopScreen = () => {
   useAos(1000)

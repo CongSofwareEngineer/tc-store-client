@@ -1,4 +1,3 @@
-import MyButton from '@/components/MyButton'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
@@ -7,7 +6,7 @@ import ClientApi from '@/services/clientApi'
 import { decryptData } from '@/utils/crypto'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 
-import { Checkbox, Input } from 'antd'
+import { Button, Checkbox, Input } from 'antd'
 import { isEmpty } from 'lodash'
 import React, { useEffect, useState } from 'react'
 
@@ -120,13 +119,19 @@ const ModalUpdateUser = ({ keyType, callBack, initValue, maxLength = 20 }: Props
               </Checkbox>
             </div>
           ) : (
-            <Input.TextArea rows={2} value={valueNew?.toString()} onChange={(e) => setValueNew(e.target.value)} maxLength={maxLength} showCount />
+            <Input.TextArea
+              rows={2}
+              value={valueNew?.toString()}
+              onChange={(e) => setValueNew(e.target.value)}
+              maxLength={maxLength}
+              showCount
+            />
           )}
         </div>
         <div className='w-full mt-6'>
-          <MyButton className='w-full' loading={loading} onClick={handleSubmit}>
+          <Button className='w-full' loading={loading} onClick={handleSubmit}>
             {translate('common.save')}
-          </MyButton>
+          </Button>
         </div>
       </div>
     </div>

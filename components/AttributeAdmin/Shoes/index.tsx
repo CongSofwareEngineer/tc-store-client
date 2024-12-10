@@ -8,7 +8,6 @@ import useModalAdmin from '@/hook/useModalAdmin'
 import ModalDelete from '@/components/ModalDelete'
 import { VALUE_KEY_DEFAULT } from '@/constant/admin'
 import { PropsSelectItem } from '@/components/MySelect'
-import Sex from '../Sex'
 
 export type IEditItemAttributesProps = {
   data: any

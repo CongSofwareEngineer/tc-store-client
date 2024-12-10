@@ -13,9 +13,9 @@ import { isObject } from '@/utils/functions'
 import useQuerySearch from './useQuerySearch'
 import MyDatePickerForm from '@/components/Form/MyDatePickerForm'
 import dayjs from 'dayjs'
-import MyButton from '@/components/MyButton'
 import StatusFormBill from '@/components/Form/StatusFormBill'
 import { FILTER_BILL } from '@/constant/app'
+import { Button } from 'antd'
 
 type Props = {
   dateStart?: boolean
@@ -198,9 +198,9 @@ const useSearchBaseAdmin = (param?: Props) => {
             </div>
             <div className='flex justify-center items-center gap-2 w-full'>
               <ButtonForm disableClose titleSubmit={translate('common.search')} />
-              <MyButton type='primary' className=' mt-2' onClick={() => clearSearch()}>
+              <Button type='primary' className=' mt-2' onClick={() => clearSearch()}>
                 {'Clean'}
-              </MyButton>
+              </Button>
             </div>
           </MyForm>
         )}

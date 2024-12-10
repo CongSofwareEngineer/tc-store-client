@@ -37,8 +37,9 @@ type Props = {
   amountBuy: number
   setIsPayment: (e: any) => void
   setAmountBuy: (e: any) => void
+  onChangeData?: (param: any) => void
 }
-const ViewDetail = ({ productDetail, amountBuy = 0, setIsPayment, setAmountBuy }: Props) => {
+const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, setAmountBuy }: Props) => {
   useAos(500)
   const { isMobile } = useMedia()
   const { refreshQuery } = useRefreshQuery()

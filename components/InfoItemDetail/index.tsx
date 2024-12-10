@@ -1,6 +1,6 @@
 import React from 'react'
 import { ItemDetailType } from './type'
-import { ITYPE_PRODUCT_EX } from '@/constant/mongoDB'
+import { TYPE_PRODUCT_EX } from '@/constant/mongoDB'
 import dynamic from 'next/dynamic'
 import { Rate } from 'antd'
 import useMedia from '@/hook/useMedia'
@@ -13,12 +13,12 @@ const InfoItemDetail = ({ data }: { data: ItemDetailType }) => {
 
   const getTypeProduct = () => {
     if (data?.category === 'shoes') {
-      return ITYPE_PRODUCT_EX.shoes
+      return TYPE_PRODUCT_EX.shoes
     }
     // if (data?.category === 'nests') {
-    //   return ITYPE_PRODUCT_EX.nests
+    //   return TYPE_PRODUCT_EX.nests
     // }
-    return ITYPE_PRODUCT_EX.normal
+    return TYPE_PRODUCT_EX.normal
   }
 
   const renderItemDes = (title: string, des?: any) => {
@@ -40,7 +40,7 @@ const InfoItemDetail = ({ data }: { data: ItemDetailType }) => {
         </div>
         {renderItemDes(translate('textPopular.description'), data.des)}
         {renderItemDes(translate('productDetail.sold'), Number(data.sold))}
-        {getTypeProduct() === ITYPE_PRODUCT_EX.normal && renderItemDes(translate('productDetail.weight'), data.weight)}
+        {getTypeProduct() === TYPE_PRODUCT_EX.normal && renderItemDes(translate('productDetail.weight'), data.weight)}
         {renderItemDes(translate('productDetail.totalNumber'), Number(data.amount))}
         {renderItemDes(translate('textPopular.freeShip'), 'Free ship trong 20 KM')}
       </div>
@@ -55,7 +55,7 @@ const InfoItemDetail = ({ data }: { data: ItemDetailType }) => {
         </div>
         {renderItemDes(translate('textPopular.description'), data.des)}
         {renderItemDes(translate('productDetail.sold'), Number(data.sold))}
-        {getTypeProduct() === ITYPE_PRODUCT_EX.normal && renderItemDes(translate('productDetail.weight'), data.weight)}
+        {getTypeProduct() === TYPE_PRODUCT_EX.normal && renderItemDes(translate('productDetail.weight'), data.weight)}
         {renderItemDes(translate('productDetail.totalNumber'), Number(data.amount))}
         {renderItemDes(translate('textPopular.freeShip'), 'Free ship trong 20 KM')}
       </div>

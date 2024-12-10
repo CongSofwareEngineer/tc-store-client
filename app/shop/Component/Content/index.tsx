@@ -5,22 +5,31 @@ import useAllProduct from '@/hook/tank-query/useAllProduct'
 import useQuerySearch from '@/hook/useQuerySearch'
 import React from 'react'
 import LoadingData from '../LoadingData'
+import { TYPE_PRODUCT } from '@/constant/admin'
+import useLanguage from '@/hook/useLanguage'
 
 const Content = () => {
   const { queries } = useQuerySearch()
+  const { translate } = useLanguage()
   const { data, isLoading, loadMore, hasNextPage, isFetchingNextPage } = useAllProduct(PAGE_SIZE_LIMIT, queries)
 
+  const getUrl = (item: any) => {
+    if (item.category === TYPE_PRODUCT.shoes) {
+      return `/shoes/${item.keyName}`
+    }
+    return `/shop/${item.keyName}`
+  }
   return (
     <>
       {data.length > 0 && (
         <div className='mt-2  w-full grid grid-cols-2 sm:grid-cols-3  lg:grid-cols-4   gap-3 xl:gap-6 md:gap-4'>
           {data.map((item: any) => {
-            return <ItemProduct showFeedback showSold key={`shop-${item.id}`} item={item} href={`/shop/${item.keyName}`} />
+            return <ItemProduct showFeedback showSold key={`shop-${item.id}`} item={item} href={getUrl(item)} />
           })}
         </div>
       )}
 
-      {data.length === 0 && !isLoading && <div className='mt-3'>Chưa có sản phẩm</div>}
+      {data.length === 0 && !isLoading && <div className='mt-3'>{translate('warning.noData')}</div>}
 
       <MyLoadMore
         callback={loadMore}

@@ -33,7 +33,7 @@ const ItemProduct = ({
   return (
     <Link className='group' onClick={callback} href={href}>
       <div
-        className={`group relative item-list cursor-pointer px-3 pt-6 md:pb-4 pb-3 gap-3 flex items-center justify-between flex-col ${styles['item-coffee']} ${className}`}
+        className={`group relative item-list cursor-pointer px-3 md:pt-6 pt-4 md:pb-4 pb-3 gap-3 flex items-center justify-between flex-col ${styles['item-coffee']} ${className}`}
       >
         {showDiscount && item?.discount > 0 && (
           <div className='absolute right-0 top-4 bg-green-300 px-3 rounded-l-lg z-[1]'>{item?.discount || 0}%</div>

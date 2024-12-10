@@ -37,7 +37,7 @@ const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
                     {e.listImg.map((img: string) => {
                       return (
                         <div key={img} className='md:w-[50px] w-[30px] aspect-square relative overflow-hidden '>
-                          <ImageAdmin src={img} alt={img} className='w-full' />
+                          <ImageAdmin key={img} src={img} alt={img} className='w-full' />
                         </div>
                       )
                     })}

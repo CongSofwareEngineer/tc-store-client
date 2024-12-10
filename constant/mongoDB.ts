@@ -38,7 +38,7 @@ export type BodyAddBill = {
   listNewSoldProduct?: { [key: string]: any }[]
 }
 
-export const ITYPE_PRODUCT_EX = {
+export const TYPE_PRODUCT_EX = {
   shoes: 'shoes',
   nests: 'nests',
   laptop: 'laptop',
@@ -52,7 +52,7 @@ const FILTER_BASE_DB = {
 }
 
 export const OPTION_FILTER_DB = {
-  Poduct: {
+  Product: {
     ...FILTER_BASE_DB,
     keyName: 'keyName',
   },
@@ -82,7 +82,7 @@ export const OPTION_FILTER_DB = {
 }
 
 export enum KEY_OPTION_FILTER_DB {
-  Poduct = 'Poduct',
+  Product = 'Product',
   Bill = 'Bill',
   User = 'User',
   Cart = 'Cart',

@@ -15,13 +15,12 @@ import { BodyAddBill } from '@/constant/firebase'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalProcess from '@/components/ModalProcess'
 import ModalDelete from '@/components/ModalDelete'
-import { DEFAULT_RATE_EXP_USER, FILTER_BILL, LOCAL_STORAGE_KEY } from '@/constant/app'
+import { FILTER_BILL, LOCAL_STORAGE_KEY } from '@/constant/app'
 import ModalSuccess from '@/components/ModalSuccess'
 import { useRouter } from 'next/navigation'
 import ClientApi from '@/services/clientApi'
 import OptionsPayment from '@/app/my-cart/Component/Payment/Component/OptionsPayment'
 import { showNotificationError } from '@/utils/notification'
-import BigNumber from 'bignumber.js'
 
 const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const { translate } = useLanguage()
@@ -63,6 +62,44 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
     })
   }
 
+  const callbackSuccessBuy = async () => {
+    await Promise.all([
+      refreshQuery(QUERY_KEY.MyCartUser),
+      refreshQuery(QUERY_KEY.GetProductByID),
+      refreshQuery(QUERY_KEY.MyBillUser),
+      refreshQuery(QUERY_KEY.LengthCartUser),
+    ])
+
+    openModalDrawer({
+      content: (
+        <ModalSuccess
+          showClose
+          title={translate('productDetail.modalBuy.success')}
+          des={translate('productDetail.modalBuy.successDes')}
+          titleSubmit={translate('common.viewBill')}
+          titleClose={translate('common.ok')}
+          callback={() => {
+            route.push('/my-page/bill')
+            closeModalDrawer()
+          }}
+        />
+      ),
+    })
+  }
+
+  const callbackProcessingBuy = () => {
+    openModalDrawer({
+      content: (
+        <ModalProcess title={translate('confirm.bill.createBill')} des={translate('confirm.bill.createBill_Des')} />
+      ),
+      configModal: {
+        showHeader: false,
+        showBtnClose: false,
+        overClickClose: false,
+      },
+    })
+  }
+
   const saveDataNoLogin = (bodyBill: BodyAddBill) => {
     if (!isLogin) {
       const listSDT: string[] = getDataLocal(LOCAL_STORAGE_KEY.ListSDTBuy) || []
@@ -76,7 +113,9 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const handleSubmit = async () => {
     const callBack = async () => {
       setLoading(true)
-      const totalBill = data?.price * amount
+      callbackProcessingBuy()
+
+      let res
 
       const bodyBill: BodyAddBill = {
         addressShip: formData?.addressShip,
@@ -92,7 +131,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
           },
         ],
         status: FILTER_BILL.Processing,
-        totalBill: totalBill,
+        totalBill: data?.price * amount,
         listNewSoldProduct: [
           {
             sold: amount + data?.sold,
@@ -103,54 +142,16 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         ],
       }
 
-      if (isLogin) {
-        const expUser = BigNumber(totalBill)
-          .multipliedBy(DEFAULT_RATE_EXP_USER)
-          .plus(userData?.exp || 0)
-          .decimalPlaces(0)
-          .toNumber()
-
-        bodyBill.expUser = expUser
-      }
-
       saveDataNoLogin(bodyBill)
 
-      openModalDrawer({
-        content: (
-          <ModalProcess title={translate('confirm.bill.createBill')} des={translate('confirm.bill.createBill_Des')} />
-        ),
-        configModal: {
-          showHeader: false,
-          showBtnClose: false,
-          overClickClose: false,
-        },
-      })
+      if (isLogin) {
+        res = await ClientApi.buy(bodyBill)
+      } else {
+        res = await ClientApi.buyNoLogin(bodyBill)
+      }
 
-      const res = await ClientApi.buy(bodyBill)
-
-      if (res?.data) {
-        await Promise.all([
-          refreshQuery(QUERY_KEY.MyCartUser),
-          refreshQuery(QUERY_KEY.GetProductByID),
-          refreshQuery(QUERY_KEY.MyBillUser),
-          refreshQuery(QUERY_KEY.LengthCartUser),
-        ])
-
-        openModalDrawer({
-          content: (
-            <ModalSuccess
-              showClose
-              title={translate('productDetail.modalBuy.success')}
-              des={translate('productDetail.modalBuy.successDes')}
-              titleSubmit={translate('common.viewBill')}
-              titleClose={translate('common.ok')}
-              callback={() => {
-                route.push('/my-page/bill')
-                closeModalDrawer()
-              }}
-            />
-          ),
-        })
+      if (res.data) {
+        await callbackSuccessBuy()
       } else {
         showNotificationError(translate('productDetail.modalBuy.error'))
         closeModalDrawer()

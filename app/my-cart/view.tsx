@@ -15,8 +15,13 @@ import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { Button } from 'antd'
 import LoadingData from './Component/LoadingData'
+import MyLoading from '@/components/MyLoading'
 
-const Payment = dynamic(() => import('./Component/Payment'), { ssr: false })
+const Payment = dynamic(() => import('./Component/Payment'), {
+  ssr: false,
+  loading: () => <MyLoading />,
+})
+
 const MyCartScreen = () => {
   const [listCartFormat, setListCartFormat] = useState<any[]>([])
   const [isPayment, setIsPayment] = useState(false)
