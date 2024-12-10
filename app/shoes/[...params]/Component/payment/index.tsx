@@ -110,6 +110,14 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
     }
   }
 
+  const handleUpdateAddressShip = async () => {
+    if (userData?.addressShip?.length === 0) {
+      await ClientApi.updateUser(userData._id, {
+        addressShipper: [formData?.addressShip],
+      })
+    }
+  }
+
   const handleSubmit = async () => {
     const callBack = async () => {
       setLoading(true)
@@ -145,6 +153,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
       saveDataNoLogin(bodyBill)
 
       if (isLogin) {
+        await handleUpdateAddressShip()
         res = await ClientApi.buy(bodyBill)
       } else {
         res = await ClientApi.buyNoLogin(bodyBill)

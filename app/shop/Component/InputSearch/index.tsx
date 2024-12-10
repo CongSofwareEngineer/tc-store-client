@@ -5,7 +5,7 @@ import { Input } from 'antd'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
-const InputSearch = () => {
+const InputSearch = ({ keySearch = 'name' }: { keySearch?: string }) => {
   const router = useRouter()
   const pathname = usePathname()
   const { translate } = useLanguage()
@@ -15,12 +15,12 @@ const InputSearch = () => {
   const nameSearchDebounce = useDebounce(nameSearch)
 
   useEffect(() => {
-    setNameSearch(searchParam.get('name') || '')
+    setNameSearch(searchParam.get(keySearch) || '')
   }, [searchParam])
 
   useEffect(() => {
     if (nameSearchDebounce) {
-      router.push(`${pathname}?name=${nameSearch}`)
+      router.push(`${pathname}?${keySearch}=${nameSearch}`)
     } else {
       router.push(pathname)
     }
@@ -30,7 +30,7 @@ const InputSearch = () => {
     if (!nameSearch) {
       router.push(pathname)
     } else {
-      router.push(`${pathname}?name=${nameSearch}`)
+      router.push(`${pathname}?${keySearch}=${nameSearch}`)
     }
   }
 
@@ -38,7 +38,7 @@ const InputSearch = () => {
     if (!nameSearch) {
       router.push(pathname)
     } else {
-      router.push(`${pathname}?name=${nameSearch}`)
+      router.push(`${pathname}?${keySearch}=${nameSearch}`)
     }
   }
 

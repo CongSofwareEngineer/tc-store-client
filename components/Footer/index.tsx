@@ -6,7 +6,6 @@ import { scrollTop } from '@/utils/functions'
 import { useRouter } from 'next/navigation'
 import SocialMediaShare from '../SocialMediaShare'
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
 import { copyToClipboard } from '@/utils/notification'
 import Image from 'next/image'
 

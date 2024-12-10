@@ -80,7 +80,7 @@ const NavMobile = () => {
           <span className='text-green-500 text-base'>
             <LoginOutlined />
           </span>
-          <span>{translate('common.logOut')}</span>
+          <span className='cursor-pointer hover:underline'>{translate('common.logOut')}</span>
         </div>
       )}
 
