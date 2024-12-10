@@ -100,6 +100,14 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
     })
   }
 
+  const handleUpdateAddressShip = async () => {
+    if (userData?.addressShip?.length === 0) {
+      await ClientApi.updateUser(userData._id, {
+        addressShipper: [formData?.addressShip],
+      })
+    }
+  }
+
   const saveDataNoLogin = (bodyBill: BodyAddBill) => {
     if (!isLogin) {
       const listSDT: string[] = getDataLocal(LOCAL_STORAGE_KEY.ListSDTBuy) || []
@@ -145,6 +153,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
       saveDataNoLogin(bodyBill)
 
       if (isLogin) {
+        handleUpdateAddressShip()
         res = await ClientApi.buy(bodyBill)
       } else {
         res = await ClientApi.buyNoLogin(bodyBill)

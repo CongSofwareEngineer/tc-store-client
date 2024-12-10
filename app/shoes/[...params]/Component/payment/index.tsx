@@ -153,7 +153,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
       saveDataNoLogin(bodyBill)
 
       if (isLogin) {
-        await handleUpdateAddressShip()
+        handleUpdateAddressShip()
         res = await ClientApi.buy(bodyBill)
       } else {
         res = await ClientApi.buyNoLogin(bodyBill)
@@ -190,7 +190,6 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
           formData={formData}
           onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
         >
-          {/* lg:max-h-[calc(100vh-126px)] hide-scroll */}
           <div className='flex lg:flex-row flex-col lg:gap-6 gap-5'>
             <div className='flex flex-1 h-full overflow-y-auto  flex-col lg:max-w-[calc(100%-300px)]'>
               <ContentFormPayment onChange={onChangeAddressShip} />
