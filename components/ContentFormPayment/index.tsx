@@ -10,7 +10,7 @@ import Image from 'next/image'
 import dynamic from 'next/dynamic'
 const OptionVnLocation = dynamic(() => import('../OptionVnLocation'), { ssr: false })
 
-const ContentFormPayment = ({ onChange }: { onChange: (param: any) => void }) => {
+const ContentFormPayment = ({ onChange, value }: { onChange: (param: any) => void; value?: any }) => {
   const { checkNumberPhone } = useCheckForm()
   const { userData } = useUserData()
   const { translate } = useLanguage()
@@ -52,7 +52,7 @@ const ContentFormPayment = ({ onChange }: { onChange: (param: any) => void }) =>
       </div>
       <div className='md:mt-4 mt-2 w-full' />
 
-      <OptionVnLocation callback={onChange} />
+      <OptionVnLocation value={value.addressShip} callback={onChange} />
 
       <div className='md:mt-2 mt-1' />
 

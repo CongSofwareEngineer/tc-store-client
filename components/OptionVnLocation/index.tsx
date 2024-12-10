@@ -1,11 +1,12 @@
 import useAddressShip from '@/hook/useAddressShip'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MySelect from '../MySelect'
 import { useAppSelector } from '@/redux/store'
 import useLanguage from '@/hook/useLanguage'
 import MyInput from '../MyInput'
+import { isEmpty } from 'lodash'
 
-const OptionVnLocation = ({ callback }: { callback: any }) => {
+const OptionVnLocation = ({ callback, value = [] }: { callback: any; value?: any }) => {
   const [provence, setProvence] = useState<any>(null)
   const [districts, setDistricts] = useState<any>(null)
   const [ward, setWard] = useState<any>(null)
@@ -15,6 +16,13 @@ const OptionVnLocation = ({ callback }: { callback: any }) => {
   const { translate } = useLanguage()
   const { data: listDistrict, loading: loadingDistrict } = useAddressShip(2, provence?.id || provence)
   const { data: listWards, loading: loadingWard } = useAddressShip(3, districts?.id)
+
+  useEffect(() => {
+    if (!isEmpty(value)) {
+      const data = value.split('---')
+      console.log({ data })
+    }
+  }, [value])
 
   const getOption = (list: any) => {
     return list.map((e: any) => {
