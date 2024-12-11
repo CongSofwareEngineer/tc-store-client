@@ -64,6 +64,14 @@ const RevenueScreen: NextPage = () => {
             return <TextCopy value={id} textView={ellipsisText(id, 2, 2)} />
           },
         },
+        {
+          title: translate('textPopular.infor'),
+          key: '_id',
+          dataIndex: '_id',
+          render: (id: string, record: any) => {
+            return <TextCopy value={id} textView={ellipsisText(id, 2, 2)} />
+          },
+        },
       ]
       return columns
     }
