@@ -67,6 +67,7 @@ export const OPTIONS_PAYMENT = {
 
 export enum OBSERVER_KEY {
   'LogOut' = 'LogOut',
+  'ReLogin' = 'ReLogin',
   'UpdateCookieAuth' = 'UpdateCookieAuth',
 }
 

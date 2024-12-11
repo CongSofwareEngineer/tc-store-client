@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect } from 'react'
+import { useEffect } from 'react'
 import useUserData from '../useUserData'
 import { usePathname } from 'next/navigation'
 import useModalDrawer from '../useModalDrawer'

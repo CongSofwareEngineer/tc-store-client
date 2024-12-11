@@ -55,7 +55,7 @@ const nextConfig = {
   compress: true,
   swcMinify: true,
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    removeConsole: !!process.env.REMOVE_CONSOLE_LOG,
     reactRemoveProperties: true,
     styledComponents: {
       displayName: true,
