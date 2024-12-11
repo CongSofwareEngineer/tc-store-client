@@ -1,7 +1,7 @@
 'use client'
 import useMedia from '@/hook/useMedia'
 import useUserData from '@/hook/useUserData'
-import { CopyOutlined, EditOutlined } from '@ant-design/icons'
+import { CopyOutlined, EditOutlined, RightOutlined } from '@ant-design/icons'
 import React from 'react'
 import ItemInfoUser from './Component/ItemInfoUser'
 import useLanguage from '@/hook/useLanguage'
@@ -14,6 +14,7 @@ import ModalEnterPassAgain from './Component/ModalEnterPassAgain'
 import MyCheckBox from '@/components/MyCheckBox'
 import Avatar from './Component/Avatar'
 import { copyToClipboard } from '@/utils/notification'
+import ModalUpdateAddressShip from './Component/ModalUpdateAddressShip'
 
 const MyProfile = () => {
   const { isMobile } = useMedia()
@@ -35,6 +36,13 @@ const MyProfile = () => {
         return ''
     }
   }
+  const updateAddressShip = () => {
+    openModalDrawer({
+      content: <ModalUpdateAddressShip />,
+      title: `${translate('common.update')} ${translate('textPopular.addressShip')}`,
+      useDrawer: true,
+    })
+  }
 
   const handleEditName = (key: string) => {
     const callback = () => {
@@ -51,6 +59,40 @@ const MyProfile = () => {
     } else {
       callback()
     }
+  }
+
+  const renderAddressShip = () => {
+    const addressUser = userData?.addressShipper[0]
+    let addressString = ''
+    if (addressUser) {
+      const addressBase = addressUser.address.replaceAll('---', ',')
+      addressString = `${addressUser.addressDetail}, ${addressBase}`
+    }
+    return isMobile ? (
+      <div className='flex gap-2'>
+        <span className='w-[100px]'>{translate('textPopular.address')}</span>
+        <div className='flex flex-1 flex-nowrap'>
+          <div className='flex flex-1 justify-end gap-2  '>
+            <span>{addressString || translate('textPopular.notData')}</span>
+            <RightOutlined onClick={updateAddressShip} />
+          </div>
+        </div>
+      </div>
+    ) : (
+      <div className='flex gap-2'>
+        <span className='w-[140px]'>{translate('textPopular.address')}</span>
+        <div className='flex flex-1 flex-nowrap'>
+          <div className='flex flex-1 justify-between gap-2  '>
+            <span>{addressString || translate('textPopular.notData')}</span>
+            <EditOutlined
+              onClick={updateAddressShip}
+              className='text-xl cursor-pointer hover:scale-110 ml-1'
+              style={{ color: 'green' }}
+            />
+          </div>
+        </div>
+      </div>
+    )
   }
 
   const renderDesktop = () => {
@@ -105,6 +147,7 @@ const MyProfile = () => {
                 />
               </div>
             </div>
+            {renderAddressShip()}
             <div className='flex gap-2'>
               <span className='w-[140px]'>{translate('textPopular.point')}</span>
               <div className='flex flex-1 gap-2 items-end'>
@@ -138,6 +181,8 @@ const MyProfile = () => {
           <div className='relative w-full border-[.5px] my-3 border-gray-300' />
 
           <ItemInfoUser value={!!userData?.sex} title={translate('userDetail.sex')} keyType='sex' />
+          <div className='relative w-full border-[.5px] my-3 border-gray-300' />
+          {renderAddressShip()}
           <div className='relative w-full border-[.5px] my-3 border-gray-300' />
 
           <div className='flex gap-2 flex-nowrap  justify-between w-full py-2 pr-2'>

@@ -6,7 +6,16 @@ import useLanguage from '@/hook/useLanguage'
 import MyInput from '../MyInput'
 import useUserData from '@/hook/useUserData'
 
-const OptionVnLocation = ({ callback, isNew = true }: { callback: any; value?: string[]; isNew?: boolean }) => {
+const OptionVnLocation = ({
+  callback,
+  isNew = true,
+  className = '',
+}: {
+  callback: any
+  value?: string[]
+  isNew?: boolean
+  className?: string
+}) => {
   const [provence, setProvence] = useState<any>(null)
   const [districts, setDistricts] = useState<any>(null)
   const [ward, setWard] = useState<any>(null)
@@ -87,7 +96,7 @@ const OptionVnLocation = ({ callback, isNew = true }: { callback: any; value?: s
 
   return (
     <div className='w-full flex flex-col gap-4'>
-      <div className='flex flex-col gap-2 w-full md:flex-row'>
+      <div className={`flex flex-col  gap-2 w-full md:flex-row ${className}`}>
         <div className='w-full flex flex-col gap-2'>
           <div>{translate('textPopular.province')}</div>
           <MySelect
