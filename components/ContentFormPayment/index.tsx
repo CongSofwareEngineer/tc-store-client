@@ -1,6 +1,5 @@
 import useCheckForm from '@/hook/useCheckForm'
-import useUserData from '@/hook/useUserData'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import useLanguage from '@/hook/useLanguage'
 import { images } from '@/configs/images'
 // import OptionVnLocation from '../OptionVnLocation'
@@ -10,19 +9,9 @@ import Image from 'next/image'
 import dynamic from 'next/dynamic'
 const OptionVnLocation = dynamic(() => import('../OptionVnLocation'), { ssr: false })
 
-const ContentFormPayment = ({ onChange, value }: { onChange: (param: any) => void; value?: any }) => {
+const ContentFormPayment = ({ onChange }: { onChange: (param: any) => void }) => {
   const { checkNumberPhone } = useCheckForm()
-  const { userData } = useUserData()
   const { translate } = useLanguage()
-
-  const [listAddressShip, setListAddressShip] = useState<string[]>([])
-
-  useEffect(() => {
-    if (userData?.addressShipper && Array.isArray(userData?.addressShipper)) {
-      setListAddressShip(() => userData?.addressShipper)
-    }
-  }, [userData])
-  console.log({ listAddressShip })
 
   return (
     <div className='bg-white flex flex-col w-full border-[1px] shadow-gray1 border-gray-300  px-4 pt-4 lg:pb-0 pb-3'>
@@ -52,7 +41,7 @@ const ContentFormPayment = ({ onChange, value }: { onChange: (param: any) => voi
       </div>
       <div className='md:mt-4 mt-2 w-full' />
 
-      <OptionVnLocation value={value.addressShip} callback={onChange} />
+      <OptionVnLocation isNew={false} callback={onChange} />
 
       <div className='md:mt-2 mt-1' />
 

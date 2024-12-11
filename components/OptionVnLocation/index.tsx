@@ -4,9 +4,9 @@ import MySelect from '../MySelect'
 import { useAppSelector } from '@/redux/store'
 import useLanguage from '@/hook/useLanguage'
 import MyInput from '../MyInput'
-import { isEmpty } from 'lodash'
+import useUserData from '@/hook/useUserData'
 
-const OptionVnLocation = ({ callback, value = [] }: { callback: any; value?: string[] }) => {
+const OptionVnLocation = ({ callback, isNew = true }: { callback: any; value?: string[]; isNew?: boolean }) => {
   const [provence, setProvence] = useState<any>(null)
   const [districts, setDistricts] = useState<any>(null)
   const [ward, setWard] = useState<any>(null)
@@ -14,15 +14,36 @@ const OptionVnLocation = ({ callback, value = [] }: { callback: any; value?: str
 
   const { Provinces } = useAppSelector((state) => state.app)
   const { translate } = useLanguage()
+  const { userData } = useUserData()
   const { data: listDistrict, loading: loadingDistrict } = useAddressShip(2, provence?.id || provence)
   const { data: listWards, loading: loadingWard } = useAddressShip(3, districts?.id)
 
   useEffect(() => {
-    if (!isEmpty(value)) {
-      const data = value.split('---')
-      console.log({ data })
+    const initData = (address: any) => {
+      const addressArr = address?.address.split('---') || []
+      if (Array.isArray(Provinces) && !provence) {
+        const dataProvence = Provinces.find((e) => e.full_name === addressArr[2])
+        setProvence(dataProvence)
+      }
+      if (Array.isArray(listDistrict) && !districts) {
+        const dataDistrict = listDistrict.find((e) => e.full_name === addressArr[1])
+        setDistricts(dataDistrict)
+      }
+      if (Array.isArray(listWards) && !ward) {
+        const dataWard = listWards.find((e) => e.full_name === addressArr[0])
+        setAddressDetail(address.addressDetail)
+        setWard(dataWard)
+      }
     }
-  }, [value])
+
+    if (!isNew && userData?.addressShipper!?.length > 0) {
+      const address = userData?.addressShipper[0]
+      if (address) {
+        callback(address)
+        initData(address)
+      }
+    }
+  }, [isNew, userData, Provinces, listDistrict, listWards])
 
   const getOption = (list: any) => {
     return list.map((e: any) => {

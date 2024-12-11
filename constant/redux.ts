@@ -42,7 +42,10 @@ export const INIT_STATE = {
 export type TypeUserData = {
   _id?: string
   address?: string
-  addressShipper: string[]
+  addressShipper: Array<{
+    address: string
+    addressDetail: string
+  }>
   sdt?: string
   name?: string
   pass?: string
