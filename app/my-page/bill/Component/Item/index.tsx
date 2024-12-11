@@ -17,9 +17,10 @@ import styles from './style.module.scss'
 
 type Props = {
   data: { [key: string]: any }
+  indexData: number
 }
 
-const Item = ({ data }: Props) => {
+const Item = ({ data, indexData }: Props) => {
   const { isMobile } = useMedia(1000)
   const { translate } = useLanguage()
   const { openModalDrawer } = useModalDrawer()
@@ -81,7 +82,12 @@ const Item = ({ data }: Props) => {
 
   const renderDesktop = () => {
     return (
-      <div className={`shadow-md mb-1  p-4 flex flex-col gap-2 w-full bg-slate-50 ${styles['item-coffee']}`}>
+      <div
+        style={{
+          background: indexData % 2 !== 0 ? 'white' : '#f3f3f3',
+        }}
+        className={`shadow-md mb-1  p-4 flex flex-col gap-2 w-full bg-slate-50 ${styles['item-coffee']}`}
+      >
         <div className='flex justify-between w-full'>
           <div className='flex gap-2  '>
             <span>{`${translate('myBill.idOrder')} : `}</span>
@@ -142,7 +148,12 @@ const Item = ({ data }: Props) => {
 
   const renderMobile = () => {
     return (
-      <div className={`w-full shadow-md  flex flex-col md:gap-2 gap-1 py-3 bg-slate-50 ${styles['item-coffee']}`}>
+      <div
+        style={{
+          background: indexData % 2 !== 0 ? 'white' : '#f3f3f3',
+        }}
+        className={`w-full shadow-md  flex flex-col md:gap-2 gap-1 py-3 bg-slate-50 ${styles['item-coffee']}`}
+      >
         <div className='justify-between w-full flex px-3'>
           <div className='flex gap-2  '>
             <span>{`${translate('myBill.idOrder')} : `}</span>
