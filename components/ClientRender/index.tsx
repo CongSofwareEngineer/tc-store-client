@@ -1,5 +1,5 @@
 'use client'
-import React, { useRef } from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
 import Header from '../Header'
 import { useAppDispatch } from '@/redux/store'
 import { setMenuCategory } from '@/redux/categoryMenuSlice'
@@ -42,16 +42,18 @@ const ClientRender = ({ children, menuCategory }: { children: React.ReactNode; m
   const isClientRef = useRef(false)
 
   if (!isClientRef.current) {
+    dispatch(setMenuCategory(menuCategory))
+    isClientRef.current = true
+  }
+
+  useLayoutEffect(() => {
     const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
     if (dataSecure) {
       const dataDecode = decryptData(dataSecure.toString())
       dispatch(setUserData(JSON.parse(dataDecode)))
     }
-    dispatch(setMenuCategory(menuCategory))
     dispatch(fetchProvinces())
-
-    isClientRef.current = true
-  }
+  }, [])
 
   return (
     <>
