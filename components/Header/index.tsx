@@ -4,18 +4,15 @@ import { images } from '@/configs/images'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
+import { LINK_CONTACT } from '@/constant/app'
 const Nav = dynamic(() => import('./Component/Nav'), { ssr: true })
 const Account = dynamic(() => import('./Component/Account'), { ssr: true })
 
 const Header = () => {
   return (
     <header className='header-main'>
-      <a
-        aria-label='mailto:hodiencong2000.@gmail.com'
-        href='mailto:hodiencong2000.@gmail.com'
-        className='absolute z-[-1] opacity-0'
-      />
-      <a aria-label='tel:0932225405' href='tel:0932225405' className='absolute z-[-1] opacity-0' />
+      <a aria-label={LINK_CONTACT.Mail} href={LINK_CONTACT.Mail} className='absolute z-[-1] opacity-0' />
+      <a aria-label={LINK_CONTACT.SDT} href={LINK_CONTACT.SDT} className='absolute z-[-1] opacity-0' />
       <div className='w-full h-14 ' />
       <div className='w-full h-14 fixed z-10 inset-0 '>
         <div className='border-b-2 border-green-300 w-full flex m-auto justify-center items-center bg-white'>

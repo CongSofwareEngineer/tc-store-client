@@ -8,6 +8,7 @@ import SocialMediaShare from '../SocialMediaShare'
 import Link from 'next/link'
 import { copyToClipboard } from '@/utils/notification'
 import Image from 'next/image'
+import { LINK_CONTACT } from '@/constant/app'
 
 const Item = ({ icon, value, link }: any) => {
   return (
@@ -39,29 +40,16 @@ const Footer = () => {
           <p className='text-medium font-bold mb-2'>Thông tin vẻ Shop</p>
           <div className='flex md:flex-row flex-col w-full justify-between md:gap-0 gap-4'>
             <div className='flex flex-col md:gap-3 gap-2 md:w-[48%] w-full'>
-              <Item
-                icon={images.footer.iconGmail}
-                value={'hodiencong2000.@gmail.com'}
-                link='mailto:hodiencong2000.@gmail.com'
-              />
-              <Item icon={images.footer.iconNumberPhone} value={'Hồ Diên Công'} link='tel:0392225405' />
+              <Item icon={images.footer.iconGmail} value={'hodiencong2000.@gmail.com'} link={LINK_CONTACT.Mail} />
+              <Item icon={images.footer.iconNumberPhone} value={'Hồ Diên Công'} link={LINK_CONTACT.SDT} />
 
-              <Item
-                icon={images.footer.iconZalo}
-                value={'0392225405'}
-                link='https://zalo.me/0392225405'
-                type={'zalo'}
-              />
-              <Item icon={images.footer.iconFace} value={'Facebook'} link='https://www.facebook.com/tcstore.gl' />
-              <Item
-                icon={images.footer.iconGithub}
-                value={'CongSofwareEngineer'}
-                link='https://github.com/CongSofwareEngineer'
-              />
+              <Item icon={images.footer.iconZalo} value={'0392225405'} link={LINK_CONTACT.Zalo} type={'zalo'} />
+              <Item icon={images.footer.iconFace} value={'Facebook'} link={LINK_CONTACT.FaceBook} />
+              <Item icon={images.footer.iconGithub} value={'CongSofwareEngineer'} link={LINK_CONTACT.Github} />
               <Item
                 icon={images.footer.iconAddress}
                 value={'83/41, Phạm Văn Bạch, P.15, Tân Bình, TP.HCM'}
-                link='https://www.google.com/maps/place/83%2F41+Ph%E1%BA%A1m+V%C4%83n+B%E1%BA%A1ch,+Ph%C6%B0%E1%BB%9Dng+15,+T%C3%A2n+B%C3%ACnh,+H%E1%BB%93+Ch%C3%AD+Minh,+Vietnam/@10.8169953,106.6286017,17z/data=!3m1!4b1!4m6!3m5!1s0x317529d60f102fe1:0x48a05f8f5cd877f6!8m2!3d10.8169953!4d106.6334726!16s%2Fg%2F11l5hwgmt7?entry=ttu'
+                link={LINK_CONTACT.GGMap}
               />
             </div>
             <div className='w-full md:w-[48%] min-h-[200px]'>

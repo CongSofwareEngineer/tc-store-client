@@ -9,7 +9,10 @@ const useRefreshQuery = () => {
   }
 
   const refreshListQuery = async (listKey: QUERY_KEY[]) => {
-    await queryClient.invalidateQueries({ queryKey: listKey })
+    const fun = listKey.map((e: QUERY_KEY) => {
+      return refreshQuery(e)
+    })
+    await Promise.all(fun)
   }
 
   return { refreshQuery, refreshListQuery }

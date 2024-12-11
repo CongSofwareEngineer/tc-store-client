@@ -42,7 +42,7 @@ const ContentForm = ({ onChange = () => {} }: ContentFormType) => {
       </div>
       <div className='md:mt-4 mt-2 w-full' />
 
-      <OptionVnLocation callback={onChange} />
+      <OptionVnLocation isNew={false} callback={onChange} />
 
       <InputAreaForm rows={2} name='noteBil' label={translate('bill.noteBill')} className='w-full relative' />
     </div>

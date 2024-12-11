@@ -3,6 +3,7 @@ import { NextPage } from 'next'
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { LINK_CONTACT } from '@/constant/app'
 
 const SocialMedia: NextPage = () => {
   return (
@@ -14,40 +15,31 @@ const SocialMedia: NextPage = () => {
       className='w-auto fixed top-[50%] -translate-y-[50%]  left-0 p-[2px] pl-0 rounded-r-2xl rounded-br-2xl '
     >
       <div className='bg-black/80 flex flex-col py-2 px-2  gap-3 w-12 rounded-r-2xl  rounded-br-2xl'>
-        <Link target='_blank' href={'https://zalo.me/0392225405'}>
+        <Link target='_blank' href={LINK_CONTACT.Zalo}>
           <Image
             fill
             src={images.footer.iconZalo}
-            alt='https://zalo.me/0392225405'
+            alt={LINK_CONTACT.Zalo}
             className='hover:scale-110 cursor-pointer !relative !w-full !h-auto'
           />
         </Link>
 
-        <Link target='_blank' href={'tel:0392225405'}>
+        <Link target='_blank' href={LINK_CONTACT.SDT}>
           <Image
             fill
             src={images.footer.iconNumberPhone}
-            alt='tel:0392225405'
+            alt={LINK_CONTACT.SDT}
             className='hover:scale-110 cursor-pointer !relative !w-full !h-auto'
           />
         </Link>
-        <Link className='w-[90%]' target='_blank' href={'https://www.facebook.com/tcstore.gl'}>
+        <Link className='w-[90%]' target='_blank' href={LINK_CONTACT.FaceBook}>
           <Image
             fill
             src={images.footer.iconFace}
-            alt='https://www.facebook.com/tcstore.gl'
+            alt={LINK_CONTACT.FaceBook}
             className='hover:scale-110 cursor-pointer !relative !w-full !h-auto'
           />
         </Link>
-
-        {/* <Link className='w-[90%]' target='_blank' href={'https://www.facebook.com/tcstore.gl'}>
-          <Image
-            fill
-            src={images.footer.iconIntagram}
-            alt='https://www.facebook.com/tcstore.gl'
-            className='hover:scale-110 cursor-pointer !relative !w-full !h-auto'
-          />
-        </Link> */}
       </div>
     </div>
   )

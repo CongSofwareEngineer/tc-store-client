@@ -57,6 +57,7 @@ const OptionVnLocation = ({ callback, isNew = true }: { callback: any; value?: s
 
   const onChangeProvince = (id: string) => {
     setDistricts(null)
+    setAddressDetail('')
     setWard(null)
     const data = Provinces.find((e) => e.id === id)
     setProvence(data)
@@ -64,11 +65,13 @@ const OptionVnLocation = ({ callback, isNew = true }: { callback: any; value?: s
 
   const onChangeDistrict = (id: string) => {
     setWard(null)
+    setAddressDetail('')
     const data = listDistrict.find((e: any) => e.id === id)
     setDistricts(data)
   }
 
   const onChangeWard = (id: string) => {
+    setAddressDetail('')
     const data = listWards.find((e: any) => e.id === id)
     setWard(data)
   }

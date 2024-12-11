@@ -31,7 +31,7 @@ const MyCartScreen = () => {
   const { data, isLoading } = useMyCart(pageSize)
   const { translate } = useLanguage()
   const { isMobile, isClient } = useMedia()
-  const { refreshQuery } = useRefreshQuery()
+  const { refreshListQuery } = useRefreshQuery()
 
   useEffect(() => {
     if (data) {
@@ -81,7 +81,7 @@ const MyCartScreen = () => {
   const handleDelete = async (index: number) => {
     const dataRemove = listCartFormat[index]
     await ClientApi.deleteCart(dataRemove._id)
-    await Promise.all([refreshQuery(QUERY_KEY.MyCartUser), refreshQuery(QUERY_KEY.LengthCartUser)])
+    await refreshListQuery([QUERY_KEY.MyCartUser, QUERY_KEY.LengthCartUser])
   }
 
   const handleSelectAll = (isSelect = false) => {

@@ -25,13 +25,12 @@ import ModalDelete from '@/components/ModalDelete'
 const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
   const { translate } = useLanguage()
   const { userData, isLogin } = useUserData()
-  const { refreshQuery } = useRefreshQuery()
+  const { refreshListQuery } = useRefreshQuery()
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()
   const route = useRouter()
 
   const [formData, setFormData] = useState<Record<string, any> | null>(null)
   const [loading, setLoading] = useState(false)
-  const [listAddressShip, setListAddressShip] = useState<string[]>([])
   const { onChangeOptions, listOptions, optionSelected } = useOptionPayment()
 
   useEffect(() => {
@@ -44,9 +43,6 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
       noteBil: '',
     }
     setFormData(initData)
-    if (userData?.addressShipper && Array.isArray(userData?.addressShipper)) {
-      setListAddressShip(userData?.addressShipper)
-    }
   }, [userData, dataCart])
 
   const isValidSubmit = useMemo(() => {
@@ -77,10 +73,6 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
     return numberWithCommas(total + (plusFee ? 30000 : 0))
   }
 
-  const refreshAllData = async () => {
-    await Promise.all([refreshQuery(QUERY_KEY.LengthCartUser), refreshQuery(QUERY_KEY.MyCartUser)])
-  }
-
   const getItemForShow = (e: any) => {
     if (e?.moreConfig) {
       return e?.moreConfig
@@ -88,19 +80,48 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
     return e.more_data || {}
   }
 
+  const callbackProcessing = () => {
+    openModalDrawer({
+      content: (
+        <ModalProcess title={translate('confirm.bill.createBill')} des={translate('confirm.bill.createBill_Des')} />
+      ),
+      configModal: {
+        showHeader: false,
+        showBtnClose: false,
+        overClickClose: false,
+      },
+    })
+  }
+
+  const callbackSuccess = async () => {
+    await refreshListQuery([
+      QUERY_KEY.LengthCartUser,
+      QUERY_KEY.MyCartUser,
+      QUERY_KEY.GetAllNests,
+      QUERY_KEY.GetAllProduct,
+      QUERY_KEY.GetShoesShop,
+    ])
+    openModalDrawer({
+      content: (
+        <ModalSuccess
+          showClose
+          title={translate('productDetail.modalBuy.success')}
+          des={translate('productDetail.modalBuy.successDes')}
+          titleSubmit={translate('common.viewBill')}
+          titleClose={translate('common.ok')}
+          callback={() => {
+            route.push('/my-page/bill')
+            closeModalDrawer()
+          }}
+        />
+      ),
+    })
+  }
+
   const handleSubmit = async () => {
     const callBack = async () => {
       setLoading(true)
-      openModalDrawer({
-        content: (
-          <ModalProcess title={translate('confirm.bill.createBill')} des={translate('confirm.bill.createBill_Des')} />
-        ),
-        configModal: {
-          showHeader: false,
-          showBtnClose: false,
-          overClickClose: false,
-        },
-      })
+      callbackProcessing()
 
       let totalBill = 0
       const listBill: any[] = []
@@ -150,27 +171,13 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
       }
 
       if (res?.data) {
-        await refreshAllData()
-        openModalDrawer({
-          content: (
-            <ModalSuccess
-              showClose
-              title={translate('productDetail.modalBuy.success')}
-              des={translate('productDetail.modalBuy.successDes')}
-              titleSubmit={translate('common.viewBill')}
-              titleClose={translate('common.ok')}
-              callback={() => {
-                route.push('/my-page/bill')
-                closeModalDrawer()
-              }}
-            />
-          ),
-        })
+        await callbackSuccess()
         clickBack()
       } else {
         showNotificationError(translate('productDetail.modalBuy.error'))
       }
     }
+
     openModalDrawer({
       content: (
         <ModalDelete
@@ -188,38 +195,32 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
     <div className='w-full mb-7 mt-1'>
       {showBack && <BtnBack clickBack={clickBack} />}
       <div className='flex flex-col gap-3 w-full mt-1'>
-        {formData && (
-          <MyForm
-            onFinish={handleSubmit}
-            formData={formData}
-            onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
-          >
-            <div className='flex lg:flex-row flex-col lg:gap-6 gap-5'>
-              <div className='flex flex-1 flex-col lg:max-w-[calc(100%-300px)]'>
-                <ContentForm
-                  listAddressShip={listAddressShip}
-                  setListAddressShip={setListAddressShip}
-                  onChange={onChangeAddressShip}
-                />
-                <ViewListOrder dataCart={dataCart} />
-              </div>
-
-              <div className='lg:w-[300px] flex flex-col md:gap-6 gap-5'>
-                <OptionsPayment
-                  onChangeOptions={onChangeOptions}
-                  listOptions={listOptions}
-                  optionSelected={optionSelected}
-                />
-                <BillFinal
-                  disabledSubmit={!isValidSubmit}
-                  loading={loading}
-                  totalBill={getTotalPayBill()}
-                  totalBillFeeShip={getTotalPayBill(true)}
-                />
-              </div>
+        <MyForm
+          onFinish={handleSubmit}
+          formData={formData}
+          onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
+        >
+          <div className='flex lg:flex-row flex-col lg:gap-6 gap-5'>
+            <div className='flex flex-1 flex-col lg:max-w-[calc(100%-300px)]'>
+              <ContentForm onChange={onChangeAddressShip} />
+              <ViewListOrder dataCart={dataCart} />
             </div>
-          </MyForm>
-        )}
+
+            <div className='lg:w-[300px] flex flex-col md:gap-6 gap-5'>
+              <OptionsPayment
+                onChangeOptions={onChangeOptions}
+                listOptions={listOptions}
+                optionSelected={optionSelected}
+              />
+              <BillFinal
+                disabledSubmit={!isValidSubmit}
+                loading={loading}
+                totalBill={getTotalPayBill()}
+                totalBillFeeShip={getTotalPayBill(true)}
+              />
+            </div>
+          </div>
+        </MyForm>
       </div>
     </div>
   )
