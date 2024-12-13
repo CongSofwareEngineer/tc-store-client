@@ -15,6 +15,11 @@ import useLanguage from '@/hook/useLanguage'
 import Link from 'next/link'
 import useListProductAdmin from '@/hook/tank-query/Admin/useListProductAdmin'
 import { ColumnsType } from 'antd/es/table'
+import ModalDelete from '@/components/ModalDelete'
+import ServerApi from '@/services/serverApi'
+import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
+import { QUERY_KEY } from '@/constant/reactQuery'
+import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 
 const ProductAdminScreen = () => {
   const { renderContent } = useSearchBaseAdmin({
@@ -31,6 +36,7 @@ const ProductAdminScreen = () => {
   const { isMobile } = useMedia()
   const { openModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
+  const { refreshQuery } = useRefreshQuery()
 
   const handleUpdate = (item: any) => {
     openModalDrawer({
@@ -44,6 +50,22 @@ const ProductAdminScreen = () => {
         height: 'auto',
         placement: 'bottom',
       },
+    })
+  }
+
+  const handleDelete = (id: string) => {
+    const callback = async () => {
+      const res = await ServerApi.deleteProduct(id)
+      if (res.data) {
+        await refreshQuery(QUERY_KEY.GetListProductAdmin)
+        showNotificationSuccess(translate('success.delete'))
+      } else {
+        showNotificationError(translate('error.delete'))
+      }
+    }
+
+    openModalDrawer({
+      content: <ModalDelete callback={callback} />,
     })
   }
 
@@ -111,7 +133,7 @@ const ProductAdminScreen = () => {
                     <Button onClick={() => handleUpdate(record)} className='w-full'>
                       {translate('common.update')}
                     </Button>
-                    <Button className='w-full' type='primary'>
+                    <Button onClick={() => handleDelete(record._id)} className='w-full' type='primary'>
                       {translate('common.delete')}
                     </Button>
                   </div>

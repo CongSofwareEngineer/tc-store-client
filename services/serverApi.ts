@@ -74,6 +74,13 @@ const ServerApi = {
     })
     return res
   },
+  deleteProduct: async (id:string) => {
+    const res = await ServerApi.requestBase({
+      url: `product/delete/${id}`,
+      method:REQUEST_TYPE.DELETE
+    })
+    return res
+  },
   getLengthCart: async (idUser: string) => {
     const res = await ServerApi.requestBase({
       url: `length-cart/${idUser}`,
