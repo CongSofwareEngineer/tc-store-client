@@ -32,11 +32,11 @@ const UploadImage = ({
   const { typeFile: typeFileBase } = useTypeFile()
 
   const handleLoadFile = (file: any) => {
-    if (!typeFileBase.includes(file.type)) {
-      const text = `${translate('error.supportTypeFile')} ${typeFileBase}`
-      showNotificationError(text)
-      return
-    }
+    // if (!typeFileBase.includes(file.type)) {
+    //   const text = `${translate('error.supportTypeFile')} ${typeFileBase}`
+    //   showNotificationError(text)
+    //   return
+    // }
     const callBack = (data: any) => {
       if (listData.some((e) => isEqual(e, data))) {
         showNotificationError(translate('errors.existFile'))
