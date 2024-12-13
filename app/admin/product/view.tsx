@@ -208,7 +208,7 @@ const ProductAdminScreen = () => {
             <Button onClick={() => handleUpdate(record)} className='w-full'>
               {translate('common.update')}
             </Button>
-            <Button className='w-full' type='primary'>
+            <Button onClick={() => handleDelete(record._id)} className='w-full' type='primary'>
               {translate('common.delete')}
             </Button>
           </div>
