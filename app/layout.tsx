@@ -148,6 +148,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
             /> */}
             <Script
               id='schema'
+              strategy='worker'
               type='application/ld+json'
               dangerouslySetInnerHTML={{
                 __html: JSON.stringify({
