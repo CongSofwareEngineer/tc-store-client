@@ -48,11 +48,17 @@ const NotificationClient: NextPage = () => {
       notification.open({
         message: <div className='text-black font-bold '>{dataMess?.data?.title || dataMess?.notification?.title}</div>,
         description: (
-          <div className='max-h-[100px] overflow-scroll'>{dataMess?.data?.body || dataMess?.notification?.body}</div>
+          <div className='max-h-[100px] overflow-scroll'>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: dataMess?.data?.body || dataMess?.notification?.body,
+              }}
+            />
+          </div>
         ),
         btn,
         key,
-        duration: 10000,
+        duration: 10,
       })
     }
     const addListener = () => {
