@@ -1,21 +1,24 @@
-import useMoreCollections from '@/hook/tank-query/useMoreCollections'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import MyCollections from '../MyCollections'
 import ItemProduct from '../ItemProduct'
 import { TYPE_PRODUCT } from '@/constant/admin'
 import { useParams, useRouter } from 'next/navigation'
 import LoadingGetData from '../LoadingGetData'
-import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
-import { QUERY_KEY } from '@/constant/reactQuery'
+import ClientApi from '@/services/clientApi'
 
 const MoreCollections = () => {
   const router = useRouter()
-  const { refreshQuery } = useRefreshQuery()
-  const { data: dataMoreCollections, isLoading } = useMoreCollections()
   const param = useParams()
+  const [isLoading, setIsLoading] = useState(true)
+  const [data, setData] = useState<Array<any>>([])
 
   useEffect(() => {
-    refreshQuery(QUERY_KEY.GetMoreCollections)
+    const getData = async () => {
+      const res = await ClientApi.getMoreCollections(10)
+      setData(res?.data || [])
+      setIsLoading(false)
+    }
+    getData()
   }, [])
 
   const isClickItemRef = useRef(true)
@@ -38,7 +41,7 @@ const MoreCollections = () => {
     <div className='w-full flex flex-col gap-2'>
       <MyCollections isClickItem={isClickItemRef}>
         <>
-          {dataMoreCollections?.data.map((e) => {
+          {data.map((e) => {
             if (e.keyName === param.params[0]) {
               return <></>
             }
@@ -46,7 +49,7 @@ const MoreCollections = () => {
               <div className=' min-w-[200px] select-none'>
                 <ItemProduct
                   showDiscount
-                  className='!bg-gray-100'
+                  className='!bg-gray-100 !shadow-full'
                   noClick
                   callback={() => getRouteProduct(e)}
                   item={e}

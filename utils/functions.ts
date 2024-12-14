@@ -43,9 +43,10 @@ export const formatPriceBase = (data: any, discount = 20) => {
     if (Number(data) === 0) {
       return 0
     }
-    const rate = new BigNumber(100).plus(discount).dividedBy(100).toNumber()
+    const rate = new BigNumber(100).minus(discount).dividedBy(100).toFixed()
+
     // const rate = (100 + discount) / 100
-    return numberWithCommas(new BigNumber(rate).multipliedBy(data).toNumber())
+    return numberWithCommas(new BigNumber(data).dividedBy(rate).decimalPlaces(0).toFixed())
     // return numberWithCommas(rate * rate)
   } catch (error) {
     return 0
@@ -188,16 +189,9 @@ export const detectAvatar = (src: any) => {
   }
 }
 
-export const ellipsisText = (
-  text: string,
-  prefixLength = 13,
-  suffixLength = 4
-): string => {
+export const ellipsisText = (text: string, prefixLength = 13, suffixLength = 4): string => {
   text = text || ''
-  return `${text.substr(0, prefixLength)}...${text.substr(
-    text.length - suffixLength,
-    suffixLength
-  )}`
+  return `${text.substr(0, prefixLength)}...${text.substr(text.length - suffixLength, suffixLength)}`
 }
 
 export function isObject(value: any): boolean {

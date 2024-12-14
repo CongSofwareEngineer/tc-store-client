@@ -31,12 +31,11 @@ const ItemProduct = ({
 }: ItemType) => {
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
-  console.log({ item })
 
   const renderContent = () => {
     return (
       <div
-        className={`!shadow-full  group relative item-list cursor-pointer px-3 md:pt-6 pt-4 md:pb-4 pb-3 gap-3 flex items-center justify-between flex-col ${styles['item-coffee']} ${className}`}
+        className={`  group relative item-list cursor-pointer px-3 md:pt-6 pt-4 md:pb-4 pb-3 gap-3 flex items-center justify-between flex-col ${styles['item-coffee']} ${className}`}
       >
         {showDiscount && item?.disCount > 0 && (
           <div className='absolute text-black right-0 top-4 bg-green-300   px-2  rounded-l-md z-[1]'>
@@ -56,7 +55,10 @@ const ItemProduct = ({
           <p className='w-full md:text-medium font-bold whitespace-nowrap overflow-hidden text-ellipsis'>
             {item?.name}
           </p>
-          <TextPriceBase className=' w-full   '>{`${formatPriceBase(item?.price || 150)} VNĐ`}</TextPriceBase>
+          <TextPriceBase className=' w-full   '>{`${formatPriceBase(
+            item?.price || 150,
+            item?.disCount,
+          )} VNĐ`}</TextPriceBase>
 
           <div className='w-full  text-green-600 xl:text-[24px] md:text-[18px] text-[13px] font-bold flex justify-between  '>
             {formatPrice(item?.price || 150)}
