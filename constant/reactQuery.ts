@@ -17,6 +17,7 @@ export enum QUERY_KEY {
   GetNests = 'GetNests',
   GetShoesShop = 'GetShoesShop',
   GetMoreCollections = 'GetMoreCollections',
+  GetFanPage = 'GetFanPage',
 }
 
 export type TypeHookReactQuery = {

@@ -47,10 +47,11 @@ const MenuAdminMobile = () => {
       url: '/admin/category',
       icon: <ClusterOutlined />,
     },
-    // {
-    //   title: translate('admin.subCategories'),
-    //   url: '/admin/sub-categories',
-    // },
+    {
+      title: 'Fan Page',
+      url: '/admin/fan-page',
+      icon: <ProductOutlined />,
+    },
   ]
   return (
     <div className='flex w-full gap-3  flex-col pb-3  '>

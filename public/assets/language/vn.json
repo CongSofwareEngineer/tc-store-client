@@ -52,6 +52,8 @@
     "exitSDT": "SĐT đã tồn tại"
   },
   "textPopular": {
+    "source": "Nguồn",
+    "date": "Ngày Tháng",
     "moreLike": "Có thể bạn cũng thích",
     "feedbackProduct": "Đánh giá sản phẩm",
     "attribute": "Thuộc tính",

@@ -74,6 +74,29 @@ const ServerApi = {
     })
     return res
   },
+
+  deleteFanPage: async (body: Object) => {
+    const res = await ServerApi.requestBase({
+      url: `fan-page/delete`,
+      body,
+      method: REQUEST_TYPE.POST,
+    })
+    return res
+  },
+  createFanPage: async (body: Object) => {
+    const res = await ServerApi.requestBase({
+      url: `fan-page/create`,
+      body,
+      method: REQUEST_TYPE.POST,
+    })
+    return res
+  },
+  getFanPage: async () => {
+    const res = await ServerApi.requestBase({
+      url: `fan-page/all`,
+    })
+    return res
+  },
   deleteProduct: async (id: string, imageDelete?: string[]) => {
     const res = await ServerApi.requestBase({
       url: `product/delete/${id}`,

@@ -69,6 +69,10 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
       title: translate('admin.subCategories'),
       url: '/admin/sub-categories',
     },
+    {
+      title: 'Fan page',
+      url: '/admin/fan-page',
+    },
   ]
 
   return (
@@ -76,13 +80,13 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
       {isLogin && isClient && (
         <>
           {!isMobile && (
-            <div className='w-[200px] flex flex-col p-3 gap-2 bg-[#000000d6]'>
+            <div className='w-[200px] flex flex-col p-3 gap-3 bg-[#000000d6]'>
               <div className='w-full'>
                 <Image fill alt='logo-admin' src={images.logo} className='!relative !w-full !h-auto' />
               </div>
               {LIST_MENU.map((e) => {
                 return (
-                  <div key={e.url} className='flex gap-3 items-center'>
+                  <div key={e.url} className='flex gap-3 mt-2 items-center'>
                     <TagFilled style={{ color: 'white' }} />
                     <Link
                       href={e.url}
