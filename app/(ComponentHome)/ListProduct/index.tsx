@@ -8,8 +8,8 @@ import { AlignLeftOutlined, CaretRightOutlined, RightOutlined } from '@ant-desig
 import { CollapseCustom } from './styled'
 import useProductByLimit from '@/hook/tank-query/useProductByLimit'
 import { scrollTop } from '@/utils/functions'
-import LoadingData from '../LoadingData'
 import { TYPE_PRODUCT } from '@/constant/admin'
+import LoadingGetData from '@/components/LoadingGetData'
 
 const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   const { data, isLoading } = useProductByLimit(type, 5)
@@ -29,7 +29,7 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   const renderListItem = () => {
     return (
       <div className='pb-3 flex gap-3 md:gap-5 overflow-x-auto w-full'>
-        <LoadingData loading={isLoading} />
+        <LoadingGetData loading={isLoading} colDesktop={5} />
 
         {Array.isArray(data?.data) &&
           data?.data?.map((item) => {

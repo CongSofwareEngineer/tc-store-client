@@ -104,7 +104,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
         <meta itemProp='name' content={process.env.NEXT_PUBLIC_TITLE} />
         <meta itemProp='description' content={process.env.NEXT_PUBLIC_TITLE_DES} />
         <meta itemProp='image' content={'/favicon.ico'} />
-
+        <link href='https://unpkg.com/aos@2.3.1/dist/aos.css' rel='stylesheet' />
         {process.env.NEXT_PUBLIC_MODE_PRODUCTION && (
           <>
             <meta name='google-site-verification' content='Sr2q2elTmvBwx7P3aM-ZiaH-3yjcxuGHrMI9H9iCewI' />
