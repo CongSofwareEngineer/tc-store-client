@@ -1,12 +1,6 @@
 import { collection, getFirestore } from 'firebase/firestore/lite'
 import { initializeApp, getApps } from 'firebase/app'
-import {
-  deleteToken,
-  getMessaging,
-  getToken,
-  isSupported,
-  onMessage,
-} from 'firebase/messaging'
+import { deleteToken, getMessaging, getToken, isSupported, onMessage } from 'firebase/messaging'
 import FirebaseFun from '@/utils/firebase'
 import { DatabaseCollectionType } from '@/constant/firebase'
 
@@ -20,9 +14,7 @@ export const FirebaseServices = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APPID,
   },
   initFirebase: () => {
-    return getApps().length === 0
-      ? initializeApp(FirebaseServices.config)
-      : getApps()[0]
+    return getApps().length === 0 ? initializeApp(FirebaseServices.config) : getApps()[0]
   },
 
   createMessage: () => {
@@ -40,25 +32,18 @@ export const FirebaseServices = {
     )
   },
   createToken: async (callback: (e?: any) => Promise<void>) => {
-    const firebaseUrl = encodeURIComponent(
-      JSON.stringify(FirebaseServices.config)
-    )
+    const firebaseUrl = encodeURIComponent(JSON.stringify(FirebaseServices.config))
 
     const registration = await navigator.serviceWorker.register(
-      `/firebase-messaging-sw.js?firebaseConfig=${firebaseUrl}`
+      `/firebase-messaging-sw.js?firebaseConfig=${firebaseUrl}`,
     )
-    console.log({ registration })
 
-    return await FirebaseServices.recursiveCreateToken(
-      callback,
-      registration,
-      0
-    )
+    return await FirebaseServices.recursiveCreateToken(callback, registration, 0)
   },
   recursiveCreateToken: async (
     callBack: (e?: any) => Promise<void>,
     registration: any,
-    numberReq = 0
+    numberReq = 0,
   ): Promise<any> => {
     if (numberReq >= 5) {
       callBack && callBack(null)
@@ -73,24 +58,18 @@ export const FirebaseServices = {
             vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VERIFIED_API_KEY,
             serviceWorkerRegistration: registration,
           }
-          console.log('====================================')
-          console.log({ config })
-          console.log('====================================')
+
           const token = await getToken(FirebaseServices.createMessage(), {
             vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VERIFIED_API_KEY,
             serviceWorkerRegistration: registration,
           })
           callBack && callBack(token)
-          console.log({ token })
+
           return token
         }
       } catch (error) {
         numberReq++
-        return await FirebaseServices.recursiveCreateToken(
-          callBack,
-          registration,
-          numberReq
-        )
+        return await FirebaseServices.recursiveCreateToken(callBack, registration, numberReq)
       }
     }
   },
@@ -103,15 +82,11 @@ export const FirebaseServices = {
 
   createFBFun: (nameData: string) => {
     const dataCreate = FirebaseServices.initFirebase()
-    const collectionData: DatabaseCollectionType = collection(
-      getFirestore(dataCreate),
-      nameData
-    )
+    const collectionData: DatabaseCollectionType = collection(getFirestore(dataCreate), nameData)
     return new FirebaseFun(collectionData)
   },
   addListenMessage: async (callback: (e?: any) => any) => {
-    const isSupportFirebaseMess =
-      await FirebaseServices.isSupportedNotification()
+    const isSupportFirebaseMess = await FirebaseServices.isSupportedNotification()
     if (isSupportFirebaseMess) {
       onMessage(FirebaseServices.createMessage(), (payload) => {
         callback(payload)
@@ -119,20 +94,14 @@ export const FirebaseServices = {
     }
   },
 
-  requestPermission: async (
-    callback: (e?: any) => any,
-    callbackReject?: () => any
-  ) => {
-    const isSupportFirebaseMess =
-      await FirebaseServices.isSupportedNotification()
+  requestPermission: async (callback: (e?: any) => any, callbackReject?: () => any) => {
+    const isSupportFirebaseMess = await FirebaseServices.isSupportedNotification()
     if (isSupportFirebaseMess) {
-      navigator.permissions
-        .query({ name: 'notifications' })
-        .then(async (result) => {
-          if (result.state === 'prompt') {
-            callback && callback()
-          }
-        })
+      navigator.permissions.query({ name: 'notifications' }).then(async (result) => {
+        if (result.state === 'prompt') {
+          callback && callback()
+        }
+      })
     } else {
       callbackReject && callbackReject()
     }

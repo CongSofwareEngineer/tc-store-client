@@ -79,3 +79,9 @@ export type BodyUserData = {
   addressShipper: string[]
   sex: boolean
 }
+
+export const TYPE_NOTIFICATION = {
+  myCart: 'myCart',
+  myBill: 'myBill',
+  shoesShop: 'shoesShop',
+}

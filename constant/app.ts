@@ -41,6 +41,7 @@ export enum LOCAL_STORAGE_KEY {
   'MyCart' = 'MyCart',
   'IsFirstPermissionNoti' = 'IsFirstPermissionNoti',
   'ListSDTBuy' = 'ListSDTBuy',
+  'TokenFirebase' = 'TokenFirebase',
 }
 
 export enum FilterAPI {
