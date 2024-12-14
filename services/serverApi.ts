@@ -74,10 +74,13 @@ const ServerApi = {
     })
     return res
   },
-  deleteProduct: async (id:string) => {
+  deleteProduct: async (id: string, imageDelete?: string[]) => {
     const res = await ServerApi.requestBase({
       url: `product/delete/${id}`,
-      method:REQUEST_TYPE.DELETE
+      method: REQUEST_TYPE.POST,
+      body: {
+        imageDelete,
+      },
     })
     return res
   },

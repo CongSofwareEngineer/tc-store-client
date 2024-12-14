@@ -53,9 +53,11 @@ const ProductAdminScreen = () => {
     })
   }
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (item: any) => {
     const callback = async () => {
-      const res = await ServerApi.deleteProduct(id)
+      const imagesDelete = [item?.imageMain, ...item?.imageMore]
+
+      const res = await ServerApi.deleteProduct(item?._id, imagesDelete)
       if (res.data) {
         await refreshQuery(QUERY_KEY.GetListProductAdmin)
         showNotificationSuccess(translate('success.delete'))
@@ -133,7 +135,7 @@ const ProductAdminScreen = () => {
                     <Button onClick={() => handleUpdate(record)} className='w-full'>
                       {translate('common.update')}
                     </Button>
-                    <Button onClick={() => handleDelete(record._id)} className='w-full' type='primary'>
+                    <Button onClick={() => handleDelete(record)} className='w-full' type='primary'>
                       {translate('common.delete')}
                     </Button>
                   </div>
@@ -208,7 +210,7 @@ const ProductAdminScreen = () => {
             <Button onClick={() => handleUpdate(record)} className='w-full'>
               {translate('common.update')}
             </Button>
-            <Button onClick={() => handleDelete(record._id)} className='w-full' type='primary'>
+            <Button onClick={() => handleDelete(record)} className='w-full' type='primary'>
               {translate('common.delete')}
             </Button>
           </div>

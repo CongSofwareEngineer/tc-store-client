@@ -59,7 +59,7 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
 
     dataFile.listImg = listImgFeeBack
 
-    dataFile.listImgDelete = dataGetApi?.listImg.filter((e: any) => {
+    dataFile.imagesDelete = dataGetApi?.listImg.filter((e: any) => {
       const isExited = listImgFeeBack.find((eApi) => {
         return eApi === e
       })

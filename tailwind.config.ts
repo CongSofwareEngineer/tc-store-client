@@ -16,6 +16,9 @@ const config = {
       animation: {
         zoom: 'zoom 0.2s ease-in-out',
       },
+      boxShadow: {
+        full: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
+      },
     },
   },
   darkMode: 'class',

@@ -22,6 +22,7 @@ import { DataItemType } from '@/app/my-cart/type'
 import { showNotificationSuccess } from '@/utils/notification'
 import { Button } from 'antd'
 import Image from 'next/image'
+import MoreCollections from '@/components/MoreCollections'
 
 const MoreInfo = dynamic(() => import('@/components/MoreInfo'), {
   ssr: true,
@@ -176,6 +177,10 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
 
         <div data-aos='fade-up' className='w-full bg-white rounded-xl p-6 mt-6'>
           <MoreInfo data={productDetail} />
+        </div>
+        <div data-aos='fade-up' className='w-full bg-white py-4 px-4   rounded-xl  mt-6'>
+          <div className='text-medium capitalize font-bold'>{translate('textPopular.moreLike')}</div>
+          <MoreCollections />
         </div>
       </div>
     )

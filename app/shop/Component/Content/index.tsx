@@ -4,9 +4,9 @@ import { PAGE_SIZE_LIMIT } from '@/constant/app'
 import useAllProduct from '@/hook/tank-query/useAllProduct'
 import useQuerySearch from '@/hook/useQuerySearch'
 import React from 'react'
-import LoadingData from '../LoadingData'
 import { TYPE_PRODUCT } from '@/constant/admin'
 import useLanguage from '@/hook/useLanguage'
+import LoadingGetData from '@/components/LoadingGetData'
 
 const Content = () => {
   const { queries } = useQuerySearch()
@@ -38,7 +38,7 @@ const Content = () => {
         isFetchingNextPage={isFetchingNextPage}
       />
 
-      <LoadingData loading={isLoading} />
+      <LoadingGetData colSurface={3} rows={2} loading={isLoading} />
     </>
   )
 }

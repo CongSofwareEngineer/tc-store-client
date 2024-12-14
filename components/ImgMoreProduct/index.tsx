@@ -2,7 +2,7 @@ import React from 'react'
 import { detectImg } from '@/utils/functions'
 import { Image } from 'antd'
 
-const ImgMoreProduct = ({ data }: { data: any }) => {
+const ImgMoreProduct = ({ data, onHover = () => {} }: { data: any; onHover?: (param?: string) => void }) => {
   return data?.imageMore?.length > 1 ? (
     // <div className="absolute bottom-0 ">
     <div className='mt-2'>
@@ -15,6 +15,8 @@ const ImgMoreProduct = ({ data }: { data: any }) => {
               }}
               className='flex shadow-inner md:w-[60px] w-10 aspect-square  md:h-[60px] h-10'
               key={e}
+              onMouseLeave={() => onHover('')}
+              onMouseOver={() => onHover(e)}
             >
               <Image alt={e} src={detectImg(e)} />
             </div>

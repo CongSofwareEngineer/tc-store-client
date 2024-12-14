@@ -22,12 +22,17 @@ import { showNotificationSuccess } from '@/utils/notification'
 import { Button } from 'antd'
 import Attributes from '../Attributes'
 import MyImage from '@/components/MyImage'
+// import MoreCollections from '@/components/MoreCollections'
 
 const MoreInfo = dynamic(() => import('@/components/MoreInfo'), {
   ssr: true,
 })
 
 const ImageMore = dynamic(() => import('@/components/ImgMoreProduct'), {
+  ssr: false,
+})
+
+const MoreCollections = dynamic(() => import('@/components/MoreCollections'), {
   ssr: false,
 })
 
@@ -46,6 +51,7 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
   const { refreshQuery } = useRefreshQuery()
   const { translate } = useLanguage()
   const { userData, isLogin } = useUserData()
+  const [imageShow, setImageShow] = useState('')
 
   const [loadingAddCart, setLoadingAddCart] = useState(false)
 
@@ -140,11 +146,11 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
         <div className='w-full flex gap-6 bg-white rounded-xl p-6'>
           <div data-aos='fade-right' className='relative min-w-[300px] max-w-[450px] w-[50%] p-5 overflow-hidden '>
             <MyImage
-              src={detectImg(productDetail.imageMain || '')}
+              src={detectImg(imageShow || productDetail.imageMain || '')}
               alt={`img-main--${productDetail.name}`}
               className='!relative !w-full !h-auto'
             />
-            <ImageMore data={productDetail} />
+            <ImageMore onHover={(url) => setImageShow(url!)} data={productDetail} />
           </div>
           <div className='flex-1 flex flex-col gap-2 justify-center  ' data-aos='fade-left'>
             <h1 className='text-title font-bold'>{productDetail.name}</h1>
@@ -179,6 +185,11 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
 
         <div data-aos='fade-up' className='w-full bg-white rounded-xl p-6 mt-6'>
           <MoreInfo data={productDetail} />
+        </div>
+
+        <div data-aos='fade-up' className='w-full bg-white py-4 px-4   rounded-xl  mt-6'>
+          <div className='text-medium capitalize font-bold'>{translate('textPopular.moreLike')}</div>
+          <MoreCollections />
         </div>
       </div>
     )
@@ -238,6 +249,10 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
           className=' shadow-yellow-50 bg-white p-5 md:pr-5 pr-3 w-full flex flex-col gap-2 mt-2'
         >
           <MoreInfo data={productDetail} />
+        </div>
+        <div data-aos='fade-right' className='w-full bg-white rounded-xl p-6 mt-6'>
+          <div className='text-medium capitalize font-bold mb-1'>{translate('textPopular.moreLike')}</div>
+          <MoreCollections />
         </div>
       </div>
     )

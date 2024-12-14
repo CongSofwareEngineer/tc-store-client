@@ -4,10 +4,10 @@ import React from 'react'
 import MenuShoes from './Components/MenuShoes'
 import InputSearch from '../shop/Component/InputSearch'
 import useShoesShop from '@/hook/tank-query/useShoesShop'
-import LoadingData from './Components/LoadingGetData'
 import MyLoadMore from '@/components/MyLoadMore'
 import ItemProduct from '@/components/ItemProduct'
 import useAos from '@/hook/useAos'
+import LoadingGetData from '@/components/LoadingGetData'
 
 const ShoesScreen = () => {
   useAos(1000)
@@ -43,7 +43,7 @@ const ShoesScreen = () => {
           loading={isLoading}
           isFetchingNextPage={isFetchingNextPage}
         />
-        <LoadingData loading={isLoading} />
+        <LoadingGetData colSurface={3} rows={2} loading={isLoading} />
       </div>
     </div>
   )

@@ -24,7 +24,6 @@ import { SEX, TYPE_PRODUCT, VALUE_KEY_DEFAULT } from '@/constant/admin'
 
 const ProductConfig = ({ item }: { item: any }) => {
   const { translate, lang } = useLanguage()
-  const { typeFile } = useTypeFile({ typeAndroid: '.png,.jpg,.jpeg' })
   const { checkIsNumber } = useCheckForm()
   const { refreshQuery } = useRefreshQuery()
   const { closeModalDrawer } = useModalDrawer()
@@ -219,8 +218,7 @@ const ProductConfig = ({ item }: { item: any }) => {
             <div className='w-[100px]'>
               <UploadImage
                 maxSizeOutputKB={500}
-                typeFile={typeFile}
-                fullQuality
+                maxPixelReduce={500}
                 handleUpload={(e) => setFormData({ ...formData, imageMain: e })}
               >
                 <div className='flex gap-2'>
@@ -241,7 +239,6 @@ const ProductConfig = ({ item }: { item: any }) => {
           <div className='w-[calc(100%-200px)] h-full flex flex-col  gap-3 justify-between items-center'>
             <div className='w-full'>
               <UploadImage
-                typeFile={typeFile}
                 listData={formData?.imageMore || []}
                 handleUpload={(e) =>
                   setFormData({
@@ -249,8 +246,8 @@ const ProductConfig = ({ item }: { item: any }) => {
                     imageMore: [...formData?.imageMore, e],
                   })
                 }
-                maxSizeOutputKB={200}
-                maxPixelReduce={200}
+                maxSizeOutputKB={300}
+                maxPixelReduce={500}
               >
                 <div className='flex w-full gap-2 justify-center items-center'>
                   <CameraOutlined />

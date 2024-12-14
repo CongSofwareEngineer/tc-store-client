@@ -8,6 +8,9 @@ const ClientApi = {
   pingServer: async () => {
     return fetchData({ url: `/auth/ping` })
   },
+  getMoreCollections: async (count = 10) => {
+    return fetchData({ url: `/product/more-collections?count=${count}` })
+  },
   uploadImg: async (file: any, path: PATH_IMG) => {
     return fetchData({
       url: `/upload-image/upload`,
@@ -55,7 +58,7 @@ const ClientApi = {
   },
   getCategory: async () => {
     return fetchData({
-      url: `category/all?isShow=true&timeStamp=${new Date().getHours()}`,
+      url: `category/all?isShow=true&timeStamp=${new Date().getTime()}`,
       isAuth: false,
     })
   },
