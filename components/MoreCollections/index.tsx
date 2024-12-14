@@ -1,14 +1,23 @@
 import useMoreCollections from '@/hook/tank-query/useMoreCollections'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import MyCollections from '../MyCollections'
 import ItemProduct from '../ItemProduct'
 import { TYPE_PRODUCT } from '@/constant/admin'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import LoadingGetData from '../LoadingGetData'
+import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
+import { QUERY_KEY } from '@/constant/reactQuery'
 
 const MoreCollections = () => {
   const router = useRouter()
+  const { refreshQuery } = useRefreshQuery()
   const { data: dataMoreCollections, isLoading } = useMoreCollections()
+  const param = useParams()
+
+  useEffect(() => {
+    refreshQuery(QUERY_KEY.GetMoreCollections)
+  }, [])
+
   const isClickItemRef = useRef(true)
 
   const getRouteProduct = (product: any) => {
@@ -30,6 +39,9 @@ const MoreCollections = () => {
       <MyCollections isClickItem={isClickItemRef}>
         <>
           {dataMoreCollections?.data.map((e) => {
+            if (e.keyName === param.params[0]) {
+              return <></>
+            }
             return (
               <div className=' min-w-[200px] select-none'>
                 <ItemProduct
