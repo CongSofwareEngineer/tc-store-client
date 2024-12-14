@@ -31,14 +31,17 @@ const ItemProduct = ({
 }: ItemType) => {
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
+  console.log({ item })
 
   const renderContent = () => {
     return (
       <div
         className={`!shadow-full  group relative item-list cursor-pointer px-3 md:pt-6 pt-4 md:pb-4 pb-3 gap-3 flex items-center justify-between flex-col ${styles['item-coffee']} ${className}`}
       >
-        {showDiscount && item?.discount > 0 && (
-          <div className='absolute right-0 top-4 bg-green-300 px-3 rounded-l-lg z-[1]'>{item?.discount || 0}%</div>
+        {showDiscount && item?.disCount > 0 && (
+          <div className='absolute text-black right-0 top-4 bg-green-300   px-2  rounded-l-md z-[1]'>
+            -{item?.disCount}%
+          </div>
         )}
 
         <div className='m-auto max-w-[85%] relative w-full aspect-square  overflow-hidden'>
@@ -67,7 +70,7 @@ const ItemProduct = ({
 
               {showFeedback && (
                 <div className='flex gap-1 items-center'>
-                  <RateCustom disabled defaultValue={4.5} style={{ fontSize: 12 }} />
+                  <RateCustom disabled defaultValue={5} style={{ fontSize: 12 }} />
                 </div>
               )}
             </div>

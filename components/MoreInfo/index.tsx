@@ -24,7 +24,7 @@ const MoreInfo = ({ data }: { data: any }) => {
     {
       key: 'info',
       label: translate('textPopular.infor'),
-      children: <MyBlog value={JSON.parse(data?.des2 || '{}')} disabled />,
+      children: <MyBlog className='!p-0' value={JSON.parse(data?.des2 || '{}')} disabled />,
     },
     {
       key: 'Comment',

@@ -1,10 +1,10 @@
 import useMoreCollections from '@/hook/tank-query/useMoreCollections'
 import React, { useRef } from 'react'
-import LoadingGetData from '../LoadingGetData'
 import MyCollections from '../MyCollections'
 import ItemProduct from '../ItemProduct'
 import { TYPE_PRODUCT } from '@/constant/admin'
 import { useRouter } from 'next/navigation'
+import LoadingGetData from '../LoadingGetData'
 
 const MoreCollections = () => {
   const router = useRouter()
@@ -32,7 +32,14 @@ const MoreCollections = () => {
           {dataMoreCollections?.data.map((e) => {
             return (
               <div className=' min-w-[200px] select-none'>
-                <ItemProduct className='!bg-gray-100' noClick callback={() => getRouteProduct(e)} item={e} showSold />
+                <ItemProduct
+                  showDiscount
+                  className='!bg-gray-100'
+                  noClick
+                  callback={() => getRouteProduct(e)}
+                  item={e}
+                  showSold
+                />
               </div>
             )
           })}

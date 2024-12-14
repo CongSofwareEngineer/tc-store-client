@@ -43,11 +43,13 @@ const MyBlog = ({
   setValue = () => {},
   disabled = false,
   pathFile = PATH_IMG.Products,
+  className = '',
 }: {
   value: any
   setValue?: (e: any) => void
   disabled?: boolean
   pathFile?: PATH_IMG
+  className?: string
 }) => {
   const editor = useMemo(() => createYooptaEditor(), [])
   const selectionRef = useRef(null)
@@ -134,7 +136,7 @@ const MyBlog = ({
 
   return (
     <div className='flex flex-col flex-1  h-full  w-full  relative'>
-      <div className='w-full h-full p-2 min-h-10 ' ref={selectionRef}>
+      <div className={`w-full h-full p-2 min-h-10  ${className}`} ref={selectionRef}>
         <YooptaEditor
           editor={editor}
           plugins={plugins}

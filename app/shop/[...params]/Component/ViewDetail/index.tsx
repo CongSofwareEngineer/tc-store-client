@@ -240,6 +240,10 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
         >
           <MoreInfo data={productDetail} />
         </div>
+        <div data-aos='fade-right' className='w-full bg-white p-4  mt-2  '>
+          <div className='pl-1 text-medium capitalize font-bold'>{translate('textPopular.moreLike')}</div>
+          <MoreCollections />
+        </div>
       </div>
     )
   }
