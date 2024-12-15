@@ -1,6 +1,7 @@
 import { COOKIE_EXPIRED, COOKIE_KEY, OBSERVER_KEY } from '@/constant/app'
 import { SLICE, TypeUserData } from '@/constant/redux'
 import useCheckPatchName from '@/hook/tank-query/useCheckPatchName'
+import { setMenuCategory } from '@/redux/categoryMenuSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { setUserData } from '@/redux/userDataSlice'
 import ClientApi from '@/services/clientApi'
@@ -19,6 +20,11 @@ const FirstLoadWebsite: React.FC = () => {
     if (userData) {
       ObserverService.emit(OBSERVER_KEY.ReLogin, userData)
     }
+    const getCategory = async () => {
+      const menuCategory = await ClientApi.getCategory()
+      dispatch(setMenuCategory(menuCategory?.data || []))
+    }
+    getCategory()
   }, [])
 
   //re login

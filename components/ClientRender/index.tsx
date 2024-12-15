@@ -1,8 +1,7 @@
 'use client'
-import React, { useRef } from 'react'
+import React, { useLayoutEffect } from 'react'
 import Header from '../Header'
 import { useAppDispatch } from '@/redux/store'
-import { setMenuCategory } from '@/redux/categoryMenuSlice'
 import Footer from '../Footer'
 import dynamic from 'next/dynamic'
 import useAos from '@/hook/useAos'
@@ -36,24 +35,18 @@ const FirstLoadWebsite = dynamic(() => import('../FirstLoadWebsite'), {
   ssr: false,
 })
 
-const ClientRender = ({ children, menuCategory }: { children: React.ReactNode; menuCategory: any[] }) => {
+const ClientRender = ({ children }: { children: React.ReactNode }) => {
   useAos()
   const dispatch = useAppDispatch()
-  const isServerRef = useRef(false)
-  const isClientRef = useRef(typeof window !== 'undefined')
 
-  if (!isServerRef.current) {
-    dispatch(setMenuCategory(menuCategory))
-    isServerRef.current = true
-  }
-  if (isClientRef.current) {
+  useLayoutEffect(() => {
     const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
     if (dataSecure) {
       const dataDecode = decryptData(dataSecure.toString())
       dispatch(setUserData(JSON.parse(dataDecode)))
     }
     dispatch(fetchProvinces())
-  }
+  }, [])
 
   return (
     <>
