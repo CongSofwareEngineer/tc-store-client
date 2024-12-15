@@ -57,7 +57,7 @@ const AdminApi = {
     })
   },
   getProduct: async (query = '') => {
-    const res = await ServerApi.requestBase({
+    const res = await fetchData({
       url: `all-product${query}`,
     })
     return res
