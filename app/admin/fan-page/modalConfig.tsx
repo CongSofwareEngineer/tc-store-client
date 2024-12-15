@@ -5,7 +5,7 @@ import MyForm from '@/components/Form/MyForm'
 import UploadImage from '@/components/UploadImg'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
-import { CameraOutlined } from '@ant-design/icons'
+import { CameraOutlined, DeleteOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import MyImage from '@/components/MyImage'
@@ -14,6 +14,7 @@ import ServerApi from '@/services/serverApi'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
+import { isEqual } from 'lodash'
 
 const ModalConfig = ({ data }: { data?: any }) => {
   const { translate } = useLanguage()
@@ -24,7 +25,7 @@ const ModalConfig = ({ data }: { data?: any }) => {
   const [formData, setFormData] = useState<{ [key: string]: any } | null>(null)
 
   useEffect(() => {
-    const date = dayjs(new Date(data?.date || Date.now()))
+    const date = dayjs(new Date(Number(data?.date) || Date.now()))
     const initData = {
       des: data?.des || '',
       source: data?.source || '',
@@ -37,88 +38,132 @@ const ModalConfig = ({ data }: { data?: any }) => {
 
   console.log({ formData })
 
+  const getImageDelete = () => {
+    if (data) {
+      const list: string[] = []
+
+      data?.listImage.forEach((e: string) => {
+        const isExited = formData?.listImage?.find((eForm: any) => eForm === e)
+        if (!isExited) {
+          list.push(e)
+        }
+      })
+      return list
+    }
+    return []
+  }
+  const onDeleteImage = (index: number) => {
+    const arrImg = formData?.listImage.filter((_: any, indexFiler: number) => indexFiler !== index)
+    const data = {
+      ...formData,
+      listImage: arrImg,
+    }
+    setFormData(data)
+  }
   const handleSubmit = async () => {
     setLoading(true)
+    if (data) {
+      const dataEdit: Record<string, any> = {}
 
-    const body = {
-      ...formData,
-      date: new Date(formData?.date?.toString()).getTime(),
-    }
-    console.log({ body })
-    const res = await ServerApi.createFanPage(body)
-    console.log({ res })
+      Object.keys(data).forEach((key) => {
+        if (formData![key] && !isEqual(formData![key], data[key])) {
+          dataEdit[key] = formData![key]
+        }
+      })
 
-    if (res.data) {
-      await refreshQuery(QUERY_KEY.GetFanPage)
-      showNotificationSuccess(translate('success.create'))
-      closeModalDrawer()
+      dataEdit.date = new Date(formData?.date?.toString()).getTime()
+      dataEdit.imagesDelete = getImageDelete()
+      console.log({ dataEdit })
+
+      const res = await ServerApi.updateFanPage(data?._id, dataEdit)
+      console.log({ res })
+
+      if (res.data) {
+        await refreshQuery(QUERY_KEY.GetFanPage)
+        showNotificationSuccess(translate('success.update'))
+        closeModalDrawer()
+      } else {
+        showNotificationError(translate('error.update'))
+      }
     } else {
-      showNotificationError(translate('error.create'))
+      const body = {
+        ...formData,
+        date: new Date(formData?.date?.toString()).getTime(),
+      }
+
+      const res = await ServerApi.createFanPage(body)
+      if (res.data) {
+        await refreshQuery(QUERY_KEY.GetFanPage)
+        showNotificationSuccess(translate('success.create'))
+        closeModalDrawer()
+      } else {
+        showNotificationError(translate('error.create'))
+      }
     }
+
     setLoading(false)
   }
 
   return (
-    <div className='flex flex-col gap-2'>
-      <MyForm
-        formData={formData}
-        onFinish={handleSubmit}
-        onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
-        className='!w-full !h-full md:min-h-[70vh]  max-h-[85vh]'
-      >
-        <div className='flex flex-col gap-3 flex-1 h-full overflow-hidden'>
-          <div className='flex flex-col gap-3 max-h overflow-y-auto w-full flex-1'>
-            <MyDatePickerForm defaultValue={formData?.date} label={translate('textPopular.date')} name='date' />
-            <InputForm label={translate('textPopular.source')} name={'source'} classFromItem='w-full' />
-            <InputForm
-              label={translate('textPopular.infor')}
-              typeBtn='area'
-              rows={12}
-              name={'des'}
-              classFromItem='w-full'
-            />
+    <MyForm
+      formData={formData}
+      onFinish={handleSubmit}
+      onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
+      className='!w-full !h-full flex flex-1 md:min-h-[70vh] md:max-h-[85vh] overflow-y-auto '
+    >
+      <div className='flex flex-col gap-3 max-h overflow-y-auto w-full flex-1'>
+        <MyDatePickerForm defaultValue={formData?.date} label={translate('textPopular.date')} name='date' />
+        <InputForm label={translate('textPopular.source')} name={'source'} classFromItem='w-full' />
+        <InputForm
+          label={translate('textPopular.infor')}
+          typeBtn='area'
+          rows={12}
+          name={'des'}
+          classFromItem='w-full'
+        />
 
-            <div className='md:mb-[250px] w-full bg-gray-300' />
+        <div className='md:mb-[250px] w-full bg-gray-300' />
 
-            <div className='flex '>
-              <div className='flex w-max'>
-                <UploadImage
-                  maxSizeOutputKB={500}
-                  maxPixelReduce={500}
-                  handleUpload={(e) => {
-                    setFormData({
-                      ...formData,
-                      listImage: [...formData?.listImage, e],
-                    })
-                  }}
-                >
-                  <div className='flex gap-2'>
-                    <CameraOutlined />
-                    <span>{translate('textPopular.image')}</span>
-                  </div>
-                </UploadImage>
+        <div className='flex '>
+          <div className='flex w-max'>
+            <UploadImage
+              maxSizeOutputKB={500}
+              maxPixelReduce={500}
+              handleUpload={(e) => {
+                setFormData({
+                  ...formData,
+                  listImage: [...formData?.listImage, e],
+                })
+              }}
+            >
+              <div className='flex gap-2'>
+                <CameraOutlined />
+                <span>{translate('textPopular.image')}</span>
               </div>
-            </div>
-            <div className='grid lg:grid-cols-4 sm:grid-cols-3 md:grid-cols-3 grid-cols-2 gap-3'>
-              {formData?.listImage?.map((e: any) => {
-                return (
-                  <div className='flex aspect-square w-full overflow-hidden relative' key={e}>
-                    <MyImage
-                      className='!relative !w-full !h-auto '
-                      alt={detectImg(e?.base64 || e)}
-                      src={detectImg(e?.base64 || e)}
-                    />
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-          <div className='flex  w-full'>
-            <ButtonForm titleSubmit={translate(data ? 'common.update' : 'common.create')} loading={loading} />
+            </UploadImage>
           </div>
         </div>
-      </MyForm>
-    </div>
+        <div className='grid lg:grid-cols-4 sm:grid-cols-3 md:grid-cols-3 grid-cols-2 gap-3'>
+          {formData?.listImage?.map((e: any, index: number) => {
+            return (
+              <div className='flex aspect-square w-full overflow-hidden relative' key={e}>
+                <MyImage
+                  className='!relative !w-full !h-auto '
+                  alt={detectImg(e?.base64 || e)}
+                  src={detectImg(e?.base64 || e)}
+                />
+                <div className='absolute text-red-500 text-xl right-4 top-3'>
+                  <DeleteOutlined onClick={() => onDeleteImage(index)} className='cursor-pointer ' />
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+      <div className='flex  w-full'>
+        <ButtonForm titleSubmit={translate(data ? 'common.update' : 'common.create')} loading={loading} />
+      </div>
+    </MyForm>
   )
 }
 

@@ -75,25 +75,22 @@ const BillAdminScreen = () => {
     })
   }
 
-  // const handleDelete = async (id: string) => {
-  //   const callback = async () => {
-  //     const data = await fetchConfig({
-  //       url: `/bill/delete/${id}`,
-  //       method: REQUEST_TYPE.DELETE,
-  //     })
-  //     if (data?.data) {
-  //       showNotificationSuccess(translate('success.delete'))
-  //       refreshQuery(QUERY_KEY.BillAdmin)
-  //     } else {
-  //       showNotificationError(translate('error.delete'))
-  //     }
-  //     closeModalDrawer()
-  //   }
+  const handleDelete = async (id: string) => {
+    const callback = async () => {
+      const data = await ServerApi.deleteBill(id)
+      if (data?.data) {
+        showNotificationSuccess(translate('success.delete'))
+        refreshQuery(QUERY_KEY.BillAdmin)
+      } else {
+        showNotificationError(translate('error.delete'))
+      }
+      closeModalDrawer()
+    }
 
-  //   openModalDrawer({
-  //     content: <ModalDelete title="Do you delete Bill" callback={callback} />,
-  //   })
-  // }
+    openModalDrawer({
+      content: <ModalDelete title='Do you delete Bill' callback={callback} />,
+    })
+  }
 
   const handleViewDetail = (item: any) => {
     openModalDrawer({
@@ -327,7 +324,11 @@ const BillAdminScreen = () => {
               />
 
               <div className='text-red-500'>
-                <DeleteOutlined className='hover:scale-105 cursor-pointer' style={{ fontSize: 24 }} />
+                <DeleteOutlined
+                  onClick={() => handleDelete(record._id)}
+                  className='hover:scale-105 cursor-pointer'
+                  style={{ fontSize: 24 }}
+                />
               </div>
             </div>
           )

@@ -46,6 +46,7 @@ const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
                 config.placement === 'right' || config.placement === 'left'
                   ? 'calc(100dvh - 100px)'
                   : 'calc(95dvh - 100px)',
+              height: 'auto',
             }}
           >
             {config.content ?? <></>}

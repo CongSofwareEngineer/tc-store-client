@@ -91,6 +91,14 @@ const ServerApi = {
     })
     return res
   },
+  updateFanPage: async (id: TimeRanges, body: Object) => {
+    const res = await ServerApi.requestBase({
+      url: `fan-page/update/${id}`,
+      body,
+      method: REQUEST_TYPE.PUT,
+    })
+    return res
+  },
   getFanPage: async () => {
     const res = await ServerApi.requestBase({
       url: `fan-page/all`,
@@ -125,6 +133,13 @@ const ServerApi = {
       url: `bill/update/${idBill}`,
       body,
       method: REQUEST_TYPE.POST,
+    })
+    return res
+  },
+  deleteBill: async (idBill: string) => {
+    const res = await ServerApi.requestBase({
+      url: `bill/delete/${idBill}`,
+      method: REQUEST_TYPE.DELETE,
     })
     return res
   },

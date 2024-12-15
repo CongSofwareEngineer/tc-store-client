@@ -169,6 +169,7 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
       } else {
         res = await ClientApi.buyNoLogin(bodyAPI)
       }
+      console.log({ res })
 
       if (res?.data) {
         await callbackSuccess()

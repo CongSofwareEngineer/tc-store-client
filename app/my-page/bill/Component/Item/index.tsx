@@ -74,10 +74,10 @@ const Item = ({ data, indexData }: Props) => {
   }
 
   const getRouteProduct = (product: any) => {
-    if (product.more_data.category === TYPE_PRODUCT.shoes) {
+    if (product?.more_data?.category === TYPE_PRODUCT.shoes) {
       return `/shoes/${product.more_data.keyName}`
     }
-    return `/shop/${product.more_data.keyName}`
+    return `/shop/${product?.more_data?.keyName}`
   }
 
   const renderDesktop = () => {
@@ -110,15 +110,15 @@ const Item = ({ data, indexData }: Props) => {
           return (
             <div key={e._id} className='flex mt-2 gap-2 px-3'>
               <div className='w-[70px]  rounded-md aspect-square overflow-hidden relative flex justify-center items-center'>
-                <MyImage className='!relative ' alt={e.more_data.name} src={detectImg(e.more_data.imageMain)} />
+                <MyImage className='!relative ' alt={e?.more_data?.name} src={detectImg(e?.more_data?.imageMain)} />
               </div>
               <div className='flex justify-between flex-1 gap-2'>
                 <div className='flex flex-col gap-1'>
                   <Link href={getRouteProduct(e)}>
-                    <span className='hover:underline text-black font-bold '>{e.more_data.name}</span>
+                    <span className='hover:underline text-black font-bold '>{e?.more_data?.name}</span>
                   </Link>
                   <ConfigBill item={e} />
-                  <div className=' text-sm text-green-600'>{`${formatPrice(e.more_data.price)} VNĐ`}</div>
+                  <div className=' text-sm text-green-600'>{`${formatPrice(e?.more_data?.price)} VNĐ`}</div>
                 </div>
                 <div>x{e.amount}</div>
               </div>
@@ -173,13 +173,17 @@ const Item = ({ data, indexData }: Props) => {
           return (
             <div key={e._id} className='flex mt-2 gap-2 px-3'>
               <div className='w-[70px]  rounded-md aspect-square overflow-hidden relative flex justify-center items-center'>
-                <MyImage className='!relative !h-auto ' alt={e.more_data.name} src={detectImg(e.more_data.imageMain)} />
+                <MyImage
+                  className='!relative !h-auto '
+                  alt={e?.more_data?.name}
+                  src={detectImg(e?.more_data?.imageMain)}
+                />
               </div>
               <div className='flex justify-between flex-1 gap-2'>
                 <div className='flex flex-col gap-1'>
-                  <div>{e.more_data.name}</div>
+                  <div>{e?.more_data?.name}</div>
                   <ConfigBill item={e} />
-                  <div className=' text-sm text-green-600'>{`${formatPrice(e.more_data.price)} VNĐ`}</div>
+                  <div className=' text-sm text-green-600'>{`${formatPrice(e?.more_data?.price)} VNĐ`}</div>
                 </div>
                 <div>x{e.amount}</div>
               </div>
