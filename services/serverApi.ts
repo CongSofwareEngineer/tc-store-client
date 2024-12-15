@@ -75,36 +75,6 @@ const ServerApi = {
     return res
   },
 
-  deleteFanPage: async (body: Object) => {
-    const res = await ServerApi.requestBase({
-      url: `fan-page/delete`,
-      body,
-      method: REQUEST_TYPE.POST,
-    })
-    return res
-  },
-  createFanPage: async (body: Object) => {
-    const res = await ServerApi.requestBase({
-      url: `fan-page/create`,
-      body,
-      method: REQUEST_TYPE.POST,
-    })
-    return res
-  },
-  updateFanPage: async (id: TimeRanges, body: Object) => {
-    const res = await ServerApi.requestBase({
-      url: `fan-page/update/${id}`,
-      body,
-      method: REQUEST_TYPE.PUT,
-    })
-    return res
-  },
-  getFanPage: async () => {
-    const res = await ServerApi.requestBase({
-      url: `fan-page/all`,
-    })
-    return res
-  },
   deleteProduct: async (id: string, imageDelete?: string[]) => {
     const res = await ServerApi.requestBase({
       url: `product/delete/${id}`,
@@ -126,22 +96,6 @@ const ServerApi = {
       url: `all-cart/${idUser}${query}`,
     })
     return res.data
-  },
-
-  updateBill: async (idBill: string, body: any) => {
-    const res = await ServerApi.requestBase({
-      url: `bill/update/${idBill}`,
-      body,
-      method: REQUEST_TYPE.POST,
-    })
-    return res
-  },
-  deleteBill: async (idBill: string) => {
-    const res = await ServerApi.requestBase({
-      url: `bill/delete/${idBill}`,
-      method: REQUEST_TYPE.DELETE,
-    })
-    return res
   },
 }
 export default ServerApi

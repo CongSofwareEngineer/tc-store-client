@@ -8,7 +8,6 @@ import { ellipsisText, formatPrice, getColorStatus, numberWithCommas } from '@/u
 import React from 'react'
 import ItemDetail from './Components/Itemdetail'
 import ModalDelete from '@/components/ModalDelete'
-import ServerApi from '@/services/serverApi'
 import useLanguage from '@/hook/useLanguage'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
@@ -20,6 +19,7 @@ import useMedia from '@/hook/useMedia'
 import { ColumnsType } from 'antd/es/table'
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
 import { DEFAULT_RATE_EXP_USER } from '../../../constant/app'
+import AdminApi from '@/services/adminApi'
 
 const BillAdminScreen = () => {
   const { renderContent } = useSearchBaseAdmin({
@@ -59,7 +59,7 @@ const BillAdminScreen = () => {
         exp: item.totalBill * DEFAULT_RATE_EXP_USER,
       }
 
-      const res = await ServerApi.updateBill(item._id, body)
+      const res = await AdminApi.updateBill(item._id, body)
 
       if (res?.data) {
         showNotificationSuccess(translate('myPage.updateSuccess'))
@@ -77,7 +77,7 @@ const BillAdminScreen = () => {
 
   const handleDelete = async (id: string) => {
     const callback = async () => {
-      const data = await ServerApi.deleteBill(id)
+      const data = await AdminApi.deleteBill(id)
       if (data?.data) {
         showNotificationSuccess(translate('success.delete'))
         refreshQuery(QUERY_KEY.BillAdmin)

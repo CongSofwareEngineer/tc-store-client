@@ -2,12 +2,65 @@ import { fetchData } from '@/configs/fetchConfig'
 import { REQUEST_TYPE } from '@/constant/app'
 
 const AdminApi = {
+  updateFanPage: async (id: TimeRanges, body: Object) => {
+    const res = await fetchData({
+      url: `fan-page/update/${id}`,
+      body,
+      method: REQUEST_TYPE.PUT,
+    })
+    return res
+  },
+  getFanPage: async () => {
+    const res = await fetchData({
+      url: `fan-page/all`,
+    })
+    return res
+  },
+  createFanPage: async (body: Object) => {
+    const res = await fetchData({
+      url: `fan-page/create`,
+      body,
+      method: REQUEST_TYPE.POST,
+    })
+    return res
+  },
+  deleteFanPage: async (body: Object) => {
+    const res = await fetchData({
+      url: `fan-page/delete`,
+      body,
+      method: REQUEST_TYPE.POST,
+    })
+    return res
+  },
+  updateBill: async (idBill: string, body: any) => {
+    const res = await fetchData({
+      url: `bill/update/${idBill}`,
+      body,
+      method: REQUEST_TYPE.POST,
+    })
+    return res
+  },
+  deleteBill: async (idBill: string) => {
+    const res = await fetchData({
+      url: `bill/delete/${idBill}`,
+      method: REQUEST_TYPE.DELETE,
+    })
+    return res
+  },
+
+  ///////
   createSubCategories: async (body: any) => {
     return fetchData({
       url: `/sub-categories/create`,
       method: REQUEST_TYPE.POST,
       body,
     })
+  },
+  getProduct: async (query = '') => {
+    const res = await ServerApi.requestBase({
+      url: `all-product${query}`,
+    })
+    return res
   },
   createCategories: async (body: any) => {
     return fetchData({

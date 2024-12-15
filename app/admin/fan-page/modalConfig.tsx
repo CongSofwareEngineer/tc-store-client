@@ -10,11 +10,11 @@ import React, { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import MyImage from '@/components/MyImage'
 import { detectImg } from '@/utils/functions'
-import ServerApi from '@/services/serverApi'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import { isEqual } from 'lodash'
+import AdminApi from '@/services/adminApi'
 
 const ModalConfig = ({ data }: { data?: any }) => {
   const { translate } = useLanguage()
@@ -75,7 +75,7 @@ const ModalConfig = ({ data }: { data?: any }) => {
       dataEdit.imagesDelete = getImageDelete()
       console.log({ dataEdit })
 
-      const res = await ServerApi.updateFanPage(data?._id, dataEdit)
+      const res = await AdminApi.updateFanPage(data?._id, dataEdit)
       console.log({ res })
 
       if (res.data) {
@@ -91,7 +91,7 @@ const ModalConfig = ({ data }: { data?: any }) => {
         date: new Date(formData?.date?.toString()).getTime(),
       }
 
-      const res = await ServerApi.createFanPage(body)
+      const res = await AdminApi.createFanPage(body)
       if (res.data) {
         await refreshQuery(QUERY_KEY.GetFanPage)
         showNotificationSuccess(translate('success.create'))

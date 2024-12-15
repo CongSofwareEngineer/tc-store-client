@@ -1,9 +1,9 @@
 import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery'
-import ServerApi from '@/services/serverApi'
+import AdminApi from '@/services/adminApi'
 import { useQuery } from '@tanstack/react-query'
 
 const getData = async ({ queryKey }: { queryKey: any }): Promise<TypeHookReactQuery> => {
-  const res = await ServerApi.getFanPage()
+  const res = await AdminApi.getFanPage()
   return {
     data: res?.data || [],
     page: 1,
