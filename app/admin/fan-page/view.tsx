@@ -17,6 +17,7 @@ import React from 'react'
 import ModalConfig from './modalConfig'
 import { CopyOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import ImageAdmin from '@/components/ImageAdmin'
+import AdminApi from '@/services/adminApi'
 
 const FanPageScreen = () => {
   const { data, isLoading } = useFanPage()
@@ -45,7 +46,7 @@ const FanPageScreen = () => {
       const imageDelete = item.listImage || []
       const listId = [item?._id]
 
-      const res = await ServerApi.deleteFanPage({
+      const res = await AdminApi.deleteFanPage({
         imageDelete,
         listId,
       })
@@ -70,7 +71,7 @@ const FanPageScreen = () => {
             console.log({ record })
 
             return (
-              <div className='flex flex-col gap-2'>
+              <div className='flex flex-col gap-2 w-full  '>
                 <div className='flex gap-2 items-center'>
                   <span className='font-bold'>{translate('textPopular.date')}:</span>
                   <span>{formatDateTime(parseInt(record.date))}</span>
@@ -88,14 +89,14 @@ const FanPageScreen = () => {
                 </div>
                 <div className='flex w-full max-h-[300px] py-2 overflow-y-auto'>
                   <div
-                    className='whitespace-break-spaces'
+                    className='whitespace-break-spaces '
                     dangerouslySetInnerHTML={{
                       __html: record.des,
                     }}
                   />
                 </div>
 
-                <div className='flex gap-3 overflow-x-auto py-2'>
+                <div className='flex gap-3 w-full  max-w-[calc(100dvw-85px)]  overflow-auto py-2'>
                   {record.listImage.map((e: string) => {
                     return (
                       <div key={e} className='overflow-hidden relative w-[80px] min-w-[80px] aspect-square'>
@@ -212,6 +213,7 @@ const FanPageScreen = () => {
 
   return (
     <MyTable
+      className='!w-full'
       columns={getColumns()}
       loading={isLoading}
       data={data?.data || []}
