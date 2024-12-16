@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import MyCollapse, { ItemCollapseProps } from '@/components/MyCollapse'
 import { Button, Input, Select } from 'antd'
 import useLanguage from '@/hook/useLanguage'
-import { DeleteOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons'
+import { DeleteOutlined, DiffOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { cloneData, isObject } from '@/utils/functions'
 import useModalAdmin from '@/hook/useModalAdmin'
 import ModalDelete from '@/components/ModalDelete'
@@ -15,7 +15,7 @@ export type IEditItemAttributesProps = {
   keyIndex?: string
 }
 
-const SelectHasAdd = ({ value, onChange, handleAddNew, options }: any) => {
+const SelectCustom = ({ value, onChange, handleAddNew, options }: any) => {
   const { translate } = useLanguage()
   const inputRef = useRef(null)
   const [newValue, setNewValue] = useState('')
@@ -101,6 +101,14 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
     onChange(dataClone)
   }
 
+  const handleDoubleValueData = (index: number) => {
+    const dataClone = cloneData(data)
+    const dataDouble = dataClone.value[index]
+    dataDouble.size = `${dataDouble.size}-new`
+    dataClone.value.splice(1, 0, dataDouble)
+    onChange(dataClone)
+  }
+
   const handleDeleteKeyValueData = (index: number) => {
     const callBack = () => {
       const dataClone = cloneData(data)
@@ -168,10 +176,13 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
         label: <div>{`Size : ${key}`} </div>,
         children: (
           <div className='flex flex-col gap-2'>
-            <div className='flex gap-2 items-center'>
+            <div className='flex gap-3 items-center'>
               <Input className='!w-[200px]' value={key} onChange={(e) => onChangeKeyData(index, e.target.value)} />
               <div className='text-green-600 text-xl'>
                 <PlusCircleOutlined onClick={() => handleAddValueData(index)} className='cursor-pointer' />
+              </div>
+              <div className='text-xl text-green-600'>
+                <DiffOutlined onClick={() => handleDoubleValueData(index)} className='cursor-pointer' />
               </div>
               <div className='text-red-500 text-xl'>
                 <DeleteOutlined onClick={() => handleDeleteKeyValueData(index)} className='cursor-pointer' />
@@ -183,7 +194,7 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
                 <div key={`valeDetail-${indexDetail}`} className='flex gap-2 items-center'>
                   <div className='flex flex-col gap-1'>
                     <div>{`Color ${indexDetail + 1}`}</div>
-                    <SelectHasAdd
+                    <SelectCustom
                       options={optionKeyValues}
                       value={valeDetail['color']}
                       onChange={(e: string) => onChangeValueData(index, indexDetail, 'color', e)}
