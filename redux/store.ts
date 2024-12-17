@@ -1,21 +1,15 @@
-import { TYPE_PERSIST_REDUCER, WHITE_LIST_PERSIT_REDUX } from '@/constant/redux'
+import { SLICE, TYPE_PERSIST_REDUCER, WHITE_LIST_PERSIT_REDUX } from '@/constant/redux'
 import { configureStore } from '@reduxjs/toolkit'
 import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2'
 import storage from 'redux-persist/lib/storage'
-import {
-  persistStore,
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  REGISTER,
-  PURGE,
-} from 'redux-persist'
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, REGISTER, PURGE } from 'redux-persist'
 
 import appReducer from './appReducer'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
+import secureLocalStorage from 'react-secure-storage'
+import { decryptData } from '@/utils/crypto'
+import { setUserData } from './userDataSlice'
 
 const reducer = (state: Partial<unknown> | unknown, action: any) => {
   return appReducer(state || {}, action)
@@ -30,10 +24,7 @@ export const makeStore = () => {
     whitelist: WHITE_LIST_PERSIT_REDUX,
     stateReconciler: autoMergeLevel2,
   }
-  const persistedReducer = persistReducer<TYPE_PERSIST_REDUCER>(
-    persistConfig,
-    reducer
-  )
+  const persistedReducer = persistReducer<TYPE_PERSIST_REDUCER>(persistConfig, reducer)
   const storeRedux = configureStore({
     reducer: {
       app: persistedReducer,
@@ -47,6 +38,12 @@ export const makeStore = () => {
     devTools: process.env.NODE_ENV !== 'production',
   })
   if (isClient) {
+    const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
+    if (dataSecure) {
+      const dataDecode = decryptData(dataSecure.toString())
+      storeRedux.dispatch(setUserData(JSON.parse(dataDecode)))
+    }
+
     return storeRedux
   }
 

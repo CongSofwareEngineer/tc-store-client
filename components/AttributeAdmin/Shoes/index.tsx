@@ -103,7 +103,7 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
 
   const handleDoubleValueData = (index: number) => {
     const dataClone = cloneData(data)
-    const dataDouble = dataClone.value[index]
+    const dataDouble = cloneData(dataClone.value[index])
     dataDouble.size = `${dataDouble.size}-new`
     dataClone.value.splice(1, 0, dataDouble)
     onChange(dataClone)

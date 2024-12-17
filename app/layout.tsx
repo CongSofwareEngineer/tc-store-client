@@ -16,6 +16,7 @@ const inter = Inter({ subsets: ['latin'] })
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import Script from 'next/script'
+import ClientApi from '@/services/clientApi'
 
 const BaseMeta = {
   title: process.env.NEXT_PUBLIC_TITLE,
@@ -94,6 +95,9 @@ export const viewport: Viewport = {
 }
 
 const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
+  const menuCategory = await ClientApi.getCategory()
+  // return menuCategory?.data || []
+
   return (
     <html lang='en'>
       {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <GoogleTagManager gtmId='GTM-T7S7DKJ4' />}
@@ -185,7 +189,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
                 <ReduxProvider>
                   <MyModalProvider>
                     <DrawerProvider>
-                      <ClientRender>{children}</ClientRender>
+                      <ClientRender menuCategory={menuCategory?.data || []}>{children}</ClientRender>
                     </DrawerProvider>
                   </MyModalProvider>
                 </ReduxProvider>

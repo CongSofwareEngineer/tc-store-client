@@ -6,10 +6,7 @@ import Footer from '../Footer'
 import dynamic from 'next/dynamic'
 import useAos from '@/hook/useAos'
 import { fetchProvinces } from '@/redux/provincesSlice'
-import { SLICE } from '@/constant/redux'
-import secureLocalStorage from 'react-secure-storage'
-import { setUserData } from '@/redux/userDataSlice'
-import { decryptData } from '@/utils/crypto'
+import { setMenuCategory } from '@/redux/categoryMenuSlice'
 
 const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
   ssr: true,
@@ -35,17 +32,13 @@ const FirstLoadWebsite = dynamic(() => import('../FirstLoadWebsite'), {
   ssr: false,
 })
 
-const ClientRender = ({ children }: { children: React.ReactNode }) => {
+const ClientRender = ({ children, menuCategory = [] }: { children: React.ReactNode; menuCategory: any[] }) => {
   useAos()
   const dispatch = useAppDispatch()
 
   useLayoutEffect(() => {
-    const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
-    if (dataSecure) {
-      const dataDecode = decryptData(dataSecure.toString())
-      dispatch(setUserData(JSON.parse(dataDecode)))
-    }
     dispatch(fetchProvinces())
+    dispatch(setMenuCategory(menuCategory))
   }, [])
 
   return (

@@ -17,7 +17,7 @@ export enum SLICE {
   Provinces = 'Provinces',
 }
 
-export const WHITE_LIST_PERSIT_REDUX = [SLICE.Language]
+export const WHITE_LIST_PERSIT_REDUX = [SLICE.Language, SLICE.CategoryMenu]
 
 export const INIT_STATE = {
   [SLICE.Language]: localeVN,
@@ -60,7 +60,12 @@ export type TYPE_SLICE = {
   [SLICE.Setting]: Object | null
   [SLICE.UserData]: TypeUserData | null
   [SLICE.ConnectedChain]: Number
-  [SLICE.CategoryMenu]: Array<{ keyName: string; icon?: string; lang?: { [key: string]: string } }>
+  [SLICE.CategoryMenu]: Array<{
+    keyName: string
+    icon?: string
+    lang?: { [key: string]: string }
+    [key: string]: any
+  }>
   [SLICE.Provinces]: any[]
   [SLICE.ModalAdmin]: {
     open?: boolean

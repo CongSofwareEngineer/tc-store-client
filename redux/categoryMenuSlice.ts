@@ -1,22 +1,15 @@
 import { INIT_STATE, SLICE } from '@/constant/redux'
-import ServerApi from '@/services/serverApi'
+import ClientApi from '@/services/clientApi'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-
-export const fetchMenuCategory = createAsyncThunk(
-  'menuCategory/fetchMenuCategory',
-  async () => {
-    try {
-      const menuHandle = await ServerApi.requestBase({
-        url: 'menu-category'
-      })
-      return menuHandle?.data?.data || menuHandle?.data || []
-    } catch (error) {
-      return []
-    }
+export const fetchMenuCategory: any = createAsyncThunk('CategoryMenu/fetchMenuCategory', async () => {
+  try {
+    const menuCategory = await ClientApi.getCategory()
+    return menuCategory?.data || []
+  } catch (error) {
+    return []
   }
-)
-
+})
 
 export const categoryMenuSlice = createSlice({
   name: SLICE.CategoryMenu,
@@ -27,11 +20,10 @@ export const categoryMenuSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(fetchMenuCategory.fulfilled, (_: any, action) => {
-        return action.payload
-      })
-  }
+    builder.addCase(fetchMenuCategory.fulfilled, (_: any, action) => {
+      return action.payload
+    })
+  },
 })
 
 export const { setMenuCategory } = categoryMenuSlice.actions

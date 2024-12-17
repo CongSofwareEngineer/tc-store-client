@@ -331,7 +331,14 @@
       "orange": "Cam",
       "yellow": "Vàng",
       "black": "Đen",
-      "white": "Trắng"
+      "white": "Trắng",
+      "blue": "Xanh dương",
+      "blueWhite": "Xanh trắng",
+      "orangeWhite": "Cam trắng",
+      "whiteBlack": "Trắng đen",
+      "purple": "Tím",
+      "gray": "Xám",
+      "green": "Xanh lá"
     }
   },
   "comment": {

@@ -1,30 +1,27 @@
 import { COOKIE_EXPIRED, COOKIE_KEY, OBSERVER_KEY } from '@/constant/app'
 import { SLICE, TypeUserData } from '@/constant/redux'
 import useCheckPatchName from '@/hook/tank-query/useCheckPatchName'
-import { setMenuCategory } from '@/redux/categoryMenuSlice'
-import { useAppDispatch, useAppSelector } from '@/redux/store'
+import { fetchMenuCategory } from '@/redux/categoryMenuSlice'
+import { useAppSelector } from '@/redux/store'
 import { setUserData } from '@/redux/userDataSlice'
 import ClientApi from '@/services/clientApi'
 import { deleteCookie, setCookie } from '@/services/CookiesService'
 import ObserverService from '@/services/observer'
 import { encryptData } from '@/utils/crypto'
-import React, { useEffect } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import secureLocalStorage from 'react-secure-storage'
 
 const FirstLoadWebsite: React.FC = () => {
   useCheckPatchName()
-  const dispatch = useAppDispatch()
+  const dispatch = useDispatch()
   const { UserData: userData } = useAppSelector((state) => state.app)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (userData) {
       ObserverService.emit(OBSERVER_KEY.ReLogin, userData)
     }
-    const getCategory = async () => {
-      const menuCategory = await ClientApi.getCategory()
-      dispatch(setMenuCategory(menuCategory?.data || []))
-    }
-    getCategory()
+    dispatch(fetchMenuCategory())
   }, [])
 
   //re login
