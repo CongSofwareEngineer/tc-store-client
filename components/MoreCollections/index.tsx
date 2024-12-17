@@ -5,9 +5,10 @@ import { TYPE_PRODUCT } from '@/constant/admin'
 import { useParams, useRouter } from 'next/navigation'
 import LoadingGetData from '../LoadingGetData'
 import ClientApi from '@/services/clientApi'
+import useRoutePage from '@/hook/useRoutePage'
 
 const MoreCollections = () => {
-  const router = useRouter()
+  const router = useRoutePage()
   const param = useParams()
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState<Array<any>>([])
