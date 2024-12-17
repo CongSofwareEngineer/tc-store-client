@@ -82,6 +82,8 @@ const UserAdminScreen = () => {
           title: translate('textPopular.infor'),
           key: 'status',
           dataIndex: 'status',
+          sorter: (a: any, b: any) => a.isAdmin - b.isAdmin,
+
           render: (_: any, record: any) => {
             return (
               <div className='flex justify-between gap-3'>
@@ -109,7 +111,13 @@ const UserAdminScreen = () => {
                   </div>
                 </div>
                 <div className='flex flex-col gap-1 flex-1'>
-                  <div>{formatDateTime(parseInt(record.date))}</div>
+                  <div className='flex text-xs justify-between'>
+                    <div>{formatDateTime(parseInt(record.date))}</div>
+                    <span className='flex gap-1'>
+                      <MyCheckBox size={16} value={!!record.isAdmin} className='!w-4 !h-4' />
+                      <span>Admin</span>
+                    </span>
+                  </div>
                   <div className='font-bold'>{record.name}</div>
                   <Link href={`tel:${record.sdt}`} className='font-bold'>
                     <TextCopy textView={record.sdt} value={record.sdt} />

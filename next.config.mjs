@@ -16,13 +16,14 @@ const nextConfig = {
     includePaths: [path.join(__dirname, 'styles')],
   },
   experimental: {
-    // optimisticClientCache: true,
+    optimisticClientCache: true,
     // workerThreads: true,
     // optimizeCss: true,
     nextScriptWorkers: true,
     gzipSize: true,
     swcMinify: true,
     optimizeCss: true,
+    optimizeServerReact: true,
     optimizePackageImports: [
       '@tanstack/react-query',
       'framer-motion',
@@ -56,6 +57,7 @@ const nextConfig = {
   compress: true,
   swcMinify: true,
   optimizeFonts: true,
+  cleanDistDir: true,
   compiler: {
     removeConsole: !!process.env.REMOVE_CONSOLE_LOG,
     reactRemoveProperties: true,
