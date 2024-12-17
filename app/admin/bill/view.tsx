@@ -53,10 +53,25 @@ const BillAdminScreen = () => {
     }
 
     const callBack = async () => {
-      const body = {
+      const body: any = {
         status,
         idUser: item.idUser,
         exp: item.totalBill * DEFAULT_RATE_EXP_USER,
+      }
+
+      if (status === FILTER_BILL.DeliverySuccess) {
+        const listNewSoldProduct: any[] = []
+        item.listBill.forEach((e: any) => {
+          const item = {
+            sold: e.amount + e.more_data.sold,
+            idProduct: e._id,
+            configBill: e.configBill || {},
+            category: e.more_data.category,
+          }
+          listNewSoldProduct.push(item)
+        })
+
+        body.listNewSoldProduct = listNewSoldProduct
       }
 
       const res = await AdminApi.updateBill(item._id, body)

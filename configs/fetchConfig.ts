@@ -13,14 +13,7 @@ export type ServerAPIReqType = {
   isAuth?: boolean
 }
 
-export type ClientAPITypeParam = {
-  url?: string
-  body?: any
-  auth?: string
-  method?: REQUEST_TYPE
-  timeOut?: number
-  isAuth?: boolean
-}
+export type ClientAPITypeParam = ServerAPIReqType
 
 export const fetchData = async (
   param: ClientAPITypeParam,

@@ -1,4 +1,3 @@
-import ServerApi from '@/services/serverApi'
 import useUserData from '../useUserData'
 import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery'
 import { PAGE_SIZE_LIMIT } from '@/constant/app'

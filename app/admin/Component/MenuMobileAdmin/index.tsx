@@ -7,6 +7,7 @@ import {
   LineChartOutlined,
   ProductOutlined,
   ShoppingCartOutlined,
+  UsergroupAddOutlined,
 } from '@ant-design/icons'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -51,6 +52,11 @@ const MenuAdminMobile = () => {
       title: 'Fan Page',
       url: '/admin/fan-page',
       icon: <ProductOutlined />,
+    },
+    {
+      title: 'User',
+      url: '/admin/user',
+      icon: <UsergroupAddOutlined />,
     },
   ]
   return (

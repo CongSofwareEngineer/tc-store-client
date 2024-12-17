@@ -16,7 +16,7 @@ import Image from 'next/image'
 import { detectAvatar } from '@/utils/functions'
 // import MenuAdminMobile from '@/app/admin/Component/MenuMobile'
 const CartUser = dynamic(() => import('./cartUser'), { ssr: false })
-const MenuAdminMobile = dynamic(() => import('@/app/admin/Component/MenuMobile'), { ssr: false })
+const MenuAdminMobile = dynamic(() => import('@/app/admin/Component/MenuMobileAdmin'), { ssr: false })
 
 const Account = () => {
   const { openModalDrawer } = useModalDrawer()

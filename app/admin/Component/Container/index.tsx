@@ -73,6 +73,10 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
       title: 'Fan page',
       url: '/admin/fan-page',
     },
+    {
+      title: 'User',
+      url: '/admin/user',
+    },
   ]
 
   return (

@@ -1,6 +1,8 @@
 {
   "language": "Ngôn ngữ",
   "common": {
+    "updateAdmin": "Cấp quyền admin",
+    "revertAdmin": "Thu quyền admin",
     "continue": "Tiếp tục",
     "back": "Trờ về",
     "updateFeedback": "Cập nhật đánh giá",

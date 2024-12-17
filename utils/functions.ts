@@ -233,3 +233,14 @@ export const getColorStatus = (key: FILTER_BILL) => {
       return COLOR.green1
   }
 }
+
+export function convertBoolean(value: any): boolean {
+  try {
+    if (lowercase(value) === 'true' || value === true) {
+      return true
+    }
+    return false
+  } catch (error) {
+    return false
+  }
+}

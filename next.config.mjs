@@ -22,6 +22,7 @@ const nextConfig = {
     nextScriptWorkers: true,
     gzipSize: true,
     swcMinify: true,
+    optimizeCss: true,
     optimizePackageImports: [
       '@tanstack/react-query',
       'framer-motion',
@@ -54,6 +55,7 @@ const nextConfig = {
   },
   compress: true,
   swcMinify: true,
+  optimizeFonts: true,
   compiler: {
     removeConsole: !!process.env.REMOVE_CONSOLE_LOG,
     reactRemoveProperties: true,

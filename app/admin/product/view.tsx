@@ -16,10 +16,10 @@ import Link from 'next/link'
 import useListProductAdmin from '@/hook/tank-query/Admin/useListProductAdmin'
 import { ColumnsType } from 'antd/es/table'
 import ModalDelete from '@/components/ModalDelete'
-import ServerApi from '@/services/serverApi'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
+import AdminApi from '@/services/adminApi'
 
 const ProductAdminScreen = () => {
   const { renderContent } = useSearchBaseAdmin({
@@ -57,7 +57,7 @@ const ProductAdminScreen = () => {
     const callback = async () => {
       const imagesDelete = [item?.imageMain, ...item?.imageMore]
 
-      const res = await ServerApi.deleteProduct(item?._id, imagesDelete)
+      const res = await AdminApi.deleteProduct(item?._id, imagesDelete)
       if (res.data) {
         await refreshQuery(QUERY_KEY.GetListProductAdmin)
         showNotificationSuccess(translate('success.delete'))

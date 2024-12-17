@@ -47,6 +47,16 @@ const AdminApi = {
     })
     return res
   },
+  deleteProduct: async (id: string, imageDelete?: string[]) => {
+    const res = await fetchData({
+      url: `product/delete/${id}`,
+      method: REQUEST_TYPE.POST,
+      body: {
+        imageDelete,
+      },
+    })
+    return res
+  },
 
   ///////
   createSubCategories: async (body: any) => {
@@ -119,6 +129,23 @@ const AdminApi = {
   getRevenue: async (queryUrl: string) => {
     return fetchData({
       url: `/revenue/admin/limit${queryUrl}`,
+    })
+  },
+  getCart: async (queryUrl: string) => {
+    return fetchData({
+      url: `/cart/all${queryUrl}`,
+    })
+  },
+  getUserAdmin: async (queryUrl: string) => {
+    return fetchData({
+      url: `user/admin/all${queryUrl}`,
+    })
+  },
+
+  deleteUserAdmin: async (id: string) => {
+    return fetchData({
+      url: `user/delete/${id}`,
+      method: REQUEST_TYPE.DELETE,
     })
   },
 }
