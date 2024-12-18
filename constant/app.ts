@@ -113,7 +113,7 @@ export enum MODE_SELECT {
   tags = 'tags',
 }
 
-export const DEFAULT_SIZE = {
+export const DEFAULT_VALUE_RANGE = {
   Shoes: {
     minSize: 29,
     maxSize: 45,
