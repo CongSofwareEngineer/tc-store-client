@@ -29,6 +29,7 @@ export const VALUE_KEY_DEFAULT = {
     'orange',
     'purple',
     'gray',
+    'blue',
     'green',
     'whiteBlack',
     'orangeWhite',
