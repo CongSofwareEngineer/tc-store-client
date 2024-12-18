@@ -7,17 +7,18 @@ import useUserData from '@/hook/useUserData'
 import { scrollTop } from '@/utils/functions'
 import { Col, Row } from 'antd'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { PropsWithChildren } from 'react'
 import Avatar from '../Avatar'
 import Image from 'next/image'
+import useRoutePage from '@/hook/useRoutePage'
 const Container = ({ children }: PropsWithChildren) => {
-  const { isMobile, isClient } = useMedia()
+  const { isMobile } = useMedia()
   const { translate } = useLanguage()
   const { userData, isLogin } = useUserData()
   const patchName = usePathname()
-  const router = useRouter()
+  const router = useRoutePage()
 
   useEffect(() => {
     setTimeout(() => {

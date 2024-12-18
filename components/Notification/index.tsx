@@ -1,19 +1,19 @@
 import { LOCAL_STORAGE_KEY } from '@/constant/app'
 import { TYPE_NOTIFICATION } from '@/constant/firebase'
 import useLanguage from '@/hook/useLanguage'
+import useRoutePage from '@/hook/useRoutePage'
 import useUserData from '@/hook/useUserData'
 import ClientApi from '@/services/clientApi'
 import { FirebaseServices } from '@/services/firebaseService'
 import { saveDataLocal } from '@/utils/functions'
 import { Button, notification } from 'antd'
 import { NextPage } from 'next'
-import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 const NotificationClient: NextPage = () => {
   const { isLogin, reLogin, userData } = useUserData()
   const { translate } = useLanguage()
-  const router = useRouter()
+  const router = useRoutePage()
 
   useEffect(() => {
     const handleOpenNoti = (dataMess: any) => {

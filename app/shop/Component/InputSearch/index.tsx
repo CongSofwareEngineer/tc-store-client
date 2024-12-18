@@ -1,12 +1,13 @@
 import useDebounce from '@/hook/useDebounce'
 import useLanguage from '@/hook/useLanguage'
+import useRoutePage from '@/hook/useRoutePage'
 import { SearchOutlined } from '@ant-design/icons'
 import { Input } from 'antd'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 const InputSearch = ({ keySearch = 'name' }: { keySearch?: string }) => {
-  const router = useRouter()
+  const router = useRoutePage()
   const pathname = usePathname()
   const { translate } = useLanguage()
   const searchParam = useSearchParams()

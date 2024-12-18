@@ -3,15 +3,15 @@ import { InfoBillType } from '../../../type'
 import { images } from '@/configs/images'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
-import { useRouter } from 'next/navigation'
 import { detectImg, numberWithCommas } from '@/utils/functions'
 import Image from 'next/image'
 import MyImage from '@/components/MyImage'
+import useRoutePage from '@/hook/useRoutePage'
 
 const InfoBill = ({ data, amountBuy }: InfoBillType) => {
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
-  const router = useRouter()
+  const router = useRoutePage()
 
   const handleClickName = () => {
     router.push(`/shop/${data?.idProduct}/${data?.keyName}`)

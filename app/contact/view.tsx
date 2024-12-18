@@ -11,7 +11,6 @@ import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
-import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { DataAddContact } from '@/constant/mongoDB'
@@ -19,6 +18,7 @@ import { DataAddContact } from '@/constant/mongoDB'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import ClientApi from '@/services/clientApi'
 import Image from 'next/image'
+import useRoutePage from '@/hook/useRoutePage'
 
 const ModalProcess = dynamic(() => import('@/components/ModalProcess'), {
   ssr: true,
@@ -26,7 +26,7 @@ const ModalProcess = dynamic(() => import('@/components/ModalProcess'), {
 const ContactScreen = () => {
   useAos()
   const { isMobile } = useMedia()
-  const router = useRouter()
+  const router = useRoutePage()
   const { translate } = useLanguage()
   const { checkNumberPhone } = useCheckForm()
   const { userData } = useUserData()

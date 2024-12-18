@@ -3,15 +3,15 @@ import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
+import useRoutePage from '@/hook/useRoutePage'
 import { detectImg, numberWithCommas } from '@/utils/functions'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 const ViewListOrder = ({ dataCart }: { dataCart: any[] }) => {
   const { isMobile } = useMedia()
   const { translate, getLabelCategory } = useLanguage()
-  const router = useRouter()
+  const router = useRoutePage()
 
   const [listDataValid, setListDataValid] = useState<any[]>([])
 

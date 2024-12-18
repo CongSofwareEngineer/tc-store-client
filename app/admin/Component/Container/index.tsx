@@ -2,11 +2,12 @@
 import { images } from '@/configs/images'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
+import useRoutePage from '@/hook/useRoutePage'
 import useUserData from '@/hook/useUserData'
 import { TagFilled } from '@ant-design/icons'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import React, { useEffect } from 'react'
 
 const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
@@ -14,7 +15,7 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
   const { translate } = useLanguage()
   const patchName = usePathname()
   const { isLogin } = useUserData()
-  const router = useRouter()
+  const router = useRoutePage()
 
   useEffect(() => {
     const sectionMain = window.document.getElementById('id-section-content')

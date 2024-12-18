@@ -9,19 +9,19 @@ import useAos from '@/hook/useAos'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
+import useRoutePage from '@/hook/useRoutePage'
 import useUserData from '@/hook/useUserData'
 import ClientApi from '@/services/clientApi'
 import { encryptData } from '@/utils/crypto'
 import { showNotificationError } from '@/utils/notification'
 import { Checkbox } from 'antd'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 const RegisterScreen = () => {
   useAos(1000)
   const { translate } = useLanguage()
-  const router = useRouter()
+  const router = useRoutePage()
   const { checkNumberPhone } = useCheckForm()
   const { isMobile } = useMedia()
   const { login } = useUserData()

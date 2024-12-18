@@ -5,7 +5,6 @@ import { cloneData, detectImg, formatPriceBase, numberWithCommas } from '@/utils
 import { DeleteOutlined } from '@ant-design/icons'
 import { Checkbox } from 'antd'
 import BigNumber from 'bignumber.js'
-import { useRouter } from 'next/navigation'
 import React from 'react'
 import { ItemCartType } from '../../type'
 import SubAndPlus from '@/components/SubAndPlus'
@@ -13,12 +12,13 @@ import useModalDrawer from '@/hook/useModalDrawer'
 import MyCheckBox from '@/components/MyCheckBox'
 import MyImage from '@/components/MyImage'
 import ConfigBill from '@/components/ConfigBill'
+import useRoutePage from '@/hook/useRoutePage'
 
 const ItemCart = ({ data, callBack, noBorder = false, callBackDelete, noEdit = false }: ItemCartType) => {
   const { translate, getLabelCategory } = useLanguage()
   const { isMobile } = useMedia()
   const { openModalDrawer } = useModalDrawer()
-  const router = useRouter()
+  const router = useRoutePage()
 
   const selectedItem = () => {
     const dataClone = cloneData(data)

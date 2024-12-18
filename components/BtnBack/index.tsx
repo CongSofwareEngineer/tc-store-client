@@ -1,9 +1,8 @@
 import { RightOutlined } from '@ant-design/icons'
 import Link from 'next/link'
-import MyImage from '../MyImage'
 import { images } from '@/configs/images'
-import { useRouter } from 'next/navigation'
 import Image from 'next/image'
+import useRoutePage from '@/hook/useRoutePage'
 
 type BtnBackType = {
   children?: React.ReactNode | undefined
@@ -14,7 +13,7 @@ type BtnBackType = {
 
 const BtnBack = ({ title, url = [], onClick = null }: BtnBackType) => {
   // const BtnBack = ({ title, url = [] }: BtnBackType) => {
-  const router = useRouter()
+  const router = useRoutePage()
 
   return (
     <div className='flex w-full align-middle justify-start gap-1 mb-3 md:mb-6 items-center '>
