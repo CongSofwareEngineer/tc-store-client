@@ -22,9 +22,10 @@ const BaseMeta = {
   title: process.env.NEXT_PUBLIC_TITLE,
   description: process.env.NEXT_PUBLIC_TITLE_DES,
   images: process.env.NEXT_PUBLIC_IMAGE,
+  url: 'https://tcstore.vercel.app',
 }
 export const metadata: Metadata = {
-  metadataBase: new URL('https://tcstore.vercel.app/'),
+  metadataBase: new URL(BaseMeta.url),
   title: BaseMeta.title,
   description: BaseMeta.description,
   keywords: [
@@ -47,9 +48,13 @@ export const metadata: Metadata = {
     description: BaseMeta.description,
     images: BaseMeta.images,
     siteName: BaseMeta.title,
-    url: 'https://tcstore.vercel.app',
+    url: BaseMeta.url,
+    phoneNumbers: ['0392225405', '0397373405'],
+    locale: 'vi',
+    emails: 'hodiencong2000@gmail.com',
+    countryName: 'Vietnamese',
   },
-  bookmarks: 'https://tcstore.vercel.app',
+  bookmarks: BaseMeta.url,
   robots: {
     index: true,
     follow: true,
@@ -59,6 +64,7 @@ export const metadata: Metadata = {
       follow: true,
     },
   },
+  applicationName: BaseMeta.title,
   icons: {
     icon: { url: '/favicon.ico' },
     shortcut: { url: '/favicon.ico' },
@@ -70,9 +76,11 @@ export const metadata: Metadata = {
     description: BaseMeta.description,
     card: 'summary_large_image',
     images: BaseMeta.images,
+    site: BaseMeta.url,
   },
   appleWebApp: {
     title: BaseMeta.title,
+    capable: true,
   },
   verification: {
     // google: '-SD7kSWHZKEXxbtkWRvn1r5wtOy8o6Gv0wDuA_ituHk',
@@ -80,10 +88,11 @@ export const metadata: Metadata = {
   },
   appLinks: {
     web: {
-      url: 'https://tcstore.vercel.app',
+      url: BaseMeta.url,
       should_fallback: true,
     },
   },
+  category: 'fashion',
 }
 
 export const viewport: Viewport = {
@@ -109,7 +118,6 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
         <link href='https://unpkg.com/aos@2.3.1/dist/aos.css' rel='stylesheet' />
         {process.env.NEXT_PUBLIC_MODE_PRODUCTION && (
           <>
-            <meta name='google-site-verification' content='Sr2q2elTmvBwx7P3aM-ZiaH-3yjcxuGHrMI9H9iCewI' />
             {/* <GoogleTagManager gtmId="GTM-T7S7DKJ4" /> */}
 
             {/* <Script
