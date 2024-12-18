@@ -7,6 +7,7 @@ import { detectImg, formatPrice, formatPriceBase, numberWithCommas } from '@/uti
 import MySliderSell from '../MySliderSell'
 import useMedia from '@/hook/useMedia'
 import MyImage from '../MyImage'
+import useRoutePage from '@/hook/useRoutePage'
 
 type ItemType = {
   item: any
@@ -31,6 +32,12 @@ const ItemProduct = ({
 }: ItemType) => {
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
+  const { push } = useRoutePage()
+
+  const handleClick = () => {
+    push(href)
+    callback()
+  }
 
   const renderContent = () => {
     return (
@@ -90,7 +97,7 @@ const ItemProduct = ({
   }
 
   return (
-    <Link className='group' onClick={callback} href={href}>
+    <Link className='group' onClick={handleClick} href={href}>
       {renderContent()}
     </Link>
   )
