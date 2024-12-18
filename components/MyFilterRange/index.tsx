@@ -16,7 +16,7 @@ type Props = {
   onChangeComplete?: (value: number[]) => void
   stepRange?: number
   title?: string
-  renderTooltip?: (value?: any) => React.ReactNode
+  renderTooltip?: (value?: any) => React.ReactNode | undefined
 }
 
 const MyFilterRange = ({
@@ -28,7 +28,7 @@ const MyFilterRange = ({
   title = '',
   keyMin = '',
   keyMax = '',
-  renderTooltip,
+  renderTooltip = undefined,
 }: Props) => {
   const [slider, setSlider] = useState([minSlider, maxSlider])
 
@@ -66,7 +66,7 @@ const MyFilterRange = ({
 
   const renderTooltips = (value?: any) => {
     if (renderTooltip) {
-      return renderTooltips(value)
+      return renderTooltip(value)
     }
     return <div>{numberWithCommas(value)}</div>
   }
