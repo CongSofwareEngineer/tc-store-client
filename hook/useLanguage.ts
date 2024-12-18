@@ -17,7 +17,7 @@ const useLanguage = () => {
           text = text[e]
         }
       })
-      return text || key
+      return text
     } catch (error) {
       return ''
     }

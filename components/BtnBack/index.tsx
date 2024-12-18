@@ -35,6 +35,7 @@ const BtnBack = ({ title, url = [], onClick = null }: BtnBackType) => {
                   className='cursor-pointer flex-nowrap hover:underline md:text-[16px] text-sm  text-blue-700 flex gap-1'
                   href={url[index]}
                   key={item}
+                  onClick={() => router.push(url[index])}
                 >
                   <span>{item}</span>
                   <RightOutlined className='black' />
