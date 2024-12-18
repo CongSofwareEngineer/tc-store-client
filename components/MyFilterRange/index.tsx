@@ -3,7 +3,7 @@ import useQuerySearch from '@/hook/useQuerySearch'
 import { numberWithCommas } from '@/utils/functions'
 import { AlignLeftOutlined, CaretRightOutlined } from '@ant-design/icons'
 import { Slider } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import MyCollapse from '../MyCollapse'
 import { isEqual } from 'lodash'
 
@@ -30,32 +30,30 @@ const MyFilterRange = ({
   keyMax = '',
   renderTooltip = undefined,
 }: Props) => {
-  const [slider, setSlider] = useState([minSlider, maxSlider])
-
   const { queries, updateQuery } = useQuerySearch()
+  const [slider, setSlider] = useState<number[]>([minSlider, maxSlider])
+
+  // Use useMemo to compute slider values only when queries change
+  const sliderFromQuery = useMemo(() => {
+    const min = Number(queries?.[keyMin]?.[0] || minSlider)
+    const max = Number(queries?.[keyMax]?.[0] || maxSlider)
+    return [min, max]
+  }, [queries, keyMin, keyMax, minSlider, maxSlider])
 
   useEffect(() => {
-    let minSliderQuery = minSlider
-    let maxSliderQuery = maxSlider
-    if (queries?.[keyMin] && queries?.[keyMin][0]) {
-      minSliderQuery = Number(queries?.[keyMin][0])
-    }
-    if (queries?.[keyMax] && queries?.[keyMax][0]) {
-      maxSliderQuery = Number(queries?.[keyMax][0])
-    }
-
-    setSlider([minSliderQuery, maxSliderQuery])
-  }, [queries])
+    setSlider(sliderFromQuery)
+  }, [sliderFromQuery])
 
   const handleChangeComplete = (value: number[]) => {
-    if (Number(queries?.[keyMin]?.[0] || '0') !== value[0]) {
-      updateQuery(keyMin, value[0])
-    }
-
-    if (Number(queries?.[keyMax]?.[0] || '1') !== value[1]) {
+    if (sliderFromQuery[1] !== value[1]) {
       updateQuery(keyMax, value[1])
     }
 
+    if (sliderFromQuery[0] !== value[0]) {
+      console.log('handleChangeComplete', keyMin)
+
+      updateQuery(keyMin, value[0])
+    }
     onChangeComplete(value)
   }
 
@@ -65,45 +63,46 @@ const MyFilterRange = ({
   }
 
   const renderTooltips = (value?: any) => {
-    if (renderTooltip) {
-      return renderTooltip(value)
-    }
-    return <div>{numberWithCommas(value)}</div>
+    return renderTooltip ? renderTooltip(value) : <div>{numberWithCommas(value)}</div>
   }
 
-  const itemsRangeSize = [
-    {
-      key: keyMax + keyMin,
-      expandIcon: <AlignLeftOutlined style={{ fontSize: 20 }} />,
-      label: <div className='flex text-medium justify-between items-center'>{title}</div>,
-      children: (
-        <div className='px-4 py-2 flex flex-col gap-1'>
-          <div className='flex items-center mt-2 justify-between'>
-            <div className=' px-3 text-sm py-1   rounded-xl border-[1px] border-gray-400'>
-              {numberWithCommas(slider[0])}
+  // Memoize the items array to prevent unnecessary re-renders
+  const itemsRangeSize = useMemo(
+    () => [
+      {
+        key: `${keyMax}${keyMin}`,
+        expandIcon: <AlignLeftOutlined style={{ fontSize: 20 }} />,
+        label: <div className='flex text-medium justify-between items-center'>{title}</div>,
+        children: (
+          <div className='px-4 py-2 flex flex-col gap-1'>
+            <div className='flex items-center mt-2 justify-between'>
+              <div className='px-3 text-sm py-1 rounded-xl border-[1px] border-gray-400'>
+                {numberWithCommas(slider[0])}
+              </div>
+              <div className='pb-[2px] w-[10px] bg-gray-400' />
+              <div className='px-3 py-1 text-sm rounded-xl border-[1px] border-gray-400'>
+                {numberWithCommas(slider[1])}
+              </div>
             </div>
-            <div className='pb-[2px] w-[10px] bg-gray-400' />
-            <div className='px-3 py-1 text-sm rounded-xl border-[1px] border-gray-400'>
-              {numberWithCommas(slider[1])}
-            </div>
+            <Slider
+              onChangeComplete={handleChangeComplete}
+              range
+              onChange={handleChange}
+              value={slider}
+              defaultValue={sliderFromQuery}
+              min={minSlider}
+              max={maxSlider}
+              step={stepRange}
+              tooltip={{
+                formatter: renderTooltips,
+              }}
+            />
           </div>
-          <Slider
-            onChangeComplete={handleChangeComplete}
-            range
-            onChange={handleChange}
-            value={slider}
-            defaultValue={[Number(queries?.[keyMin]?.[0] || minSlider), Number(queries?.[keyMax]?.[0] || maxSlider)]}
-            min={minSlider}
-            max={maxSlider}
-            step={stepRange}
-            tooltip={{
-              formatter: renderTooltips,
-            }}
-          />
-        </div>
-      ),
-    },
-  ]
+        ),
+      },
+    ],
+    [slider, sliderFromQuery, title, minSlider, maxSlider, stepRange, renderTooltip],
+  )
 
   return (
     <MyCollapse
@@ -113,7 +112,6 @@ const MyFilterRange = ({
   )
 }
 
-const compareValueRender = (a: any, b: any): boolean => {
-  return !isEqual(a, b)
-}
+const compareValueRender = (a: any, b: any): boolean => !isEqual(a, b)
+
 export default React.memo(MyFilterRange, compareValueRender)
