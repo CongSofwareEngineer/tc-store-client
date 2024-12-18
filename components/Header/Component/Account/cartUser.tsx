@@ -3,16 +3,16 @@ import useLengthCart from '@/hook/tank-query/useLengthCart'
 import useMedia from '@/hook/useMedia'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'
-import { useRouter } from 'next/navigation'
 import React from 'react'
 import CartNoLogin from '../CartNoLogin'
 import useLanguage from '@/hook/useLanguage'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import Image from 'next/image'
+import useRoutePage from '@/hook/useRoutePage'
 
 const CartUser = () => {
-  const router = useRouter()
+  const router = useRoutePage()
   const { userData, isLogin } = useUserData()
   const { data } = useLengthCart(userData?._id)
   const { openModalDrawer } = useModalDrawer()

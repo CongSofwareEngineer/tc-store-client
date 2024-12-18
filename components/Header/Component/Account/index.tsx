@@ -8,12 +8,13 @@ import { Dropdown, MenuProps } from 'antd'
 // import CartUser from './cartUser'
 import useMedia from '@/hook/useMedia'
 import useModalDrawer from '@/hook/useModalDrawer'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import ObserverService from '@/services/observer'
 import { OBSERVER_KEY } from '@/constant/app'
 import Image from 'next/image'
 import { detectAvatar } from '@/utils/functions'
+import useRoutePage from '@/hook/useRoutePage'
 // import MenuAdminMobile from '@/app/admin/Component/MenuMobile'
 const CartUser = dynamic(() => import('./cartUser'), { ssr: false })
 const MenuAdminMobile = dynamic(() => import('@/app/admin/Component/MenuMobileAdmin'), { ssr: false })
@@ -23,7 +24,7 @@ const Account = () => {
   const { translate } = useLanguage()
   const { isLogin, userData } = useUserData()
   const { isMobile } = useMedia(900)
-  const route = useRouter()
+  const route = useRoutePage()
   const pathName = usePathname()
 
   const handleLogin = () => {

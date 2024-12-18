@@ -4,7 +4,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export const fetchMenuCategory: any = createAsyncThunk('CategoryMenu/fetchMenuCategory', async () => {
   try {
-    const menuCategory = await ClientApi.getCategory()
+    const menuCategory = await ClientApi.getCategory(true)
     return menuCategory?.data || []
   } catch (error) {
     return []

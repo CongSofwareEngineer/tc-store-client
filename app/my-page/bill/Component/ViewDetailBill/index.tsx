@@ -8,15 +8,15 @@ import { FILTER_BILL } from '@/constant/app'
 import { Button } from 'antd'
 import MyImage from '@/components/MyImage'
 import ConfigBill from '@/components/ConfigBill'
-import { useRouter } from 'next/navigation'
 import { TYPE_PRODUCT } from '@/constant/admin'
+import useRoutePage from '@/hook/useRoutePage'
 type Props = {
   data?: any
 }
 const ViewDetailBill = ({ data }: Props) => {
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
-  const route = useRouter()
+  const route = useRoutePage()
   const { openModalDrawer } = useModalDrawer()
   const enableFeedback = data?.status === FILTER_BILL.DeliverySuccess
 

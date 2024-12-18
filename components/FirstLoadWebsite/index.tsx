@@ -8,14 +8,16 @@ import ClientApi from '@/services/clientApi'
 import { deleteCookie, setCookie } from '@/services/CookiesService'
 import ObserverService from '@/services/observer'
 import { encryptData } from '@/utils/crypto'
-import { Loading3QuartersOutlined } from '@ant-design/icons'
+import { LoadingOutlined } from '@ant-design/icons'
+import { NextPage } from 'next'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import secureLocalStorage from 'react-secure-storage'
 
 const listUrlExited: string[] = []
-const FirstLoadWebsite: React.FC = () => {
+
+const FirstLoadWebsite: NextPage = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   useCheckPatchName()
@@ -82,9 +84,8 @@ const FirstLoadWebsite: React.FC = () => {
     }
 
     const routePage = ({ url = '' }: { url?: string }) => {
-      console.log({ url })
-
       if (!listUrlExited.includes(url)) {
+
         setIsLoading(true)
         listUrlExited.push(url)
       }
@@ -101,9 +102,21 @@ const FirstLoadWebsite: React.FC = () => {
   }, [])
 
   return isLoading ? (
-    <div className='fixed bg-green/10 flex justify-center items-center invisible'>
+    <div
+      style={{
+        position: 'fixed',
+        zIndex: 999999999999999,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        inset: 0,
+        width: '100vw',
+        height: '100vh',
+        background: '#8487843d',
+      }}
+    >
       <div className='text-2xl text-green-600'>
-        <Loading3QuartersOutlined />
+        <LoadingOutlined style={{ fontSize: 35 }} />
       </div>
     </div>
   ) : (

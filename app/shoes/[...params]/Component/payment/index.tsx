@@ -17,14 +17,14 @@ import ModalProcess from '@/components/ModalProcess'
 import ModalDelete from '@/components/ModalDelete'
 import { FILTER_BILL, LOCAL_STORAGE_KEY } from '@/constant/app'
 import ModalSuccess from '@/components/ModalSuccess'
-import { useRouter } from 'next/navigation'
 import ClientApi from '@/services/clientApi'
 import OptionsPayment from '@/app/my-cart/Component/Payment/Component/OptionsPayment'
 import { showNotificationError } from '@/utils/notification'
+import useRoutePage from '@/hook/useRoutePage'
 
 const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const { translate } = useLanguage()
-  const route = useRouter()
+  const route = useRoutePage()
   const { userData, isLogin } = useUserData()
   const { refreshListQuery } = useRefreshQuery()
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()

@@ -56,9 +56,14 @@ const ClientApi = {
       method: REQUEST_TYPE.POST,
     })
   },
-  getCategory: async () => {
+  getCategory: async (isClient = false) => {
+    let url = 'category/all?isShow=true'
+    if (isClient) {
+      url += `&timeStamp=${new Date().getTime()}`
+    }
+
     return fetchData({
-      url: `category/all?isShow=true&timeStamp=${new Date().getTime()}`,
+      url,
       isAuth: false,
     })
   },

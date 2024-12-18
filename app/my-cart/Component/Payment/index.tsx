@@ -17,17 +17,17 @@ import ModalProcess from '@/components/ModalProcess'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalSuccess from '@/components/ModalSuccess'
 import ClientApi from '@/services/clientApi'
-import { useRouter } from 'next/navigation'
 import OptionsPayment from './Component/OptionsPayment'
 import { showNotificationError } from '@/utils/notification'
 import ModalDelete from '@/components/ModalDelete'
+import useRoutePage from '@/hook/useRoutePage'
 
 const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
   const { translate } = useLanguage()
   const { userData, isLogin } = useUserData()
   const { refreshListQuery } = useRefreshQuery()
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()
-  const route = useRouter()
+  const route = useRoutePage()
 
   const [formData, setFormData] = useState<Record<string, any> | null>(null)
   const [loading, setLoading] = useState(false)
