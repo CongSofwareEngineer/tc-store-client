@@ -11,11 +11,9 @@ import { encryptData } from '@/utils/crypto'
 import { LoadingOutlined } from '@ant-design/icons'
 import { NextPage } from 'next'
 import { usePathname } from 'next/navigation'
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import secureLocalStorage from 'react-secure-storage'
-
-const listUrlExited: string[] = []
 
 const FirstLoadWebsite: NextPage = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -23,6 +21,7 @@ const FirstLoadWebsite: NextPage = () => {
   useCheckPatchName()
   const pathName = usePathname()
   const dispatch = useDispatch()
+  const listUrlExitedRef = useRef<string[]>([])
   const { UserData: userData } = useAppSelector((state) => state.app)
 
   useLayoutEffect(() => {
@@ -84,18 +83,21 @@ const FirstLoadWebsite: NextPage = () => {
     }
 
     const routePage = ({ url = '' }: { url?: string }) => {
-      if (!listUrlExited.includes(url)) {
-
+      if (!listUrlExitedRef.current.includes(url)) {
         setIsLoading(true)
-        listUrlExited.push(url)
+        listUrlExitedRef.current.push(url)
+        setTimeout(() => {
+          setIsLoading(false)
+        }, 1500)
       }
     }
+
     ObserverService.on(OBSERVER_KEY.RoutePage, routePage)
     ObserverService.on(OBSERVER_KEY.LogOut, handleLogout)
     ObserverService.on(OBSERVER_KEY.UpdateCookieAuth, updateCookies)
 
     return () => {
-      ObserverService.removeListener(OBSERVER_KEY.RoutePage)
+      ObserverService.removeListener(OBSERVER_KEY.RoutePage, () => setIsLoading(false))
       ObserverService.removeListener(OBSERVER_KEY.LogOut)
       ObserverService.removeListener(OBSERVER_KEY.UpdateCookieAuth)
     }
@@ -113,6 +115,7 @@ const FirstLoadWebsite: NextPage = () => {
         width: '100vw',
         height: '100vh',
         background: '#8487843d',
+        backdropFilter: 'blur(1px)',
       }}
     >
       <div className='text-2xl text-green-600'>
