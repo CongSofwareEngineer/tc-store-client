@@ -56,7 +56,7 @@ const Attributes = ({ data, onChange = () => {} }: IAttributes) => {
                   onChange={() => onChangeValueData(e.color)}
                   checked={configBill.color === e.color}
                 >
-                  {translate(keyLocal)}
+                  {translate(keyLocal) || e.color}
                 </Checkbox>
                 {Number(e.amount) === 0 && <span className='text-red-600 text-sm'>(Hết hàng)</span>}
               </div>
