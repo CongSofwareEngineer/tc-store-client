@@ -5,6 +5,7 @@ import { AlignLeftOutlined, CaretRightOutlined } from '@ant-design/icons'
 import { Slider } from 'antd'
 import React, { useEffect, useState } from 'react'
 import MyCollapse from '../MyCollapse'
+import { isEqual } from 'lodash'
 
 type Props = {
   minSlider?: number
@@ -112,4 +113,7 @@ const MyFilterRange = ({
   )
 }
 
-export default MyFilterRange
+const compareValueRender = (a: any, b: any): boolean => {
+  return !isEqual(a, b)
+}
+export default React.memo(MyFilterRange, compareValueRender)

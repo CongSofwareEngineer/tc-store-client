@@ -70,4 +70,4 @@ const MyFilter = ({
   )
 }
 
-export default React.memo(MyFilter)
+export default MyFilter

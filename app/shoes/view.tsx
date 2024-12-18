@@ -28,7 +28,7 @@ const ShoesScreen = () => {
                 <ItemProduct
                   showFeedback
                   showSold
-                  key={`shoes-${item.id}`}
+                  key={`shoes-${item._id}`}
                   item={item}
                   href={`/shoes/${item.keyName}`}
                 />
