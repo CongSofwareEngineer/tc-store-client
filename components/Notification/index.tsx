@@ -67,13 +67,13 @@ const NotificationClient: NextPage = () => {
       })
     }
     const updateToken = async (token: string) => {
-      if (userData?.tokenNoti !== token) {
-        const res = await ClientApi.updateUser(userData?._id, {
-          tokenNoti: token,
-        })
-        if (res?.data) {
-          reLogin()
-        }
+      const arrFilter = userData?.tokenNoti.filter((item: string) => item !== token)
+      const res = await ClientApi.updateUser(userData?._id, {
+        tokenNoti: [...arrFilter, token],
+      })
+
+      if (res?.data) {
+        reLogin()
       }
     }
     const getData = async () => {
