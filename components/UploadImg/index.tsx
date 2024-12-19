@@ -7,6 +7,7 @@ import { Upload } from 'antd'
 import ImgCrop from 'antd-img-crop'
 import { isEqual } from 'lodash'
 import React from 'react'
+import { isIOS, isMacOs } from 'react-device-detect'
 type Props = {
   typeFile?: string
   children?: React.ReactNode
@@ -31,12 +32,29 @@ const UploadImage = ({
   const { getBase64, getBase64Full } = useBase64Img(maxSizeOutputKB, maxPixelReduce)
   const { typeFile: typeFileBase } = useTypeFile()
 
+  const isValidFile = (typeFile?: string) => {
+    if (isIOS && isMacOs) {
+      return true
+    }
+    const typeFileDefault = typeFileBase.replaceAll('.', '')
+    const listTypeFile = typeFileDefault?.split(',')
+
+    let isValid = false
+    listTypeFile?.forEach((e) => {
+      if (typeFile!.includes(e)) {
+        isValid = true
+      }
+    })
+    return isValid
+  }
+
   const handleLoadFile = (file: any) => {
-    // if (!typeFileBase.includes(file.type)) {
-    //   const text = `${translate('error.supportTypeFile')} ${typeFileBase}`
-    //   showNotificationError(text)
-    //   return
-    // }
+    if (!isValidFile(file.type)) {
+      const text = `${translate('error.supportTypeFile')} ${typeFileBase}`
+      showNotificationError(text)
+      return
+    }
+
     const callBack = (data: any) => {
       if (listData.some((e) => isEqual(e, data))) {
         showNotificationError(translate('errors.existFile'))
