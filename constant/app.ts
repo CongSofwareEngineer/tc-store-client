@@ -96,7 +96,7 @@ export const COLOR = {
 
 export const MAX_PIXEL_REDUCE = 300 as Number
 
-export const LIST_PAGE_REQUIRE_LOGIN = ['/my-cart', '/my-page']
+export const LIST_PAGE_REQUIRE_LOGIN = ['/my-cart', '/my-page', '/admin']
 export const LIST_PAGE_NO_FOOTER = ['/my-cart', '/contact', '/register']
 
 export enum PATH_IMG {

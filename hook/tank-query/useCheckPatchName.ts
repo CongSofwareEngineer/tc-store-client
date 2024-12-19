@@ -4,16 +4,18 @@ import { usePathname } from 'next/navigation'
 import useModalDrawer from '../useModalDrawer'
 import { LIST_PAGE_NO_FOOTER, LIST_PAGE_REQUIRE_LOGIN, OBSERVER_KEY } from '@/constant/app'
 import ObserverService from '@/services/observer'
+import useRoutePage from '../useRoutePage'
 
 const useCheckPatchName = () => {
   const { isLogin } = useUserData()
   const patchName = usePathname()
   const { closeModalDrawer } = useModalDrawer()
+  const router = useRoutePage()
 
   useEffect(() => {
     if (!isLogin) {
       if (LIST_PAGE_REQUIRE_LOGIN.includes(patchName)) {
-        ObserverService.emit(OBSERVER_KEY.LogOut)
+        router.push('/')
       }
     } else {
       switch (patchName) {
