@@ -82,11 +82,11 @@ const FirstLoadWebsite: NextPage = () => {
     }
 
     const handleLogout = async (isReload = true) => {
-      if (userRef.current) {
+      if (userRef.current && Array.isArray(userRef.current?.tokenNoti)) {
         const tokenLocal = getDataLocal(LOCAL_STORAGE_KEY.TokenFirebase)
         const tokens = userRef.current?.tokenNoti.filter((item: string) => item !== tokenLocal)
 
-        ClientApi.updateTokenNoti(userRef.current._id!, {
+        ClientApi.updateTokenNoti(userRef.current?._id!, {
           tokenNoti: tokens,
           isLogout: true,
         })
