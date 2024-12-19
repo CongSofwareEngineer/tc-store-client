@@ -108,7 +108,7 @@ const AttributeAdmin = ({ data, onChange, typeProduct = 'shoes' }: IAttributeAdm
       title: 'Option add a new',
     })
   }
-  console.log({ dataAttributes })
+
   const items = [
     {
       key: 'Attribute',

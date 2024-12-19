@@ -22,7 +22,7 @@ import AttributeAdmin from '@/components/AttributeAdmin'
 import { SEX, TYPE_PRODUCT, VALUE_KEY_DEFAULT } from '@/constant/admin'
 
 const ProductConfig = ({ item }: { item: any }) => {
-  const { translate, lang } = useLanguage()
+  const { translate } = useLanguage()
   const { checkIsNumber } = useCheckForm()
   const { refreshQuery } = useRefreshQuery()
   const { closeModalDrawer } = useModalDrawer()
@@ -92,6 +92,13 @@ const ProductConfig = ({ item }: { item: any }) => {
       }
     }
   }, [formData?.category, item])
+
+  const onChangeBlog = (value: any) => {
+    setFormData((pre) => ({
+      ...pre,
+      des2: value,
+    }))
+  }
 
   const handleDeleteMoreImg = (index: number) => {
     const newList = formData?.imageMore?.filter((_: any, indexFilter: number) => indexFilter !== index)
@@ -285,11 +292,7 @@ const ProductConfig = ({ item }: { item: any }) => {
         <div className='w-full flex flex-col gap-2 md:mt-16 min-h-[300px]'>
           <div className='font-bold  '>{`${translate('admin.infoDetail')} :`} </div>
           <div className='w-full flex flex-1 bg-slate-50'>
-            <MyBlog
-              pathFile={PATH_IMG.Products}
-              value={formData?.des2}
-              setValue={(e) => setFormData({ ...formData, des2: e })}
-            />
+            <MyBlog pathFile={PATH_IMG.Products} value={formData?.des2} setValue={onChangeBlog} />
           </div>
         </div>
       </div>
