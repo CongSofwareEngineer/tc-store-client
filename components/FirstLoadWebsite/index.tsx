@@ -1,4 +1,4 @@
-import { COOKIE_EXPIRED, COOKIE_KEY, OBSERVER_KEY } from '@/constant/app'
+import { COOKIE_EXPIRED, COOKIE_KEY, LOCAL_STORAGE_KEY, OBSERVER_KEY } from '@/constant/app'
 import { SLICE, TypeUserData } from '@/constant/redux'
 import useCheckPatchName from '@/hook/tank-query/useCheckPatchName'
 import { fetchMenuCategory } from '@/redux/categoryMenuSlice'
@@ -8,6 +8,7 @@ import ClientApi from '@/services/clientApi'
 import { deleteCookie, setCookie } from '@/services/CookiesService'
 import ObserverService from '@/services/observer'
 import { encryptData } from '@/utils/crypto'
+import { removeDataLocal } from '@/utils/functions'
 import { LoadingOutlined } from '@ant-design/icons'
 import { NextPage } from 'next'
 import { usePathname } from 'next/navigation'
@@ -72,10 +73,12 @@ const FirstLoadWebsite: NextPage = () => {
     const updateCookies = (auth: string) => {
       setCookie(COOKIE_KEY.Auth, auth, COOKIE_EXPIRED.ExpiredAuth)
     }
-    const handleLogout = (isReload = true) => {
+    const handleLogout = async (isReload = true) => {
       secureLocalStorage.removeItem(SLICE.UserData)
       deleteCookie(COOKIE_KEY.Auth)
       deleteCookie(COOKIE_KEY.AuthRefresh)
+      removeDataLocal(LOCAL_STORAGE_KEY.TokenFirebase)
+
       dispatch(setUserData(null))
       if (isReload) {
         window.location.href = '/'

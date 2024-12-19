@@ -89,7 +89,7 @@ const useUserData = () => {
 
   return {
     userData,
-    isLogin: !!userData || !!secureLocalStorage.getItem(SLICE.UserData),
+    isLogin: !!userData,
     login,
     refreshLogin,
     reLogin,

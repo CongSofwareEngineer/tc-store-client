@@ -54,11 +54,6 @@ export const FirebaseServices = {
           name: 'notifications',
         })
         if (permission.state === 'granted') {
-          const config = {
-            vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VERIFIED_API_KEY,
-            serviceWorkerRegistration: registration,
-          }
-
           const token = await getToken(FirebaseServices.createMessage(), {
             vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VERIFIED_API_KEY,
             serviceWorkerRegistration: registration,
