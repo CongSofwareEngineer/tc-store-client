@@ -8,7 +8,7 @@ import ClientApi from '@/services/clientApi'
 import { deleteCookie, setCookie } from '@/services/CookiesService'
 import ObserverService from '@/services/observer'
 import { encryptData } from '@/utils/crypto'
-import { removeDataLocal } from '@/utils/functions'
+import { getDataLocal, removeDataLocal } from '@/utils/functions'
 import { LoadingOutlined } from '@ant-design/icons'
 import { NextPage } from 'next'
 import { usePathname } from 'next/navigation'
@@ -23,7 +23,14 @@ const FirstLoadWebsite: NextPage = () => {
   const pathName = usePathname()
   const dispatch = useDispatch()
   const listUrlExitedRef = useRef<string[]>([])
+  const userRef = useRef<TypeUserData | null>(null)
   const { UserData: userData } = useAppSelector((state) => state.app)
+
+  useEffect(() => {
+    if (!userRef.current) {
+      userRef.current = userData
+    }
+  }, [userData])
 
   useLayoutEffect(() => {
     if (userData) {
@@ -73,7 +80,21 @@ const FirstLoadWebsite: NextPage = () => {
     const updateCookies = (auth: string) => {
       setCookie(COOKIE_KEY.Auth, auth, COOKIE_EXPIRED.ExpiredAuth)
     }
+
     const handleLogout = async (isReload = true) => {
+      if (userRef.current) {
+        const tokenLocal = getDataLocal(LOCAL_STORAGE_KEY.TokenFirebase)
+        const tokens = userRef.current?.tokenNoti.filter((item: string) => item !== tokenLocal)
+
+        await ClientApi.updateTokenNoti(userRef.current._id!, {
+          tokenNoti: tokens,
+          isLogout: true,
+        })
+
+
+        userRef.current = null
+      }
+
       secureLocalStorage.removeItem(SLICE.UserData)
       deleteCookie(COOKIE_KEY.Auth)
       deleteCookie(COOKIE_KEY.AuthRefresh)

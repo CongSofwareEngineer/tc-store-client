@@ -8,6 +8,14 @@ const ClientApi = {
   pingServer: async () => {
     return fetchData({ url: `/auth/ping` })
   },
+
+  updateTokenNoti: async (id: string, body: { [key: string]: any }) => {
+    return fetchData({
+      url: `/user/update-token/${id}`,
+      method: REQUEST_TYPE.POST,
+      body,
+    })
+  },
   getMoreCollections: async (count = 10) => {
     return fetchData({ url: `/product/more-collections?count=${count}` })
   },
