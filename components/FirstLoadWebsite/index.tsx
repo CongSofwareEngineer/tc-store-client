@@ -86,19 +86,20 @@ const FirstLoadWebsite: NextPage = () => {
         const tokenLocal = getDataLocal(LOCAL_STORAGE_KEY.TokenFirebase)
         const tokens = userRef.current?.tokenNoti.filter((item: string) => item !== tokenLocal)
 
-        await ClientApi.updateTokenNoti(userRef.current._id!, {
+        ClientApi.updateTokenNoti(userRef.current._id!, {
           tokenNoti: tokens,
           isLogout: true,
         })
 
-
         userRef.current = null
       }
 
-      secureLocalStorage.removeItem(SLICE.UserData)
-      deleteCookie(COOKIE_KEY.Auth)
-      deleteCookie(COOKIE_KEY.AuthRefresh)
-      removeDataLocal(LOCAL_STORAGE_KEY.TokenFirebase)
+      setTimeout(() => {
+        secureLocalStorage.removeItem(SLICE.UserData)
+        deleteCookie(COOKIE_KEY.Auth)
+        deleteCookie(COOKIE_KEY.AuthRefresh)
+        removeDataLocal(LOCAL_STORAGE_KEY.TokenFirebase)
+      }, 100)
 
       dispatch(setUserData(null))
       if (isReload) {
