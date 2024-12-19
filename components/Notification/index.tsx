@@ -15,7 +15,7 @@ const NotificationClient: NextPage = () => {
   const { translate } = useLanguage()
   const router = useRoutePage()
 
-  useEffect(() => {
+  const handleAddEvent = () => {
     const handleOpenNoti = (dataMess: any) => {
       const key = `open${Date.now()}`
       const handleConfirm = (type: string) => {
@@ -61,15 +61,21 @@ const NotificationClient: NextPage = () => {
         duration: 10,
       })
     }
-    const addListener = () => {
-      FirebaseServices.addListenMessage((dataMess) => {
-        handleOpenNoti(dataMess)
-      })
-    }
+    FirebaseServices.addListenMessage((dataMess) => {
+      handleOpenNoti(dataMess)
+    })
+  }
+
+  useEffect(() => {
+    handleAddEvent()
+    FirebaseServices.initFirebase()
+  }, [])
+
+  useEffect(() => {
     const updateToken = async (token: string) => {
       const isExited = userData?.tokenNoti.some((item: string) => item === token)
 
-      if (!isExited) {
+      if (!isExited || userData?.tokenNoti?.length === 0) {
         const res = await ClientApi.updateTokenNoti(userData?._id!, {
           tokenNoti: [...userData?.tokenNoti, token],
         })
@@ -80,17 +86,18 @@ const NotificationClient: NextPage = () => {
       }
     }
     const getData = async () => {
-      FirebaseServices.initFirebase()
       const isSupport = await FirebaseServices.isSupportedNotification()
+
       if (isSupport) {
         Notification.requestPermission()
           .then(async (permission: any) => {
+            console.log({ permission })
+
             // If the user accepts, let's create a notification
             if (permission === 'granted') {
               FirebaseServices.createToken(async (token) => {
                 updateToken(token)
                 saveDataLocal(LOCAL_STORAGE_KEY.TokenFirebase, token)
-                addListener()
               })
             }
           })
@@ -99,8 +106,8 @@ const NotificationClient: NextPage = () => {
     }
     if (isLogin) {
       getData()
-      addListener()
     }
+    console.log({ isLogin })
   }, [isLogin])
 
   return <></>
