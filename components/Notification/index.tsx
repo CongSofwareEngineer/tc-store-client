@@ -8,7 +8,7 @@ import { FirebaseServices } from '@/services/firebaseService'
 import { saveDataLocal } from '@/utils/functions'
 import { Button, notification } from 'antd'
 import { NextPage } from 'next'
-import React, { useEffect } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 
 const NotificationClient: NextPage = () => {
   const { isLogin, reLogin, userData } = useUserData()
@@ -66,7 +66,7 @@ const NotificationClient: NextPage = () => {
     })
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     handleAddEvent()
     FirebaseServices.initFirebase()
   }, [])
@@ -107,7 +107,6 @@ const NotificationClient: NextPage = () => {
     if (isLogin) {
       getData()
     }
-    console.log({ isLogin })
   }, [isLogin])
 
   return <></>
