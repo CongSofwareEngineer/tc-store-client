@@ -62,9 +62,9 @@ const NavMobile = () => {
       {isLogin && <LinkRoute path='/my-page' icon={<UserOutlined />} text={translate('myProfile.myProfile')} />}
       <LinkRoute path='/' icon={<HomeOutlined />} text={translate('header.home')} />
 
-      <LinkRoute path='/shop' icon={<ShopOutlined />} text={translate('header.shop')} />
+      {/* <LinkRoute path='/shop' icon={<ShopOutlined />} text={translate('header.shop')} /> */}
 
-      <LinkRoute path='/nests' icon={<ShopOutlined />} text={translate('textPopular.nest')} />
+      {/* <LinkRoute path='/nests' icon={<ShopOutlined />} text={translate('textPopular.nest')} /> */}
 
       <LinkRoute path='/shoes' icon={<ShopOutlined />} text={translate('textPopular.shoes')} />
 
