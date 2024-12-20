@@ -44,7 +44,7 @@ const ClientRender = ({ children, menuCategory = [] }: { children: React.ReactNo
   return (
     <>
       <Header />
-      <main className='main-content w-full flex justify-center min-h-[calc(100vh-56px)]'>
+      <main className='main-content w-full flex justify-center min-h-[calc(100dvh-56px)]'>
         <section
           id='id-section-content'
           className='section-content  w-full max-w-[1350px]  md:px-12 px-[20px]  md:pt-5 pt-2'

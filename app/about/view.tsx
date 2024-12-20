@@ -54,7 +54,7 @@ const AboutScreen = ({ data }: AboutProps) => {
 
   if (userData?.isAdmin) {
     return (
-      <div className='flex w-full min-h-full flex-col gap-2'>
+      <div className='flex w-full min-h-full flex-col gap-2 py-5'>
         <Button loading={loading} onClick={handleSubmit}>
           {translate('common.save')}
         </Button>
@@ -69,11 +69,11 @@ const AboutScreen = ({ data }: AboutProps) => {
   }
 
   return (
-    <div className='flex w-full  justify-center items-center py-5'>
+    <div className='flex w-full  justify-center items-center '>
       {dataAbout ? (
-        <MyBlog pathFile={PATH_IMG.Products} value={dataAbout} disabled />
+        <MyBlog className='!p-0' pathFile={PATH_IMG.Products} value={dataAbout} disabled />
       ) : (
-        <span className='text-2xl '>{translate('textPopular.notData')}</span>
+        <span className='text-2xl py-5 '>{translate('textPopular.notData')}</span>
       )}
     </div>
   )
