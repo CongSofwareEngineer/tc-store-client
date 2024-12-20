@@ -9,7 +9,9 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
 
   const metaData = generateMetaBase({
     dataBase,
-    title: 'Thông tin',
+    title: 'TC Store - Địa Chỉ Uy Tín Tại Bình Dương | Giày Thời Trang, Yến Sào, Cà Phê Cao Cấp',
+    override: true,
+    des: 'TC Store chuyên cung cấp giày thời trang, yến sào, cà phê cao cấp tại Bình Dương. Thành lập bởi nhóm sinh viên TDMU, TC Store cam kết sản phẩm chất lượng, bảo hành uy tín và nhiều ưu đãi hấp dẫn. Miễn phí giao hàng trong bán kính 10km.',
   })
   return metaData
 }
@@ -17,9 +19,12 @@ const AboutLayout = async () => {
   const res = await ClientApi.getAbout()
 
   return (
-    <Suspense>
-      <AboutScreen data={res} />
-    </Suspense>
+    <>
+      <h1 className='absolute opacity-0'>Giới thiệu về TC Store - Hành trình mang giá trị đến khách hàng</h1>
+      <Suspense>
+        <AboutScreen data={res} />
+      </Suspense>
+    </>
   )
 }
 
