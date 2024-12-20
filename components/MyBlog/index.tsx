@@ -20,6 +20,7 @@ import YooptaEditor, { createYooptaEditor } from '@yoopta/editor'
 import ClientApi from '@/services/clientApi'
 import { PATH_IMG } from '@/constant/mongoDB'
 import useBase64Img from '@/hook/useBase64Img'
+import { detectImg } from '@/utils/functions'
 
 const TOOLS = {
   ActionMenu: {
@@ -112,9 +113,10 @@ const MyBlog = ({
           async onUpload(file: File) {
             const fileImg = await getBase64(file, () => {})
 
-            await ClientApi.uploadImg(fileImg, pathFile)
+            const res = await ClientApi.uploadImg(fileImg, pathFile)
+
             return {
-              src: fileImg?.base64 || null,
+              src: detectImg(res?.data?.public_id || null),
               alt: file.name,
               sizes: {
                 width: 300,
