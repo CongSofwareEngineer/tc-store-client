@@ -18,7 +18,6 @@ import { ellipsisText, numberWithCommas } from '@/utils/functions'
 import { formatDateTime } from '@/utils/momentFunc'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
-import { ColumnType } from 'antd/es/table'
 import React from 'react'
 import ModalConfig from './modalConfig'
 import Link from 'next/link'
@@ -75,9 +74,9 @@ const UserAdminScreen = () => {
     })
   }
 
-  const getColumns = (): ColumnType[] => {
+  const getColumns = () => {
     if (isMobile) {
-      const columns: ColumnType[] = [
+      const columns = [
         {
           title: translate('textPopular.infor'),
           key: 'status',
@@ -135,7 +134,7 @@ const UserAdminScreen = () => {
       ]
       return columns
     }
-    const columns: ColumnType[] = [
+    const columns = [
       {
         title: 'SDT',
         key: 'sdt',

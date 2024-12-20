@@ -38,9 +38,10 @@ const Nav = () => {
           {translate('header.home')}
         </LinkCustom>
 
-        {/* <LinkUrl text={translate('header.shop')} url='/shop' /> */}
+        <LinkUrl text={translate('header.shop')} url='/shop' />
         <LinkUrl text={translate('textPopular.shoes')} url='/shoes' />
         <LinkUrl text={translate('header.contact')} url='/contact' />
+        <LinkUrl text={translate('header.about')} url='/about' />
         {/* <LinkUrl text={translate('textPopular.nest')} url='/nests' /> */}
 
         {!isLogin && <LinkUrl text={translate('header.register')} url='/register' />}

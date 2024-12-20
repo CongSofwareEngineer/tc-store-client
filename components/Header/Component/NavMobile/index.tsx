@@ -62,19 +62,16 @@ const NavMobile = () => {
       {isLogin && <LinkRoute path='/my-page' icon={<UserOutlined />} text={translate('myProfile.myProfile')} />}
       <LinkRoute path='/' icon={<HomeOutlined />} text={translate('header.home')} />
 
-      {/* <LinkRoute path='/shop' icon={<ShopOutlined />} text={translate('header.shop')} /> */}
+      <LinkRoute path='/shop' icon={<ShopOutlined />} text={translate('header.shop')} />
 
       {/* <LinkRoute path='/nests' icon={<ShopOutlined />} text={translate('textPopular.nest')} /> */}
 
       <LinkRoute path='/shoes' icon={<ShopOutlined />} text={translate('textPopular.shoes')} />
 
       <LinkRoute path='/contact' icon={<ContactsOutlined />} text={translate('header.contact')} />
+      <LinkRoute path='/about' icon={<ContactsOutlined />} text={translate('header.about')} />
 
-      {isLogin ? (
-        <LinkRoute path='/cart' icon={<ShoppingCartOutlined />} text={translate('header.cart')} />
-      ) : (
-        <LinkRoute path='/register' icon={<HighlightOutlined />} text={translate('header.register')} />
-      )}
+      {!isLogin && <LinkRoute path='/register' icon={<HighlightOutlined />} text={translate('header.register')} />}
       {isLogin && (
         <div onClick={handleLogOut} className='flex gap-2 items-center'>
           <span className='text-green-500 text-base'>

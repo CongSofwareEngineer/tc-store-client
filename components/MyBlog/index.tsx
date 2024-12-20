@@ -69,9 +69,33 @@ const MyBlog = ({
         },
       }),
       Accordion,
-      HeadingOne,
-      HeadingTwo,
-      HeadingThree,
+      HeadingOne.extend({
+        options: {
+          HTMLAttributes: {
+            style: {
+              fontSize: 22,
+            },
+          },
+        },
+      }),
+      HeadingTwo.extend({
+        options: {
+          HTMLAttributes: {
+            style: {
+              fontSize: 20,
+            },
+          },
+        },
+      }),
+      HeadingThree.extend({
+        options: {
+          HTMLAttributes: {
+            style: {
+              fontSize: 20,
+            },
+          },
+        },
+      }),
       Blockquote,
       Callout,
       NumberedList,
@@ -145,6 +169,7 @@ const MyBlog = ({
           selectionBoxRoot={selectionRef}
           value={value}
           onChange={onChange}
+          placeholder='Start typing here...'
           autoFocus
           className='!relative !h-full !w-full !pb-2 cursor-pointer'
           readOnly={disabled}

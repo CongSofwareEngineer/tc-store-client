@@ -3,12 +3,38 @@ import { ClientAPITypeParam, fetchData } from '@/configs/fetchConfig'
 import { BodyAddBill } from '@/constant/firebase'
 import { encryptData } from '@/utils/crypto'
 import { PATH_IMG } from '@/constant/mongoDB'
+import { AboutProps } from '@/app/about/type'
 
 const ClientApi = {
   pingServer: async () => {
     return fetchData({ url: `/auth/ping` })
   },
 
+  getAbout: async (): Promise<AboutProps['data']> => {
+    const res = await fetchData({ url: `/about/category/shoes` })
+    if (res.data) {
+      return {
+        _id: res.data._id,
+        des: res.data.des,
+        category: res.data.category,
+      }
+    }
+    return null
+  },
+  createAbout: async (body: any) => {
+    return fetchData({
+      url: `/about/create`,
+      method: REQUEST_TYPE.POST,
+      body,
+    })
+  },
+  updateAbout: async (id: String, body: any) => {
+    return fetchData({
+      url: `/about/update/${id}`,
+      method: REQUEST_TYPE.POST,
+      body,
+    })
+  },
   updateTokenNoti: async (id: string, body: { [key: string]: any }) => {
     return fetchData({
       url: `/user/update-token/${id}`,

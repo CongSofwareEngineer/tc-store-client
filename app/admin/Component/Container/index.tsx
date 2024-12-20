@@ -14,7 +14,7 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
   const { isMobile, isClient } = useMedia()
   const { translate } = useLanguage()
   const patchName = usePathname()
-  const { isLogin } = useUserData()
+  const { userData } = useUserData()
   const router = useRoutePage()
 
   useEffect(() => {
@@ -36,10 +36,10 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
   }, [patchName, isMobile])
 
   useEffect(() => {
-    if (!isLogin) {
+    if (!userData?.isAdmin) {
       router.push('/')
     }
-  }, [isLogin, router])
+  }, [userData, router])
 
   const LIST_MENU = [
     {
@@ -82,7 +82,7 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className='md:fixed  w-screen   flex md:flex-row flex-col h-full max-h-[calc(100vh-56px)]'>
-      {isLogin && isClient && (
+      {userData?.isAdmin && isClient && (
         <>
           {!isMobile && (
             <div className='w-[200px] flex flex-col p-3 gap-3 bg-[#000000d6]'>

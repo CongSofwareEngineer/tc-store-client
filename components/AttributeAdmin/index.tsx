@@ -83,7 +83,7 @@ const AttributeAdmin = ({ data, onChange, typeProduct = 'shoes' }: IAttributeAdm
             newData.key = `newKey${dataAttributeClone.length}`
             newData.value = [
               {
-                size: 38,
+                size: '38',
                 colors: [],
               },
             ]
