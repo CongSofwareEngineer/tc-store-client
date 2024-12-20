@@ -20,6 +20,7 @@ import MyBlog from '@/components/MyBlog'
 import { PATH_IMG } from '@/constant/mongoDB'
 import AttributeAdmin from '@/components/AttributeAdmin'
 import { SEX, TYPE_PRODUCT, VALUE_KEY_DEFAULT } from '@/constant/admin'
+import { INIT_DATA_MY_BLOG } from '@/constant/app'
 
 const ProductConfig = ({ item }: { item: any }) => {
   const { translate } = useLanguage()
@@ -40,7 +41,7 @@ const ProductConfig = ({ item }: { item: any }) => {
       imageMore: item?.imageMore || [],
       imageMain: item?.imageMain || '',
       des: item?.des || '',
-      des2: item?.des2 ? JSON.parse(item?.des2) : {},
+      des2: item?.des2 ? JSON.parse(item?.des2) : INIT_DATA_MY_BLOG,
       name: item?.name || '',
       keyName: item?.keyName || '',
       linkShoppe: item?.linkShoppe || '',
