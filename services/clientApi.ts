@@ -10,7 +10,7 @@ const ClientApi = {
     return fetchData({ url: `/auth/ping` })
   },
 
-  getAbout: async (): Promise<AboutProps['data']> => {
+  getAbout: async () => {
     const res = await fetchData({ url: `/about/category/shoes` })
     if (res.data) {
       return {
