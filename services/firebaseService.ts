@@ -2,7 +2,7 @@ import { collection, getFirestore } from 'firebase/firestore/lite'
 import { initializeApp, getApps } from 'firebase/app'
 import { deleteToken, getMessaging, getToken, isSupported, onMessage } from 'firebase/messaging'
 import FirebaseFun from '@/utils/firebase'
-import { DatabaseCollectionType } from '@/constant/firebase'
+import { DATA_BASE, DatabaseCollectionType } from '@/constant/firebase'
 
 export const FirebaseServices = {
   config: {
@@ -103,7 +103,7 @@ export const FirebaseServices = {
   },
 }
 
-// export const FirebaseProduct = FirebaseServices.createFBFun(DataBase.productShop)
+export const FirebaseAbout = FirebaseServices.createFBFun(DATA_BASE.About)
 // export const FirebaseCart = FirebaseServices.createFBFun(DataBase.cartUser)
 // export const FirebaseUser = FirebaseServices.createFBFun(DataBase.user)
 // export const FirebaseImageDelete = FirebaseServices.createFBFun(

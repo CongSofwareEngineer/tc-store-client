@@ -1,6 +1,6 @@
 export type AboutProps = {
   data?: {
-    _id: string
+    id: string
     des: string
     category: string
   } | null

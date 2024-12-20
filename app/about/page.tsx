@@ -2,7 +2,7 @@ import React, { Suspense } from 'react'
 import { generateMetaBase } from '@/utils/serverNext'
 import { ResolvingMetadata } from 'next'
 import AboutScreen from './view'
-import ClientApi from '@/services/clientApi'
+import { FirebaseAbout } from '@/services/firebaseService'
 
 export async function generateMetadata(_: any, parent: ResolvingMetadata) {
   const dataBase = await parent
@@ -16,13 +16,14 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
   return metaData
 }
 const AboutLayout = async () => {
-  const res = await ClientApi.getAbout()
+  // const res = await ClientApi.getAbout()
+  const res = await FirebaseAbout.getAllData()
 
   return (
     <>
       <h1 className='absolute opacity-0'>Giới thiệu về TC Store - Hành trình mang giá trị đến khách hàng</h1>
       <Suspense>
-        <AboutScreen data={res} />
+        <AboutScreen data={res[0]} />
       </Suspense>
     </>
   )

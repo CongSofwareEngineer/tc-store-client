@@ -1,21 +1,8 @@
 import { CollectionReference, DocumentData, DocumentReference, Query, WhereFilterOp } from 'firebase/firestore/lite'
 import { FILTER_BILL } from './app'
 
-export const DataBase = {
-  bill: 'Bill',
-  cartUser: 'CartUser',
-  productShop: 'ProductShop',
-  imageProduct: 'ImageProduct',
-  comment: 'CommentUser',
-  contact: 'contact',
-  coffee: 'Coffee',
-  build: 'Build',
-  otherHome: 'OtherHome',
-  typeProduct: 'TypeProduct',
-  user: 'User',
-  landingPageCoffee: 'landingPageCoffee',
-  imageDelete: 'ImageDelete',
-  landingPage: 'LandingPage',
+export const DATA_BASE = {
+  About: 'About',
 } as const
 
 export const FB_FC = {

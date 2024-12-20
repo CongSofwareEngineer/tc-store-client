@@ -1,18 +1,17 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { AboutProps } from './type'
 
 import useUserData from '@/hook/useUserData'
 import useLanguage from '@/hook/useLanguage'
 import { PATH_IMG } from '@/constant/mongoDB'
-import dynamic from 'next/dynamic'
 import useModalDrawer from '@/hook/useModalDrawer'
 import { Button, Input } from 'antd'
 import ModalDelete from '@/components/ModalDelete'
-import ClientApi from '@/services/clientApi'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import MyBlog from '@/components/MyBlog'
 import { INIT_DATA_MY_BLOG } from '@/constant/app'
+import { FirebaseAbout } from '@/services/firebaseService'
 
 const AboutScreen = ({ data }: AboutProps) => {
   const { openModalDrawer } = useModalDrawer()
@@ -27,11 +26,15 @@ const AboutScreen = ({ data }: AboutProps) => {
       setLoading(true)
       let res
       if (data) {
-        res = await ClientApi.updateAbout(data._id, { des: JSON.stringify(dataAbout) })
+        res = await FirebaseAbout.updateData(data.id, { category, des: JSON.stringify(dataAbout) })
+        // res = await ClientApi.updateAbout(data.id, { des: JSON.stringify(dataAbout) })
       } else {
-        res = await ClientApi.createAbout({ category, des: JSON.stringify(dataAbout) })
+        res = await FirebaseAbout.addData({ category, des: JSON.stringify(dataAbout) })
+
+        // res = await ClientApi.createAbout({ category, des: JSON.stringify(dataAbout) })
       }
-      if (res.data) {
+
+      if (res) {
         if (data) {
           showNotificationSuccess(translate('success.update'))
         } else {
