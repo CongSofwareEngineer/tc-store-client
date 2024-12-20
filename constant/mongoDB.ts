@@ -96,4 +96,5 @@ export enum PATH_IMG {
   Products = 'products',
   ContactMe = 'contact-me',
   Category = 'category',
+  About = 'About',
 }

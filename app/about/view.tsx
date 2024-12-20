@@ -63,7 +63,7 @@ const AboutScreen = ({ data }: AboutProps) => {
           onChange={(e) => setCategory(e.target.value)}
           placeholder={translate('textPopular.menuCategory')}
         />
-        <MyBlog className='w-full h-full' pathFile={PATH_IMG.Products} value={dataAbout} setValue={setDataAbout} />
+        <MyBlog className='w-full h-full' pathFile={PATH_IMG.About} value={dataAbout} setValue={setDataAbout} />
       </div>
     )
   }
@@ -71,7 +71,7 @@ const AboutScreen = ({ data }: AboutProps) => {
   return (
     <div className='flex w-full  justify-center items-center '>
       {dataAbout ? (
-        <MyBlog className='!p-0' pathFile={PATH_IMG.Products} value={dataAbout} disabled />
+        <MyBlog className='!p-0' pathFile={PATH_IMG.About} value={dataAbout} disabled />
       ) : (
         <span className='text-2xl py-5 '>{translate('textPopular.notData')}</span>
       )}
