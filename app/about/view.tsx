@@ -19,33 +19,38 @@ const AboutScreen = ({ data }: AboutProps) => {
   const { translate } = useLanguage()
   const [category, setCategory] = useState('')
   const [loading, setLoading] = useState(false)
-  const [dataAbout, setDataAbout] = useState<any>({
-    'b351b4ab-a9af-47a1-8be5-3029325fc9ab': {
-      id: 'b351b4ab-a9af-47a1-8be5-3029325fc9ab',
-      type: 'Paragraph',
-      value: [
-        {
-          id: '9fed4bba-3182-4b61-8d50-b3ddc2e02279',
-          type: 'paragraph',
-          children: [
-            {
-              text: 'New',
-            },
-          ],
-        },
-      ],
-      meta: {
-        align: 'left',
-        depth: 0,
-        order: 0,
-      },
-    },
-  })
+  const [dataAbout, setDataAbout] = useState<any>(null)
 
   useEffect(() => {
     if (data) {
+      console.log({ data })
+
       setCategory(data?.category)
       setDataAbout(JSON.parse(data.des))
+    } else {
+      const initData = {
+        'b351b4ab-a9af-47a1-8be5-3029325fc9ab': {
+          id: 'b351b4ab-a9af-47a1-8be5-3029325fc9ab',
+          type: 'Paragraph',
+          value: [
+            {
+              id: '9fed4bba-3182-4b61-8d50-b3ddc2e02279',
+              type: 'paragraph',
+              children: [
+                {
+                  text: 'New',
+                },
+              ],
+            },
+          ],
+          meta: {
+            align: 'left',
+            depth: 0,
+            order: 0,
+          },
+        },
+      }
+      setDataAbout(initData)
     }
   }, [data])
 
@@ -75,7 +80,7 @@ const AboutScreen = ({ data }: AboutProps) => {
     }
 
     openModalDrawer({
-      content: <ModalDelete callback={callBack} />,
+      content: <ModalDelete title={translate(data ? 'common.update' : 'common.create')} des='' callback={callBack} />,
     })
   }
 
@@ -97,8 +102,8 @@ const AboutScreen = ({ data }: AboutProps) => {
 
   return (
     <div className='flex w-full  justify-center items-center py-5'>
-      {data ? (
-        <MyBlog pathFile={PATH_IMG.Products} value={data} disabled />
+      {dataAbout ? (
+        <MyBlog pathFile={PATH_IMG.Products} value={dataAbout} disabled />
       ) : (
         <span className='text-2xl '>{translate('textPopular.notData')}</span>
       )}
