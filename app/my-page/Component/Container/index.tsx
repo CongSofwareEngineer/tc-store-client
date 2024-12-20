@@ -4,7 +4,6 @@ import { images } from '@/configs/images'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import useUserData from '@/hook/useUserData'
-import { scrollTop } from '@/utils/functions'
 import { Col, Row } from 'antd'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -19,12 +18,6 @@ const Container = ({ children }: PropsWithChildren) => {
   const { userData, isLogin } = useUserData()
   const patchName = usePathname()
   const router = useRoutePage()
-
-  useEffect(() => {
-    setTimeout(() => {
-      scrollTop()
-    }, 100)
-  }, [])
 
   useEffect(() => {
     if (!isLogin && router) {

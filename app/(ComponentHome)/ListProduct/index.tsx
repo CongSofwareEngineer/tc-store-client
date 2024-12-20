@@ -7,17 +7,12 @@ import { FilterAPI } from '@/constant/app'
 import { AlignLeftOutlined, CaretRightOutlined, RightOutlined } from '@ant-design/icons'
 import { CollapseCustom } from './styled'
 import useProductByLimit from '@/hook/tank-query/useProductByLimit'
-import { scrollTop } from '@/utils/functions'
 import { TYPE_PRODUCT } from '@/constant/admin'
 import LoadingGetData from '@/components/LoadingGetData'
 
 const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   const { data, isLoading } = useProductByLimit(type, 5)
   const { translate } = useLanguage()
-
-  useEffect(() => {
-    scrollTop()
-  }, [])
 
   const getUrl = () => {
     if (type === TYPE_PRODUCT.shoes) {

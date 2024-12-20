@@ -8,7 +8,7 @@ import ClientApi from '@/services/clientApi'
 import { deleteCookie, setCookie } from '@/services/CookiesService'
 import ObserverService from '@/services/observer'
 import { encryptData } from '@/utils/crypto'
-import { getDataLocal, removeDataLocal } from '@/utils/functions'
+import { getDataLocal, removeDataLocal, scrollTop } from '@/utils/functions'
 import { LoadingOutlined } from '@ant-design/icons'
 import { NextPage } from 'next'
 import { usePathname } from 'next/navigation'
@@ -41,6 +41,7 @@ const FirstLoadWebsite: NextPage = () => {
 
   useEffect(() => {
     setIsLoading(false)
+    scrollTop()
   }, [pathName])
 
   //re login

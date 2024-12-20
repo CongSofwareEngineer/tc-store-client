@@ -1,14 +1,12 @@
 'use client'
 import { images } from '@/configs/images'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { CopyOutlined } from '@ant-design/icons'
-import { scrollTop } from '@/utils/functions'
 import SocialMediaShare from '../SocialMediaShare'
 import Link from 'next/link'
 import { copyToClipboard } from '@/utils/notification'
 import Image from 'next/image'
 import { LINK_CONTACT } from '@/constant/app'
-import useRoutePage from '@/hook/useRoutePage'
 
 const Item = ({ icon, value, link }: any) => {
   return (
@@ -27,11 +25,6 @@ const Item = ({ icon, value, link }: any) => {
   )
 }
 const Footer = () => {
-  const patchName = useRoutePage()
-  useEffect(() => {
-    scrollTop()
-  }, [patchName])
-
   return (
     <footer className='no footer-web w-full bg-white flex justify-center md:mt-5 mt-3'>
       <SocialMediaShare />
