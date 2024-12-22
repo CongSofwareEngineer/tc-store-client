@@ -6,16 +6,18 @@ type Props = {
   textView?: string
   value?: string
   isLink?: boolean
+  classText?: string
+  className?: string
 }
-const TextCopy = ({ textView = '', value = '', isLink = false }: Props) => {
+const TextCopy = ({ textView = '', value = '', isLink = false, ...props }: Props) => {
   return (
-    <div className='flex gap-2'>
+    <div className={`flex gap-2 ${props?.className}`}>
       {isLink ? (
         <Link target='_blank' href={value || textView}>
           {value || textView}
         </Link>
       ) : (
-        <span>{textView || value}</span>
+        <div className={props?.classText}>{textView || value}</div>
       )}
       <CopyOutlined onClick={() => copyToClipboard(value || textView)} />
     </div>

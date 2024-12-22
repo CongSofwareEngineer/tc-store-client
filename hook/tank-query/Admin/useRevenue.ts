@@ -8,9 +8,9 @@ import { useMemo } from 'react'
 const getData = async ({ queryKey, pageParam = 1 }: { queryKey: any; pageParam: any }): Promise<TypeHookReactQuery> => {
   const query = queryKey[2]
   const limit = queryKey[1]
-  const { dateEnd, dateStart, sdt, status } = query
+  const { dateEnd, dateStart, sdt, status, id = '' } = query
 
-  let queryUrl = `?page=${pageParam}&limit=${limit}`
+  let queryUrl = `?page=${pageParam}&limit=${limit}&status=${FILTER_BILL.DeliverySuccess}`
 
   if (dateEnd) {
     queryUrl += `&dateEnd=${dateEnd[0]}`
@@ -23,6 +23,10 @@ const getData = async ({ queryKey, pageParam = 1 }: { queryKey: any; pageParam: 
   }
   if (status && status !== FILTER_BILL.All) {
     queryUrl += `&status=${status}`
+  }
+
+  if (id) {
+    queryUrl += `&id=${id}`
   }
 
   const dataServer = await AdminApi.getRevenue(queryUrl)

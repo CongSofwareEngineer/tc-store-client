@@ -23,12 +23,9 @@ import AdminApi from '@/services/adminApi'
 
 const CategoryAdminScreen = () => {
   const { renderContent } = useSearchBaseAdmin({
-    dateEnd: false,
-    oneDate: false,
-    sdt: false,
-    status: false,
-    category: false,
-    dateStart: false,
+    category: true,
+    keyName: true,
+    id: true,
   })
   const { queries } = useQuerySearch()
   const { isMobile } = useMedia()

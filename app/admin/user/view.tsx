@@ -21,17 +21,11 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import React from 'react'
 import ModalConfig from './modalConfig'
 import Link from 'next/link'
-import { Button } from 'antd'
 
 const UserAdminScreen = () => {
   const { renderContent } = useSearchBaseAdmin({
-    category: false,
-    keyName: false,
-    oneDate: false,
-    status: false,
-    id: false,
-    dateStart: false,
-    dateEnd: false,
+    dateEnd: true,
+    dateStart: true,
     admin: true,
   })
   const { queries } = useQuerySearch()

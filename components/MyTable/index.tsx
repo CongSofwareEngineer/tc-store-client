@@ -1,7 +1,15 @@
 import React from 'react'
-import { Card, Table } from 'antd'
+import { Breakpoint, Card, Table } from 'antd'
 import MyLoadMore from '../MyLoadMore'
 import styled from 'styled-components'
+import {
+  ColumnFilterItem,
+  FilterDropdownProps,
+  FilterSearchType,
+  FilterValue,
+  SorterTooltipProps,
+  SortOrder,
+} from 'antd/es/table/interface'
 const CardCustom = styled(Card)`
   @media screen and (max-width: 768px) {
     .ant-card-body {
@@ -9,9 +17,50 @@ const CardCustom = styled(Card)`
     }
   }
 `
+
+export type ColumnsType = {
+  title?: any
+  key?: string
+  dataIndex?: string
+  sorter?: boolean
+  sortOrder?: SortOrder
+  defaultSortOrder?: SortOrder
+  sortDirections?: SortOrder[]
+  sortIcon?: (props: { sortOrder: SortOrder }) => React.ReactNode
+  showSorterTooltip?: boolean | SorterTooltipProps
+  filtered?: boolean
+  filters?: ColumnFilterItem[]
+  filterDropdown?: React.ReactNode | ((props: FilterDropdownProps) => React.ReactNode)
+  filterOnClose?: boolean
+  filterMultiple?: boolean
+  filteredValue?: FilterValue | null
+  defaultFilteredValue?: FilterValue | null
+  filterIcon?: React.ReactNode | ((filtered: boolean) => React.ReactNode)
+  filterMode?: 'menu' | 'tree'
+  filterSearch?: FilterSearchType<ColumnFilterItem>
+  onFilter?: (value: React.Key | boolean, record: any) => boolean
+  /**
+   * Can cover `<Dropdown>` props
+   * @since 5.22.0
+   */
+
+  filterDropdownOpen?: boolean
+  fixed?: 'left' | 'right' | boolean
+  /**
+   * @deprecated Please use `filterDropdownProps.onOpenChange` instead.
+   * @since 4.23.0
+   */
+  onFilterDropdownOpenChange?: (visible: boolean) => void
+  /** @deprecated Please use `filterDropdownProps.open` instead. */
+  filterDropdownVisible?: boolean
+  /** @deprecated Please use `filterDropdownProps.onOpenChange` instead */
+  onFilterDropdownVisibleChange?: (visible: boolean) => void
+  render?: (text: any, record: any, index: number) => React.ReactNode
+}
+
 type Props = {
   data?: any[]
-  columns?: any[]
+  columns?: ColumnsType[]
   limit?: number
   total?: number
   loading?: boolean

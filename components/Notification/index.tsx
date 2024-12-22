@@ -73,15 +73,17 @@ const NotificationClient: NextPage = () => {
 
   useEffect(() => {
     const updateToken = async (token: string) => {
-      const isExited = userData?.tokenNoti.some((item: string) => item === token)
+      if (Array.isArray(userData?.tokenNoti)) {
+        const isExited = userData?.tokenNoti?.some((item: string) => item === token)
 
-      if (!isExited || userData?.tokenNoti?.length === 0) {
-        const res = await ClientApi.updateTokenNoti(userData?._id!, {
-          tokenNoti: [...userData?.tokenNoti, token],
-        })
+        if (!isExited || userData?.tokenNoti?.length === 0) {
+          const res = await ClientApi.updateTokenNoti(userData?._id!, {
+            tokenNoti: [...userData?.tokenNoti, token],
+          })
 
-        if (res?.data) {
-          reLogin()
+          if (res?.data) {
+            reLogin()
+          }
         }
       }
     }

@@ -10,6 +10,7 @@ const ClientApi = {
     return fetchData({ url: `/auth/ping` })
   },
 
+  // -> about
   getAbout: async () => {
     const res = await fetchData({ url: `/about/category/shoes` })
     if (res.data) {
@@ -35,6 +36,8 @@ const ClientApi = {
       body,
     })
   },
+
+  // -> token notification
   updateTokenNoti: async (id: string, body: { [key: string]: any }) => {
     return fetchData({
       url: `/user/update-token/${id}`,
@@ -55,6 +58,8 @@ const ClientApi = {
       },
     })
   },
+
+  // -> user
   login: async (body: any) => {
     return fetchData({
       url: `user/login`,
@@ -71,6 +76,8 @@ const ClientApi = {
       isAuth: false,
     })
   },
+
+  // -> user
   updateAvatar: async (id: string | undefined, file: any) => {
     const publicId = file.public_id
     delete file.public_id
@@ -90,6 +97,7 @@ const ClientApi = {
       method: REQUEST_TYPE.POST,
     })
   },
+
   getCategory: async (isClient = false) => {
     let url = 'category/all?isShow=true'
     if (isClient) {
@@ -101,6 +109,8 @@ const ClientApi = {
       isAuth: false,
     })
   },
+
+  // -> bill
   buyNoLogin: async (bodyAPI: BodyAddBill) => {
     const dataEncode = encryptData(bodyAPI)
     return fetchData({
@@ -123,6 +133,13 @@ const ClientApi = {
     }
     return fetchData(config)
   },
+  getBills: async (queryUrl: string) => {
+    return fetchData({
+      url: `bill/detail/${queryUrl}`,
+    })
+  },
+
+  // -> cart
   getMyCart: async (queryUrl: string) => {
     return fetchData({
       url: `cart/detail/${queryUrl}`,
@@ -158,6 +175,8 @@ const ClientApi = {
       url: `/cart/length-cart/${queryUrl}`,
     })
   },
+
+  // -> product
   getProductByKeyName: async (keyName: string) => {
     return fetchData({
       url: `product/detail-keyName/${keyName}`,
@@ -174,6 +193,8 @@ const ClientApi = {
       url: `/product/detail/${id}`,
     })
   },
+
+  // -> comment
   getComments: async (queryUrl: string) => {
     return fetchData({
       url: `/comment/detail/${queryUrl}`,
@@ -193,23 +214,13 @@ const ClientApi = {
       body,
     })
   },
-  getBills: async (queryUrl: string) => {
-    return fetchData({
-      url: `bill/detail/${queryUrl}`,
-    })
-  },
+
+  // -> contact
   createContact: async (body: any) => {
     return fetchData({
       url: 'contact-me/create',
       method: REQUEST_TYPE.POST,
       body,
-    })
-  },
-  updateTokenNotification: async (token: string) => {
-    return fetchData({
-      url: 'token-noti/create',
-      method: REQUEST_TYPE.POST,
-      body: { token },
     })
   },
 }

@@ -23,12 +23,8 @@ import AdminApi from '@/services/adminApi'
 
 const ProductAdminScreen = () => {
   const { renderContent } = useSearchBaseAdmin({
-    status: false,
-    admin: false,
-    dateEnd: false,
-    dateStart: false,
-    oneDate: false,
-    sdt: false,
+    keyName: true,
+    category: true,
   })
   const { queries } = useQuerySearch()
   const { data, isLoading, hasNextPage, isFetchingNextPage, loadMore } = useListProductAdmin(PAGE_SIZE_LIMIT, queries)

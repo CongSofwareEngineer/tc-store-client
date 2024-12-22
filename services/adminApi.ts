@@ -148,6 +148,13 @@ const AdminApi = {
       method: REQUEST_TYPE.DELETE,
     })
   },
+
+  //get comment
+  getComments: async (queryUrl: string) => {
+    return fetchData({
+      url: `comment/all${queryUrl}`,
+    })
+  },
 }
 
 export default AdminApi

@@ -17,7 +17,7 @@ import StatusFormBill from '@/components/Form/StatusFormBill'
 import { FILTER_BILL } from '@/constant/app'
 import { Button } from 'antd'
 
-type Props = {
+type KeySearchProps = {
   dateStart?: boolean
   dateEnd?: boolean
   category?: boolean
@@ -27,21 +27,19 @@ type Props = {
   status?: boolean
   admin?: boolean
   oneDate?: boolean
+  idProduct?: boolean
+  idUser?: boolean
 }
-const useSearchBaseAdmin = (param?: Props) => {
-  const config: Props = {
-    dateStart: true,
-    dateEnd: true,
-    category: true,
-    id: true,
-    sdt: true,
-    keyName: true,
-    status: true,
-    oneDate: true,
-    admin: false,
-    ...param,
-  }
 
+type TitleProps = {
+  id?: string
+  keyName?: string
+  oneDate?: string
+  dateStart?: string
+  dateEnd?: string
+  idProduct?: string
+}
+const useSearchBaseAdmin = (param?: KeySearchProps, paramTitle?: TitleProps) => {
   const { translate } = useLanguage()
   const pathPage = usePathname()
   const router = useRouter()
@@ -73,8 +71,10 @@ const useSearchBaseAdmin = (param?: Props) => {
         status: FILTER_BILL.All,
         oneDate: moment().format('YYYY-MM-DD'),
         admin: false,
-        dateStart: dayjs(new Date(Date.now()).setDate(new Date().getDate() - 7)),
-        dateEnd: dayjs(new Date(Date.now()).setDate(new Date().getDate())),
+        dateStart: '',
+        dateEnd: '',
+        // dateStart: dayjs(new Date(Date.now()).setDate(new Date().getDate() - 7)),
+        // dateEnd: dayjs(new Date(Date.now()).setDate(new Date().getDate())),
       }
       setFormData(initData)
     }
@@ -91,8 +91,10 @@ const useSearchBaseAdmin = (param?: Props) => {
       status: '',
       oneDate: moment().format('YYYY-MM-DD'),
       admin: false,
-      dateStart: dayjs(new Date(Date.now()).setDate(new Date().getDate() - 7)),
-      dateEnd: dayjs(new Date(Date.now()).setDate(new Date().getDate())),
+      dateStart: '',
+      dateEnd: '',
+      // dateStart: dayjs(new Date(Date.now()).setDate(new Date().getDate() - 7)),
+      // dateEnd: dayjs(new Date(Date.now()).setDate(new Date().getDate())),
     }
     setFormData(initData)
     router.push(pathPage)
@@ -101,7 +103,7 @@ const useSearchBaseAdmin = (param?: Props) => {
   const handleSubmit = () => {
     let query = ''
 
-    Object.entries(config).forEach(([key, value]: [string, boolean]) => {
+    Object.entries(param!).forEach(([key, value]: [string, any]) => {
       if (value && formData?.[key]) {
         if (query) {
           if (isObject(formData?.[key])) {
@@ -149,35 +151,45 @@ const useSearchBaseAdmin = (param?: Props) => {
             className='w-full'
           >
             <div className='flex justify-between flex-wrap'>
-              {config.keyName && (
+              {param?.id && (
+                <div className='md:w-[48%] w-full'>
+                  <InputForm key={'id'} name='id' label={paramTitle?.id || 'ID'} />
+                </div>
+              )}
+              {param?.idProduct && (
+                <div className='md:w-[48%] w-full'>
+                  <InputForm key={'idProduct'} name='idProduct' label={paramTitle?.idProduct || 'ID Product'} />
+                </div>
+              )}
+              {param?.keyName && (
                 <div className='md:w-[48%] w-full'>
                   <InputForm key={'KeyName'} name='keyName' label={'Key Name'} />
                 </div>
               )}
 
-              {config.sdt && (
+              {param?.sdt && (
                 <div className='md:w-[48%] w-full'>
                   <InputForm key={'sdt'} name='sdt' label={translate('userDetail.sdt')} />
                 </div>
               )}
 
-              {config.category && (
+              {param?.category && (
                 <div className='md:w-[48%] w-full'>
                   <CategoryForm label='category' name='category' />
                 </div>
               )}
-              {config.status && (
+              {param?.status && (
                 <div className='md:w-[48%] w-full'>
                   <StatusFormBill label={translate('textPopular.status')} name='status' />
                 </div>
               )}
-              {config.admin && (
+              {param?.admin && (
                 <div className='md:w-[48%] w-full'>
                   <CheckBoxForm label='Admin' name='admin' />
                 </div>
               )}
 
-              {config.dateStart && (
+              {param?.dateStart && (
                 <div className='md:w-[48%] w-full'>
                   <MyDatePickerForm
                     label={translate('textPopular.dateStart')}
@@ -186,7 +198,7 @@ const useSearchBaseAdmin = (param?: Props) => {
                   />
                 </div>
               )}
-              {config.dateEnd && (
+              {param?.dateEnd && (
                 <div className='md:w-[48%] w-full'>
                   <MyDatePickerForm
                     label={translate('textPopular.dateEnd')}

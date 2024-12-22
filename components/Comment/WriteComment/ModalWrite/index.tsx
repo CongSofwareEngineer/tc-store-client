@@ -44,7 +44,7 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
         rate: 5,
         listImg: [],
       }
-      if (userData && dataApi) {
+      if (userData && dataApi?.data) {
         initData.listImg = dataApi.listImg
         initData.note = dataApi.note
         initData.rate = dataApi.rate
@@ -65,16 +65,20 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
       }
     }
 
-    data.imagesDelete = dataExited?.listImg.filter((e: any) => {
-      const isExited = formData?.listImg.find((eApi: any) => {
-        return eApi === e
-      })
+    data.imagesDelete = []
+    if (Array.isArray(dataExited?.listImg)) {
+      data.imagesDelete = dataExited?.listImg?.filter((e: any) => {
+        const isExited = formData?.listImg.find((eApi: any) => {
+          return eApi === e
+        })
 
-      return !isExited
-    })
+        return !isExited
+      })
+    }
 
     return data
   }
+  console.log({ formData })
 
   const handleSubmit = async () => {
     setLoading(true)
@@ -104,7 +108,7 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
   }
 
   const handleUpload = async (file: any) => {
-    setFormData((prev) => ({ ...prev, listImg: [...prev?.listImg, file] }))
+    setFormData((prev) => ({ ...prev, listImg: [...(prev?.listImg || []), file] }))
   }
 
   const deleteImg = (index: number) => {
@@ -176,7 +180,7 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
             maxLength={200}
           />
 
-          <div className='flex flex-col w-full gap-2 mt-10'>
+          <div className='flex flex-col w-full gap-2 mt-14'>
             {renderListImg()}
             <UploadImage
               handleUpload={handleUpload}

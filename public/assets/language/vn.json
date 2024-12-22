@@ -33,7 +33,8 @@
     "viewBill": "Xem hóa đơn",
     "view": "Xem",
     "cancelOrder": "Hủy đơn",
-    "writeComment": "Viết bình luận"
+    "writeComment": "Viết bình luận",
+    "reply": "Trả lời"
   },
   "userDetail": {
     "addressNow": "Địa chỉ hiện tại",
@@ -153,6 +154,7 @@
     "idOrder": "Mã đơn"
   },
   "bill": {
+    "id": "Mã ĐH",
     "noteBill": "Ghi chú đơn hàng",
     "totalBill": "Tổng thanh toán",
     "detailPayment": "Chi Tiết Thanh Toán",

@@ -1,4 +1,4 @@
-import MyTable from '@/components/MyTable'
+import MyTable, { ColumnsType } from '@/components/MyTable'
 import TextCopy from '@/components/TextCopy'
 import { FILTER_BILL, PAGE_SIZE_LIMIT } from '@/constant/app'
 import useBillAdmin from '@/hook/tank-query/Admin/useBillAdmin'
@@ -16,24 +16,28 @@ import { showNotificationError, showNotificationSuccess } from '@/utils/notifica
 import { formatDateTime } from '@/utils/momentFunc'
 import { Button } from 'antd'
 import useMedia from '@/hook/useMedia'
-import { ColumnsType } from 'antd/es/table'
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
 import { DEFAULT_RATE_EXP_USER } from '../../../constant/app'
 import AdminApi from '@/services/adminApi'
 
 const BillAdminScreen = () => {
-  const { renderContent } = useSearchBaseAdmin({
-    admin: false,
-    category: false,
-    keyName: false,
-    oneDate: false,
-  })
   const { queries } = useQuerySearch()
   const { data, isLoading } = useBillAdmin(queries)
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
   const { refreshQuery } = useRefreshQuery()
   const { isMobile } = useMedia()
+  const { renderContent } = useSearchBaseAdmin(
+    {
+      category: true,
+      dateEnd: true,
+      dateStart: true,
+      id: true,
+    },
+    {
+      id: translate('bill.id'),
+    },
+  )
 
   const getAmountBuy = (item: any) => {
     let amount = 0
@@ -152,7 +156,7 @@ const BillAdminScreen = () => {
 
   const getColumns = () => {
     if (isMobile) {
-      const columns = [
+      const columns: ColumnsType[] = [
         {
           title: translate('textPopular.infor'),
           key: 'status',
@@ -221,17 +225,17 @@ const BillAdminScreen = () => {
       ]
       return columns
     }
-    const columns: ColumnsType = [
+    const columns: ColumnsType[] = [
+      // {
+      //   title: 'STT',
+      //   key: '_id',
+      //   dataIndex: '_id',
+      //   render: (id: string, record: any, index: number) => {
+      //     return <span>{index + 1}</span>
+      //   },
+      // },
       {
-        title: 'STT',
-        key: '_id',
-        dataIndex: '_id',
-        render: (id: string, record: any, index: number) => {
-          return <span>{index + 1}</span>
-        },
-      },
-      {
-        title: 'Id',
+        title: translate('bill.id'),
         key: '_id',
         dataIndex: '_id',
         render: (id: any) => {

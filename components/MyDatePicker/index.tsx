@@ -23,7 +23,7 @@ const MyDatePicker = ({
     <DatePicker
       disabled={disabled}
       onChange={(e) => onChange(e)}
-      defaultValue={dayjs(defaultValue, 'DD/MM/YY')}
+      defaultValue={defaultValue ? dayjs(defaultValue, 'DD/MM/YY') : null}
       className={`w-full ${className}`}
       format={'DD/MM/YY'}
       lang='vn'

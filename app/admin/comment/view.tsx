@@ -1,58 +1,223 @@
 'use client'
 import ImageAdmin from '@/components/ImageAdmin'
+import MyTable, { ColumnsType } from '@/components/MyTable'
 import TextCopy from '@/components/TextCopy'
+import TextWithToggle from '@/components/TextWithToggle'
+import { TYPE_PRODUCT } from '@/constant/admin'
+import { PAGE_SIZE_LIMIT } from '@/constant/app'
 import useCommentAdmin from '@/hook/tank-query/Admin/useCommentAdmin'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
+import useModalDrawer from '@/hook/useModalDrawer'
+import useQuerySearch from '@/hook/useQuerySearch'
 import useSearchBaseAdmin from '@/hook/useSearchBaseAdmin'
+import { ellipsisText } from '@/utils/functions'
+import { formatDateTime } from '@/utils/momentFunc'
+import { CommentOutlined } from '@ant-design/icons'
+import { Button, Rate } from 'antd'
 import Link from 'next/link'
+
 import React from 'react'
+import ModalReplay from './Component/ModalReplay'
 
 const CommentClient = () => {
-  const { renderContent } = useSearchBaseAdmin()
   const { isMobile } = useMedia()
   const { translate } = useLanguage()
-  const { data, isLoading } = useCommentAdmin()
-  const renderItem = (item: any, index: number) => {
-    return (
-      <div key={`item_${index}`} className='flex flex-col we-full'>
-        <div className='flex items-center w-full'>
-          <div className='md:w-[150px] w-[80px] flex items-center justify-center'>
-            <div className='md:w-[130px] w-[70px] aspect-square relative overflow-hidden'>
-              <ImageAdmin src={item?.image} className='w-full' />
+  const { queries } = useQuerySearch()
+  const { openModalDrawer } = useModalDrawer()
+  const { data, isLoading } = useCommentAdmin(queries)
+  const { renderContent } = useSearchBaseAdmin(
+    {
+      dateEnd: true,
+      dateStart: true,
+      idProduct: true,
+      sdt: true,
+    },
+    {
+      idProduct: `ID ${translate('textPopular.product')}`,
+    },
+  )
+
+  const getRouteProduct = (product: any) => {
+    if (product?.category === TYPE_PRODUCT.shoes) {
+      return `/shoes/${product.keyName}`
+    }
+    return `/shop/${product?.keyName}`
+  }
+
+  const handleReply = (item: any) => {
+    openModalDrawer({
+      content: <ModalReplay />,
+      useDrawer: true,
+      configDrawer: {
+        // height:
+      },
+    })
+  }
+  const getColumns = () => {
+    if (isMobile) {
+      const column: ColumnsType[] = [
+        {
+          key: translate('textPopular.infor'),
+          dataIndex: 'date',
+          title: translate('textPopular.date'),
+          render: (_: string, record: any) => {
+            return (
+              <div className='flex flex-col gap-2 w-full'>
+                <div className='flex w-full justify-between text-xs'>
+                  <div className='flex gap-2'>
+                    <span className='font-bold'>{'SDT'}:</span>
+                    <TextCopy textView={ellipsisText(record?.sdt, 4, 3)} value={record?.sdt} classText='text-xs' />
+                  </div>
+                  <span>{formatDateTime(record?.date)}</span>
+                </div>
+                <Rate style={{ fontSize: 12 }} value={record?.rate} className='text-xs' />
+
+                <div className='flex gap-2'>
+                  <span className='font-bold'>{translate('header.name')}:</span>
+                  <span>{record?.name}</span>
+                </div>
+                <div className='flex gap-2'>
+                  <span className='font-bold'>{translate('textPopular.product')}:</span>
+                  {record?.product ? (
+                    <Link href={getRouteProduct(record?.product)}>{record?.product?.name || ''}</Link>
+                  ) : (
+                    <span>{''}</span>
+                  )}
+                </div>
+                <div className='font-bold'>{translate('textPopular.comment')}</div>
+                <TextWithToggle text={record?.note} />
+                {record?.listImg?.length > 0 && (
+                  <>
+                    <div className='font-bold'>{translate('textPopular.image')}</div>
+                    <div className='flex gap-2'>
+                      {record?.listImg?.map((src: string) => {
+                        return (
+                          <div key={src} className='w-[80px]'>
+                            <ImageAdmin src={src} />
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </>
+                )}
+
+                <Button onClick={() => handleReply(record)}>{translate('common.reply')}</Button>
+              </div>
+            )
+          },
+        },
+      ]
+
+      return column
+    }
+
+    const column: ColumnsType[] = [
+      {
+        key: 'date',
+        dataIndex: 'date',
+        title: translate('textPopular.date'),
+        render: (date: string) => {
+          return <div className='whitespace-nowrap'> {formatDateTime(date)}</div>
+        },
+      },
+      {
+        key: 'rate',
+        dataIndex: 'rate',
+        title: translate('textPopular.rate'),
+        render: (rate: string) => {
+          return <div className='w-full text-center'> {`${rate} (⭐)`}</div>
+        },
+      },
+      {
+        title: `SDT`,
+        key: 'sdt',
+        dataIndex: 'sdt',
+        render: (sdt: string) => {
+          return <TextCopy classText='whitespace-nowrap' textView={ellipsisText(sdt, 3, 4)} value={sdt} />
+        },
+      },
+      {
+        title: translate('header.name'),
+        key: 'name',
+        dataIndex: 'name',
+        render: (name: string) => {
+          return <span>{name}</span>
+        },
+      },
+      {
+        title: `ID ${translate('textPopular.product')}`,
+        key: 'idProduct',
+        dataIndex: 'idProduct',
+        render: (idProduct: string) => {
+          return <TextCopy classText='whitespace-nowrap' textView={ellipsisText(idProduct, 3, 4)} value={idProduct} />
+        },
+      },
+
+      {
+        title: translate('textPopular.nameProduct'),
+        key: 'note',
+        dataIndex: 'note',
+        render: (note: any, record: any) => {
+          if (record?.product) {
+            return (
+              <Link className='hover:underline hover:!text-blue-600' href={getRouteProduct(record?.product)}>
+                {record?.product?.name}
+              </Link>
+            )
+          }
+
+          return <span>{''}</span>
+        },
+      },
+      {
+        title: translate('textPopular.comment'),
+        key: 'note',
+        dataIndex: 'note',
+        render: (note: string) => {
+          return (
+            <div className='min-w-[250px]'>
+              <TextWithToggle text={note} />
             </div>
-          </div>
-          <div className='flex flex-col gap-2'>
-            <Link href={`/shop/${item.keyName}`}>
-              <div className='text-black font-bold'>{item?.name}</div>
-            </Link>
-            <div className='flex items-center gap-2'>
-              <div>SDT</div>
-              <TextCopy value={item?.sdt} />
+          )
+        },
+      },
+      {
+        title: translate('textPopular.image'),
+        key: 'listImg',
+        dataIndex: 'listImg',
+        render: (listImg: string[]) => {
+          return (
+            <div className='flex flex-nowrap gap-3'>
+              {listImg.map((src) => {
+                return (
+                  <div key={src} className='w-[100px]'>
+                    <ImageAdmin src={src} />
+                  </div>
+                )
+              })}
             </div>
-            <div className='flex items-center gap-2'>
-              <div>SDT</div>
-              <TextCopy value={item?.sdt} />
-            </div>
-          </div>
-        </div>
-      </div>
-    )
+          )
+        },
+      },
+      {
+        title: '.',
+        key: 'listImg',
+        dataIndex: 'listImg',
+        render: (_: string[], record: any) => {
+          return (
+            <CommentOutlined onClick={() => handleReply(record)} className='text-2xl cursor-pointer hover:scale-110' />
+          )
+        },
+      },
+    ]
+
+    return column
   }
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='flex flex-col gap-2 w-full'>
       {renderContent()}
-      <div className='w-full flex items-center '>
-        <div className='md:w-[150px] w-[80px] flex items-center justify-center'>{translate('textPopular.image')}</div>
-        <div className='flex flex-1'>{translate('textPopular.infor')}</div>
-        {!isMobile && <div className='flex flex-1'>.</div>}
-      </div>
-      <div className='flex flex-col w-full'>
-        {!isLoading &&
-          data.map((e, index) => {
-            return renderItem(e, index)
-          })}
-      </div>
+      <MyTable columns={getColumns()} loading={isLoading} data={data || []} limit={PAGE_SIZE_LIMIT} total={20} />
     </div>
   )
 }

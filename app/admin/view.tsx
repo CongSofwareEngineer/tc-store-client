@@ -1,4 +1,4 @@
-import MyTable from '@/components/MyTable'
+import MyTable, { ColumnsType } from '@/components/MyTable'
 import TextCopy from '@/components/TextCopy'
 import { FILTER_BILL, PAGE_SIZE_LIMIT } from '@/constant/app'
 import useRevenue from '@/hook/tank-query/Admin/useRevenue'
@@ -13,20 +13,21 @@ import { Button } from 'antd'
 import { NextPage } from 'next'
 import React from 'react'
 import ModalViewBillDetail from './Component/ModalViewBillDetail'
-import { ColumnsType } from 'antd/es/table'
 import GraphRevenue from './Component/GraphRevenue'
 
 const RevenueScreen: NextPage = () => {
-  const { renderContent } = useSearchBaseAdmin({
-    admin: false,
-    category: false,
-    keyName: false,
-    oneDate: false,
-  })
   const { queries } = useQuerySearch()
   const { isMobile } = useMedia(568)
   const { translate } = useLanguage()
   const { openModalDrawer } = useModalDrawer()
+
+  const { renderContent } = useSearchBaseAdmin({
+    dateEnd: true,
+    dateStart: true,
+    id: true,
+    titleId: translate('bill.id'),
+  })
+
   const { data, isLoading, hasNextPage, isFetchingNextPage, loadMore } = useRevenue(PAGE_SIZE_LIMIT, queries)
 
   const handleViewDetail = (item: any) => {
@@ -53,11 +54,11 @@ const RevenueScreen: NextPage = () => {
     }
   }
 
-  const getColumns = () => {
+  const getColumns = (): ColumnsType[] => {
     if (isMobile) {
-      const columns: ColumnsType = [
+      const columns: ColumnsType[] = [
         {
-          title: 'Id',
+          title: translate('bill.id'),
           key: '_id',
           dataIndex: '_id',
           render: (id: any) => {
@@ -75,17 +76,17 @@ const RevenueScreen: NextPage = () => {
       ]
       return columns
     }
-    const columns: ColumnsType = [
+    const columns: ColumnsType[] = [
+      // {
+      //   title: 'STT',
+      //   key: '_id',
+      //   dataIndex: '_id',
+      //   render: (id: string, record: any, index: number) => {
+      //     return <span>{index + 1}</span>
+      //   },
+      // },
       {
-        title: 'STT',
-        key: '_id',
-        dataIndex: '_id',
-        render: (id: string, record: any, index: number) => {
-          return <span>{index + 1}</span>
-        },
-      },
-      {
-        title: 'Id',
+        title: translate('bill.id'),
         key: '_id',
         dataIndex: '_id',
         render: (id: any) => {
@@ -100,37 +101,37 @@ const RevenueScreen: NextPage = () => {
           return <TextCopy value={sdt} textView={ellipsisText(sdt, 4, 4)} />
         },
       },
-      {
-        title: translate('textPopular.status'),
-        key: 'status',
-        dataIndex: 'status',
-        filters: [
-          {
-            text: getStatus(FILTER_BILL.DeliverySuccess),
-            value: FILTER_BILL.DeliverySuccess,
-          },
-          {
-            text: getStatus(FILTER_BILL.Delivering),
-            value: FILTER_BILL.Delivering,
-          },
-          {
-            text: getStatus(FILTER_BILL.Processing),
-            value: FILTER_BILL.Processing,
-          },
-          {
-            text: getStatus(FILTER_BILL.Canceled),
-            value: FILTER_BILL.Canceled,
-          },
-        ],
-        onFilter: (value, record) => record.status === value,
-        render: (status: any) => {
-          return (
-            <div className='font-bold whitespace-nowrap' style={{ color: getColorStatus(status) }}>
-              {getStatus(status)}
-            </div>
-          )
-        },
-      },
+      // {
+      //   title: translate('textPopular.status'),
+      //   key: 'status',
+      //   dataIndex: 'status',
+      //   filters: [
+      //     {
+      //       text: getStatus(FILTER_BILL.DeliverySuccess),
+      //       value: FILTER_BILL.DeliverySuccess,
+      //     },
+      //     {
+      //       text: getStatus(FILTER_BILL.Delivering),
+      //       value: FILTER_BILL.Delivering,
+      //     },
+      //     {
+      //       text: getStatus(FILTER_BILL.Processing),
+      //       value: FILTER_BILL.Processing,
+      //     },
+      //     {
+      //       text: getStatus(FILTER_BILL.Canceled),
+      //       value: FILTER_BILL.Canceled,
+      //     },
+      //   ],
+      //   onFilter: (value, record) => record.status === value,
+      //   render: (status: any) => {
+      //     return (
+      //       <div className='font-bold whitespace-nowrap' style={{ color: getColorStatus(status) }}>
+      //         {getStatus(status)}
+      //       </div>
+      //     )
+      //   },
+      // },
 
       {
         title: translate('bill.totalBill'),
@@ -204,11 +205,6 @@ const RevenueScreen: NextPage = () => {
           data={data || []}
           limit={PAGE_SIZE_LIMIT}
           total={20}
-          // extra={
-          //   <Button onClick={() => handleUpdate()}>
-          //     {translate('common.addNew')}
-          //   </Button>
-          // }
         />
       </div>
     </div>
