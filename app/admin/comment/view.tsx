@@ -126,7 +126,7 @@ const CommentClient = () => {
         dataIndex: 'rate',
         title: translate('textPopular.rate'),
         render: (rate: string) => {
-          return <div className='w-full text-center'> {`${rate} (⭐)`}</div>
+          return <div className='w-full text-center whitespace-nowrap'> {`${rate} (⭐)`}</div>
         },
       },
       {

@@ -10,14 +10,13 @@ import useSearchBaseAdmin from '@/hook/useSearchBaseAdmin'
 import { detectImg } from '@/utils/functions'
 import { Button } from 'antd'
 import React from 'react'
-import MyTable from '@/components/MyTable'
+import MyTable, { ColumnsType } from '@/components/MyTable'
 import TextCopy from '@/components/TextCopy'
 import MyCheckBox from '@/components/MyCheckBox'
 import ModalDelete from '@/components/ModalDelete'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import ModalConfigCategory from './modalConfig'
-import { ColumnsType } from 'antd/es/table'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import AdminApi from '@/services/adminApi'
 
@@ -95,7 +94,7 @@ const CategoryAdminScreen = () => {
   }
 
   const renderTable = () => {
-    const columns: ColumnsType = [
+    const columns: ColumnsType[] = [
       {
         title: 'Info',
         key: 'isShow',
