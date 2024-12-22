@@ -22,7 +22,7 @@ export type ColumnsType = {
   title?: any
   key?: string
   dataIndex?: string
-  sorter?: boolean
+  sorter?: any
   sortOrder?: SortOrder
   defaultSortOrder?: SortOrder
   sortDirections?: SortOrder[]

@@ -21,12 +21,16 @@ const RevenueScreen: NextPage = () => {
   const { translate } = useLanguage()
   const { openModalDrawer } = useModalDrawer()
 
-  const { renderContent } = useSearchBaseAdmin({
-    dateEnd: true,
-    dateStart: true,
-    id: true,
-    titleId: translate('bill.id'),
-  })
+  const { renderContent } = useSearchBaseAdmin(
+    {
+      dateEnd: true,
+      dateStart: true,
+      id: true,
+    },
+    {
+      id: translate('bill.id'),
+    },
+  )
 
   const { data, isLoading, hasNextPage, isFetchingNextPage, loadMore } = useRevenue(PAGE_SIZE_LIMIT, queries)
 

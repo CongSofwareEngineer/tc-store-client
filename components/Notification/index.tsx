@@ -78,7 +78,7 @@ const NotificationClient: NextPage = () => {
 
         if (!isExited || userData?.tokenNoti?.length === 0) {
           const res = await ClientApi.updateTokenNoti(userData?._id!, {
-            tokenNoti: [...userData?.tokenNoti, token],
+            tokenNoti: [...(userData?.tokenNoti || []), token],
           })
 
           if (res?.data) {

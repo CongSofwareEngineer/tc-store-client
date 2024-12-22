@@ -139,16 +139,21 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
     const isObj = dataClone.value.some((e: any) => isObject(e))
 
     if (isObj) {
-      const newData = optionKeyValues.map((e) => {
-        return {
-          color: e.value,
-          amount: 10,
-          sold: 0,
-        }
-      })
+      // const newData = optionKeyValues.map((e) => {
+      //   return {
+      //     color: e.value,
+      //     amount: 10,
+      //     sold: 0,
+      //   }
+      // })
+      const newData = {
+        color: optionKeyValues[0].value,
+        amount: 10,
+        sold: 0,
+      }
       dataClone.value.push({
         size: 0,
-        colors: newData,
+        colors: [newData],
       })
     } else {
       dataClone.value.push('new value')

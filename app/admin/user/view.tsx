@@ -2,7 +2,7 @@
 import ImageAdmin from '@/components/ImageAdmin'
 import ModalDelete from '@/components/ModalDelete'
 import MyCheckBox from '@/components/MyCheckBox'
-import MyTable from '@/components/MyTable'
+import MyTable, { ColumnsType } from '@/components/MyTable'
 import TextCopy from '@/components/TextCopy'
 import { PAGE_SIZE_LIMIT } from '@/constant/app'
 import { QUERY_KEY } from '@/constant/reactQuery'
@@ -68,9 +68,9 @@ const UserAdminScreen = () => {
     })
   }
 
-  const getColumns = () => {
+  const getColumns = (): ColumnsType[] => {
     if (isMobile) {
-      const columns = [
+      const columns: ColumnsType[] = [
         {
           title: translate('textPopular.infor'),
           key: 'status',
@@ -128,7 +128,7 @@ const UserAdminScreen = () => {
       ]
       return columns
     }
-    const columns = [
+    const columns: ColumnsType[] = [
       {
         title: 'SDT',
         key: 'sdt',

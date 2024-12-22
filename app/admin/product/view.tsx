@@ -1,6 +1,6 @@
 'use client'
 import ImageAdmin from '@/components/ImageAdmin'
-import MyTable from '@/components/MyTable'
+import MyTable, { ColumnsType } from '@/components/MyTable'
 import TextCopy from '@/components/TextCopy'
 import { PAGE_SIZE_LIMIT } from '@/constant/app'
 import useMedia from '@/hook/useMedia'
@@ -14,7 +14,6 @@ import ProductConfig from './Component/ModalConfig'
 import useLanguage from '@/hook/useLanguage'
 import Link from 'next/link'
 import useListProductAdmin from '@/hook/tank-query/Admin/useListProductAdmin'
-import { ColumnsType } from 'antd/es/table'
 import ModalDelete from '@/components/ModalDelete'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
@@ -142,7 +141,7 @@ const ProductAdminScreen = () => {
         },
       ]
     }
-    const columns: ColumnsType = [
+    const columns: ColumnsType[] = [
       {
         title: 'STT',
         key: '_id',
