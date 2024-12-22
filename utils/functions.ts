@@ -156,7 +156,7 @@ export const viewExternal = (url: string) => {
   window.open(url, '_blank')
 }
 
-export const detectImg = (src: any, maxWidthScale = 500) => {
+export const detectImg = (src: any, maxWidthScale = 0) => {
   try {
     if (!src) {
       return ''
@@ -168,7 +168,10 @@ export const detectImg = (src: any, maxWidthScale = 500) => {
     if (src?.startsWith('https')) {
       return src
     }
-    return `https://res.cloudinary.com/tc-store/image/upload/c_scale,w_${maxWidthScale}/v1722158972/${src}`
+    if (maxWidthScale > 0) {
+      return `https://res.cloudinary.com/tc-store/image/upload/c_scale,w_${maxWidthScale}/v1722158972/${src}`
+    }
+    return `https://res.cloudinary.com/tc-store/image/upload/v1722158972/${src}`
   } catch (error) {
     return ''
   }
