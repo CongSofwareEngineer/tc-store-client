@@ -12,7 +12,7 @@ const MyImage = (props: ImageProps) => {
           fill
           quality={10}
           src={
-            'https://ipfsgw.bountykinds.com/ipfs/QmZnHddnniAY7TQYyitKZpXwCdYQj47927a75ypixxCQAS?filename=bgWhiteBlur.avif'
+            'https://res.cloudinary.com/tc-store/image/upload/w_100/v1734883048/tc-store/bgWhiteBlur_yxlqi7.png'
           }
           alt='image-loading-blur'
           priority
