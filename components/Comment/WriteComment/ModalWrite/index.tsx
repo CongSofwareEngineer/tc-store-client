@@ -33,6 +33,7 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
   const { refreshQuery } = useRefreshQuery()
   const { closeModalDrawer } = useModalDrawer()
   const { data: dataApi, isLoading: loadingApi } = useCommentDetail(dataItem._id)
+  console.log({ dataApi })
 
   useEffect(() => {
     const getData = async () => {
@@ -44,7 +45,7 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
         rate: 5,
         listImg: [],
       }
-      if (userData && dataApi?.data) {
+      if (userData && dataApi) {
         initData.listImg = dataApi.listImg
         initData.note = dataApi.note
         initData.rate = dataApi.rate

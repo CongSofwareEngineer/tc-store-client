@@ -14,12 +14,14 @@ import { images } from '@/configs/images'
 import ClientApi from '@/services/clientApi'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
+import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 
 const Like = ({ data }: { data: any }) => {
   const [isLike, setIsLike] = useState(false)
   const { userData, isLogin } = useUserData()
   const { translate } = useLanguage()
   const { refreshQuery } = useRefreshQuery()
+  const isYourComment = userData?.sdt === data?.sdt
 
   useEffect(() => {
     const isLike = data?.userLikes?.some((id: string) => id === userData?._id)
@@ -27,7 +29,7 @@ const Like = ({ data }: { data: any }) => {
   }, [userData, data])
 
   const handleLike = async () => {
-    if (isLogin) {
+    if (isLogin && !isYourComment) {
       setIsLike(!isLike)
       const body = {
         idUser: userData?._id,
@@ -44,9 +46,12 @@ const Like = ({ data }: { data: any }) => {
         {isLike ? (
           <MyImage
             onClick={handleLike}
-            className='!relative cursor-pointer !w-4 !h-auto'
+            className='!relative   !w-4 !h-auto'
             src={images.icon.iconHeart}
             alt='liked'
+            style={{
+              cursor: isYourComment ? 'default' : 'pointer',
+            }}
           />
         ) : (
           <MyImage
@@ -54,6 +59,9 @@ const Like = ({ data }: { data: any }) => {
             className='!relative cursor-pointer !w-4 !h-auto'
             src={images.icon.iconHeart1}
             alt='unlike'
+            style={{
+              cursor: isYourComment ? 'default' : 'pointer',
+            }}
           />
         )}
       </div>
@@ -69,8 +77,25 @@ const Like = ({ data }: { data: any }) => {
 }
 const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
   const { translate } = useLanguage()
+  // const { userData } = useUserData()
+  // const { refreshQuery } = useRefreshQuery()
   const { data, isLoading, hasNextPage, isFetchingNextPage, loadMore } = useComment(dataItem?._id)
 
+  // const handleDelete = async (item: any) => {
+  //   if (userData?.sdt === item?.sdt) {
+  //     const bodyDelete = {
+  //       imageDelete: item.listImg || [],
+  //       id: item._id,
+  //     }
+  //     const res = await ClientApi.deleteComment(bodyDelete)
+  //     if (res.data) {
+  //       await refreshQuery(QUERY_KEY.GetCommentProduction)
+  //       showNotificationSuccess(translate('success.delete'))
+  //     } else {
+  //       showNotificationError(translate('error.delete'))
+  //     }
+  //   }
+  // }
   return (
     <div className='flex flex-col gap-2'>
       <div className='text-medium font-bold'>{translate('textPopular.comment')}:</div>

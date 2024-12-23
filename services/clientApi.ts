@@ -195,9 +195,14 @@ const ClientApi = {
   },
 
   // -> comment
-  getComments: async (queryUrl: string) => {
+  getCommentById: async (queryUrl: string) => {
     return fetchData({
       url: `/comment/detail/${queryUrl}`,
+    })
+  },
+  getCommentByIdAndSDT: async (idProduct: string, sdt: string) => {
+    return fetchData({
+      url: `/comment/detail/${idProduct}/${sdt}`,
     })
   },
   createComment: async (body: any) => {
@@ -217,6 +222,14 @@ const ClientApi = {
   likeComment: async (id: string, body: any) => {
     return fetchData({
       url: `comment/like/${id}`,
+      method: REQUEST_TYPE.POST,
+      body,
+    })
+  },
+
+  deleteComment: async (body: any) => {
+    return fetchData({
+      url: 'comment/delete',
       method: REQUEST_TYPE.POST,
       body,
     })

@@ -6,7 +6,7 @@ import useUserData from '../useUserData'
 const getData = async ({ queryKey }: any) => {
   const idProduct = queryKey[1]
   const userData = queryKey[2]
-  const res = await ClientApi.getComments(`${idProduct}/${userData?.sdt}`)
+  const res = await ClientApi.getCommentByIdAndSDT(idProduct, userData?.sdt)
   return res?.data || null
 }
 
