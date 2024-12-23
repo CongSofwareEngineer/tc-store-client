@@ -349,7 +349,7 @@
   },
   "comment": {
     "feedbackSuccess": "Cảm ơn bạn đánh giá",
-    "feedbackFaild": "Đánh giá thật bại",
+    "feedbackFail": "Đánh giá thật bại",
     "veryGood": "Rất hài lòng",
     "good": "Hài lòng",
     "wellwell": "Khá hài lòng",

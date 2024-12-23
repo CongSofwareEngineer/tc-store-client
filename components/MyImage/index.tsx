@@ -11,9 +11,7 @@ const MyImage = (props: ImageProps) => {
         <Image
           fill
           quality={10}
-          src={
-            'https://res.cloudinary.com/tc-store/image/upload/w_100/v1734883048/tc-store/bgWhiteBlur_yxlqi7.png'
-          }
+          src={'https://res.cloudinary.com/tc-store/image/upload/w_100/v1734883048/tc-store/bgWhiteBlur_yxlqi7.png'}
           alt='image-loading-blur'
           priority
         />

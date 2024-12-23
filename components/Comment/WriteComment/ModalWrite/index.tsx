@@ -30,10 +30,9 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
   const { isLogin, userData } = useUserData()
   const { translate } = useLanguage()
   const { checkNumberPhone } = useCheckForm()
-  const { refreshQuery } = useRefreshQuery()
+  const { refreshListQuery } = useRefreshQuery()
   const { closeModalDrawer } = useModalDrawer()
   const { data: dataApi, isLoading: loadingApi } = useCommentDetail(dataItem._id)
-  console.log({ dataApi })
 
   useEffect(() => {
     const getData = async () => {
@@ -79,7 +78,6 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
 
     return data
   }
-  console.log({ formData })
 
   const handleSubmit = async () => {
     setLoading(true)
@@ -99,11 +97,11 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
       res = await ClientApi.createComment(body)
     }
     if (res?.data) {
-      await Promise.all([refreshQuery(QUERY_KEY.GetProductByID), refreshQuery(QUERY_KEY.GetCommentProduction)])
+      await refreshListQuery([QUERY_KEY.GetCommentProduction, QUERY_KEY.GetProductByID, QUERY_KEY.GetCommentDetail])
       closeModalDrawer()
       showNotificationSuccess(translate('comment.feedbackSuccess'))
     } else {
-      showNotificationError(translate('comment.feedbackFaild'))
+      showNotificationError(translate('comment.feedbackFail'))
     }
     setLoading(false)
   }

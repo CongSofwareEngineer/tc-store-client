@@ -14,14 +14,13 @@ import { images } from '@/configs/images'
 import ClientApi from '@/services/clientApi'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
-import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
+import { formatDateTime } from '@/utils/momentFunc'
 
-const Like = ({ data }: { data: any }) => {
+const Like = ({ data, isYourComment = false }: { data: any; isYourComment: boolean }) => {
   const [isLike, setIsLike] = useState(false)
   const { userData, isLogin } = useUserData()
   const { translate } = useLanguage()
   const { refreshQuery } = useRefreshQuery()
-  const isYourComment = userData?.sdt === data?.sdt
 
   useEffect(() => {
     const isLike = data?.userLikes?.some((id: string) => id === userData?._id)
@@ -42,7 +41,7 @@ const Like = ({ data }: { data: any }) => {
 
   return (
     <div className='flex gap-2 mt-1 items-center'>
-      <div className='min-w-4 cursor-pointer'>
+      <div className='!w-4 relative overflow-hidden cursor-pointer'>
         {isLike ? (
           <MyImage
             onClick={handleLike}
@@ -50,7 +49,7 @@ const Like = ({ data }: { data: any }) => {
             src={images.icon.iconHeart}
             alt='liked'
             style={{
-              cursor: isYourComment ? 'default' : 'pointer',
+              cursor: isYourComment || !isLogin ? 'default' : 'pointer',
             }}
           />
         ) : (
@@ -60,7 +59,7 @@ const Like = ({ data }: { data: any }) => {
             src={images.icon.iconHeart1}
             alt='unlike'
             style={{
-              cursor: isYourComment ? 'default' : 'pointer',
+              cursor: isYourComment || !isLogin ? 'default' : 'pointer',
             }}
           />
         )}
@@ -77,7 +76,7 @@ const Like = ({ data }: { data: any }) => {
 }
 const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
   const { translate } = useLanguage()
-  // const { userData } = useUserData()
+  const { userData, isLogin } = useUserData()
   // const { refreshQuery } = useRefreshQuery()
   const { data, isLoading, hasNextPage, isFetchingNextPage, loadMore } = useComment(dataItem?._id)
 
@@ -106,14 +105,20 @@ const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
         <div className='flex flex-col gap-2 max-h-[600px] overflow-y-auto'>
           {data.length === 0 && <div>{translate('textPopular.notData')}</div>}
           {data.map((e) => {
+            const isYourComment = userData?.sdt === e?.sdt
+
             return (
-              <div key={e?.sdt} className='flex gap-4 pb-3 border-b-[1px] mt-1 border-b-gray-200'>
-                <div className='aspect-square h-fit rounded-lg relative overflow-hidden w-[20%] md:min-w-[80px] min-w-[20px]  max-w-[50px]'>
+              <div key={e?.sdt} className='flex md:gap-4 gap-3 pb-3 border-b-[1px] mt-1 border-b-gray-200'>
+                <div className='aspect-square h-fit rounded-lg relative overflow-hidden w-[20%] md:min-w-[80px] min-w-[20px]  max-w-[40px]'>
                   <Image src={detectAvatar(e.user[0]?.avatar)} alt={e.sdt} fill className='!relative !w-full !h-auto' />
                 </div>
                 <div className='flex flex-col gap-1'>
                   <p className='font-bold'>{e.name}</p>
-                  <div className='text-[10px]'>{`SĐT : ${ellipsisText(e.sdt, 4, 3)}`}</div>
+                  <div className='flex gap-2 text-[10px]'>
+                    <span>{formatDateTime(e.date)}</span>
+                    <span>|</span>
+                    <div>{`SĐT : ${ellipsisText(e.sdt, 4, 3)}`}</div>
+                  </div>
                   <Rate disabled value={e.rate} style={{ fontSize: 15 }} />
 
                   <div className='my-1'>{e.note}</div>
@@ -126,7 +131,7 @@ const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
                       )
                     })}
                   </div>
-                  <Like data={e} />
+                  <Like isYourComment={isYourComment} data={e} />
                 </div>
               </div>
             )
