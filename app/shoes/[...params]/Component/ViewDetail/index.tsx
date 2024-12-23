@@ -206,7 +206,7 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
               alt={productDetail.des || ''}
               className='!relative !w-full !h-auto'
             />
-            <ImageMore data={productDetail} />
+            <ImageMore onHover={(url) => setImageShow(url!)} data={productDetail} />
           </div>
           <div data-aos='fade-right' className='w-full flex-col gap-2 px-5 pt-5'>
             <h1 className='text-title font-bold'>{productDetail.name}</h1>

@@ -105,10 +105,29 @@ const RegisterScreen = () => {
                 label={translate('productDetail.modalBuy.enterNumberPhone')}
               />
 
-              <InputForm name='name' required label={translate('productDetail.modalBuy.enterName')} />
+              <InputForm
+                showCount
+                maxLength={20}
+                name='name'
+                required
+                label={translate('productDetail.modalBuy.enterName')}
+              />
 
-              <InputForm name='pass' isPass required label={translate('register.enterPassWord')} />
-              <InputForm name='passAgain' isPass required label={translate('register.enterPassWordAgain')} />
+              <InputForm
+                showCount
+                name='pass'
+                maxLength={20}
+                isPass
+                required
+                label={translate('register.enterPassWord')}
+              />
+              <InputForm
+                name='passAgain'
+                isPass
+                maxLength={20}
+                required
+                label={translate('register.enterPassWordAgain')}
+              />
               <div className='flex gap-2 mt-2 '>
                 <div>{translate('userDetail.sex')} :</div>
 

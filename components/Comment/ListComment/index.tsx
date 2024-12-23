@@ -15,12 +15,26 @@ import ClientApi from '@/services/clientApi'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import { formatDateTime } from '@/utils/momentFunc'
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
+import useModalDrawer from '@/hook/useModalDrawer'
+import ModalDelete from '@/components/ModalDelete'
+import ModalWrite from '../WriteComment/ModalWrite'
+import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 
-const Like = ({ data, isYourComment = false }: { data: any; isYourComment: boolean }) => {
+const Like = ({
+  data,
+  isYourComment = false,
+  dataProduct,
+}: {
+  data: any
+  isYourComment: boolean
+  dataProduct: any
+}) => {
   const [isLike, setIsLike] = useState(false)
   const { userData, isLogin } = useUserData()
   const { translate } = useLanguage()
   const { refreshQuery } = useRefreshQuery()
+  const { openModalDrawer } = useModalDrawer()
 
   useEffect(() => {
     const isLike = data?.userLikes?.some((id: string) => id === userData?._id)
@@ -37,6 +51,41 @@ const Like = ({ data, isYourComment = false }: { data: any; isYourComment: boole
       await ClientApi.likeComment(data._id, body)
       refreshQuery(QUERY_KEY.GetCommentProduction)
     }
+  }
+
+  const handleEdit = () => {
+    openModalDrawer({
+      content: <ModalWrite dataItem={dataProduct} />,
+      useDrawer: true,
+      title: <div className='text-medium'>{translate('feedback.title')}</div>,
+      configModal: {
+        width: '600px',
+      },
+    })
+  }
+
+  const handleDelete = () => {
+    const callback = async () => {
+      const bodyDelete = {
+        imageDelete: data.listImg || [],
+        id: data._id,
+      }
+      const res = await ClientApi.deleteComment(bodyDelete)
+      if (res.data) {
+        await refreshQuery(QUERY_KEY.GetCommentProduction)
+        showNotificationSuccess(translate('success.delete'))
+      } else {
+        showNotificationError(translate('error.delete'))
+      }
+    }
+
+    openModalDrawer({
+      content: <ModalDelete callback={callback} />,
+      configModal: {
+        overClickClose: false,
+        showBtnClose: false,
+      },
+    })
   }
 
   return (
@@ -71,30 +120,25 @@ const Like = ({ data, isYourComment = false }: { data: any; isYourComment: boole
             : numberWithCommas(data?.userLikes.length)
           : translate('textPopular.useful')}
       </span>
+      {isYourComment && (
+        <span className='text-green-500 text-lg '>
+          <EditOutlined onClick={handleEdit} className='text-green-500 cursor-pointer' />
+        </span>
+      )}
+
+      {userData?.isAdmin && (
+        <span className='text-red-500 text-lg'>
+          <DeleteOutlined className='cursor-pointer' onClick={handleDelete} />
+        </span>
+      )}
     </div>
   )
 }
 const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
   const { translate } = useLanguage()
-  const { userData, isLogin } = useUserData()
-  // const { refreshQuery } = useRefreshQuery()
+  const { userData } = useUserData()
   const { data, isLoading, hasNextPage, isFetchingNextPage, loadMore } = useComment(dataItem?._id)
 
-  // const handleDelete = async (item: any) => {
-  //   if (userData?.sdt === item?.sdt) {
-  //     const bodyDelete = {
-  //       imageDelete: item.listImg || [],
-  //       id: item._id,
-  //     }
-  //     const res = await ClientApi.deleteComment(bodyDelete)
-  //     if (res.data) {
-  //       await refreshQuery(QUERY_KEY.GetCommentProduction)
-  //       showNotificationSuccess(translate('success.delete'))
-  //     } else {
-  //       showNotificationError(translate('error.delete'))
-  //     }
-  //   }
-  // }
   return (
     <div className='flex flex-col gap-2'>
       <div className='text-medium font-bold'>{translate('textPopular.comment')}:</div>
@@ -121,7 +165,7 @@ const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
                   </div>
                   <Rate disabled value={e.rate} style={{ fontSize: 15 }} />
 
-                  <div className='my-1'>{e.note}</div>
+                  <div className='md:my-1 mt-1'>{e.note}</div>
                   <div className='flex flex-wrap w-full gap-2 mt-1 '>
                     {e.listImg.map((img: string) => {
                       return (
@@ -131,7 +175,7 @@ const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
                       )
                     })}
                   </div>
-                  <Like isYourComment={isYourComment} data={e} />
+                  <Like dataProduct={dataItem} isYourComment={isYourComment} data={e} />
                 </div>
               </div>
             )
