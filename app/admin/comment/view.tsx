@@ -13,19 +13,25 @@ import useQuerySearch from '@/hook/useQuerySearch'
 import useSearchBaseAdmin from '@/hook/useSearchBaseAdmin'
 import { ellipsisText } from '@/utils/functions'
 import { formatDateTime } from '@/utils/momentFunc'
-import { CommentOutlined, LikeOutlined } from '@ant-design/icons'
+import { CommentOutlined, DeleteOutlined, LikeOutlined } from '@ant-design/icons'
 import { Button, Rate } from 'antd'
 import Link from 'next/link'
 
 import React from 'react'
 import ModalReply from './Component/ModalReply'
 import { numberWithCommas } from '../../../utils/functions'
+import ModalDelete from '@/components/ModalDelete'
+import ClientApi from '@/services/clientApi'
+import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
+import { QUERY_KEY } from '@/constant/reactQuery'
+import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 
 const CommentClient = () => {
   const { isMobile } = useMedia()
   const { translate } = useLanguage()
   const { queries } = useQuerySearch()
   const { openModalDrawer } = useModalDrawer()
+  const { refreshQuery } = useRefreshQuery()
   const { data, isLoading } = useCommentAdmin(queries)
   const { renderContent } = useSearchBaseAdmin(
     {
@@ -51,8 +57,29 @@ const CommentClient = () => {
       content: <ModalReply data={item} />,
       useDrawer: true,
       title: translate('common.reply'),
-      configDrawer: {
-        // height:
+    })
+  }
+
+  const handleDelete = (item: any) => {
+    const callback = async () => {
+      const bodyDelete = {
+        imageDelete: item.listImg || [],
+        id: item._id,
+      }
+      const res = await ClientApi.deleteComment(bodyDelete)
+      if (res.data) {
+        await refreshQuery(QUERY_KEY.GetCommentProduction)
+        showNotificationSuccess(translate('success.delete'))
+      } else {
+        showNotificationError(translate('error.delete'))
+      }
+    }
+
+    openModalDrawer({
+      content: <ModalDelete callback={callback} />,
+      configModal: {
+        showBtnClose: false,
+        overClickClose: false,
       },
     })
   }
@@ -112,7 +139,12 @@ const CommentClient = () => {
                   </>
                 )}
 
-                <Button onClick={() => handleReply(record)}>{translate('common.reply')}</Button>
+                <div className='flex gap-3'>
+                  <Button onClick={() => handleReply(record)}>{translate('common.reply')}</Button>
+                  <Button type='primary' onClick={() => handleDelete(record)}>
+                    {translate('common.delete')}
+                  </Button>
+                </div>
               </div>
             )
           },
@@ -217,6 +249,25 @@ const CommentClient = () => {
         render: (_: string[], record: any) => {
           return (
             <CommentOutlined onClick={() => handleReply(record)} className='text-2xl cursor-pointer hover:scale-110' />
+          )
+        },
+      },
+      {
+        title: 'Action',
+        key: 'addressShip',
+        dataIndex: 'addressShip',
+        fixed: 'right',
+        render: (_: any, record: any) => {
+          return (
+            <div className='flex gap-2  items-center justify-end'>
+              <div className='text-red-500'>
+                <DeleteOutlined
+                  onClick={() => handleDelete(record)}
+                  className='hover:scale-105 cursor-pointer'
+                  style={{ fontSize: 24 }}
+                />
+              </div>
+            </div>
           )
         },
       },
