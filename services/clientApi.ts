@@ -214,6 +214,13 @@ const ClientApi = {
       body,
     })
   },
+  likeComment: async (id: string, body: any) => {
+    return fetchData({
+      url: `comment/like/${id}`,
+      method: REQUEST_TYPE.POST,
+      body,
+    })
+  },
 
   // -> contact
   createContact: async (body: any) => {

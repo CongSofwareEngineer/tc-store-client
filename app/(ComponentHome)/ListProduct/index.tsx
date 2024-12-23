@@ -32,7 +32,7 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
               <ItemProduct
                 showFeedback
                 showSold
-                key={item.id}
+                key={item.keyName}
                 item={item}
                 href={`/shop/${item.keyName}`}
                 className={'w-[180px] md:w-[230px]   md:h-[350px]'}

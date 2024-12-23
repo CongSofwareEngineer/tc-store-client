@@ -82,14 +82,6 @@ const MenuAdminMobile = () => {
           </div>
         )
       })}
-      <div className='w-auto'>
-        <Link href={'/'} className={`text-black flex gap-2 items-baseline`}>
-          <span className='text-xl text-green-500'>
-            <HomeOutlined />
-          </span>
-          <span> {translate('header.home')}</span>
-        </Link>
-      </div>
     </div>
   )
 }

@@ -55,6 +55,7 @@
     "exitSDT": "SĐT đã tồn tại"
   },
   "textPopular": {
+    "useful": "Hữu ích",
     "source": "Nguồn",
     "date": "Ngày Tháng",
     "moreLike": "Có thể bạn cũng thích",
@@ -255,6 +256,7 @@
     }
   },
   "success": {
+    "reply": "Trả lời thành công",
     "login": "Đăng nhập thành công",
     "create": "Tạo mới thành công",
     "delete": "Xóa thành công",

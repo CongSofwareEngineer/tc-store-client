@@ -13,12 +13,13 @@ import useQuerySearch from '@/hook/useQuerySearch'
 import useSearchBaseAdmin from '@/hook/useSearchBaseAdmin'
 import { ellipsisText } from '@/utils/functions'
 import { formatDateTime } from '@/utils/momentFunc'
-import { CommentOutlined } from '@ant-design/icons'
+import { CommentOutlined, LikeOutlined } from '@ant-design/icons'
 import { Button, Rate } from 'antd'
 import Link from 'next/link'
 
 import React from 'react'
-import ModalReplay from './Component/ModalReplay'
+import ModalReply from './Component/ModalReply'
+import { numberWithCommas } from '../../../utils/functions'
 
 const CommentClient = () => {
   const { isMobile } = useMedia()
@@ -47,8 +48,9 @@ const CommentClient = () => {
 
   const handleReply = (item: any) => {
     openModalDrawer({
-      content: <ModalReplay />,
+      content: <ModalReply data={item} />,
       useDrawer: true,
+      title: translate('common.reply'),
       configDrawer: {
         // height:
       },
@@ -71,7 +73,15 @@ const CommentClient = () => {
                   </div>
                   <span>{formatDateTime(record?.date)}</span>
                 </div>
-                <Rate style={{ fontSize: 12 }} value={record?.rate} className='text-xs' />
+                <div className='flex justify-between'>
+                  <Rate style={{ fontSize: 12 }} value={record?.rate} className='text-xs' />
+                  <div className='flex gap-1 text-sm items-center'>
+                    <span>{Array.isArray(record?.userLike) ? numberWithCommas(record?.userLike.length) : 0}</span>
+                    <span className='  text-blue-500'>
+                      <LikeOutlined className='  text-blue-500' />
+                    </span>
+                  </div>
+                </div>
 
                 <div className='flex gap-2'>
                   <span className='font-bold'>{translate('header.name')}:</span>
