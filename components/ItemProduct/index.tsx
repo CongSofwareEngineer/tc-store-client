@@ -52,7 +52,7 @@ const ItemProduct = ({
 
         <div className='m-auto max-w-[85%] relative w-full aspect-square  overflow-hidden'>
           <MyImage
-            src={detectImg(item?.imageMain || images.userDetail.iconUserDetail,350)}
+            src={detectImg(item?.imageMain || images.userDetail.iconUserDetail, 350)}
             alt={`item-${item?.name || href}`}
             className='!relative  !h-auto group-hover:scale-110 transform transition duration-300 ease-in-out select-none'
           />

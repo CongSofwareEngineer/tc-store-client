@@ -6,7 +6,7 @@ const MyImage = (props: ImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false)
   return (
     <>
-      <Image {...props} onLoad={() => setIsLoaded(true)} fill />
+      <Image loading='lazy' {...props} onLoad={() => setIsLoaded(true)} fill />
       {!isLoaded && (
         <Image
           fill
