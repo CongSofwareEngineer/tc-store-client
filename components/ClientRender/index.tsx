@@ -1,12 +1,11 @@
 'use client'
 import React, { useLayoutEffect } from 'react'
 import Header from '../Header'
-import { useAppDispatch } from '@/redux/store'
 import Footer from '../Footer'
 import dynamic from 'next/dynamic'
 import useAos from '@/hook/useAos'
-import { fetchProvinces } from '@/redux/provincesSlice'
-import { setMenuCategory } from '@/redux/categoryMenuSlice'
+import { useCategoryMenu } from '@/zustand/useCategoryMenu'
+import { useUserData } from '@/zustand/useUserData'
 
 const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
   ssr: true,
@@ -34,11 +33,12 @@ const FirstLoadWebsite = dynamic(() => import('../FirstLoadWebsite'), {
 
 const ClientRender = ({ children, menuCategory = [] }: { children: React.ReactNode; menuCategory: any[] }) => {
   useAos()
-  const dispatch = useAppDispatch()
+  const { setCategoryMenu } = useCategoryMenu()
+  const { loadDataLocal } = useUserData()
 
   useLayoutEffect(() => {
-    dispatch(fetchProvinces())
-    dispatch(setMenuCategory(menuCategory))
+    setCategoryMenu(menuCategory)
+    loadDataLocal()
   }, [])
 
   return (

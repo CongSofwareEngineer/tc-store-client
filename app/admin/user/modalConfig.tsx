@@ -1,7 +1,7 @@
 import MyImage from '@/components/MyImage'
 import TextCopy from '@/components/TextCopy'
 import { QUERY_KEY } from '@/constant/reactQuery'
-import { TypeUserData } from '@/constant/redux'
+import { TYPE_USER_DATA } from '@/constant/zustand'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
@@ -12,7 +12,7 @@ import { Button } from 'antd'
 import Link from 'next/link'
 import React, { useState } from 'react'
 
-const ModalConfig = ({ data }: { data?: TypeUserData }) => {
+const ModalConfig = ({ data }: { data?: TYPE_USER_DATA }) => {
   const { translate } = useLanguage()
   const { refreshQuery } = useRefreshQuery()
   const { closeModalDrawer } = useModalDrawer()

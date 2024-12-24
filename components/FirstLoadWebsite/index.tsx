@@ -1,9 +1,6 @@
 import { COOKIE_EXPIRED, COOKIE_KEY, LOCAL_STORAGE_KEY, OBSERVER_KEY } from '@/constant/app'
-import { SLICE, TypeUserData } from '@/constant/redux'
+import { TYPE_USER_DATA, TYPE_ZUSTAND, ZUSTAND } from '@/constant/zustand'
 import useCheckPatchName from '@/hook/tank-query/useCheckPatchName'
-import { fetchMenuCategory } from '@/redux/categoryMenuSlice'
-import { useAppSelector } from '@/redux/store'
-import { setUserData } from '@/redux/userDataSlice'
 import ClientApi from '@/services/clientApi'
 import { deleteCookie, setCookie } from '@/services/CookiesService'
 import ObserverService from '@/services/observer'
@@ -16,7 +13,6 @@ import { LoadingOutlined } from '@ant-design/icons'
 import { NextPage } from 'next'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import secureLocalStorage from 'react-secure-storage'
 
 const FirstLoadWebsite: NextPage = () => {
@@ -26,15 +22,14 @@ const FirstLoadWebsite: NextPage = () => {
   const pathName = usePathname()
   const { fetchData: fetchCategoryMenu } = useCategoryMenu()
   const { fetchData: fetchDataProvinces } = useProvinces()
-  const { reset: resetUser, userData: userDataZustand } = useUserData()
-  const dispatch = useDispatch()
+  const { reset: resetUser, userData, setUserData, loadDataLocal } = useUserData()
   const listUrlExitedRef = useRef<string[]>([])
-  const userRef = useRef<TypeUserData | null>(null)
-  const { UserData: userData } = useAppSelector((state) => state.app)
+  const userRef = useRef<TYPE_ZUSTAND[ZUSTAND.UserData]>(null)
 
   useLayoutEffect(() => {
     fetchCategoryMenu()
     fetchDataProvinces()
+    loadDataLocal()
   }, [])
   useEffect(() => {
     if (!userRef.current) {
@@ -46,7 +41,6 @@ const FirstLoadWebsite: NextPage = () => {
     if (userData) {
       ObserverService.emit(OBSERVER_KEY.ReLogin, userData)
     }
-    dispatch(fetchMenuCategory())
   }, [])
 
   useEffect(() => {
@@ -69,14 +63,14 @@ const FirstLoadWebsite: NextPage = () => {
       const data = await ClientApi.login(body)
 
       if (data?.data) {
-        dispatch(setUserData(data?.data))
+        setUserData(data?.data)
         setCookie(COOKIE_KEY.Auth, data?.data.auth?.toString(), COOKIE_EXPIRED.ExpiredAuth)
         setCookie(COOKIE_KEY.AuthRefresh, data?.data.authRefresh?.toString(), COOKIE_EXPIRED.ExpiredAuthRefresh)
       }
       return data?.data || null
     }
 
-    const refreshLogin = async (userData: TypeUserData) => {
+    const refreshLogin = async (userData: TYPE_USER_DATA) => {
       const data = await loginWithDB(userData.sdt!, userData.pass!)
       if (!data) {
         ObserverService.emit(OBSERVER_KEY.LogOut)
@@ -106,13 +100,11 @@ const FirstLoadWebsite: NextPage = () => {
       }
       resetUser()
       setTimeout(() => {
-        secureLocalStorage.removeItem(SLICE.UserData)
+        secureLocalStorage.removeItem(ZUSTAND.UserData)
         deleteCookie(COOKIE_KEY.Auth)
         deleteCookie(COOKIE_KEY.AuthRefresh)
         removeDataLocal(LOCAL_STORAGE_KEY.TokenFirebase)
       }, 100)
-
-      dispatch(setUserData(null))
       if (isReload) {
         window.location.href = '/'
       }

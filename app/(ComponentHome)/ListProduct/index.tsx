@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { ListProductType } from './type'
 import ItemProduct from '@/components/ItemProduct'
 import useLanguage from '@/hook/useLanguage'

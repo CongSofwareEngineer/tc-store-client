@@ -7,7 +7,7 @@ import { TYPE_PRODUCT } from '@/constant/admin'
 import AttributeShoes from './Shoes'
 import useLanguage from '@/hook/useLanguage'
 import OptionAddNew from './OptionAddNew'
-import useModalAdmin from '@/hook/useModalAdmin'
+import { useModalAdmin } from '@/zustand/useModalAdmin'
 
 export type TypeHandle = 'add' | 'update' | 'delete'
 export type TypeValue = 'arr' | 'object' | 'string'

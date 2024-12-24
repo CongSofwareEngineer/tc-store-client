@@ -1,8 +1,9 @@
-import { useAppSelector } from '@/redux/store'
 import { Form } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 import MySelect from '../MySelect'
+import { useLanguage } from '@/zustand/useLanguage'
+import { useCategoryMenu } from '@/zustand/useCategoryMenu'
 const FormItem = styled(styled(Form.Item)<{ $configInput: any }>``)`
   margin-bottom: 24px !important;
   width: 100% !important;
@@ -61,12 +62,13 @@ type Props = {
 }
 
 const CategoryForm = ({ label, name, classFromItem = '', configInput = {}, disabled = false }: Props) => {
-  const { CategoryMenu, Language } = useAppSelector((state) => state.app)
+  const { language } = useLanguage()
+  const { categoryMenu } = useCategoryMenu()
 
   const getMenu = () => {
-    const data = CategoryMenu.map((e) => {
+    const data = categoryMenu.map((e) => {
       return {
-        label: e?.lang?.[Language.locale || 'vn'].toString() || '',
+        label: e?.lang?.[language.locale || 'vn'].toString() || '',
         value: e.keyName.toString() || '',
         name: e.keyName,
       }
@@ -80,7 +82,7 @@ const CategoryForm = ({ label, name, classFromItem = '', configInput = {}, disab
     ]
   }
 
-  return CategoryMenu ? (
+  return categoryMenu ? (
     <FormItem $configInput={configInput} className={classFromItem} label={label} name={name}>
       <MySelect disabled={disabled} option={getMenu()} className='w-full' />
     </FormItem>

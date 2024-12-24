@@ -24,7 +24,10 @@ const zustandProvinces = create<ProvincesStore>()(
         } catch (error) {}
       },
     }),
-    { name: ZUSTAND.Provinces },
+    {
+      name: `zustand-${ZUSTAND.Provinces}`,
+      enabled: process.env.NODE_ENV !== 'production',
+    },
   ),
 )
 

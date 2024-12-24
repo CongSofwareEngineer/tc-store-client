@@ -4,7 +4,7 @@ import { images } from '@/configs/images'
 import useModalDrawer from '@/hook/useModalDrawer'
 import Image from 'next/image'
 import { Button } from 'antd'
-import useModalAdmin from '@/hook/useModalAdmin'
+import { useModalAdmin } from '@/zustand/useModalAdmin'
 
 type ModalDeleteType = {
   des?: string

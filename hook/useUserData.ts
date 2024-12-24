@@ -1,10 +1,6 @@
-import { useAppDispatch, useAppSelector } from '@/redux/store'
-import { setUserData } from '@/redux/userDataSlice'
 import useLanguage from './useLanguage'
-
 import secureLocalStorage from 'react-secure-storage'
 import { decryptData, encryptData } from '@/utils/crypto'
-import { SLICE } from '@/constant/redux'
 import useModalDrawer from './useModalDrawer'
 import { COOKIE_EXPIRED, COOKIE_KEY, OBSERVER_KEY } from '@/constant/app'
 import { setCookie } from '@/services/CookiesService'
@@ -12,13 +8,12 @@ import ClientApi from '@/services/clientApi'
 import ObserverService from '@/services/observer'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import { useUserData as userUserDataZustand } from '@/zustand/useUserData'
+import { ZUSTAND } from '@/constant/zustand'
 
 const useUserData = () => {
-  const dispatch = useAppDispatch()
-  const { UserData: userData } = useAppSelector((state) => state.app)
   const { translate } = useLanguage()
   const { closeModalDrawer } = useModalDrawer()
-  const { setUserData: setUserDataZustand } = userUserDataZustand()
+  const { setUserData: setUserDataZustand, userData } = userUserDataZustand()
 
   const loginWithDB = async (sdt: string, pass: string) => {
     const dataBody = encryptData(
@@ -33,7 +28,6 @@ const useUserData = () => {
     const data = await ClientApi.login(body)
 
     if (data?.data) {
-      dispatch(setUserData(data?.data))
       setUserDataZustand(data?.data)
       setCookie(COOKIE_KEY.Auth, data?.data.auth?.toString(), COOKIE_EXPIRED.ExpiredAuth)
       setCookie(COOKIE_KEY.AuthRefresh, data?.data.authRefresh?.toString(), COOKIE_EXPIRED.ExpiredAuthRefresh)
@@ -53,7 +47,7 @@ const useUserData = () => {
   }
 
   const reLogin = async () => {
-    const dataSecure = secureLocalStorage.getItem(SLICE.UserData)
+    const dataSecure = secureLocalStorage.getItem(ZUSTAND.UserData)
     if (dataSecure) {
       const dataDecode = decryptData(dataSecure.toString())
       const dataPare = JSON.parse(dataDecode)
@@ -61,7 +55,7 @@ const useUserData = () => {
       const data = await loginWithDB(dataPare?.sdt, dataPare?.pass)
       if (data) {
         const userEncode = encryptData(JSON.stringify(data))
-        secureLocalStorage.setItem(SLICE.UserData, userEncode)
+        secureLocalStorage.setItem(ZUSTAND.UserData, userEncode)
       } else {
         ObserverService.emit(OBSERVER_KEY.LogOut, false)
       }
@@ -78,7 +72,7 @@ const useUserData = () => {
       if (data) {
         if (saveLogin) {
           const userEncode = encryptData(JSON.stringify(data))
-          secureLocalStorage.setItem(SLICE.UserData, userEncode)
+          secureLocalStorage.setItem(ZUSTAND.UserData, userEncode)
         }
         showNotificationSuccess(translate('success.login'))
         closeModalDrawer()

@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import React from 'react'
 import { Inter } from 'next/font/google'
 import AntdProvider from '@/components/AntdProvider'
-import ReduxProvider from '@/components/ReduxProvider'
+// import ReduxProvider from '@/components/ReduxProvider'
 import MyModalProvider from '@/components/MyModal'
 import '@/styles/globals.scss'
 import '@/styles/override.scss'
@@ -194,13 +194,13 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
           <StyledComponentsRegistry>
             <AntdRegistry>
               <AntdProvider>
-                <ReduxProvider>
-                  <MyModalProvider>
-                    <DrawerProvider>
-                      <ClientRender menuCategory={menuCategory?.data || []}>{children}</ClientRender>
-                    </DrawerProvider>
-                  </MyModalProvider>
-                </ReduxProvider>
+                {/* <ReduxProvider> */}
+                <MyModalProvider>
+                  <DrawerProvider>
+                    <ClientRender menuCategory={menuCategory?.data || []}>{children}</ClientRender>
+                  </DrawerProvider>
+                </MyModalProvider>
+                {/* </ReduxProvider> */}
               </AntdProvider>
             </AntdRegistry>
           </StyledComponentsRegistry>

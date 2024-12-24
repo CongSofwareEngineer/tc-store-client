@@ -1,34 +1,37 @@
 import { persist, devtools } from 'zustand/middleware'
 
 import { create } from 'zustand'
-import { SLICE } from '@/constant/redux'
+
 import { INIT_ZUSTAND, ZUSTAND } from '@/constant/zustand'
 
-type LanguageStoreState = { [SLICE.Language]: { locale: string; messages: any } }
+type LanguageStoreState = { [ZUSTAND.Language]: { locale: string; messages: any } }
 
 type LanguageStoreActions = {
-  setLanguage: (nextLanguage: LanguageStoreState[SLICE.Language]) => void
+  setLanguage: (nextLanguage: LanguageStoreState[ZUSTAND.Language]) => void
 }
 
 type LanguageStore = LanguageStoreState & LanguageStoreActions
 
-const zustandLanguage = create<LanguageStore>()(
+export const zustandLanguage = create<LanguageStore>()(
   devtools(
     persist(
       (set) => ({
-        [SLICE.Language]: INIT_ZUSTAND[ZUSTAND.Language],
-        setLanguage: (language) => set({ [SLICE.Language]: language }),
+        [ZUSTAND.Language]: INIT_ZUSTAND[ZUSTAND.Language],
+        setLanguage: (language) => set({ [ZUSTAND.Language]: language }),
       }),
       {
-        name: SLICE.Language,
+        name: ZUSTAND.Language,
       },
     ),
-    { name: SLICE.Language },
+    {
+      name: `zustand-${ZUSTAND.Language}`,
+      enabled: process.env.NODE_ENV !== 'production',
+    },
   ),
 )
 
 export const useLanguage = () => {
-  const data = zustandLanguage((state) => state[SLICE.Language])
+  const data = zustandLanguage((state) => state[ZUSTAND.Language])
   const setLanguage = zustandLanguage((state) => state.setLanguage)
   return {
     language: data,

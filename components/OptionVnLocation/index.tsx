@@ -1,10 +1,10 @@
 import useAddressShip from '@/hook/useAddressShip'
 import React, { useEffect, useState } from 'react'
 import MySelect from '../MySelect'
-import { useAppSelector } from '@/redux/store'
-import useLanguage from '@/hook/useLanguage'
 import MyInput from '../MyInput'
-import useUserData from '@/hook/useUserData'
+import { useProvinces } from '@/zustand/useProvinces'
+import { useUserData } from '@/zustand/useUserData'
+import useLanguage from '@/hook/useLanguage'
 
 const OptionVnLocation = ({
   callback,
@@ -21,7 +21,7 @@ const OptionVnLocation = ({
   const [ward, setWard] = useState<any>(null)
   const [addressDetail, setAddressDetail] = useState('')
 
-  const { Provinces } = useAppSelector((state) => state.app)
+  const { provinces } = useProvinces()
   const { translate } = useLanguage()
   const { userData } = useUserData()
   const { data: listDistrict, loading: loadingDistrict } = useAddressShip(2, provence?.id || provence)
@@ -30,8 +30,8 @@ const OptionVnLocation = ({
   useEffect(() => {
     const initData = (address: any) => {
       const addressArr = address?.address.split('---') || []
-      if (Array.isArray(Provinces) && !provence) {
-        const dataProvence = Provinces.find((e) => e.full_name === addressArr[2])
+      if (Array.isArray(provinces) && !provence) {
+        const dataProvence = provinces.find((e) => e.full_name === addressArr[2])
         setProvence(dataProvence)
       }
       if (Array.isArray(listDistrict) && !districts) {
@@ -52,7 +52,7 @@ const OptionVnLocation = ({
         initData(address)
       }
     }
-  }, [isNew, userData, Provinces, listDistrict, listWards])
+  }, [isNew, userData, provinces, listDistrict, listWards])
 
   const getOption = (list: any) => {
     return list.map((e: any) => {
@@ -68,7 +68,7 @@ const OptionVnLocation = ({
     setDistricts(null)
     setAddressDetail('')
     setWard(null)
-    const data = Provinces.find((e) => e.id === id)
+    const data = provinces.find((e) => e.id === id)
     setProvence(data)
   }
 
@@ -106,7 +106,7 @@ const OptionVnLocation = ({
             showSearch
             fullImage
             className='w-full'
-            option={getOption(Provinces)}
+            option={getOption(provinces)}
             onChange={onChangeProvince}
           />
         </div>

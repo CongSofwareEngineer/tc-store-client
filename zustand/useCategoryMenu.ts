@@ -53,7 +53,10 @@ const zustandCategoryMenu = create<CategoryMenuStore>()(
         name: `zustand-${ZUSTAND.CategoryMenu}`,
       },
     ),
-    { name: ZUSTAND.CategoryMenu },
+    {
+      name: `zustand-${ZUSTAND.CategoryMenu}`,
+      enabled: process.env.NODE_ENV !== 'production',
+    },
   ),
 )
 

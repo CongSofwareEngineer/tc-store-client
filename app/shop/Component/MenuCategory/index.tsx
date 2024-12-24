@@ -1,27 +1,31 @@
 import { FilterAPI } from '@/constant/app'
 import useLanguage from '@/hook/useLanguage'
-import { useAppSelector } from '@/redux/store'
 import React, { useMemo } from 'react'
 import MyFilter from '@/components/MyFilter'
 import MyFilterCheckBox from '@/components/MyFilterCheckBox'
+import { useCategoryMenu } from '@/zustand/useCategoryMenu'
 
 const MenuCategory = () => {
   const { translate, lang } = useLanguage()
-  const { CategoryMenu } = useAppSelector((state) => state.app)
-
+  const { categoryMenu } = useCategoryMenu()
   const itemMenu = useMemo(() => {
-    return CategoryMenu.map((e) => {
+    return categoryMenu.map((e) => {
       return {
         value: e.keyName,
         label: e.keyName,
         name: e?.lang?.[lang],
       }
     })
-  }, [CategoryMenu, lang])
+  }, [categoryMenu, lang])
 
   return (
     <MyFilter titleHeader={translate('menuProduct.category')}>
-      <MyFilterCheckBox data={itemMenu || []} titleFilter={translate('menuProduct.product')} typeChecked={FilterAPI.Category} isReplace={false} />
+      <MyFilterCheckBox
+        data={itemMenu || []}
+        titleFilter={translate('menuProduct.product')}
+        typeChecked={FilterAPI.Category}
+        isReplace={false}
+      />
     </MyFilter>
   )
 }

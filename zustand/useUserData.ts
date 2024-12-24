@@ -1,4 +1,4 @@
-import { persist, devtools } from 'zustand/middleware'
+import { devtools } from 'zustand/middleware'
 import { create } from 'zustand'
 import { INIT_ZUSTAND, TYPE_ZUSTAND, ZUSTAND } from '@/constant/zustand'
 import secureLocalStorage from 'react-secure-storage'
@@ -22,24 +22,28 @@ const zustandUserData = create<UserDataStore>()(
       reset: () => set({ [ZUSTAND.UserData]: INIT_ZUSTAND[ZUSTAND.UserData] }),
       loadDataLocal: () => {
         const dataSecure = secureLocalStorage.getItem(ZUSTAND.UserData)
+
         if (dataSecure) {
           const dataDecode = decryptData(dataSecure.toString())
-          set(JSON.parse(dataDecode))
+          set({ [ZUSTAND.UserData]: JSON.parse(dataDecode) })
         }
       },
     }),
-    { name: ZUSTAND.UserData },
+    {
+      name: `zustand-${ZUSTAND.UserData}`,
+      enabled: process.env.NODE_ENV !== 'production',
+    },
   ),
 )
 
 export const useUserData = () => {
-  const data = zustandUserData((state) => state[ZUSTAND.UserData])
+  const userData = zustandUserData((state) => state[ZUSTAND.UserData])
   const setUserData = zustandUserData((state) => state.setUserData)
   const reset = zustandUserData((state) => state.reset)
   const loadDataLocal = zustandUserData((state) => state.loadDataLocal)
 
   return {
-    userData: data,
+    userData,
     setUserData,
     reset,
     loadDataLocal,

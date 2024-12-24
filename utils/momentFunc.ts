@@ -1,9 +1,8 @@
-import { SLICE } from '@/constant/redux'
-import storeRedux from '@/redux/store'
+import { zustandLanguage } from '@/zustand/useLanguage'
 import moment from 'moment'
 
 const localMoment = () => {
-  const { locale } = storeRedux.getState().app[SLICE.Language]
+  const { locale } = zustandLanguage.getState().language
   moment.locale(locale)
   return moment
 }

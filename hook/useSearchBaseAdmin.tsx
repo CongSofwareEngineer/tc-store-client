@@ -7,15 +7,15 @@ import CategoryForm from '@/components/CategoryForm'
 import CheckBoxForm from '@/components/Form/CheckBoxForm'
 import { usePathname, useRouter } from 'next/navigation'
 import ButtonForm from '@/components/Form/ButtonForm'
-import { useAppSelector } from '@/redux/store'
 import useMedia from './useMedia'
 import { isObject } from '@/utils/functions'
 import useQuerySearch from './useQuerySearch'
 import MyDatePickerForm from '@/components/Form/MyDatePickerForm'
-import dayjs from 'dayjs'
 import StatusFormBill from '@/components/Form/StatusFormBill'
 import { FILTER_BILL } from '@/constant/app'
+import { useLanguage as useLanguageZustand } from '@/zustand/useLanguage'
 import { Button } from 'antd'
+import { useCategoryMenu } from '@/zustand/useCategoryMenu'
 
 type KeySearchProps = {
   dateStart?: boolean
@@ -44,19 +44,20 @@ const useSearchBaseAdmin = (param?: KeySearchProps, paramTitle?: TitleProps) => 
   const pathPage = usePathname()
   const router = useRouter()
   const { isClient } = useMedia()
-  const { CategoryMenu, Language } = useAppSelector((state) => state.app)
+  const { language } = useLanguageZustand()
+  const { categoryMenu } = useCategoryMenu()
   const { queries } = useQuerySearch()
   const [formData, setFormData] = useState<{ [key: string]: any } | null>(null)
 
   useEffect(() => {
     const getCategory = () => {
       const initData = {
-        label: CategoryMenu[0]?.lang?.[Language.locale || 'vn'].toString() || '',
-        value: CategoryMenu[0]?.keyName.toString() || '',
+        label: categoryMenu[0]?.lang?.[language.locale || 'vn'].toString() || '',
+        value: categoryMenu[0]?.keyName.toString() || '',
       }
       if (queries?.['category']) {
-        const dataLan = CategoryMenu.find((e) => e.keyName === queries?.['category'][0]!)
-        initData.label = dataLan?.lang?.[Language.locale || 'vn'].toString() || queries?.['category'][0]!
+        const dataLan = categoryMenu.find((e) => e.keyName === queries?.['category'][0]!)
+        initData.label = dataLan?.lang?.[language.locale || 'vn'].toString() || queries?.['category'][0]!
         initData.value = dataLan?.keyName.toString() || queries?.['category'][0]!
       }
 
@@ -80,7 +81,7 @@ const useSearchBaseAdmin = (param?: KeySearchProps, paramTitle?: TitleProps) => 
     }
 
     return () => setFormData(null)
-  }, [CategoryMenu, Language, queries, isClient])
+  }, [categoryMenu, language, queries, isClient])
 
   const clearSearch = () => {
     const initData = {

@@ -1,21 +1,21 @@
 import useLanguage from '@/hook/useLanguage'
-import { useAppSelector } from '@/redux/store'
+import { useCategoryMenu } from '@/zustand/useCategoryMenu'
 import { AlignLeftOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 import React from 'react'
 
 const CategoryHome = () => {
   const { translate, lang } = useLanguage()
-  const { CategoryMenu } = useAppSelector((state) => state.app)
+  const { categoryMenu } = useCategoryMenu()
 
   const renderContent = () => {
     return (
       <div className='flex flex-col '>
-        {CategoryMenu.map((e, index) => {
+        {categoryMenu.map((e, index) => {
           return (
             <Link
               className={`text-black hover:text-black hover:font-semibold md:px-3 md:py-4 border-b-[1px] ${
-                CategoryMenu.length - 1 !== index && 'border-green-300'
+                categoryMenu.length - 1 !== index && 'border-green-300'
               }`}
               key={e.keyName}
               href={`/shop?category=${e.keyName}`}

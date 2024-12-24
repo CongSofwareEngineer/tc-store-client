@@ -1,5 +1,5 @@
 import useLanguage from '@/hook/useLanguage'
-import useModalAdmin from '@/hook/useModalAdmin'
+import { useModalAdmin } from '@/zustand/useModalAdmin'
 import { Button, Checkbox } from 'antd'
 import React, { useState } from 'react'
 type IOptionAddNew = {
