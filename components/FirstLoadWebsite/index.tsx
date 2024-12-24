@@ -9,6 +9,9 @@ import { deleteCookie, setCookie } from '@/services/CookiesService'
 import ObserverService from '@/services/observer'
 import { encryptData } from '@/utils/crypto'
 import { getDataLocal, removeDataLocal, scrollTop } from '@/utils/functions'
+import { useCategoryMenu } from '@/zustand/useCategoryMenu'
+import { useProvinces } from '@/zustand/useProvinces'
+import { useUserData } from '@/zustand/useUserData'
 import { LoadingOutlined } from '@ant-design/icons'
 import { NextPage } from 'next'
 import { usePathname } from 'next/navigation'
@@ -21,11 +24,18 @@ const FirstLoadWebsite: NextPage = () => {
 
   useCheckPatchName()
   const pathName = usePathname()
+  const { fetchData: fetchCategoryMenu } = useCategoryMenu()
+  const { fetchData: fetchDataProvinces } = useProvinces()
+  const { reset: resetUser, userData: userDataZustand } = useUserData()
   const dispatch = useDispatch()
   const listUrlExitedRef = useRef<string[]>([])
   const userRef = useRef<TypeUserData | null>(null)
   const { UserData: userData } = useAppSelector((state) => state.app)
 
+  useLayoutEffect(() => {
+    fetchCategoryMenu()
+    fetchDataProvinces()
+  }, [])
   useEffect(() => {
     if (!userRef.current) {
       userRef.current = userData
@@ -94,7 +104,7 @@ const FirstLoadWebsite: NextPage = () => {
 
         userRef.current = null
       }
-
+      resetUser()
       setTimeout(() => {
         secureLocalStorage.removeItem(SLICE.UserData)
         deleteCookie(COOKIE_KEY.Auth)

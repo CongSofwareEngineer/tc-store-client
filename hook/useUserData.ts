@@ -11,12 +11,14 @@ import { setCookie } from '@/services/CookiesService'
 import ClientApi from '@/services/clientApi'
 import ObserverService from '@/services/observer'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
+import { useUserData as userUserDataZustand } from '@/zustand/useUserData'
 
 const useUserData = () => {
   const dispatch = useAppDispatch()
   const { UserData: userData } = useAppSelector((state) => state.app)
   const { translate } = useLanguage()
   const { closeModalDrawer } = useModalDrawer()
+  const { setUserData: setUserDataZustand } = userUserDataZustand()
 
   const loginWithDB = async (sdt: string, pass: string) => {
     const dataBody = encryptData(
@@ -32,6 +34,7 @@ const useUserData = () => {
 
     if (data?.data) {
       dispatch(setUserData(data?.data))
+      setUserDataZustand(data?.data)
       setCookie(COOKIE_KEY.Auth, data?.data.auth?.toString(), COOKIE_EXPIRED.ExpiredAuth)
       setCookie(COOKIE_KEY.AuthRefresh, data?.data.authRefresh?.toString(), COOKIE_EXPIRED.ExpiredAuthRefresh)
     }
