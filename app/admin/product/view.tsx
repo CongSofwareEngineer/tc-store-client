@@ -215,26 +215,22 @@ const ProductAdminScreen = () => {
     return columns
   }
 
-  const renderTable = () => {
-    return (
-      <MyTable
-        loadMore={loadMore}
-        hasMoreData={hasNextPage}
-        isFetchingNextPage={isFetchingNextPage}
-        columns={getColumns()}
-        loading={isLoading}
-        data={data || []}
-        limit={PAGE_SIZE_LIMIT}
-        total={20}
-        extra={<Button onClick={() => handleUpdate(null)}>{translate('common.addNew')}</Button>}
-      />
-    )
-  }
-
   return (
     <div className='flex flex-col w-full gap-3 overflow-y-auto '>
       {renderContent()}
-      {renderTable()}
+      <div className='flex w-full'>
+        <MyTable
+          loadMore={loadMore}
+          hasMoreData={hasNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+          columns={getColumns()}
+          loading={isLoading}
+          data={data || []}
+          limit={PAGE_SIZE_LIMIT}
+          total={20}
+          extra={<Button onClick={() => handleUpdate(null)}>{translate('common.addNew')}</Button>}
+        />
+      </div>
     </div>
   )
 }

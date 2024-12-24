@@ -21,7 +21,7 @@ const SocialMedia = dynamic(() => import('./(ComponentHome)/SocialMedia'), {
 // })
 
 const Home: NextPage = () => {
-  useAos(1000)
+  useAos()
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
 
@@ -37,7 +37,7 @@ const Home: NextPage = () => {
         <div className='w-[90%] m-auto my-14'>
           <InfoHome />
         </div>
-        <div className='w-full flex flex-col gap-4 '>
+        <div className='w-full flex flex-col gap-4' data-aos='fade-up'>
           <ListProduct title={translate('textPopular.shoes')} type={FilterAPI.Shoes} />
 
           {/* <ListProduct title={translate('textPopular.nest')} type={'nest'} /> */}

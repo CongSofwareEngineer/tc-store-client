@@ -14,19 +14,20 @@ import { isEqual } from 'lodash'
 import UploadImage from '@/components/UploadImg'
 import InputForm from '@/components/Form/InputForm'
 import ButtonForm from '@/components/Form/ButtonForm'
-import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import AdminApi from '@/services/adminApi'
 import MyBlog from '@/components/MyBlog'
 import { PATH_IMG } from '@/constant/mongoDB'
 import AttributeAdmin from '@/components/AttributeAdmin'
 import { SEX, TYPE_PRODUCT, VALUE_KEY_DEFAULT } from '@/constant/admin'
 import { INIT_DATA_MY_BLOG } from '@/constant/app'
+import useCallbackToast from '@/hook/useCallbackToast'
 
 const ProductConfig = ({ item }: { item: any }) => {
   const { translate } = useLanguage()
   const { checkIsNumber } = useCheckForm()
   const { refreshQuery } = useRefreshQuery()
   const { closeModalDrawer } = useModalDrawer()
+  const { callbackUpdateError, callbackCreateSuccess, callbackUpdateSuccess, callbackCreateError } = useCallbackToast()
 
   const [formData, setFormData] = useState<{ [key: string]: any } | null>(null)
   const [loading, setLoading] = useState(false)
@@ -150,11 +151,19 @@ const ProductConfig = ({ item }: { item: any }) => {
     }
 
     if (data?.data) {
-      showNotificationSuccess(translate(item ? 'success.update' : 'success.create'))
       await refreshQuery(QUERY_KEY.GetListProductAdmin)
+      if (item) {
+        callbackUpdateSuccess()
+      } else {
+        callbackCreateSuccess()
+      }
       closeModalDrawer()
     } else {
-      showNotificationError(translate(item ? 'error.update' : 'errors.create'))
+      if (item) {
+        callbackCreateError()
+      } else {
+        callbackUpdateError()
+      }
     }
     setLoading(false)
   }

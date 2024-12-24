@@ -19,7 +19,7 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 
 const RegisterScreen = () => {
-  useAos(1000)
+  useAos()
   const { translate } = useLanguage()
   const router = useRoutePage()
   const { checkNumberPhone } = useCheckForm()

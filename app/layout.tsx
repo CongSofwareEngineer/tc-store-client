@@ -6,6 +6,7 @@ import AntdProvider from '@/components/AntdProvider'
 import MyModalProvider from '@/components/MyModal'
 import '@/styles/globals.scss'
 import '@/styles/override.scss'
+import '@/styles/aos.css'
 import { AntdRegistry } from '@ant-design/nextjs-registry'
 import StyledComponentsRegistry from '@/components/RegistryApp'
 import ClientRender from '@/components/ClientRender'
@@ -115,7 +116,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
         <meta itemProp='name' content={process.env.NEXT_PUBLIC_TITLE} />
         <meta itemProp='description' content={process.env.NEXT_PUBLIC_TITLE_DES} />
         <meta itemProp='image' content={'/favicon.ico'} />
-        <link href='https://unpkg.com/aos@2.3.1/dist/aos.css' rel='stylesheet' />
+        {/* <link href='https://unpkg.com/aos@2.3.1/dist/aos.css' rel='stylesheet' /> */}
         {process.env.NEXT_PUBLIC_MODE_PRODUCTION && (
           <>
             {/* <GoogleTagManager gtmId="GTM-T7S7DKJ4" /> */}

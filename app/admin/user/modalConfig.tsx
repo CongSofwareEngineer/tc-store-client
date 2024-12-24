@@ -3,11 +3,11 @@ import TextCopy from '@/components/TextCopy'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import { TYPE_USER_DATA } from '@/constant/zustand'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
+import useCallbackToast from '@/hook/useCallbackToast'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ClientApi from '@/services/clientApi'
 import { convertBoolean, detectAvatar } from '@/utils/functions'
-import { showNotificationSuccess } from '@/utils/notification'
 import { Button } from 'antd'
 import Link from 'next/link'
 import React, { useState } from 'react'
@@ -16,6 +16,7 @@ const ModalConfig = ({ data }: { data?: TYPE_USER_DATA }) => {
   const { translate } = useLanguage()
   const { refreshQuery } = useRefreshQuery()
   const { closeModalDrawer } = useModalDrawer()
+  const { callbackUpdateError, callbackUpdateSuccess } = useCallbackToast()
 
   const [loading, setLoading] = useState(false)
 
@@ -28,9 +29,10 @@ const ModalConfig = ({ data }: { data?: TYPE_USER_DATA }) => {
     const res = await ClientApi.updateUser(data?._id, body)
     if (res.data) {
       await refreshQuery(QUERY_KEY.GetUserAdmin)
-      showNotificationSuccess(translate('success.update'))
+      callbackUpdateSuccess()
       closeModalDrawer()
     } else {
+      callbackUpdateError()
     }
     setLoading(false)
   }

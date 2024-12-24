@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import useMedia from './useMedia'
-const useAos = (time = 1000) => {
+const useAos = (time = 800) => {
   const { isMobile } = useMedia()
 
   useEffect(() => {

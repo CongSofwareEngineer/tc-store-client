@@ -12,9 +12,9 @@ import React, { useEffect, useState } from 'react'
 const ModalReply = ({ data }: { data?: any }) => {
   const { translate } = useLanguage()
   const { refreshQuery } = useRefreshQuery()
-  const { callback, callbackReject } = useCallbackToast()
   const { closeModalDrawer } = useModalDrawer()
   const isNewReply = isEmpty(data?.listReply)
+  const { callbackUpdateError, callbackCreateSuccess, callbackUpdateSuccess, callbackCreateError } = useCallbackToast()
 
   const [text, setText] = useState('Shop cảm ơn Bạn đã tin tưởng và ủng hộ ạ.')
   const [loading, setLoading] = useState(false)
@@ -42,13 +42,17 @@ const ModalReply = ({ data }: { data?: any }) => {
     if (res.data) {
       await refreshQuery(QUERY_KEY.GetCommentAdmin)
       if (isNewReply) {
-        callback(isNewReply, translate('success.reply'))
+        callbackCreateSuccess(translate('success.reply'))
       } else {
-        callback(!isNewReply)
+        callbackUpdateSuccess()
       }
       closeModalDrawer()
     } else {
-      callbackReject(data)
+      if (isNewReply) {
+        callbackCreateError()
+      } else {
+        callbackUpdateError()
+      }
     }
     setLoading(false)
   }

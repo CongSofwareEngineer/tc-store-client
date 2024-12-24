@@ -19,9 +19,39 @@ const useCallbackToast = () => {
     }
   }
 
+  const callbackUpdateSuccess = (text?: string) => {
+    showNotificationSuccess(text || translate('success.update'))
+  }
+
+  const callbackDeleteSuccess = (text?: string) => {
+    showNotificationSuccess(text || translate('success.delete'))
+  }
+
+  const callbackCreateSuccess = (text?: string) => {
+    showNotificationSuccess(text || translate('success.create'))
+  }
+
+  const callbackUpdateError = (text?: string) => {
+    showNotificationError(text || translate('error.update'))
+  }
+
+  const callbackDeleteError = (text?: string) => {
+    showNotificationError(text || translate('error.delete'))
+  }
+
+  const callbackCreateError = (text?: string) => {
+    showNotificationError(text || translate('error.create'))
+  }
+
   return {
     callback,
     callbackReject,
+    callbackCreateSuccess,
+    callbackUpdateSuccess,
+    callbackDeleteSuccess,
+    callbackUpdateError,
+    callbackCreateError,
+    callbackDeleteError,
   }
 }
 

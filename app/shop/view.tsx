@@ -6,7 +6,7 @@ import InputSearch from './Component/InputSearch'
 import Content from './Component/Content'
 
 const ShopScreen = () => {
-  useAos(1000)
+  useAos()
 
   return (
     <div className='w-full flex md:flex-row flex-col  md:gap-6 gap-3  h-full justify-star md:mt-3'>

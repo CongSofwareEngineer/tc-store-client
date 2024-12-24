@@ -10,7 +10,7 @@ import useAos from '@/hook/useAos'
 import LoadingGetData from '@/components/LoadingGetData'
 
 const ShoesScreen = () => {
-  useAos(1000)
+  useAos()
   const { queries } = useQuerySearch()
   const { data, isLoading, hasNextPage, loadMore, isFetchingNextPage } = useShoesShop(queries)
 

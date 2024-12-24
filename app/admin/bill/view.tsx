@@ -12,13 +12,13 @@ import useLanguage from '@/hook/useLanguage'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import useQuerySearch from '@/hook/useQuerySearch'
-import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import { formatDateTime } from '@/utils/momentFunc'
 import { Button } from 'antd'
 import useMedia from '@/hook/useMedia'
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
 import { DEFAULT_RATE_EXP_USER } from '../../../constant/app'
 import AdminApi from '@/services/adminApi'
+import useCallbackToast from '@/hook/useCallbackToast'
 
 const BillAdminScreen = () => {
   const { queries } = useQuerySearch()
@@ -27,6 +27,8 @@ const BillAdminScreen = () => {
   const { translate } = useLanguage()
   const { refreshQuery } = useRefreshQuery()
   const { isMobile } = useMedia()
+  const { callbackDeleteSuccess, callbackDeleteError, callbackUpdateError, callbackUpdateSuccess } = useCallbackToast()
+
   const { renderContent } = useSearchBaseAdmin(
     {
       category: true,
@@ -81,10 +83,10 @@ const BillAdminScreen = () => {
       const res = await AdminApi.updateBill(item._id, body)
 
       if (res?.data) {
-        showNotificationSuccess(translate('myPage.updateSuccess'))
+        callbackUpdateSuccess()
         refreshQuery(QUERY_KEY.BillAdmin)
       } else {
-        showNotificationError(translate('textPopular.updateFailed'))
+        callbackUpdateError()
       }
       closeModalDrawer()
     }
@@ -98,10 +100,10 @@ const BillAdminScreen = () => {
     const callback = async () => {
       const data = await AdminApi.deleteBill(id)
       if (data?.data) {
-        showNotificationSuccess(translate('success.delete'))
+        callbackDeleteSuccess()
         refreshQuery(QUERY_KEY.BillAdmin)
       } else {
-        showNotificationError(translate('error.delete'))
+        callbackDeleteError()
       }
       closeModalDrawer()
     }

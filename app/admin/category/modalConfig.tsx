@@ -7,6 +7,7 @@ import UploadImage from '@/components/UploadImg'
 import { LANGUAGE_SUPPORT } from '@/constant/app'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
+import useCallbackToast from '@/hook/useCallbackToast'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useTypeFile from '@/hook/useTypeFile'
@@ -22,6 +23,7 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
   const { typeFile } = useTypeFile({ typeAndroid: '.png,.jpg,.jpeg' })
   const { refreshQuery } = useRefreshQuery()
   const { closeModalDrawer } = useModalDrawer()
+  const { callbackCreateError, callbackUpdateError, callbackCreateSuccess, callbackUpdateSuccess } = useCallbackToast()
 
   const [formData, setFormData] = useState<{ [key: string]: any } | null>(null)
   const [loading, setLoading] = useState(false)
@@ -39,10 +41,6 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
     }
     setFormData(initData)
   }, [data])
-
-  console.log('====================================')
-  console.log({ formData })
-  console.log('====================================')
 
   const onChangeName = (key: string, value?: string) => {
     setFormData({
@@ -73,12 +71,18 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
 
       if (res?.data) {
         if (data) {
-          showNotificationSuccess(translate('success.update'))
+          callbackUpdateSuccess()
         } else {
-          showNotificationSuccess(translate('success.create'))
+          callbackCreateSuccess()
         }
         await refreshQuery(QUERY_KEY.GetCategoryAdmin)
         closeModalDrawer()
+      } else {
+        if (data) {
+          callbackUpdateError()
+        } else {
+          callbackCreateError()
+        }
       }
     } finally {
       setLoading(false)

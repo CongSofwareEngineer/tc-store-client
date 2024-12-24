@@ -22,9 +22,9 @@ import ModalReply from './Component/ModalReply'
 import { numberWithCommas } from '../../../utils/functions'
 import ModalDelete from '@/components/ModalDelete'
 import ClientApi from '@/services/clientApi'
-import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
+import useCallbackToast from '@/hook/useCallbackToast'
 
 const CommentClient = () => {
   const { isMobile } = useMedia()
@@ -33,6 +33,7 @@ const CommentClient = () => {
   const { openModalDrawer } = useModalDrawer()
   const { refreshQuery } = useRefreshQuery()
   const { data, isLoading } = useCommentAdmin(queries)
+  const { callbackDeleteSuccess, callbackDeleteError } = useCallbackToast()
   const { renderContent } = useSearchBaseAdmin(
     {
       dateEnd: true,
@@ -68,10 +69,10 @@ const CommentClient = () => {
       }
       const res = await ClientApi.deleteComment(bodyDelete)
       if (res.data) {
-        await refreshQuery(QUERY_KEY.GetCommentProduction)
-        showNotificationSuccess(translate('success.delete'))
+        await refreshQuery(QUERY_KEY.GetCommentAdmin)
+        callbackDeleteSuccess()
       } else {
-        showNotificationError(translate('error.delete'))
+        callbackDeleteError()
       }
     }
 
@@ -184,7 +185,7 @@ const CommentClient = () => {
         key: 'name',
         dataIndex: 'name',
         render: (name: string) => {
-          return <span>{name}</span>
+          return <div className='min-w-[80px]'>{name}</div>
         },
       },
       {
@@ -203,7 +204,10 @@ const CommentClient = () => {
         render: (note: any, record: any) => {
           if (record?.product) {
             return (
-              <Link className='hover:underline hover:!text-blue-600' href={getRouteProduct(record?.product)}>
+              <Link
+                className='hover:underline hover:!text-blue-600 min-w-[80px]'
+                href={getRouteProduct(record?.product)}
+              >
                 {record?.product?.name}
               </Link>
             )
@@ -246,20 +250,14 @@ const CommentClient = () => {
         title: '.',
         key: 'listImg',
         dataIndex: 'listImg',
+        fixed: 'right',
         render: (_: string[], record: any) => {
           return (
-            <CommentOutlined onClick={() => handleReply(record)} className='text-2xl cursor-pointer hover:scale-110' />
-          )
-        },
-      },
-      {
-        title: 'Action',
-        key: 'addressShip',
-        dataIndex: 'addressShip',
-        fixed: 'right',
-        render: (_: any, record: any) => {
-          return (
-            <div className='flex gap-2  items-center justify-end'>
+            <div className='flex gap-2'>
+              <CommentOutlined
+                onClick={() => handleReply(record)}
+                className='text-2xl cursor-pointer hover:scale-110'
+              />
               <div className='text-red-500'>
                 <DeleteOutlined
                   onClick={() => handleDelete(record)}
@@ -278,7 +276,9 @@ const CommentClient = () => {
   return (
     <div className='flex flex-col gap-2 w-full'>
       {renderContent()}
-      <MyTable columns={getColumns()} loading={isLoading} data={data || []} limit={PAGE_SIZE_LIMIT} total={20} />
+      <div className='flex w-full'>
+        <MyTable columns={getColumns()} loading={isLoading} data={data || []} limit={PAGE_SIZE_LIMIT} total={20} />
+      </div>
     </div>
   )
 }

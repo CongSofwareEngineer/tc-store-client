@@ -183,8 +183,9 @@ const UserAdminScreen = () => {
         title: translate('userDetail.exp'),
         key: 'exp',
         dataIndex: 'exp',
+        sorter: (a: any, b: any) => a.exp - b.exp,
         render: (exp: any) => {
-          return <span>{numberWithCommas(exp)}</span>
+          return <div className='min-w-[80px]'>{numberWithCommas(exp)}</div>
         },
       },
 
