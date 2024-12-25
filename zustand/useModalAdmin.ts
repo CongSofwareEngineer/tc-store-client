@@ -2,7 +2,9 @@ import { devtools } from 'zustand/middleware'
 import { create } from 'zustand'
 import { INIT_ZUSTAND, TYPE_ZUSTAND, ZUSTAND } from '@/constant/zustand'
 
-type ModalAdminStoreState = { [ZUSTAND.ModalAdmin]: TYPE_ZUSTAND[ZUSTAND.ModalAdmin] }
+type ModalAdminData = TYPE_ZUSTAND[typeof ZUSTAND.ModalAdmin]
+
+type ModalAdminStoreState = { [ZUSTAND.ModalAdmin]: ModalAdminData }
 
 type ModalAdminStoreActions = {
   setModalAdmin: (nextModalAdmin: ModalAdminStoreState[ZUSTAND.ModalAdmin]) => void
@@ -16,50 +18,22 @@ const zustandModalAdmin = create<ModalAdminStore>()(
   devtools(
     (set) => ({
       [ZUSTAND.ModalAdmin]: INIT_ZUSTAND[ZUSTAND.ModalAdmin],
-      setModalAdmin: (param: TYPE_ZUSTAND[ZUSTAND.ModalAdmin]) => set({ [ZUSTAND.ModalAdmin]: param }),
-      openModal: (param: TYPE_ZUSTAND[ZUSTAND.ModalAdmin]) => {
-        const {
-          title = '',
-          open = true,
-          body,
-          className = '',
-          width = '500px',
-          height = '',
-          callBackAfter = () => {},
-          classNameContent = '',
-          overClickClose = false,
-          showBtnClose = true,
-        } = param
-
-        set({
+      setModalAdmin: (param: ModalAdminData) => set({ [ZUSTAND.ModalAdmin]: param }),
+      openModal: (param: ModalAdminData) => {
+        set((state) => ({
           [ZUSTAND.ModalAdmin]: {
-            open,
-            body,
-            className,
-            width,
-            height,
-            callBackAfter,
-            title,
-            classNameContent,
-            overClickClose,
-            showBtnClose,
+            ...state,
+            ...param,
+            open: true,
           },
-        })
+        }))
       },
       closeModal: () => {
-        const config = {
-          open: false,
-          body: null,
-          className: '',
-          width: '500px',
-          height: 'auto',
-          classNameContent: '',
-          overClickClose: true,
-          title: '',
-          showBtnClose: true,
-        }
         set({
-          [ZUSTAND.ModalAdmin]: config,
+          [ZUSTAND.ModalAdmin]: {
+            ...INIT_ZUSTAND[ZUSTAND.ModalAdmin],
+            open: false,
+          },
         })
       },
     }),
@@ -71,13 +45,13 @@ const zustandModalAdmin = create<ModalAdminStore>()(
 )
 
 export const useModalAdmin = () => {
-  const data = zustandModalAdmin((state) => state[ZUSTAND.ModalAdmin])
+  const modalAdmin = zustandModalAdmin((state) => state[ZUSTAND.ModalAdmin])
   const setModalAdmin = zustandModalAdmin((state) => state.setModalAdmin)
   const closeModal = zustandModalAdmin((state) => state.closeModal)
   const openModal = zustandModalAdmin((state) => state.openModal)
 
   return {
-    modalAdmin: data,
+    modalAdmin,
     setModalAdmin,
     openModal,
     closeModal,

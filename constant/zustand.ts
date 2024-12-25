@@ -28,11 +28,12 @@ export const INIT_ZUSTAND = {
     body: null,
     className: '',
     width: '500px',
-    height: 'auto',
+    height: '',
     title: '',
-    showBtnClose: false,
+    showBtnClose: true,
     classNameContent: '',
     overClickClose: true,
+    callBackAfter: () => {},
   },
 }
 

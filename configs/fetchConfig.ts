@@ -88,9 +88,12 @@ const fetchConfig = async ({
 
   if (body) {
     if (method !== REQUEST_TYPE.GET) {
+      // config.data = {
+      //   ...body,
+      //   dataEncode: encodeDataMaxLength(body),
+      // }
       config.data = {
-        ...body,
-        dataEncode: encodeDataMaxLength(body),
+        data: encryptData(body),
       }
     } else {
       config.params = body
