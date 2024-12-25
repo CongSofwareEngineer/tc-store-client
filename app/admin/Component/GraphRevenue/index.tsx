@@ -14,12 +14,12 @@ const GraphRevenue = ({ data }: { data: any }) => {
     })
     return (
       <div className='flex gap-2 w-full items-center'>
-        <div className='w-[60px] aspect-square'>
+        <div className='md:w-[60px] w-10 aspect-square'>
           <Image className='!relative !w-full !h-auto' alt='iconBill' src={images.icon.iconBill} fill />
         </div>
         <div>
-          <div className='text-lg text-green-500'>{numberWithCommas(total)}</div>
-          <div className='text-lg text-green-500'>{translate('textPopular.totalMoney')}</div>
+          <div className='md:text-lg text-green-500'>{numberWithCommas(total)}</div>
+          <div className='md:text-lg text-green-500'>{translate('textPopular.totalMoney')}</div>
         </div>
       </div>
     )

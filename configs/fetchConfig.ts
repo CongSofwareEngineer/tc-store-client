@@ -1,7 +1,7 @@
 import { COOKIE_KEY, OBSERVER_KEY, REQUEST_TYPE } from '@/constant/app'
 import { getCookie, setCookie } from '@/services/CookiesService'
 import ObserverService from '@/services/observer'
-import { decryptData, encryptData } from '@/utils/crypto'
+import { decryptData, encodeDataMaxLength, encryptData } from '@/utils/crypto'
 import axios from 'axios'
 
 export type ServerAPIReqType = {
@@ -89,7 +89,8 @@ const fetchConfig = async ({
   if (body) {
     if (method !== REQUEST_TYPE.GET) {
       config.data = {
-        data: encryptData(body),
+        ...body,
+        dataEncode: encodeDataMaxLength(body),
       }
     } else {
       config.params = body
@@ -104,14 +105,8 @@ const fetchConfig = async ({
     .request(config)
     .then(async (response) => {
       if (response.status === 200) {
-        let data = response?.data?.data || response?.data || response
-
-        if (method !== REQUEST_TYPE.GET) {
-          data = decryptData(data)
-        }
-
         return {
-          data: data,
+          data: response?.data?.data,
           messages: 'success',
         }
       }
