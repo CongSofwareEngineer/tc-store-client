@@ -203,7 +203,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
             </AntdRegistry>
           </StyledComponentsRegistry>
         </ReactQueryProvider>
-        {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <SpeedInsights dsn='tcstore.vercel.app' />}
+        {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <SpeedInsights />}
       </body>
       {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <GoogleAnalytics gaId='G-QH99F8WFPW' />}
     </html>
