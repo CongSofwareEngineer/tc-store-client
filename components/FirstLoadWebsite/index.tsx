@@ -2,7 +2,7 @@ import { COOKIE_EXPIRED, COOKIE_KEY, LOCAL_STORAGE_KEY, OBSERVER_KEY } from '@/c
 import { TYPE_USER_DATA, TYPE_ZUSTAND, ZUSTAND } from '@/constant/zustand'
 import useCheckPatchName from '@/hook/tank-query/useCheckPatchName'
 import ClientApi from '@/services/clientApi'
-import { deleteCookie, setCookie } from '@/services/CookiesService'
+import { deleteCookie, getCookie, setCookie } from '@/services/CookiesService'
 import ObserverService from '@/services/observer'
 import { encryptData } from '@/utils/crypto'
 import { getDataLocal, removeDataLocal, scrollTop } from '@/utils/functions'
@@ -65,12 +65,16 @@ const FirstLoadWebsite: NextPage = () => {
       if (data?.data) {
         setUserData(data?.data)
         setCookie(COOKIE_KEY.Auth, data?.data.auth?.toString(), COOKIE_EXPIRED.ExpiredAuth)
-        setCookie(COOKIE_KEY.AuthRefresh, data?.data.authRefresh?.toString(), COOKIE_EXPIRED.ExpiredAuthRefresh)
       }
       return data?.data || null
     }
 
     const refreshLogin = async (userData: TYPE_USER_DATA) => {
+      const refreshAuth = await getCookie(COOKIE_KEY.AuthRefresh)
+      if (!refreshAuth) {
+        ObserverService.emit(OBSERVER_KEY.LogOut)
+        return
+      }
       const data = await loginWithDB(userData.sdt!, userData.pass!)
       if (!data) {
         ObserverService.emit(OBSERVER_KEY.LogOut)
@@ -82,10 +86,6 @@ const FirstLoadWebsite: NextPage = () => {
 
   //logout
   useEffect(() => {
-    const updateCookies = (auth: string) => {
-      setCookie(COOKIE_KEY.Auth, auth, COOKIE_EXPIRED.ExpiredAuth)
-    }
-
     const handleLogout = async (isReload = true) => {
       if (userRef.current && Array.isArray(userRef.current?.tokenNoti)) {
         const tokenLocal = getDataLocal(LOCAL_STORAGE_KEY.TokenFirebase)
@@ -122,12 +122,10 @@ const FirstLoadWebsite: NextPage = () => {
 
     ObserverService.on(OBSERVER_KEY.RoutePage, routePage)
     ObserverService.on(OBSERVER_KEY.LogOut, handleLogout)
-    ObserverService.on(OBSERVER_KEY.UpdateCookieAuth, updateCookies)
 
     return () => {
       ObserverService.removeListener(OBSERVER_KEY.RoutePage, () => setIsLoading(false))
       ObserverService.removeListener(OBSERVER_KEY.LogOut)
-      ObserverService.removeListener(OBSERVER_KEY.UpdateCookieAuth)
     }
   }, [])
 
