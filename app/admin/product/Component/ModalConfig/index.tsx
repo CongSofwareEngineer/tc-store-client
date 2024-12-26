@@ -66,17 +66,19 @@ const ProductConfig = ({ item }: { item: any }) => {
     if (!item && dataClone) {
       switch (formData?.category) {
         case TYPE_PRODUCT.shoes:
-          const arrColors = VALUE_KEY_DEFAULT.sizes.map((e) => ({
-            color: e,
-            sold: 0,
-            amount: 10,
-          }))
+          const arrColors = [
+            {
+              color: VALUE_KEY_DEFAULT.sizes[0],
+              sold: 0,
+              amount: 10,
+            },
+          ]
 
           dataClone.attributes = {
             sex: [SEX.female, SEX.male],
             sizes: [
               {
-                size: '38',
+                size: '40',
                 colors: arrColors,
               },
             ],
