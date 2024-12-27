@@ -158,6 +158,7 @@
     "idOrder": "Mã đơn"
   },
   "bill": {
+    "listBill": "Danh sách sản phẩm",
     "id": "Mã ĐH",
     "noteBill": "Ghi chú đơn hàng",
     "totalBill": "Tổng thanh toán",
@@ -375,6 +376,7 @@
   "banking": {
     "title": "Thanh toán ngân hàng",
     "bnaked": "Đã chuyển khoản",
-    "openApp": "Mở app"
+    "openApp": "Mở app",
+    "idBanked": "Mã chuyển tiền"
   }
 }

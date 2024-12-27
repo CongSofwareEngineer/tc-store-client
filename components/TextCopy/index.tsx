@@ -1,4 +1,4 @@
-import { copyToClipboard } from '@/utils/notification'
+import useLanguage from '@/hook/useLanguage'
 import { CopyOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 import React from 'react'
@@ -10,6 +10,7 @@ type Props = {
   className?: string
 }
 const TextCopy = ({ textView = '', value = '', isLink = false, ...props }: Props) => {
+  const { copyToClipboard } = useLanguage()
   return (
     <div className={`flex gap-2 ${props?.className}`}>
       {isLink ? (

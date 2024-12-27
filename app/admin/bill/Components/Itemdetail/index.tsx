@@ -1,10 +1,6 @@
-import MyLoading from '@/components/MyLoading'
 import TextCopy from '@/components/TextCopy'
-import useUserDetail from '@/hook/tank-query/useUserDetail'
 import useLanguage from '@/hook/useLanguage'
-import useMedia from '@/hook/useMedia'
 import { detectImg, formatPrice, numberWithCommas } from '@/utils/functions'
-import { LoadingOutlined } from '@ant-design/icons'
 import Image from 'next/image'
 import React from 'react'
 

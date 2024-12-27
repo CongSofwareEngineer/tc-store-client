@@ -59,7 +59,6 @@ const InfoBanking = ({
         </div>
       </div>
       <div className='flex flex-col flex-1 gap-2 '>
-        {/* <Button onClick={checkFac}>check baninkg</Button> */}
         <div className='flex gap-2'>
           <div className='font-bold'>NH : VietCombank</div>
 
@@ -75,7 +74,7 @@ const InfoBanking = ({
           <span className='font-bold'>{translate('textPopular.content')} :</span>
           <TextCopy value={message} textView={message} />
         </div>
-        <div className='rounded-lg flex p-3 w-full bg-[#f6cf83]'>
+        <div className='rounded-lg mt-1 flex p-3 w-full bg-[#f6cf83]'>
           <span className='mr-1'>
             <ExclamationCircleOutlined />
           </span>

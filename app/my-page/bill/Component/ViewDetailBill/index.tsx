@@ -46,18 +46,31 @@ const ViewDetailBill = ({ data }: Props) => {
     <div className='flex flex-col w-full gap-4 overflow-y-auto'>
       <div className='flex flex-col  w-full gap-1 '>
         <div className='flex gap-1'>
-          <span>SĐT</span>
-          <span>:</span>
+          <span className='font-bold'>{`SĐT :`}</span>
           <TextCopy textView={data.sdt} value={data.sdt} />
         </div>
+        {data?.infoBanking?.id && (
+          <div className='flex flex-col mt-1   gap-1'>
+            <span className='font-bold'>{`${translate('banking.title')} (Vietcombank) :`}</span>
+            <div className='flex gap-1 ml-3'>
+              <span className='font-bold'>{`+ ${translate('banking.idBanked')} :`}</span>
+              <TextCopy textView={data?.infoBanking?.id} value={data?.infoBanking?.id} />
+            </div>
+            <div className='fex gap-1  ml-3'>
+              <span className='font-bold'>{`+ ${translate('textPopular.content')} :`}</span>
+              <span className='ml-1'>{data?.infoBanking?.messages} </span>
+            </div>
+          </div>
+        )}
         {isMobile && (
-          <div className='flex gap-1'>
-            <div className='whitespace-nowrap'>{translate('textPopular.address')}</div>
-            <div>:</div>
+          <div className=' mt-1'>
+            <div className='whitespace-nowrap font-bold'>{`${translate('textPopular.address')} :`}</div>
+
             <div>{getAddressShip(data)}</div>
           </div>
         )}
       </div>
+      <div className='w-full font-bold'>{`${translate('bill.listBill')} :`}</div>
       {data && (
         <div className='flex flex-col gap-4 w-full overflow-y-auto'>
           {data?.listBill?.map((e: any, index: number) => {

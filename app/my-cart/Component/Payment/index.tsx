@@ -116,6 +116,9 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
           }}
         />
       ),
+      configModal: {
+        width: '500px',
+      },
     })
   }
 

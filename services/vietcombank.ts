@@ -43,7 +43,7 @@ const VietcomBankService = {
     return img
   },
   generateMess: (salt: string): string => {
-    return `Ma HD ${salt}  Ngay ${formatDateTime(new Date(), 'DD MM YYYY')}`
+    return `Ma ID ${salt}  Ngay ${formatDateTime(new Date(), 'DD MM YYYY')}`
   },
   generateSalt: (): string => {
     return Buffer.from(randomBytes(7)).toString('hex').padStart(10, '0')

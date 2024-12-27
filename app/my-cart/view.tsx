@@ -105,7 +105,7 @@ const MyCartScreen = () => {
         <LoadingData loading={isLoading} />
 
         {!isLoading && (
-          <div className='w-full flex   gap-5 overflow-hidden h-full'>
+          <div className='w-full flex   gap-5 overflow-hidden '>
             <div
               style={{ boxShadow: '3px 3px 6px rgba(0,0,0,.0509803922)' }}
               className='flex-1 max-h-[calc(100dvh-150px)]  border-2 border-gray-300  overflow-y-auto bg-white'
