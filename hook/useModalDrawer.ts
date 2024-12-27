@@ -43,8 +43,10 @@ const useModalDrawer = () => {
     } else {
       if (isMobile && config.useDrawer) {
         openDrawer(configDrawerBase)
+        closeModal()
       } else {
         open(configModalBase)
+        closeDrawer()
       }
     }
   }

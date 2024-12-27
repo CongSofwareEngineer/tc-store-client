@@ -34,7 +34,8 @@
     "view": "Xem",
     "cancelOrder": "Hủy đơn",
     "writeComment": "Viết bình luận",
-    "reply": "Trả lời"
+    "reply": "Trả lời",
+    "checkBanking": "Kiểm tra Banking"
   },
   "userDetail": {
     "addressNow": "Địa chỉ hiện tại",
@@ -55,6 +56,8 @@
     "exitSDT": "SĐT đã tồn tại"
   },
   "textPopular": {
+    "sended": "Đã gửi",
+    "content": "Nội dung",
     "useful": "Hữu ích",
     "source": "Nguồn",
     "date": "Ngày Tháng",
@@ -368,5 +371,10 @@
   "pingServer": {
     "title": "Hệ thống đang cập nhật",
     "des": "Hệ thống cập nhật khoảng 5 phút, xin lỗi bạn với sự bất tiện này. </br> Bạn có thể nhất tiếp tục để xem trang web"
+  },
+  "banking": {
+    "title": "Thanh toán ngân hàng",
+    "bnaked": "Đã chuyển khoản",
+    "openApp": "Mở app"
   }
 }

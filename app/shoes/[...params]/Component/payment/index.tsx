@@ -15,12 +15,13 @@ import { BodyAddBill } from '@/constant/firebase'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalProcess from '@/components/ModalProcess'
 import ModalDelete from '@/components/ModalDelete'
-import { FILTER_BILL, LOCAL_STORAGE_KEY } from '@/constant/app'
+import { FILTER_BILL, LOCAL_STORAGE_KEY, OPTIONS_PAYMENT } from '@/constant/app'
 import ModalSuccess from '@/components/ModalSuccess'
 import ClientApi from '@/services/clientApi'
 import OptionsPayment from '@/app/my-cart/Component/Payment/Component/OptionsPayment'
 import { showNotificationError } from '@/utils/notification'
 import useRoutePage from '@/hook/useRoutePage'
+import InfoBanking from '@/components/InfoBanking'
 
 const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const { translate } = useLanguage()
@@ -28,7 +29,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const { userData, isLogin } = useUserData()
   const { refreshListQuery } = useRefreshQuery()
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()
-  const { onChangeOptions, listOptions, optionSelected } = useOptionPayment()
+  const { onChangeOptions, listOptions, optionSelected } = useOptionPayment(null, { banking: true })
 
   const [formData, setFormData] = useState<Record<string, any> | null>(null)
   const [loading, setLoading] = useState(false)
@@ -120,58 +121,65 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
       })
     }
   }
+  const handleSubmitBuy = async () => {
+    setLoading(true)
+    callbackProcessingBuy()
 
+    let res
+
+    const bodyBill: BodyAddBill = {
+      addressShip: formData?.addressShip,
+      discount: 0,
+      sdt: formData?.sdt,
+      idUser: isLogin ? userData?._id : 'no-id',
+      listBill: [
+        {
+          amount: amount,
+          _id: data?._id!,
+          keyName: data?.keyName,
+          configBill: data?.configBill || {},
+        },
+      ],
+      status: FILTER_BILL.Processing,
+      totalBill: data?.price * amount,
+    }
+
+    handleUpdateAddressShip()
+
+    saveDataNoLogin(bodyBill)
+
+    if (isLogin) {
+      handleUpdateAddressShip()
+      res = await ClientApi.buy(bodyBill)
+    } else {
+      res = await ClientApi.buyNoLogin(bodyBill)
+    }
+
+    if (res.data) {
+      await callbackSuccessBuy()
+    } else {
+      showNotificationError(translate('productDetail.modalBuy.error'))
+      closeModalDrawer()
+    }
+
+    setLoading(false)
+  }
   const handleSubmit = async () => {
     const callBack = async () => {
-      setLoading(true)
-      callbackProcessingBuy()
+      console.log('handleSubmit')
 
-      let res
-
-      const bodyBill: BodyAddBill = {
-        addressShip: formData?.addressShip,
-        discount: 0,
-        sdt: formData?.sdt,
-        idUser: isLogin ? userData?._id : 'no-id',
-        listBill: [
-          {
-            amount: amount,
-            _id: data?._id!,
-            keyName: data?.keyName,
-            configBill: data?.configBill || {},
+      if (optionSelected.value === OPTIONS_PAYMENT.banking) {
+        openModalDrawer({
+          content: <InfoBanking callback={handleSubmitBuy} amount={data?.price * amount} />,
+          useDrawer: true,
+          configModal: {
+            className: '!w-[700px]',
           },
-        ],
-        status: FILTER_BILL.Processing,
-        totalBill: data?.price * amount,
-        // listNewSoldProduct: [
-        //   {
-        //     sold: amount + data?.sold,
-        //     idProduct: data?._id,
-        //     configBill: data?.configBill || {},
-        //     category: data?.category,
-        //   },
-        // ],
-      }
-
-      handleUpdateAddressShip()
-
-      saveDataNoLogin(bodyBill)
-
-      if (isLogin) {
-        handleUpdateAddressShip()
-        res = await ClientApi.buy(bodyBill)
+          title: translate('banking.title'),
+        })
       } else {
-        res = await ClientApi.buyNoLogin(bodyBill)
+        handleSubmitBuy()
       }
-
-      if (res.data) {
-        await callbackSuccessBuy()
-      } else {
-        showNotificationError(translate('productDetail.modalBuy.error'))
-        closeModalDrawer()
-      }
-
-      setLoading(false)
     }
     openModalDrawer({
       content: (

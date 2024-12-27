@@ -247,3 +247,17 @@ export function convertBoolean(value: any): boolean {
     return false
   }
 }
+
+export const stringToArrayBuffer = (str: string) => {
+  let buffer = new ArrayBuffer(str.length)
+
+  // Create a Uint8Array view over the ArrayBuffer
+  let uint8Array = new Uint8Array(buffer)
+
+  // Fill the Uint8Array with the string's char codes
+  for (let i = 0; i < str.length; i++) {
+    uint8Array[i] = str.charCodeAt(i)
+  }
+
+  return buffer
+}

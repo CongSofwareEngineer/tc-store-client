@@ -10,7 +10,13 @@ type OptionType = {
   value: string
   icon?: string
 }
-const useOptionPayment = (defaultValue?: OptionType) => {
+
+type EnableType = {
+  momo?: boolean
+  banking?: boolean
+  cod?: boolean
+}
+const useOptionPayment = (defaultValue?: OptionType | null, optionEnable?: EnableType) => {
   const { translate } = useLanguage()
   const { isLogin } = useUserData()
 
@@ -32,7 +38,7 @@ const useOptionPayment = (defaultValue?: OptionType) => {
       name: 'Momo',
       value: OPTIONS_PAYMENT.momo,
       icon: images.icon.iconMomo,
-      disabled: true || !isLogin,
+      disabled: !optionEnable?.momo || !isLogin,
     },
     {
       name: translate('optionPayment.onDelivery'),
@@ -41,7 +47,7 @@ const useOptionPayment = (defaultValue?: OptionType) => {
     {
       name: translate('optionPayment.banking'),
       value: OPTIONS_PAYMENT.banking,
-      disabled: true || !isLogin,
+      disabled: !optionEnable?.banking || !isLogin,
     },
   ]
 

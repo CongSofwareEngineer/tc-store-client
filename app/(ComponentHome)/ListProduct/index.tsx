@@ -21,6 +21,13 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
     return `shop?${FilterAPI.Category}=${type || 'all'}`
   }
 
+  const getUrlItem = (product: any) => {
+    if (product?.more_data?.category === TYPE_PRODUCT.shoes) {
+      return `/shoes/${product.more_data.keyName}`
+    }
+    return `/shop/${product?.more_data?.keyName}`
+  }
+
   const renderListItem = () => {
     return (
       <div className='pb-3 flex gap-3 md:gap-5 overflow-x-auto w-full'>
@@ -34,7 +41,7 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
                 showSold
                 key={item.keyName}
                 item={item}
-                href={`/shop/${item.keyName}`}
+                href={getUrlItem(item)}
                 className={'w-[180px] md:w-[230px]   md:h-[350px]'}
               />
             )
