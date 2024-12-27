@@ -9,6 +9,7 @@ import { CollapseCustom } from './styled'
 import useProductByLimit from '@/hook/tank-query/useProductByLimit'
 import { TYPE_PRODUCT } from '@/constant/admin'
 import LoadingGetData from '@/components/LoadingGetData'
+import { getUrlProduct } from '@/utils/functions'
 
 const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   const { data, isLoading } = useProductByLimit(type, 5)
@@ -19,13 +20,6 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
       return 'shoes'
     }
     return `shop?${FilterAPI.Category}=${type || 'all'}`
-  }
-
-  const getUrlItem = (product: any) => {
-    if (product?.category === TYPE_PRODUCT.shoes) {
-      return `/shoes/${product.keyName}`
-    }
-    return `/shop/${product?.keyName}`
   }
 
   const renderListItem = () => {
@@ -41,7 +35,7 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
                 showSold
                 key={item.keyName}
                 item={item}
-                href={getUrlItem(item)}
+                href={getUrlProduct(item)}
                 className={'w-[180px] md:w-[230px]   md:h-[350px]'}
               />
             )

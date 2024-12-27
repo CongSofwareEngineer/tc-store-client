@@ -1,5 +1,6 @@
 // import lodash from 'lodash'
 
+import { TYPE_PRODUCT } from '@/constant/admin'
 import { COLOR, FILTER_BILL } from '@/constant/app'
 import BigNumber from 'bignumber.js'
 
@@ -260,4 +261,12 @@ export const stringToArrayBuffer = (str: string) => {
   }
 
   return buffer
+}
+
+export const getUrlProduct = (product: any) => {
+  if (product?.more_data?.category === TYPE_PRODUCT.shoes || product?.category === TYPE_PRODUCT.shoes) {
+    return `/shoes/${product?.more_data?.keyName || product?.keyName}`
+  }
+
+  return `/shop/${product?.more_data?.keyName || product?.keyName}`
 }

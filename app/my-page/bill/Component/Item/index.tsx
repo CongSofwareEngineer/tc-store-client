@@ -3,7 +3,7 @@ import useMedia from '@/hook/useMedia'
 import React from 'react'
 import moment from 'moment'
 import Link from 'next/link'
-import { detectImg, ellipsisText, formatPrice, numberWithCommas } from '@/utils/functions'
+import { detectImg, ellipsisText, formatPrice, getUrlProduct, numberWithCommas } from '@/utils/functions'
 import { COLOR, FILTER_BILL } from '@/constant/app'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ViewDetailBill from '../ViewDetailBill'
@@ -71,13 +71,6 @@ const Item = ({ data, indexData }: Props) => {
     })
   }
 
-  const getRouteProduct = (product: any) => {
-    if (product?.more_data?.category === TYPE_PRODUCT.shoes) {
-      return `/shoes/${product.more_data.keyName}`
-    }
-    return `/shop/${product?.more_data?.keyName}`
-  }
-
   const renderDesktop = () => {
     return (
       <div
@@ -123,7 +116,7 @@ const Item = ({ data, indexData }: Props) => {
                 </div>
                 <div className='flex justify-between flex-1 gap-2'>
                   <div className='flex flex-col gap-1'>
-                    <Link href={getRouteProduct(e)}>
+                    <Link href={getUrlProduct(e)}>
                       <span className='hover:underline text-black font-bold '>{e?.more_data?.name}</span>
                     </Link>
                     <ConfigBill item={e} />

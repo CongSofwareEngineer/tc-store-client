@@ -1,7 +1,7 @@
 import ModalDelete from '@/components/ModalDelete'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
-import { cloneData, detectImg, formatPriceBase, numberWithCommas } from '@/utils/functions'
+import { cloneData, detectImg, formatPriceBase, getUrlProduct, numberWithCommas } from '@/utils/functions'
 import { DeleteOutlined } from '@ant-design/icons'
 import { Checkbox } from 'antd'
 import BigNumber from 'bignumber.js'
@@ -68,7 +68,7 @@ const ItemCart = ({ data, callBack, noBorder = false, callBackDelete, noEdit = f
         </div>
         <div className='flex flex-col flex-1 gap-1'>
           <div
-            onClick={() => router.push(`/shop/${data?.more_data.keyName}`)}
+            onClick={() => router.push(getUrlProduct(data))}
             className='text-medium font-medium mb-1 hover:underline cursor-pointer '
           >
             {data?.more_data?.name}
@@ -118,7 +118,7 @@ const ItemCart = ({ data, callBack, noBorder = false, callBackDelete, noEdit = f
         </div>
         <div className='flex flex-1 gap-1 flex-col max-w-[calc(100%-130px)] pr-2'>
           <div
-            onClick={() => router.push(`/shop/${data?.more_data.keyName}`)}
+            onClick={() => router.push(getUrlProduct(data))}
             className=' font-bold   hover:underline cursor-pointer '
           >
             {data?.more_data?.name}
