@@ -22,10 +22,10 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   }
 
   const getUrlItem = (product: any) => {
-    if (product?.more_data?.category === TYPE_PRODUCT.shoes) {
-      return `/shoes/${product.more_data.keyName}`
+    if (product?.category === TYPE_PRODUCT.shoes) {
+      return `/shoes/${product.keyName}`
     }
-    return `/shop/${product?.more_data?.keyName}`
+    return `/shop/${product?.keyName}`
   }
 
   const renderListItem = () => {

@@ -125,8 +125,9 @@ const FirstLoadWebsite: NextPage = () => {
     ObserverService.on(OBSERVER_KEY.LogOut, handleLogout)
 
     return () => {
-      ObserverService.removeListener(OBSERVER_KEY.RoutePage, () => setIsLoading(false))
+      ObserverService.removeListener(OBSERVER_KEY.RoutePage)
       ObserverService.removeListener(OBSERVER_KEY.LogOut)
+      ObserverService.removeListener(OBSERVER_KEY.FirstLoadPage)
     }
   }, [])
 
