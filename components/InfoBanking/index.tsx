@@ -54,7 +54,7 @@ const InfoBanking = ({
       <div className='relative w-full flex-1 flex md:pb-0 pb-[100%]   aspect-square overflow-hidden'>
         <div className='absolute w-full aspect-square flex justify-center'>
           <div className='relative md:w-full  w-[90%] aspect-square '>
-            <Image src={qrCode} alt='QR' className='!relative !w-full !h-auto ' />
+            <Image preview={false} src={qrCode} alt='QR' className='!relative !w-full !h-auto ' />
           </div>
         </div>
       </div>
