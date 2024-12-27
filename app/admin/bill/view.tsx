@@ -19,8 +19,10 @@ import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
 import { DEFAULT_RATE_EXP_USER } from '../../../constant/app'
 import AdminApi from '@/services/adminApi'
 import useCallbackToast from '@/hook/useCallbackToast'
+import useFirstLoadPage from '@/hook/useFirstLoadPage'
 
 const BillAdminScreen = () => {
+  useFirstLoadPage()
   const { queries } = useQuerySearch()
   const { data, isLoading } = useBillAdmin(queries)
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()

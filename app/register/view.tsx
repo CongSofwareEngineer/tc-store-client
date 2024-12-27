@@ -7,6 +7,7 @@ import { images } from '@/configs/images'
 import { BodyUserData } from '@/constant/firebase'
 import useAos from '@/hook/useAos'
 import useCheckForm from '@/hook/useCheckForm'
+import useFirstLoadPage from '@/hook/useFirstLoadPage'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import useRoutePage from '@/hook/useRoutePage'
@@ -20,6 +21,7 @@ import React, { useEffect, useState } from 'react'
 
 const RegisterScreen = () => {
   useAos()
+  useFirstLoadPage()
   const { translate } = useLanguage()
   const router = useRoutePage()
   const { checkNumberPhone } = useCheckForm()

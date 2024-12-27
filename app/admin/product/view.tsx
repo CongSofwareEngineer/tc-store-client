@@ -19,6 +19,7 @@ import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import AdminApi from '@/services/adminApi'
+import useFirstLoadPage from '@/hook/useFirstLoadPage'
 
 const ProductAdminScreen = () => {
   const { renderContent } = useSearchBaseAdmin({
@@ -28,6 +29,7 @@ const ProductAdminScreen = () => {
   const { queries } = useQuerySearch()
   const { data, isLoading, hasNextPage, isFetchingNextPage, loadMore } = useListProductAdmin(PAGE_SIZE_LIMIT, queries)
 
+  useFirstLoadPage()
   const { isMobile } = useMedia()
   const { openModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()

@@ -16,6 +16,7 @@ import dynamic from 'next/dynamic'
 import { Button } from 'antd'
 import LoadingData from './Component/LoadingData'
 import MyLoading from '@/components/MyLoading'
+import useFirstLoadPage from '@/hook/useFirstLoadPage'
 
 const Payment = dynamic(() => import('./Component/Payment'), {
   ssr: false,
@@ -28,6 +29,7 @@ const MyCartScreen = () => {
   const [allSelected, setAllSelected] = useState(false)
   const [pageSize] = useState(PAGE_SIZE_LIMIT)
 
+  useFirstLoadPage()
   const { data, isLoading } = useMyCart(pageSize)
   const { translate } = useLanguage()
   const { isMobile, isClient } = useMedia()
@@ -141,7 +143,7 @@ const MyCartScreen = () => {
 
   const renderMobile = () => {
     return (
-      <div className='mt-1'>
+      <div className='mt-1 flex flex-col gap-2 max-h-full overflow-hidden'>
         <BtnBack title={[translate('header.shop'), translate('header.cart')]} url={['/shop']} />
         <LoadingData loading={isLoading} />
 
@@ -149,7 +151,7 @@ const MyCartScreen = () => {
           <>
             <div
               style={{ boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px' }}
-              className='mt-1 flex-1  border-[.5px] border-gray-300 bg-white  overflow-y-auto'
+              className='mt-1 flex-1 flex-col  border-[.5px] border-gray-300 bg-white  overflow-y-auto'
             >
               <ListItemCart
                 allSelected={allSelected}
@@ -166,7 +168,7 @@ const MyCartScreen = () => {
                 </div>
               )}
             </div>
-            <div className='fixed z-[2] w-full bg-white border-gray-300 p-[20px] bottom-0 left-0'>
+            <div className=' w-full flex flex-col bg-white border-gray-300 p-[20px] bottom-0 left-0'>
               <div className='relative flex flex-col gap-2'>
                 <div className='flex gap-2 w-full'>
                   <div className='font-semibold'>{translate('textPopular.totalMoney')} :</div>

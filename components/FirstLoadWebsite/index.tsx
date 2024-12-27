@@ -44,7 +44,6 @@ const FirstLoadWebsite: NextPage = () => {
   }, [])
 
   useEffect(() => {
-    setIsLoading(false)
     scrollTop()
   }, [pathName])
 
@@ -114,13 +113,15 @@ const FirstLoadWebsite: NextPage = () => {
       if (!listUrlExitedRef.current.includes(url)) {
         setIsLoading(true)
         listUrlExitedRef.current.push(url)
-        setTimeout(() => {
-          setIsLoading(false)
-        }, 1500)
       }
     }
 
+    const firstLoadPage = () => {
+      setIsLoading(false)
+    }
+
     ObserverService.on(OBSERVER_KEY.RoutePage, routePage)
+    ObserverService.on(OBSERVER_KEY.FirstLoadPage, firstLoadPage)
     ObserverService.on(OBSERVER_KEY.LogOut, handleLogout)
 
     return () => {

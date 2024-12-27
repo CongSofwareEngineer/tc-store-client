@@ -15,12 +15,14 @@ import MyCheckBox from '@/components/MyCheckBox'
 import Avatar from './Component/Avatar'
 import { copyToClipboard } from '@/utils/notification'
 import ModalUpdateAddressShip from './Component/ModalUpdateAddressShip'
+import useFirstLoadPage from '@/hook/useFirstLoadPage'
 
 const MyProfile = () => {
   const { isMobile } = useMedia()
   const { userData } = useUserData()
   const { translate } = useLanguage()
   const { openModalDrawer } = useModalDrawer()
+  useFirstLoadPage()
 
   const getLanguage = (keyType: string) => {
     switch (keyType) {

@@ -8,9 +8,11 @@ import MyLoadMore from '@/components/MyLoadMore'
 import ItemProduct from '@/components/ItemProduct'
 import useAos from '@/hook/useAos'
 import LoadingGetData from '@/components/LoadingGetData'
+import useFirstLoadPage from '@/hook/useFirstLoadPage'
 
 const ShoesScreen = () => {
   useAos()
+  useFirstLoadPage()
   const { queries } = useQuerySearch()
   const { data, isLoading, hasNextPage, loadMore, isFetchingNextPage } = useShoesShop(queries)
 

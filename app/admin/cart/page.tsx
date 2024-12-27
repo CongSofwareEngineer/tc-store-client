@@ -1,12 +1,8 @@
-'use client'
-import useCartAdmin from '@/hook/tank-query/Admin/useCart'
 import React from 'react'
+import CartAdminScreen from './view'
 
 const CartAdmin = () => {
-  const { data } = useCartAdmin()
-  console.log({ data })
-
-  return <div>CartAdmin</div>
+  return <CartAdminScreen />
 }
 
 export default CartAdmin

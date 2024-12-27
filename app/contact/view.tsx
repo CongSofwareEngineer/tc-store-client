@@ -19,12 +19,14 @@ import { showNotificationError, showNotificationSuccess } from '@/utils/notifica
 import ClientApi from '@/services/clientApi'
 import Image from 'next/image'
 import useRoutePage from '@/hook/useRoutePage'
+import useFirstLoadPage from '@/hook/useFirstLoadPage'
 
 const ModalProcess = dynamic(() => import('@/components/ModalProcess'), {
   ssr: true,
 })
 const ContactScreen = () => {
   useAos()
+  useFirstLoadPage()
   const { isMobile } = useMedia()
   const router = useRoutePage()
   const { translate } = useLanguage()

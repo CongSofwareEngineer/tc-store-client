@@ -19,8 +19,10 @@ import { QUERY_KEY } from '@/constant/reactQuery'
 import ModalConfigCategory from './modalConfig'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import AdminApi from '@/services/adminApi'
+import useFirstLoadPage from '@/hook/useFirstLoadPage'
 
 const CategoryAdminScreen = () => {
+  useFirstLoadPage()
   const { renderContent } = useSearchBaseAdmin({
     category: true,
     keyName: true,

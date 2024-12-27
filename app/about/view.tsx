@@ -12,8 +12,10 @@ import { showNotificationError, showNotificationSuccess } from '@/utils/notifica
 import MyBlog from '@/components/MyBlog'
 import { INIT_DATA_MY_BLOG } from '@/constant/app'
 import { FirebaseAbout } from '@/services/firebaseService'
+import useFirstLoadPage from '@/hook/useFirstLoadPage'
 
 const AboutScreen = ({ data }: AboutProps) => {
+  useFirstLoadPage()
   const { openModalDrawer } = useModalDrawer()
   const { userData } = useUserData()
   const { translate } = useLanguage()

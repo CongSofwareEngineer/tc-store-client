@@ -8,9 +8,11 @@ import useQuerySearch from '@/hook/useQuerySearch'
 import MyLoadMore from '@/components/MyLoadMore'
 import OptionFilter from './Component/OptionFilter'
 import LoadingData from './Component/LoadingData'
+import useFirstLoadPage from '@/hook/useFirstLoadPage'
 // import MyDatePicker from '@/components/MyDatePicker'
 
 const BillScreen = () => {
+  useFirstLoadPage()
   const { queries } = useQuerySearch()
   const { translate } = useLanguage()
 

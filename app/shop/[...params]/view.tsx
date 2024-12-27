@@ -10,6 +10,7 @@ import ViewDetail from './Component/ViewDetail'
 import dynamic from 'next/dynamic'
 import { cloneData } from '@/utils/functions'
 import MyLoading from '@/components/MyLoading'
+import useFirstLoadPage from '@/hook/useFirstLoadPage'
 
 const PaymentShop = dynamic(() => import('./Component/payment'), {
   ssr: true,
@@ -23,6 +24,7 @@ const ShopDetailScreen = ({ productDetail }: { productDetail: ItemDetailType }) 
   const [productState, setProductState] = useState<ItemDetailType>(productDetail)
 
   useAos()
+  useFirstLoadPage()
   const { isLogin } = useUserData()
   const { data } = useGetProductByID(productDetail?.id)
   const dataItem = data?.data ?? productDetail

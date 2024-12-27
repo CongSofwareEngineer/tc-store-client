@@ -25,8 +25,10 @@ import ClientApi from '@/services/clientApi'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useCallbackToast from '@/hook/useCallbackToast'
+import useFirstLoadPage from '@/hook/useFirstLoadPage'
 
 const CommentClient = () => {
+  useFirstLoadPage()
   const { isMobile } = useMedia()
   const { translate } = useLanguage()
   const { queries } = useQuerySearch()

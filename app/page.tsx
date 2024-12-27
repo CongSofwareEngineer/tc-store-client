@@ -9,6 +9,7 @@ import InfoHome from './(ComponentHome)/InfoHome'
 import Banner from './(ComponentHome)/Banner'
 import useAos from '@/hook/useAos'
 import { NextPage } from 'next'
+import useFirstLoadPage from '@/hook/useFirstLoadPage'
 const ListProduct = dynamic(() => import('./(ComponentHome)/ListProduct'), {
   ssr: false,
 })
@@ -22,6 +23,7 @@ const SocialMedia = dynamic(() => import('./(ComponentHome)/SocialMedia'), {
 
 const Home: NextPage = () => {
   useAos()
+  useFirstLoadPage()
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
 

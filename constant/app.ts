@@ -70,6 +70,7 @@ export enum OBSERVER_KEY {
   'LogOut' = 'LogOut',
   'ReLogin' = 'ReLogin',
   'RoutePage' = 'RoutePage',
+  'FirstLoadPage' = 'FirstLoadPage',
   'UpdateCookieAuth' = 'UpdateCookieAuth',
 }
 

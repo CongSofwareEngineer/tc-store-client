@@ -9,12 +9,13 @@ import { NextPage } from 'next'
 import React from 'react'
 import ModalViewBillDetail from './Component/ModalViewBillDetail'
 import GraphRevenue from './Component/GraphRevenue'
+import useFirstLoadPage from '@/hook/useFirstLoadPage'
 
 const RevenueScreen: NextPage = () => {
   const { queries } = useQuerySearch()
   const { translate } = useLanguage()
   const { openModalDrawer } = useModalDrawer()
-
+  useFirstLoadPage()
   const { renderContent } = useSearchBaseAdmin({
     dateEnd: true,
     dateStart: true,
