@@ -100,15 +100,15 @@ const MyCartScreen = () => {
 
   const renderDesktop = () => {
     return (
-      <div className='w-full'>
+      <div className='w-full flex flex-col gap-1 overflow-hidden h-full'>
         <BtnBack title={[translate('header.shop'), translate('header.cart')]} url={['/shop']} />
         <LoadingData loading={isLoading} />
 
         {!isLoading && (
-          <div className='w-full flex gap-5'>
+          <div className='w-full flex   gap-5 overflow-hidden h-full'>
             <div
               style={{ boxShadow: '3px 3px 6px rgba(0,0,0,.0509803922)' }}
-              className='flex-1  border-2 border-gray-300  overflow-y-auto bg-white'
+              className='flex-1 max-h-[calc(100dvh-150px)]  border-2 border-gray-300  overflow-y-auto bg-white'
             >
               <ListItemCart
                 allSelected={allSelected}
@@ -143,46 +143,48 @@ const MyCartScreen = () => {
 
   const renderMobile = () => {
     return (
-      <div className='mt-1 flex flex-col gap-2 max-h-full overflow-hidden'>
-        <BtnBack title={[translate('header.shop'), translate('header.cart')]} url={['/shop']} />
-        <LoadingData loading={isLoading} />
+      <div className=' flex flex-1 flex-col h-full  max-h-full w-[calc(100%+40px)] ml-[-20px] overflow-hidden justify-between'>
+        <div className='w-full px-5 flex flex-col max-h-[calc(100dvh-175px)]  overflow-y-auto  '>
+          <BtnBack className='!mb-0' title={[translate('header.shop'), translate('header.cart')]} url={['/shop']} />
 
-        {!isLoading && (
-          <>
-            <div
-              style={{ boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px' }}
-              className='mt-1 flex-1 flex-col  border-[.5px] border-gray-300 bg-white  overflow-y-auto'
-            >
-              <ListItemCart
-                allSelected={allSelected}
-                dataCart={listCartFormat}
-                callBackClick={handleSelect}
-                callBackDelete={handleDelete}
-                callBackSelectAll={handleSelectAll}
-                loading={isLoading}
-              />
-              {listCartFormat.length === 0 && (
-                <div className='w-full flex gap-1 my-2 pl-3'>
-                  <span>{translate('textPopular.notData')}</span>
-                  <Link href={'/shop'}>{translate('common.buyNow')}</Link>
-                </div>
-              )}
-            </div>
-            <div className=' w-full flex flex-col bg-white border-gray-300 p-[20px] bottom-0 left-0'>
-              <div className='relative flex flex-col gap-2'>
-                <div className='flex gap-2 w-full'>
-                  <div className='font-semibold'>{translate('textPopular.totalMoney')} :</div>
-                  <span className='font-bold text-green-700'>{numberWithCommas(calculatePayment())} VNĐ</span>
-                </div>
-                <div className='w-full border-[1px] border-gray-200  relative  ' />
-
-                <Button disabled={Number(calculatePayment()) <= 1} onClick={() => setIsPayment(true)}>
-                  {`${translate('cart.payment')} (${numberWithCommas(calculatePayment())} VNĐ)`}
-                </Button>
+          <LoadingData loading={isLoading} />
+          {!isLoading && (
+            <>
+              <div
+                style={{ boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px' }}
+                className='mt-1 flex-1 flex-col  border-[.5px] border-gray-300 bg-white '
+              >
+                <ListItemCart
+                  allSelected={allSelected}
+                  dataCart={listCartFormat}
+                  callBackClick={handleSelect}
+                  callBackDelete={handleDelete}
+                  callBackSelectAll={handleSelectAll}
+                  loading={isLoading}
+                />
+                {listCartFormat.length === 0 && (
+                  <div className='w-full flex gap-1 my-2 pl-3'>
+                    <span>{translate('textPopular.notData')}</span>
+                    <Link href={'/shop'}>{translate('common.buyNow')}</Link>
+                  </div>
+                )}
               </div>
+            </>
+          )}
+        </div>
+        <div className=' w-full flex flex-col bg-white border-gray-300 p-[20px] bottom-0 left-0'>
+          <div className='relative flex flex-col gap-2'>
+            <div className='flex gap-2 w-full'>
+              <div className='font-semibold'>{translate('textPopular.totalMoney')} :</div>
+              <span className='font-bold text-green-700'>{numberWithCommas(calculatePayment())} VNĐ</span>
             </div>
-          </>
-        )}
+            <div className='w-full border-[1px] border-gray-200  relative  ' />
+
+            <Button disabled={Number(calculatePayment()) <= 1} onClick={() => setIsPayment(true)}>
+              {`${translate('cart.payment')} (${numberWithCommas(calculatePayment())} VNĐ)`}
+            </Button>
+          </div>
+        </div>
       </div>
     )
   }

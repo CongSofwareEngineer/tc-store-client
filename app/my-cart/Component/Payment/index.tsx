@@ -12,7 +12,7 @@ import BillFinal from './Component/BillFinal'
 import ContentForm from './Component/ContentForm'
 import useOptionPayment from '@/hook/useOptionPayment'
 import ViewListOrder from './Component/ViewListOrder'
-import { DEFAULT_RATE_EXP_USER, FILTER_BILL } from '@/constant/app'
+import { DEFAULT_RATE_EXP_USER, FILTER_BILL, OPTIONS_PAYMENT } from '@/constant/app'
 import ModalProcess from '@/components/ModalProcess'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalSuccess from '@/components/ModalSuccess'
@@ -21,6 +21,7 @@ import OptionsPayment from './Component/OptionsPayment'
 import { showNotificationError } from '@/utils/notification'
 import ModalDelete from '@/components/ModalDelete'
 import useRoutePage from '@/hook/useRoutePage'
+import InfoBanking from '@/components/InfoBanking'
 
 const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
   const { translate } = useLanguage()
@@ -31,7 +32,7 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
 
   const [formData, setFormData] = useState<Record<string, any> | null>(null)
   const [loading, setLoading] = useState(false)
-  const { onChangeOptions, listOptions, optionSelected } = useOptionPayment()
+  const { onChangeOptions, listOptions, optionSelected } = useOptionPayment(null, { banking: true })
 
   useEffect(() => {
     const initData = {
@@ -118,6 +119,31 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
     })
   }
 
+  const handleSubmitBuy = async (idBanking?: string, mess?: string, bodyAPI?: BodyAddBill) => {
+    let res: any = null
+
+    if (idBanking) {
+      bodyAPI!.infoBanking = {
+        id: idBanking,
+        messages: mess,
+      }
+    }
+
+    if (isLogin) {
+      res = await ClientApi.buy(bodyAPI!)
+    } else {
+      res = await ClientApi.buyNoLogin(bodyAPI!)
+    }
+    console.log({ res })
+
+    if (res?.data) {
+      await callbackSuccess()
+      clickBack()
+    } else {
+      showNotificationError(translate('productDetail.modalBuy.error'))
+    }
+  }
+
   const handleSubmit = async () => {
     const callBack = async () => {
       setLoading(true)
@@ -162,20 +188,17 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
         const expUser = totalBill * DEFAULT_RATE_EXP_USER + (userData?.exp || 0)
         bodyAPI.expUser = expUser
       }
-
-      let res: any = null
-      if (isLogin) {
-        res = await ClientApi.buy(bodyAPI)
+      if (optionSelected.value === OPTIONS_PAYMENT.banking) {
+        openModalDrawer({
+          content: <InfoBanking callback={(id, mess) => handleSubmitBuy(id, mess, bodyAPI)} amount={totalBill} />,
+          useDrawer: true,
+          configModal: {
+            className: '!w-[700px]',
+          },
+          title: translate('banking.title'),
+        })
       } else {
-        res = await ClientApi.buyNoLogin(bodyAPI)
-      }
-      console.log({ res })
-
-      if (res?.data) {
-        await callbackSuccess()
-        clickBack()
-      } else {
-        showNotificationError(translate('productDetail.modalBuy.error'))
+        handleSubmitBuy('', '', bodyAPI)
       }
     }
 

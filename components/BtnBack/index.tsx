@@ -9,14 +9,15 @@ type BtnBackType = {
   onClick?: ((param?: any) => void) | null
   url?: string[] | string
   title?: string[] | string
+  className?: string
 }
 
-const BtnBack = ({ title, url = [], onClick = null }: BtnBackType) => {
+const BtnBack = ({ title, url = [], onClick = null, className = '' }: BtnBackType) => {
   // const BtnBack = ({ title, url = [] }: BtnBackType) => {
   const router = useRoutePage()
 
   return (
-    <div className='flex w-full align-middle justify-start gap-1 mb-3 md:mb-6 items-center '>
+    <div className={`flex w-full align-middle justify-start gap-1 mb-3 md:mb-6 items-center ${className}`}>
       <Image
         fill
         onClick={() => (onClick ? onClick() : router.back())}
