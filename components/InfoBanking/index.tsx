@@ -7,6 +7,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import { images } from '@/configs/images'
 import useMedia from '@/hook/useMedia'
+import Image from 'next/image'
 
 const InfoBanking = ({
   amount,
@@ -54,7 +55,7 @@ const InfoBanking = ({
       <div className='relative w-full flex-1 flex md:pb-0 pb-[100%]   aspect-square overflow-hidden'>
         <div className='absolute w-full aspect-square flex justify-center'>
           <div className='relative md:w-full  w-[90%] aspect-square '>
-            <MyImage key={Date.now()} src={qrCode} alt='QR' className='!relative !w-full !h-auto ' />
+            <Image fill src={qrCode} alt='QR' className='!relative !w-full !h-auto ' />
           </div>
         </div>
       </div>
