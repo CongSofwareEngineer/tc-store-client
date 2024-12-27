@@ -44,14 +44,15 @@ export type BodyAddBill = {
   addressShip: string
   discount: number
   sdt: string
-  iDBanking?: number
-  iDMomo?: number | string
   status: FILTER_BILL
   abort?: boolean
   totalBill: Number
   listNewSoldProduct?: { [key: string]: any }[]
-  configBill?: { [key: string]: any }
   expUser?: number
+  infoBanking?: {
+    id?: string
+    messages?: string
+  }
 }
 
 export type BodyUserData = {

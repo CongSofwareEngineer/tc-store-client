@@ -42,11 +42,8 @@ const VietcomBankService = {
     const img = `https://img.vietqr.io/image/970436-${process.env.NEXT_PUBLIC_VCB_STK}-yWeQQO1.jpg?accountName=HO%20DIEN%20CONG&amount=${amount}&addInfo=${mess}`
     return img
   },
-  generateMess: (): string => {
-    return `
-    Ma HD ${VietcomBankService.generateSalt()}
-    Ngay ${formatDateTime(new Date(), 'DD MM YYYY')}
-  `
+  generateMess: (salt: string): string => {
+    return `Ma HD ${salt}  Ngay ${formatDateTime(new Date(), 'DD MM YYYY')}`
   },
   generateSalt: (): string => {
     return Buffer.from(randomBytes(7)).toString('hex').padStart(10, '0')

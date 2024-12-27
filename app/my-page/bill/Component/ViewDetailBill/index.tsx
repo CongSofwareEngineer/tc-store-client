@@ -10,6 +10,7 @@ import MyImage from '@/components/MyImage'
 import ConfigBill from '@/components/ConfigBill'
 import { TYPE_PRODUCT } from '@/constant/admin'
 import useRoutePage from '@/hook/useRoutePage'
+import TextCopy from '@/components/TextCopy'
 type Props = {
   data?: any
 }
@@ -42,20 +43,33 @@ const ViewDetailBill = ({ data }: Props) => {
   }
 
   return (
-    <div className='flex flex-col w-full gap-4'>
-      {!isMobile && <p className='text-[22px] mb-2 font-bold text-center'>{translate('textPopular.viewDetail')}</p>}
-      {isMobile && (
+    <div className='flex flex-col w-full gap-4 overflow-y-auto'>
+      <div className='flex flex-col  w-full gap-1 '>
         <div className='flex gap-1'>
-          <div className='whitespace-nowrap'>{translate('textPopular.address')}</div>
-          <div>:</div>
-          <div>{getAddressShip(data)}</div>
+          <span>SĐT</span>
+          <span>:</span>
+          <TextCopy textView={data.sdt} value={data.sdt} />
         </div>
-      )}
+        {isMobile && (
+          <div className='flex gap-1'>
+            <div className='whitespace-nowrap'>{translate('textPopular.address')}</div>
+            <div>:</div>
+            <div>{getAddressShip(data)}</div>
+          </div>
+        )}
+      </div>
       {data && (
-        <div className='flex flex-col gap-4 w-full'>
-          {[...data?.listBill, ...data?.listBill]?.map((e: any) => {
+        <div className='flex flex-col gap-4 w-full overflow-y-auto'>
+          {data?.listBill?.map((e: any, index: number) => {
+            const isHasBorder = index < data?.listBill.length - 1
             return (
-              <div key={e._id} className={`flex gap-3 w-full pb-4 border-b-[2px] border-gray-200`}>
+              <div
+                style={{
+                  borderBottom: `${isHasBorder ? 2 : 0}px solid #e5e7eb `,
+                }}
+                key={e._id}
+                className={`flex gap-3 w-full pb-4 `}
+              >
                 <div className='aspect-square w-[100px]  flex justify-center align-middle  relative rounded-md overflow-hidden'>
                   <MyImage
                     alt={`icon-product-bill-${e._id}`}
@@ -91,7 +105,7 @@ const ViewDetailBill = ({ data }: Props) => {
           })}
         </div>
       )}
-      <div className='text-medium gap-1 flex w-full justify-end font-bold text-green-500 '>
+      <div className='text-medium gap-1 md:border-t-0 md:pt-0 pt-3 border-t-2 border-gray-200 flex w-full justify-end font-bold text-green-500 '>
         <span>{translate('textPopular.totalMoney')} : </span>
         <span>{`${formatPrice(data.totalBill || '0')} VNĐ`}</span>
       </div>

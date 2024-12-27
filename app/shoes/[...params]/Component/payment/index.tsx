@@ -115,13 +115,13 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   }
 
   const handleUpdateAddressShip = async () => {
-    if (userData?.addressShipper?.length === 0) {
+    if (isLogin && userData?.addressShipper?.length === 0) {
       await ClientApi.updateUser(userData._id, {
         addressShipper: [formData?.addressShip],
       })
     }
   }
-  const handleSubmitBuy = async () => {
+  const handleSubmitBuy = async (idBanking?: string, messBanking?: string) => {
     setLoading(true)
     callbackProcessingBuy()
 
@@ -144,14 +144,17 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
       totalBill: data?.price * amount,
     }
 
-    handleUpdateAddressShip()
-
-    saveDataNoLogin(bodyBill)
-
+    if (idBanking) {
+      bodyBill.infoBanking = {
+        id: idBanking,
+        messages: messBanking,
+      }
+    }
     if (isLogin) {
       handleUpdateAddressShip()
       res = await ClientApi.buy(bodyBill)
     } else {
+      saveDataNoLogin(bodyBill)
       res = await ClientApi.buyNoLogin(bodyBill)
     }
 
@@ -166,8 +169,6 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   }
   const handleSubmit = async () => {
     const callBack = async () => {
-      console.log('handleSubmit')
-
       if (optionSelected.value === OPTIONS_PAYMENT.banking) {
         openModalDrawer({
           content: <InfoBanking callback={handleSubmitBuy} amount={data?.price * amount} />,

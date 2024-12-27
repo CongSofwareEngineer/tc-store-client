@@ -61,9 +61,7 @@ const Item = ({ data, indexData }: Props) => {
     openModalDrawer({
       content: <ViewDetailBill data={item} />,
       useDrawer: true,
-      configDrawer: {
-        title: translate('textPopular.viewDetail'),
-      },
+      title: translate('textPopular.viewDetail'),
     })
   }
 
@@ -106,10 +104,20 @@ const Item = ({ data, indexData }: Props) => {
           <div>:</div>
           <div>{getAddressShip(data)}</div>
         </div>
-        <div className='flex flex-col gap-4 w-full mt-2'>
-          {data?.listBill?.map((e: any) => {
+        <div className='flex flex-col w-full mt-2'>
+          {data?.listBill?.map((e: any, index: number) => {
+            const isHasBorder = index < data?.listBill.length - 1
+
             return (
-              <div key={e._id} className='flex gap-3 px-3'>
+              <div
+                style={{
+                  borderBottom: `${isHasBorder ? 1 : 0}px solid #e5e7eb `,
+                  paddingBottom: isHasBorder ? 15 : 0,
+                  paddingTop: index > 0 ? 15 : 0,
+                }}
+                key={e._id}
+                className='flex gap-3 '
+              >
                 <div className='w-[70px]  rounded-md aspect-square overflow-hidden relative flex justify-center items-center'>
                   <MyImage className='!relative ' alt={e?.more_data?.name} src={detectImg(e?.more_data?.imageMain)} />
                 </div>
@@ -171,10 +179,20 @@ const Item = ({ data, indexData }: Props) => {
           <div> {moment(Number(data.date)).format('DD/MM/YYYY')}</div>
         </div>
 
-        <div className='flex flex-col gap-4 w-full mt-2'>
-          {data?.listBill?.map((e: any) => {
+        <div className='flex flex-col  w-full mt-2'>
+          {data?.listBill?.map((e: any, index: number) => {
+            const isHasBorder = index < data?.listBill.length - 1
+
             return (
-              <div key={e._id} className='flex gap-3 px-3'>
+              <div
+                style={{
+                  borderBottom: `${isHasBorder ? 1 : 0}px solid #e5e7eb `,
+                  paddingBottom: isHasBorder ? 15 : 0,
+                  paddingTop: index > 0 ? 15 : 0,
+                }}
+                key={e._id}
+                className='flex gap-3 px-3 '
+              >
                 <div className='w-[70px]  rounded-md aspect-square overflow-hidden relative flex justify-center items-center'>
                   <MyImage
                     className='!relative !h-auto '

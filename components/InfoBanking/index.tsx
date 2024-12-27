@@ -8,7 +8,13 @@ import { Button } from 'antd'
 import { images } from '@/configs/images'
 import useMedia from '@/hook/useMedia'
 
-const InfoBanking = ({ amount, callback = () => {} }: { amount: number; callback?: () => any }) => {
+const InfoBanking = ({
+  amount,
+  callback = () => {},
+}: {
+  amount: number
+  callback?: (id?: string, mess?: string) => any
+}) => {
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
 
@@ -16,13 +22,17 @@ const InfoBanking = ({ amount, callback = () => {} }: { amount: number; callback
   const [message, setMessage] = useState<string>('')
   const [loadingCheck, setLoadingCheck] = useState(false)
   const [isBanking, setIsBanking] = useState(false)
+  const [idBanking, setIdBanking] = useState('')
 
   useEffect(() => {
     ;(async () => {
-      const mess = VietcomBankService.generateMess()
+      const idBanking = VietcomBankService.generateSalt()
+      const mess = VietcomBankService.generateMess(idBanking)
       const qr = VietcomBankService.createQR(amount, mess)
+
       setQrCode(qr)
       setMessage(mess)
+      setIdBanking(idBanking)
     })()
   }, [])
 
@@ -35,9 +45,8 @@ const InfoBanking = ({ amount, callback = () => {} }: { amount: number; callback
     }
   }
 
-  const checkFac = async () => {
-    const data = await VietcomBankService.checkBanking()
-    console.log({ data })
+  const handleCallBack = () => {
+    callback(idBanking, message)
   }
 
   return (
@@ -78,12 +87,12 @@ const InfoBanking = ({ amount, callback = () => {} }: { amount: number; callback
               <Button onClick={checkBanking} loading={loadingCheck} className='flex-1'>
                 {translate('banking.openApp')}
               </Button>
-              <Button onClick={callback} disabled={isBanking} type='primary' className='flex-1'>
+              <Button onClick={handleCallBack} disabled={isBanking} type='primary' className='flex-1'>
                 {translate('textPopular.sended')}
               </Button>
             </>
           ) : (
-            <Button onClick={callback} disabled={isBanking} className='flex-1'>
+            <Button onClick={handleCallBack} disabled={isBanking} className='flex-1'>
               {translate('textPopular.sended')}
             </Button>
           )}

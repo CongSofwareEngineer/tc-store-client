@@ -107,9 +107,7 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
     openModalDrawer({
       content: <ViewDetailBill data={item} />,
       useDrawer: true,
-      configDrawer: {
-        title: translate('textPopular.viewDetail'),
-      },
+      title: translate('textPopular.viewDetail'),
     })
   }
 

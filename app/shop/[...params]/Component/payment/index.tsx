@@ -140,14 +140,6 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         ],
         status: FILTER_BILL.Processing,
         totalBill: data?.price * amount,
-        listNewSoldProduct: [
-          {
-            sold: amount + data?.sold,
-            idProduct: data?._id,
-            configBill: data?.configBill || {},
-            category: data?.category,
-          },
-        ],
       }
 
       saveDataNoLogin(bodyBill)
