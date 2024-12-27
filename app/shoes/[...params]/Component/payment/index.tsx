@@ -131,6 +131,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
       addressShip: formData?.addressShip,
       discount: 0,
       sdt: formData?.sdt,
+      name: formData?.name,
       idUser: isLogin ? userData?._id : 'no-id',
       listBill: [
         {
@@ -150,6 +151,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         messages: messBanking,
       }
     }
+
     if (isLogin) {
       handleUpdateAddressShip()
       res = await ClientApi.buy(bodyBill)

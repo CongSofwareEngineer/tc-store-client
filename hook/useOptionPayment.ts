@@ -38,7 +38,7 @@ const useOptionPayment = (defaultValue?: OptionType | null, optionEnable?: Enabl
       name: 'Momo',
       value: OPTIONS_PAYMENT.momo,
       icon: images.icon.iconMomo,
-      disabled: !optionEnable?.momo || !isLogin,
+      disabled: !optionEnable?.momo,
     },
     {
       name: translate('optionPayment.onDelivery'),
@@ -47,7 +47,7 @@ const useOptionPayment = (defaultValue?: OptionType | null, optionEnable?: Enabl
     {
       name: translate('optionPayment.banking'),
       value: OPTIONS_PAYMENT.banking,
-      disabled: !optionEnable?.banking || !isLogin,
+      disabled: !optionEnable?.banking,
     },
   ]
 

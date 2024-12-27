@@ -2,6 +2,12 @@ import { fetchData } from '@/configs/fetchConfig'
 import { REQUEST_TYPE } from '@/constant/app'
 
 const AdminApi = {
+  getUserDetailById: async (id: string) => {
+    return fetchData({
+      url: `user/detail/${id}`,
+    })
+  },
+
   replyComment: async (id: string, body: any) => {
     return fetchData({
       url: `comment/reply/${id}`,
@@ -13,7 +19,7 @@ const AdminApi = {
   //bill
   getBills: async (queryUrl: string) => {
     return fetchData({
-      url: `bill/admin/all${queryUrl}`,
+      url: `bill/all${queryUrl}`,
     })
   },
   updateBill: async (idBill: string, body: any) => {

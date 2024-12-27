@@ -1,28 +1,58 @@
+import MyLoading from '@/components/MyLoading'
+import TextCopy from '@/components/TextCopy'
+import useUserDetail from '@/hook/tank-query/useUserDetail'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import { detectImg, formatPrice, numberWithCommas } from '@/utils/functions'
+import { LoadingOutlined } from '@ant-design/icons'
 import Image from 'next/image'
 import React from 'react'
 
 const ItemDetail = ({ data }: { data: any }) => {
-  const { isMobile } = useMedia()
   const { translate } = useLanguage()
 
   const renderAddress = () => {
     if (data.addressShip.addressDetail) {
       return (
-        <div className='flex gap-1'>
-          {/* <span className="text-nowrap">Address :</span> */}
-          <div>{`${data.addressShip.addressDetail} (${data.addressShip.address.replaceAll('---', ', ')})`}</div>
+        <div>
+          <span className='font-bold whitespace-nowrap'>{`${translate('textPopular.addressShip')} :`}</span>
+          <TextCopy
+            value={`${data.addressShip.addressDetail} (${data.addressShip.address.replaceAll('---', ', ')})`}
+            textView={`${data.addressShip.addressDetail} (${data.addressShip.address.replaceAll('---', ', ')})`}
+          />
         </div>
       )
     }
   }
 
+  const renderInfoBanking = () => {
+    if (data?.infoBanking?.id) {
+      return (
+        <div className='flex flex-col  gap-1'>
+          <span className='font-bold'>{`${translate('banking.title')} (Vietcombank) :`}</span>
+          <div className='flex gap-1 ml-3'>
+            <span className='font-bold'>{`+ Ma HĐ :`}</span>
+            <TextCopy textView={data?.infoBanking?.id} value={data?.infoBanking?.id} />
+          </div>
+          <div className='fex gap-1  ml-3'>
+            <span className='font-bold'>{`+ ${translate('textPopular.content')} :`}</span>
+            <span className='ml-1'>{data?.infoBanking?.messages} </span>
+          </div>
+        </div>
+      )
+    }
+    return <></>
+  }
+
   return (
     <div className='flex flex-col w-full gap-2'>
-      {!isMobile && <p className='text-center text-medium font-bold '>Bill detail</p>}
+      {renderInfoBanking()}
       {renderAddress()}
+      <div className='flex gap-1'>
+        <span className='font-bold'>{`${translate('userDetail.name')} :`}</span>
+        <span>{data?.name || 'no-name'}</span>
+      </div>
+
       {data?.note && (
         <div className='flex gap-1'>
           <span className='text-nowrap'>Note :</span>

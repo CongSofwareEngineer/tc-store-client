@@ -33,7 +33,7 @@ const BillAdminScreen = () => {
 
   const { renderContent } = useSearchBaseAdmin(
     {
-      category: true,
+      status: true,
       dateEnd: true,
       dateStart: true,
       id: true,
@@ -119,9 +119,10 @@ const BillAdminScreen = () => {
     openModalDrawer({
       content: <ItemDetail data={item} />,
       useDrawer: true,
+      title: translate('bill.infoBill'),
       configDrawer: {
         placement: 'bottom',
-        title: <p className='text-center text-medium font-bold '>{translate('bill.infoBill')}</p>,
+
         height: 'auto',
       },
     })
@@ -230,14 +231,6 @@ const BillAdminScreen = () => {
       return columns
     }
     const columns: ColumnsType[] = [
-      // {
-      //   title: 'STT',
-      //   key: '_id',
-      //   dataIndex: '_id',
-      //   render: (id: string, record: any, index: number) => {
-      //     return <span>{index + 1}</span>
-      //   },
-      // },
       {
         title: translate('bill.id'),
         key: '_id',
