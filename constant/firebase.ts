@@ -44,6 +44,7 @@ export type BodyAddBill = {
   addressShip: string
   discount: number
   sdt: string
+  name: string
   status: FILTER_BILL
   abort?: boolean
   totalBill: Number
