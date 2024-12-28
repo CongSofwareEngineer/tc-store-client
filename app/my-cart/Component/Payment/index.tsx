@@ -181,6 +181,7 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
         discount: 0,
         idUser: userData?._id || undefined,
         listBill,
+        name: userData?.name || 'no-name',
         totalBill: totalBill,
         sdt: formData?.sdt,
         status: FILTER_BILL.Processing,

@@ -129,6 +129,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         addressShip: formData?.addressShip,
         discount: 0,
         sdt: formData?.sdt,
+        name: formData?.name,
         idUser: isLogin ? userData?._id : 'no-id',
         listBill: [
           {
