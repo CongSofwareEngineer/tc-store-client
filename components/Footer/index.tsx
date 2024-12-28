@@ -76,7 +76,7 @@ const Footer = () => {
         </div>
         <div className='flex gap-2 justify-center mb-2'>
           <span>Copyright © 2024</span>
-          <Link href={'https://hdcong.vercel.app/'} target='_blank'>
+          <Link href={LINK_CONTACT.HoDieCong} target='_blank'>
             <span className='hover:underline hover:scale-105'>CÔNG</span>
           </Link>
           <span>All Rights Reserved</span>

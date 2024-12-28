@@ -22,26 +22,24 @@ const FirstLoadWebsite: NextPage = () => {
   const pathName = usePathname()
   const { fetchData: fetchCategoryMenu } = useCategoryMenu()
   const { fetchData: fetchDataProvinces } = useProvinces()
-  const { reset: resetUser, userData, setUserData, loadDataLocal } = useUserData()
+  const { reset: resetUser, userData, setUserData } = useUserData()
   const listUrlExitedRef = useRef<string[]>([])
   const userRef = useRef<TYPE_ZUSTAND[ZUSTAND.UserData]>(null)
 
   useLayoutEffect(() => {
     fetchCategoryMenu()
     fetchDataProvinces()
-    loadDataLocal()
-  }, [])
+
+    if (userData) {
+      ObserverService.emit(OBSERVER_KEY.ReLogin, userData)
+    }
+  }, [fetchDataProvinces, fetchCategoryMenu])
+
   useEffect(() => {
     if (!userRef.current) {
       userRef.current = userData
     }
   }, [userData])
-
-  useLayoutEffect(() => {
-    if (userData) {
-      ObserverService.emit(OBSERVER_KEY.ReLogin, userData)
-    }
-  }, [])
 
   useEffect(() => {
     scrollTop()
@@ -79,9 +77,10 @@ const FirstLoadWebsite: NextPage = () => {
         ObserverService.emit(OBSERVER_KEY.LogOut)
       }
     }
+
     ObserverService.on(OBSERVER_KEY.ReLogin, refreshLogin)
     return () => ObserverService.removeListener(OBSERVER_KEY.ReLogin)
-  }, [])
+  }, [setUserData])
 
   //logout
   useEffect(() => {
@@ -129,7 +128,7 @@ const FirstLoadWebsite: NextPage = () => {
       ObserverService.removeListener(OBSERVER_KEY.LogOut)
       ObserverService.removeListener(OBSERVER_KEY.FirstLoadPage)
     }
-  }, [])
+  }, [resetUser])
 
   return isLoading ? (
     <div

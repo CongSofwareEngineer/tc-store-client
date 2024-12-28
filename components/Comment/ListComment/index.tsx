@@ -37,9 +37,13 @@ const Like = ({
   const { openModalDrawer } = useModalDrawer()
 
   useEffect(() => {
-    const isLike = data?.userLikes?.some((id: string) => id === userData?._id)
-    setIsLike(isLike)
-  }, [userData, data])
+    if (isLogin) {
+      const isLike = data?.userLikes?.some((id: string) => id === userData?._id)
+      setIsLike(isLike)
+    } else {
+      setIsLike(true)
+    }
+  }, [userData, data, isLogin])
 
   const handleLike = async () => {
     if (isLogin && !isYourComment) {

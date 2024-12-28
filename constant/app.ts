@@ -129,6 +129,7 @@ export const DEFAULT_RATE_EXP_USER = 0.01
 
 export enum LINK_CONTACT {
   Zalo = 'https://zalo.me/0392225405',
+  HoDieCong = 'https://hdcong.vercel.app/',
   FaceBook = 'https://www.facebook.com/tcstore.gl',
   Github = 'https://github.com/CongSofwareEngineer',
   SDT = 'tel:0392225405',

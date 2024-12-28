@@ -9,6 +9,7 @@ export const encryptData = (
     return crypto.AES.encrypt(JSON.stringify(value), crypto.enc.Utf8.parse(pinCode), {
       iv: getIV(),
     }).toString()
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return ''
   }
@@ -22,6 +23,8 @@ export const decryptData = (value: any, pinCode: string = process.env.NEXT_PUBLI
 
     const decryptedData = JSON.parse(bytes.toString(crypto.enc.Utf8))
     return decryptedData
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return ''
   }
@@ -38,6 +41,7 @@ export const encodeDataMaxLength = (
       return stringEncode
     }
     return stringEncode.substr(0, maxLength)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return ''
   }
