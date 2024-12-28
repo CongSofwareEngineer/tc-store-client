@@ -300,7 +300,8 @@
     "file": "File chưa đúng định dạng",
     "existFile": "File đã tồn tại",
     "invalidPass": "Mật khẩu chưa mã độc",
-    "inValueNumber": "Không phải là số"
+    "inValueNumber": "Không phải là số",
+    "pinCode": "Pin code sai"
   },
   "home": {
     "titleCoffee": "Coffee",
@@ -378,5 +379,11 @@
     "bnaked": "Đã chuyển khoản",
     "openApp": "Mở app",
     "idBanked": "Mã chuyển tiền"
+  },
+  "verifyNumberPhone": {
+    "title": "Sác thực số điện thoại",
+    "receiveCode": "Nhận code",
+    "verifyCode": "Xác thực code",
+    "note": "Bạn nhận được 1 tin nhắn với mã pin code 6 số, bạn nhập 6 số để tiếp tục"
   }
 }

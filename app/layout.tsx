@@ -111,6 +111,11 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
     <html lang='en'>
       {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <GoogleTagManager gtmId='GTM-T7S7DKJ4' />}
       <head>
+        <script
+          async
+          src='https://www.google.com/recaptcha/enterprise.js?render=6LduyKcqAAAAADr61HAi3H68cCPL4JG0Jw_M1CNr'
+        />
+
         {/* Google / Search Engine Tags  */}
         <meta itemProp='name' content={process.env.NEXT_PUBLIC_TITLE} />
         <meta itemProp='description' content={process.env.NEXT_PUBLIC_TITLE_DES} />

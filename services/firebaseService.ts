@@ -3,7 +3,7 @@ import { initializeApp, getApps } from 'firebase/app'
 import { deleteToken, getMessaging, getToken, isSupported, onMessage } from 'firebase/messaging'
 import FirebaseFun from '@/utils/firebase'
 import { DATA_BASE, DatabaseCollectionType } from '@/constant/firebase'
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
+import { Auth, getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 
 export const FirebaseServices = {
   config: {
@@ -34,29 +34,9 @@ export const FirebaseServices = {
     })
   },
 
-  sendNumberToGetOtp: (numberPhone: string) => {
-    const auth = FirebaseServices.initAuth()
-    const appVerifier = window.recaptchaVerifier
-    signInWithPhoneNumber(auth, numberPhone, appVerifier)
-      .then((confirmationResult) => {
-        console.log({ confirmationResult })
-
-        // SMS sent. Prompt user to type the code from the message, then sign the
-        // user in with confirmationResult.confirm(code).
-        window.confirmationResult = confirmationResult
-        alert('send op success')
-        // ...
-      })
-      .catch((error) => {
-        // Error; SMS not sent
-        console.log({ errorsignInWithPhoneNumber: error })
-
-        // ...
-      })
-
-    // return new Promise(async (resolve, reject) => {
-
-    // })
+  sendNumberToGetOtp: async (numberPhone: string, auth: Auth, appVerifier: RecaptchaVerifier) => {
+    const data = await signInWithPhoneNumber(auth, numberPhone, appVerifier)
+    return data
   },
 
   createMessage: () => {

@@ -31,7 +31,7 @@
     "prettier/prettier": "off",
     "jsx-a11y/alt-text": "off",
     "react/jsx-key": "off",
-    "@typescript-eslint/no-non-null-asserted-optional-chain": "warn",
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
     "no-unused-expressions": "off",
     "no-unsafe-optional-chaining": "off",
     "no-case-declarations": "off",

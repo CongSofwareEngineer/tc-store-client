@@ -17,9 +17,14 @@ const config = {
           '0%': { transform: 'scale(0)' },
           '100%': { transform: 'scale(1)' },
         },
+        'spin-3': {
+          from: { transform: 'rotate(0deg)' },
+          to: { transform: 'rotate(360deg)' },
+        },
       },
       animation: {
         zoom: 'zoom 0.2s ease-in-out',
+        spin3s: 'spin-3 3s infinite linear',
       },
       boxShadow: {
         full: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
