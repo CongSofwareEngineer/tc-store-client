@@ -130,8 +130,12 @@ const ViewListOrder = ({ dataCart }: { dataCart: any[] }) => {
                 </div>
                 <div className='w-[20%] '>
                   <div className='  text-green-800 flex flex-col  justify-items-start items-center gap-2'>
-                    <span className='line-through text-xs'>{numberWithCommas(getItemForShow(e)?.price * 1.2)}</span>
-                    <div className=' text-green-800'>{numberWithCommas(getItemForShow(e)?.price)}</div>
+                    <span className='line-through text-xs'>
+                      {numberWithCommas(getItemForShow(e)?.price * 1.2)}
+                    </span>
+                    <div className=' text-green-800'>
+                      {numberWithCommas(getItemForShow(e)?.price)}
+                    </div>
                   </div>
                 </div>
                 <div className='w-[10%] text-center'>{`x${e.amount}`}</div>
@@ -150,12 +154,19 @@ const ViewListOrder = ({ dataCart }: { dataCart: any[] }) => {
     <div className='bg-white w-full mt-4 flex flex-col  border-[1px] shadow-gray1 border-gray-300 p-3 px-4 pt-4'>
       <div className='flex w-full gap-2'>
         <div>
-          <Image src={images.icon.iconCart} alt='my-cart-bill' fill className='!relative !w-[25px] !h-[25px]' />
+          <Image
+            src={images.icon.iconCart}
+            alt='my-cart-bill'
+            fill
+            className='!relative !w-[25px] !h-[25px]'
+          />
         </div>
         <div className='text-medium font-semibold'>{translate('bill.infoBill')}</div>
       </div>
       <div className='relative w-full border-[1px] my-3 border-gray-300' />
-      <div className='w-full overflow-y-auto'>{isMobile ? renderItemMobile() : renderItemDesktop()}</div>
+      <div className='w-full overflow-y-auto'>
+        {isMobile ? renderItemMobile() : renderItemDesktop()}
+      </div>
     </div>
   )
 }

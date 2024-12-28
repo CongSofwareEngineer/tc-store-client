@@ -21,7 +21,9 @@ const AboutLayout = async () => {
 
   return (
     <>
-      <h1 className='absolute opacity-0'>Giới thiệu về TC Store - Hành trình mang giá trị đến khách hàng</h1>
+      <h1 className='absolute opacity-0'>
+        Giới thiệu về TC Store - Hành trình mang giá trị đến khách hàng
+      </h1>
       <Suspense>
         <AboutScreen data={res[0]} />
       </Suspense>

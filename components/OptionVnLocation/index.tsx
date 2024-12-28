@@ -24,7 +24,10 @@ const OptionVnLocation = ({
   const { provinces } = useProvinces()
   const { translate } = useLanguage()
   const { userData } = useUserData()
-  const { data: listDistrict, loading: loadingDistrict } = useAddressShip(2, provence?.id || provence)
+  const { data: listDistrict, loading: loadingDistrict } = useAddressShip(
+    2,
+    provence?.id || provence
+  )
   const { data: listWards, loading: loadingWard } = useAddressShip(3, districts?.id)
 
   useEffect(() => {
@@ -45,7 +48,7 @@ const OptionVnLocation = ({
       }
     }
 
-    if (!isNew && userData?.addressShipper!?.length > 0) {
+    if (!isNew && userData?.addressShipper && userData?.addressShipper?.length > 0) {
       const address = userData?.addressShipper[0]
       if (address) {
         callback(address)

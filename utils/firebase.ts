@@ -110,7 +110,12 @@ export default class FirebaseFun {
     }
   }
 
-  async queryDataOption2(dataLast: any, querySQL: QueryData, keyOderBy: string, limitPage: number = PAGE_SIZE_LIMIT) {
+  async queryDataOption2(
+    dataLast: any,
+    querySQL: QueryData,
+    keyOderBy: string,
+    limitPage: number = PAGE_SIZE_LIMIT
+  ) {
     try {
       if (dataLast) {
         const docDetail = query(this.db, where(querySQL.key, querySQL.match, querySQL.value))

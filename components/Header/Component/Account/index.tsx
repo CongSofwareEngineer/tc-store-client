@@ -17,7 +17,9 @@ import { detectAvatar } from '@/utils/functions'
 import useRoutePage from '@/hook/useRoutePage'
 // import MenuAdminMobile from '@/app/admin/Component/MenuMobile'
 const CartUser = dynamic(() => import('./cartUser'), { ssr: false })
-const MenuAdminMobile = dynamic(() => import('@/app/admin/Component/MenuMobileAdmin'), { ssr: false })
+const MenuAdminMobile = dynamic(() => import('@/app/admin/Component/MenuMobileAdmin'), {
+  ssr: false,
+})
 
 const Account = () => {
   const { openModalDrawer } = useModalDrawer()
@@ -83,7 +85,10 @@ const Account = () => {
             <div>{userData?.name}</div>
           </div>
         ) : (
-          <div onClick={handleLogin} className='rounded h-full cursor-pointer w-24  flex justify-center items-center'>
+          <div
+            onClick={handleLogin}
+            className='rounded h-full cursor-pointer w-24  flex justify-center items-center'
+          >
             <span className='text-black underline'>{translate('common.login')}</span>
           </div>
         )}

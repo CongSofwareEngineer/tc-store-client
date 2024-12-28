@@ -67,7 +67,8 @@ const Home: NextPage = () => {
   return (
     <>
       <h1 className='absolute opacity-0'>
-        TC Store - Cửa Hàng Đa Dạng Sản Phẩm: Giày Dép, Yến Sào, Laptop, Cà Phê & Nhiều Mặt Hàng Khác
+        TC Store - Cửa Hàng Đa Dạng Sản Phẩm: Giày Dép, Yến Sào, Laptop, Cà Phê & Nhiều Mặt Hàng
+        Khác
       </h1>
       <h2 className='absolute opacity-0'>Sản Phẩm Nổi Bật Tại TC Store</h2>
       <h2 className='absolute opacity-0'>Giày Dép Thời Trang - Phong Cách & Chất Lượng</h2>

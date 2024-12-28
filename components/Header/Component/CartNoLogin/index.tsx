@@ -20,7 +20,7 @@ import { useEffect } from 'react'
 
 const CartNoLogin = () => {
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()
-  const { translate, getLabelCategory } = useLanguage()
+  const { translate } = useLanguage()
   const { data, isLoading } = useMyCart()
   const [listArr, setListArr] = useState<Array<DataItemType>>([])
 
@@ -111,7 +111,10 @@ const CartNoLogin = () => {
             onClick={(e: boolean) => selectedItem(index, e)}
             value={!!item?.selected}
           />
-          <DeleteOutlined style={{ color: 'red', fontSize: 25 }} onClick={() => handleDelete(index)} />
+          <DeleteOutlined
+            style={{ color: 'red', fontSize: 25 }}
+            onClick={() => handleDelete(index)}
+          />
         </div>
         <div className='md:w-[120px] w-[100px] aspect-square relative overflow-hidden'>
           <Image
@@ -159,7 +162,11 @@ const CartNoLogin = () => {
         ${getTotalsBill()} VNĐ `}</div>
       </div>
       <div className='flex md:justify-end justify-center w-full '>
-        <Button disabled={listArr.length === 0 || getAmountBill() === 0} onClick={handlePayment} className='w-full'>
+        <Button
+          disabled={listArr.length === 0 || getAmountBill() === 0}
+          onClick={handlePayment}
+          className='w-full'
+        >
           {`${translate('cart.payment')} (${getAmountBill()})`}
         </Button>
       </div>

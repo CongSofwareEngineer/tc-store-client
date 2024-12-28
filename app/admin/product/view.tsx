@@ -27,7 +27,10 @@ const ProductAdminScreen = () => {
     category: true,
   })
   const { queries } = useQuerySearch()
-  const { data, isLoading, hasNextPage, isFetchingNextPage, loadMore } = useListProductAdmin(PAGE_SIZE_LIMIT, queries)
+  const { data, isLoading, hasNextPage, isFetchingNextPage, loadMore } = useListProductAdmin(
+    PAGE_SIZE_LIMIT,
+    queries
+  )
 
   useFirstLoadPage()
   const { isMobile } = useMedia()
@@ -110,7 +113,10 @@ const ProductAdminScreen = () => {
                         <p className='text-medium font-bold'>{record.name}</p>
                       </Link>
                     )}
-                    {renderItem(translate('menuProduct.category'), <TextCopy value={record.category} />)}
+                    {renderItem(
+                      translate('menuProduct.category'),
+                      <TextCopy value={record.category} />
+                    )}
                     {renderItem(translate('productDetail.price'), numberWithCommas(record.price))}
                     {renderItem(translate('textPopular.cost'), numberWithCommas(record.cost))}
                     {renderItem(translate('textPopular.amount'), numberWithCommas(record.amount))}
@@ -157,7 +163,9 @@ const ProductAdminScreen = () => {
         key: 'imageMain',
         dataIndex: 'imageMain',
         fixed: 'left',
-        render: (src?: string) => <ImageAdmin src={src || ''} className='!w-[100px] !h-[100px] overflow-hidden' />,
+        render: (src?: string) => (
+          <ImageAdmin src={src || ''} className='!w-[100px] !h-[100px] overflow-hidden' />
+        ),
       },
       {
         title: translate('textPopular.nameProduct'),

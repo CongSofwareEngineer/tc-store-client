@@ -153,13 +153,21 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
 
   return (
     <div className='fex flex-col gap-3 '>
-      <div onClick={handleBack} className='w-max mb-4 flex items-center gap-2 cursor-pointer font-bold'>
+      <div
+        onClick={handleBack}
+        className='w-max mb-4 flex items-center gap-2 cursor-pointer font-bold'
+      >
         <ArrowLeftOutlined />
         <div>{translate('common.back')}</div>
       </div>
       <div className='flex gap-2'>
         <div className='md:w-[100px] w-[80px] aspect-square'>
-          <ImageNext src={detectImg(data?.more_data?.imageMain)} alt={data.keyName} fill className='!relative ' />
+          <ImageNext
+            src={detectImg(data?.more_data?.imageMain)}
+            alt={data.keyName}
+            fill
+            className='!relative '
+          />
         </div>
         <div className='flex flex-col gap-2'>
           <div className='font-bold text-lg'>{data?.more_data?.name}</div>
@@ -168,7 +176,14 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
         </div>
       </div>
       <div className='mt-2 mb-1'>{`${translate('textPopular.note')} :`}</div>
-      <MyInput onChangeText={(e) => setDes(e.toString())} type='area' rows={3} showCount value={des} maxLength={150} />
+      <MyInput
+        onChangeText={(e) => setDes(e.toString())}
+        type='area'
+        rows={3}
+        showCount
+        value={des}
+        maxLength={150}
+      />
       <div className='mb-3' />
       <UploadImage
         handleUpload={handleUpload}
@@ -183,7 +198,12 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
         </div>
       </UploadImage>
       {renderListImg()}
-      <Button onClick={handleSubmit} loading={loading} disabled={!des} className='mt-4 md:mb-0 mb-2 w-full'>
+      <Button
+        onClick={handleSubmit}
+        loading={loading}
+        disabled={!des}
+        className='mt-4 md:mb-0 mb-2 w-full'
+      >
         {dataGetApi?.note ? translate('common.update') : translate('common.save')}
       </Button>
     </div>

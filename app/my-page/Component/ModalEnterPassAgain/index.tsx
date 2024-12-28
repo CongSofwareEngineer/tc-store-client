@@ -17,11 +17,19 @@ const ModalEnterPassAgain = ({ callBack }: { callBack: () => void }) => {
 
   return (
     <div className='flex flex-col gap-2 justify-between'>
-      <p className='text-medium text-center font-bold'>{translate('textPopular.enterPassToContinue')}</p>
+      <p className='text-medium text-center font-bold'>
+        {translate('textPopular.enterPassToContinue')}
+      </p>
       <div className='flex flex-col gap-2 w-full'>
         <div>{translate('userDetail.pass')} :</div>
-        <MyInput type='password' value={passAgain} onChangeText={(e) => setPassAgain(e?.toString() || '')} />
-        <span className='text-xs text-red-600 h-4'>{isValidPass && translate('warning.inValidPassWordAgain')}</span>
+        <MyInput
+          type='password'
+          value={passAgain}
+          onChangeText={(e) => setPassAgain(e?.toString() || '')}
+        />
+        <span className='text-xs text-red-600 h-4'>
+          {isValidPass && translate('warning.inValidPassWordAgain')}
+        </span>
         <div className='flex justify-center w-full mt-2'>
           <Button onClick={callBack} disabled={isValidPass} className='w-full'>
             {translate('common.ok')}

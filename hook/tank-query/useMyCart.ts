@@ -6,7 +6,13 @@ import { useMemo } from 'react'
 import ClientApi from '@/services/clientApi'
 import { getCookie } from '@/services/CookiesService'
 
-const getData = async ({ queryKey, pageParam = 1 }: { queryKey: any; pageParam: any }): Promise<TypeHookReactQuery> => {
+const getData = async ({
+  queryKey,
+  pageParam = 1,
+}: {
+  queryKey: any
+  pageParam: any
+}): Promise<TypeHookReactQuery> => {
   const isLogin = queryKey[3]
   if (isLogin) {
     const queryUrl = `${queryKey[1]}?page=${pageParam}&limit=${queryKey[2]}`

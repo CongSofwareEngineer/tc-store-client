@@ -31,7 +31,9 @@ const CategoryHome = () => {
     <div
       className={`bg-white border-zinc-500 border-[1px] w-full  flex flex-col md:rounded-xl rounded-lg overflow-hidden  `}
     >
-      <div className={`border-b-[1px] border-zinc-500 w-full flex justify-between items-center  p-3 bg-green-200 `}>
+      <div
+        className={`border-b-[1px] border-zinc-500 w-full flex justify-between items-center  p-3 bg-green-200 `}
+      >
         <div className='flex items-center gap-2'>
           <AlignLeftOutlined style={{ fontSize: 20 }} />
           <div className='text-medium '>{translate('menuProduct.category')}</div>

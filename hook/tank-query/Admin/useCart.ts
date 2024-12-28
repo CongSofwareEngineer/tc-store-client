@@ -4,7 +4,13 @@ import AdminApi from '@/services/adminApi'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 
-const getData = async ({ queryKey, pageParam = 1 }: { queryKey: any; pageParam: any }): Promise<TypeHookReactQuery> => {
+const getData = async ({
+  queryKey,
+  pageParam = 1,
+}: {
+  queryKey: any
+  pageParam: any
+}): Promise<TypeHookReactQuery> => {
   const queryUrl = `?page=${pageParam}&limit=${queryKey[2]}`
   const dataServer = await AdminApi.getCart(queryUrl)
 

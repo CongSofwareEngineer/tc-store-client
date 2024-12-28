@@ -37,8 +37,20 @@ const OptionsPayment = ({ listOptions, onChangeOptions, optionSelected }: Option
                 onClick={() => onChangeOptions(e)}
                 className='cursor-pointer flex gap-2  md:text-[16px] text-[14px] items-center'
               >
-                <Image fill src={getIcon(e.value)} alt={`checkbox-${e.name}`} className='!relative !w-5 !h-5' />
-                {e.icon && <Image fill src={e.icon} alt={`icon-${e.name}`} className='!relative !w-[18px] !h-[18px]' />}
+                <Image
+                  fill
+                  src={getIcon(e.value)}
+                  alt={`checkbox-${e.name}`}
+                  className='!relative !w-5 !h-5'
+                />
+                {e.icon && (
+                  <Image
+                    fill
+                    src={e.icon}
+                    alt={`icon-${e.name}`}
+                    className='!relative !w-[18px] !h-[18px]'
+                  />
+                )}
                 <span>{e.name}</span>
               </div>
               {e.disabled && (

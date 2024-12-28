@@ -27,7 +27,8 @@ const ProductConfig = ({ item }: { item: any }) => {
   const { checkIsNumber } = useCheckForm()
   const { refreshQuery } = useRefreshQuery()
   const { closeModalDrawer } = useModalDrawer()
-  const { callbackUpdateError, callbackCreateSuccess, callbackUpdateSuccess, callbackCreateError } = useCallbackToast()
+  const { callbackUpdateError, callbackCreateSuccess, callbackUpdateSuccess, callbackCreateError } =
+    useCallbackToast()
 
   const [formData, setFormData] = useState<{ [key: string]: any } | null>(null)
   const [loading, setLoading] = useState(false)
@@ -105,7 +106,9 @@ const ProductConfig = ({ item }: { item: any }) => {
   }
 
   const handleDeleteMoreImg = (index: number) => {
-    const newList = formData?.imageMore?.filter((_: any, indexFilter: number) => indexFilter !== index)
+    const newList = formData?.imageMore?.filter(
+      (_: any, indexFilter: number) => indexFilter !== index
+    )
     setFormData({ ...formData, imageMore: newList })
   }
 
@@ -184,8 +187,18 @@ const ProductConfig = ({ item }: { item: any }) => {
         </div>
 
         <div className='flex gap-4 w-full md:flex-row flex-col '>
-          <InputForm classFromItem='w-full' name='keyName' label={translate('header.name')} required />
-          <InputForm classFromItem='w-full' name='titleSeo' label={translate('admin.titleSeo')} required />
+          <InputForm
+            classFromItem='w-full'
+            name='keyName'
+            label={translate('header.name')}
+            required
+          />
+          <InputForm
+            classFromItem='w-full'
+            name='titleSeo'
+            label={translate('admin.titleSeo')}
+            required
+          />
         </div>
 
         <div className='flex gap-4 w-full md:flex-row flex-col '>
@@ -249,7 +262,10 @@ const ProductConfig = ({ item }: { item: any }) => {
             <div className='w-[150px] flex justify-center '>
               {(formData?.imageMain?.base64 || formData?.imageMain) && (
                 <div className='w-[100px] aspect-square overflow-hidden'>
-                  <Image alt='img-main' src={detectImg(formData?.imageMain?.base64 || formData?.imageMain)} />
+                  <Image
+                    alt='img-main'
+                    src={detectImg(formData?.imageMain?.base64 || formData?.imageMain)}
+                  />
                 </div>
               )}
             </div>
@@ -279,7 +295,11 @@ const ProductConfig = ({ item }: { item: any }) => {
                   return (
                     <div className='w-[100px]' key={detectImg(e?.base64 || e)}>
                       <div className='w-[100px] relative'>
-                        <Image className='w-[100px]' alt={`img-moew-${e?.name}`} src={detectImg(e?.base64 || e)} />
+                        <Image
+                          className='w-[100px]'
+                          alt={`img-moew-${e?.name}`}
+                          src={detectImg(e?.base64 || e)}
+                        />
                         <CloseCircleOutlined
                           onClick={() => handleDeleteMoreImg(index)}
                           className='absolute right-0 top-0 text-[18px] cursor-pointer '
@@ -292,7 +312,13 @@ const ProductConfig = ({ item }: { item: any }) => {
           </div>
         </div>
 
-        <InputForm classFromItem='w-full' name='desSeo' label={translate('admin.desSeo')} required typeBtn='area' />
+        <InputForm
+          classFromItem='w-full'
+          name='desSeo'
+          label={translate('admin.desSeo')}
+          required
+          typeBtn='area'
+        />
         <div className='w-ful md:mt-10' />
         <AttributeAdmin
           typeProduct={formData?.category}
@@ -310,7 +336,10 @@ const ProductConfig = ({ item }: { item: any }) => {
       </div>
 
       <div className='flex flex-1 w-full'>
-        <ButtonForm titleSubmit={translate(item ? 'common.update' : 'common.create')} loading={loading} />
+        <ButtonForm
+          titleSubmit={translate(item ? 'common.update' : 'common.create')}
+          loading={loading}
+        />
       </div>
     </MyForm>
   )

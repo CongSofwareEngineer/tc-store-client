@@ -1,5 +1,4 @@
 import React from 'react'
-import MyImage from '../MyImage'
 import { images } from '@/configs/images'
 import { RightOutlined } from '@ant-design/icons'
 import Image from 'next/image'

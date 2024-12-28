@@ -47,7 +47,9 @@ const ShoesDetailScreen = ({ productDetail }: { productDetail: ItemDetailType })
   }, [dataItem])
 
   if (isPayment) {
-    return <PaymentShop callBack={() => setIsPayment(false)} data={productState} amount={amountBuy} />
+    return (
+      <PaymentShop callBack={() => setIsPayment(false)} data={productState} amount={amountBuy} />
+    )
   }
 
   return (

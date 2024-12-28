@@ -57,7 +57,13 @@ type RateFormType = {
   disable?: boolean
 }
 
-const RateForm = ({ label, name, classFromItem = '', configInput = {}, disable = false }: RateFormType) => {
+const RateForm = ({
+  label,
+  name,
+  classFromItem = '',
+  configInput = {},
+  disable = false,
+}: RateFormType) => {
   return (
     <FormItem $configInput={configInput} className={classFromItem} label={label} name={name}>
       <Rate disabled={disable} className='w-full' />

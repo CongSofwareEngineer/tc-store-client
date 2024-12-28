@@ -11,7 +11,7 @@ type MyFilterCheckBox = {
   data?: Record<string, any>[]
   typeChecked?: string
   titleFilter?: string
-  isDefault?: Boolean
+  isDefault?: boolean
   isReplace?: boolean
 }
 

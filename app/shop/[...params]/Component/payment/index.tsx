@@ -38,8 +38,8 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
     const initData = {
       sdt: userData?.sdt,
       name: userData?.name,
-      addressShip: userData?.addressShipper[0]!,
-      linkContact: userData?.linkContact!,
+      addressShip: userData?.addressShipper[0],
+      linkContact: userData?.linkContact,
       gmail: userData?.gmail,
       noteBil: '',
     }
@@ -90,7 +90,10 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const callbackProcessingBuy = () => {
     openModalDrawer({
       content: (
-        <ModalProcess title={translate('confirm.bill.createBill')} des={translate('confirm.bill.createBill_Des')} />
+        <ModalProcess
+          title={translate('confirm.bill.createBill')}
+          des={translate('confirm.bill.createBill_Des')}
+        />
       ),
       configModal: {
         showHeader: false,
@@ -134,7 +137,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         listBill: [
           {
             amount: amount,
-            _id: data?._id!,
+            _id: data?._id || '',
             keyName: data?.keyName,
             configBill: data?.configBill || {},
           },
@@ -176,7 +179,11 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
 
   return (
     <div className='w-full md:mb-7 mb-10 mt-1'>
-      <BtnBackUI clickBack={callBack} titlePageMain={translate('header.shop')} titlePage={data?.name} />
+      <BtnBackUI
+        clickBack={callBack}
+        titlePageMain={translate('header.shop')}
+        titlePage={data?.name}
+      />
       <div className='flex flex-col gap-3 w-full mt-1'>
         {formData && (
           <MyForm

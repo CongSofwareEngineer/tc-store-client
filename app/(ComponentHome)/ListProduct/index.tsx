@@ -41,7 +41,9 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
             )
           })}
 
-        {Array.isArray(data?.data) && data?.data?.length === 0 && <div>{translate('warning.noData')}</div>}
+        {Array.isArray(data?.data) && data?.data?.length === 0 && (
+          <div>{translate('warning.noData')}</div>
+        )}
       </div>
     )
   }

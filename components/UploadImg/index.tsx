@@ -16,7 +16,7 @@ type Props = {
   maxSizeOutputKB?: number
   listData?: any[]
   fullQuality?: boolean
-  maxPixelReduce?: Number
+  maxPixelReduce?: number
 }
 const UploadImage = ({
   children = <></>,

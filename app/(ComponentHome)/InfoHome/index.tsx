@@ -26,7 +26,11 @@ const InfoHome = () => {
         'TINH THẦN VÀ TRÁCH NHIỆM',
         'Mỗi sản phẩm là biểu hiện trí tuệ và công sức bỏ ra.'
       )}
-      {renderItem(images.icon.iconShield, 'CAM KẾT CHẤT LƯỢNG', 'Sản phẩm chúng tôi 100% chất lượng và tự nhiên.')}
+      {renderItem(
+        images.icon.iconShield,
+        'CAM KẾT CHẤT LƯỢNG',
+        'Sản phẩm chúng tôi 100% chất lượng và tự nhiên.'
+      )}
       {renderItem(
         images.icon.iconSupport,
         'CHĂM SÓC KHÁCH HÀNG 24/7',

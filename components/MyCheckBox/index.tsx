@@ -8,7 +8,13 @@ type MyCheckBoxProps = {
   alt?: string
   value?: boolean
 }
-const MyCheckBox = ({ className = '', onClick = () => {}, size = 22, alt = '', value = false }: MyCheckBoxProps) => {
+const MyCheckBox = ({
+  className = '',
+  onClick = () => {},
+  size = 22,
+  alt = '',
+  value = false,
+}: MyCheckBoxProps) => {
   return value ? (
     <Image
       fill

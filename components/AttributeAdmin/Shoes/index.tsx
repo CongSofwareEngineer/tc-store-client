@@ -64,7 +64,13 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
     }))
   )
 
-  const onChangeValueData = (indexParent: number, index: number, key: string, value: any, isObj = true) => {
+  const onChangeValueData = (
+    indexParent: number,
+    index: number,
+    key: string,
+    value: any,
+    isObj = true
+  ) => {
     const dataClone = cloneData(data)
     if (isObj) {
       dataClone.value[indexParent].colors[index][key] = value
@@ -82,7 +88,9 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
           (_: any, indexFilter: number) => indexFilter !== index
         )
       } else {
-        dataClone.value = dataClone.value.filter((_: any, indexFilter: number) => indexParent !== indexFilter)
+        dataClone.value = dataClone.value.filter(
+          (_: any, indexFilter: number) => indexParent !== indexFilter
+        )
       }
 
       onChange(dataClone)
@@ -112,7 +120,9 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
   const handleDeleteKeyValueData = (index: number) => {
     const callBack = () => {
       const dataClone = cloneData(data)
-      dataClone.value = dataClone.value.filter((_: any, indexFilter: number) => index !== indexFilter)
+      dataClone.value = dataClone.value.filter(
+        (_: any, indexFilter: number) => index !== indexFilter
+      )
       onChange(dataClone)
     }
     openModal({
@@ -182,15 +192,28 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
         children: (
           <div className='flex flex-col gap-2'>
             <div className='flex gap-3 items-center'>
-              <Input className='!w-[200px]' value={key} onChange={(e) => onChangeKeyData(index, e.target.value)} />
+              <Input
+                className='!w-[200px]'
+                value={key}
+                onChange={(e) => onChangeKeyData(index, e.target.value)}
+              />
               <div className='text-green-600 text-xl'>
-                <PlusCircleOutlined onClick={() => handleAddValueData(index)} className='cursor-pointer' />
+                <PlusCircleOutlined
+                  onClick={() => handleAddValueData(index)}
+                  className='cursor-pointer'
+                />
               </div>
               <div className='text-xl text-green-600'>
-                <DiffOutlined onClick={() => handleDoubleValueData(index)} className='cursor-pointer' />
+                <DiffOutlined
+                  onClick={() => handleDoubleValueData(index)}
+                  className='cursor-pointer'
+                />
               </div>
               <div className='text-red-500 text-xl'>
-                <DeleteOutlined onClick={() => handleDeleteKeyValueData(index)} className='cursor-pointer' />
+                <DeleteOutlined
+                  onClick={() => handleDeleteKeyValueData(index)}
+                  className='cursor-pointer'
+                />
               </div>
             </div>
             <div>List data :</div>
@@ -215,7 +238,9 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
                   <div className='flex flex-col gap-1'>
                     <div>{translate('textPopular.amount')}</div>
                     <Input
-                      onChange={(e) => onChangeValueData(index, indexDetail, 'amount', e.target.value)}
+                      onChange={(e) =>
+                        onChangeValueData(index, indexDetail, 'amount', e.target.value)
+                      }
                       value={valeDetail['amount']}
                     />
                   </div>
@@ -248,7 +273,10 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
             className='max-w-[250px]'
           />
           <div className='flex text-xl text-red-600 flex-col justify-center items-center h-full'>
-            <DeleteOutlined onClick={() => handleDeleteValueData(index, 0, false)} className='cursor-pointer' />
+            <DeleteOutlined
+              onClick={() => handleDeleteValueData(index, 0, false)}
+              className='cursor-pointer'
+            />
           </div>
         </div>
       </div>

@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 
-import { readFile } from 'fs/promises'
+// import { readFile } from 'fs/promises'
 
-const json = (await readFile(new URL('./env.json', import.meta.url))).toString('utf-8')
+// const json = (await readFile(new URL('./env.json', import.meta.url))).toString('utf-8')
 
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -14,14 +14,14 @@ const nextConfig = {
     includePaths: [path.join(__dirname, 'styles')],
   },
   experimental: {
-    optimisticClientCache: true,
-    workerThreads: true,
+    // optimisticClientCache: true,
+    // workerThreads: true,
     // optimizeCss: true,
-    nextScriptWorkers: true,
+    // nextScriptWorkers: true,
     gzipSize: true,
     swcMinify: true,
     optimizeCss: true,
-    optimizeServerReact: true,
+    // optimizeServerReact: true,
     optimizePackageImports: [
       '@tanstack/react-query',
       'framer-motion',
@@ -68,7 +68,7 @@ const nextConfig = {
     // serverMinification: true
   },
   env: {
-    ...JSON.parse(json),
+    // ...JSON.parse(json),
     NEXT_PUBLIC_PROJECT_ID: '5a998e5a831f4de43423a0ee6314508b',
   },
   compress: true,
@@ -90,38 +90,7 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**',
         pathname: '/**',
-      },
-      // {
-      //   protocol: 'https',
-      //   hostname: 'ipfs.pantograph.app',
-      //   pathname: '/**',
-      // },
-      // {
-      //   protocol: 'https',
-      //   hostname: 'ipfs.pantograph.app/ipfs',
-      //   pathname: '/**',
-      // },
-      // {
-      //   protocol: 'https',
-      //   hostname: 'ipfsgw.bountykinds.com',
-      //   pathname: '/**',
-      // },
-
-      // {
-      //   protocol: 'https',
-      //   hostname: 'skywalker.infura-ipfs.io',
-      //   pathname: '/**',
-      // },
-      // {
-      //   protocol: 'https',
-      //   hostname: 'ipfs.filebase.io',
-      //   pathname: '/**',
-      // },
-      // {
-      //   protocol: 'https',
-      //   hostname: 'ucarecdn.com',
-      //   pathname: '/**',
-      // },
+      }
     ],
   },
   webpack: (config) => {

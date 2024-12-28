@@ -84,7 +84,10 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
   const callbackProcessing = () => {
     openModalDrawer({
       content: (
-        <ModalProcess title={translate('confirm.bill.createBill')} des={translate('confirm.bill.createBill_Des')} />
+        <ModalProcess
+          title={translate('confirm.bill.createBill')}
+          des={translate('confirm.bill.createBill_Des')}
+        />
       ),
       configModal: {
         showHeader: false,
@@ -194,7 +197,12 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
       }
       if (optionSelected.value === OPTIONS_PAYMENT.banking) {
         openModalDrawer({
-          content: <InfoBanking callback={(id, mess) => handleSubmitBuy(id, mess, bodyAPI)} amount={totalBill} />,
+          content: (
+            <InfoBanking
+              callback={(id, mess) => handleSubmitBuy(id, mess, bodyAPI)}
+              amount={totalBill}
+            />
+          ),
           useDrawer: true,
           configModal: {
             className: '!w-[700px]',

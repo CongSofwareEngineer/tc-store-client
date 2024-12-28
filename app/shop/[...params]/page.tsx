@@ -12,7 +12,10 @@ const getCoffeeDetail = async (keyName: string): Promise<ItemDetailType> => {
 }
 
 export async function generateMetadata({ params }: any, parent: ResolvingMetadata) {
-  const [dataBase, data]: any[] = await Promise.allSettled([parent, getCoffeeDetail(params.params[0])])
+  const [dataBase, data]: any[] = await Promise.allSettled([
+    parent,
+    getCoffeeDetail(params.params[0]),
+  ])
 
   const metaData = generateMetaBase({
     dataBase: dataBase?.value,

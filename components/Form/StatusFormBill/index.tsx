@@ -62,7 +62,13 @@ type Props = {
   disabled?: boolean
 }
 
-const StatusFormBill = ({ label, name, classFromItem = '', configInput = {}, disabled = false }: Props) => {
+const StatusFormBill = ({
+  label,
+  name,
+  classFromItem = '',
+  configInput = {},
+  disabled = false,
+}: Props) => {
   const { translate } = useLanguage()
 
   const getStatus = (key: string) => {

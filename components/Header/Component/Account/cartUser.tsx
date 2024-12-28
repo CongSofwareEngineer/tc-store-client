@@ -46,7 +46,12 @@ const CartUser = () => {
           {data?.lengthCart}
         </span>
       )}
-      <Image fill src={images.icon.iconCart} alt='my-cart' className='!relative !w-[25px] !h-[25px' />
+      <Image
+        fill
+        src={images.icon.iconCart}
+        alt='my-cart'
+        className='!relative !w-[25px] !h-[25px'
+      />
     </div>
   )
 }

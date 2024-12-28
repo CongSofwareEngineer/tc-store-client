@@ -41,7 +41,12 @@ const OptionAddressShip = ({ listAddressShip, setListAddressShip }: PropsType) =
     />
   ) : (
     <>
-      <InputForm required name='addressShip' label={translate('textPopular.addressShip')} classFromItem='w-full' />
+      <InputForm
+        required
+        name='addressShip'
+        label={translate('textPopular.addressShip')}
+        classFromItem='w-full'
+      />
       <div className='md:mb-4' />
     </>
   )

@@ -223,7 +223,13 @@ const UserAdminScreen = () => {
   return (
     <div className='flex flex-col gap-3 w-full'>
       {renderContent()}
-      <MyTable columns={getColumns()} loading={isLoading} data={data || []} limit={PAGE_SIZE_LIMIT} total={20} />
+      <MyTable
+        columns={getColumns()}
+        loading={isLoading}
+        data={data || []}
+        limit={PAGE_SIZE_LIMIT}
+        total={20}
+      />
     </div>
   )
 }

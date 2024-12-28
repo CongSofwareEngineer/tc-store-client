@@ -43,7 +43,9 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
               <div>{`${translate('textPopular.amount')} : ${amountBuy}`}</div>
               <div className='flex gap-1'>
                 <span>{translate('textPopular.totalMoney')} :</span>
-                <span className='font-bold text-green-700'>{numberWithCommas(amountBuy * data?.price)} VNĐ</span>
+                <span className='font-bold text-green-700'>
+                  {numberWithCommas(amountBuy * data?.price)} VNĐ
+                </span>
               </div>
             </div>
           </div>
@@ -76,7 +78,10 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
           </div>
           <div className='w-[100px] flex flex-1'>
             <div className='flex flex-col gap-1'>
-              <div className='font-semibold   cursor-pointer md:hover:underline' onClick={handleClickName}>
+              <div
+                className='font-semibold   cursor-pointer md:hover:underline'
+                onClick={handleClickName}
+              >
                 {data?.name}
               </div>
               <div className='opacity-80 text-xs '>{`${translate('category')} : ${
@@ -103,12 +108,19 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
     <div className='bg-white w-full mt-4 flex flex-col  border-[1px] shadow-gray1 border-gray-300 p-3 px-4 pt-4'>
       <div className='flex w-full gap-2'>
         <div>
-          <Image className='!relative !w-[25px] !h-[25px]' src={images.icon.iconCart} alt='my-cart-bill' fill />
+          <Image
+            className='!relative !w-[25px] !h-[25px]'
+            src={images.icon.iconCart}
+            alt='my-cart-bill'
+            fill
+          />
         </div>
         <div className='text-medium font-semibold'>{translate('bill.infoBill')}</div>
       </div>
       <div className='relative w-full border-[1px] my-3 border-gray-300' />
-      <div className='w-full overflow-y-auto'>{isMobile ? renderItemMobile() : renderItemDesktop()}</div>
+      <div className='w-full overflow-y-auto'>
+        {isMobile ? renderItemMobile() : renderItemDesktop()}
+      </div>
     </div>
   )
 }

@@ -13,7 +13,9 @@ const ItemNest = ({ data }: { data: Record<string, any> | null }) => {
 
   return (
     <Link className='w-full cursor-pointer relative' href={`/shop/${data?.keyName}`}>
-      <div className='absolute right-0 top-4 bg-green-300 px-3 rounded-l-lg z-20'>{data?.disCount || 0}%</div>
+      <div className='absolute right-0 top-4 bg-green-300 px-3 rounded-l-lg z-20'>
+        {data?.disCount || 0}%
+      </div>
       <div className='p-5 hover:shadow-lg cursor-pointer group bg-white rounded-lg w-full flex flex-col items-center justify-center'>
         <div className='relative w-full aspect-square  overflow-hidden'>
           <Image
@@ -36,7 +38,9 @@ const ItemNest = ({ data }: { data: Record<string, any> | null }) => {
             VNĐ
           </div>
 
-          {!isMobile && <MySliderSell total={data?.amount} sell={data?.sold} className={'text-[12px]'} />}
+          {!isMobile && (
+            <MySliderSell total={data?.amount} sell={data?.sold} className={'text-[12px]'} />
+          )}
           <span className='text-[11px] md:mt-1 '>{`${translate('productDetail.sold')}  ${numberWithCommas(
             data?.sold || '0'
           )}`}</span>

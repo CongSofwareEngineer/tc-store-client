@@ -81,7 +81,10 @@ const RegisterScreen = () => {
     <div className='h-full max-w-[1000px] relative flex justify-center m-auto'>
       <div className='w-full flex justify-between h-full items-center'>
         {!isMobile && (
-          <div data-aos='fade-right' className='flex-1 flex flex-col justify-center items-center max-w-[450px]'>
+          <div
+            data-aos='fade-right'
+            className='flex-1 flex flex-col justify-center items-center max-w-[450px]'
+          >
             <Image
               fill
               alt={'tc-store-logo-register'}
@@ -94,7 +97,9 @@ const RegisterScreen = () => {
 
         <div data-aos='fade-left' className='flex justify-start items-start md:w-fit w-full'>
           <div className='m-auto flex flex-col md:w-[450px] w-full shadow-md p-8 rounded-[16px] justify-center align-middle bg-white'>
-            <h1 className='mb- uppercase font-bold text-center text-[16px]'>{translate('register.title')}</h1>
+            <h1 className='mb- uppercase font-bold text-center text-[16px]'>
+              {translate('register.title')}
+            </h1>
             <MyForm
               onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
               formData={formData}
@@ -133,10 +138,16 @@ const RegisterScreen = () => {
               <div className='flex gap-2 mt-2 '>
                 <div>{translate('userDetail.sex')} :</div>
 
-                <Checkbox checked={formData?.sex} onChange={() => setFormData({ ...formData, sex: true })}>
+                <Checkbox
+                  checked={formData?.sex}
+                  onChange={() => setFormData({ ...formData, sex: true })}
+                >
                   {translate('textPopular.male')}
                 </Checkbox>
-                <Checkbox checked={!formData?.sex} onChange={() => setFormData({ ...formData, sex: false })}>
+                <Checkbox
+                  checked={!formData?.sex}
+                  onChange={() => setFormData({ ...formData, sex: false })}
+                >
                   {translate('textPopular.female')}
                 </Checkbox>
               </div>

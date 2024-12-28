@@ -31,7 +31,13 @@ const FirstLoadWebsite = dynamic(() => import('../FirstLoadWebsite'), {
   ssr: false,
 })
 
-const ClientRender = ({ children, menuCategory = [] }: { children: React.ReactNode; menuCategory: any[] }) => {
+const ClientRender = ({
+  children,
+  menuCategory = [],
+}: {
+  children: React.ReactNode
+  menuCategory: any[]
+}) => {
   useAos()
   const { setCategoryMenu } = useCategoryMenu()
   const { loadDataLocal } = useUserData()

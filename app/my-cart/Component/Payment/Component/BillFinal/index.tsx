@@ -21,7 +21,12 @@ const BillFinal = ({
     <div className='bg-white w-full  flex flex-col  border-[1px] shadow-gray1 border-gray-300 md:p-3 px-4 py-4'>
       <div className='flex w-full gap-2'>
         <div>
-          <Image src={images.icon.iconBill} alt='my-cart-bill' fill className='!relative !w-[25px] !h-[25px]' />
+          <Image
+            src={images.icon.iconBill}
+            alt='my-cart-bill'
+            fill
+            className='!relative !w-[25px] !h-[25px]'
+          />
         </div>
         <div className='text-medium font-semibold'>{translate('bill.detailPayment')}</div>
       </div>

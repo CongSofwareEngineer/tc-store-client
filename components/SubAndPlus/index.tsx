@@ -18,7 +18,7 @@ const SubAndPlus = ({
 }: SubAndPlusType) => {
   const { isMobile } = useMedia()
   return (
-    <div className='flex align-middle gap-3 '>
+    <div className='flex align-middle gap-3  '>
       {isSquare ? (
         <div className='flex  border-solid border-2 border-gray-400 rounded-lg md:py-1 py-[2px]'>
           <div
@@ -32,7 +32,11 @@ const SubAndPlus = ({
             className='relative font-bold cursor-pointer text-center   min-w-5'
             onClick={() =>
               callBackPlus(
-                maxAmount === -1 ? Number(value) + 1 : maxAmount === Number(value) ? Number(value) : Number(value) + 1
+                maxAmount === -1
+                  ? Number(value) + 1
+                  : maxAmount === Number(value)
+                    ? Number(value)
+                    : Number(value) + 1
               )
             }
           >
@@ -52,7 +56,11 @@ const SubAndPlus = ({
             className='cursor-pointer'
             onClick={() =>
               callBackPlus(
-                maxAmount === -1 ? Number(value) + 1 : maxAmount === Number(value) ? Number(value) : Number(value) + 1
+                maxAmount === -1
+                  ? Number(value) + 1
+                  : maxAmount === Number(value)
+                    ? Number(value)
+                    : Number(value) + 1
               )
             }
             style={{ fontSize: isMobile ? 22 : 25, color: 'green' }}

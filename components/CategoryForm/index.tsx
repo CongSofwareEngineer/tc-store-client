@@ -61,7 +61,13 @@ type Props = {
   disabled?: boolean
 }
 
-const CategoryForm = ({ label, name, classFromItem = '', configInput = {}, disabled = false }: Props) => {
+const CategoryForm = ({
+  label,
+  name,
+  classFromItem = '',
+  configInput = {},
+  disabled = false,
+}: Props) => {
   const { language } = useLanguage()
   const { categoryMenu } = useCategoryMenu()
 

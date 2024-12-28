@@ -33,12 +33,29 @@ const Footer = () => {
           <p className='text-medium font-bold mb-2'>Thông tin vẻ Shop</p>
           <div className='flex md:flex-row flex-col w-full justify-between md:gap-0 gap-4'>
             <div className='flex flex-col md:gap-3 gap-2 md:w-[48%] w-full'>
-              <Item icon={images.footer.iconGmail} value={'hodiencong2000.@gmail.com'} link={LINK_CONTACT.Mail} />
-              <Item icon={images.footer.iconNumberPhone} value={'Hồ Diên Công'} link={LINK_CONTACT.SDT} />
+              <Item
+                icon={images.footer.iconGmail}
+                value={'hodiencong2000.@gmail.com'}
+                link={LINK_CONTACT.Mail}
+              />
+              <Item
+                icon={images.footer.iconNumberPhone}
+                value={'Hồ Diên Công'}
+                link={LINK_CONTACT.SDT}
+              />
 
-              <Item icon={images.footer.iconZalo} value={'0392225405'} link={LINK_CONTACT.Zalo} type={'zalo'} />
+              <Item
+                icon={images.footer.iconZalo}
+                value={'0392225405'}
+                link={LINK_CONTACT.Zalo}
+                type={'zalo'}
+              />
               <Item icon={images.footer.iconFace} value={'Facebook'} link={LINK_CONTACT.FaceBook} />
-              <Item icon={images.footer.iconGithub} value={'CongSofwareEngineer'} link={LINK_CONTACT.Github} />
+              <Item
+                icon={images.footer.iconGithub}
+                value={'CongSofwareEngineer'}
+                link={LINK_CONTACT.Github}
+              />
               <Item
                 icon={images.footer.iconAddress}
                 value={'83/41, Phạm Văn Bạch, P.15, Tân Bình, TP.HCM'}

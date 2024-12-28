@@ -36,7 +36,11 @@ const NotificationClient: NextPage = () => {
       }
       const btn = (
         <div className='flex w-full justify-end gap-2'>
-          <Button type='default' onClick={() => handleConfirm(dataMess.data.type)} className='min-w-[50px]'>
+          <Button
+            type='default'
+            onClick={() => handleConfirm(dataMess.data.type)}
+            className='min-w-[50px]'
+          >
             {translate('common.view')}
           </Button>
           <Button onClick={() => notification.destroy(key)} size='middle' type='primary'>
@@ -46,7 +50,11 @@ const NotificationClient: NextPage = () => {
       )
 
       notification.open({
-        message: <div className='text-black font-bold '>{dataMess?.data?.title || dataMess?.notification?.title}</div>,
+        message: (
+          <div className='text-black font-bold '>
+            {dataMess?.data?.title || dataMess?.notification?.title}
+          </div>
+        ),
         description: (
           <div className='max-h-[100px] overflow-scroll'>
             <div
@@ -103,7 +111,7 @@ const NotificationClient: NextPage = () => {
               })
             }
           })
-          .catch((error: any) => {})
+          .catch(() => {})
       }
     }
     if (isLogin) {

@@ -13,7 +13,12 @@ const ListProduct = ({ lisDataBill }: { lisDataBill: any[] }) => {
     <div className='bg-white w-full mt-4 flex flex-col  border-[1px] shadow-gray1 border-gray-300 p-3 px-4 pt-4'>
       <div className='flex w-full gap-2'>
         <div>
-          <Image src={images.icon.iconCart} alt='my-cart-bill' fill className='!relative !w-[25px] !h-[25px]' />
+          <Image
+            src={images.icon.iconCart}
+            alt='my-cart-bill'
+            fill
+            className='!relative !w-[25px] !h-[25px]'
+          />
         </div>
         <div className='text-medium font-semibold'>{translate('bill.infoBill')}</div>
       </div>

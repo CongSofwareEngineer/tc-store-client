@@ -32,7 +32,11 @@ const useQuerySearch = () => {
     setCurrentQueries(window.location.search)
   }, [searchParam, router, pathPage])
 
-  const updateQuery = (key: string, value: string | string[] | number | number[], isReplace = true) => {
+  const updateQuery = (
+    key: string,
+    value: string | string[] | number | number[],
+    isReplace = true
+  ) => {
     const searchPareClone = cloneData(queries)
 
     if (searchPareClone[key]) {

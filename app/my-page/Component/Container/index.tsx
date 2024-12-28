@@ -53,8 +53,12 @@ const Container = ({ children }: PropsWithChildren) => {
           <div className='fixed bg-white  w-full flex justify-around bottom-0 left-0 py-3  border-t-[1px] shadow-gray1 border-gray-300 z-10'>
             <Row className='w-full'>
               <Col span={8}>{renderItem(images.icon.iconHome, translate('header.home'), '/')}</Col>
-              <Col span={8}>{renderItem(images.icon.iconHistory, translate('myPage.myOder'), '/my-page/bill')}</Col>
-              <Col span={8}>{renderItem(images.icon.iconMyUser, translate('myPage.myUser'), '/my-page')}</Col>
+              <Col span={8}>
+                {renderItem(images.icon.iconHistory, translate('myPage.myOder'), '/my-page/bill')}
+              </Col>
+              <Col span={8}>
+                {renderItem(images.icon.iconMyUser, translate('myPage.myUser'), '/my-page')}
+              </Col>
             </Row>
           </div>
           <div className='w-full mb-[75px]'>{children}</div>
@@ -75,7 +79,9 @@ const Container = ({ children }: PropsWithChildren) => {
             {renderItem(images.icon.iconCart, translate('header.cart'), '/my-cart')}
           </div>
         </div>
-        <div className='flex flex-1 bg-white p-4 h-fit max-h-[calc(100vh-80px)] overflow-y-auto '>{children}</div>
+        <div className='flex flex-1 bg-white p-4 h-fit max-h-[calc(100vh-80px)] overflow-y-auto '>
+          {children}
+        </div>
       </div>
     )
   }

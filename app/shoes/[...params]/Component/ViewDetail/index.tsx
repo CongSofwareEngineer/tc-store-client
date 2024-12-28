@@ -44,7 +44,13 @@ type Props = {
   setAmountBuy: (e: any) => void
   onChangeData?: (param: any) => void
 }
-const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, setAmountBuy }: Props) => {
+const ViewDetail = ({
+  onChangeData,
+  productDetail,
+  amountBuy = 0,
+  setIsPayment,
+  setAmountBuy,
+}: Props) => {
   useAos(500)
 
   const { isMobile } = useMedia()
@@ -131,7 +137,10 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
         }
         await addCartNoLogin(bodyOther)
       }
-      await Promise.all([refreshQuery(QUERY_KEY.LengthCartUser), refreshQuery(QUERY_KEY.MyCartUser)])
+      await Promise.all([
+        refreshQuery(QUERY_KEY.LengthCartUser),
+        refreshQuery(QUERY_KEY.MyCartUser),
+      ])
       setLoadingAddCart(false)
       showNotificationSuccess(translate('addCart.addSuccess'))
     } finally {
@@ -144,7 +153,10 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
       <div className='flex flex-col'>
         <BtnBack title={['Shop', productDetail.name]} url={['/shop']} />
         <div className='w-full flex gap-6 bg-white rounded-xl p-6'>
-          <div data-aos='fade-right' className='relative min-w-[300px] max-w-[450px] w-[50%] p-5 overflow-hidden '>
+          <div
+            data-aos='fade-right'
+            className='relative min-w-[300px] max-w-[450px] w-[50%] p-5 overflow-hidden '
+          >
             <MyImage
               src={detectImg(imageShow || productDetail.imageMain || '')}
               alt={`img-main--${productDetail.name}`}
@@ -173,9 +185,18 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
               <Button onClick={handleBuy} className='min-w-[30%] !h-[40px]'>
                 {translate('common.buyNow')}
               </Button>
-              <Button type='primary' onClick={handleAddCart} className='min-w-[30%] !h-[40px]' loading={loadingAddCart}>
+              <Button
+                type='primary'
+                onClick={handleAddCart}
+                className='min-w-[30%] !h-[40px]'
+                loading={loadingAddCart}
+              >
                 <div className='flex gap-3 whitespace-nowrap'>
-                  <MyImage src={images.icon.iconCart} alt='btn-add-cart' className='!relative !w-[25px] !h-[25px]' />
+                  <MyImage
+                    src={images.icon.iconCart}
+                    alt='btn-add-cart'
+                    className='!relative !w-[25px] !h-[25px]'
+                  />
                   <span>{translate('common.addCart')}</span>
                 </div>
               </Button>
@@ -188,7 +209,9 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
         </div>
 
         <div data-aos='fade-up' className='w-full bg-white py-4 px-4   rounded-xl  mt-6'>
-          <div className='text-medium capitalize font-bold'>{translate('textPopular.moreLike')}</div>
+          <div className='text-medium capitalize font-bold'>
+            {translate('textPopular.moreLike')}
+          </div>
           <MoreCollections />
         </div>
       </div>
@@ -237,7 +260,11 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
                 loading={loadingAddCart}
               >
                 <div className='flex gap-3 whitespace-nowrap'>
-                  <MyImage src={images.icon.iconCart} alt='btn-add-cart' className='!relative !w-[25px] !h-[25px]' />
+                  <MyImage
+                    src={images.icon.iconCart}
+                    alt='btn-add-cart'
+                    className='!relative !w-[25px] !h-[25px]'
+                  />
                   <span>{translate('common.addCart')}</span>
                 </div>
               </Button>
@@ -251,7 +278,9 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
           <MoreInfo data={productDetail} />
         </div>
         <div data-aos='fade-right' className='w-full bg-white p-4  mt-2 '>
-          <div className='text-medium capitalize font-bold mb-1'>{translate('textPopular.moreLike')}</div>
+          <div className='text-medium capitalize font-bold mb-1'>
+            {translate('textPopular.moreLike')}
+          </div>
           <MoreCollections />
         </div>
       </div>

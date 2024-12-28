@@ -2,7 +2,12 @@ import type { Config } from 'tailwindcss'
 import plugin from 'tailwindcss/plugin'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const config = {
-  content: ['./components/**/*.{ts,tsx}', './hook/**/*.{ts,tsx}', './app/**/*.{ts,tsx}', './hook/**/*.{ts,tsx}'],
+  content: [
+    './components/**/*.{ts,tsx}',
+    './hook/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './hook/**/*.{ts,tsx}',
+  ],
 
   prefix: '',
   theme: {

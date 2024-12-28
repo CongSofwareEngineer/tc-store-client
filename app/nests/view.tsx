@@ -10,7 +10,10 @@ import LoadingData from './Component/LoadingData'
 
 const PageNestsScreen = () => {
   const { queries } = useQuerySearch()
-  const { data, isLoading, loadMore, hasNextPage, isFetchingNextPage } = useNests(PAGE_SIZE_LIMIT, queries)
+  const { data, isLoading, loadMore, hasNextPage, isFetchingNextPage } = useNests(
+    PAGE_SIZE_LIMIT,
+    queries
+  )
   const { translate } = useLanguage()
 
   return (

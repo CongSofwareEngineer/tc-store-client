@@ -118,7 +118,11 @@ const Banner = () => {
               >
                 <MyImage
                   alt={`icon-${index}`}
-                  src={images.home.banner[indexItem === index ? 'btnPositionActive' : 'btnPositionUnActive']}
+                  src={
+                    images.home.banner[
+                      indexItem === index ? 'btnPositionActive' : 'btnPositionUnActive'
+                    ]
+                  }
                   className='!relative !w-full !h-auto '
                 />
                 <div className='absolute-center text-white  text-center'>{indexItem + 1}</div>

@@ -38,13 +38,23 @@ const ContentForm = ({ onChange = () => {} }: ContentFormType) => {
           label={translate('userDetail.sdt')}
           classFromItem='w-full'
         />
-        <InputForm required name='name' label={translate('userDetail.name')} classFromItem='w-full' />
+        <InputForm
+          required
+          name='name'
+          label={translate('userDetail.name')}
+          classFromItem='w-full'
+        />
       </div>
       <div className='md:mt-4 mt-2 w-full' />
 
       <OptionVnLocation isNew={false} callback={onChange} />
 
-      <InputAreaForm rows={2} name='noteBil' label={translate('bill.noteBill')} className='w-full relative' />
+      <InputAreaForm
+        rows={2}
+        name='noteBil'
+        label={translate('bill.noteBill')}
+        className='w-full relative'
+      />
     </div>
   )
 }

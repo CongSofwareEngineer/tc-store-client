@@ -11,7 +11,10 @@ import LoadingGetData from '@/components/LoadingGetData'
 const Content = () => {
   const { queries } = useQuerySearch()
   const { translate } = useLanguage()
-  const { data, isLoading, loadMore, hasNextPage, isFetchingNextPage } = useAllProduct(PAGE_SIZE_LIMIT, queries)
+  const { data, isLoading, loadMore, hasNextPage, isFetchingNextPage } = useAllProduct(
+    PAGE_SIZE_LIMIT,
+    queries
+  )
 
   const getUrl = (item: any) => {
     if (item.category === TYPE_PRODUCT.shoes) {
@@ -24,7 +27,15 @@ const Content = () => {
       {data.length > 0 && (
         <div className='mt-2  w-full grid grid-cols-2 sm:grid-cols-3  lg:grid-cols-4   gap-3 xl:gap-6 md:gap-4'>
           {data.map((item: any) => {
-            return <ItemProduct showFeedback showSold key={`shop-${item.id}`} item={item} href={getUrl(item)} />
+            return (
+              <ItemProduct
+                showFeedback
+                showSold
+                key={`shop-${item.id}`}
+                item={item}
+                href={getUrl(item)}
+              />
+            )
           })}
         </div>
       )}

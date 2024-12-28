@@ -21,7 +21,9 @@ const AboutScreen = ({ data }: AboutProps) => {
   const { translate } = useLanguage()
   const [category, setCategory] = useState(data?.category || '')
   const [loading, setLoading] = useState(false)
-  const [dataAbout, setDataAbout] = useState<any>(data?.des ? JSON.parse(data.des) : INIT_DATA_MY_BLOG)
+  const [dataAbout, setDataAbout] = useState<any>(
+    data?.des ? JSON.parse(data.des) : INIT_DATA_MY_BLOG
+  )
 
   const handleSubmit = async () => {
     const callBack = async () => {
@@ -53,7 +55,13 @@ const AboutScreen = ({ data }: AboutProps) => {
     }
 
     openModalDrawer({
-      content: <ModalDelete title={translate(data ? 'common.update' : 'common.create')} des='' callback={callBack} />,
+      content: (
+        <ModalDelete
+          title={translate(data ? 'common.update' : 'common.create')}
+          des=''
+          callback={callBack}
+        />
+      ),
     })
   }
 
@@ -68,7 +76,12 @@ const AboutScreen = ({ data }: AboutProps) => {
           onChange={(e) => setCategory(e.target.value)}
           placeholder={translate('textPopular.menuCategory')}
         />
-        <MyBlog className='w-full h-full' pathFile={PATH_IMG.About} value={dataAbout} setValue={setDataAbout} />
+        <MyBlog
+          className='w-full h-full'
+          pathFile={PATH_IMG.About}
+          value={dataAbout}
+          setValue={setDataAbout}
+        />
       </div>
     )
   }

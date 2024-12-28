@@ -41,7 +41,11 @@ const ModalConfig = ({ data }: { data?: TYPE_USER_DATA }) => {
     <div className='flex flex-col gap-2'>
       <div className='flex gap-3 items-center'>
         <div className='aspect-square w-[100px] overflow-hidden'>
-          <MyImage alt={data?.name || ''} src={detectAvatar(data?.avatar)} className='!w-full !h-auto !relative' />
+          <MyImage
+            alt={data?.name || ''}
+            src={detectAvatar(data?.avatar)}
+            className='!w-full !h-auto !relative'
+          />
         </div>
         <div className='flex flex-col gap-2 flex-1'>
           <div className='text-lg font-bold'>{data?.name}</div>

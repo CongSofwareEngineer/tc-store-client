@@ -34,7 +34,8 @@ const useModalDrawer = () => {
       ...config.configModal,
       title: config.configModal?.title || config.title,
       content: config.content,
-      showBtnClose: config?.configModal?.showBtnClose === false ? false : config?.configModal?.overClickClose,
+      showBtnClose:
+        config?.configModal?.showBtnClose === false ? false : config?.configModal?.overClickClose,
       open: true,
     }
 

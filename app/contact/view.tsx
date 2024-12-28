@@ -84,7 +84,10 @@ const ContactScreen = () => {
     <div className=' flex flex-col justify-center items-center h-full w-full gap-2'>
       <div className='w-full flex  justify-between h-full items-center'>
         {!isMobile && (
-          <div data-aos='fade-right' className='flex-1 flex flex-col justify-center items-center max-w-[450px]'>
+          <div
+            data-aos='fade-right'
+            className='flex-1 flex flex-col justify-center items-center max-w-[450px]'
+          >
             <Image
               fill
               alt={'tc-store-logo-register'}
@@ -97,7 +100,9 @@ const ContactScreen = () => {
 
         <div data-aos='fade-left' className='flex flex-1 justify-start items-start md:w-fit w-full'>
           <div className='m-auto flex flex-col   md:w-[80%] w-full shadow-md p-8 rounded-[16px] justify-center align-middle bg-white'>
-            <h1 className='mb- uppercase font-bold text-center text-[16px]'>{translate('header.contact')}</h1>
+            <h1 className='mb- uppercase font-bold text-center text-[16px]'>
+              {translate('header.contact')}
+            </h1>
             <h2 className='opacity-0 h-0 w-0 overflow-hidden absolute -z-10'>
               Liên hệ với Shop nếu cần có thắc mắc cũng như muốn hợp tác với Shop
             </h2>
@@ -115,10 +120,20 @@ const ContactScreen = () => {
                   label={translate('productDetail.modalBuy.enterNumberPhone')}
                 />
 
-                <InputForm name='name' required label={translate('productDetail.modalBuy.enterName')} />
+                <InputForm
+                  name='name'
+                  required
+                  label={translate('productDetail.modalBuy.enterName')}
+                />
 
                 <InputForm name='email' label={'Email/ Gmail'} />
-                <InputForm typeBtn='area' rows={5} name='note' label={translate('textPopular.note')} maxLength={300} />
+                <InputForm
+                  typeBtn='area'
+                  rows={5}
+                  name='note'
+                  label={translate('textPopular.note')}
+                  maxLength={300}
+                />
                 <div className='md:mt-16 mt-6' />
 
                 <ButtonForm

@@ -44,14 +44,22 @@ const ModalLogin: React.FC = () => {
 
   return (
     <div className='w-full flex flex-col gap-2 justify-start '>
-      <div className='text-medium uppercase text-center w-full font-semibold'>{translate('common.login')}</div>
+      <div className='text-medium uppercase text-center w-full font-semibold'>
+        {translate('common.login')}
+      </div>
       {formData && (
         <MyForm
           onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
           formData={formData}
           onFinish={handleLogin}
         >
-          <InputForm key={'sdt'} validator={checkNumberPhone} required name='sdt' label={translate('userDetail.sdt')} />
+          <InputForm
+            key={'sdt'}
+            validator={checkNumberPhone}
+            required
+            name='sdt'
+            label={translate('userDetail.sdt')}
+          />
           <InputForm
             key={'password'}
             required

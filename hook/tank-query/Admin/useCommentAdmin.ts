@@ -6,7 +6,13 @@ import { isObject } from '@/utils/functions'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 
-const getData = async ({ queryKey, pageParam = 1 }: { queryKey: any; pageParam: any }): Promise<TypeHookReactQuery> => {
+const getData = async ({
+  queryKey,
+  pageParam = 1,
+}: {
+  queryKey: any
+  pageParam: any
+}): Promise<TypeHookReactQuery> => {
   try {
     const query = queryKey[1]
     let queryUrl = `?page=${pageParam}&limit=${PAGE_SIZE_LIMIT}`

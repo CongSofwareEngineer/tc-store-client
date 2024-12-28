@@ -11,8 +11,16 @@ const Account = dynamic(() => import('./Component/Account'), { ssr: true })
 const Header = () => {
   return (
     <header className='header-main'>
-      <a aria-label={LINK_CONTACT.Mail} href={LINK_CONTACT.Mail} className='absolute z-[-1] opacity-0' />
-      <a aria-label={LINK_CONTACT.SDT} href={LINK_CONTACT.SDT} className='absolute z-[-1] opacity-0' />
+      <a
+        aria-label={LINK_CONTACT.Mail}
+        href={LINK_CONTACT.Mail}
+        className='absolute z-[-1] opacity-0'
+      />
+      <a
+        aria-label={LINK_CONTACT.SDT}
+        href={LINK_CONTACT.SDT}
+        className='absolute z-[-1] opacity-0'
+      />
       <div className='w-full h-14 ' />
       <div className='w-full h-14 fixed z-10 inset-0 '>
         <div className='border-b-2 border-green-300 w-full flex m-auto justify-center items-center bg-white'>
@@ -22,7 +30,12 @@ const Header = () => {
           >
             <div className='h-full relative '>
               <Link href={'/'}>
-                <Image src={images.logo} alt='logo-tcstore' fill className='!relative !w-auto !h-full' />
+                <Image
+                  src={images.logo}
+                  alt='logo-tcstore'
+                  fill
+                  className='!relative !w-auto !h-full'
+                />
               </Link>
             </div>
             <Nav />

@@ -35,7 +35,9 @@ const MyModalAdmin = () => {
             />
           </div>
         )}
-        {modalAdmin.title && <div className='text-medium mb-2 font-bold w-full'>{modalAdmin.title}</div>}
+        {modalAdmin.title && (
+          <div className='text-medium mb-2 font-bold w-full'>{modalAdmin.title}</div>
+        )}
         {modalAdmin.body}
       </div>
     </div>

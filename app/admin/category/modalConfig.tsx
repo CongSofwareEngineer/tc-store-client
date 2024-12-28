@@ -13,7 +13,6 @@ import useModalDrawer from '@/hook/useModalDrawer'
 import useTypeFile from '@/hook/useTypeFile'
 import AdminApi from '@/services/adminApi'
 import { detectImg, uppercase } from '@/utils/functions'
-import { showNotificationSuccess } from '@/utils/notification'
 import { CameraOutlined, DeleteOutlined } from '@ant-design/icons'
 import { Button, Form, Image } from 'antd'
 import React, { useEffect, useState } from 'react'
@@ -23,7 +22,8 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
   const { typeFile } = useTypeFile({ typeAndroid: '.png,.jpg,.jpeg' })
   const { refreshQuery } = useRefreshQuery()
   const { closeModalDrawer } = useModalDrawer()
-  const { callbackCreateError, callbackUpdateError, callbackCreateSuccess, callbackUpdateSuccess } = useCallbackToast()
+  const { callbackCreateError, callbackUpdateError, callbackCreateSuccess, callbackUpdateSuccess } =
+    useCallbackToast()
 
   const [formData, setFormData] = useState<{ [key: string]: any } | null>(null)
   const [loading, setLoading] = useState(false)
@@ -97,7 +97,13 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
       className='!overflow-auto gap-2'
     >
       <div className='flex flex-col gap-2 w-full flex-1 overflow-y-auto '>
-        <InputForm classFromItem='w-full ' name='keyName' label={'keyName'} required disable={!!data} />
+        <InputForm
+          classFromItem='w-full '
+          name='keyName'
+          label={'keyName'}
+          required
+          disable={!!data}
+        />
         <Form.List name='subCategories'>
           {(fields, { add, remove }) => (
             <div className='w-full'>
@@ -106,7 +112,11 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
                   return (
                     <div key={e.name} className='flex gap-2 items-end '>
                       <div className='flex flex-1'>
-                        <InputForm classFromItem='w-full' label={`Sub Category ${index + 1}`} name={e.name} />
+                        <InputForm
+                          classFromItem='w-full'
+                          label={`Sub Category ${index + 1}`}
+                          name={e.name}
+                        />
                       </div>
 
                       <div className='text-red-500 text-medium relative top-1'>
@@ -130,12 +140,19 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
           return (
             <div key={value} className='flex flex-col  w-full gap-2 mt-2'>
               <div>{`${translate('language')} : ${uppercase(value)}`}</div>
-              <MyInput value={formData?.lang[value] || ''} onChangeText={(e) => onChangeName(value, e?.toString())} />
+              <MyInput
+                value={formData?.lang[value] || ''}
+                onChangeText={(e) => onChangeName(value, e?.toString())}
+              />
             </div>
           )
         })}
 
-        <CheckBoxForm classFromItem='w-full' name='isShow' label={translate('textPopular.showScreen')} />
+        <CheckBoxForm
+          classFromItem='w-full'
+          name='isShow'
+          label={translate('textPopular.showScreen')}
+        />
         <div className='flex justify-center'>
           <div className='flex flex-col  w-[150px] h-[150px]   justify-between items-center'>
             <UploadImage
@@ -148,12 +165,19 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
                 <span>Icon</span>
               </div>
             </UploadImage>
-            <Image className='mt-3' alt='img-main' src={detectImg(formData?.icon?.base64 || formData?.icon)} />
+            <Image
+              className='mt-3'
+              alt='img-main'
+              src={detectImg(formData?.icon?.base64 || formData?.icon)}
+            />
           </div>
         </div>
 
         <div className='flex flex-1 w-full mt-10'>
-          <ButtonForm titleSubmit={translate(data ? 'common.update' : 'common.create')} loading={loading} />
+          <ButtonForm
+            titleSubmit={translate(data ? 'common.update' : 'common.create')}
+            loading={loading}
+          />
         </div>
       </div>
     </MyForm>

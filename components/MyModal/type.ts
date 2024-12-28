@@ -1,6 +1,13 @@
 import { ModalProps } from 'antd'
 
-export type Placement = 'center' | 'auto' | 'top' | 'top-center' | 'bottom' | 'bottom-center' | undefined
+export type Placement =
+  | 'center'
+  | 'auto'
+  | 'top'
+  | 'top-center'
+  | 'bottom'
+  | 'bottom-center'
+  | undefined
 
 export type ConfigModal = {
   classContainer?: string | 'w-[500px]'

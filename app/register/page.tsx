@@ -16,7 +16,9 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
 const RegisterPage: NextPage = () => {
   return (
     <>
-      <h1 className='absolute opacity-0'>Đăng Ký Tài Khoản Tại TC Store - Bắt Đầu Hành Trình Mua Sắm Dễ Dàng</h1>
+      <h1 className='absolute opacity-0'>
+        Đăng Ký Tài Khoản Tại TC Store - Bắt Đầu Hành Trình Mua Sắm Dễ Dàng
+      </h1>
       <h2 className='absolute opacity-0'>Lợi Ích Khi Đăng Ký Tài Khoản TC Store</h2>
       <h2 className='absolute opacity-0'>Cách Đăng Ký Tài Khoản Nhanh Chóng</h2>
       <h2 className='absolute opacity-0'>Ưu Đãi Đặc Biệt Dành Cho Thành Viên Mới</h2>

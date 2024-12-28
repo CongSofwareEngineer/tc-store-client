@@ -15,7 +15,10 @@ const BtnBack = ({ clickBack }: { clickBack: () => void }) => {
         alt={'TC Store Icon Back page '}
         className='cursor-pointer !relative !w-[25px] !h-[25px] '
       />
-      <a onClick={clickBack} className='cursor-pointer hover:underline text-[16px] text-blue-700 flex gap-1'>
+      <a
+        onClick={clickBack}
+        className='cursor-pointer hover:underline text-[16px] text-blue-700 flex gap-1'
+      >
         <h2>{translate('header.cart')}</h2>
         <RightOutlined className='black' />
       </a>

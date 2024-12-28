@@ -71,7 +71,9 @@ const ItemProduct = ({
             {formatPrice(item?.price || 150)}
             VNĐ
           </div>
-          {!isMobile && <MySliderSell total={item.amount} sell={item.sold} className={'text-[12px]'} />}
+          {!isMobile && (
+            <MySliderSell total={item.amount} sell={item.sold} className={'text-[12px]'} />
+          )}
 
           {showSold && (
             <div className='md:mt-2 text-[11px] flex w-full justify-between items-center'>

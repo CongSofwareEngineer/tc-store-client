@@ -131,7 +131,11 @@ const MyCartScreen = () => {
                 <span className='font-bold text-green-500'>{`${numberWithCommas(calculatePayment())} VNĐ`}</span>
               </div>
               <div className='border-[1px] border-gray-300 w-full' />
-              <Button className='w-full' disabled={Number(calculatePayment()) <= 1} onClick={() => setIsPayment(true)}>
+              <Button
+                className='w-full'
+                disabled={Number(calculatePayment()) <= 1}
+                onClick={() => setIsPayment(true)}
+              >
                 {`${translate('cart.payment')} (${calculateItemPayment()})`}
               </Button>
             </div>
@@ -145,7 +149,11 @@ const MyCartScreen = () => {
     return (
       <div className=' flex flex-1 flex-col h-full  max-h-full w-[calc(100%+40px)] ml-[-20px] overflow-hidden justify-between'>
         <div className='w-full px-5 flex flex-col max-h-[calc(100dvh-175px)]  overflow-y-auto  '>
-          <BtnBack className='!mb-0' title={[translate('header.shop'), translate('header.cart')]} url={['/shop']} />
+          <BtnBack
+            className='!mb-0'
+            title={[translate('header.shop'), translate('header.cart')]}
+            url={['/shop']}
+          />
 
           <LoadingData loading={isLoading} />
           {!isLoading && (
@@ -176,7 +184,9 @@ const MyCartScreen = () => {
           <div className='relative flex flex-col gap-2'>
             <div className='flex gap-2 w-full'>
               <div className='font-semibold'>{translate('textPopular.totalMoney')} :</div>
-              <span className='font-bold text-green-700'>{numberWithCommas(calculatePayment())} VNĐ</span>
+              <span className='font-bold text-green-700'>
+                {numberWithCommas(calculatePayment())} VNĐ
+              </span>
             </div>
             <div className='w-full border-[1px] border-gray-200  relative  ' />
 

@@ -71,7 +71,9 @@ const ItemDetail = ({ data }: { data: any }) => {
               />
             </div>
             <div className='flex flex-col gap-2 flex-1'>
-              <div className='text-green-500 flex gap-2 text-medium font-bold'>{e.more_data.name}</div>
+              <div className='text-green-500 flex gap-2 text-medium font-bold'>
+                {e.more_data.name}
+              </div>
               <div className='flex gap-2 '>
                 <span className='font-bold'>{translate('textPopular.amount')}:</span>
                 <span>{e.amount}</span>

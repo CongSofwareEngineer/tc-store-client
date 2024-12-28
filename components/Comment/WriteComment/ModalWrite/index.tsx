@@ -97,7 +97,11 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
       res = await ClientApi.createComment(body)
     }
     if (res?.data) {
-      await refreshListQuery([QUERY_KEY.GetCommentProduction, QUERY_KEY.GetProductByID, QUERY_KEY.GetCommentDetail])
+      await refreshListQuery([
+        QUERY_KEY.GetCommentProduction,
+        QUERY_KEY.GetProductByID,
+        QUERY_KEY.GetCommentDetail,
+      ])
       closeModalDrawer()
       showNotificationSuccess(translate('comment.feedbackSuccess'))
     } else {
@@ -121,7 +125,12 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
         <div className='flex gap-3'>
           {formData?.listImg?.map((item: any, index: number) => (
             <div key={`img-${index}`} className='relative w-[70px] '>
-              <ImageNext alt='img' className='!relative !h-auto !-[70px]' src={detectImg(item?.base64 || item)} fill />
+              <ImageNext
+                alt='img'
+                className='!relative !h-auto !-[70px]'
+                src={detectImg(item?.base64 || item)}
+                fill
+              />
               <CloseCircleOutlined
                 onClick={() => deleteImg(index)}
                 className='absolute text-[20px] z-10 cursor-pointer right-0 top-0'
@@ -189,7 +198,10 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
               maxPixelReduce={400}
             >
               <div className='flex gap-2 item-center w-full'>
-                <CameraOutlined className='cursor-pointer' style={{ fontSize: 25, color: 'blue' }} />
+                <CameraOutlined
+                  className='cursor-pointer'
+                  style={{ fontSize: 25, color: 'blue' }}
+                />
                 <span>{translate('comment.uploadImg_des')}</span>
               </div>
             </UploadImage>

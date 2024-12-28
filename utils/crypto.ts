@@ -1,7 +1,10 @@
 import crypto from 'crypto-js'
 const getIV = () => crypto.enc.Hex.parse(process.env.NEXT_PUBLIC_KEY_IV_ENCODE!)
 
-export const encryptData = (value: string | object, pinCode: string = process.env.NEXT_PUBLIC_KEY_SALT) => {
+export const encryptData = (
+  value: string | object,
+  pinCode: string = process.env.NEXT_PUBLIC_KEY_SALT
+) => {
   try {
     return crypto.AES.encrypt(JSON.stringify(value), crypto.enc.Utf8.parse(pinCode), {
       iv: getIV(),

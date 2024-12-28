@@ -15,7 +15,12 @@ const GraphRevenue = ({ data }: { data: any }) => {
     return (
       <div className='flex gap-2 w-full items-center'>
         <div className='md:w-[60px] w-10 aspect-square'>
-          <Image className='!relative !w-full !h-auto' alt='iconBill' src={images.icon.iconBill} fill />
+          <Image
+            className='!relative !w-full !h-auto'
+            alt='iconBill'
+            src={images.icon.iconBill}
+            fill
+          />
         </div>
         <div>
           <div className='md:text-lg text-green-500'>{numberWithCommas(total)}</div>
@@ -35,7 +40,12 @@ const GraphRevenue = ({ data }: { data: any }) => {
     return (
       <div className='flex gap-2 w-full'>
         <div className='w-[30px] aspect-square'>
-          <Image className='!relative !w-full !h-auto' alt='iconBill' src={images.icon.iconBill} fill />
+          <Image
+            className='!relative !w-full !h-auto'
+            alt='iconBill'
+            src={images.icon.iconBill}
+            fill
+          />
         </div>
         <div>
           <div className='text-lg text-green-500'>{numberWithCommas(total)}</div>
@@ -49,7 +59,12 @@ const GraphRevenue = ({ data }: { data: any }) => {
     return (
       <div className='flex gap-2 w-full'>
         <div className='w-[30px] aspect-square'>
-          <Image className='!relative !w-full !h-auto' alt='iconBill' src={images.icon.iconBill} fill />
+          <Image
+            className='!relative !w-full !h-auto'
+            alt='iconBill'
+            src={images.icon.iconBill}
+            fill
+          />
         </div>
         <div>
           <div className='text-lg text-green-500'>{numberWithCommas(data.length)}</div>

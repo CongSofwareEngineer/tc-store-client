@@ -41,7 +41,8 @@ const zustandCategoryMenu = create<CategoryMenuStore>()(
     persist(
       (set) => ({
         [ZUSTAND.CategoryMenu]: INIT_ZUSTAND[ZUSTAND.CategoryMenu],
-        setCategoryMenu: (user: TYPE_ZUSTAND[ZUSTAND.CategoryMenu]) => set({ [ZUSTAND.CategoryMenu]: user }),
+        setCategoryMenu: (user: TYPE_ZUSTAND[ZUSTAND.CategoryMenu]) =>
+          set({ [ZUSTAND.CategoryMenu]: user }),
         fetchData: async () => {
           try {
             const menuCategory = await ClientApi.getCategory(true)

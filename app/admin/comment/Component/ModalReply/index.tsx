@@ -14,7 +14,8 @@ const ModalReply = ({ data }: { data?: any }) => {
   const { refreshQuery } = useRefreshQuery()
   const { closeModalDrawer } = useModalDrawer()
   const isNewReply = isEmpty(data?.listReply)
-  const { callbackUpdateError, callbackCreateSuccess, callbackUpdateSuccess, callbackCreateError } = useCallbackToast()
+  const { callbackUpdateError, callbackCreateSuccess, callbackUpdateSuccess, callbackCreateError } =
+    useCallbackToast()
 
   const [text, setText] = useState('Shop cảm ơn Bạn đã tin tưởng và ủng hộ ạ.')
   const [loading, setLoading] = useState(false)
@@ -66,7 +67,13 @@ const ModalReply = ({ data }: { data?: any }) => {
           }}
         />
         <div className='font-bold'>{translate('common.reply')}:</div>
-        <MyInput type='area' rows={4} value={text} onChangeText={(e) => setText(e.toString())} className='!w-full' />
+        <MyInput
+          type='area'
+          rows={4}
+          value={text}
+          onChangeText={(e) => setText(e.toString())}
+          className='!w-full'
+        />
         <div className='w-full md:mt-10 mt-2' />
       </div>
       <Button loading={loading} className='w-full ' onClick={handleSubmit}>

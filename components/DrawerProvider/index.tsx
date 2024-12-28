@@ -35,7 +35,8 @@ const DrawerProvider = ({ children }: { children: React.ReactNode }) => {
         <Drawer
           onClose={closeDrawer}
           style={{
-            maxHeight: config.placement === 'right' || config.placement === 'left' ? 'unset' : '95dvh',
+            maxHeight:
+              config.placement === 'right' || config.placement === 'left' ? 'unset' : '95dvh',
           }}
           {...config}
         >

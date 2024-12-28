@@ -25,7 +25,12 @@ const ListItemCart = ({
       <>
         {!noTitle && (
           <table className='w-full md:min-w-[700px] '>
-            <TitleItem allSelected={allSelected} noEdit={noEdit} dataCart={dataCart} callBack={callBackSelectAll} />
+            <TitleItem
+              allSelected={allSelected}
+              noEdit={noEdit}
+              dataCart={dataCart}
+              callBack={callBackSelectAll}
+            />
           </table>
         )}
         {loading && (
@@ -54,7 +59,11 @@ const ListItemCart = ({
       <>
         <div className='w-full flex gap-3 items-center p-3 pb-4  border-b-[3px] border-gray-200 font-bold'>
           <div className='w-8 flex items-center justify-center'>
-            <MyCheckBox alt='check-all' value={allSelected} onClick={() => callBackSelectAll(!allSelected)} />
+            <MyCheckBox
+              alt='check-all'
+              value={allSelected}
+              onClick={() => callBackSelectAll(!allSelected)}
+            />
           </div>
           <div className='w-[120px] text-center'>{translate('textPopular.image')}</div>
           <div className='flex flex-1 justify-center-center items-center'>

@@ -11,7 +11,10 @@ const LoadingFirstPage = () => {
     <></>
   ) : (
     <div className='bg-white z-[999999999] flex w-screen h-screen fixed justify-center items-center inset-0'>
-      <Loading3QuartersOutlined style={{ color: 'green' }} className='text-[40px] animation_spin1s ' />
+      <Loading3QuartersOutlined
+        style={{ color: 'green' }}
+        className='text-[40px] animation_spin1s '
+      />
     </div>
   )
 }

@@ -1,10 +1,9 @@
-import { Button } from 'antd'
 import React, { useState } from 'react'
 type Props = {
   limit?: number
   text?: string
 }
-const TextWithToggle = ({ limit = 100, text = '', ...props }: Props) => {
+const TextWithToggle = ({ limit = 100, text = '' }: Props) => {
   const [isShowFull, setIsShowFull] = useState(false)
 
   function truncateText(text: any, limitText: number) {
@@ -26,7 +25,10 @@ const TextWithToggle = ({ limit = 100, text = '', ...props }: Props) => {
         }}
       />
       {text?.length > limit && (
-        <div className='cursor-pointer ml-1 text-red-600 underline' onClick={() => setIsShowFull(!isShowFull)}>
+        <div
+          className='cursor-pointer ml-1 text-red-600 underline'
+          onClick={() => setIsShowFull(!isShowFull)}
+        >
           {isShowFull ? `Less` : `More`}
         </div>
       )}

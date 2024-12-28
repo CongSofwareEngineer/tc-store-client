@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "forceConsistentCasingInFileNames": true,
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -23,16 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": [
-    "new-types.d.ts",
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "eslint.config.js",
-    ".eslintrc.ts",
-    "app/my-page/bill/Component/Item",
-    "app/my-page/bill/Component/ViewDetailBill"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

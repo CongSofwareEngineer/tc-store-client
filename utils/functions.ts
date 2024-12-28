@@ -250,10 +250,10 @@ export function convertBoolean(value: any): boolean {
 }
 
 export const stringToArrayBuffer = (str: string) => {
-  let buffer = new ArrayBuffer(str.length)
+  const buffer = new ArrayBuffer(str.length)
 
   // Create a Uint8Array view over the ArrayBuffer
-  let uint8Array = new Uint8Array(buffer)
+  const uint8Array = new Uint8Array(buffer)
 
   // Fill the Uint8Array with the string's char codes
   for (let i = 0; i < str.length; i++) {
@@ -264,7 +264,10 @@ export const stringToArrayBuffer = (str: string) => {
 }
 
 export const getUrlProduct = (product: any) => {
-  if (product?.more_data?.category === TYPE_PRODUCT.shoes || product?.category === TYPE_PRODUCT.shoes) {
+  if (
+    product?.more_data?.category === TYPE_PRODUCT.shoes ||
+    product?.category === TYPE_PRODUCT.shoes
+  ) {
     return `/shoes/${product?.more_data?.keyName || product?.keyName}`
   }
 

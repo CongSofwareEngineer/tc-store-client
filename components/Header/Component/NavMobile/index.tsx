@@ -9,21 +9,28 @@ import {
   HomeOutlined,
   LoginOutlined,
   ShopOutlined,
-  ShoppingCartOutlined,
   UserOutlined,
 } from '@ant-design/icons'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 import styled from 'styled-components'
-const LinkCustom = styled(styled(Link)<{ $isSelected?: Boolean }>``).attrs({
+const LinkCustom = styled(styled(Link)<{ $isSelected?: boolean }>``).attrs({
   className: 'hover:underline hover:text-blue-700',
 })`
   color: ${(props) => (props.$isSelected ? 'blue !important' : 'black')};
   font-weight: ${(props) => (props.$isSelected ? '700 !important' : 'nonce')};
 `
 
-const LinkRoute = ({ text, icon, path }: { text?: string; icon?: React.ReactNode; path: string }) => {
+const LinkRoute = ({
+  text,
+  icon,
+  path,
+}: {
+  text?: string
+  icon?: React.ReactNode
+  path: string
+}) => {
   const pathname = usePathname()
   const { closeModalDrawer } = useModalDrawer()
 
@@ -59,7 +66,13 @@ const NavMobile = () => {
 
   return (
     <div className='flex flex-1  flex-col gap-3'>
-      {isLogin && <LinkRoute path='/my-page' icon={<UserOutlined />} text={translate('myProfile.myProfile')} />}
+      {isLogin && (
+        <LinkRoute
+          path='/my-page'
+          icon={<UserOutlined />}
+          text={translate('myProfile.myProfile')}
+        />
+      )}
       <LinkRoute path='/' icon={<HomeOutlined />} text={translate('header.home')} />
 
       <LinkRoute path='/shop' icon={<ShopOutlined />} text={translate('header.shop')} />
@@ -71,7 +84,13 @@ const NavMobile = () => {
       <LinkRoute path='/contact' icon={<ContactsOutlined />} text={translate('header.contact')} />
       <LinkRoute path='/about' icon={<ContactsOutlined />} text={translate('header.about')} />
 
-      {!isLogin && <LinkRoute path='/register' icon={<HighlightOutlined />} text={translate('header.register')} />}
+      {!isLogin && (
+        <LinkRoute
+          path='/register'
+          icon={<HighlightOutlined />}
+          text={translate('header.register')}
+        />
+      )}
       {isLogin && (
         <div onClick={handleLogOut} className='flex gap-2 items-center'>
           <span className='text-green-500 text-base'>

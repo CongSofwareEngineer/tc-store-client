@@ -1,5 +1,5 @@
 import React from 'react'
-import { Breakpoint, Card, Table } from 'antd'
+import { Card, Table } from 'antd'
 import MyLoadMore from '../MyLoadMore'
 import styled from 'styled-components'
 import {
@@ -84,8 +84,18 @@ const MyTable = ({
   className = '',
 }: Props) => {
   return (
-    <CardCustom extra={extra} title={`Total : ${total || 0}`} className={`w-full overflow-x-auto  ${classCard}`}>
-      <Table loading={loading} columns={columns} dataSource={data} pagination={false} className={className} />
+    <CardCustom
+      extra={extra}
+      title={`Total : ${total || 0}`}
+      className={`w-full overflow-x-auto  ${classCard}`}
+    >
+      <Table
+        loading={loading}
+        columns={columns}
+        dataSource={data}
+        pagination={false}
+        className={className}
+      />
       <MyLoadMore
         hasLoadMore={hasMoreData}
         isFetchingNextPage={isFetchingNextPage}

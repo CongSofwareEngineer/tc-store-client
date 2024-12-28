@@ -29,7 +29,8 @@ const BillAdminScreen = () => {
   const { translate } = useLanguage()
   const { refreshQuery } = useRefreshQuery()
   const { isMobile } = useMedia()
-  const { callbackDeleteSuccess, callbackDeleteError, callbackUpdateError, callbackUpdateSuccess } = useCallbackToast()
+  const { callbackDeleteSuccess, callbackDeleteError, callbackUpdateError, callbackUpdateSuccess } =
+    useCallbackToast()
 
   const { renderContent } = useSearchBaseAdmin(
     {
@@ -155,7 +156,9 @@ const BillAdminScreen = () => {
         return <span className='text-red-500 font-bold'>{translate('common.cancelBill')}</span>
 
       default:
-        return <span className='text-green-500 font-bold'>{translate('myBill.deliverySuccess')}</span>
+        return (
+          <span className='text-green-500 font-bold'>{translate('myBill.deliverySuccess')}</span>
+        )
     }
   }
 
@@ -210,7 +213,9 @@ const BillAdminScreen = () => {
                 </div>
                 <div className='flex gap-2'>
                   <span className='font-bold'>{`${translate('textPopular.totalMoney')} :`}</span>
-                  <span className='text-green-500 font-bold'>{formatPrice(record?.totalBill || '0')}</span>
+                  <span className='text-green-500 font-bold'>
+                    {formatPrice(record?.totalBill || '0')}
+                  </span>
                 </div>
 
                 <div className='flex gap-5 md:flex-row'>
@@ -261,7 +266,9 @@ const BillAdminScreen = () => {
         key: 'discount',
         dataIndex: 'discount',
         render: (discount: any) => {
-          return <div className='text-green-500 whitespace-nowrap'>{numberWithCommas(discount)}</div>
+          return (
+            <div className='text-green-500 whitespace-nowrap'>{numberWithCommas(discount)}</div>
+          )
         },
       },
       {
@@ -357,7 +364,13 @@ const BillAdminScreen = () => {
   return (
     <div className='flex flex-col gap-3 w-full'>
       {renderContent()}
-      <MyTable columns={getColumns()} loading={isLoading} data={data || []} limit={PAGE_SIZE_LIMIT} total={20} />
+      <MyTable
+        columns={getColumns()}
+        loading={isLoading}
+        data={data || []}
+        limit={PAGE_SIZE_LIMIT}
+        total={20}
+      />
     </div>
   )
 }

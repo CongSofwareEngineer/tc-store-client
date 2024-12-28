@@ -1,7 +1,13 @@
 import useMedia from '@/hook/useMedia'
 import React, { useEffect } from 'react'
 
-const MyCollections = ({ children, isClickItem }: { children: React.ReactNode; isClickItem: any }) => {
+const MyCollections = ({
+  children,
+  isClickItem,
+}: {
+  children: React.ReactNode
+  isClickItem: any
+}) => {
   // const refScroll = useRef(null)
   // const isClickRoutePageRef = useRef(false)
   const { isMobile } = useMedia()

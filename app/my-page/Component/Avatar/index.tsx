@@ -82,7 +82,10 @@ const Avatar = () => {
         >
           <Upload showUploadList={false} accept={typeFile}>
             <label className='edit-avatar ' htmlFor='avatar'>
-              <EditTwoTone className='cursor-pointer hover:scale-125' style={{ fontSize: 25, color: 'blue' }} />
+              <EditTwoTone
+                className='cursor-pointer hover:scale-125'
+                style={{ fontSize: 25, color: 'blue' }}
+              />
             </label>
           </Upload>
         </ImgCrop>

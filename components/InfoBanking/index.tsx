@@ -21,7 +21,7 @@ const InfoBanking = ({
   const [qrCode, setQrCode] = useState<string>('')
   const [message, setMessage] = useState<string>('')
   const [loadingCheck, setLoadingCheck] = useState(false)
-  const [isBanking, setIsBanking] = useState(false)
+  const [isBanking] = useState(false)
   const [idBanking, setIdBanking] = useState('')
 
   useEffect(() => {
@@ -68,7 +68,10 @@ const InfoBanking = ({
         </div>
         <div className='flex  md:gap-2 gap-1'>
           <span className='font-bold'>{`STK : `}</span>
-          <TextCopy value={process.env.NEXT_PUBLIC_VCB_STK} textView={process.env.NEXT_PUBLIC_VCB_STK} />
+          <TextCopy
+            value={process.env.NEXT_PUBLIC_VCB_STK}
+            textView={process.env.NEXT_PUBLIC_VCB_STK}
+          />
         </div>
         <div className='flex  flex-col  gap-1'>
           <span className='font-bold'>{translate('textPopular.content')} :</span>
@@ -86,7 +89,12 @@ const InfoBanking = ({
               <Button onClick={checkBanking} loading={loadingCheck} className='flex-1'>
                 {translate('banking.openApp')}
               </Button>
-              <Button onClick={handleCallBack} disabled={isBanking} type='primary' className='flex-1'>
+              <Button
+                onClick={handleCallBack}
+                disabled={isBanking}
+                type='primary'
+                className='flex-1'
+              >
                 {translate('textPopular.sended')}
               </Button>
             </>

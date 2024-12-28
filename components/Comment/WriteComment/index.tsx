@@ -29,7 +29,10 @@ const WriteComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
         <div className='text-medium font-bold'>{translate('textPopular.feedbackProduct')}</div>
         <div className='text-[30px] font-bold text-green-500'>5.0/5</div>
         <Rate disabled defaultValue={5} style={{ fontSize: isMobile ? 15 : 18 }} />
-        <div className='opacity-75'> {`(${data?.length || 0} ${translate('textPopular.rate')} )`}</div>
+        <div className='opacity-75'>
+          {' '}
+          {`(${data?.length || 0} ${translate('textPopular.rate')} )`}
+        </div>
       </div>
       <div className='flex flex-col gap-2 justify-center'>
         <div className='flex gap-2 w-full'>

@@ -44,7 +44,7 @@ const LoadingGetData = ({
     if (isMobile) {
       amountCol = colMobile
     }
-    let arrInit: string[] = []
+    const arrInit: string[] = []
 
     for (let index = 0; index < amountCol * rows; index++) {
       arrInit.push(`col-${amountCol}-${index}`)
@@ -65,7 +65,10 @@ const LoadingGetData = ({
         return children ? (
           <React.Fragment key={e}>{children}</React.Fragment>
         ) : (
-          <MySkeleton key={e} className='w-full items-center flex gap-2 flex-col md:p-5 p-3 rounded-lg aspect-square'>
+          <MySkeleton
+            key={e}
+            className='w-full items-center flex gap-2 flex-col md:p-5 p-3 rounded-lg aspect-square'
+          >
             <MySkeleton className='w-[100%] aspect-square ' />
             <MySkeleton className='w-full h-6' />
             <MySkeleton className='w-full h-6' />

@@ -1,7 +1,6 @@
 import React from 'react'
 import { ItemDetailType } from './type'
 import { TYPE_PRODUCT_EX } from '@/constant/mongoDB'
-import dynamic from 'next/dynamic'
 import { Rate } from 'antd'
 import useMedia from '@/hook/useMedia'
 import useLanguage from '@/hook/useLanguage'
@@ -49,7 +48,8 @@ const InfoItemDetail = ({ data }: { data: ItemDetailType }) => {
         </div>
         {renderItemDes(translate('textPopular.description'), data.des)}
         {renderItemDes(translate('productDetail.sold'), Number(data.sold))}
-        {getTypeProduct() === TYPE_PRODUCT_EX.normal && renderItemDes(translate('productDetail.weight'), data.weight)}
+        {getTypeProduct() === TYPE_PRODUCT_EX.normal &&
+          renderItemDes(translate('productDetail.weight'), data.weight)}
         {renderItemDes(translate('productDetail.totalNumber'), Number(data.amount))}
         {renderItemDes(translate('textPopular.freeShip'), 'Free ship trong 20 KM')}
       </div>
@@ -64,7 +64,8 @@ const InfoItemDetail = ({ data }: { data: ItemDetailType }) => {
         </div>
         {renderItemDes(translate('textPopular.description'), data.des)}
         {renderItemDes(translate('productDetail.sold'), Number(data.sold))}
-        {getTypeProduct() === TYPE_PRODUCT_EX.normal && renderItemDes(translate('productDetail.weight'), data.weight)}
+        {getTypeProduct() === TYPE_PRODUCT_EX.normal &&
+          renderItemDes(translate('productDetail.weight'), data.weight)}
         {renderItemDes(translate('productDetail.totalNumber'), Number(data.amount))}
         {renderItemDes(translate('textPopular.freeShip'), 'Free ship trong 20 KM')}
       </div>

@@ -10,7 +10,12 @@ const TR = styled.tr.attrs({ className: 'border-b-2 border-gray-300' })`
     padding-bottom: 12px;
   }
 `
-const TitleItem = ({ callBack = () => {}, dataCart, noEdit = false, allSelected = false }: TitleItemType) => {
+const TitleItem = ({
+  callBack = () => {},
+  dataCart,
+  noEdit = false,
+  allSelected = false,
+}: TitleItemType) => {
   const { isMobile } = useMedia()
   const { translate } = useLanguage()
 

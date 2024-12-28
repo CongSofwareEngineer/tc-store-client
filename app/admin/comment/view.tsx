@@ -99,14 +99,22 @@ const CommentClient = () => {
                 <div className='flex w-full justify-between text-xs'>
                   <div className='flex gap-2'>
                     <span className='font-bold'>{'SDT'}:</span>
-                    <TextCopy textView={ellipsisText(record?.sdt, 4, 3)} value={record?.sdt} classText='text-xs' />
+                    <TextCopy
+                      textView={ellipsisText(record?.sdt, 4, 3)}
+                      value={record?.sdt}
+                      classText='text-xs'
+                    />
                   </div>
                   <span>{formatDateTime(record?.date)}</span>
                 </div>
                 <div className='flex justify-between'>
                   <Rate style={{ fontSize: 12 }} value={record?.rate} className='text-xs' />
                   <div className='flex gap-1 text-sm items-center'>
-                    <span>{Array.isArray(record?.userLike) ? numberWithCommas(record?.userLike.length) : 0}</span>
+                    <span>
+                      {Array.isArray(record?.userLike)
+                        ? numberWithCommas(record?.userLike.length)
+                        : 0}
+                    </span>
                     <span className='  text-blue-500'>
                       <LikeOutlined className='  text-blue-500' />
                     </span>
@@ -120,7 +128,9 @@ const CommentClient = () => {
                 <div className='flex gap-2'>
                   <span className='font-bold'>{translate('textPopular.product')}:</span>
                   {record?.product ? (
-                    <Link href={getRouteProduct(record?.product)}>{record?.product?.name || ''}</Link>
+                    <Link href={getRouteProduct(record?.product)}>
+                      {record?.product?.name || ''}
+                    </Link>
                   ) : (
                     <span>{''}</span>
                   )}
@@ -179,7 +189,13 @@ const CommentClient = () => {
         key: 'sdt',
         dataIndex: 'sdt',
         render: (sdt: string) => {
-          return <TextCopy classText='whitespace-nowrap' textView={ellipsisText(sdt, 3, 4)} value={sdt} />
+          return (
+            <TextCopy
+              classText='whitespace-nowrap'
+              textView={ellipsisText(sdt, 3, 4)}
+              value={sdt}
+            />
+          )
         },
       },
       {
@@ -195,7 +211,13 @@ const CommentClient = () => {
         key: 'idProduct',
         dataIndex: 'idProduct',
         render: (idProduct: string) => {
-          return <TextCopy classText='whitespace-nowrap' textView={ellipsisText(idProduct, 3, 4)} value={idProduct} />
+          return (
+            <TextCopy
+              classText='whitespace-nowrap'
+              textView={ellipsisText(idProduct, 3, 4)}
+              value={idProduct}
+            />
+          )
         },
       },
 
@@ -279,7 +301,13 @@ const CommentClient = () => {
     <div className='flex flex-col gap-2 w-full'>
       {renderContent()}
       <div className='flex w-full'>
-        <MyTable columns={getColumns()} loading={isLoading} data={data || []} limit={PAGE_SIZE_LIMIT} total={20} />
+        <MyTable
+          columns={getColumns()}
+          loading={isLoading}
+          data={data || []}
+          limit={PAGE_SIZE_LIMIT}
+          total={20}
+        />
       </div>
     </div>
   )

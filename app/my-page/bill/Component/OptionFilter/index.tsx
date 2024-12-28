@@ -80,7 +80,10 @@ const OptionFilter = () => {
         >
           <div className='text-nowrap'>{translate('textPopular.all')}</div>
         </Checkbox>
-        <Checkbox onClick={() => onChangeFilter(FILTER_BILL.DeliverySuccess)} checked={isDeliverySuccess}>
+        <Checkbox
+          onClick={() => onChangeFilter(FILTER_BILL.DeliverySuccess)}
+          checked={isDeliverySuccess}
+        >
           <div className='text-nowrap'>{translate('myBill.deliverySuccess')}</div>
         </Checkbox>
         <Checkbox onClick={() => onChangeFilter(FILTER_BILL.Delivering)} checked={isDelivering}>

@@ -15,7 +15,10 @@ const MyRangePicker = ({ className, onChange, dateStart = null }: Props) => {
   return (
     <RangePicker
       className={`md:min-w-[230] min-w-full ${className}`}
-      defaultValue={[dayjs(dateStart || DATE_START, 'YYYY-MM-DD'), dayjs(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD')]}
+      defaultValue={[
+        dayjs(dateStart || DATE_START, 'YYYY-MM-DD'),
+        dayjs(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'),
+      ]}
       defaultPickerValue={[
         dayjs(dateStart || DATE_START, 'YYYY-MM-DD'),
         dayjs(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'),

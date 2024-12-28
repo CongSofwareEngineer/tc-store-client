@@ -152,9 +152,17 @@ const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
             const isYourComment = userData?.sdt === e?.sdt
 
             return (
-              <div key={e?.sdt} className='flex md:gap-4 gap-3 pb-3 border-b-[1px] mt-1 border-b-gray-200'>
+              <div
+                key={e?.sdt}
+                className='flex md:gap-4 gap-3 pb-3 border-b-[1px] mt-1 border-b-gray-200'
+              >
                 <div className='aspect-square h-fit rounded-lg relative overflow-hidden w-[20%] md:min-w-[80px] min-w-[20px]  max-w-[40px]'>
-                  <Image src={detectAvatar(e.user[0]?.avatar)} alt={e.sdt} fill className='!relative !w-full !h-auto' />
+                  <Image
+                    src={detectAvatar(e.user[0]?.avatar)}
+                    alt={e.sdt}
+                    fill
+                    className='!relative !w-full !h-auto'
+                  />
                 </div>
                 <div className='flex flex-col gap-1'>
                   <p className='font-bold'>{e.name}</p>
@@ -169,7 +177,10 @@ const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
                   <div className='flex flex-wrap w-full gap-2 mt-1 '>
                     {e.listImg.map((img: string) => {
                       return (
-                        <div key={img} className='w-[50px]  aspect-square relative overflow-hidden '>
+                        <div
+                          key={img}
+                          className='w-[50px]  aspect-square relative overflow-hidden '
+                        >
                           <ImageAdmin key={img} src={img} alt={img} className='w-full' />
                         </div>
                       )
@@ -181,7 +192,11 @@ const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
             )
           })}
 
-          <MyLoadMore hasLoadMore={hasNextPage} isFetchingNextPage={isFetchingNextPage} callback={loadMore} />
+          <MyLoadMore
+            hasLoadMore={hasNextPage}
+            isFetchingNextPage={isFetchingNextPage}
+            callback={loadMore}
+          />
         </div>
       )}
     </div>

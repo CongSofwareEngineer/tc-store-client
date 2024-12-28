@@ -87,7 +87,12 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
           {!isMobile && (
             <div className='w-[200px] flex flex-col p-3 gap-3 bg-[#000000d6]'>
               <div className='w-full'>
-                <Image fill alt='logo-admin' src={images.logo} className='!relative !w-full !h-auto' />
+                <Image
+                  fill
+                  alt='logo-admin'
+                  src={images.logo}
+                  className='!relative !w-full !h-auto'
+                />
               </div>
               {LIST_MENU.map((e) => {
                 return (

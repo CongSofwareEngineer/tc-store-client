@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import MyCollections from '../MyCollections'
 import ItemProduct from '../ItemProduct'
 import { TYPE_PRODUCT } from '@/constant/admin'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import LoadingGetData from '../LoadingGetData'
 import ClientApi from '@/services/clientApi'
 import useRoutePage from '@/hook/useRoutePage'
@@ -49,6 +49,7 @@ const MoreCollections = () => {
             return (
               <div className=' min-w-[200px] select-none'>
                 <ItemProduct
+                  key={e?._id}
                   showDiscount
                   className='!bg-gray-100 !shadow-full'
                   noClick

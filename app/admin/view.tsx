@@ -1,27 +1,27 @@
-import { FILTER_BILL, PAGE_SIZE_LIMIT } from '@/constant/app'
+import { PAGE_SIZE_LIMIT } from '@/constant/app'
 import useRevenue from '@/hook/tank-query/Admin/useRevenue'
 import useLanguage from '@/hook/useLanguage'
-import useMedia from '@/hook/useMedia'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useQuerySearch from '@/hook/useQuerySearch'
 import useSearchBaseAdmin from '@/hook/useSearchBaseAdmin'
 import { NextPage } from 'next'
 import React from 'react'
-import ModalViewBillDetail from './Component/ModalViewBillDetail'
 import GraphRevenue from './Component/GraphRevenue'
 import useFirstLoadPage from '@/hook/useFirstLoadPage'
 
 const RevenueScreen: NextPage = () => {
+  useFirstLoadPage()
   const { queries } = useQuerySearch()
   const { translate } = useLanguage()
   const { openModalDrawer } = useModalDrawer()
-  useFirstLoadPage()
+
   const { renderContent } = useSearchBaseAdmin({
     dateEnd: true,
     dateStart: true,
   })
 
-  const { data, isLoading, hasNextPage, isFetchingNextPage, loadMore } = useRevenue(PAGE_SIZE_LIMIT, queries)
+  const { data } = useRevenue(PAGE_SIZE_LIMIT, queries)
+  console.log({ renderContent, translate, openModalDrawer })
 
   return (
     <div className='flex flex-col gap-3 w-full overflow-y-auto '>

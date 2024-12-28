@@ -48,7 +48,10 @@ export const pareDataClient = async (req: any): Promise<any> => {
   return bodyDecode
 }
 
-export const pareResponseDataClient = async (param: any, req: any): Promise<{ data: any; message: string }> => {
+export const pareResponseDataClient = async (
+  param: any,
+  req: any
+): Promise<{ data: any; message: string }> => {
   if (param.encode) {
     return {
       data: JSON.parse(decryptData(req.data?.data ?? req?.data ?? req ?? '')),

@@ -41,20 +41,36 @@ const OptionSearchBase = ({
     <div className='flex md:flex-row flex-col gap-3'>
       <RangePicker
         style={{ minWidth: 250 }}
-        defaultValue={[dayjs(dateStart, 'YYYY-MM-DD'), dayjs(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD')]}
-        defaultPickerValue={[dayjs(dateStart, 'YYYY-MM-DD'), dayjs(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD')]}
+        defaultValue={[
+          dayjs(dateStart, 'YYYY-MM-DD'),
+          dayjs(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'),
+        ]}
+        defaultPickerValue={[
+          dayjs(dateStart, 'YYYY-MM-DD'),
+          dayjs(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'),
+        ]}
         onChange={(_, dateString) => {
           setDateTimeBase(dateString)
         }}
       />
       <div className='flex flex-1 gap-3'>
-        <MyInput placeholder='SDT' type='string' value={sdt} onChange={(e) => setSdt(e?.toString() || '')} />
+        <MyInput
+          placeholder='SDT'
+          type='string'
+          value={sdt}
+          onChange={(e) => setSdt(e?.toString() || '')}
+        />
         <Button type='dashed' onClick={handleSearchSDT}>
           Search
         </Button>
       </div>
       <div className='flex flex-1 gap-3'>
-        <MyInput placeholder='Id' type='string' value={idOther} onChange={(e) => setIdOther(e?.toString() || '')} />
+        <MyInput
+          placeholder='Id'
+          type='string'
+          value={idOther}
+          onChange={(e) => setIdOther(e?.toString() || '')}
+        />
         <Button type='dashed' onClick={handleSearchIDOther}>
           Search
         </Button>

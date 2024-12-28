@@ -1,7 +1,13 @@
 import ModalDelete from '@/components/ModalDelete'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
-import { cloneData, detectImg, formatPriceBase, getUrlProduct, numberWithCommas } from '@/utils/functions'
+import {
+  cloneData,
+  detectImg,
+  formatPriceBase,
+  getUrlProduct,
+  numberWithCommas,
+} from '@/utils/functions'
 import { DeleteOutlined } from '@ant-design/icons'
 import { Checkbox } from 'antd'
 import BigNumber from 'bignumber.js'
@@ -14,7 +20,13 @@ import MyImage from '@/components/MyImage'
 import ConfigBill from '@/components/ConfigBill'
 import useRoutePage from '@/hook/useRoutePage'
 
-const ItemCart = ({ data, callBack, noBorder = false, callBackDelete, noEdit = false }: ItemCartType) => {
+const ItemCart = ({
+  data,
+  callBack,
+  noBorder = false,
+  callBackDelete,
+  noEdit = false,
+}: ItemCartType) => {
   const { translate, getLabelCategory } = useLanguage()
   const { isMobile } = useMedia()
   const { openModalDrawer } = useModalDrawer()
@@ -54,9 +66,15 @@ const ItemCart = ({ data, callBack, noBorder = false, callBackDelete, noEdit = f
 
   const renderDesktop = () => {
     return (
-      <div className={`w-full flex gap-3 items-center p-3 pb-4 ${!noBorder && 'border-b-[3px] border-gray-200'}`}>
+      <div
+        className={`w-full flex gap-3 items-center p-3 pb-4 ${!noBorder && 'border-b-[3px] border-gray-200'}`}
+      >
         <div className='w-8 flex flex-col gap-3 items-center'>
-          <MyCheckBox alt={data?.more_data?.keyName} onClick={selectedItem} value={!!data?.selected} />
+          <MyCheckBox
+            alt={data?.more_data?.keyName}
+            onClick={selectedItem}
+            value={!!data?.selected}
+          />
           <DeleteOutlined style={{ color: 'red', fontSize: 25 }} onClick={handleDelete} />
         </div>
         <div className='relative aspect-square w-[120px] overflow-hidden'>
@@ -81,12 +99,18 @@ const ItemCart = ({ data, callBack, noBorder = false, callBackDelete, noEdit = f
           <ConfigBill item={data} />
 
           <div className='flex w-full gap-2 items-center'>
-            <div className=' text-green-800 font-medium'>{numberWithCommas(data?.more_data.price)} đ</div>
-            <div className='line-through font-medium'>{numberWithCommas(data?.more_data.price * 1.2)}</div>
+            <div className=' text-green-800 font-medium'>
+              {numberWithCommas(data?.more_data.price)} đ
+            </div>
+            <div className='line-through font-medium'>
+              {numberWithCommas(data?.more_data.price * 1.2)}
+            </div>
           </div>
 
           <div className='w-full flex items-center justify-between'>
-            <div className='font-bold text-green-500'>{numberWithCommas(data.amount * data?.more_data.price)} VNĐ</div>
+            <div className='font-bold text-green-500'>
+              {numberWithCommas(data.amount * data?.more_data.price)} VNĐ
+            </div>
             <SubAndPlus
               isSquare
               value={data?.amount || 1}
@@ -127,7 +151,9 @@ const ItemCart = ({ data, callBack, noBorder = false, callBackDelete, noEdit = f
           <ConfigBill item={data} />
 
           <div className='w-full'>
-            <p className='text-medium font-semibold whitespace-nowrap overflow-hidden text-ellipsis '>{data.name}</p>
+            <p className='text-medium font-semibold whitespace-nowrap overflow-hidden text-ellipsis '>
+              {data.name}
+            </p>
             <span className='text-[12px] opacity-70 line-through'>
               {formatPriceBase(data.more_data.price, data.more_data.discount)} VNĐ
             </span>
@@ -145,10 +171,15 @@ const ItemCart = ({ data, callBack, noBorder = false, callBackDelete, noEdit = f
               />
             )}
           </div>
-          <div className='font-bold  text-green-500'> {numberWithCommas(data.amount * data.more_data.price)} VNĐ</div>
+          <div className='font-bold  text-green-500'>
+            {' '}
+            {numberWithCommas(data.amount * data.more_data.price)} VNĐ
+          </div>
         </div>
 
-        {!noBorder && <div className='w-[90%] border-[1px] border-gray-200 absolute bottom-2 left-[5%] ' />}
+        {!noBorder && (
+          <div className='w-[90%] border-[1px] border-gray-200 absolute bottom-2 left-[5%] ' />
+        )}
       </div>
     )
   }

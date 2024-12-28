@@ -5,7 +5,13 @@ import { useMemo } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import ClientApi from '@/services/clientApi'
 
-const getData = async ({ queryKey, pageParam = 1 }: { queryKey: any; pageParam: any }): Promise<TypeHookReactQuery> => {
+const getData = async ({
+  queryKey,
+  pageParam = 1,
+}: {
+  queryKey: any
+  pageParam: any
+}): Promise<TypeHookReactQuery> => {
   const query = queryKey[2]
   const dateTime = queryKey[3]
   const { type = null } = query

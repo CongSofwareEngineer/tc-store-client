@@ -16,7 +16,9 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
 const PageShoes: NextPage = () => {
   return (
     <>
-      <h1 className='absolute opacity-0'>TC Store - Cửa Hàng Giày Dép Thời Trang & Chất Lượng Cao</h1>
+      <h1 className='absolute opacity-0'>
+        TC Store - Cửa Hàng Giày Dép Thời Trang & Chất Lượng Cao
+      </h1>
       <h2 className='absolute opacity-0'>Giày Nam - Phong Cách & Bền Bỉ</h2>
       <h2 className='absolute opacity-0'>Giày Nữ - Sang Trọng & Thanh Lịch</h2>
       <h2 className='absolute opacity-0'>Giày Thể Thao - Năng Động & Êm Ái</h2>

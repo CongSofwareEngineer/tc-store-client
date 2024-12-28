@@ -1,4 +1,10 @@
-import { CollectionReference, DocumentData, DocumentReference, Query, WhereFilterOp } from 'firebase/firestore/lite'
+import {
+  CollectionReference,
+  DocumentData,
+  DocumentReference,
+  Query,
+  WhereFilterOp,
+} from 'firebase/firestore/lite'
 import { FILTER_BILL } from './app'
 
 export const DATA_BASE = {

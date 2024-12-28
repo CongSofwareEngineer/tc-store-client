@@ -59,7 +59,10 @@ const MyFilter = ({
           <div className='text-medium '>{titleHeader || translate('menuProduct.category')}</div>
         </div>
         {!disableShowClear && (
-          <div onClick={handleCleanAll} className='hover:underline hover:font-medium cursor-pointer'>
+          <div
+            onClick={handleCleanAll}
+            className='hover:underline hover:font-medium cursor-pointer'
+          >
             {`${translate('common.clearAll')} (${getNumberQuery})`}
           </div>
         )}

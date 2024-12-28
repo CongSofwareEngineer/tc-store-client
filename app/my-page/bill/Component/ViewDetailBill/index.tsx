@@ -102,7 +102,12 @@ const ViewDetailBill = ({ data }: Props) => {
                   </div>
                   <div className='flex gap-2 items-center'>
                     {enableFeedback && (
-                      <Button type='primary' onClick={() => handleFeedback(e)} size='small' className='w-max'>
+                      <Button
+                        type='primary'
+                        onClick={() => handleFeedback(e)}
+                        size='small'
+                        className='w-max'
+                      >
                         {translate('common.feedback')}
                       </Button>
                     )}

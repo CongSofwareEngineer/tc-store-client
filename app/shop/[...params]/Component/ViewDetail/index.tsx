@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { ItemDetailType } from '../../type'
 import useAos from '@/hook/useAos'
 import useMedia from '@/hook/useMedia'
@@ -8,11 +8,10 @@ import { COOKIE_KEY } from '@/constant/app'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
-import { delayTime, detectImg, formatPrice, formatPriceBase } from '@/utils/functions'
+import { detectImg, formatPrice, formatPriceBase } from '@/utils/functions'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import { getCookie, setCookie } from '@/services/CookiesService'
 import BtnBack from '@/components/BtnBack'
-import useGetProductByID from '@/hook/tank-query/useGetProductByID'
 import InfoItemDetail from '@/components/InfoItemDetail'
 import SubAndPlus from '@/components/SubAndPlus'
 
@@ -40,7 +39,7 @@ type Props = {
   setAmountBuy: (e: any) => void
   onChangeData?: (param: any) => void
 }
-const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, setAmountBuy }: Props) => {
+const ViewDetail = ({ productDetail, amountBuy = 0, setIsPayment, setAmountBuy }: Props) => {
   useAos(500)
   const { isMobile } = useMedia()
   const { refreshQuery } = useRefreshQuery()
@@ -124,7 +123,10 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
         }
         await addCartNoLogin(bodyOther)
       }
-      await Promise.all([refreshQuery(QUERY_KEY.LengthCartUser), refreshQuery(QUERY_KEY.MyCartUser)])
+      await Promise.all([
+        refreshQuery(QUERY_KEY.LengthCartUser),
+        refreshQuery(QUERY_KEY.MyCartUser),
+      ])
       setLoadingAddCart(false)
       showNotificationSuccess(translate('addCart.addSuccess'))
     } finally {
@@ -137,7 +139,10 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
       <div className='flex flex-col'>
         <BtnBack title={['Shop', productDetail.name]} url={['/shop']} />
         <div className='w-full flex gap-6 bg-white rounded-xl p-6'>
-          <div data-aos='fade-right' className='relative min-w-[300px] max-w-[450px] w-[50%] p-5 overflow-hidden '>
+          <div
+            data-aos='fade-right'
+            className='relative min-w-[300px] max-w-[450px] w-[50%] p-5 overflow-hidden '
+          >
             <Image
               src={detectImg(productDetail.imageMain || '')}
               alt={`img-main--${productDetail.name}`}
@@ -165,9 +170,19 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
               <Button onClick={handleBuy} className='min-w-[30%] !h-[40px]'>
                 {translate('common.buyNow')}
               </Button>
-              <Button type='primary' onClick={handleAddCart} className='min-w-[30%] !h-[40px]' loading={loadingAddCart}>
+              <Button
+                type='primary'
+                onClick={handleAddCart}
+                className='min-w-[30%] !h-[40px]'
+                loading={loadingAddCart}
+              >
                 <div className='flex gap-3 whitespace-nowrap'>
-                  <Image src={images.icon.iconCart} alt='btn-add-cart' fill className='!relative !w-[25px] !h-[25px]' />
+                  <Image
+                    src={images.icon.iconCart}
+                    alt='btn-add-cart'
+                    fill
+                    className='!relative !w-[25px] !h-[25px]'
+                  />
                   <span>{translate('common.addCart')}</span>
                 </div>
               </Button>
@@ -179,7 +194,9 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
           <MoreInfo data={productDetail} />
         </div>
         <div data-aos='fade-up' className='w-full bg-white py-4 px-4   rounded-xl  mt-6'>
-          <div className='text-medium capitalize font-bold'>{translate('textPopular.moreLike')}</div>
+          <div className='text-medium capitalize font-bold'>
+            {translate('textPopular.moreLike')}
+          </div>
           <MoreCollections />
         </div>
       </div>
@@ -227,7 +244,12 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
                 loading={loadingAddCart}
               >
                 <div className='flex gap-3 whitespace-nowrap'>
-                  <Image src={images.icon.iconCart} alt='btn-add-cart' className='!relative !w-[25px] !h-[25px]' fill />
+                  <Image
+                    src={images.icon.iconCart}
+                    alt='btn-add-cart'
+                    className='!relative !w-[25px] !h-[25px]'
+                    fill
+                  />
                   <span>{translate('common.addCart')}</span>
                 </div>
               </Button>
@@ -241,7 +263,9 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
           <MoreInfo data={productDetail} />
         </div>
         <div data-aos='fade-right' className='w-full bg-white p-4  mt-2  '>
-          <div className='pl-1 text-medium capitalize font-bold'>{translate('textPopular.moreLike')}</div>
+          <div className='pl-1 text-medium capitalize font-bold'>
+            {translate('textPopular.moreLike')}
+          </div>
           <MoreCollections />
         </div>
       </div>

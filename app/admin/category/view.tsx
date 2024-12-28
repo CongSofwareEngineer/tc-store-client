@@ -45,7 +45,6 @@ const CategoryAdminScreen = () => {
         } else {
           showNotificationError(translate('error.delete'))
         }
-      } catch (error) {
       } finally {
         refreshQuery(QUERY_KEY.GetCategoryAdmin)
       }
@@ -74,7 +73,7 @@ const CategoryAdminScreen = () => {
   const getName = (type: Record<string, string>) => {
     try {
       return type[lang]
-    } catch (error) {
+    } catch (error: any) {
       return lang
     }
   }

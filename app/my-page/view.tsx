@@ -50,7 +50,9 @@ const MyProfile = () => {
     const callback = () => {
       openModalDrawer({
         content: <ModalUpdateUser keyType={key} />,
-        title: <div className='text-medium '>{`${translate('common.edit')} ${getLanguage(key)}`}</div>,
+        title: (
+          <div className='text-medium '>{`${translate('common.edit')} ${getLanguage(key)}`}</div>
+        ),
       })
     }
 
@@ -127,7 +129,13 @@ const MyProfile = () => {
             <div className='flex gap-2'>
               <span className='w-[140px]'>{translate('userDetail.pass')}</span>
               <div className='flex flex-1 gap-2 items-end'>
-                <MyInput className='w-[90%]' typeBtn={1} type='password' value={userData?.pass} disabled />
+                <MyInput
+                  className='w-[90%]'
+                  typeBtn={1}
+                  type='password'
+                  value={userData?.pass}
+                  disabled
+                />
                 <EditOutlined
                   onClick={() => handleEditName('pass')}
                   className='text-xl cursor-pointer hover:scale-110 ml-1'
@@ -140,7 +148,9 @@ const MyProfile = () => {
               <div className='flex flex-1 gap-2 items-end'>
                 <div className='flex gap-2 items-end'>
                   <MyCheckBox className='!w-[22px] !h-[22px]' value={!userData?.sex} />
-                  <span>{translate(!!userData?.sex ? 'textPopular.female' : 'textPopular.male')}</span>
+                  <span>
+                    {translate(!userData?.sex ? 'textPopular.female' : 'textPopular.male')}
+                  </span>
                 </div>
                 <EditOutlined
                   onClick={() => handleEditName('sex')}
@@ -173,13 +183,25 @@ const MyProfile = () => {
         <div className='relative w-full border-[.5px] my-3 border-gray-300' />
 
         <div className='w-full flex flex-col'>
-          <ItemInfoUser value={userData?.name?.toString()} title={translate('header.name')} keyType='name' />
+          <ItemInfoUser
+            value={userData?.name?.toString()}
+            title={translate('header.name')}
+            keyType='name'
+          />
           <div className='relative w-full border-[.5px] my-3 border-gray-300' />
 
-          <ItemInfoUser value={userData?.sdt?.toString()} title={translate('userDetail.sdt')} keyType='sdt' />
+          <ItemInfoUser
+            value={userData?.sdt?.toString()}
+            title={translate('userDetail.sdt')}
+            keyType='sdt'
+          />
           <div className='relative w-full border-[.5px] my-3 border-gray-300' />
 
-          <ItemInfoUser value={userData?.pass?.toString()} title={translate('userDetail.pass')} keyType='pass' />
+          <ItemInfoUser
+            value={userData?.pass?.toString()}
+            title={translate('userDetail.pass')}
+            keyType='pass'
+          />
           <div className='relative w-full border-[.5px] my-3 border-gray-300' />
 
           <ItemInfoUser value={!!userData?.sex} title={translate('userDetail.sex')} keyType='sex' />

@@ -57,7 +57,8 @@ const useSearchBaseAdmin = (param?: KeySearchProps, paramTitle?: TitleProps) => 
       }
       if (queries?.['category']) {
         const dataLan = categoryMenu.find((e) => e.keyName === queries?.['category'][0]!)
-        initData.label = dataLan?.lang?.[language.locale || 'vn'].toString() || queries?.['category'][0]!
+        initData.label =
+          dataLan?.lang?.[language.locale || 'vn'].toString() || queries?.['category'][0]!
         initData.value = dataLan?.keyName.toString() || queries?.['category'][0]!
       }
 
@@ -159,7 +160,11 @@ const useSearchBaseAdmin = (param?: KeySearchProps, paramTitle?: TitleProps) => 
               )}
               {param?.idProduct && (
                 <div className='md:w-[48%] w-full'>
-                  <InputForm key={'idProduct'} name='idProduct' label={paramTitle?.idProduct || 'ID Product'} />
+                  <InputForm
+                    key={'idProduct'}
+                    name='idProduct'
+                    label={paramTitle?.idProduct || 'ID Product'}
+                  />
                 </div>
               )}
               {param?.keyName && (

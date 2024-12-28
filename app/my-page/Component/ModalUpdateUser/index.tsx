@@ -107,7 +107,9 @@ const ModalUpdateUser = ({ keyType, callBack, initValue, maxLength = 20 }: Props
           )}
         </div>
 
-        <div className='md:text-[14px] text-medium font-bold mt-2'>{translate('textPopular.newValue')} :</div>
+        <div className='md:text-[14px] text-medium font-bold mt-2'>
+          {translate('textPopular.newValue')} :
+        </div>
         <div className='w-full mt-1'>
           {keyType === 'sex' ? (
             <div className='flex gap-2'>
