@@ -43,7 +43,15 @@ type InputFormType = {
   validator?: (value?: any) => string | null
 }
 
-const InputAreaForm = ({ label, name, message, required = false, rows = 3, validator = () => '', className = '' }: InputFormType) => {
+const InputAreaForm = ({
+  label,
+  name,
+  message,
+  required = false,
+  rows = 3,
+  validator = () => '',
+  className = '',
+}: InputFormType) => {
   const { translate } = useLanguage()
   return (
     <FormItem

@@ -7,7 +7,16 @@ import useLanguage from '@/hook/useLanguage'
 import MyCheckBox from '@/components/MyCheckBox'
 import { LoadingOutlined } from '@ant-design/icons'
 
-const ListItemCart = ({ dataCart, callBackClick = () => {}, callBackDelete = () => {}, callBackSelectAll = () => {}, loading = true, noEdit = false, noTitle = false, allSelected = false }: ListItemCartType) => {
+const ListItemCart = ({
+  dataCart,
+  callBackClick = () => {},
+  callBackDelete = () => {},
+  callBackSelectAll = () => {},
+  loading = true,
+  noEdit = false,
+  noTitle = false,
+  allSelected = false,
+}: ListItemCartType) => {
   const { isMobile } = useMedia()
   const { translate } = useLanguage()
 
@@ -25,7 +34,16 @@ const ListItemCart = ({ dataCart, callBackClick = () => {}, callBackDelete = () 
           </div>
         )}
         {dataCart.map((e, index) => {
-          return <ItemCart noEdit={noEdit} callBack={(e) => callBackClick(e, index)} callBackDelete={() => callBackDelete(index)} key={index} data={e} noBorder={index === dataCart.length - 1} />
+          return (
+            <ItemCart
+              noEdit={noEdit}
+              callBack={(e) => callBackClick(e, index)}
+              callBackDelete={() => callBackDelete(index)}
+              key={index}
+              data={e}
+              noBorder={index === dataCart.length - 1}
+            />
+          )
         })}
       </>
     )
@@ -44,7 +62,16 @@ const ListItemCart = ({ dataCart, callBackClick = () => {}, callBackDelete = () 
           </div>
         </div>
         {dataCart.map((e, index) => {
-          return <ItemCart noEdit={noEdit} callBack={(e) => callBackClick(e, index)} callBackDelete={async () => callBackDelete(index)} key={index} data={e} noBorder={index === dataCart.length - 1} />
+          return (
+            <ItemCart
+              noEdit={noEdit}
+              callBack={(e) => callBackClick(e, index)}
+              callBackDelete={async () => callBackDelete(index)}
+              key={index}
+              data={e}
+              noBorder={index === dataCart.length - 1}
+            />
+          )
         })}
         {loading && (
           <div className='flex justify-center w-full'>

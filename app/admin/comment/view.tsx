@@ -45,7 +45,7 @@ const CommentClient = () => {
     },
     {
       idProduct: `ID ${translate('textPopular.product')}`,
-    },
+    }
   )
 
   const getRouteProduct = (product: any) => {

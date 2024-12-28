@@ -103,7 +103,14 @@ const InputForm = ({
         },
       ]}
     >
-      <MyInput disabled={disable} rows={rows} type={isPass ? 'password' : typeBtn} className='w-full' maxLength={maxLength} showCount={showCount} />
+      <MyInput
+        disabled={disable}
+        rows={rows}
+        type={isPass ? 'password' : typeBtn}
+        className='w-full'
+        maxLength={maxLength}
+        showCount={showCount}
+      />
     </FormItem>
   )
 }

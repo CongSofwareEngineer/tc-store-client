@@ -21,9 +21,17 @@ const InfoHome = () => {
   }
   return (
     <div className='w-full flex flex-col md:flex-row gap-8 md:gap-7 justify-between md:mt-8'>
-      {renderItem(images.icon.iconResponsibility, 'TINH THẦN VÀ TRÁCH NHIỆM', 'Mỗi sản phẩm là biểu hiện trí tuệ và công sức bỏ ra.')}
+      {renderItem(
+        images.icon.iconResponsibility,
+        'TINH THẦN VÀ TRÁCH NHIỆM',
+        'Mỗi sản phẩm là biểu hiện trí tuệ và công sức bỏ ra.'
+      )}
       {renderItem(images.icon.iconShield, 'CAM KẾT CHẤT LƯỢNG', 'Sản phẩm chúng tôi 100% chất lượng và tự nhiên.')}
-      {renderItem(images.icon.iconSupport, 'CHĂM SÓC KHÁCH HÀNG 24/7', 'Hỗ trợ và giải đáp thắc mắc các thông tin 24/7.')}
+      {renderItem(
+        images.icon.iconSupport,
+        'CHĂM SÓC KHÁCH HÀNG 24/7',
+        'Hỗ trợ và giải đáp thắc mắc các thông tin 24/7.'
+      )}
     </div>
   )
 }

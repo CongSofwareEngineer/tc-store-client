@@ -54,7 +54,7 @@ const FirstLoadWebsite: NextPage = () => {
         JSON.stringify({
           sdt,
           pass,
-        }),
+        })
       )
       const body = {
         data: dataBody,

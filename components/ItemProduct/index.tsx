@@ -64,7 +64,7 @@ const ItemProduct = ({
           </p>
           <TextPriceBase className=' w-full   '>{`${formatPriceBase(
             item?.price || 150,
-            item?.disCount,
+            item?.disCount
           )} VNĐ`}</TextPriceBase>
 
           <div className='w-full  text-green-600 xl:text-[24px] md:text-[18px] text-[13px] font-bold flex justify-between  '>

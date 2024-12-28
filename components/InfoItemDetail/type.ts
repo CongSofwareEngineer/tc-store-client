@@ -1,17 +1,17 @@
 export type ItemDetailType = {
-  imageMain?: string,
-  typeProduct?: string,
-  des?: string,
-  name: string,
+  imageMain?: string
+  typeProduct?: string
+  des?: string
+  name: string
   id?: string
-  amount?: number,
+  amount?: number
   des2?: string
   dateSale?: string
   dateEndSale?: string
-  numberLike?: number,
-  weight?: string,
+  numberLike?: number
+  weight?: string
   linkShoppe?: string
   linkFacebook?: string
-  sold?: string | number,
+  sold?: string | number
   [key: string]: any
-} 
+}

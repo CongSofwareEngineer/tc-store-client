@@ -40,7 +40,7 @@ const BillAdminScreen = () => {
     },
     {
       id: translate('bill.id'),
-    },
+    }
   )
 
   const getAmountBuy = (item: any) => {

@@ -1,10 +1,7 @@
 importScripts('https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js')
-importScripts(
-  'https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js'
-)
+importScripts('https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js')
 
 const firebaseConfig = JSON.parse(new URL(location).searchParams.get('firebaseConfig'))
-
 
 firebase.initializeApp(firebaseConfig)
 const messaging = firebase.messaging()
@@ -18,9 +15,9 @@ messaging.onBackgroundMessage((payload) => {
       actions: [
         {
           action: 'action',
-          title: payload.data?.titleConfirm || 'Confirm'
-        }
-      ]
+          title: payload.data?.titleConfirm || 'Confirm',
+        },
+      ],
     }
     self.registration.showNotification(notificationTitle, notificationOptions)
 
@@ -29,7 +26,7 @@ messaging.onBackgroundMessage((payload) => {
       event.waitUntil(
         clients
           .matchAll({
-            type: 'window'
+            type: 'window',
           })
           .then((clientList) => {
             for (const client of clientList) {

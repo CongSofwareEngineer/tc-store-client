@@ -21,13 +21,13 @@ export const zustandLanguage = create<LanguageStore>()(
       }),
       {
         name: ZUSTAND.Language,
-      },
+      }
     ),
     {
       name: `zustand-${ZUSTAND.Language}`,
       enabled: process.env.NODE_ENV !== 'production',
-    },
-  ),
+    }
+  )
 )
 
 export const useLanguage = () => {

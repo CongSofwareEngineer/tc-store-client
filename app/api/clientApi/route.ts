@@ -15,15 +15,10 @@ export async function POST(req: any) {
 
     switch (bodyDecode.namFn) {
       case FB_FC.queryListData:
-        dataRequest = await dataFB.listQueryData(
-          bodyDecode.body[FB_FC.queryListData]
-        )
+        dataRequest = await dataFB.listQueryData(bodyDecode.body[FB_FC.queryListData])
         break
       case FB_FC.updateData:
-        dataRequest = await dataFB.updateData(
-          bodyDecode.body.id,
-          bodyDecode.body.data
-        )
+        dataRequest = await dataFB.updateData(bodyDecode.body.id, bodyDecode.body.data)
         break
       case FB_FC.addData:
         dataRequest = await dataFB.addData(bodyDecode.body.data)

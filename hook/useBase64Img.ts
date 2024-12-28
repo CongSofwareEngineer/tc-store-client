@@ -40,7 +40,7 @@ const useBase64Img = (maxSizeOutputKB = 15, maxScale = MAX_PIXEL_REDUCE) => {
               }
             },
             'image/jpeg',
-            currentQuality,
+            currentQuality
           )
         }
 
@@ -52,7 +52,7 @@ const useBase64Img = (maxSizeOutputKB = 15, maxScale = MAX_PIXEL_REDUCE) => {
 
   const getBase64 = async (
     fileUpload: any,
-    callBack?: any,
+    callBack?: any
   ): Promise<{
     base64: string
     name: string

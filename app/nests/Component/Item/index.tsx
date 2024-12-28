@@ -29,7 +29,7 @@ const ItemNest = ({ data }: { data: Record<string, any> | null }) => {
           </p>
           <div className=' w-full text-green-400 line-through md:text-sm text-xs   '>{`${formatPriceBase(
             data?.price || 150,
-            data?.disCount,
+            data?.disCount
           )} VNĐ`}</div>
           <div className='w-full  text-green-600 md:text-[18px] text-[13px] font-bold flex justify-between  '>
             {formatPrice(data?.price || 150)}
@@ -38,7 +38,7 @@ const ItemNest = ({ data }: { data: Record<string, any> | null }) => {
 
           {!isMobile && <MySliderSell total={data?.amount} sell={data?.sold} className={'text-[12px]'} />}
           <span className='text-[11px] md:mt-1 '>{`${translate('productDetail.sold')}  ${numberWithCommas(
-            data?.sold || '0',
+            data?.sold || '0'
           )}`}</span>
         </div>
       </div>

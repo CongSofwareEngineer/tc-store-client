@@ -61,7 +61,7 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
     VALUE_KEY_DEFAULT.sizes.map((e) => ({
       label: translate(`admin.color.${e}`),
       value: e,
-    })),
+    }))
   )
 
   const onChangeValueData = (indexParent: number, index: number, key: string, value: any, isObj = true) => {
@@ -79,7 +79,7 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
       const dataClone = cloneData(data)
       if (isObj) {
         dataClone.value[indexParent].colors = dataClone.value[indexParent].colors.filter(
-          (_: any, indexFilter: number) => indexFilter !== index,
+          (_: any, indexFilter: number) => indexFilter !== index
         )
       } else {
         dataClone.value = dataClone.value.filter((_: any, indexFilter: number) => indexParent !== indexFilter)

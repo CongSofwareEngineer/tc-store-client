@@ -74,7 +74,10 @@ const OptionFilter = () => {
     <div className='flex flex-wrap gap-4 align-middle   '>
       <div className='flex gap-4 flex-wrap items-center '>
         {/* <MyDatePicker onChange={(e) => setDateTime(e?.toString() || '')} /> */}
-        <Checkbox onClick={() => onChangeFilter(FILTER_BILL.All)} checked={!isDelivering && !isDeliverySuccess && !isProcessing}>
+        <Checkbox
+          onClick={() => onChangeFilter(FILTER_BILL.All)}
+          checked={!isDelivering && !isDeliverySuccess && !isProcessing}
+        >
           <div className='text-nowrap'>{translate('textPopular.all')}</div>
         </Checkbox>
         <Checkbox onClick={() => onChangeFilter(FILTER_BILL.DeliverySuccess)} checked={isDeliverySuccess}>

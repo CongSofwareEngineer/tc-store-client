@@ -7,8 +7,10 @@
     "build": "next build",
     "start": "next start -p 3016",
     "lint": "next lint .",
+    "format": "prettier --write .",
     "postbuild": "next-sitemap",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "lint:fix": "eslint --fix ."
   },
   "dependencies": {
     "@ant-design/icons": "^5.3.7",

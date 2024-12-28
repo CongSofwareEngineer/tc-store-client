@@ -5,7 +5,7 @@ type LinkType = {
 } & LinkProps
 const MyLink = ({ href, children, ...props }: LinkType) => {
   return (
-    <Link href={href} className="shadow-lg" {...props}>
+    <Link href={href} className='shadow-lg' {...props}>
       {children}
     </Link>
   )

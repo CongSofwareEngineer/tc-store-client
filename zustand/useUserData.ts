@@ -32,8 +32,8 @@ const zustandUserData = create<UserDataStore>()(
     {
       name: `zustand-${ZUSTAND.UserData}`,
       enabled: process.env.NODE_ENV !== 'production',
-    },
-  ),
+    }
+  )
 )
 
 export const useUserData = () => {

@@ -40,8 +40,8 @@ const zustandModalAdmin = create<ModalAdminStore>()(
     {
       name: `zustand-${ZUSTAND.ModalAdmin}`,
       enabled: process.env.NODE_ENV !== 'production',
-    },
-  ),
+    }
+  )
 )
 
 export const useModalAdmin = () => {

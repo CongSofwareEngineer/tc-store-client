@@ -2,9 +2,7 @@
 
 import { readFile } from 'fs/promises'
 
-const json = (await readFile(new URL('./env.json', import.meta.url))).toString(
-  'utf-8'
-)
+const json = (await readFile(new URL('./env.json', import.meta.url))).toString('utf-8')
 
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -64,7 +62,7 @@ const nextConfig = {
       'react-share',
       'slate',
       'react-intersection-observer',
-      '@ant-design/nextjs-registry'
+      '@ant-design/nextjs-registry',
     ],
     // optimizeServerReact: true,
     // serverMinification: true

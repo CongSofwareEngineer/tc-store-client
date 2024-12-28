@@ -153,7 +153,7 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
               {formatPriceBase(productDetail.price, productDetail.discount)} VNĐ
             </div>
             <div className='text-title font-bold text-green-500'>{`${formatPrice(
-              Number(productDetail.price || '0') * amountBuy,
+              Number(productDetail.price || '0') * amountBuy
             )} VNĐ`}</div>
             <SubAndPlus
               callBackSub={(e) => setAmountBuy(e)}
@@ -207,7 +207,7 @@ const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, 
               {formatPriceBase(productDetail?.price, productDetail?.discount)} VNĐ
             </div>
             <div className='text-title font-bold text-green-500'>{`${formatPrice(
-              Number(productDetail?.price || '0') * amountBuy,
+              Number(productDetail?.price || '0') * amountBuy
             )} VNĐ`}</div>
             <SubAndPlus
               callBackSub={(e) => setAmountBuy(e)}

@@ -27,8 +27,8 @@ const zustandProvinces = create<ProvincesStore>()(
     {
       name: `zustand-${ZUSTAND.Provinces}`,
       enabled: process.env.NODE_ENV !== 'production',
-    },
-  ),
+    }
+  )
 )
 
 export const useProvinces = () => {

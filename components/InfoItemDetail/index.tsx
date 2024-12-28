@@ -22,7 +22,6 @@ const InfoItemDetail = ({ data }: { data: ItemDetailType }) => {
   }
 
   const renderItemDes = (title: string, des?: any) => {
-
     return des ? (
       <div className='flex md:gap-3 gap-[10px]'>
         <span className='font-bold whitespace-nowrap'>{`${title} :`}</span>

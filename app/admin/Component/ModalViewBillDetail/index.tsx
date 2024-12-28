@@ -14,7 +14,12 @@ const ModalViewBillDetail = ({ data }: { data: any }) => {
         return (
           <div key={e._id} className='flex gap-2 w-full pb-4 border-b-2 border-b-gray-200'>
             <div className='w-[100px]'>
-              <Image alt={e.keyName} src={detectImg(e.more_data.imageMain)} fill className='!relative !w-full !h-auto' />
+              <Image
+                alt={e.keyName}
+                src={detectImg(e.more_data.imageMain)}
+                fill
+                className='!relative !w-full !h-auto'
+              />
             </div>
             <div className='flex flex-col flex-1 gap-2'>
               <Link href={`/shop/${e.keyName}`} className='font-bold hover:underline'>

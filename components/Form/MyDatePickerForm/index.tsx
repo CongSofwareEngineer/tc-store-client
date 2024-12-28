@@ -49,7 +49,13 @@ type InputFormType = {
   defaultValue?: ReturnType<typeof dayjs>
 }
 
-const MyDatePickerForm = ({ classFromItem = '', disabled = false, label = '', name = '', defaultValue }: InputFormType) => {
+const MyDatePickerForm = ({
+  classFromItem = '',
+  disabled = false,
+  label = '',
+  name = '',
+  defaultValue,
+}: InputFormType) => {
   return (
     <FormItem label={label} name={name} className={classFromItem}>
       <MyDatePicker defaultValue={defaultValue} disabled={disabled} />

@@ -35,7 +35,7 @@ export const FirebaseServices = {
     const firebaseUrl = encodeURIComponent(JSON.stringify(FirebaseServices.config))
 
     const registration = await navigator.serviceWorker.register(
-      `/firebase-messaging-sw.js?firebaseConfig=${firebaseUrl}`,
+      `/firebase-messaging-sw.js?firebaseConfig=${firebaseUrl}`
     )
 
     return await FirebaseServices.recursiveCreateToken(callback, registration, 0)
@@ -43,7 +43,7 @@ export const FirebaseServices = {
   recursiveCreateToken: async (
     callBack: (e?: any) => Promise<void>,
     registration: any,
-    numberReq = 0,
+    numberReq = 0
   ): Promise<any> => {
     if (numberReq >= 5) {
       callBack && callBack(null)

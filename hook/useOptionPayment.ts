@@ -22,7 +22,7 @@ const useOptionPayment = (defaultValue?: OptionType | null, optionEnable?: Enabl
     defaultValue || {
       name: translate('optionPayment.onDelivery'),
       value: OPTIONS_PAYMENT.delivery,
-    },
+    }
   )
 
   useEffect(() => {

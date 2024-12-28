@@ -4,7 +4,17 @@ import useLanguage from '@/hook/useLanguage'
 import Image from 'next/image'
 import React from 'react'
 
-const BillFinal = ({ totalBill, totalBillFeeShip, loading = false, disabledSubmit = false }: { totalBill: string; totalBillFeeShip: string; loading: boolean; disabledSubmit?: boolean }) => {
+const BillFinal = ({
+  totalBill,
+  totalBillFeeShip,
+  loading = false,
+  disabledSubmit = false,
+}: {
+  totalBill: string
+  totalBillFeeShip: string
+  loading: boolean
+  disabledSubmit?: boolean
+}) => {
   const { translate } = useLanguage()
 
   return (
@@ -29,7 +39,14 @@ const BillFinal = ({ totalBill, totalBillFeeShip, loading = false, disabledSubmi
         <span>{translate('bill.totalBill')}</span>
         <span className='font-bold text-green-600'>{totalBillFeeShip} VNĐ</span>
       </div>
-      <ButtonForm disabledSubmit={disabledSubmit} classNameItem={'w-full'} classBtnSubmit='w-full  rounded-none' className='mt-5' loading={loading} disableClose />
+      <ButtonForm
+        disabledSubmit={disabledSubmit}
+        classNameItem={'w-full'}
+        classBtnSubmit='w-full  rounded-none'
+        className='mt-5'
+        loading={loading}
+        disableClose
+      />
     </div>
   )
 }

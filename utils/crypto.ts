@@ -27,7 +27,7 @@ export const decryptData = (value: any, pinCode: string = process.env.NEXT_PUBLI
 export const encodeDataMaxLength = (
   value: string | object,
   maxLength = 42,
-  pinCode: string = process.env.NEXT_PUBLIC_KEY_SALT,
+  pinCode: string = process.env.NEXT_PUBLIC_KEY_SALT
 ) => {
   try {
     const stringEncode = encryptData(value, pinCode)
