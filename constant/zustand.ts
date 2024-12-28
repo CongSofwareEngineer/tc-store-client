@@ -55,9 +55,9 @@ export type TYPE_ZUSTAND = {
     locale: string
     messages: any
   }
-  [ZUSTAND.Setting]: Object | null
+  [ZUSTAND.Setting]: { [key: string]: string } | null
   [ZUSTAND.UserData]: TYPE_USER_DATA | null
-  [ZUSTAND.ConnectedChain]: Number
+  [ZUSTAND.ConnectedChain]: number
   [ZUSTAND.CategoryMenu]: Array<{
     keyName: string
     icon?: string

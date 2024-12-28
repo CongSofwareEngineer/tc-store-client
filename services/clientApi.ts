@@ -3,7 +3,6 @@ import { ClientAPITypeParam, fetchData } from '@/configs/fetchConfig'
 import { BodyAddBill } from '@/constant/firebase'
 import { encryptData } from '@/utils/crypto'
 import { PATH_IMG } from '@/constant/mongoDB'
-import { AboutProps } from '@/app/about/type'
 
 const ClientApi = {
   pingServer: async () => {
@@ -29,7 +28,7 @@ const ClientApi = {
       body,
     })
   },
-  updateAbout: async (id: String, body: any) => {
+  updateAbout: async (id: string, body: any) => {
     return fetchData({
       url: `/about/update/${id}`,
       method: REQUEST_TYPE.POST,

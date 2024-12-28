@@ -1,10 +1,10 @@
 import { COOKIE_EXPIRED, COOKIE_KEY, LOCAL_STORAGE_KEY, OBSERVER_KEY } from '@/constant/app'
-import { TYPE_USER_DATA, TYPE_ZUSTAND, ZUSTAND } from '@/constant/zustand'
+import { TYPE_ZUSTAND, ZUSTAND } from '@/constant/zustand'
 import useCheckPatchName from '@/hook/tank-query/useCheckPatchName'
 import ClientApi from '@/services/clientApi'
 import { deleteCookie, getCookie, setCookie } from '@/services/CookiesService'
 import ObserverService from '@/services/observer'
-import { encryptData } from '@/utils/crypto'
+import { decryptData, encryptData } from '@/utils/crypto'
 import { getDataLocal, removeDataLocal, scrollTop } from '@/utils/functions'
 import { useCategoryMenu } from '@/zustand/useCategoryMenu'
 import { useProvinces } from '@/zustand/useProvinces'
@@ -29,10 +29,6 @@ const FirstLoadWebsite: NextPage = () => {
   useLayoutEffect(() => {
     fetchCategoryMenu()
     fetchDataProvinces()
-
-    if (userData) {
-      ObserverService.emit(OBSERVER_KEY.ReLogin, userData)
-    }
   }, [fetchDataProvinces, fetchCategoryMenu])
 
   useEffect(() => {
@@ -66,20 +62,27 @@ const FirstLoadWebsite: NextPage = () => {
       return data?.data || null
     }
 
-    const refreshLogin = async (userData: TYPE_USER_DATA) => {
-      const refreshAuth = await getCookie(COOKIE_KEY.AuthRefresh)
-      if (!refreshAuth) {
-        ObserverService.emit(OBSERVER_KEY.LogOut)
-        return
-      }
-      const data = await loginWithDB(userData.sdt!, userData.pass!)
-      if (!data) {
-        ObserverService.emit(OBSERVER_KEY.LogOut)
+    const refreshLogin = async () => {
+      const dataSecure = secureLocalStorage.getItem(ZUSTAND.UserData)
+      if (dataSecure) {
+        const dataDecode = decryptData(dataSecure.toString())
+        if (dataDecode) {
+          const userData = JSON.parse(dataDecode)
+          const refreshAuth = await getCookie(COOKIE_KEY.AuthRefresh)
+          if (!refreshAuth) {
+            ObserverService.emit(OBSERVER_KEY.LogOut, false)
+            return
+          }
+          const data = await loginWithDB(userData.sdt!, userData.pass!)
+          if (!data) {
+            ObserverService.emit(OBSERVER_KEY.LogOut, false)
+          }
+        } else {
+          ObserverService.emit(OBSERVER_KEY.LogOut, false)
+        }
       }
     }
-
-    ObserverService.on(OBSERVER_KEY.ReLogin, refreshLogin)
-    return () => ObserverService.removeListener(OBSERVER_KEY.ReLogin)
+    refreshLogin()
   }, [setUserData])
 
   //logout
@@ -115,12 +118,8 @@ const FirstLoadWebsite: NextPage = () => {
       }
     }
 
-    const firstLoadPage = () => {
-      setIsLoading(false)
-    }
-
     ObserverService.on(OBSERVER_KEY.RoutePage, routePage)
-    ObserverService.on(OBSERVER_KEY.FirstLoadPage, firstLoadPage)
+    ObserverService.on(OBSERVER_KEY.FirstLoadPage, () => setIsLoading(false))
     ObserverService.on(OBSERVER_KEY.LogOut, handleLogout)
 
     return () => {

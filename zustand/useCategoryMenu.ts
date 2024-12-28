@@ -24,13 +24,14 @@ import { devtools, persist } from 'zustand/middleware'
 //     ),
 //   )
 // }
+type CategoryData = TYPE_ZUSTAND[ZUSTAND.CategoryMenu]
 
 type CategoryMenuStoreState = {
-  [ZUSTAND.CategoryMenu]: TYPE_ZUSTAND[ZUSTAND.CategoryMenu]
+  [ZUSTAND.CategoryMenu]: CategoryData
 }
 
 type CategoryMenuStoreActions = {
-  setCategoryMenu: (nextCategoryMenu: TYPE_ZUSTAND[ZUSTAND.CategoryMenu]) => void
+  setCategoryMenu: (nextCategoryMenu: CategoryData) => void
   fetchData: () => Promise<void>
 }
 
@@ -41,13 +42,12 @@ const zustandCategoryMenu = create<CategoryMenuStore>()(
     persist(
       (set) => ({
         [ZUSTAND.CategoryMenu]: INIT_ZUSTAND[ZUSTAND.CategoryMenu],
-        setCategoryMenu: (user: TYPE_ZUSTAND[ZUSTAND.CategoryMenu]) =>
-          set({ [ZUSTAND.CategoryMenu]: user }),
+        setCategoryMenu: (categoryMenu: CategoryData) => {
+          set({ [ZUSTAND.CategoryMenu]: categoryMenu })
+        },
         fetchData: async () => {
-          try {
-            const menuCategory = await ClientApi.getCategory(true)
-            set(menuCategory?.data || [])
-          } catch (error) {}
+          const menuCategory = await ClientApi.getCategory(true)
+          set(menuCategory?.data || [])
         },
       }),
       {

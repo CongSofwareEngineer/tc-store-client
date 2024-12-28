@@ -41,30 +41,12 @@ const useUserData = () => {
 
   const refreshLogin = async () => {
     if (userData) {
-      const data = await loginWithDB(userData?.sdt || '', userData?.pass || '')
+      const data = await loginWithDB(userData?.sdt!, userData?.pass!)
       if (!data) {
         ObserverService.emit(OBSERVER_KEY.LogOut)
       }
     } else {
       ObserverService.emit(OBSERVER_KEY.LogOut)
-    }
-  }
-
-  const reLogin = async () => {
-    const dataSecure = secureLocalStorage.getItem(ZUSTAND.UserData)
-    if (dataSecure) {
-      const dataDecode = decryptData(dataSecure.toString())
-      const dataPare = JSON.parse(dataDecode)
-
-      const data = await loginWithDB(dataPare?.sdt, dataPare?.pass)
-      if (data) {
-        const userEncode = encryptData(JSON.stringify(data))
-        secureLocalStorage.setItem(ZUSTAND.UserData, userEncode)
-      } else {
-        ObserverService.emit(OBSERVER_KEY.LogOut, false)
-      }
-    } else {
-      ObserverService.emit(OBSERVER_KEY.LogOut, false)
     }
   }
 
@@ -93,7 +75,6 @@ const useUserData = () => {
     isLogin: !!userData,
     login,
     refreshLogin,
-    reLogin,
   }
 }
 
