@@ -3,7 +3,6 @@ import useLanguage from './useLanguage'
 import { OPTIONS_PAYMENT } from '@/constant/app'
 import { images } from '@/configs/images'
 import { delayTime } from '@/utils/functions'
-import useUserData from './useUserData'
 
 type OptionType = {
   name: string
@@ -18,7 +17,6 @@ type EnableType = {
 }
 const useOptionPayment = (defaultValue?: OptionType | null, optionEnable?: EnableType) => {
   const { translate } = useLanguage()
-  const { isLogin } = useUserData()
 
   const [optionSelected, setOptionSelected] = useState<OptionType>(
     defaultValue || {

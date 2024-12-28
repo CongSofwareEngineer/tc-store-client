@@ -46,7 +46,7 @@ const VietcomBankService = {
     return `Ma ID ${salt}  Ngay ${formatDateTime(new Date(), 'DD MM YYYY')}`
   },
   generateSalt: (): string => {
-    return Buffer.from(randomBytes(7)).toString('hex').padStart(10, '0')
+    return Buffer.from(randomBytes(7).buffer).toString('hex').padStart(10, '0')
   },
   openDeepLink: (amount: number, mess: string) => {
     const urlFinal = `https://dl.vietqr.io/pay?app=vcb&ba=${process.env.NEXT_PUBLIC_VCB_STK}@vcb&am=$${amount}&tn=${mess}`
