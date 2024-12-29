@@ -56,14 +56,18 @@ const ViewDetail = ({ productDetail, amountBuy = 0, setIsPayment, setAmountBuy }
     const listCartUser = await ClientApi.getCartDetail(body.idUser!, body.idProduct!)
 
     const dataExited = listCartUser?.data[0]
+    let res
 
     if (!dataExited) {
-      await ClientApi.createMyCart(body)
+      res = await ClientApi.createMyCart(body)
     } else {
       const body = {
         amount: Number(dataExited.amount) + Number(amountBuy),
       }
-      await ClientApi.updateMyCart(dataExited._id, body)
+      res = await ClientApi.updateMyCart(dataExited._id, body)
+    }
+    if (!res?.data) {
+      throw new Error('error add cart')
     }
   }
 
@@ -129,6 +133,7 @@ const ViewDetail = ({ productDetail, amountBuy = 0, setIsPayment, setAmountBuy }
       ])
       setLoadingAddCart(false)
       showNotificationSuccess(translate('addCart.addSuccess'))
+    } catch (error) {
     } finally {
       setLoadingAddCart(false)
     }

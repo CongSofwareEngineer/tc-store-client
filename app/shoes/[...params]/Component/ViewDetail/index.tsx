@@ -76,7 +76,11 @@ const ViewDetail = ({
         amount: Number(dataExited.amount) + Number(amountBuy),
         configBill: data.configBill,
       }
-      await ClientApi.updateMyCart(dataExited._id, body)
+      const dataAddCart = await ClientApi.updateMyCart(dataExited._id, body)
+
+      if (!dataAddCart?.data) {
+        throw new Error('error add cart')
+      }
     }
   }
 
@@ -143,6 +147,7 @@ const ViewDetail = ({
       ])
       setLoadingAddCart(false)
       showNotificationSuccess(translate('addCart.addSuccess'))
+    } catch (error) {
     } finally {
       setLoadingAddCart(false)
     }

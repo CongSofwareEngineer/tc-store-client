@@ -125,52 +125,56 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
     }
   }
   const handleSubmitBuy = async (idBanking?: string, messBanking?: string) => {
-    setLoading(true)
-    callbackProcessingBuy()
+    try {
+      setLoading(true)
+      callbackProcessingBuy()
 
-    let res
+      let res
 
-    const bodyBill: BodyAddBill = {
-      addressShip: formData?.addressShip,
-      discount: 0,
-      sdt: formData?.sdt,
-      name: formData?.name,
-      idUser: isLogin ? userData?._id : 'no-id',
-      listBill: [
-        {
-          amount: amount,
-          _id: data?._id!,
-          keyName: data?.keyName,
-          configBill: data?.configBill || {},
-        },
-      ],
-      status: FILTER_BILL.Processing,
-      totalBill: data?.price * amount,
-    }
-
-    if (idBanking) {
-      bodyBill.infoBanking = {
-        id: idBanking,
-        messages: messBanking,
+      const bodyBill: BodyAddBill = {
+        addressShip: formData?.addressShip,
+        discount: 0,
+        sdt: formData?.sdt,
+        name: formData?.name,
+        idUser: isLogin ? userData?._id : 'no-id',
+        listBill: [
+          {
+            amount: amount,
+            _id: data?._id!,
+            keyName: data?.keyName,
+            configBill: data?.configBill || {},
+          },
+        ],
+        status: FILTER_BILL.Processing,
+        totalBill: data?.price * amount,
       }
-    }
 
-    if (isLogin) {
-      handleUpdateAddressShip()
-      res = await ClientApi.buy(bodyBill)
-    } else {
-      saveDataNoLogin(bodyBill)
-      res = await ClientApi.buyNoLogin(bodyBill)
-    }
+      if (idBanking) {
+        bodyBill.infoBanking = {
+          id: idBanking,
+          messages: messBanking,
+        }
+      }
 
-    if (res.data) {
-      await callbackSuccessBuy()
-    } else {
-      showNotificationError(translate('productDetail.modalBuy.error'))
-      closeModalDrawer()
-    }
+      if (isLogin) {
+        handleUpdateAddressShip()
+        res = await ClientApi.buy(bodyBill)
+      } else {
+        saveDataNoLogin(bodyBill)
+        res = await ClientApi.buyNoLogin(bodyBill)
+      }
 
-    setLoading(false)
+      if (res.data) {
+        await callbackSuccessBuy()
+      } else {
+        showNotificationError(translate('productDetail.modalBuy.error'))
+        closeModalDrawer()
+      }
+
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+    }
   }
   const handleSubmit = async () => {
     const callBack = async () => {
