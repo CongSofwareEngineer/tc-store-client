@@ -17,6 +17,7 @@ import { Button } from 'antd'
 import LoadingData from './Component/LoadingData'
 import MyLoading from '@/components/MyLoading'
 import useFirstLoadPage from '@/hook/useFirstLoadPage'
+import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 
 const Payment = dynamic(() => import('./Component/Payment'), {
   ssr: false,
@@ -82,8 +83,13 @@ const MyCartScreen = () => {
 
   const handleDelete = async (index: number) => {
     const dataRemove = listCartFormat[index]
-    await ClientApi.deleteCart(dataRemove._id)
-    await refreshListQuery([QUERY_KEY.MyCartUser, QUERY_KEY.LengthCartUser])
+    const data = await ClientApi.deleteCart(dataRemove._id)
+    if (data.data) {
+      await refreshListQuery([QUERY_KEY.MyCartUser, QUERY_KEY.LengthCartUser])
+      showNotificationSuccess(translate('success.delete'))
+    } else {
+      showNotificationError(translate('error.delete'))
+    }
   }
 
   const handleSelectAll = (isSelect = false) => {
