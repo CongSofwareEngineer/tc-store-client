@@ -384,6 +384,7 @@
     "title": "Sác thực số điện thoại",
     "receiveCode": "Nhận code",
     "verifyCode": "Xác thực code",
-    "note": "Bạn nhận được 1 tin nhắn với mã pin code 6 số, bạn nhập 6 số để tiếp tục"
+    "verifyUser": "Xác thực người thật",
+    "note": "Bạn nhận được 1 tin nhắn với mã pin code 6 số, bạn nhập 6 số để tiếp tục. Đây là bước xác nhận là người thật"
   }
 }

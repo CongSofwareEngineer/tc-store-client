@@ -15,32 +15,15 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
   const [isPending, setIsPending] = useState(false)
   const [isErrorCode, setIsErrorCode] = useState(false)
   const [otpReceived, setOtpReceived] = useState<ConfirmationResult | null>(null)
-  const [auth, setAuth] = useState<Auth | null>(null)
   const [timeStamp, settimeStamp] = useState(0)
   const [pinCode, setPinCode] = useState<string>()
-  const [reCaptchaVerifier, setReCaptchaVerifier] = useState<RecaptchaVerifier | null>(null)
 
-  const { closeModalDrawer, openModalDrawer } = useModalDrawer()
+  const [reCaptchaVerifier, setReCaptchaVerifier] = useState<RecaptchaVerifier | null>(null)
+  const [auth, setAuth] = useState<Auth | null>(null)
+
+  const { closeModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
   const { time } = useCountdown(timeStamp)
-
-  useLayoutEffect(() => {
-    if (isPending && time <= 0) {
-      console.log('rerender')
-      setIsErrorCode(false)
-      setIsPending(false)
-      settimeStamp(0)
-
-      openModalDrawer({
-        content: <CaptchaOtp numberPhone={numberPhone} callback={callback} />,
-        title: 'Verify number phone',
-        configModal: {
-          overClickClose: false,
-          showBtnClose: false,
-        },
-      })
-    }
-  }, [time, isPending, openModalDrawer, numberPhone, callback])
 
   useLayoutEffect(() => {
     const auth = FirebaseServices.initAuth()
@@ -66,7 +49,7 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
 
   const handleSendOtp = async () => {
     try {
-      settimeStamp(10)
+      settimeStamp(300)
       setTimeout(() => {
         setIsPending(true)
       }, 100)
@@ -86,7 +69,7 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
   const handleVerifyOtp = async () => {
     try {
       setLoadingCheckPinCode(true)
-      setIsErrorCode(true)
+
       if (otpReceived) {
         const isVerify = await otpReceived.confirm(pinCode!)
         console.log({ isVerify })
@@ -96,15 +79,18 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
       }
     } catch (error) {
       console.log({ errorhandleVerifyOtp: error })
-
       setIsErrorCode(true)
+    } finally {
+      setTimeout(() => {
+        setLoadingCheckPinCode(false)
+      }, 3000)
     }
   }
 
   return (
     <div className='flex flex-col gap-3'>
       <div id='recaptcha-container' className='absolute opacity-0 z-[-1]'></div>
-      <div className='flex justify-center mt-5 mb-2'>
+      <div className='flex relative justify-center mt-5 mb-2'>
         <OtpInput
           value={pinCode}
           onChange={setPinCode}
@@ -116,6 +102,7 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
             </div>
           )}
         />
+        {!isPending && <div className='absolute w-full h-full cursor-not-allowed opacity-75' />}
       </div>
       {isPending && (
         <div className='flex justify-center items-center'>
