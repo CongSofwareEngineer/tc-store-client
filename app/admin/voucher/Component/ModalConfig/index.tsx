@@ -84,7 +84,7 @@ const ModalConfig = ({ data }: { data?: VoucherProps }) => {
       })
       console.log({ body })
 
-      const res = await AdminApi.updateVoucher(data?._id, formData)
+      const res = await AdminApi.updateVoucher(data?._id!, formData)
       console.log({ res })
 
       if (res.data) {
