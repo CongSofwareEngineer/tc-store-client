@@ -54,6 +54,10 @@ const useCheckForm = () => {
     if (!pass) {
       return translate('errors.empty')
     }
+    if (pass.length < 4) {
+      return translate('errors.minimumPass')
+    }
+
     const noSQLInjectionPattern = /(\$|\{|\}|\[|\])/g
 
     // Check if the input contains any NoSQL injection patterns

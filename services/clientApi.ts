@@ -59,6 +59,9 @@ const ClientApi = {
   },
 
   // -> user
+  checkSDT: async (sdt: any) => {
+    return fetchData({ url: `user/check-sdt/${sdt}` })
+  },
   login: async (body: any) => {
     return fetchData({
       url: `user/login`,

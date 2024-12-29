@@ -301,6 +301,7 @@
     "existFile": "File đã tồn tại",
     "invalidPass": "Mật khẩu chưa mã độc",
     "inValueNumber": "Không phải là số",
+    "minimumPass": "Mật khảu tối thiểu 4 ký tự",
     "pinCode": "Pin code sai"
   },
   "home": {
@@ -381,7 +382,8 @@
     "idBanked": "Mã chuyển tiền"
   },
   "verifyNumberPhone": {
-    "title": "Sác thực số điện thoại",
+    "manyRequest": "Hệ thống đang xử lý quá nhiều, làm phiền bạn thử lại 2 phút sau. Shop xin lỗi vì sự bất tiện này",
+    "title": "Xác thực số điện thoại",
     "receiveCode": "Nhận code",
     "verifyCode": "Xác thực code",
     "verifyUser": "Xác thực người thật",

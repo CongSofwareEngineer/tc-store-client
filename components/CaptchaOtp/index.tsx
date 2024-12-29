@@ -4,8 +4,8 @@ import { FirebaseServices } from '@/services/firebaseService'
 import { Button, Image, Input } from 'antd'
 import { Auth, ConfirmationResult, RecaptchaVerifier } from 'firebase/auth'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import useCountdown from '@/hook/useCountdown'
 import OtpInput from 'react-otp-input'
+
 type CaptchaOtpProps = {
   callback?: (param?: any) => any
   numberPhone?: string
@@ -15,15 +15,14 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
   const [isPending, setIsPending] = useState(false)
   const [isErrorCode, setIsErrorCode] = useState(false)
   const [otpReceived, setOtpReceived] = useState<ConfirmationResult | null>(null)
-  const [timeStamp, settimeStamp] = useState(0)
   const [pinCode, setPinCode] = useState<string>()
+  const [isErrorManyRequest, setIsErrorManyRequest] = useState(false)
 
   const [reCaptchaVerifier, setReCaptchaVerifier] = useState<RecaptchaVerifier | null>(null)
   const [auth, setAuth] = useState<Auth | null>(null)
 
   const { closeModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
-  const { time } = useCountdown(timeStamp)
 
   useLayoutEffect(() => {
     const auth = FirebaseServices.initAuth()
@@ -49,19 +48,15 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
 
   const handleSendOtp = async () => {
     try {
-      settimeStamp(300)
-      setTimeout(() => {
-        setIsPending(true)
-      }, 100)
+      setIsPending(true)
       const otpRes = await FirebaseServices.sendNumberToGetOtp(
         numberPhone,
         auth!,
         reCaptchaVerifier!
       )
-      console.log({ otpRes })
-
       setOtpReceived(otpRes)
     } catch (error) {
+      setIsErrorManyRequest(true)
       console.log({ errorhandleSendOtp: error })
     }
   }
@@ -69,12 +64,11 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
   const handleVerifyOtp = async () => {
     try {
       setLoadingCheckPinCode(true)
-
       if (otpReceived) {
         const isVerify = await otpReceived.confirm(pinCode!)
-        console.log({ isVerify })
-        if (isVerify) {
-          callback && callback()
+
+        if (isVerify && callback) {
+          await callback()
         }
       }
     } catch (error) {
@@ -104,7 +98,7 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
         />
         {!isPending && <div className='absolute w-full h-full cursor-not-allowed opacity-75' />}
       </div>
-      {isPending && (
+      {isPending && !isErrorManyRequest && (
         <div className='flex justify-center items-center'>
           <div className='md:w-[80px] w-[60px] aspect-square overflow-hidden relative '>
             <Image
@@ -113,15 +107,14 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
               alt='loading'
               preview={false}
             />
-            <div className='absolute w-full inset-0 h-full flex justify-center items-center z-10'>
-              <div>{`${time}s`}</div>
-            </div>
           </div>
         </div>
       )}
       <div className='text-center'>{translate('verifyNumberPhone.note')}</div>
       {isErrorCode && <div className='text-red-500 text-center'>{translate('errors.pinCode')}</div>}
-
+      {isErrorManyRequest && (
+        <div className='text-red-500 text-center'>{translate('verifyNumberPhone.manyRequest')}</div>
+      )}
       <div className='flex gap-3 w-full'>
         {!isPending ? (
           <Button className='flex-1' onClick={handleSendOtp}>
@@ -129,7 +122,7 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
           </Button>
         ) : (
           <Button
-            disabled={!pinCode || pinCode?.length! < 6}
+            disabled={isErrorManyRequest || !pinCode || pinCode?.length! < 6}
             loading={loadingCheckPinCode}
             className='flex-1'
             onClick={handleVerifyOtp}

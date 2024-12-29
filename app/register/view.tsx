@@ -1,8 +1,8 @@
 'use client'
+import CaptchaOtp from '@/components/CaptchaOtp'
 import ButtonForm from '@/components/Form/ButtonForm'
 import InputForm from '@/components/Form/InputForm'
 import MyForm from '@/components/Form/MyForm'
-
 import { images } from '@/configs/images'
 import { BodyUserData } from '@/constant/firebase'
 import useAos from '@/hook/useAos'
@@ -10,6 +10,7 @@ import useCheckForm from '@/hook/useCheckForm'
 import useFirstLoadPage from '@/hook/useFirstLoadPage'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
+import useModalDrawer from '@/hook/useModalDrawer'
 import useRoutePage from '@/hook/useRoutePage'
 import useUserData from '@/hook/useUserData'
 import ClientApi from '@/services/clientApi'
@@ -23,8 +24,9 @@ const RegisterScreen = () => {
   useAos()
   useFirstLoadPage()
   const { translate } = useLanguage()
+  const { openModalDrawer, closeModalDrawer } = useModalDrawer()
   const router = useRoutePage()
-  const { checkNumberPhone } = useCheckForm()
+  const { checkNumberPhone, checkPassword } = useCheckForm()
   const { isMobile } = useMedia()
   const { login } = useUserData()
 
@@ -48,33 +50,51 @@ const RegisterScreen = () => {
     return () => footer.classList.remove('bg-custom-register')
   }, [])
 
+  const handleRegister = async () => {
+    const bodyUser: BodyUserData = {
+      addressShipper: [],
+      exp: 0,
+      sdt: formData.sdt,
+      sex: formData.sex,
+      isAdmin: false,
+      name: formData.name,
+      pass: encryptData(formData.pass),
+      avatar: '',
+      address: '',
+    }
+    const newData = await ClientApi.register(bodyUser)
+    if (!newData?.data) {
+      showNotificationError(translate('register.exitSDT'))
+    } else {
+      await login(formData.sdt, formData.pass, !!formData?.saveLogin)
+    }
+
+    closeModalDrawer()
+    setLoadingRegister(false)
+  }
+
   const handleSubmit = async () => {
     setLoadingRegister(true)
-
     if (formData.pass !== formData.passAgain) {
       showNotificationError(translate('warning.passAgain'))
-    } else {
-      const bodyUser: BodyUserData = {
-        addressShipper: [],
-        exp: 0,
-        sdt: formData.sdt,
-        sex: formData.sex,
-        isAdmin: false,
-        name: formData.name,
-        pass: encryptData(formData.pass),
-        avatar: '',
-        address: '',
-      }
-
-      const newData = await ClientApi.register(bodyUser)
-
-      if (!newData?.data) {
-        showNotificationError(translate('register.exitSDT'))
-      } else {
-        await login(formData.sdt, formData.pass, !!formData?.saveLogin)
-      }
+      setLoadingRegister(false)
+      return
     }
+
+    const isExitedSDT = await ClientApi.checkSDT(formData.sdt)
     setLoadingRegister(false)
+    if (isExitedSDT?.data) {
+      showNotificationError(translate('register.exitSDT'))
+    } else {
+      openModalDrawer({
+        content: <CaptchaOtp numberPhone={formData.sdt} callback={handleRegister} />,
+        title: translate('verifyNumberPhone.title'),
+        configModal: {
+          overClickClose: false,
+          showBtnClose: false,
+        },
+      })
+    }
   }
 
   return (
@@ -114,7 +134,7 @@ const RegisterScreen = () => {
 
               <InputForm
                 showCount
-                maxLength={20}
+                maxLength={24}
                 name='name'
                 required
                 label={translate('productDetail.modalBuy.enterName')}
@@ -123,15 +143,16 @@ const RegisterScreen = () => {
               <InputForm
                 showCount
                 name='pass'
-                maxLength={20}
+                maxLength={15}
                 isPass
                 required
+                validator={checkPassword}
                 label={translate('register.enterPassWord')}
               />
               <InputForm
                 name='passAgain'
                 isPass
-                maxLength={20}
+                maxLength={15}
                 required
                 label={translate('register.enterPassWordAgain')}
               />
