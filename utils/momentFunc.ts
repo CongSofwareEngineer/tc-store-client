@@ -1,10 +1,27 @@
 import { zustandLanguage } from '@/zustand/useLanguage'
 import moment from 'moment'
+import { isObject } from './functions'
 
 const localMoment = () => {
   const { locale } = zustandLanguage.getState().language
   moment.locale(locale)
   return moment
+}
+
+export const convertDateToNumber = (date?: any) => {
+  try {
+    return localMoment()(date || moment()).valueOf()
+  } catch (error) {
+    return localMoment()().valueOf()
+  }
+}
+
+export const plusDay = (value?: any, amount = 7, type: moment.DurationInputArg2 = 'days') => {
+  try {
+    return localMoment()(value || moment()).add(amount, type)
+  } catch (error) {
+    return moment()
+  }
 }
 
 export function isNumericString(input: string) {
@@ -24,6 +41,27 @@ export const formatDateTime = (data: any, format = 'DD / MM /YYYY') => {
     }
 
     return localMoment()(timeTemp).format(format)
+  } catch (error) {
+    return data
+  }
+}
+
+export const expiredTimeToNumber = (data: any) => {
+  try {
+    let timeTemp = data
+
+    if (typeof data === 'string') {
+      if (isNumericString(data)) {
+        timeTemp = parseInt(data)
+      }
+    }
+
+    if (isObject(data)) {
+      timeTemp = timeTemp.toString()
+    }
+
+    const daysDifference = localMoment()(timeTemp).diff(moment(), 'days')
+    return daysDifference
   } catch (error) {
     return data
   }

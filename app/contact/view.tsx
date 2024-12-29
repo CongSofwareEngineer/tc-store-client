@@ -112,37 +112,39 @@ const ContactScreen = () => {
                 formData={formData}
                 onFinish={handleSubmit}
               >
-                <InputForm
-                  name='sdt'
-                  required
-                  disable={!!userData?.sdt}
-                  validator={checkNumberPhone}
-                  label={translate('productDetail.modalBuy.enterNumberPhone')}
-                />
+                <div className='flex flex-col w-full'>
+                  <InputForm
+                    name='sdt'
+                    required
+                    disable={!!userData?.sdt}
+                    validator={checkNumberPhone}
+                    label={translate('productDetail.modalBuy.enterNumberPhone')}
+                  />
 
-                <InputForm
-                  name='name'
-                  required
-                  label={translate('productDetail.modalBuy.enterName')}
-                />
+                  <InputForm
+                    name='name'
+                    required
+                    label={translate('productDetail.modalBuy.enterName')}
+                  />
 
-                <InputForm name='email' label={'Email/ Gmail'} />
-                <InputForm
-                  typeBtn='area'
-                  rows={5}
-                  name='note'
-                  label={translate('textPopular.note')}
-                  maxLength={300}
-                />
-                <div className='md:mt-16 mt-6' />
+                  <InputForm name='email' label={'Email/ Gmail'} />
+                  <InputForm
+                    typeBtn='area'
+                    rows={5}
+                    name='note'
+                    label={translate('textPopular.note')}
+                    maxLength={300}
+                  />
+                  <div className='mt-2' />
 
-                <ButtonForm
-                  loading={loading}
-                  classNameItem='w-full'
-                  className='w-full'
-                  disableClose
-                  titleSubmit={translate('common.Send')}
-                />
+                  <ButtonForm
+                    loading={loading}
+                    classNameItem='w-full'
+                    className='w-full'
+                    disableClose
+                    titleSubmit={translate('common.Send')}
+                  />
+                </div>
               </MyForm>
             )}
           </div>

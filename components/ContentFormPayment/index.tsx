@@ -3,7 +3,6 @@ import React from 'react'
 import useLanguage from '@/hook/useLanguage'
 import { images } from '@/configs/images'
 // import OptionVnLocation from '../OptionVnLocation'
-import InputAreaForm from '../Form/InputAreaForm'
 import InputForm from '../Form/InputForm'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
@@ -29,7 +28,7 @@ const ContentFormPayment = ({ onChange }: { onChange: (param: any) => void }) =>
 
       <div className='relative w-full border-[1px] my-3 border-gray-300' />
 
-      <div className='flex md:gap-6 gap-2 flex-col md:grid md:grid-cols-2 md:pb-2 pb-0'>
+      <div className='flex md:gap-6   flex-col md:grid md:grid-cols-2  '>
         <InputForm
           validator={checkNumberPhone}
           required
@@ -44,18 +43,20 @@ const ContentFormPayment = ({ onChange }: { onChange: (param: any) => void }) =>
           classFromItem='w-full'
         />
       </div>
-      <div className='md:mt-4 mt-2 w-full' />
 
       <OptionVnLocation isNew={false} callback={onChange} />
 
       <div className='md:mt-2 mt-1' />
 
-      <InputAreaForm
+      <InputForm
+        typeBtn='area'
+        maxLength={200}
+        showCount
         rows={2}
         name='noteBil'
         label={translate('bill.noteBill')}
-        className='w-full relative'
       />
+      <div className='md:mb-5 w-full' />
     </div>
   )
 }

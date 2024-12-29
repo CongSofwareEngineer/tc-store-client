@@ -22,8 +22,7 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
   const { typeFile } = useTypeFile({ typeAndroid: '.png,.jpg,.jpeg' })
   const { refreshQuery } = useRefreshQuery()
   const { closeModalDrawer } = useModalDrawer()
-  const { callbackCreateError, callbackUpdateError, callbackCreateSuccess, callbackUpdateSuccess } =
-    useCallbackToast()
+  const { createError, updateError, createSuccess, updateSuccess } = useCallbackToast()
 
   const [formData, setFormData] = useState<{ [key: string]: any } | null>(null)
   const [loading, setLoading] = useState(false)
@@ -71,17 +70,17 @@ const ModalConfigCategory = ({ data }: { data: any }) => {
 
       if (res?.data) {
         if (data) {
-          callbackUpdateSuccess()
+          updateSuccess()
         } else {
-          callbackCreateSuccess()
+          createSuccess()
         }
         await refreshQuery(QUERY_KEY.GetCategoryAdmin)
         closeModalDrawer()
       } else {
         if (data) {
-          callbackUpdateError()
+          updateError()
         } else {
-          callbackCreateError()
+          createError()
         }
       }
     } finally {

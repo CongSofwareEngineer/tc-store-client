@@ -16,7 +16,7 @@ const ModalConfig = ({ data }: { data?: TYPE_USER_DATA }) => {
   const { translate } = useLanguage()
   const { refreshQuery } = useRefreshQuery()
   const { closeModalDrawer } = useModalDrawer()
-  const { callbackUpdateError, callbackUpdateSuccess } = useCallbackToast()
+  const { updateError, updateSuccess } = useCallbackToast()
 
   const [loading, setLoading] = useState(false)
 
@@ -29,10 +29,10 @@ const ModalConfig = ({ data }: { data?: TYPE_USER_DATA }) => {
     const res = await ClientApi.updateUser(data?._id, body)
     if (res.data) {
       await refreshQuery(QUERY_KEY.GetUserAdmin)
-      callbackUpdateSuccess()
+      updateSuccess()
       closeModalDrawer()
     } else {
-      callbackUpdateError()
+      updateError()
     }
     setLoading(false)
   }

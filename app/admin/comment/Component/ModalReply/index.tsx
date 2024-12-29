@@ -14,8 +14,7 @@ const ModalReply = ({ data }: { data?: any }) => {
   const { refreshQuery } = useRefreshQuery()
   const { closeModalDrawer } = useModalDrawer()
   const isNewReply = isEmpty(data?.listReply)
-  const { callbackUpdateError, callbackCreateSuccess, callbackUpdateSuccess, callbackCreateError } =
-    useCallbackToast()
+  const { updateError, createSuccess, updateSuccess, createError } = useCallbackToast()
 
   const [text, setText] = useState('Shop cảm ơn Bạn đã tin tưởng và ủng hộ ạ.')
   const [loading, setLoading] = useState(false)
@@ -43,16 +42,16 @@ const ModalReply = ({ data }: { data?: any }) => {
     if (res.data) {
       await refreshQuery(QUERY_KEY.GetCommentAdmin)
       if (isNewReply) {
-        callbackCreateSuccess(translate('success.reply'))
+        createSuccess(translate('success.reply'))
       } else {
-        callbackUpdateSuccess()
+        updateSuccess()
       }
       closeModalDrawer()
     } else {
       if (isNewReply) {
-        callbackCreateError()
+        createError()
       } else {
-        callbackUpdateError()
+        updateError()
       }
     }
     setLoading(false)

@@ -43,3 +43,8 @@ export const SEX = {
   male: 'male',
   female: 'female',
 } as const
+
+export const TYPE_VOUCHER = {
+  freeShip: 'freeShip',
+  disCount: 'disCount',
+}

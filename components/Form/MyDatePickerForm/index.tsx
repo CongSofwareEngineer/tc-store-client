@@ -2,9 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { Form } from 'antd'
 import MyDatePicker from '@/components/MyDatePicker'
-import dayjs from 'dayjs'
+
 const FormItem = styled(Form.Item)`
-  margin-bottom: 24px !important;
+  margin-bottom: 0px !important;
+  padding-bottom: 17px !important;
   .ant-form-item-row {
     flex-direction: column !important;
     .ant-form-item-label {
@@ -46,7 +47,7 @@ type InputFormType = {
   message?: string
   classFromItem?: string
   disabled?: boolean
-  defaultValue?: ReturnType<typeof dayjs>
+  defaultValue?: any
 }
 
 const MyDatePickerForm = ({

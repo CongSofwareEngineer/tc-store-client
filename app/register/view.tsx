@@ -125,73 +125,75 @@ const RegisterScreen = () => {
               formData={formData}
               onFinish={handleSubmit}
             >
-              <InputForm
-                name='sdt'
-                required
-                validator={checkNumberPhone}
-                label={translate('productDetail.modalBuy.enterNumberPhone')}
-              />
+              <div className='flex flex-col w-full'>
+                <InputForm
+                  name='sdt'
+                  required
+                  validator={checkNumberPhone}
+                  label={translate('productDetail.modalBuy.enterNumberPhone')}
+                />
 
-              <InputForm
-                showCount
-                maxLength={24}
-                name='name'
-                required
-                label={translate('productDetail.modalBuy.enterName')}
-              />
+                <InputForm
+                  showCount
+                  maxLength={24}
+                  name='name'
+                  required
+                  label={translate('productDetail.modalBuy.enterName')}
+                />
 
-              <InputForm
-                showCount
-                name='pass'
-                maxLength={15}
-                isPass
-                required
-                validator={checkPassword}
-                label={translate('register.enterPassWord')}
-              />
-              <InputForm
-                name='passAgain'
-                isPass
-                maxLength={15}
-                required
-                label={translate('register.enterPassWordAgain')}
-              />
-              <div className='flex gap-2 mt-2 '>
-                <div>{translate('userDetail.sex')} :</div>
+                <InputForm
+                  showCount
+                  name='pass'
+                  maxLength={15}
+                  isPass
+                  required
+                  validator={checkPassword}
+                  label={translate('register.enterPassWord')}
+                />
+                <InputForm
+                  name='passAgain'
+                  isPass
+                  maxLength={15}
+                  required
+                  label={translate('register.enterPassWordAgain')}
+                />
+                <div className='flex gap-2 mb-2 '>
+                  <div>{translate('userDetail.sex')} :</div>
 
-                <Checkbox
-                  checked={formData?.sex}
-                  onChange={() => setFormData({ ...formData, sex: true })}
-                >
-                  {translate('textPopular.male')}
-                </Checkbox>
-                <Checkbox
-                  checked={!formData?.sex}
-                  onChange={() => setFormData({ ...formData, sex: false })}
-                >
-                  {translate('textPopular.female')}
-                </Checkbox>
-              </div>
-              <div className='flex gap-2  md:mt-0 mt-3 md:mb-0 mb-1 relative top-[-5px]'>
-                <div>{translate('register.saveRegister')} :</div>
-                <Checkbox
-                  checked={formData?.saveLogin}
-                  onChange={() =>
-                    setFormData({
-                      ...formData,
-                      saveLogin: !formData?.saveLogin,
-                    })
-                  }
+                  <Checkbox
+                    checked={formData?.sex}
+                    onChange={() => setFormData({ ...formData, sex: true })}
+                  >
+                    {translate('textPopular.male')}
+                  </Checkbox>
+                  <Checkbox
+                    checked={!formData?.sex}
+                    onChange={() => setFormData({ ...formData, sex: false })}
+                  >
+                    {translate('textPopular.female')}
+                  </Checkbox>
+                </div>
+                <div className='flex gap-2 my-2 relative top-[-5px]'>
+                  <div>{translate('register.saveRegister')} :</div>
+                  <Checkbox
+                    checked={formData?.saveLogin}
+                    onChange={() =>
+                      setFormData({
+                        ...formData,
+                        saveLogin: !formData?.saveLogin,
+                      })
+                    }
+                  />
+                </div>
+
+                <ButtonForm
+                  loading={loadingRegister}
+                  classNameItem='w-full'
+                  className='w-full'
+                  disableClose
+                  titleSubmit={translate('header.register')}
                 />
               </div>
-
-              <ButtonForm
-                loading={loadingRegister}
-                classNameItem='w-full'
-                className='w-full'
-                disableClose
-                titleSubmit={translate('header.register')}
-              />
             </MyForm>
           </div>
         </div>

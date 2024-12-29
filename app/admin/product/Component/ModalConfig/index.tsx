@@ -27,8 +27,7 @@ const ProductConfig = ({ item }: { item: any }) => {
   const { checkIsNumber } = useCheckForm()
   const { refreshQuery } = useRefreshQuery()
   const { closeModalDrawer } = useModalDrawer()
-  const { callbackUpdateError, callbackCreateSuccess, callbackUpdateSuccess, callbackCreateError } =
-    useCallbackToast()
+  const { updateError, createSuccess, updateSuccess, createError } = useCallbackToast()
 
   const [formData, setFormData] = useState<{ [key: string]: any } | null>(null)
   const [loading, setLoading] = useState(false)
@@ -158,16 +157,16 @@ const ProductConfig = ({ item }: { item: any }) => {
     if (data?.data) {
       await refreshQuery(QUERY_KEY.GetListProductAdmin)
       if (item) {
-        callbackUpdateSuccess()
+        updateSuccess()
       } else {
-        callbackCreateSuccess()
+        createSuccess()
       }
       closeModalDrawer()
     } else {
       if (item) {
-        callbackCreateError()
+        createError()
       } else {
-        callbackUpdateError()
+        updateError()
       }
     }
     setLoading(false)
@@ -180,13 +179,13 @@ const ProductConfig = ({ item }: { item: any }) => {
       onFinish={handleSubmit}
       className='!overflow-auto !w-full gap-2 md:max-h-[85vh]'
     >
-      <div className='flex flex-col gap-4 w-full flex-1 overflow-y-auto '>
-        <div className='flex gap-4 w-full md:flex-row flex-col'>
+      <div className='flex flex-col  w-full flex-1 overflow-y-auto '>
+        <div className='flex md:gap-4 w-full md:flex-row flex-col'>
           <InputForm classFromItem='w-full' name='name' label={translate('header.name')} required />
           <CategoryForm label={translate('menuProduct.category')} name='category' />
         </div>
 
-        <div className='flex gap-4 w-full md:flex-row flex-col '>
+        <div className='flex md:gap-4 w-full md:flex-row flex-col '>
           <InputForm
             classFromItem='w-full'
             name='keyName'
@@ -201,7 +200,7 @@ const ProductConfig = ({ item }: { item: any }) => {
           />
         </div>
 
-        <div className='flex gap-4 w-full md:flex-row flex-col '>
+        <div className='flex md:gap-4 w-full md:flex-row flex-col '>
           <InputForm classFromItem='w-full' name='linkFacebook' label='linkFacebook' />
 
           <InputForm classFromItem='w-full' name='linkShoppe' label='linkShoppe' />
@@ -319,7 +318,6 @@ const ProductConfig = ({ item }: { item: any }) => {
           required
           typeBtn='area'
         />
-        <div className='w-ful md:mt-10' />
         <AttributeAdmin
           typeProduct={formData?.category}
           data={formData?.attributes}
@@ -327,7 +325,7 @@ const ProductConfig = ({ item }: { item: any }) => {
         />
 
         <InputForm classFromItem='w-full' name='des' label='des' required typeBtn='area' />
-        <div className='w-full flex flex-col gap-2 md:mt-16 min-h-[300px]'>
+        <div className='w-full flex flex-col gap-2  min-h-[300px]'>
           <div className='font-bold  '>{`${translate('admin.infoDetail')} :`} </div>
           <div className='w-full flex flex-1 bg-slate-50'>
             <MyBlog pathFile={PATH_IMG.Products} value={formData?.des2} setValue={onChangeBlog} />

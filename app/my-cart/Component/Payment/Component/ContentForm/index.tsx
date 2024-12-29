@@ -1,7 +1,5 @@
 import { ContentFormType } from '@/app/my-cart/type'
-import InputAreaForm from '@/components/Form/InputAreaForm'
 import InputForm from '@/components/Form/InputForm'
-// import OptionVnLocation from '@/components/OptionVnLocation'
 import { images } from '@/configs/images'
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
@@ -30,7 +28,7 @@ const ContentForm = ({ onChange = () => {} }: ContentFormType) => {
       <div className='relative w-full border-[1px] my-3 border-gray-300' />
 
       <div className='flex md:flex-row gap-6'></div>
-      <div className='flex md:gap-6 gap-3 flex-col md:grid md:grid-cols-2 md:pb-2 pb-0'>
+      <div className='flex md:gap-6 gap-3 flex-col md:grid md:grid-cols-2 '>
         <InputForm
           validator={checkNumberPhone}
           required
@@ -45,16 +43,18 @@ const ContentForm = ({ onChange = () => {} }: ContentFormType) => {
           classFromItem='w-full'
         />
       </div>
-      <div className='md:mt-4 mt-2 w-full' />
 
       <OptionVnLocation isNew={false} callback={onChange} />
 
-      <InputAreaForm
+      <InputForm
+        typeBtn='area'
+        maxLength={200}
+        showCount
         rows={2}
         name='noteBil'
         label={translate('bill.noteBill')}
-        className='w-full relative'
       />
+      <div className='md:mb-5 w-full' />
     </div>
   )
 }

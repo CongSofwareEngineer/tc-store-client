@@ -145,7 +145,7 @@ const OptionVnLocation = ({
           />
         </div>
       </div>
-      <div className='w-full flex flex-col gap-2'>
+      <div className='w-full flex flex-col gap-2 mb-[10px]'>
         <div>{translate('textPopular.addressDetail')}</div>
         <MyInput
           disabled={!districts || !provence || !ward}

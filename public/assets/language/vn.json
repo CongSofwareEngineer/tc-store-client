@@ -325,6 +325,10 @@
     "myUser": "Tôi",
     "updateSuccess": "Cập nhật thành công"
   },
+  "voucher": {
+    "expired": "Hạn sử dụng",
+    "amountApplied": "Số người nhận"
+  },
   "admin": {
     "bill": {
       "doYouWantChangeDelivering": "Xác nhận giao hàng",

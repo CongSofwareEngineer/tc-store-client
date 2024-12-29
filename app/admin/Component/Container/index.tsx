@@ -41,44 +41,63 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
     }
   }, [userData, router])
 
-  const LIST_MENU = [
-    {
-      title: translate('admin.revenue'),
-      url: '/admin',
-    },
-    {
-      title: translate('bill.title'),
-      url: '/admin/bill',
-    },
-    {
-      title: translate('header.cart'),
-      url: '/admin/cart',
-    },
-    {
-      title: translate('textPopular.comment'),
-      url: '/admin/comment',
-    },
-    {
-      title: translate('textPopular.product'),
-      url: '/admin/product',
-    },
-    {
-      title: translate('menuProduct.category'),
-      url: '/admin/category',
-    },
-    // {
-    //   title: translate('admin.subCategories'),
-    //   url: '/admin/sub-categories',
-    // },
-    // {
-    //   title: 'Fan page',
-    //   url: '/admin/fan-page',
-    // },
-    {
-      title: 'User',
-      url: '/admin/user',
-    },
-  ]
+  const renderMenu = () => {
+    const LIST_MENU = [
+      {
+        title: translate('admin.revenue'),
+        url: '/admin',
+      },
+      {
+        title: translate('bill.title'),
+        url: '/admin/bill',
+      },
+      {
+        title: translate('header.cart'),
+        url: '/admin/cart',
+      },
+      {
+        title: translate('textPopular.comment'),
+        url: '/admin/comment',
+      },
+      {
+        title: translate('textPopular.product'),
+        url: '/admin/product',
+      },
+      {
+        title: translate('menuProduct.category'),
+        url: '/admin/category',
+      },
+      // {
+      //   title: translate('admin.subCategories'),
+      //   url: '/admin/sub-categories',
+      // },
+      {
+        title: 'Voucher',
+        url: '/admin/voucher',
+      },
+      {
+        title: 'User',
+        url: '/admin/user',
+      },
+    ]
+
+    return LIST_MENU.map((e) => {
+      return (
+        <div key={e.url} className='flex gap-3 mt-2 items-center'>
+          <TagFilled style={{ color: 'white' }} />
+          <Link
+            href={e.url}
+            className='capitalize text-medium hover:underline text-white'
+            style={{
+              fontWeight: patchName.includes(e.url) ? 'bold' : 'normal',
+            }}
+          >
+            {e.title}
+          </Link>
+        </div>
+      )
+    })
+  }
 
   return (
     <div className='md:fixed  w-screen   flex md:flex-row flex-col h-full max-h-[calc(100vh-56px)]'>
@@ -94,22 +113,7 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
                   className='!relative !w-full !h-auto'
                 />
               </div>
-              {LIST_MENU.map((e) => {
-                return (
-                  <div key={e.url} className='flex gap-3 mt-2 items-center'>
-                    <TagFilled style={{ color: 'white' }} />
-                    <Link
-                      href={e.url}
-                      className='capitalize text-medium hover:underline text-white'
-                      style={{
-                        fontWeight: patchName.includes(e.url) ? 'bold' : 'normal',
-                      }}
-                    >
-                      {e.title}
-                    </Link>
-                  </div>
-                )
-              })}
+              {renderMenu()}
             </div>
           )}
           <div className='flex flex-1 md:p-4 p-5 md:max-w-[calc(100vw-212px)]'>{children}</div>

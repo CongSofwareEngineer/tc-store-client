@@ -36,6 +36,35 @@ const AdminApi = {
     })
   },
 
+  //voucher
+  getVouchers: async (query = '') => {
+    return fetchData({ url: `voucher/all${query}` })
+  },
+  getVoucherBuyId: async (id: string) => {
+    return fetchData({ url: `voucher/detail/${id}` })
+  },
+  deleteVoucher: async (id: string, imagesDelete: string[]) => {
+    return fetchData({
+      url: `voucher/delete`,
+      method: REQUEST_TYPE.POST,
+      body: { id, imagesDelete },
+    })
+  },
+  updateVoucher: async (id: string, body: any) => {
+    return fetchData({
+      url: `voucher/update/${id}`,
+      method: REQUEST_TYPE.POST,
+      body,
+    })
+  },
+  createVoucher: async (body: any) => {
+    return fetchData({
+      url: `voucher/create`,
+      method: REQUEST_TYPE.POST,
+      body,
+    })
+  },
+
   //Product
   deleteProduct: async (id: string, imagesDelete?: string[]) => {
     return fetchData({
@@ -60,12 +89,7 @@ const AdminApi = {
       body,
     })
   },
-  getProduct: async (query = '') => {
-    const res = await fetchData({
-      url: `all-product${query}`,
-    })
-    return res
-  },
+
   getListProducts: async (queryUrl: string) => {
     return fetchData({
       url: `product/admin/all${queryUrl}`,

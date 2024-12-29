@@ -35,7 +35,7 @@ const CommentClient = () => {
   const { openModalDrawer } = useModalDrawer()
   const { refreshQuery } = useRefreshQuery()
   const { data, isLoading } = useCommentAdmin(queries)
-  const { callbackDeleteSuccess, callbackDeleteError } = useCallbackToast()
+  const { deleteSuccess, deleteError } = useCallbackToast()
   const { renderContent } = useSearchBaseAdmin(
     {
       dateEnd: true,
@@ -72,9 +72,9 @@ const CommentClient = () => {
       const res = await ClientApi.deleteComment(bodyDelete)
       if (res.data) {
         await refreshQuery(QUERY_KEY.GetCommentAdmin)
-        callbackDeleteSuccess()
+        deleteSuccess()
       } else {
-        callbackDeleteError()
+        deleteError()
       }
     }
 

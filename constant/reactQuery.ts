@@ -13,6 +13,7 @@ export enum QUERY_KEY {
   MyBillUser = 'MyBillUser',
   AllProvincesVn = 'AllProvincesVn',
   BillAdmin = 'BillAdmin',
+  VoucherAdmin = 'VoucherAdmin',
   GetCommentAdmin = 'GetCommentAdmin',
   RevenueAdmin = 'RevenueAdmin',
   GetNests = 'GetNests',

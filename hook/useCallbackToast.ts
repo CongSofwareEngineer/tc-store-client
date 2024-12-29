@@ -4,7 +4,7 @@ import useLanguage from './useLanguage'
 const useCallbackToast = () => {
   const { translate } = useLanguage()
   const callback = (data: any = null, text?: string) => {
-    if (!!data) {
+    if (data) {
       showNotificationSuccess(text || translate('success.update'))
     } else {
       showNotificationSuccess(text || translate('success.create'))
@@ -12,46 +12,46 @@ const useCallbackToast = () => {
   }
 
   const callbackReject = (data: any = null, text?: string) => {
-    if (!!data) {
+    if (data) {
       showNotificationError(text || translate('error.update'))
     } else {
       showNotificationSuccess(text || translate('error.create'))
     }
   }
 
-  const callbackUpdateSuccess = (text?: string) => {
+  const updateSuccess = (text?: string) => {
     showNotificationSuccess(text || translate('success.update'))
   }
 
-  const callbackDeleteSuccess = (text?: string) => {
+  const deleteSuccess = (text?: string) => {
     showNotificationSuccess(text || translate('success.delete'))
   }
 
-  const callbackCreateSuccess = (text?: string) => {
+  const createSuccess = (text?: string) => {
     showNotificationSuccess(text || translate('success.create'))
   }
 
-  const callbackUpdateError = (text?: string) => {
+  const updateError = (text?: string) => {
     showNotificationError(text || translate('error.update'))
   }
 
-  const callbackDeleteError = (text?: string) => {
+  const deleteError = (text?: string) => {
     showNotificationError(text || translate('error.delete'))
   }
 
-  const callbackCreateError = (text?: string) => {
+  const createError = (text?: string) => {
     showNotificationError(text || translate('error.create'))
   }
 
   return {
     callback,
     callbackReject,
-    callbackCreateSuccess,
-    callbackUpdateSuccess,
-    callbackDeleteSuccess,
-    callbackUpdateError,
-    callbackCreateError,
-    callbackDeleteError,
+    createSuccess,
+    updateSuccess,
+    deleteSuccess,
+    updateError,
+    createError,
+    deleteError,
   }
 }
 

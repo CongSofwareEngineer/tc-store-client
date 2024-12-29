@@ -4,7 +4,8 @@ import { Form } from 'antd'
 import React from 'react'
 import styled from 'styled-components'
 const FormItem = styled(styled(Form.Item)<{ $configInput: any }>``)`
-  margin-bottom: 24px !important;
+  margin-bottom: 0px !important;
+  padding-bottom: 17px !important;
   .ant-form-item-row {
     flex-direction: column !important;
     .ant-form-item-label {

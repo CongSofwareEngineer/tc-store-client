@@ -56,6 +56,7 @@ const ProductAdminScreen = () => {
   const handleDelete = (item: any) => {
     const callback = async () => {
       const imagesDelete = [item?.imageMain, ...item?.imageMore]
+      console.log({ imagesDelete })
 
       const res = await AdminApi.deleteProduct(item?._id, imagesDelete)
       if (res.data) {

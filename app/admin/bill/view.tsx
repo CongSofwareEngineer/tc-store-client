@@ -29,8 +29,7 @@ const BillAdminScreen = () => {
   const { translate } = useLanguage()
   const { refreshQuery } = useRefreshQuery()
   const { isMobile } = useMedia()
-  const { callbackDeleteSuccess, callbackDeleteError, callbackUpdateError, callbackUpdateSuccess } =
-    useCallbackToast()
+  const { deleteSuccess, deleteError, updateError, updateSuccess } = useCallbackToast()
 
   const { renderContent } = useSearchBaseAdmin(
     {
@@ -86,10 +85,10 @@ const BillAdminScreen = () => {
       const res = await AdminApi.updateBill(item._id, body)
 
       if (res?.data) {
-        callbackUpdateSuccess()
+        updateSuccess()
         refreshQuery(QUERY_KEY.BillAdmin)
       } else {
-        callbackUpdateError()
+        updateError()
       }
       closeModalDrawer()
     }
@@ -103,10 +102,10 @@ const BillAdminScreen = () => {
     const callback = async () => {
       const data = await AdminApi.deleteBill(id)
       if (data?.data) {
-        callbackDeleteSuccess()
+        deleteSuccess()
         refreshQuery(QUERY_KEY.BillAdmin)
       } else {
-        callbackDeleteError()
+        deleteError()
       }
       closeModalDrawer()
     }

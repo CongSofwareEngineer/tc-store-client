@@ -11,6 +11,9 @@ import {
   SortOrder,
 } from 'antd/es/table/interface'
 const CardCustom = styled(Card)`
+  .ant-table-cell {
+    text-align: center !important;
+  }
   @media screen and (max-width: 768px) {
     .ant-card-body {
       padding: 10px !important;
