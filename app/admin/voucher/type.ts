@@ -1,6 +1,6 @@
 export type VoucherProps = {
-  type: string
-  _id: string
+  type?: string
+  _id?: string
   name?: string
   note?: string
   icon?: string
