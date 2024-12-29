@@ -148,6 +148,7 @@ const ViewDetail = ({
       setLoadingAddCart(false)
       showNotificationSuccess(translate('addCart.addSuccess'))
     } catch (error) {
+      console.log({ error })
     } finally {
       setLoadingAddCart(false)
     }
