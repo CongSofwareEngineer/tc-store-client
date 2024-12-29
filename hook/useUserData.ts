@@ -20,12 +20,14 @@ const useUserData = () => {
 
     if (data?.data) {
       setUserDataZustand(data?.data)
-      setCookie(COOKIE_KEY.Auth, data?.data.auth?.toString(), COOKIE_EXPIRED.ExpiredAuth)
-      setCookie(
-        COOKIE_KEY.AuthRefresh,
-        data?.data.authRefresh?.toString(),
-        COOKIE_EXPIRED.ExpiredAuthRefresh
-      )
+      await Promise.all([
+        setCookie(COOKIE_KEY.Auth, data?.data.auth?.toString(), COOKIE_EXPIRED.ExpiredAuth),
+        setCookie(
+          COOKIE_KEY.AuthRefresh,
+          data?.data.authRefresh?.toString(),
+          COOKIE_EXPIRED.ExpiredAuthRefresh
+        ),
+      ])
     }
     return data?.data || null
   }

@@ -1,5 +1,5 @@
-import { devtools } from 'zustand/middleware'
-import { create } from 'zustand'
+import { devtools, persist } from 'zustand/middleware'
+import { createStore } from 'zustand'
 import { INIT_ZUSTAND, TYPE_ZUSTAND, ZUSTAND } from '@/constant/zustand'
 import secureLocalStorage from 'react-secure-storage'
 import { decryptData } from '@/utils/crypto'
@@ -14,21 +14,39 @@ type UserDataStoreActions = {
 
 type UserDataStore = UserDataStoreState & UserDataStoreActions
 
-const zustandUserData = create<UserDataStore>()(
+const zustandUserData = createStore<UserDataStore>()(
   devtools(
-    (set) => ({
-      [ZUSTAND.UserData]: INIT_ZUSTAND[ZUSTAND.UserData],
-      setUserData: (user: TYPE_ZUSTAND[ZUSTAND.UserData]) => set({ [ZUSTAND.UserData]: user }),
-      reset: () => set({ [ZUSTAND.UserData]: INIT_ZUSTAND[ZUSTAND.UserData] }),
-      loadDataLocal: () => {
-        const dataSecure = secureLocalStorage.getItem(ZUSTAND.UserData)
+    persist(
+      (set) => ({
+        [ZUSTAND.UserData]: INIT_ZUSTAND[ZUSTAND.UserData],
+        setUserData: (user: TYPE_ZUSTAND[ZUSTAND.UserData]) => set({ [ZUSTAND.UserData]: user }),
+        reset: () => set({ [ZUSTAND.UserData]: INIT_ZUSTAND[ZUSTAND.UserData] }),
+        loadDataLocal: () => {
+          const dataSecure = secureLocalStorage.getItem(ZUSTAND.UserData)
 
-        if (dataSecure) {
-          const dataDecode = decryptData(dataSecure.toString())
-          set({ [ZUSTAND.UserData]: JSON.parse(dataDecode) })
-        }
-      },
-    }),
+          if (dataSecure) {
+            const dataDecode = decryptData(dataSecure.toString())
+            set({ [ZUSTAND.UserData]: JSON.parse(dataDecode) })
+          }
+        },
+      }),
+      {
+        name: `zustand-${ZUSTAND.UserData}`,
+        storage: {
+          getItem: () => {
+            const dataSecure = secureLocalStorage.getItem(ZUSTAND.UserData)
+
+            if (dataSecure) {
+              const dataDecode = decryptData(dataSecure.toString())
+              return JSON.parse(dataDecode)
+            }
+            return null
+          },
+          removeItem: () => null,
+          setItem: () => null,
+        },
+      }
+    ),
     {
       name: `zustand-${ZUSTAND.UserData}`,
       enabled: process.env.NODE_ENV !== 'production',
@@ -37,10 +55,10 @@ const zustandUserData = create<UserDataStore>()(
 )
 
 export const useUserData = () => {
-  const userData = zustandUserData((state) => state[ZUSTAND.UserData])
-  const setUserData = zustandUserData((state) => state.setUserData)
-  const reset = zustandUserData((state) => state.reset)
-  const loadDataLocal = zustandUserData((state) => state.loadDataLocal)
+  const userData = zustandUserData.getState()[ZUSTAND.UserData]
+  const setUserData = zustandUserData.getState().setUserData
+  const reset = zustandUserData.getState().reset
+  const loadDataLocal = zustandUserData.getState().loadDataLocal
 
   return {
     userData,

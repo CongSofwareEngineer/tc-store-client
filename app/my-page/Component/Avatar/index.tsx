@@ -1,4 +1,5 @@
 import ModalProcess from '@/components/ModalProcess'
+import MyImage from '@/components/MyImage'
 import useBase64Img from '@/hook/useBase64Img'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
@@ -9,7 +10,6 @@ import { showNotificationError, showNotificationSuccess } from '@/utils/notifica
 import { EditTwoTone } from '@ant-design/icons'
 import { Upload } from 'antd'
 import ImgCrop from 'antd-img-crop'
-import Image from 'next/image'
 import React, { useMemo } from 'react'
 import { isIOS, isMacOs } from 'react-device-detect'
 
@@ -64,14 +64,14 @@ const Avatar = () => {
 
   return (
     <div className='w-[150px] min-h-[150px] relative overflow-hidden rounded-[50%]'>
-      <Image
-        fill
-        src={detectAvatar(userData?.avatar?.toString())}
-        alt='avatar'
-        className='!relative !w-full !h-auto'
-        priority
-        key={userData?.avatar}
-      />
+      <div className='absolute w-full h-full'>
+        <MyImage
+          preview={false}
+          src={detectAvatar(userData?.avatar?.toString())}
+          alt='avatar'
+          className='!relative !w-full !h-full'
+        />
+      </div>
       <div className='absolute-center mt-2'>
         <ImgCrop
           aspect={1}

@@ -48,7 +48,7 @@ const FirstLoadWebsite: NextPage = () => {
 
       if (data?.data) {
         setUserData(data?.data)
-        setCookie(COOKIE_KEY.Auth, data?.data.auth?.toString(), COOKIE_EXPIRED.ExpiredAuth)
+        await setCookie(COOKIE_KEY.Auth, data?.data.auth?.toString(), COOKIE_EXPIRED.ExpiredAuth)
       }
       return data?.data || null
     }
@@ -60,6 +60,7 @@ const FirstLoadWebsite: NextPage = () => {
         if (dataDecode) {
           const userData = JSON.parse(dataDecode)
           const refreshAuth = await getCookie(COOKIE_KEY.AuthRefresh)
+
           if (!refreshAuth) {
             ObserverService.emit(OBSERVER_KEY.LogOut, false)
             return
