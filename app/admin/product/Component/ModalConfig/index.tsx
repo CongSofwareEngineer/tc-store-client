@@ -141,7 +141,7 @@ const ProductConfig = ({ item }: { item: any }) => {
       dataEdit.desSeo = formData?.desSeo
 
       if (Object.keys(dataEdit).length > 0) {
-        dataEdit.imageDelete = getImgDelete()
+        dataEdit.imagesDelete = getImgDelete()
         dataEdit.des2 = JSON.stringify(dataEdit.des2)
 
         data = await AdminApi.updateProduct(item._id, dataEdit)

@@ -2,6 +2,7 @@ import { COOKIE_KEY, OBSERVER_KEY, REQUEST_TYPE } from '@/constant/app'
 import { getCookie, setCookie } from '@/services/CookiesService'
 import ObserverService from '@/services/observer'
 import { decryptData, encodeDataMaxLength, encryptData } from '@/utils/crypto'
+import { showNotificationError } from '@/utils/notification'
 import axios from 'axios'
 
 export type ServerAPIReqType = {
@@ -16,7 +17,7 @@ export type ServerAPIReqType = {
 export type ClientAPITypeParam = ServerAPIReqType
 
 export const fetchData = async (
-  param: ClientAPITypeParam,
+  param: ClientAPITypeParam
 ): Promise<{
   data: any
   error?: any
@@ -37,6 +38,7 @@ export const fetchData = async (
         const authRefresh = await getCookie(COOKIE_KEY.AuthRefresh)
 
         if (!authRefresh) {
+          showNotificationError('Bạn đã hết hạn đăng nhập')
           ObserverService.emit(OBSERVER_KEY.LogOut, false)
           return {
             data: null,

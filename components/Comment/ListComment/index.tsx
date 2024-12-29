@@ -71,7 +71,7 @@ const Like = ({
   const handleDelete = () => {
     const callback = async () => {
       const bodyDelete = {
-        imageDelete: data.listImg || [],
+        imagesDelete: data.listImg || [],
         id: data._id,
       }
       const res = await ClientApi.deleteComment(bodyDelete)

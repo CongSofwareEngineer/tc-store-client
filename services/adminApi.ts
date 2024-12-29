@@ -37,12 +37,12 @@ const AdminApi = {
   },
 
   //Product
-  deleteProduct: async (id: string, imageDelete?: string[]) => {
+  deleteProduct: async (id: string, imagesDelete?: string[]) => {
     return fetchData({
       url: `product/delete/${id}`,
       method: REQUEST_TYPE.POST,
       body: {
-        imageDelete,
+        imagesDelete,
       },
     })
   },

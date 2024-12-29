@@ -66,7 +66,7 @@ const CommentClient = () => {
   const handleDelete = (item: any) => {
     const callback = async () => {
       const bodyDelete = {
-        imageDelete: item.listImg || [],
+        imagesDelete: item.listImg || [],
         id: item._id,
       }
       const res = await ClientApi.deleteComment(bodyDelete)
