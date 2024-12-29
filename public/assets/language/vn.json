@@ -345,13 +345,15 @@
       "yellow": "Vàng",
       "black": "Đen",
       "white": "Trắng",
-      "blue": "Xanh dương",
-      "blueWhite": "Xanh trắng",
-      "orangeWhite": "Cam trắng",
-      "whiteBlack": "Trắng đen",
       "purple": "Tím",
       "gray": "Xám",
-      "green": "Xanh lá"
+      "green": "Xanh lá",
+      "blue": "Xanh dương",
+      "grayBlack": "Xám đen",
+      "blueWhite": "Xanh trắng",
+      "brownWhite": "Nâu trắng",
+      "orangeWhite": "Cam trắng",
+      "whiteBlack": "Trắng đen"
     }
   },
   "comment": {

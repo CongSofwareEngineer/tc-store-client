@@ -34,6 +34,8 @@ export const VALUE_KEY_DEFAULT = {
     'whiteBlack',
     'orangeWhite',
     'blueWhite',
+    'grayBlack',
+    'brownWhite',
   ],
 } as const
 
