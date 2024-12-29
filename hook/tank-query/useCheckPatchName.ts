@@ -20,7 +20,7 @@ const useCheckPatchName = () => {
     } else {
       switch (patchName) {
         case '/register':
-          ObserverService.emit(OBSERVER_KEY.LogOut)
+          router.push('/')
           break
       }
     }

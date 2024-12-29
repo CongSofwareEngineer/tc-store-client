@@ -44,16 +44,7 @@ const FirstLoadWebsite: NextPage = () => {
   //re login
   useEffect(() => {
     const loginWithDB = async (sdt: string, pass: string) => {
-      const dataBody = encryptData(
-        JSON.stringify({
-          sdt,
-          pass,
-        })
-      )
-      const body = {
-        data: dataBody,
-      }
-      const data = await ClientApi.login(body)
+      const data = await ClientApi.login(sdt, pass)
 
       if (data?.data) {
         setUserData(data?.data)

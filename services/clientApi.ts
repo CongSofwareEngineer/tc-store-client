@@ -62,7 +62,16 @@ const ClientApi = {
   checkSDT: async (sdt: any) => {
     return fetchData({ url: `user/check-sdt/${sdt}` })
   },
-  login: async (body: any) => {
+  login: async (sdt: string, pass: string) => {
+    const dataBody = encryptData(
+      JSON.stringify({
+        sdt,
+        pass,
+      })
+    )
+    const body = {
+      data: dataBody,
+    }
     return fetchData({
       url: `user/login`,
       method: REQUEST_TYPE.POST,

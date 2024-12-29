@@ -302,6 +302,7 @@
     "invalidPass": "Mật khẩu chưa mã độc",
     "inValueNumber": "Không phải là số",
     "minimumPass": "Mật khảu tối thiểu 4 ký tự",
+    "minimumText": "Tối thiểu 4 ký tự",
     "pinCode": "Pin code sai"
   },
   "home": {

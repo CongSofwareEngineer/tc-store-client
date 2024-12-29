@@ -1,14 +1,18 @@
 import useCheckForm from '@/hook/useCheckForm'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
-import useUserData from '@/hook/useUserData'
+import { useUserData as useUserDataZustand } from '@/zustand/useUserData'
 import ClientApi from '@/services/clientApi'
-import { decryptData } from '@/utils/crypto'
+import { decryptData, encryptData } from '@/utils/crypto'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 
 import { Button, Checkbox, Input } from 'antd'
 import { isEmpty } from 'lodash'
 import React, { useEffect, useState } from 'react'
+import { ZUSTAND } from '@/constant/zustand'
+import secureLocalStorage from 'react-secure-storage'
+import ObserverService from '@/services/observer'
+import { OBSERVER_KEY } from '@/constant/app'
 
 type PropsType = {
   keyType: string
@@ -18,7 +22,7 @@ type PropsType = {
 }
 
 const ModalUpdateUser = ({ keyType, callBack, initValue, maxLength = 20 }: PropsType) => {
-  const { refreshLogin, userData } = useUserData()
+  const { setUserData, userData } = useUserDataZustand()
   const { closeModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
   const { checkNumberPhone } = useCheckForm()
@@ -49,39 +53,58 @@ const ModalUpdateUser = ({ keyType, callBack, initValue, maxLength = 20 }: Props
   const handleSubmit = async () => {
     setLoading(true)
     let error = false
+    let valueTemp = valueNew?.toString() || ''
+    if (isEmpty(valueTemp)) {
+      showNotificationError(translate('errors.empty'))
+      error = true
+    }
+
     switch (keyType) {
       case 'sdt':
-        if (checkNumberPhone(valueNew?.toString() || '')) {
-          showNotificationError(checkNumberPhone(valueNew?.toString() || ''))
+        if (checkNumberPhone(valueTemp)) {
+          showNotificationError(checkNumberPhone(valueTemp))
           error = true
         }
         break
 
-      case 'name':
       case 'pass':
-        if (isEmpty(valueNew?.toString())) {
-          showNotificationError(translate('errors.empty'))
+        if (valueTemp.length < 4) {
+          showNotificationError(translate('errors.minimumText'))
           error = true
         }
+        valueTemp = encryptData(valueTemp)
         break
     }
+
     if (error) {
       setLoading(false)
       return
     }
     if (callBack) {
-      await callBack(valueNew?.toString())
+      await callBack(valueTemp)
     } else {
       const body = {
-        [keyType]: valueNew,
+        [keyType]: valueTemp,
       }
+
       const res = await ClientApi.updateUser(userData?._id, body)
 
       if (!res?.error) {
-        await refreshLogin()
+        const userTemp: any = {
+          ...userData,
+          ...body,
+        }
+
+        setUserData(userTemp)
+        if (secureLocalStorage.getItem(ZUSTAND.UserData)) {
+          const userEncode = encryptData(JSON.stringify(userTemp))
+          secureLocalStorage.setItem(ZUSTAND.UserData, userEncode)
+        }
+
         showNotificationSuccess(translate('myPage.updateSuccess'))
       } else {
         showNotificationError(translate('error.expiredLogin'))
+        ObserverService.emit(OBSERVER_KEY.LogOut)
       }
     }
     closeModalDrawer()

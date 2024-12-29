@@ -1,6 +1,6 @@
 import useLanguage from './useLanguage'
 import secureLocalStorage from 'react-secure-storage'
-import { decryptData, encryptData } from '@/utils/crypto'
+import { encryptData } from '@/utils/crypto'
 import useModalDrawer from './useModalDrawer'
 import { COOKIE_EXPIRED, COOKIE_KEY, OBSERVER_KEY } from '@/constant/app'
 import { setCookie } from '@/services/CookiesService'
@@ -16,16 +16,7 @@ const useUserData = () => {
   const { setUserData: setUserDataZustand, userData } = userUserDataZustand()
 
   const loginWithDB = async (sdt: string, pass: string) => {
-    const dataBody = encryptData(
-      JSON.stringify({
-        sdt,
-        pass,
-      })
-    )
-    const body = {
-      data: dataBody,
-    }
-    const data = await ClientApi.login(body)
+    const data = await ClientApi.login(sdt, pass)
 
     if (data?.data) {
       setUserDataZustand(data?.data)

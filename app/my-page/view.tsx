@@ -147,9 +147,9 @@ const MyProfile = () => {
               <span className='w-[140px]'>{translate('userDetail.sex')}</span>
               <div className='flex flex-1 gap-2 items-end'>
                 <div className='flex gap-2 items-end'>
-                  <MyCheckBox className='!w-[22px] !h-[22px]' value={!userData?.sex} />
+                  <MyCheckBox className='!w-[22px] !h-[22px]' value={userData?.sex} />
                   <span>
-                    {translate(!userData?.sex ? 'textPopular.female' : 'textPopular.male')}
+                    {translate(userData?.sex ? 'textPopular.female' : 'textPopular.male')}
                   </span>
                 </div>
                 <EditOutlined
