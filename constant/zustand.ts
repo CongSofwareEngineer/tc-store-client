@@ -9,6 +9,7 @@ const localeVN = {
 export enum ZUSTAND {
   Setting = 'setting',
   ModalAdmin = 'modalAdmin',
+  Modal = 'modal',
   Language = 'language',
   UserData = 'userData',
   ConnectedChain = 'connectedChain',
