@@ -1,6 +1,7 @@
 import { zustandLanguage } from '@/zustand/useLanguage'
 import moment from 'moment'
 import { isObject } from './functions'
+import dayjs from 'dayjs'
 
 const localMoment = () => {
   const { locale } = zustandLanguage.getState().language
@@ -8,9 +9,17 @@ const localMoment = () => {
   return moment
 }
 
-export const convertDateToNumber = (date?: any) => {
+export const convertDateToNumber = (data?: any) => {
   try {
-    return localMoment()(date || moment()).valueOf()
+    let timeTemp = data
+    if (typeof data === 'string' && isNumericString(data)) {
+      timeTemp = parseInt(data)
+    }
+    if (isObject(data)) {
+      timeTemp = timeTemp.toString()
+    }
+
+    return localMoment()(timeTemp || moment()).valueOf()
   } catch (error) {
     return localMoment()().valueOf()
   }
@@ -39,10 +48,13 @@ export const formatDateTime = (data: any, format = 'DD / MM /YYYY') => {
     if (typeof data === 'string' && isNumericString(data)) {
       timeTemp = parseInt(data)
     }
+    if (isObject(data)) {
+      timeTemp = timeTemp.toString()
+    }
 
     return localMoment()(timeTemp).format(format)
   } catch (error) {
-    return data
+    return localMoment()().format(format)
   }
 }
 
@@ -85,5 +97,19 @@ export const diffTime = (data: any, type: moment.DurationInputArg2 = 'days') => 
     return daysDifference
   } catch (error) {
     return 0
+  }
+}
+
+export const formatDatePicker = (data: any) => {
+  try {
+    let timeTemp = data
+    if (typeof data === typeof dayjs) {
+      return timeTemp
+    }
+    timeTemp = formatDateTime(data, 'DD/MM/YYYY')
+
+    return dayjs(timeTemp, 'DD/MM/YYYY')
+  } catch (error) {
+    return dayjs(Date.now(), 'DD/MM/YYYY')
   }
 }

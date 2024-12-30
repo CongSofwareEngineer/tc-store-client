@@ -3,7 +3,7 @@ import { VoucherProps } from '../../type'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useCallbackToast from '@/hook/useCallbackToast'
-import { convertDateToNumber, diffTime, formatDateTime, plusDay } from '@/utils/momentFunc'
+import { convertDateToNumber, diffTime, formatDatePicker, plusDay } from '@/utils/momentFunc'
 import MyForm from '@/components/Form/MyForm'
 import ButtonForm from '@/components/Form/ButtonForm'
 import InputForm from '@/components/Form/InputForm'
@@ -17,6 +17,7 @@ import { TYPE_VOUCHER } from '@/constant/admin'
 import { isEqual } from 'lodash'
 import AdminApi from '@/services/adminApi'
 import { QUERY_KEY } from '@/constant/reactQuery'
+import { isObject } from '@/utils/functions'
 
 const ModalConfig = ({ data }: { data?: VoucherProps }) => {
   const { translate, lang } = useLanguage()
@@ -77,6 +78,9 @@ const ModalConfig = ({ data }: { data?: VoucherProps }) => {
           body[key] = value
         }
       })
+      if (body?.expired && isObject(body?.expired)) {
+        body.expired = convertDateToNumber(body?.expired?.toString())
+      }
 
       const res = await AdminApi.updateVoucher(data?._id!, formData)
 
@@ -88,7 +92,14 @@ const ModalConfig = ({ data }: { data?: VoucherProps }) => {
         updateError()
       }
     } else {
-      const res = await AdminApi.createVoucher(formData)
+      const body = {
+        ...formData,
+      }
+      if (body?.expired && isObject(body?.expired)) {
+        body.expired = convertDateToNumber(body?.expired?.toString())
+      }
+
+      const res = await AdminApi.createVoucher(body)
 
       if (res.data) {
         await refreshQuery(QUERY_KEY.VoucherAdmin)
@@ -113,7 +124,7 @@ const ModalConfig = ({ data }: { data?: VoucherProps }) => {
         <MyDatePickerForm
           name='expired'
           label={`${translate('textPopular.dateEnd')} (${diffTime(formData?.expired) + 1} day)`}
-          defaultValue={formatDateTime(formData?.expired, 'DD/MM/YY')}
+          defaultValue={formatDatePicker(formData?.expired)}
         />
 
         <SelectForm
