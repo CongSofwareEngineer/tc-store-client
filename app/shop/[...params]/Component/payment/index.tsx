@@ -26,7 +26,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const { translate } = useLanguage()
   const route = useRoutePage()
   const { userData, isLogin } = useUserData()
-  const { refreshQuery } = useRefreshQuery()
+  const { refreshListQuery } = useRefreshQuery()
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()
   const { onChangeOptions, listOptions, optionSelected } = useOptionPayment()
 
@@ -63,11 +63,11 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   }
 
   const callbackSuccessBuy = async () => {
-    await Promise.all([
-      refreshQuery(QUERY_KEY.MyCartUser),
-      refreshQuery(QUERY_KEY.GetProductByID),
-      refreshQuery(QUERY_KEY.MyBillUser),
-      refreshQuery(QUERY_KEY.LengthCartUser),
+    await refreshListQuery([
+      QUERY_KEY.MyCartUser,
+      QUERY_KEY.GetProductByID,
+      QUERY_KEY.MyBillUser,
+      QUERY_KEY.LengthCartUser,
     ])
 
     openModalDrawer({
