@@ -23,6 +23,7 @@ const MyDatePicker = ({
 }: Props) => {
   return (
     <DatePicker
+      inputReadOnly
       disabled={disabled}
       onChange={(e) => onChange(e)}
       defaultValue={defaultValue ? formatDatePicker(defaultValue) : null}
