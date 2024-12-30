@@ -4,7 +4,7 @@ const useAos = (time = 800) => {
   const { isMobile } = useMedia()
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
     const Aos = require('aos')
     setTimeout(() => {
       Aos.init({
