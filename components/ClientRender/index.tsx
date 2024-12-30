@@ -2,34 +2,9 @@
 import React, { useLayoutEffect } from 'react'
 import Header from '../Header'
 import Footer from '../Footer'
-import dynamic from 'next/dynamic'
 import useAos from '@/hook/useAos'
 import { useCategoryMenu } from '@/zustand/useCategoryMenu'
 import { useUserData } from '@/zustand/useUserData'
-
-const LoadingFirstPage = dynamic(() => import('../LoadingFirstPage'), {
-  ssr: true,
-})
-
-const ToastNoti = dynamic(() => import('../ToastNoti'), {
-  ssr: false,
-})
-
-const Notification = dynamic(() => import('../Notification'), {
-  ssr: false,
-})
-
-const CheckPingServer = dynamic(() => import('../CheckPingServer'), {
-  ssr: false,
-})
-
-const MyModalAdmin = dynamic(() => import('../MyModalAdmin'), {
-  ssr: false,
-})
-
-const FirstLoadWebsite = dynamic(() => import('../FirstLoadWebsite'), {
-  ssr: false,
-})
 
 const ClientRender = ({
   children,
@@ -43,6 +18,8 @@ const ClientRender = ({
   const { loadDataLocal } = useUserData()
 
   useLayoutEffect(() => {
+    console.log({ env: process.env.NEXT_PUBLIC_DISABLE_DEV })
+
     setCategoryMenu(menuCategory)
     loadDataLocal()
   }, [])
@@ -59,12 +36,6 @@ const ClientRender = ({
         </section>
       </main>
       <Footer />
-      <LoadingFirstPage />
-      <ToastNoti />
-      <Notification />
-      <MyModalAdmin />
-      <CheckPingServer />
-      <FirstLoadWebsite />
     </>
   )
 }

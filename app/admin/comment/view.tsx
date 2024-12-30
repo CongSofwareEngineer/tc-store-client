@@ -81,7 +81,6 @@ const CommentClient = () => {
     openModalDrawer({
       content: <ModalDelete callback={callback} />,
       configModal: {
-        showBtnClose: false,
         overClickClose: false,
       },
     })

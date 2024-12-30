@@ -1,7 +1,7 @@
 import { INIT_ZUSTAND, TYPE_ZUSTAND, ZUSTAND } from '@/constant/zustand'
 import ClientApi from '@/services/clientApi'
 import { create } from 'zustand'
-import { devtools, persist } from 'zustand/middleware'
+import { devtools } from 'zustand/middleware'
 
 // export const createCategoryMenuStore = (
 //   initState: CategoryMenuStoreState = {
@@ -39,24 +39,19 @@ type CategoryMenuStore = CategoryMenuStoreState & CategoryMenuStoreActions
 
 const zustandCategoryMenu = create<CategoryMenuStore>()(
   devtools(
-    persist(
-      (set) => ({
-        [ZUSTAND.CategoryMenu]: INIT_ZUSTAND[ZUSTAND.CategoryMenu],
-        setCategoryMenu: (categoryMenu: CategoryData) => {
-          set({ [ZUSTAND.CategoryMenu]: categoryMenu })
-        },
-        fetchData: async () => {
-          const menuCategory = await ClientApi.getCategory(true)
-          set(menuCategory?.data || [])
-        },
-      }),
-      {
-        name: `zustand-${ZUSTAND.CategoryMenu}`,
-      }
-    ),
+    (set) => ({
+      [ZUSTAND.CategoryMenu]: INIT_ZUSTAND[ZUSTAND.CategoryMenu],
+      setCategoryMenu: (categoryMenu: CategoryData) => {
+        set({ [ZUSTAND.CategoryMenu]: categoryMenu })
+      },
+      fetchData: async () => {
+        const menuCategory = await ClientApi.getCategory(true)
+        set(menuCategory?.data || [])
+      },
+    }),
     {
       name: `zustand-${ZUSTAND.CategoryMenu}`,
-      enabled: process.env.NODE_ENV !== 'production',
+      enabled: process.env.NEXT_PUBLIC_DISABLE_DEV === 'true',
     }
   )
 )

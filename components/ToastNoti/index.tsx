@@ -1,3 +1,4 @@
+'use client'
 import useMedia from '@/hook/useMedia'
 import React from 'react'
 import { ToastContainer } from 'react-toastify'

@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import React from 'react'
 import { Inter } from 'next/font/google'
 import AntdProvider from '@/components/AntdProvider'
-import MyModalProvider from '@/components/MyModal'
+// import MyModalProvider from '@/components/MyModal'
 import '@/styles/globals.scss'
 import '@/styles/override.scss'
 import '@/styles/aos.css'
@@ -11,12 +11,35 @@ import StyledComponentsRegistry from '@/components/RegistryApp'
 import ClientRender from '@/components/ClientRender'
 import type { Viewport } from 'next'
 import ReactQueryProvider from '@/components/ReactQueryProvider'
-import DrawerProvider from '@/components/DrawerProvider'
 const inter = Inter({ subsets: ['latin'] })
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import Script from 'next/script'
 import ClientApi from '@/services/clientApi'
+import dynamic from 'next/dynamic'
+const MyModal = dynamic(() => import('@/components/MyModal'))
+const ModalDrawer = dynamic(() => import('@/components/MyDrawer'))
+const LoadingFirstPage = dynamic(() => import('@/components/LoadingFirstPage'), {
+  ssr: true,
+})
+const MyModalAdmin = dynamic(() => import('@/components/MyModalAdmin'), {
+  ssr: false,
+})
+const CheckPingServer = dynamic(() => import('@/components/CheckPingServer'), {
+  ssr: false,
+})
+
+const FirstLoadWebsite = dynamic(() => import('@/components/FirstLoadWebsite'), {
+  ssr: false,
+})
+
+const ToastNoti = dynamic(() => import('@/components/ToastNoti'), {
+  ssr: false,
+})
+
+const Notification = dynamic(() => import('@/components/Notification'), {
+  ssr: false,
+})
 
 const BaseMeta = {
   title: process.env.NEXT_PUBLIC_TITLE,
@@ -195,19 +218,25 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
           </>
         )}
 
-        <ReactQueryProvider>
-          <StyledComponentsRegistry>
-            <AntdRegistry>
-              <AntdProvider>
-                <MyModalProvider>
-                  <DrawerProvider>
-                    <ClientRender menuCategory={menuCategory?.data || []}>{children}</ClientRender>
-                  </DrawerProvider>
-                </MyModalProvider>
-              </AntdProvider>
-            </AntdRegistry>
-          </StyledComponentsRegistry>
-        </ReactQueryProvider>
+        <AntdProvider>
+          <ReactQueryProvider>
+            <StyledComponentsRegistry>
+              <AntdRegistry>
+                <ClientRender menuCategory={menuCategory?.data || []}>{children}</ClientRender>
+                {/* load more option */}
+                <LoadingFirstPage />
+                <MyModal />
+                <ModalDrawer />
+                <MyModalAdmin />
+                <CheckPingServer />
+                <FirstLoadWebsite />
+                <ToastNoti />
+                <Notification />
+                {/* load more option */}
+              </AntdRegistry>
+            </StyledComponentsRegistry>
+          </ReactQueryProvider>
+        </AntdProvider>
         {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <SpeedInsights />}
       </body>
       {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <GoogleAnalytics gaId='G-QH99F8WFPW' />}

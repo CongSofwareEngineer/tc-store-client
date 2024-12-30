@@ -26,6 +26,7 @@ interface EnvironmentVariables {
   readonly NEXT_PUBLIC_KEY_IV_ENCODE: string
   readonly NEXT_PUBLIC_API_KEY_GG_MAP: string
   readonly NEXT_PUBLIC_ENABLE_SERVER_LOCAL: string
+  readonly NEXT_PUBLIC_DISABLE_DEV: string
 }
 
 declare namespace NodeJS {

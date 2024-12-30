@@ -96,7 +96,6 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         />
       ),
       configModal: {
-        showHeader: false,
         showBtnClose: false,
         overClickClose: false,
       },

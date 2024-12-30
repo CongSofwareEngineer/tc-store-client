@@ -59,7 +59,6 @@ const ItemCart = ({
       content: <ModalDelete callback={callBackDelete} />,
       configModal: {
         width: '500px',
-        showHeader: true,
       },
     })
   }

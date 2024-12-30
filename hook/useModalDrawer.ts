@@ -1,41 +1,47 @@
-import { ModalContext } from '@/components/MyModal'
-import { ConfigModal } from '@/components/MyModal/type'
-import { useContext } from 'react'
 import useMedia from './useMedia'
 
 import React from 'react'
-import { ConfigMyDrawerType, DrawerContext } from '@/components/DrawerProvider/config'
+import { ModalData, useModal } from '@/zustand/useModal'
+import { DrawerData, useDrawer } from '@/zustand/useDrawer'
 
 type UseModalType = {
   useDrawer?: boolean | false
   onlyDrawer?: boolean | false
-  configModal?: ConfigModal
-  configDrawer?: ConfigMyDrawerType
+  configModal?: ModalData
+  configDrawer?: DrawerData
   content: React.ReactNode
   title?: string | React.ReactNode | undefined
 }
 
 const useModalDrawer = () => {
-  const { closeModal, openModal: open } = useContext(ModalContext)
-  const { closeDrawer, openDrawer, config: configDrawer } = useContext(DrawerContext)
+  const { closeModal, openModal } = useModal()
+  const { closeDrawer, openDrawer, drawer } = useDrawer()
   const { isMobile } = useMedia()
 
   const openModalDrawer = (config: UseModalType) => {
-    const configDrawerBase: ConfigMyDrawerType = {
+    const configDrawerBase: DrawerData = {
       content: config.content,
       placement: 'bottom',
       height: 'auto',
       width: '500px',
       ...config.configDrawer,
       title: config.configDrawer?.title || config?.title,
+      open: true,
+    }
+    let isShowBtnModal = true
+
+    if (
+      config?.configModal?.showBtnClose === false ||
+      config?.configModal?.overClickClose === false
+    ) {
+      isShowBtnModal = false
     }
 
-    const configModalBase: ConfigModal = {
+    const configModalBase: ModalData = {
       ...config.configModal,
       title: config.configModal?.title || config.title,
       content: config.content,
-      showBtnClose:
-        config?.configModal?.showBtnClose === false ? false : config?.configModal?.overClickClose,
+      showBtnClose: isShowBtnModal,
       open: true,
     }
 
@@ -46,14 +52,14 @@ const useModalDrawer = () => {
         openDrawer(configDrawerBase)
         closeModal()
       } else {
-        open(configModalBase)
+        openModal(configModalBase)
         closeDrawer()
       }
     }
   }
 
   const closeModalDrawer = () => {
-    if (configDrawer.open) {
+    if (drawer.open) {
       closeDrawer()
     } else {
       closeModal()

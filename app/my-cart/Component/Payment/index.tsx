@@ -90,8 +90,6 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
         />
       ),
       configModal: {
-        showHeader: false,
-        showBtnClose: false,
         overClickClose: false,
       },
     })

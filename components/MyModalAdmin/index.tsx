@@ -1,3 +1,4 @@
+'use client'
 import { CloseOutlined } from '@ant-design/icons'
 import React from 'react'
 import { useModalAdmin as useModalAdminZustand } from '@/zustand/useModalAdmin'

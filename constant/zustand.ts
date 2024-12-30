@@ -1,5 +1,6 @@
 import MessageVN from '@/public/assets/language/vn.json'
 import { LANGUAGE_SUPPORT } from './app'
+import { DrawerProps, ModalProps } from 'antd'
 
 const localeVN = {
   locale: LANGUAGE_SUPPORT.VN,
@@ -10,6 +11,7 @@ export enum ZUSTAND {
   Setting = 'setting',
   ModalAdmin = 'modalAdmin',
   Modal = 'modal',
+  Drawer = 'drawer',
   Language = 'language',
   UserData = 'userData',
   ConnectedChain = 'connectedChain',
@@ -27,14 +29,14 @@ export const INIT_ZUSTAND = {
   [ZUSTAND.ModalAdmin]: {
     open: false,
     body: null,
-    className: '',
-    width: '500px',
-    height: '',
-    title: '',
-    showBtnClose: true,
-    classNameContent: '',
-    overClickClose: true,
-    callBackAfter: () => {},
+  },
+  [ZUSTAND.Modal]: {
+    content: null,
+    open: false,
+  },
+  [ZUSTAND.Drawer]: {
+    content: null,
+    open: false,
   },
 }
 
@@ -78,6 +80,19 @@ export type TYPE_ZUSTAND = {
     showBtnClose?: boolean
     overClickClose?: boolean
   }
+  [ZUSTAND.Modal]: {
+    classContent?: string | ''
+    content?: React.ReactNode
+    open?: boolean | false
+    title?: React.ReactNode | string | undefined
+    overClickClose?: boolean | true
+    showBtnClose?: boolean | true
+  } & ModalProps
+
+  [ZUSTAND.Drawer]: {
+    content?: React.ReactNode
+    afterClose?: ((param?: any) => any) | null
+  } & DrawerProps
 }
 
 export type TYPE_LANGUAGE = typeof MessageVN
