@@ -3,12 +3,7 @@ import { VoucherProps } from '../../type'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useCallbackToast from '@/hook/useCallbackToast'
-import {
-  convertDateToNumber,
-  expiredTimeToNumber,
-  formatDateTime,
-  plusDay,
-} from '@/utils/momentFunc'
+import { convertDateToNumber, diffTime, formatDateTime, plusDay } from '@/utils/momentFunc'
 import MyForm from '@/components/Form/MyForm'
 import ButtonForm from '@/components/Form/ButtonForm'
 import InputForm from '@/components/Form/InputForm'
@@ -82,10 +77,8 @@ const ModalConfig = ({ data }: { data?: VoucherProps }) => {
           body[key] = value
         }
       })
-      console.log({ body })
 
       const res = await AdminApi.updateVoucher(data?._id!, formData)
-      console.log({ res })
 
       if (res.data) {
         await refreshQuery(QUERY_KEY.VoucherAdmin)
@@ -119,7 +112,7 @@ const ModalConfig = ({ data }: { data?: VoucherProps }) => {
         <InputForm classFromItem='w-full' name='name' label={translate('header.name')} required />
         <MyDatePickerForm
           name='expired'
-          label={`${translate('textPopular.dateEnd')} (${expiredTimeToNumber(formData?.expired) + 1} day)`}
+          label={`${translate('textPopular.dateEnd')} (${diffTime(formData?.expired) + 1} day)`}
           defaultValue={formatDateTime(formData?.expired, 'DD/MM/YY')}
         />
 

@@ -60,7 +60,7 @@ const BillAdminScreen = () => {
       title = translate('admin.bill.doYouWantChangeDeliverySuccess')
     }
 
-    const callBack = async () => {
+    const callBackUpdate = async () => {
       const body: any = {
         status,
         idUser: item.idUser,
@@ -93,9 +93,43 @@ const BillAdminScreen = () => {
       closeModalDrawer()
     }
 
-    openModalDrawer({
-      content: <ModalDelete title={title} callback={callBack} />,
-    })
+    const abortBill = async () => {
+      status = FILTER_BILL.DeliveryFail
+
+      const body: any = {
+        status,
+        idUser: item.idUser,
+        exp: item.totalBill * DEFAULT_RATE_EXP_USER,
+      }
+
+      const res = await AdminApi.updateBill(item._id, body)
+
+      if (res?.data) {
+        updateSuccess()
+        refreshQuery(QUERY_KEY.BillAdmin)
+      } else {
+        updateError()
+      }
+    }
+
+    if (item.status === FILTER_BILL.Processing) {
+      openModalDrawer({
+        content: <ModalDelete title={title} callback={callBackUpdate} />,
+      })
+    }
+
+    if (item.status === FILTER_BILL.Delivering) {
+      openModalDrawer({
+        content: (
+          <ModalDelete
+            titleReject={translate('common.cancelBill')}
+            reject={abortBill}
+            title={title}
+            callback={callBackUpdate}
+          />
+        ),
+      })
+    }
   }
 
   const handleDelete = async (id: string) => {

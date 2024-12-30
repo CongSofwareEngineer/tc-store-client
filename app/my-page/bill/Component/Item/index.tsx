@@ -18,7 +18,6 @@ import TextCopy from '@/components/TextCopy'
 import { Button } from 'antd'
 import MyImage from '@/components/MyImage'
 import ConfigBill from '@/components/ConfigBill'
-import { TYPE_PRODUCT } from '@/constant/admin'
 import styles from './style.module.scss'
 
 type Props = {

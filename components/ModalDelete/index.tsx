@@ -9,10 +9,12 @@ import { useModalAdmin } from '@/zustand/useModalAdmin'
 type ModalDeleteType = {
   des?: string
   callback?: (param?: any) => Promise<void> | void
+  reject?: () => Promise<void> | void
   title?: string
   titleConfirm?: string
+  titleReject?: string
   autoClose?: boolean
-  isAdmin?: boolean
+  isModalAdmin?: boolean
   disableCancel?: boolean
 }
 const ModalDelete = ({
@@ -20,8 +22,10 @@ const ModalDelete = ({
   title = '',
   titleConfirm = '',
   callback = () => {},
+  reject = () => {},
+  titleReject = '',
   autoClose = true,
-  isAdmin = false,
+  isModalAdmin = false,
   disableCancel = false,
 }: ModalDeleteType) => {
   const { translate } = useLanguage()
@@ -29,6 +33,7 @@ const ModalDelete = ({
   const { closeModal } = useModalAdmin()
 
   const [loading, setLoading] = useState(false)
+  const [loadingReject, setLoadingReject] = useState(false)
 
   const handleSubmit = async () => {
     setLoading(true)
@@ -37,11 +42,22 @@ const ModalDelete = ({
     }
     setLoading(false)
     if (autoClose) {
-      if (isAdmin) {
+      if (isModalAdmin) {
         closeModal()
       } else {
         closeModalDrawer()
       }
+    }
+  }
+
+  const handleCancel = async () => {
+    try {
+      setLoadingReject(true)
+      await reject()
+      isModalAdmin ? closeModal() : closeModalDrawer()
+      setLoadingReject(false)
+    } catch (error) {
+      setLoadingReject(false)
     }
   }
   return (
@@ -64,19 +80,25 @@ const ModalDelete = ({
       />
       <div className='w-full flex gap-4'>
         <div className='flex-1'>
-          <Button className='w-full' loading={loading} onClick={handleSubmit}>
+          <Button
+            disabled={loadingReject}
+            className='w-full'
+            loading={loading}
+            onClick={handleSubmit}
+          >
             {titleConfirm || translate('common.ok')}
           </Button>
         </div>
         {!disableCancel && (
           <div className='flex-1'>
             <Button
+              loading={loadingReject}
               disabled={loading}
               type='primary'
               className='w-full'
-              onClick={() => (isAdmin ? closeModal() : closeModalDrawer())}
+              onClick={handleCancel}
             >
-              {translate('common.close')}
+              {titleReject || translate('common.close')}
             </Button>
           </div>
         )}

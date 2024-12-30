@@ -83,6 +83,7 @@ export enum FILTER_BILL {
   'All' = 'all',
   'Processing' = 'processing',
   'Delivering' = 'delivering',
+  'DeliveryFail' = 'deliveryFail',
   'DeliverySuccess' = 'deliverySuccess',
   'Canceled' = 'canceled',
 }

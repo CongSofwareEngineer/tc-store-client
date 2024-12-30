@@ -171,6 +171,7 @@
     "priceTotal": "Tổng cộng",
     "abort": "Hủy mua",
     "warningCancel": "Bạn muốn hủy đơn",
+    "deliveryFail": "Giao hàng thất bại",
     "warningCancel_des": "Đơn hàng sẽ hủy và không lưu lại. Bạn hủy phải đặt lại đơn hàng mới",
     "destroyBillSuccess": "Hủy đơn thành công",
     "destroyBillError": "Đơn không thể hủy"

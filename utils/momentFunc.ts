@@ -66,3 +66,24 @@ export const expiredTimeToNumber = (data: any) => {
     return data
   }
 }
+
+export const diffTime = (data: any, type: moment.DurationInputArg2 = 'days') => {
+  try {
+    let timeTemp = data
+
+    if (typeof data === 'string') {
+      if (isNumericString(data)) {
+        timeTemp = parseInt(data)
+      }
+    }
+
+    if (isObject(data)) {
+      timeTemp = timeTemp.toString()
+    }
+
+    const daysDifference = localMoment()(timeTemp).diff(moment(), type)
+    return daysDifference
+  } catch (error) {
+    return 0
+  }
+}

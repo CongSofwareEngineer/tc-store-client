@@ -50,7 +50,7 @@ const LoadingGetData = ({
       arrInit.push(`col-${amountCol}-${index}`)
     }
     setArrClo(arrInit)
-  }, [isSurface, isTablet, isMobile, colMobile, colDesktop, colSurface, colSurface, rows])
+  }, [colTablet, isSurface, isTablet, isMobile, colMobile, colDesktop, colSurface, rows])
 
   if (!loading) {
     return <></>

@@ -1,7 +1,7 @@
 import { DatePicker } from 'antd'
 import React from 'react'
-import dayjs from 'dayjs'
-const DATE_START = dayjs(new Date(Date.now()).setDate(new Date().getDate() - 1))
+import { formatDateTime } from '@/utils/momentFunc'
+const DATE_START = formatDateTime(Date.now())
 // const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY', 'DD-MM-YYYY', 'DD-MM-YY']
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
   className?: string
   allowClear?: boolean
   disabled?: boolean
-  defaultValue?: ReturnType<typeof dayjs>
+  defaultValue?: any
 }
 
 const MyDatePicker = ({
@@ -23,7 +23,7 @@ const MyDatePicker = ({
     <DatePicker
       disabled={disabled}
       onChange={(e) => onChange(e)}
-      defaultValue={defaultValue ? dayjs(defaultValue, 'DD/MM/YY') : null}
+      defaultValue={defaultValue ? formatDateTime(defaultValue, 'DD/MM/YY') : null}
       className={`w-full ${className}`}
       format={'DD/MM/YY'}
       lang='vn'

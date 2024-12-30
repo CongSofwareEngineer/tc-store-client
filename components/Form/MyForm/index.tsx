@@ -22,12 +22,13 @@ type FormPropsType = {
   formData?: Record<string, any> | null
 } & FormProps
 const MyForm = ({ formData, children, ...props }: FormPropsType) => {
-  return formData ? (
+  if (!formData) {
+    return <></>
+  }
+  return (
     <FormCustom initialValues={formData} {...props}>
       {children}
     </FormCustom>
-  ) : (
-    <></>
   )
 }
 

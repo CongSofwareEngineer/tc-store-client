@@ -96,7 +96,7 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
       onChange(dataClone)
     }
     openModal({
-      body: <ModalDelete isAdmin callback={callBack} />,
+      body: <ModalDelete isModalAdmin callback={callBack} />,
     })
   }
 
@@ -126,7 +126,7 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
       onChange(dataClone)
     }
     openModal({
-      body: <ModalDelete isAdmin callback={callBack} />,
+      body: <ModalDelete isModalAdmin callback={callBack} />,
     })
   }
 
@@ -178,7 +178,7 @@ const AttributeShoes = ({ data, onChange, keyIndex = '' }: IEditItemAttributesPr
     }
 
     openModal({
-      body: <ModalDelete isAdmin callback={callBack} />,
+      body: <ModalDelete isModalAdmin callback={callBack} />,
     })
   }
 
