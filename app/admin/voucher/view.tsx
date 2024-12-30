@@ -85,7 +85,9 @@ const VoucherScreen: NextPage = () => {
                   <span>{numberWithCommas(record.amountApplied || '0')}</span>
                 </div>
                 <div className='flex gap-1 flex-col w-full justify-start'>
-                  <div className='font-bold w-full text-left'>{`${translate('textPopular.note')} :`}</div>
+                  <div className='font-bold w-full text-left'>{`${translate(
+                    'textPopular.note'
+                  )} :`}</div>
                   <TextWithToggle limit={50} text={record.note} />
                 </div>
                 <div className='flex gap-3 mt-1'>
@@ -200,7 +202,7 @@ const VoucherScreen: NextPage = () => {
 
   const handleDelete = (item: VoucherProps) => {
     const callback = async () => {
-      const res = await AdminApi.deleteVoucher(item._id, [])
+      const res = await AdminApi.deleteVoucher(item._id!, [])
       if (res.data) {
         await refreshQuery(QUERY_KEY.VoucherAdmin)
         deleteSuccess()
