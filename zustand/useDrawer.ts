@@ -35,7 +35,7 @@ const zustandDrawer = create<DrawerStore>()(
     }),
     {
       name: `zustand-${ZUSTAND.Drawer}`,
-      enabled: process.env.NEXT_PUBLIC_DISABLE_DEV === 'true',
+      enabled: process.env.NEXT_PUBLIC_DISABLE_DEV === undefined,
     }
   )
 )

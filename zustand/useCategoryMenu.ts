@@ -51,7 +51,7 @@ const zustandCategoryMenu = create<CategoryMenuStore>()(
     }),
     {
       name: `zustand-${ZUSTAND.CategoryMenu}`,
-      enabled: process.env.NEXT_PUBLIC_DISABLE_DEV === 'true',
+      enabled: process.env.NEXT_PUBLIC_DISABLE_DEV === undefined,
     }
   )
 )

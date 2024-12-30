@@ -79,7 +79,7 @@ const nextConfig = {
   optimizeFonts: true,
   cleanDistDir: true,
   compiler: {
-    // removeConsole: !!process.env.REMOVE_CONSOLE_LOG,
+    removeConsole: !!process.env.REMOVE_CONSOLE_LOG,
     reactRemoveProperties: true,
     styledComponents: {
       displayName: true,
