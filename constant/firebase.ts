@@ -53,7 +53,7 @@ export type BodyAddBill = {
   name: string
   status: FILTER_BILL
   abort?: boolean
-  totalBill: Number
+  totalBill: number
   listNewSoldProduct?: { [key: string]: any }[]
   expUser?: number
   infoBanking?: {

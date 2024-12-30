@@ -10,7 +10,7 @@ const getAllProduct = async ({
   queryKey: any
   pageParam: number
 }): Promise<TypeHookReactQuery> => {
-  let queryUrl = `${queryKey[1]}?page=${pageParam}&limit=${PAGE_SIZE_LIMIT}`
+  const queryUrl = `${queryKey[1]}?page=${pageParam}&limit=${PAGE_SIZE_LIMIT}`
 
   const dataServer = await ClientApi.getCommentById(queryUrl)
 
@@ -20,18 +20,17 @@ const getAllProduct = async ({
   }
 }
 const useComment = (isProduct = '') => {
-  const { data, isLoading, refetch, fetchNextPage, isFetchingNextPage, hasNextPage } =
-    useInfiniteQuery({
-      queryKey: [QUERY_KEY.GetCommentProduction, isProduct],
-      initialPageParam: 1,
-      queryFn: getAllProduct,
-      getNextPageParam: (lastPage: { data: any; page: number }) => {
-        if (lastPage.data.length == PAGE_SIZE_LIMIT) {
-          return lastPage.page + 1
-        }
-        return null
-      },
-    })
+  const { data, isLoading, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteQuery({
+    queryKey: [QUERY_KEY.GetCommentProduction, isProduct],
+    initialPageParam: 1,
+    queryFn: getAllProduct,
+    getNextPageParam: (lastPage: { data: any; page: number }) => {
+      if (lastPage.data.length == PAGE_SIZE_LIMIT) {
+        return lastPage.page + 1
+      }
+      return null
+    },
+  })
 
   const dataFinal = useMemo(() => {
     if (!data) {
