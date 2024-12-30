@@ -122,7 +122,7 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
   const renderListImg = () => {
     return (
       formData?.listImg?.length > 0 && (
-        <div className='flex gap-3'>
+        <div className='flex gap-3 mt-2'>
           {formData?.listImg?.map((item: any, index: number) => (
             <div key={`img-${index}`} className='relative w-[70px] '>
               <ImageNext
@@ -152,43 +152,42 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
           formData={formData}
           onFinish={handleSubmit}
         >
-          <div className='flex gap-2 w-full'>
-            <div className='w-[100px] aspect-square overflow-hidden'>
-              <Image alt='avatar-product' src={detectImg(dataItem.imageMain)} />
+          <div className='flex flex-col overflow-y-auto'>
+            <div className='flex gap-2 w-full'>
+              <div className='w-[100px] aspect-square overflow-hidden'>
+                <Image alt='avatar-product' src={detectImg(dataItem.imageMain)} />
+              </div>
+              <div className='flex flex-1 flex-col gap-2 h-auto justify-center'>
+                <p className='text-medium font-bold'>{dataItem.name}</p>
+                <RateForm name='rate' />
+              </div>
             </div>
-            <div className='flex flex-1 flex-col gap-2 h-auto justify-center'>
-              <p className='text-medium font-bold'>{dataItem.name}</p>
-              <RateForm name='rate' />
-            </div>
-          </div>
-          <InputForm
-            typeBtn='string'
-            required
-            name={'name'}
-            label={translate('header.name')}
-            classFromItem='w-full'
-            disable={!!isLogin}
-          />
-          <InputForm
-            typeBtn='string'
-            required
-            name={'sdt'}
-            label={translate('userDetail.sdt')}
-            classFromItem='w-full'
-            validator={checkNumberPhone}
-            disable={!!isLogin}
-          />
-          <InputForm
-            name={'note'}
-            required
-            typeBtn='area'
-            label={translate('textPopular.note')}
-            classFromItem='w-full'
-            showCount
-            maxLength={200}
-          />
-
-          <div className='flex flex-col w-full gap-2 mt-14'>
+            <InputForm
+              typeBtn='string'
+              required
+              name={'name'}
+              label={translate('header.name')}
+              classFromItem='w-full'
+              disable={!!isLogin}
+            />
+            <InputForm
+              typeBtn='string'
+              required
+              name={'sdt'}
+              label={translate('userDetail.sdt')}
+              classFromItem='w-full'
+              validator={checkNumberPhone}
+              disable={!!isLogin}
+            />
+            <InputForm
+              name={'note'}
+              required
+              typeBtn='area'
+              label={translate('textPopular.note')}
+              classFromItem='w-full'
+              showCount
+              maxLength={200}
+            />
             {renderListImg()}
             <UploadImage
               handleUpload={handleUpload}
@@ -197,7 +196,7 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
               maxSizeOutputKB={200}
               maxPixelReduce={400}
             >
-              <div className='flex gap-2 item-center w-full'>
+              <div className='flex gap-2 item-center w-full mt-3'>
                 <CameraOutlined
                   className='cursor-pointer'
                   style={{ fontSize: 25, color: 'blue' }}
@@ -205,7 +204,9 @@ const ModalWrite = ({ dataItem }: { dataItem: ItemDetailType }) => {
                 <span>{translate('comment.uploadImg_des')}</span>
               </div>
             </UploadImage>
+          </div>
 
+          <div className='flex flex-col w-full gap-2 '>
             <ButtonForm
               loading={loading}
               classNameItem='w-full '

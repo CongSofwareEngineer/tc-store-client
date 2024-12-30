@@ -48,11 +48,11 @@ const MenuAdminMobile = () => {
       url: '/admin/category',
       icon: <ClusterOutlined />,
     },
-    // {
-    //   title: 'Fan Page',
-    //   url: '/admin/fan-page',
-    //   icon: <ProductOutlined />,
-    // },
+    {
+      title: 'Voucher',
+      url: '/admin/voucher',
+      icon: <ProductOutlined />,
+    },
     {
       title: 'User',
       url: '/admin/user',

@@ -60,7 +60,7 @@ const NavMobile = () => {
   const { closeModalDrawer } = useModalDrawer()
 
   const handleLogOut = () => {
-    ObserverService.emit(OBSERVER_KEY.LogOut)
+    ObserverService.emit(OBSERVER_KEY.LogOut, false)
     closeModalDrawer()
   }
 

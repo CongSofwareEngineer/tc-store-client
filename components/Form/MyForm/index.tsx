@@ -5,7 +5,7 @@ import styled from 'styled-components'
 const FormCustom = styled(Form)`
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 10px;
   .ant-form-item-margin-offset {
     margin-bottom: 0px !important;
   }

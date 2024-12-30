@@ -13,6 +13,9 @@ const nextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },
+  eslint: {
+    dirs: ['app', 'hook', 'components', 'configs', 'utils', 'zustand', 'constant', 'services']
+  },
   experimental: {
     // optimisticClientCache: true,
     // workerThreads: true,
