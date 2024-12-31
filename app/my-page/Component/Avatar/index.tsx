@@ -10,7 +10,7 @@ import { showNotificationError, showNotificationSuccess } from '@/utils/notifica
 import { EditTwoTone } from '@ant-design/icons'
 import { Upload } from 'antd'
 import ImgCrop from 'antd-img-crop'
-import React, { useMemo } from 'react'
+import React from 'react'
 import { isIOS, isMacOs } from 'react-device-detect'
 
 const Avatar = () => {
@@ -19,12 +19,8 @@ const Avatar = () => {
   const { translate } = useLanguage()
   const { getBase64 } = useBase64Img(300)
 
-  const typeFile = useMemo(() => {
-    if (isIOS || isMacOs) {
-      return 'image/*'
-    }
-    return '.png,.jpg,.jpeg,.gif,.svg'
-  }, [])
+  const typeFile = isIOS || isMacOs ? 'image/*' : '.png,.jpg,.jpeg,.gif,.svg'
+
   const onChangeAvatar = async (file: any) => {
     // const typeFileUpload = file.type.replace('image/', '')
     // if (!typeFile.includes(typeFileUpload) && !(isIOS || isMacOs)) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { PaymentPageType } from '../../type'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
@@ -46,12 +46,7 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
     setFormData(initData)
   }, [userData, dataCart])
 
-  const isValidSubmit = useMemo(() => {
-    if (!formData?.addressShip) {
-      return false
-    }
-    return !!formData?.addressShip.addressDetail
-  }, [formData])
+  const isValidSubmit = !!formData?.addressShip?.addressDetail
 
   const onChangeAddressShip = (item: any) => {
     setFormData({

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { VoucherProps } from '../../type'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useModalDrawer from '@/hook/useModalDrawer'
@@ -28,7 +28,7 @@ const ModalConfig = ({ data }: { data?: VoucherProps }) => {
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState<VoucherProps | null>(null)
 
-  const optionMenuCategories = useMemo(() => {
+  const optionMenuCategories = () => {
     if (categoryMenu) {
       return categoryMenu.map((e) => {
         const itemTemp: PropsSelectItem = {
@@ -39,9 +39,9 @@ const ModalConfig = ({ data }: { data?: VoucherProps }) => {
       })
     }
     return []
-  }, [categoryMenu, lang])
+  }
 
-  const optionVouchers = useMemo(() => {
+  const optionVouchers = () => {
     return Object.values(TYPE_VOUCHER).map((e) => {
       const keyLang: any = `textPopular.${e}`
       const itemTemp: PropsSelectItem = {
@@ -50,7 +50,7 @@ const ModalConfig = ({ data }: { data?: VoucherProps }) => {
       }
       return itemTemp
     })
-  }, [translate])
+  }
 
   useEffect(() => {
     const initData: VoucherProps = {
@@ -128,7 +128,7 @@ const ModalConfig = ({ data }: { data?: VoucherProps }) => {
         />
 
         <SelectForm
-          options={optionVouchers}
+          options={optionVouchers()}
           showSearch
           name='type'
           label={translate('menuProduct.category')}
@@ -136,7 +136,7 @@ const ModalConfig = ({ data }: { data?: VoucherProps }) => {
         />
 
         <SelectForm
-          options={optionMenuCategories}
+          options={optionMenuCategories()}
           showSearch
           mode={MODE_SELECT.multiple}
           name='categoriesProduct'

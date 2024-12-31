@@ -1,7 +1,6 @@
 import useUserData from '../useUserData'
 import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery'
 import { PAGE_SIZE_LIMIT } from '@/constant/app'
-import { useMemo } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import ClientApi from '@/services/clientApi'
 
@@ -48,13 +47,7 @@ const useBill = (query: any = [], dateTime = '') => {
     },
   })
 
-  const dataFinal = useMemo(() => {
-    if (!data) {
-      return []
-    }
-    const dataFormat = data?.pages.flatMap((e: any) => e.data)
-    return dataFormat
-  }, [data])
+  const dataFinal = data?.pages?.flatMap((e: any) => e.data) || []
 
   return {
     data: dataFinal,

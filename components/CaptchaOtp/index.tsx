@@ -3,7 +3,7 @@ import useModalDrawer from '@/hook/useModalDrawer'
 import { FirebaseServices } from '@/services/firebaseService'
 import { Button, Image, Input } from 'antd'
 import { Auth, ConfirmationResult, RecaptchaVerifier } from 'firebase/auth'
-import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import OtpInput from 'react-otp-input'
 
 type CaptchaOtpProps = {
@@ -23,13 +23,6 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
 
   const { closeModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
-
-  const phoneMemo = useMemo(() => {
-    if (numberPhone.startsWith('0')) {
-      return '+84' + numberPhone.slice(1)
-    }
-    return '+84' + numberPhone
-  }, [numberPhone])
 
   useLayoutEffect(() => {
     const auth = FirebaseServices.initAuth()
@@ -56,6 +49,14 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
   const handleSendOtp = async () => {
     try {
       setIsPending(true)
+
+      let phoneMemo: string = ''
+      if (numberPhone.startsWith('0')) {
+        phoneMemo = '+84' + numberPhone.slice(1)
+      } else {
+        phoneMemo = '+84' + numberPhone
+      }
+
       const otpRes = await FirebaseServices.sendNumberToGetOtp(phoneMemo, auth!, reCaptchaVerifier!)
       setOtpReceived(otpRes)
     } catch (error) {
