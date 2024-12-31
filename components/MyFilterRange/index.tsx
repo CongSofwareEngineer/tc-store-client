@@ -3,7 +3,7 @@ import useQuerySearch from '@/hook/useQuerySearch'
 import { numberWithCommas } from '@/utils/functions'
 import { AlignLeftOutlined, CaretRightOutlined } from '@ant-design/icons'
 import { Slider } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import MyCollapse from '../MyCollapse'
 import { isEqual } from 'lodash'
 
@@ -32,14 +32,17 @@ const MyFilterRange = ({
 }: Props) => {
   const { queries, updateQuery } = useQuerySearch()
   const [slider, setSlider] = useState<number[]>([minSlider, maxSlider])
-  const [sliderFromQuery, setSliderFromQuery] = useState<number[]>([])
 
-  useEffect(() => {
+  // Use useMemo to compute slider values only when queries change
+  const sliderFromQuery = useMemo(() => {
     const min = Number(queries?.[keyMin]?.[0] || minSlider)
     const max = Number(queries?.[keyMax]?.[0] || maxSlider)
-    setSliderFromQuery([min, max])
-    setSlider([min, max])
+    return [min, max]
   }, [queries, keyMin, keyMax, minSlider, maxSlider])
+
+  useEffect(() => {
+    setSlider(sliderFromQuery)
+  }, [sliderFromQuery])
 
   const handleChangeComplete = (value: number[]) => {
     if (sliderFromQuery[1] !== value[1]) {
@@ -64,39 +67,42 @@ const MyFilterRange = ({
   }
 
   // Memoize the items array to prevent unnecessary re-renders
-  const itemsRangeSize = [
-    {
-      key: `${keyMax}${keyMin}`,
-      expandIcon: <AlignLeftOutlined style={{ fontSize: 20 }} />,
-      label: <div className='flex text-medium justify-between items-center'>{title}</div>,
-      children: (
-        <div className='px-4 py-2 flex flex-col gap-1'>
-          <div className='flex items-center mt-2 justify-between'>
-            <div className='px-3 text-sm py-1 rounded-xl border-[1px] border-gray-400'>
-              {numberWithCommas(slider[0])}
+  const itemsRangeSize = useMemo(
+    () => [
+      {
+        key: `${keyMax}${keyMin}`,
+        expandIcon: <AlignLeftOutlined style={{ fontSize: 20 }} />,
+        label: <div className='flex text-medium justify-between items-center'>{title}</div>,
+        children: (
+          <div className='px-4 py-2 flex flex-col gap-1'>
+            <div className='flex items-center mt-2 justify-between'>
+              <div className='px-3 text-sm py-1 rounded-xl border-[1px] border-gray-400'>
+                {numberWithCommas(slider[0])}
+              </div>
+              <div className='pb-[2px] w-[10px] bg-gray-400' />
+              <div className='px-3 py-1 text-sm rounded-xl border-[1px] border-gray-400'>
+                {numberWithCommas(slider[1])}
+              </div>
             </div>
-            <div className='pb-[2px] w-[10px] bg-gray-400' />
-            <div className='px-3 py-1 text-sm rounded-xl border-[1px] border-gray-400'>
-              {numberWithCommas(slider[1])}
-            </div>
+            <Slider
+              onChangeComplete={handleChangeComplete}
+              range
+              onChange={handleChange}
+              value={slider}
+              defaultValue={sliderFromQuery}
+              min={minSlider}
+              max={maxSlider}
+              step={stepRange}
+              tooltip={{
+                formatter: renderTooltips,
+              }}
+            />
           </div>
-          <Slider
-            onChangeComplete={handleChangeComplete}
-            range
-            onChange={handleChange}
-            value={slider}
-            defaultValue={sliderFromQuery}
-            min={minSlider}
-            max={maxSlider}
-            step={stepRange}
-            tooltip={{
-              formatter: renderTooltips,
-            }}
-          />
-        </div>
-      ),
-    },
-  ]
+        ),
+      },
+    ],
+    [slider, sliderFromQuery, title, minSlider, maxSlider, stepRange, renderTooltip]
+  )
 
   return (
     <MyCollapse

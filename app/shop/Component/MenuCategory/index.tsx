@@ -1,6 +1,6 @@
 import { FilterAPI } from '@/constant/app'
 import useLanguage from '@/hook/useLanguage'
-import React from 'react'
+import React, { useMemo } from 'react'
 import MyFilter from '@/components/MyFilter'
 import MyFilterCheckBox from '@/components/MyFilterCheckBox'
 import { useCategoryMenu } from '@/zustand/useCategoryMenu'
@@ -8,13 +8,15 @@ import { useCategoryMenu } from '@/zustand/useCategoryMenu'
 const MenuCategory = () => {
   const { translate, lang } = useLanguage()
   const { categoryMenu } = useCategoryMenu()
-  const itemMenu = categoryMenu.map((e) => {
-    return {
-      value: e.keyName,
-      label: e.keyName,
-      name: e?.lang?.[lang],
-    }
-  })
+  const itemMenu = useMemo(() => {
+    return categoryMenu.map((e) => {
+      return {
+        value: e.keyName,
+        label: e.keyName,
+        name: e?.lang?.[lang],
+      }
+    })
+  }, [categoryMenu, lang])
 
   return (
     <MyFilter titleHeader={translate('menuProduct.category')}>

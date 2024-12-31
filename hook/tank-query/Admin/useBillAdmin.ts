@@ -4,6 +4,7 @@ import useUserData from '@/hook/useUserData'
 import AdminApi from '@/services/adminApi'
 import { isObject } from '@/utils/functions'
 import { useInfiniteQuery } from '@tanstack/react-query'
+import { useMemo } from 'react'
 
 const getData = async ({
   queryKey,
@@ -50,7 +51,15 @@ const useBillAdmin = (queries: Record<string, (string | null)[]> | null) => {
     },
   })
 
-  const dataFinal = data?.pages?.flatMap((e: any) => e.data) || []
+  const dataFinal = useMemo(() => {
+    console.log({ data })
+
+    if (!data) {
+      return []
+    }
+    const dataFormat = data?.pages.flatMap((e: any) => e.data)
+    return dataFormat
+  }, [data])
 
   return {
     data: dataFinal,

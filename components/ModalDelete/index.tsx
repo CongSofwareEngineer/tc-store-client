@@ -1,5 +1,5 @@
 import useLanguage from '@/hook/useLanguage'
-import { useState, useTransition } from 'react'
+import { useState } from 'react'
 import { images } from '@/configs/images'
 import useModalDrawer from '@/hook/useModalDrawer'
 import Image from 'next/image'
@@ -32,32 +32,33 @@ const ModalDelete = ({
   const { closeModalDrawer } = useModalDrawer()
   const { closeModal } = useModalAdmin()
 
-  const [loading, startSubmit] = useTransition()
-  const [loadingReject, startReject] = useTransition()
+  const [loading, setLoading] = useState(false)
+  const [loadingReject, setLoadingReject] = useState(false)
 
   const handleSubmit = async () => {
-    startSubmit(async () => {
-      if (callback) {
-        await callback()
+    setLoading(true)
+    if (callback) {
+      await callback()
+    }
+    setLoading(false)
+    if (autoClose) {
+      if (isModalAdmin) {
+        closeModal()
+      } else {
+        closeModalDrawer()
       }
-
-      if (autoClose) {
-        if (isModalAdmin) {
-          closeModal()
-        } else {
-          closeModalDrawer()
-        }
-      }
-    })
+    }
   }
 
   const handleCancel = async () => {
-    startReject(async () => {
-      try {
-        await reject()
-        isModalAdmin ? closeModal() : closeModalDrawer()
-      } catch (error) {}
-    })
+    try {
+      setLoadingReject(true)
+      await reject()
+      isModalAdmin ? closeModal() : closeModalDrawer()
+      setLoadingReject(false)
+    } catch (error) {
+      setLoadingReject(false)
+    }
   }
   return (
     <div className='w-full flex flex-col gap-2'>

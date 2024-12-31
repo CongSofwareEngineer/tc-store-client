@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { ItemDetailType } from '../../type'
 import { Checkbox, Select } from 'antd'
 import useLanguage from '@/hook/useLanguage'
@@ -11,9 +11,12 @@ type IAttributes = {
 const Attributes = ({ data, onChange = () => {} }: IAttributes) => {
   const { translate } = useLanguage()
   const configBill = data?.configBill
-  const optionSizes: number[] = data?.attributes.sizes.map((e: any) => {
-    return Number(e.size)
-  })
+  const optionSizes: number[] = useMemo(() => {
+    const listSize = data?.attributes.sizes.map((e: any) => {
+      return Number(e.size)
+    })
+    return listSize
+  }, [data])
 
   const onChangeKeyData = (value: number) => {
     const dataClone = cloneData(data)

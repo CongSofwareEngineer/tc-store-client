@@ -2,7 +2,7 @@ import { PAGE_SIZE_LIMIT } from '@/constant/app'
 import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery'
 import ClientApi from '@/services/clientApi'
 import { useInfiniteQuery } from '@tanstack/react-query'
-
+import { useMemo } from 'react'
 const getAllProduct = async ({
   queryKey,
   pageParam,
@@ -32,7 +32,13 @@ const useComment = (isProduct = '') => {
     },
   })
 
-  const dataFinal = data?.pages?.flatMap((e: any) => e.data) || []
+  const dataFinal = useMemo(() => {
+    if (!data) {
+      return []
+    }
+    const dataFormat = data?.pages.flatMap((e) => e.data)
+    return dataFormat
+  }, [data])
 
   return {
     data: dataFinal,

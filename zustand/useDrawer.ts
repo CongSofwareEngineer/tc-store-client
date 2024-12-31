@@ -21,7 +21,7 @@ const zustandDrawer = create<DrawerStore>()(
       closeDrawer: () =>
         set((state) => {
           if (state[ZUSTAND.Drawer]?.afterClose) {
-            state[ZUSTAND.Drawer]?.afterClose()
+            state[ZUSTAND.Drawer].afterClose()
           }
           return {
             [ZUSTAND.Drawer]: {

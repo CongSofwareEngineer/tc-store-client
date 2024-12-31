@@ -1,7 +1,7 @@
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useLanguage from '@/hook/useLanguage'
 import useUserData from '@/hook/useUserData'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { PaymentShopType } from '../../type'
 import useOptionPayment from '@/hook/useOptionPayment'
 import BillFinal from '@/app/my-cart/Component/Payment/Component/BillFinal'
@@ -46,7 +46,12 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
     setFormData(initData)
   }, [userData, isLogin])
 
-  const isValidSubmit = !!formData?.addressShip?.addressDetail
+  const isValidSubmit = useMemo(() => {
+    if (!formData?.addressShip) {
+      return false
+    }
+    return !!formData?.addressShip.addressDetail
+  }, [formData])
 
   const onChangeAddressShip = (item: any) => {
     setFormData({
