@@ -1,6 +1,8 @@
 import { LoadingOutlined } from '@ant-design/icons'
-import { ButtonType } from 'antd/es/button'
 import React from 'react'
+
+export type ButtonType = 'default' | 'primary' | 'dashed' | 'link' | 'text'
+
 type MyButton = {
   className?: string
   children?: React.ReactNode
