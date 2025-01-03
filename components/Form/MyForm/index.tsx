@@ -1,34 +1,23 @@
 import { Form, FormProps } from 'antd'
 import React from 'react'
-import styled from 'styled-components'
 
-const FormCustom = styled(Form)`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  .ant-form-item-margin-offset {
-    margin-bottom: 0px !important;
-  }
-  .ant-form-item-explain-error {
-    margin-bottom: 10px;
-  }
-
-  @media screen and (max-width: 768px) {
-    gap: 0px;
-  }
-`
 type FormPropsType = {
   children?: React.ReactNode | null
   formData?: Record<string, any> | null
 } & FormProps
+
 const MyForm = ({ formData, children, ...props }: FormPropsType) => {
   if (!formData) {
     return <></>
   }
   return (
-    <FormCustom initialValues={formData} {...props}>
+    <Form
+      initialValues={formData}
+      {...props}
+      className={`form-container ${props?.className || ''}`}
+    >
       {children}
-    </FormCustom>
+    </Form>
   )
 }
 

@@ -3,12 +3,7 @@ import React from 'react'
 
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
-import styled from 'styled-components'
-const FormItem = styled(Form.Item)`
-  .ant-form-item-row {
-    width: 100%;
-  }
-`
+
 type ButtonFormType = {
   loading?: boolean
   disableClose?: boolean
@@ -36,7 +31,7 @@ const ButtonForm = ({
 
   return (
     <div className={`w-full flex justify-center items-center gap-4 mt-2 ${className}`}>
-      <FormItem className={`flex flex-1 ${classNameItem}`}>
+      <Form.Item className={`flex flex-1 form-item-button  ${classNameItem}`}>
         <Button
           disabled={disabledSubmit}
           className={`w-full m-auto ${classBtnSubmit}`}
@@ -45,7 +40,7 @@ const ButtonForm = ({
         >
           {titleSubmit || translate('cart.payment')}
         </Button>
-      </FormItem>
+      </Form.Item>
       {!disableClose && (
         <Button
           disabled={loading}
