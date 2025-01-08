@@ -11,11 +11,11 @@ const getData = async ({ queryKey }: any) => {
 }
 
 const useCommentDetail = (idProduct?: string) => {
-  const { userData } = useUserData()
+  const { userData, isLogin } = useUserData()
 
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_KEY.GetCommentDetail, idProduct, userData],
-    enabled: !!idProduct,
+    enabled: !!idProduct && isLogin,
     queryFn: getData,
   })
   return { data, isLoading }

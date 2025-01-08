@@ -160,7 +160,7 @@ const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
                 key={e?.sdt}
                 className='flex md:gap-4 gap-3 pb-3 border-b-[1px] mt-1 border-b-gray-200'
               >
-                <div className='aspect-square h-fit rounded-lg relative overflow-hidden w-[20%] md:min-w-[80px] min-w-[20px]  max-w-[40px]'>
+                <div className='aspect-square h-fit rounded-lg relative overflow-hidden w-[20%] md:min-w-[50px] min-w-[20px]  max-w-[40px]'>
                   <Image
                     src={detectAvatar(e.user[0]?.avatar)}
                     alt={e.sdt}
@@ -183,7 +183,7 @@ const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
                       return (
                         <div
                           key={img}
-                          className='w-[50px]  aspect-square relative overflow-hidden '
+                          className='md:w-[60px] w-[50px]  aspect-square relative overflow-hidden '
                         >
                           <ImageAdmin key={img} src={img} alt={img} className='w-full' />
                         </div>

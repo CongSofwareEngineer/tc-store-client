@@ -35,15 +35,17 @@ const ShoesDetailScreen = ({ productDetail }: { productDetail: ItemDetailType })
   }, [isLogin])
 
   useEffect(() => {
-    const dataClone = cloneData(dataItem)
-    const size = dataClone?.attributes?.sizes[0].size
-    const color = dataClone?.attributes?.sizes[0].colors[0].color
-    dataClone.configBill = {
-      size,
-      color,
-    }
+    if (dataItem) {
+      const dataClone = cloneData(dataItem)
+      const size = dataClone?.attributes?.sizes[0].size
+      const color = dataClone?.attributes?.sizes[0].colors[0].color
+      dataClone.configBill = {
+        size,
+        color,
+      }
 
-    setProductState(dataClone)
+      setProductState(dataClone)
+    }
   }, [dataItem])
 
   if (isPayment) {

@@ -23,7 +23,7 @@ const InfoBill = ({ data, amountBuy }: InfoBillType) => {
           const keyLocal: any = `textPopular.${key}`
           const valueLocal: any = `admin.${key}.${value}`
           return (
-            <div className='flex gap-1 text-xs'>
+            <div key={`renderConfigBill-${key}`} className='flex gap-1 text-xs'>
               <div>{translate(keyLocal) || key}</div>
               <span>:</span>
               <div>{translate(valueLocal) || value}</div>

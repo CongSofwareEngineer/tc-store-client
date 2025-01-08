@@ -42,23 +42,21 @@ const MoreCollections = () => {
     <div className='w-full flex flex-col gap-2'>
       <MyCollections isClickItem={isClickItemRef}>
         <>
-          {data.map((e) => {
-            if (e.keyName === param.params[0]) {
-              return <></>
+          {data.map((e, index: number) => {
+            if (e.keyName !== param.params[0]) {
+              return (
+                <div key={`item-MyCollections-${index}`} className=' min-w-[200px] select-none'>
+                  <ItemProduct
+                    showDiscount
+                    className='!bg-gray-100 !shadow-full'
+                    noClick
+                    callback={() => getRouteProduct(e)}
+                    item={e}
+                    showSold
+                  />
+                </div>
+              )
             }
-            return (
-              <div className=' min-w-[200px] select-none'>
-                <ItemProduct
-                  key={e?._id}
-                  showDiscount
-                  className='!bg-gray-100 !shadow-full'
-                  noClick
-                  callback={() => getRouteProduct(e)}
-                  item={e}
-                  showSold
-                />
-              </div>
-            )
           })}
         </>
       </MyCollections>

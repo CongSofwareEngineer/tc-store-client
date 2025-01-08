@@ -16,6 +16,7 @@ type InputFormType = {
   optionFilterProp?: string
   mode?: any
   disabled?: boolean
+  noPaddingBottom?: boolean
 }
 
 const SelectForm = ({
@@ -31,11 +32,12 @@ const SelectForm = ({
   optionFilterProp = 'any',
   mode = null,
   disabled = false,
+  noPaddingBottom = false,
 }: InputFormType) => {
   const { translate } = useLanguage()
   return (
     <Form.Item
-      className='form-item-select '
+      className={`form-item-select ${noPaddingBottom ? 'no-' : ''}padding-bottom`}
       label={label}
       name={name}
       rules={[
