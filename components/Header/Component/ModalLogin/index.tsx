@@ -8,7 +8,7 @@ import useModalDrawer from '@/hook/useModalDrawer'
 import useCheckForm from '@/hook/useCheckForm'
 import useRoutePage from '@/hook/useRoutePage'
 
-const ModalLogin: React.FC = () => {
+const ModalLogin = () => {
   const { translate } = useLanguage()
   const { login } = useUserData()
   const route = useRoutePage()
@@ -47,56 +47,54 @@ const ModalLogin: React.FC = () => {
       <div className='text-medium uppercase text-center w-full font-semibold'>
         {translate('common.login')}
       </div>
-      {formData && (
-        <MyForm
-          onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
-          formData={formData}
-          onFinish={handleLogin}
-        >
-          <div className='flex flex-col w-full'>
-            <InputForm
-              key={'sdt'}
-              validator={checkNumberPhone}
-              required
-              name='sdt'
-              label={translate('userDetail.sdt')}
-            />
-            <InputForm
-              key={'password'}
-              required
-              name='pass'
-              label={translate('userDetail.pass')}
-              isPass
-              validator={checkPassword}
-            />
-            <div className='flex md:flex-row justify-between w-full md:gap-0 gap-2 mb-3'>
-              <div className='flex flex-1 gap-2  md:mt-0 mt-3 md:mb-0 mb-1 relative '>
-                <div>{translate('register.saveRegister')} :</div>
-                <Checkbox
-                  checked={!!formData?.saveLogin}
-                  onChange={() =>
-                    setFormData({
-                      ...formData,
-                      saveLogin: !formData?.saveLogin,
-                    })
-                  }
-                />
-              </div>
-              <div className='flex-1  text-blue-500 flex justify-end items-end'>
-                <div onClick={handleRegister} className='md:hover:underline cursor-pointer'>
-                  {translate('register.title')}
-                </div>
+      <MyForm
+        onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
+        formData={formData}
+        onFinish={handleLogin}
+      >
+        <div className='flex flex-col w-full'>
+          <InputForm
+            key={'sdt'}
+            validator={checkNumberPhone}
+            required
+            name='sdt'
+            label={translate('userDetail.sdt')}
+          />
+          <InputForm
+            key={'password'}
+            required
+            name='pass'
+            label={translate('userDetail.pass')}
+            isPass
+            validator={checkPassword}
+          />
+          <div className='flex md:flex-row justify-between w-full md:gap-0 gap-2 mb-3'>
+            <div className='flex flex-1 gap-2  md:mt-0 mt-3 md:mb-0 mb-1 relative '>
+              <div>{translate('register.saveRegister')} :</div>
+              <Checkbox
+                checked={!!formData?.saveLogin}
+                onChange={() =>
+                  setFormData({
+                    ...formData,
+                    saveLogin: !formData?.saveLogin,
+                  })
+                }
+              />
+            </div>
+            <div className='flex-1  text-blue-500 flex justify-end items-end'>
+              <div onClick={handleRegister} className='md:hover:underline cursor-pointer'>
+                {translate('register.title')}
               </div>
             </div>
-
-            <Form.Item style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button loading={loading} size='large' htmlType='submit' className='w-[150px]'>
-                {translate('common.login')}
-              </Button>
-            </Form.Item>
           </div>
-        </MyForm>
-      )}
+
+          <Form.Item style={{ display: 'flex', justifyContent: 'center' }}>
+            <Button loading={loading} size='large' htmlType='submit' className='w-[150px]'>
+              {translate('common.login')}
+            </Button>
+          </Form.Item>
+        </div>
+      </MyForm>
     </div>
   )
 }

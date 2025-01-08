@@ -151,10 +151,6 @@ a:hover {
     gap: 0px;
   }
 }
-.form-item-base {
-  margin-bottom: 0px !important;
-  padding-bottom: 17px !important;
-}
 
 .form-item-button {
   .ant-form-item-row {
@@ -162,7 +158,19 @@ a:hover {
   }
 }
 
-.form-item-checkbox .form-item-input .form-item-select {
+.form-item-select,
+.form-item-checkbox,
+.form-item-input,
+.form-item-input,
+.form-item-date-picker {
+  margin-bottom: 0px !important;
+  &.no-padding-bottom {
+    padding-bottom: 0px !important;
+  }
+
+  &.padding-bottom {
+    padding-bottom: 17px !important;
+  }
   .ant-form-item-row {
     flex-direction: column !important;
     .ant-form-item-label {
@@ -194,5 +202,19 @@ a:hover {
     .ant-form-item-label {
       padding: 0px !important;
     }
+  }
+}
+
+.my-input-custom {
+  border-radius: 0px !important;
+  border: 0px !important;
+  border-bottom: 2px solid #d9d9d9 !important;
+  padding: 0px !important;
+  &:focus,
+  &:focus-within,
+  &:hover {
+    border: 0px !important;
+    box-shadow: unset !important;
+    border-bottom: 2px solid #8077ec !important;
   }
 }

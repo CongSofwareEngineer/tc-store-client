@@ -19,14 +19,13 @@ const zustandModal = create<ModalStore>()(
       [ZUSTAND.Modal]: INIT_ZUSTAND[ZUSTAND.Modal],
       openModal: (param: ModalData) => set({ [ZUSTAND.Modal]: param }),
       closeModal: () => {
-        set({
+        set((pre) => ({
           [ZUSTAND.Modal]: {
-            width: '500px',
-            className: '',
+            ...pre?.[ZUSTAND.Modal],
             content: null,
             open: false,
           },
-        })
+        }))
       },
     }),
     {

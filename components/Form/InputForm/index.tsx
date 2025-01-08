@@ -2,48 +2,7 @@ import MyInput from '@/components/MyInput'
 import useLanguage from '@/hook/useLanguage'
 import { Form } from 'antd'
 import React from 'react'
-import styled from 'styled-components'
-const FormItem = styled(styled(Form.Item)<{ $configInput: any }>``)`
-  margin-bottom: 0px !important;
-  padding-bottom: 17px !important;
-  .ant-form-item-row {
-    flex-direction: column !important;
-    .ant-form-item-label {
-      text-align: start !important;
-    }
-  }
 
-  @media screen and (max-width: 768px) {
-    .ant-form-item {
-      .ant-form-item-explain-error {
-        margin-bottom: 0px !important;
-      }
-    }
-    margin-bottom: 0px !important;
-    .ant-form-item-explain-error {
-      margin-bottom: 0px !important;
-    }
-    .ant-form-item-label {
-      padding: 0px !important;
-    }
-    .ant-col {
-      min-height: unset !important;
-    }
-  }
-  @media screen and (max-width: 568px) {
-    margin-bottom: 0px !important;
-    .ant-form-item-explain-error {
-      margin-bottom: 0px !important;
-    }
-    .ant-form-item-label {
-      padding: 0px !important;
-    }
-  }
-  .ant-input {
-    border-radius: ${(props) => props.$configInput?.borderRadius || '8px'};
-    border: ${(props) => (props.$configInput.noBorder ? 0 : 1)} solid #d9d9d9 !important;
-  }
-`
 type InputFormType = {
   label?: string
   name?: any
@@ -61,6 +20,7 @@ type InputFormType = {
   rows?: number
   maxLength?: number
   showCount?: boolean
+  noPaddingBottom?: boolean
 }
 const InputForm = ({
   label,
@@ -70,18 +30,17 @@ const InputForm = ({
   isPass = false,
   validator = () => '',
   classFromItem = '',
-  configInput = {},
   typeBtn = 'string',
   disable = false,
   rows = 3,
   maxLength = 100000,
   showCount = false,
+  noPaddingBottom = false,
 }: InputFormType) => {
   const { translate } = useLanguage()
   return (
-    <FormItem
-      $configInput={configInput}
-      className={classFromItem}
+    <Form.Item
+      className={`form-item-input ${noPaddingBottom ? 'no-' : ''}padding-bottom  ${classFromItem}`}
       label={label}
       name={name}
       rules={[
@@ -112,7 +71,7 @@ const InputForm = ({
         maxLength={maxLength}
         showCount={showCount}
       />
-    </FormItem>
+    </Form.Item>
   )
 }
 

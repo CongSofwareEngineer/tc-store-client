@@ -155,12 +155,13 @@ const useSearchBaseAdmin = (param?: KeySearchProps, paramTitle?: TitleProps) => 
             <div className='flex justify-between flex-wrap'>
               {param?.id && (
                 <div className='md:w-[48%] w-full'>
-                  <InputForm key={'id'} name='id' label={paramTitle?.id || 'ID'} />
+                  <InputForm noPaddingBottom key={'id'} name='id' label={paramTitle?.id || 'ID'} />
                 </div>
               )}
               {param?.idProduct && (
                 <div className='md:w-[48%] w-full'>
                   <InputForm
+                    noPaddingBottom
                     key={'idProduct'}
                     name='idProduct'
                     label={paramTitle?.idProduct || 'ID Product'}
@@ -169,35 +170,45 @@ const useSearchBaseAdmin = (param?: KeySearchProps, paramTitle?: TitleProps) => 
               )}
               {param?.keyName && (
                 <div className='md:w-[48%] w-full'>
-                  <InputForm key={'KeyName'} name='keyName' label={'Key Name'} />
+                  <InputForm noPaddingBottom key={'KeyName'} name='keyName' label={'Key Name'} />
                 </div>
               )}
 
               {param?.sdt && (
                 <div className='md:w-[48%] w-full'>
-                  <InputForm key={'sdt'} name='sdt' label={translate('userDetail.sdt')} />
+                  <InputForm
+                    noPaddingBottom
+                    key={'sdt'}
+                    name='sdt'
+                    label={translate('userDetail.sdt')}
+                  />
                 </div>
               )}
 
               {param?.category && (
                 <div className='md:w-[48%] w-full'>
-                  <CategoryForm label='category' name='category' />
+                  <CategoryForm noPaddingBottom label='category' name='category' />
                 </div>
               )}
               {param?.status && (
                 <div className='md:w-[48%] w-full'>
-                  <StatusFormBill label={translate('textPopular.status')} name='status' />
+                  <StatusFormBill
+                    noPaddingBottom
+                    label={translate('textPopular.status')}
+                    name='status'
+                  />
                 </div>
               )}
               {param?.admin && (
                 <div className='md:w-[48%] w-full'>
-                  <CheckBoxForm label='Admin' name='admin' />
+                  <CheckBoxForm noPaddingBottom label='Admin' name='admin' />
                 </div>
               )}
 
               {param?.dateStart && (
                 <div className='md:w-[48%] w-full'>
                   <MyDatePickerForm
+                    noPaddingBottom
                     label={translate('textPopular.dateStart')}
                     name='dateStart'
                     defaultValue={formData.dateStart}
@@ -207,6 +218,7 @@ const useSearchBaseAdmin = (param?: KeySearchProps, paramTitle?: TitleProps) => 
               {param?.dateEnd && (
                 <div className='md:w-[48%] w-full'>
                   <MyDatePickerForm
+                    noPaddingBottom
                     label={translate('textPopular.dateEnd')}
                     name='dateEnd'
                     defaultValue={formData.dateEnd}

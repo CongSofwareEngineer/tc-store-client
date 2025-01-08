@@ -56,12 +56,7 @@ const ModalConfig = ({ data }: { data?: TYPE_USER_DATA }) => {
       </div>
 
       <div className='flex gap-2 w-full mt-2'>
-        <Button
-          type={data?.isAdmin ? 'primary' : 'default'}
-          onClick={handleSubmit}
-          loading={loading}
-          className='flex flex-1'
-        >
+        <Button onClick={handleSubmit} loading={loading} className='flex flex-1'>
           {translate(data?.isAdmin ? 'common.revertAdmin' : 'common.updateAdmin')}
         </Button>
       </div>

@@ -2,23 +2,7 @@ import { PropsSelectItem } from '@/components/MySelect'
 import useLanguage from '@/hook/useLanguage'
 import { Form, Select, SelectProps } from 'antd'
 import React from 'react'
-import styled from 'styled-components'
-const FormItem = styled(Form.Item)`
-  margin-bottom: 0px !important;
-  padding-bottom: 17px !important;
-  .ant-form-item-row {
-    flex-direction: column !important;
-    .ant-form-item-label {
-      text-align: start !important;
-    }
-  }
-  .ant-form-item-label {
-    padding: 0px !important;
-  }
-  /* .ant-col {
-    min-height: auto !important;
-  } */
-`
+
 type InputFormType = {
   label?: string
   name?: string
@@ -50,7 +34,8 @@ const SelectForm = ({
 }: InputFormType) => {
   const { translate } = useLanguage()
   return (
-    <FormItem
+    <Form.Item
+      className='form-item-select '
       label={label}
       name={name}
       rules={[
@@ -80,7 +65,7 @@ const SelectForm = ({
         options={options}
         {...configSelect}
       />
-    </FormItem>
+    </Form.Item>
   )
 }
 

@@ -41,6 +41,8 @@ const ContentFormPayment = ({ onChange }: { onChange: (param: any) => void }) =>
           name='name'
           label={translate('userDetail.name')}
           classFromItem='w-full'
+          maxLength={24}
+          showCount
         />
       </div>
 
