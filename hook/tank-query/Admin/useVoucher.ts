@@ -3,7 +3,7 @@ import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery'
 import AdminApi from '@/services/adminApi'
 import { isObject } from '@/utils/functions'
 import { useInfiniteQuery } from '@tanstack/react-query'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 
 const getData = async ({
   queryKey,
