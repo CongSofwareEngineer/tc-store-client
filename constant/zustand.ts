@@ -13,6 +13,7 @@ export enum ZUSTAND {
   Modal = 'modal',
   Drawer = 'drawer',
   Language = 'language',
+  ChatSocket = 'ChatSocket',
   UserData = 'userData',
   ConnectedChain = 'connectedChain',
   CategoryMenu = 'categoryMenu',

@@ -2,6 +2,7 @@
 import { COOKIE_EXPIRED, COOKIE_KEY, LOCAL_STORAGE_KEY, OBSERVER_KEY } from '@/constant/app'
 import { TYPE_ZUSTAND, ZUSTAND } from '@/constant/zustand'
 import useCheckPatchName from '@/hook/tank-query/useCheckPatchName'
+import useVoucherUser from '@/hook/tank-query/useVoucherUser'
 import ClientApi from '@/services/clientApi'
 import { deleteCookie, getCookie, setCookie } from '@/services/CookiesService'
 import ObserverService from '@/services/observer'
@@ -24,6 +25,8 @@ const FirstLoadWebsite: NextPage = () => {
   const { fetchData: fetchCategoryMenu } = useCategoryMenu()
   const { fetchData: fetchDataProvinces } = useProvinces()
   const { reset: resetUser, userData, setUserData } = useUserData()
+  const { data: dataVoucher } = useVoucherUser()
+
   const listUrlExitedRef = useRef<string[]>([])
   const userRef = useRef<TYPE_ZUSTAND[ZUSTAND.UserData]>(null)
 
@@ -37,6 +40,12 @@ const FirstLoadWebsite: NextPage = () => {
       userRef.current = userData
     }
   }, [userData])
+
+  useEffect(() => {
+    if (userData && dataVoucher) {
+      console.log({ dataVoucher, userData })
+    }
+  }, [userData, dataVoucher])
 
   useEffect(() => {
     scrollTop()

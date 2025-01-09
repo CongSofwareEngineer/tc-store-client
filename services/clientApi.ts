@@ -9,6 +9,10 @@ const ClientApi = {
     return fetchData({ url: `/auth/ping` })
   },
 
+  getVouchersByIdUser: async (id: string) => {
+    return fetchData({ url: `/user/vouchers/${id}` })
+  },
+
   // -> about
   getAbout: async () => {
     const res = await fetchData({ url: `/about/category/shoes` })

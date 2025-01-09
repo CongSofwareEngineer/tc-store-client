@@ -41,6 +41,10 @@ const Notification = dynamic(() => import('@/components/Notification'), {
   ssr: false,
 })
 
+const ChatSocket = dynamic(() => import('@/components/ChatSocket'), {
+  ssr: false,
+})
+
 const BaseMeta = {
   title: process.env.NEXT_PUBLIC_TITLE,
   description: process.env.NEXT_PUBLIC_TITLE_DES,
@@ -219,6 +223,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
               <AntdRegistry>
                 <ClientRender menuCategory={menuCategory?.data || []}>{children}</ClientRender>
                 {/* load more option */}
+                <ChatSocket />
                 <LoadingFirstPage />
                 <MyModal />
                 <ModalDrawer />
@@ -227,6 +232,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
                 <FirstLoadWebsite />
                 <ToastNoti />
                 <Notification />
+
                 {/* load more option */}
               </AntdRegistry>
             </StyledComponentsRegistry>
