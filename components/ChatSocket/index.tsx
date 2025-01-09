@@ -10,6 +10,7 @@ export type DataMessage = {
   content: string
   received?: string
   room?: any
+  attributes?: { [key: string]: any }
 }
 
 const ChatSocket: NextPage = () => {
