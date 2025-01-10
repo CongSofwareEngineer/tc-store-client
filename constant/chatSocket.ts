@@ -1,13 +1,15 @@
-export enum TYPE_EVENT {
+export enum TYPE_EVENT_SOCKET {
   message = 'message',
   receivedMessage = 'receivedMessage',
   sendMessage = 'sendMessage',
   clientSendMessage = 'clientSendMessage',
+  newMessage = 'newMessage',
   disconnect = 'disconnect',
   connect = 'connect',
-  newMessage = 'newMessage',
   joinRoom = 'joinRoom',
+  userJoinRoom = 'userJoinRoom',
   leaveRoom = 'leaveRoom',
+  userLeaveRoom = 'userLeaveRoom',
 }
 
 export enum DEFAULT_CHAT_ROOM {

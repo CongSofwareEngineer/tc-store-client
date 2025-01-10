@@ -1,5 +1,5 @@
 'use client'
-import { TYPE_EVENT } from '@/constant/chatSocket'
+import { TYPE_EVENT_SOCKET } from '@/constant/chatSocket'
 import { useChatSocket } from '@/zustand/useChatSocket'
 import { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
@@ -23,38 +23,38 @@ const ChatSocket: NextPage = () => {
   }, [create])
 
   useEffect(() => {
-    if (chatSocket) {
-      chatSocket.on(TYPE_EVENT.newMessage, (data: any) => {
+    if (chatSocket?.connected) {
+      chatSocket.on(TYPE_EVENT_SOCKET.newMessage, (data: any) => {
         console.log({ newMessages: data })
         setListMessage((pre) => [...pre, data])
       })
 
-      chatSocket.on(TYPE_EVENT.receivedMessage, (data: any) => {
-        console.log({ receivedMessage: data })
+      chatSocket.on(TYPE_EVENT_SOCKET.userLeaveRoom, (data: any) => {
+        console.log({ userLeaveRoom: data })
       })
 
-      chatSocket.on(TYPE_EVENT.joinRoom, (data: any) => {
+      chatSocket.on(TYPE_EVENT_SOCKET.userJoinRoom, (data: any) => {
         console.log({ joinRoom: data })
       })
     }
 
     return () => {
-      chatSocket?.removeListener(TYPE_EVENT.newMessage)
-      chatSocket?.removeListener(TYPE_EVENT.receivedMessage)
-      chatSocket?.removeListener(TYPE_EVENT.joinRoom)
+      chatSocket?.removeListener(TYPE_EVENT_SOCKET.newMessage)
+      chatSocket?.removeListener(TYPE_EVENT_SOCKET.userLeaveRoom)
+      chatSocket?.removeListener(TYPE_EVENT_SOCKET.userJoinRoom)
     }
   }, [chatSocket])
 
   useEffect(() => {
     if (chatSocket?.connected) {
-      chatSocket.emit(TYPE_EVENT.joinRoom, {
+      chatSocket.emit(TYPE_EVENT_SOCKET.joinRoom, {
         content: 'client join room',
         sdt: '0392225405',
         date: Date.now(),
       })
 
       setTimeout(() => {
-        chatSocket.emit(TYPE_EVENT.clientSendMessage, {
+        chatSocket.emit(TYPE_EVENT_SOCKET.clientSendMessage, {
           content: 'client send message',
           sdt: '0392225405',
           date: Date.now(),
@@ -63,7 +63,7 @@ const ChatSocket: NextPage = () => {
     }
 
     return () => {
-      chatSocket?.disconnect()
+      chatSocket?.connected && chatSocket?.disconnect()
     }
   }, [chatSocket])
 
