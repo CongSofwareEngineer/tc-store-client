@@ -45,6 +45,10 @@ const ChatSocket = dynamic(() => import('@/components/ChatSocket'), {
   ssr: false,
 })
 
+const ChatFirebase = dynamic(() => import('@/components/ChatFirebase'), {
+  ssr: false,
+})
+
 const BaseMeta = {
   title: process.env.NEXT_PUBLIC_TITLE,
   description: process.env.NEXT_PUBLIC_TITLE_DES,
@@ -224,6 +228,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
                 <ClientRender menuCategory={menuCategory?.data || []}>{children}</ClientRender>
                 {/* load more option */}
                 <ChatSocket />
+                <ChatFirebase />
                 <LoadingFirstPage />
                 <MyModal />
                 <ModalDrawer />

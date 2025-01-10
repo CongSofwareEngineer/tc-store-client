@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3016",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3016",
     "lint": "next lint",
     "format": "prettier --write .",
     "lint:fix": "eslint --fix .",
@@ -55,6 +55,7 @@
     "cmdk": "1.0.0",
     "critters": "^0.0.25",
     "crypto-js": "^4.2.0",
+    "cssnano": "^7.0.6",
     "firebase": "10.6.0",
     "libphonenumber-js": "^1.11.3",
     "lodash": "^4.17.21",
@@ -93,7 +94,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react-hooks": "^5.1.0",
-    "postcss": "^8",
+    "postcss": "^8.4.49",
     "prettier": "^3.4.2",
     "typescript": "^5"
   }

@@ -63,7 +63,7 @@ const ChatSocket: NextPage = () => {
     }
 
     return () => {
-      chatSocket?.connected && chatSocket?.disconnect()
+      chatSocket?.disconnect()
     }
   }, [chatSocket])
 

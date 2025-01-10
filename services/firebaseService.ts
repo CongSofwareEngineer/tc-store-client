@@ -4,6 +4,7 @@ import { deleteToken, getMessaging, getToken, isSupported, onMessage } from 'fir
 import FirebaseFun from '@/utils/firebase'
 import { DATA_BASE, DatabaseCollectionType } from '@/constant/firebase'
 import { Auth, getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
+import { getDatabase } from 'firebase/database'
 
 export const FirebaseServices = {
   config: {
@@ -21,6 +22,14 @@ export const FirebaseServices = {
     const auth = getAuth(FirebaseServices.initFirebase())
     auth.useDeviceLanguage()
     return auth
+  },
+
+  initRealtimeData: () => {
+    const db = getDatabase(
+      FirebaseServices.initFirebase(),
+      'https://tc-store-7c79f-default-rtdb.asia-southeast1.firebasedatabase.app/'
+    )
+    return db
   },
 
   addSigninNumberPhone: (callback: (param?: any) => any) => {

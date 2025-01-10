@@ -30,6 +30,7 @@ export const zustandLanguage = create<ChatSocketStore>()(
           autoConnect: true,
           secure: true,
         })
+        socket.connect()
 
         setTimeout(() => {
           set({ [ZUSTAND.ChatSocket]: socket })
@@ -47,9 +48,7 @@ export const useChatSocket = () => {
   const { ChatSocket, create } = zustandLanguage((state) => state)
 
   useEffect(() => {
-    if (ChatSocket && !ChatSocket.connected) {
-      ChatSocket.connect()
-    }
+    console.log({ connected: ChatSocket?.connected })
   }, [ChatSocket])
 
   return {
