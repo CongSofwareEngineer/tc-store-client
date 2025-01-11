@@ -39,7 +39,6 @@ export const showNotificationError = (errorMessage = '', autoClose = 5000) => {
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
-    delay: 100000,
   })
 }
 
@@ -52,6 +51,5 @@ export const showNotificationSuccess = (message = '', autoClose = 5000) => {
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
-    delay: 100000,
   })
 }
