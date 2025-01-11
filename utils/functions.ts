@@ -10,7 +10,7 @@ export const cloneData = (data: any, defaultValue: any = '') => {
       return data
     }
     return JSON.parse(JSON.stringify(data))
-  } catch (error) {
+  } catch {
     return defaultValue
   }
 }
@@ -18,7 +18,7 @@ export const cloneData = (data: any, defaultValue: any = '') => {
 export const isEmptyObject = (data: any) => {
   try {
     return Object.keys(data).length > 0
-  } catch (error) {
+  } catch {
     return false
   }
 }
@@ -35,7 +35,7 @@ export const numberWithCommas = (x: any) => {
 export const formatPrice = (data: any) => {
   try {
     return numberWithCommas(data || '0')
-  } catch (error) {
+  } catch {
     return 0
   }
 }
@@ -49,7 +49,7 @@ export const formatPriceBase = (data: any, discount = 20) => {
     // const rate = (100 + discount) / 100
     return numberWithCommas(new BigNumber(data).dividedBy(rate).decimalPlaces(0).toFixed())
     // return numberWithCommas(rate * rate)
-  } catch (error) {
+  } catch {
     return 0
   }
 }
@@ -63,16 +63,14 @@ export function delayTime(ms = 500) {
 export const saveDataLocal = (key: string, data: any) => {
   try {
     localStorage.setItem(key, JSON.stringify(data))
-  } catch (error) {
-    console.log(error)
-  }
+  } catch {}
 }
 
 export const getDataLocal = (key = '', defaultValue: any = '') => {
   try {
     const data: string = localStorage.getItem(key) || ''
     return JSON.parse(data)
-  } catch (error) {
+  } catch {
     return defaultValue
   }
 }
@@ -80,9 +78,7 @@ export const getDataLocal = (key = '', defaultValue: any = '') => {
 export const removeDataLocal = (key: string): void => {
   try {
     localStorage.removeItem(key)
-  } catch (error) {
-    console.log(error)
-  }
+  } catch {}
 }
 
 export const getBase642 = (file: any, callback: any): void => {
@@ -112,7 +108,7 @@ export const isURL = (link: string) => {
   try {
     const url = new URL(link)
     return url.protocol === 'http:' || url.protocol === 'https:'
-  } catch (error) {
+  } catch {
     return false
   }
 }
@@ -173,7 +169,7 @@ export const detectImg = (src: any, maxWidthScale = 0) => {
       return `https://res.cloudinary.com/tc-store/image/upload/c_scale,w_${maxWidthScale}/v1722158972/${src}`
     }
     return `https://res.cloudinary.com/tc-store/image/upload/v1722158972/${src}`
-  } catch (error) {
+  } catch {
     return ''
   }
 }
@@ -188,7 +184,7 @@ export const detectAvatar = (src: any) => {
       return src
     }
     return `https://res.cloudinary.com/tc-store/image/upload/v1722158972/${src}`
-  } catch (error) {
+  } catch {
     return '/images/Profile/Userdetail/iconUserDetail.png'
   }
 }
@@ -204,7 +200,7 @@ export function isObject(value: any): boolean {
       return false
     }
     return Object.prototype.toString.call(value) === '[object Object]'
-  } catch (error) {
+  } catch {
     return false
   }
 }
@@ -212,7 +208,7 @@ export function isObject(value: any): boolean {
 export function lowercase(value: any) {
   try {
     return value.toLowerCase()
-  } catch (error) {
+  } catch {
     return value
   }
 }
@@ -220,7 +216,7 @@ export function lowercase(value: any) {
 export function uppercase(value: any) {
   try {
     return value.toUpperCase()
-  } catch (error) {
+  } catch {
     return value
   }
 }
@@ -244,7 +240,7 @@ export function convertBoolean(value: any): boolean {
       return true
     }
     return false
-  } catch (error) {
+  } catch {
     return false
   }
 }

@@ -171,7 +171,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
       }
 
       setLoading(false)
-    } catch (error) {
+    } catch {
       setLoading(false)
     }
   }

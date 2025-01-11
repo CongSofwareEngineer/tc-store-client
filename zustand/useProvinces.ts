@@ -21,7 +21,7 @@ const zustandProvinces = create<ProvincesStore>()(
         try {
           const data = await axios.get('https://esgoo.net/api-tinhthanh/1/0.htm')
           set({ [ZUSTAND.Provinces]: data?.data?.data || data?.data || [] })
-        } catch (error) {}
+        } catch {}
       },
     }),
     {

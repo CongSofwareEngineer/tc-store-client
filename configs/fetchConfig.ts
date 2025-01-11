@@ -1,7 +1,7 @@
 import { COOKIE_KEY, OBSERVER_KEY, REQUEST_TYPE } from '@/constant/app'
 import { getCookie, setCookie } from '@/services/CookiesService'
 import ObserverService from '@/services/observer'
-import { decryptData, encodeDataMaxLength, encryptData } from '@/utils/crypto'
+import { encryptData } from '@/utils/crypto'
 import { showNotificationError } from '@/utils/notification'
 import axios from 'axios'
 
@@ -61,7 +61,7 @@ export const fetchData = async (
       }
     }
     return fetchConfig({ ...config, auth: auth || '' })
-  } catch (error) {
+  } catch {
     return {
       data: null,
       messages: 'fail',

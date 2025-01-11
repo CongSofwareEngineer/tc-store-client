@@ -88,8 +88,8 @@ const Vietcombank = () => {
   //       const partnerName = 'Ho Dien Congf'
   //       const qrData = `${baseUrl}/pay?partnerCode=${partnerCode}&amount=${amount}&comment=${encodeURIComponent(comment)}&partnerName=${encodeURIComponent(partnerName)}`
   //       console.log({ qrData })
-  //     } catch (error) {
-  //       console.log({ error })
+  //     } catch  {
+  //
   //     }
   //   })()
   // }, [])

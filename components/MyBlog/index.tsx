@@ -154,7 +154,7 @@ const MyBlog = ({
       //   },
       // }),
     ]
-  }, [pathFile])
+  }, [pathFile, getBase64])
 
   const onChange = (newValue: any): any => {
     setValue(newValue)

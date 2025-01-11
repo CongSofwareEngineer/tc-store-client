@@ -93,7 +93,7 @@ export const FirebaseServices = {
 
           return token
         }
-      } catch (error) {
+      } catch {
         numberReq++
         return await FirebaseServices.recursiveCreateToken(callBack, registration, numberReq)
       }

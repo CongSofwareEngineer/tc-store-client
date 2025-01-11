@@ -96,7 +96,7 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
       } else {
         showNotificationError(translate('error.feedback'))
       }
-    } catch (error) {
+    } catch {
       showNotificationError(translate('error.feedback'))
     } finally {
       setLoading(false)

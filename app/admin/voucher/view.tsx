@@ -56,7 +56,6 @@ const VoucherScreen: NextPage = () => {
           title: translate('textPopular.infor'),
           dataIndex: 'type',
           render: (type: string, record: VoucherProps) => {
-            const textViewName: any = `textPopular.${type}`
             return (
               <div className='flex flex-col gap-1'>
                 <div className='flex justify-between text-xs'>

@@ -56,7 +56,7 @@ const ModalDelete = ({
       await reject()
       isModalAdmin ? closeModal() : closeModalDrawer()
       setLoadingReject(false)
-    } catch (error) {
+    } catch {
       setLoadingReject(false)
     }
   }

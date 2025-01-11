@@ -19,7 +19,7 @@ const useLanguage = () => {
         }
       })
       return text
-    } catch (error) {
+    } catch {
       return ''
     }
   }
@@ -28,7 +28,7 @@ const useLanguage = () => {
     try {
       const data = categoryMenu.find((e) => e.keyName === key)
       return data?.lang?.[language.locale] || key
-    } catch (error) {
+    } catch {
       return key
     }
   }

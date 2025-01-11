@@ -6,6 +6,7 @@ import AntdProvider from '@/components/AntdProvider'
 import '@/styles/globals.scss'
 import '@/styles/override.scss'
 import '@/styles/aos.css'
+
 import { AntdRegistry } from '@ant-design/nextjs-registry'
 import StyledComponentsRegistry from '@/components/RegistryApp'
 import ClientRender from '@/components/ClientRender'
@@ -17,6 +18,8 @@ import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import Script from 'next/script'
 import ClientApi from '@/services/clientApi'
 import dynamic from 'next/dynamic'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 const MyModal = dynamic(() => import('@/components/MyModal'))
 const ModalDrawer = dynamic(() => import('@/components/MyDrawer'))
 const LoadingFirstPage = dynamic(() => import('@/components/LoadingFirstPage'), {
@@ -225,20 +228,29 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
           <ReactQueryProvider>
             <StyledComponentsRegistry>
               <AntdRegistry>
-                <ClientRender menuCategory={menuCategory?.data || []}>{children}</ClientRender>
-                {/* load more option */}
-                <ChatSocket />
-                <ChatFirebase />
-                <LoadingFirstPage />
-                <MyModal />
-                <ModalDrawer />
-                <MyModalAdmin />
-                <CheckPingServer />
-                <FirstLoadWebsite />
-                <ToastNoti />
-                <Notification />
+                <Header />
 
-                {/* load more option */}
+                <main className='main-content w-full flex justify-center min-h-[calc(100dvh-56px)]'>
+                  <section
+                    id='id-section-content'
+                    className='section-content  w-full max-w-[1350px]  md:px-12 px-[20px]  md:pt-5 pt-2'
+                  >
+                    <ClientRender menuCategory={menuCategory?.data || []}>{children}</ClientRender>
+                    {/* load more option */}
+                    <ChatSocket />
+                    <ChatFirebase />
+                    <LoadingFirstPage />
+                    <MyModal />
+                    <ModalDrawer />
+                    <MyModalAdmin />
+                    <CheckPingServer />
+                    <FirstLoadWebsite />
+                    <ToastNoti />
+                    <Notification />
+                  </section>
+                </main>
+
+                <Footer />
               </AntdRegistry>
             </StyledComponentsRegistry>
           </ReactQueryProvider>

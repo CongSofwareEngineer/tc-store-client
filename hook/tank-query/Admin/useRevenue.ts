@@ -1,8 +1,7 @@
 import { FILTER_BILL, PAGE_SIZE_LIMIT } from '@/constant/app'
 import { QUERY_KEY, TypeHookReactQuery } from '@/constant/reactQuery'
 import AdminApi from '@/services/adminApi'
-import ClientApi from '@/services/clientApi'
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 
 const getData = async ({

@@ -63,7 +63,7 @@ const MyCollections = ({
     if (isMobile) {
       isClickItem.current = true
     }
-  }, [isMobile])
+  }, [isMobile, isClickItem])
 
   return (
     <div id='listCollection' className='flex md:gap-4 gap-3 w-full overflow-y-auto py-3'>

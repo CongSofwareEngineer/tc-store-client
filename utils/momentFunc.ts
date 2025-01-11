@@ -20,7 +20,7 @@ export const convertDateToNumber = (data?: any) => {
     }
 
     return localMoment()(timeTemp || moment()).valueOf()
-  } catch (error) {
+  } catch {
     return localMoment()().valueOf()
   }
 }
@@ -28,7 +28,7 @@ export const convertDateToNumber = (data?: any) => {
 export const plusDay = (value?: any, amount = 7, type: moment.DurationInputArg2 = 'days') => {
   try {
     return localMoment()(value || moment()).add(amount, type)
-  } catch (error) {
+  } catch {
     return moment()
   }
 }
@@ -37,7 +37,7 @@ export function isNumericString(input: string) {
   try {
     // Matches only strings containing one or more digits
     return /^\d+$/.test(input)
-  } catch (error) {
+  } catch {
     return false
   }
 }
@@ -53,7 +53,7 @@ export const formatDateTime = (data: any, format = 'DD / MM /YYYY') => {
     }
 
     return localMoment()(timeTemp).format(format)
-  } catch (error) {
+  } catch {
     return localMoment()().format(format)
   }
 }
@@ -74,7 +74,7 @@ export const expiredTimeToNumber = (data: any) => {
 
     const daysDifference = localMoment()(timeTemp).diff(moment(), 'days')
     return daysDifference
-  } catch (error) {
+  } catch {
     return data
   }
 }
@@ -95,7 +95,7 @@ export const diffTime = (data: any, type: moment.DurationInputArg2 = 'days') => 
 
     const daysDifference = localMoment()(timeTemp).diff(moment(), type)
     return daysDifference
-  } catch (error) {
+  } catch {
     return 0
   }
 }
@@ -109,7 +109,7 @@ export const formatDatePicker = (data: any) => {
     timeTemp = formatDateTime(data, 'DD/MM/YYYY')
 
     return dayjs(timeTemp, 'DD/MM/YYYY')
-  } catch (error) {
+  } catch {
     return dayjs(Date.now(), 'DD/MM/YYYY')
   }
 }

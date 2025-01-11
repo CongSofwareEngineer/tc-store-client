@@ -81,7 +81,7 @@ const useBase64Img = (maxSizeOutputKB = 15, maxScale = MAX_PIXEL_REDUCE) => {
           })
         })
       })
-    } catch (error) {
+    } catch {
       showNotificationError(translate('errors.file'))
       return null
     }
@@ -96,7 +96,7 @@ const useBase64Img = (maxSizeOutputKB = 15, maxScale = MAX_PIXEL_REDUCE) => {
       }
 
       getBase64Base(fileUpload, callBack)
-    } catch (error) {
+    } catch {
       showNotificationError(translate('errors.file'))
       return null
     }

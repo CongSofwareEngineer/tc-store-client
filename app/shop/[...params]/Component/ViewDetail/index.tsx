@@ -133,8 +133,7 @@ const ViewDetail = ({ productDetail, amountBuy = 0, setIsPayment, setAmountBuy }
       ])
       setLoadingAddCart(false)
       showNotificationSuccess(translate('addCart.addSuccess'))
-    } catch (error) {
-      console.log({ error })
+    } catch {
     } finally {
       setLoadingAddCart(false)
     }

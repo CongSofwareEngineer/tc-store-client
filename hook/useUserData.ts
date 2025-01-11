@@ -58,7 +58,7 @@ const useUserData = () => {
       } else {
         showNotificationError(translate('noti.loginError'))
       }
-    } catch (error) {
+    } catch {
       showNotificationError(translate('noti.loginError'))
     }
   }

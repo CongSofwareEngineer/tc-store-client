@@ -10,7 +10,7 @@ export const encryptData = (
       iv: getIV(),
     }).toString()
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (error) {
+  } catch {
     return ''
   }
 }
@@ -25,7 +25,7 @@ export const decryptData = (value: any, pinCode: string = process.env.NEXT_PUBLI
     return decryptedData
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (error) {
+  } catch {
     return ''
   }
 }
@@ -42,7 +42,7 @@ export const encodeDataMaxLength = (
     }
     return stringEncode.substr(0, maxLength)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (error) {
+  } catch {
     return ''
   }
 }

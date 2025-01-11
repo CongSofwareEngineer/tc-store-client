@@ -79,8 +79,7 @@ export default class FirebaseFun {
       const temp: DatabaseDocsType = doc(this.db, id)
       await updateDoc(temp, data)
       return true
-    } catch (error) {
-      console.log('🚀 ~ file: firebase.js:67 ~ FirebaseFun ~ updateData ~ error:', error)
+    } catch {
       return false
     }
   }
@@ -95,8 +94,7 @@ export default class FirebaseFun {
     try {
       await addDoc(this.db, data)
       return true
-    } catch (error) {
-      console.log('🚀 ~ file: firebase.js:57 ~ FirebaseFun ~ addData ~ error:', error)
+    } catch {
       return false
     }
   }
@@ -105,7 +103,7 @@ export default class FirebaseFun {
     try {
       await deleteDoc(doc(this.db, id))
       return true
-    } catch (error) {
+    } catch {
       return false
     }
   }
@@ -146,7 +144,7 @@ export default class FirebaseFun {
           lastVisible,
         }
       }
-    } catch (error) {
+    } catch {
       return {
         data: null,
         lastVisible: null,
@@ -183,7 +181,7 @@ export default class FirebaseFun {
           lastVisible,
         }
       }
-    } catch (error) {
+    } catch {
       return {
         data: null,
         lastVisible: null,

@@ -14,7 +14,7 @@ const useCheckForm = () => {
         return null
       }
       return translate('warning.errorSDT')
-    } catch (error) {
+    } catch {
       return translate('warning.errorSDT')
     }
   }
@@ -29,7 +29,7 @@ const useCheckForm = () => {
         return null
       }
       return translate('errors.inValueNumber')
-    } catch (error) {
+    } catch {
       return translate('errors.inValueNumber')
     }
   }

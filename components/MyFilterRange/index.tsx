@@ -101,7 +101,7 @@ const MyFilterRange = ({
         ),
       },
     ],
-    [slider, sliderFromQuery, title, minSlider, maxSlider, stepRange, renderTooltip]
+    [keyMax, slider, sliderFromQuery, keyMin, title, minSlider, maxSlider, stepRange, renderTooltip]
   )
 
   return (

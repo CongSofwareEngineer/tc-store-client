@@ -17,7 +17,7 @@ import { devtools } from 'zustand/middleware'
 //           try {
 //             const menuCategory = await ClientApi.getCategory(true)
 //             set(menuCategory?.data || [])
-//           } catch (error) {}
+//           } catch  {}
 //         },
 //       }),
 //       { name: ZUSTAND.CategoryMenu },

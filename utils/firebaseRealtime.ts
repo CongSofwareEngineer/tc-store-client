@@ -8,22 +8,54 @@ import {
   orderByChild,
   query,
   ref,
-  startAfter,
+  remove,
+  update,
+  set,
 } from 'firebase/database'
 import { PAGE_SIZE_LIMIT } from '../constant/app'
 
 class FBRealtimeUtils {
   private db: DatabaseReference
   private lastData?: number | null = null
-  constructor(name = 'Chat') {
+
+  constructor(nameDB = 'Chat') {
     const fb = FirebaseServices.initRealtimeData()
-    this.db = ref(fb, name)
+    this.db = ref(fb, nameDB)
   }
 
-  listenerOnValue(callback: (value: any) => void) {
+  async remove() {
+    try {
+      await remove(this.db)
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  async update(body: any) {
+    try {
+      await set(this.db, body)
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  async create(body: any) {
+    try {
+      await update(this.db, body)
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  listenerOnValue(callback: (value: any[]) => void) {
     onValue(this.db, (snapshot) => {
       const data = snapshot.val()
-      callback(data)
+      if (data) {
+        callback(data)
+      }
     })
   }
 
@@ -64,8 +96,7 @@ class FBRealtimeUtils {
         data,
         loadMore: true,
       }
-    } catch (error) {
-      console.log({ error })
+    } catch {
       this.lastData = null
       return {
         data: [],

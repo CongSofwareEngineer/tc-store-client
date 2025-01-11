@@ -27,7 +27,7 @@ const getData = async ({
       data: dataServer?.data || [],
       page: pageParam,
     }
-  } catch (error) {
+  } catch {
     return {
       data: [],
       page: pageParam,

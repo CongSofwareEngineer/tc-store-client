@@ -35,9 +35,7 @@ const MyFilter = ({
       }
 
       return numberQuery
-    } catch (error) {
-      console.log({ errorgetNumberQuery: error })
-
+    } catch {
       return 0
     }
   }, [queries])

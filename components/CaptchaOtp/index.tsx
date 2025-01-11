@@ -58,9 +58,8 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
       setIsPending(true)
       const otpRes = await FirebaseServices.sendNumberToGetOtp(phoneMemo, auth!, reCaptchaVerifier!)
       setOtpReceived(otpRes)
-    } catch (error) {
+    } catch {
       setIsErrorManyRequest(true)
-      console.log({ errorhandleSendOtp: error })
     }
   }
 
@@ -74,8 +73,7 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
           await callback()
         }
       }
-    } catch (error) {
-      console.log({ errorhandleVerifyOtp: error })
+    } catch {
       setIsErrorCode(true)
     } finally {
       setTimeout(() => {

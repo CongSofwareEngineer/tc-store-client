@@ -35,8 +35,7 @@ const ModalLogin = () => {
     try {
       setLoading(true)
       await login(e.sdt, e.pass, !!formData?.saveLogin)
-    } catch (error) {
-      console.log({ error })
+    } catch {
     } finally {
       setLoading(false)
     }

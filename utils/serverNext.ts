@@ -91,7 +91,7 @@ export const formatSearchParams = (param: any) => {
     // })
     const searchPare = queryString.stringify(param, { arrayFormat: 'comma' })
     return `?${searchPare}`
-  } catch (error) {
+  } catch {
     return ''
   }
 }
