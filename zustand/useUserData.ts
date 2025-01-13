@@ -9,7 +9,6 @@ type UserDataStoreState = { [ZUSTAND.UserData]: TYPE_ZUSTAND[ZUSTAND.UserData] }
 type UserDataStoreActions = {
   setUserData: (nextUserData: UserDataStoreState[ZUSTAND.UserData]) => void
   reset: () => void
-  loadDataLocal: () => void
 }
 
 type UserDataStore = UserDataStoreState & UserDataStoreActions
@@ -21,21 +20,12 @@ const zustandUserData = createStore<UserDataStore>()(
         [ZUSTAND.UserData]: INIT_ZUSTAND[ZUSTAND.UserData],
         setUserData: (user: TYPE_ZUSTAND[ZUSTAND.UserData]) => set({ [ZUSTAND.UserData]: user }),
         reset: () => set({ [ZUSTAND.UserData]: INIT_ZUSTAND[ZUSTAND.UserData] }),
-        loadDataLocal: () => {
-          const dataSecure = secureLocalStorage.getItem(ZUSTAND.UserData)
-
-          if (dataSecure) {
-            const dataDecode = decryptData(dataSecure.toString())
-            set({ [ZUSTAND.UserData]: JSON.parse(dataDecode) })
-          }
-        },
       }),
       {
         name: `zustand-${ZUSTAND.UserData}`,
         storage: {
           getItem: () => {
             const dataSecure = secureLocalStorage.getItem(ZUSTAND.UserData)
-
             if (dataSecure) {
               const dataDecode = decryptData(dataSecure.toString())
               return JSON.parse(dataDecode)
@@ -44,6 +34,16 @@ const zustandUserData = createStore<UserDataStore>()(
           },
           removeItem: () => null,
           setItem: () => null,
+        },
+        merge: (_: unknown, currentState: UserDataStore) => {
+          const dataSecure = secureLocalStorage.getItem(ZUSTAND.UserData)
+
+          if (dataSecure) {
+            const dataDecode = decryptData(dataSecure.toString())
+            currentState[ZUSTAND.UserData] = JSON.parse(dataDecode)
+          }
+
+          return currentState
         },
       }
     ),
@@ -55,15 +55,5 @@ const zustandUserData = createStore<UserDataStore>()(
 )
 
 export const useUserData = () => {
-  const userData = zustandUserData.getState()[ZUSTAND.UserData]
-  const setUserData = zustandUserData.getState().setUserData
-  const reset = zustandUserData.getState().reset
-  const loadDataLocal = zustandUserData.getState().loadDataLocal
-
-  return {
-    userData,
-    setUserData,
-    reset,
-    loadDataLocal,
-  }
+  return zustandUserData.getState()
 }
