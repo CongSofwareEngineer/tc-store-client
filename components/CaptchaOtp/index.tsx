@@ -28,7 +28,10 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
     if (numberPhone.startsWith('0')) {
       return '+84' + numberPhone.slice(1)
     }
-    return '+84' + numberPhone
+    if (numberPhone.startsWith('+84')) {
+      return numberPhone
+    }
+    return `+840${numberPhone}`
   }, [numberPhone])
 
   useLayoutEffect(() => {
@@ -76,9 +79,7 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
     } catch {
       setIsErrorCode(true)
     } finally {
-      setTimeout(() => {
-        setLoadingCheckPinCode(false)
-      }, 3000)
+      setLoadingCheckPinCode(false)
     }
   }
 
