@@ -1,5 +1,4 @@
 import OptionVnLocation from '@/components/OptionVnLocation'
-import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useLanguage from '@/hook/useLanguage'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useUserData from '@/hook/useUserData'

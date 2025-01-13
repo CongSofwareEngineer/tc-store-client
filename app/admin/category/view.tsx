@@ -73,7 +73,7 @@ const CategoryAdminScreen = () => {
   const getName = (type: Record<string, string>) => {
     try {
       return type[lang]
-    } catch (error: any) {
+    } catch {
       return lang
     }
   }
