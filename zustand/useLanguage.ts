@@ -1,12 +1,12 @@
 import { persist, devtools, StorageValue } from 'zustand/middleware'
 import MessageVN from '@/public/assets/language/vn.json'
-import MessageEN from '@/public/assets/language/en.json'
+// import MessageEN from '@/public/assets/language/en.json'
 
 import { createStore } from 'zustand'
 
 import { ZUSTAND } from '@/constant/zustand'
 import { LANGUAGE_SUPPORT } from '@/constant/app'
-import { getDataLocal, removeDataLocal, saveDataLocal } from '@/utils/functions'
+import { removeDataLocal, saveDataLocal } from '@/utils/functions'
 
 type LanguageStoreState = { [ZUSTAND.Language]: { locale: string; messages: any } }
 type LanguageStoreActions = {
@@ -28,7 +28,7 @@ export const zustandLanguage = createStore<LanguageStore>()(
             set({
               [ZUSTAND.Language]: {
                 locale: LANGUAGE_SUPPORT.EN,
-                messages: MessageEN,
+                messages: MessageVN,
               },
             })
           } else {
@@ -51,14 +51,14 @@ export const zustandLanguage = createStore<LanguageStore>()(
           removeItem: () => removeDataLocal(nameZustand),
         },
         merge: (_: unknown, currentState: LanguageStore) => {
-          const local = getDataLocal(nameZustand)
-          if (!local || local === LANGUAGE_SUPPORT.VN) {
-            currentState[ZUSTAND.Language].locale = LANGUAGE_SUPPORT.VN
-            currentState[ZUSTAND.Language].messages = MessageVN
-          } else {
-            currentState[ZUSTAND.Language].locale = LANGUAGE_SUPPORT.EN
-            currentState[ZUSTAND.Language].messages = MessageEN
-          }
+          // const local = getDataLocal(nameZustand)
+          // if (!local || local === LANGUAGE_SUPPORT.VN) {
+          //   currentState[ZUSTAND.Language].locale = LANGUAGE_SUPPORT.VN
+          //   currentState[ZUSTAND.Language].messages = MessageVN
+          // } else {
+          //   currentState[ZUSTAND.Language].locale = LANGUAGE_SUPPORT.EN
+          //   currentState[ZUSTAND.Language].messages = MessageEN
+          // }
 
           return currentState
         },

@@ -28,19 +28,20 @@ const zustandUserData = createStore<UserDataStore>()(
             const dataSecure = secureLocalStorage.getItem(ZUSTAND.UserData)
             if (dataSecure) {
               const dataDecode = decryptData(dataSecure.toString())
-              return JSON.parse(dataDecode)
+              return {
+                state: {
+                  userData: JSON.parse(dataDecode),
+                },
+              }
             }
             return null
           },
           removeItem: () => null,
           setItem: () => null,
         },
-        merge: (_: unknown, currentState: UserDataStore) => {
-          const dataSecure = secureLocalStorage.getItem(ZUSTAND.UserData)
-
-          if (dataSecure) {
-            const dataDecode = decryptData(dataSecure.toString())
-            currentState[ZUSTAND.UserData] = JSON.parse(dataDecode)
+        merge: (preState: any, currentState: UserDataStore) => {
+          if (preState?.userData) {
+            currentState[ZUSTAND.UserData] = preState?.userData
           }
 
           return currentState

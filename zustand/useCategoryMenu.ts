@@ -45,7 +45,7 @@ const zustandCategoryMenu = create<CategoryMenuStore>()(
         set({ [ZUSTAND.CategoryMenu]: categoryMenu })
       },
       fetchData: async () => {
-        const menuCategory = await ClientApi.getCategory(true, new Date().getTime())
+        const menuCategory = await ClientApi.getCategory(true)
         set(menuCategory?.data || [])
       },
     }),
