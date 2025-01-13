@@ -38,7 +38,7 @@ const AdminApi = {
 
   //voucher
   getVouchers: async (query = '') => {
-    return fetchData({ url: `voucher/all${query}` })
+    return fetchData({ url: `voucher/admin/all${query}` })
   },
   getVoucherBuyId: async (id: string) => {
     return fetchData({ url: `voucher/detail/${id}` })

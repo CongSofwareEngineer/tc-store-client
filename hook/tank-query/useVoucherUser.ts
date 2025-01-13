@@ -2,6 +2,8 @@ import useUserData from '../useUserData'
 import { useQuery } from '@tanstack/react-query'
 import { QUERY_KEY } from '@/constant/reactQuery'
 import ClientApi from '@/services/clientApi'
+import { useEffect } from 'react'
+import { expiredTimeToNumber } from '@/utils/momentFunc'
 
 const getData = async ({ queryKey }: { queryKey: any }): Promise<any[]> => {
   const data = await ClientApi.getVouchersByIdUser(queryKey[1])
@@ -17,6 +19,16 @@ const useVoucherUser = () => {
     enabled: isLogin,
     initialData: [],
   })
+
+  useEffect(() => {
+    if (data.length > 0) {
+      const arrValid = data.filter((e) => {
+        const isValidDate = expiredTimeToNumber(e.expired)
+        return isValidDate >= 0
+      })
+      console.log({ arrValid })
+    }
+  }, [data, userData])
 
   return {
     isLoading,

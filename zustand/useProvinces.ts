@@ -32,13 +32,5 @@ const zustandProvinces = create<ProvincesStore>()(
 )
 
 export const useProvinces = () => {
-  const data = zustandProvinces((state) => state[ZUSTAND.Provinces])
-  const setProvinces = zustandProvinces((state) => state.setProvinces)
-  const fetchData = zustandProvinces((state) => state.fetchData)
-
-  return {
-    provinces: data,
-    setProvinces,
-    fetchData,
-  }
+  return zustandProvinces((state) => state)
 }

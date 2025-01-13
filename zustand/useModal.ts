@@ -36,13 +36,5 @@ const zustandModal = create<ModalStore>()(
 )
 
 export const useModal = () => {
-  const modal = zustandModal((state) => state[ZUSTAND.Modal])
-  const closeModal = zustandModal((state) => state.closeModal)
-  const openModal = zustandModal((state) => state.openModal)
-
-  return {
-    modal,
-    openModal,
-    closeModal,
-  }
+  return zustandModal((state) => state)
 }

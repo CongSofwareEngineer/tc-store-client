@@ -57,13 +57,5 @@ const zustandCategoryMenu = create<CategoryMenuStore>()(
 )
 
 export const useCategoryMenu = () => {
-  const data = zustandCategoryMenu((state) => state[ZUSTAND.CategoryMenu])
-  const setCategoryMenu = zustandCategoryMenu((state) => state.setCategoryMenu)
-  const fetchData = zustandCategoryMenu((state) => state.fetchData)
-
-  return {
-    categoryMenu: data,
-    setCategoryMenu,
-    fetchData,
-  }
+  return zustandCategoryMenu((state) => state)
 }

@@ -42,13 +42,5 @@ const zustandDrawer = create<DrawerStore>()(
 )
 
 export const useDrawer = () => {
-  const drawer = zustandDrawer((state) => state[ZUSTAND.Drawer])
-  const closeDrawer = zustandDrawer((state) => state.closeDrawer)
-  const openDrawer = zustandDrawer((state) => state.openDrawer)
-
-  return {
-    drawer,
-    openDrawer,
-    closeDrawer,
-  }
+  return zustandDrawer((state) => state)
 }

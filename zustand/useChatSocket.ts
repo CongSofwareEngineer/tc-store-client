@@ -5,7 +5,6 @@ import { create } from 'zustand'
 import { ZUSTAND } from '@/constant/zustand'
 import { io, Socket } from 'socket.io-client'
 import { encryptData } from '@/utils/crypto'
-import { useEffect } from 'react'
 
 type ChatSocketStoreState = { [ZUSTAND.ChatSocket]: Socket | null }
 
@@ -45,14 +44,5 @@ export const zustandLanguage = create<ChatSocketStore>()(
 )
 
 export const useChatSocket = () => {
-  const { ChatSocket, create } = zustandLanguage((state) => state)
-
-  useEffect(() => {
-    console.log({ connected: ChatSocket?.connected })
-  }, [ChatSocket])
-
-  return {
-    chatSocket: ChatSocket,
-    create,
-  }
+  return zustandLanguage((state) => state)
 }

@@ -45,15 +45,5 @@ const zustandModalAdmin = create<ModalAdminStore>()(
 )
 
 export const useModalAdmin = () => {
-  const modalAdmin = zustandModalAdmin((state) => state[ZUSTAND.ModalAdmin])
-  const setModalAdmin = zustandModalAdmin((state) => state.setModalAdmin)
-  const closeModal = zustandModalAdmin((state) => state.closeModal)
-  const openModal = zustandModalAdmin((state) => state.openModal)
-
-  return {
-    modalAdmin,
-    setModalAdmin,
-    openModal,
-    closeModal,
-  }
+  return zustandModalAdmin((state) => state)
 }

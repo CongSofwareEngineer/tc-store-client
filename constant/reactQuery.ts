@@ -8,6 +8,7 @@ export enum QUERY_KEY {
   GetCommentProduction = 'GetCommentProduction',
   GetCommentDetail = 'GetCommentDetail',
   LengthCartUser = 'LengthCartUser',
+  VouchersDaily = 'VouchersDaily',
   GetProductByID = 'GetProductByID',
   MyCartUser = 'MyCartUser',
   MyBillUser = 'MyBillUser',

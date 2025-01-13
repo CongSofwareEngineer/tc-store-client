@@ -12,7 +12,9 @@ const ClientApi = {
   getVouchersByIdUser: async (id: string) => {
     return fetchData({ url: `/user/vouchers/${id}` })
   },
-
+  getVouchersDaily: async () => {
+    return fetchData({ url: `/voucher/all?date=${Date.now()}` })
+  },
   // -> about
   getAbout: async () => {
     const res = await fetchData({ url: `/about/category/shoes` })
