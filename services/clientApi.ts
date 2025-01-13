@@ -113,10 +113,10 @@ const ClientApi = {
     })
   },
 
-  getCategory: async (isClient = false) => {
+  getCategory: async (isClient = false, date = 0) => {
     let url = 'category/all?isShow=true'
     if (isClient) {
-      url += `&timeStamp=${new Date().getTime()}`
+      url += `&timeStamp=${date}`
     }
 
     return fetchData({
