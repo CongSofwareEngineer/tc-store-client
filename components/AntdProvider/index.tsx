@@ -57,6 +57,9 @@ const AntdProvider = ({ children }: { children: React.ReactNode }) => {
           Slider: {
             trackBg: '#2ed569',
           },
+          Input: {
+            paddingInline: 0,
+          },
         },
         hashed: false,
       }}
