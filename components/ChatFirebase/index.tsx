@@ -158,6 +158,10 @@ const ChatFirebase: NextPage = () => {
   }
 
   const handleMouseMove = (e: MouseEvent) => {
+    if (isMobile) {
+      handleTouchMove(e)
+      return
+    }
     isDragging.current = true
     const right = window.innerWidth - e.clientX - 25
     const bottom = window.innerHeight - e.clientY - 25
@@ -177,6 +181,31 @@ const ChatFirebase: NextPage = () => {
       bottom: checkValidPosition(bottom, window.innerHeight), // 25 là nửa width icon
     })
 
+    e.preventDefault()
+  }
+
+  const handleTouchMove = (e: any) => {
+    isDragging.current = true
+    const touch = e.touches[0]
+    const right = window.innerWidth - touch.clientX - 25
+    const bottom = window.innerHeight - touch.clientY - 25
+
+    const checkValidPosition = (value: number, max: number) => {
+      if (value > 0) {
+        if (value > max - 40) {
+          return max - 40
+        }
+        return value
+      } else {
+        return 0
+      }
+    }
+    setPosition({
+      right: checkValidPosition(right, window.innerWidth), // 25 là nửa width icon
+      bottom: checkValidPosition(bottom, window.innerHeight), // 25 là nửa width icon
+    })
+
+    // Ngừng cuộn trang khi di chuyển icon
     e.preventDefault()
   }
 
@@ -301,15 +330,18 @@ const ChatFirebase: NextPage = () => {
           <Draggable
             allowAnyClick
             onStop={() => {
+              console.log('stop')
               setTimeout(() => {
                 isDragging.current = false
               }, 200)
             }}
             onDrag={(e: any) => {
+              console.log('onDrag')
+
               handleMouseMove(e)
             }}
           >
-            <div className='relative'>
+            <div onClick={handleClick} className='relative'>
               <MyImage
                 alt='icon-message-chat'
                 src={images.icon.iconMessageChat}
@@ -457,6 +489,7 @@ const ChatFirebase: NextPage = () => {
               />
               <div
                 onClick={handleClick}
+                onTouchEnd={handleClick}
                 className='absolute inset-0 w-full h-full cursor-pointer '
               />
             </div>
