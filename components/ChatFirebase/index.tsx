@@ -12,6 +12,7 @@ import MyInput from '../MyInput'
 import ChatMessage from '../ChatMessage'
 import { parsePhoneNumber } from 'libphonenumber-js'
 import { uppercase } from '@/utils/functions'
+import Draggable from 'react-draggable'
 
 export type DataMessage = {
   date: number
@@ -25,7 +26,6 @@ const ChatFirebase: NextPage = () => {
   const { translate } = useLanguage()
   const isNewChatRef = useRef(true)
   const isDragging = useRef(false)
-  const isMoving = useRef(false)
 
   const [listChats, setListChats] = useState<DataMessage[]>([])
   const { userData } = useUserData()
@@ -157,20 +157,8 @@ const ChatFirebase: NextPage = () => {
     setNumberPhone(sdt)
   }
 
-  const handleMouseDown = () => {
-    isDragging.current = true
-  }
-
-  const handleMouseUp = () => {
-    isDragging.current = false
-    setTimeout(() => {
-      isMoving.current = false
-    }, 100)
-  }
-
   const handleMouseMove = (e: MouseEvent) => {
-    if (!isDragging.current) return
-    isMoving.current = true
+    isDragging.current = true
     const right = window.innerWidth - e.clientX - 25
     const bottom = window.innerHeight - e.clientY - 25
 
@@ -188,77 +176,22 @@ const ChatFirebase: NextPage = () => {
       right: checkValidPosition(right, window.innerWidth), // 25 là nửa width icon
       bottom: checkValidPosition(bottom, window.innerHeight), // 25 là nửa width icon
     })
+
+    e.preventDefault()
   }
 
   const handleClick = () => {
-    if (!isDragging.current && !isMoving.current) {
+    if (!isDragging.current) {
       setEnableChat(true)
-      setPosition({
-        right: 20, // 25 là nửa width icon
-        bottom: 20, // 25 là nửa width icon
-      })
     }
   }
-
-  const handleTouchStart = () => {
-    isDragging.current = true
-  }
-
-  const handleTouchEnd = () => {
-    isDragging.current = false
-    setTimeout(() => {
-      isMoving.current = false
-    }, 100)
-  }
-
-  const handleTouchMove = (e: TouchEvent) => {
-    if (!isDragging.current) return
-    isMoving.current = true
-    const touch = e.touches[0]
-    const right = window.innerWidth - touch.clientX - 25
-    const bottom = window.innerHeight - touch.clientY - 25
-
-    const checkValidPosition = (value: number, max: number) => {
-      if (value > 0) {
-        if (value > max - 40) {
-          return max - 40
-        }
-        return value
-      } else {
-        return 0
-      }
-    }
-    setPosition({
-      right: checkValidPosition(right, window.innerWidth), // 25 là nửa width icon
-      bottom: checkValidPosition(bottom, window.innerHeight), // 25 là nửa width icon
-    })
-  }
-
-  useEffect(() => {
-    window.addEventListener('mousemove', handleMouseMove)
-    window.addEventListener('mouseup', handleMouseUp)
-    window.addEventListener('touchstart', handleTouchStart)
-    window.addEventListener('touchmove', handleTouchMove)
-    window.addEventListener('touchend', handleTouchEnd)
-    window.addEventListener('mousemove', handleMouseMove)
-    window.addEventListener('mouseup', handleMouseUp)
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('mouseup', handleMouseUp)
-      window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('mouseup', handleMouseUp)
-      window.removeEventListener('touchstart', handleTouchStart)
-      window.removeEventListener('touchmove', handleTouchMove)
-      window.removeEventListener('touchend', handleTouchEnd)
-    }
-  }, [])
 
   const renderDesktop = () => {
     return (
       <div
         style={{
-          right: position.right,
-          bottom: position.bottom,
+          right: enableChat ? 20 : position.right,
+          bottom: enableChat ? 20 : position.bottom,
         }}
         className='fixed z-[11]'
       >
@@ -365,24 +298,29 @@ const ChatFirebase: NextPage = () => {
             </div>
           </div>
         ) : (
-          <div className='relative'>
-            <MyImage
-              alt='icon-message-chat'
-              src={images.icon.iconMessageChat}
-              className='!relative select-none !w-[40px] !h-[40px] drop-shadow-img'
-            />
-            <div
-              onMouseDown={handleMouseDown}
-              onClick={handleClick}
-              // onTouchStart={handleTouchStart}
-              // onMouseMove={handleMouseMove}
-              // onTouchMove={handleTouchMove}
-              // onMouseUp={handleMouseUp}
-              // onTouchEnd={handleTouchEnd}
-              // onMouseLeave={handleMouseUp}
-              className='absolute inset-0 w-full h-full cursor-pointer '
-            />
-          </div>
+          <Draggable
+            allowAnyClick
+            onStop={() => {
+              setTimeout(() => {
+                isDragging.current = false
+              }, 200)
+            }}
+            onDrag={(e: any) => {
+              handleMouseMove(e)
+            }}
+          >
+            <div className='relative'>
+              <MyImage
+                alt='icon-message-chat'
+                src={images.icon.iconMessageChat}
+                className='!relative select-none !w-[40px] !h-[40px] drop-shadow-img'
+              />
+              <div
+                onClick={handleClick}
+                className='absolute inset-0 w-full h-full cursor-pointer '
+              />
+            </div>
+          </Draggable>
         )}
       </div>
     )
@@ -392,8 +330,8 @@ const ChatFirebase: NextPage = () => {
     return (
       <div
         style={{
-          right: position.right,
-          bottom: position.bottom,
+          right: enableChat ? 20 : position.right,
+          bottom: enableChat ? 20 : position.bottom,
         }}
         className='fixed z-[11]'
       >
@@ -500,12 +438,29 @@ const ChatFirebase: NextPage = () => {
             </div>
           </div>
         ) : (
-          <MyImage
-            onClick={() => setEnableChat(true)}
-            alt='icon-message-chat'
-            src={images.icon.iconMessageChat}
-            className='!relative !w-[40px] !h-[40px] cursor-pointer drop-shadow-img '
-          />
+          <Draggable
+            allowAnyClick
+            onStop={() => {
+              setTimeout(() => {
+                isDragging.current = false
+              }, 200)
+            }}
+            onDrag={(e: any) => {
+              handleMouseMove(e)
+            }}
+          >
+            <div className='relative'>
+              <MyImage
+                alt='icon-message-chat'
+                src={images.icon.iconMessageChat}
+                className='!relative select-none !w-[40px] !h-[40px] drop-shadow-img'
+              />
+              <div
+                onClick={handleClick}
+                className='absolute inset-0 w-full h-full cursor-pointer '
+              />
+            </div>
+          </Draggable>
         )}
       </div>
     )
