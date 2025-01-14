@@ -200,12 +200,56 @@ const ChatFirebase: NextPage = () => {
     }
   }
 
+  const handleTouchStart = () => {
+    isDragging.current = true
+  }
+
+  const handleTouchEnd = () => {
+    isDragging.current = false
+    setTimeout(() => {
+      isMoving.current = false
+    }, 100)
+  }
+
+  const handleTouchMove = (e: TouchEvent) => {
+    if (!isDragging.current) return
+    isMoving.current = true
+    const touch = e.touches[0]
+    const right = window.innerWidth - touch.clientX - 25
+    const bottom = window.innerHeight - touch.clientY - 25
+
+    const checkValidPosition = (value: number, max: number) => {
+      if (value > 0) {
+        if (value > max - 40) {
+          return max - 40
+        }
+        return value
+      } else {
+        return 0
+      }
+    }
+    setPosition({
+      right: checkValidPosition(right, window.innerWidth), // 25 là nửa width icon
+      bottom: checkValidPosition(bottom, window.innerHeight), // 25 là nửa width icon
+    })
+  }
+
   useEffect(() => {
+    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mouseup', handleMouseUp)
+    window.addEventListener('touchstart', handleTouchStart)
+    window.addEventListener('touchmove', handleTouchMove)
+    window.addEventListener('touchend', handleTouchEnd)
     window.addEventListener('mousemove', handleMouseMove)
     window.addEventListener('mouseup', handleMouseUp)
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('mouseup', handleMouseUp)
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', handleMouseUp)
+      window.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('touchmove', handleTouchMove)
+      window.removeEventListener('touchend', handleTouchEnd)
     }
   }, [])
 
