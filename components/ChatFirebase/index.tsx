@@ -24,6 +24,8 @@ const ChatFirebase: NextPage = () => {
   const { isMobile } = useMedia()
   const { translate } = useLanguage()
   const isNewChatRef = useRef(true)
+  const isDragging = useRef(false)
+  const isMoving = useRef(false)
 
   const [listChats, setListChats] = useState<DataMessage[]>([])
   const { userData } = useUserData()
@@ -33,6 +35,7 @@ const ChatFirebase: NextPage = () => {
   const [isValidChat, setIsValidChat] = useState(false)
   const [errorNumberPhone, setErrorNumberPhone] = useState(false)
   const [db, setDB] = useState<FBRealtimeUtils | null>(null)
+  const [position, setPosition] = useState({ right: 20, bottom: 20 }) // Vị trí ban đầu
 
   useEffect(() => {
     if (userData) {
@@ -154,15 +157,73 @@ const ChatFirebase: NextPage = () => {
     setNumberPhone(sdt)
   }
 
+  const handleMouseDown = () => {
+    isDragging.current = true
+  }
+
+  const handleMouseUp = () => {
+    isDragging.current = false
+    setTimeout(() => {
+      isMoving.current = false
+    }, 100)
+  }
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!isDragging.current) return
+    isMoving.current = true
+    const right = window.innerWidth - e.clientX - 25
+    const bottom = window.innerHeight - e.clientY - 25
+
+    const checkValidPosition = (value: number, max: number) => {
+      if (value > 0) {
+        if (value > max - 40) {
+          return max - 40
+        }
+        return value
+      } else {
+        return 0
+      }
+    }
+    setPosition({
+      right: checkValidPosition(right, window.innerWidth), // 25 là nửa width icon
+      bottom: checkValidPosition(bottom, window.innerHeight), // 25 là nửa width icon
+    })
+  }
+
+  const handleClick = () => {
+    if (!isDragging.current && !isMoving.current) {
+      setEnableChat(true)
+      setPosition({
+        right: 20, // 25 là nửa width icon
+        bottom: 20, // 25 là nửa width icon
+      })
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mouseup', handleMouseUp)
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', handleMouseUp)
+    }
+  }, [])
+
   const renderDesktop = () => {
     return (
-      <div className='fixed right-[20px] bottom-[20px]'>
+      <div
+        style={{
+          right: position.right,
+          bottom: position.bottom,
+        }}
+        className='fixed z-[11]'
+      >
         {enableChat ? (
           <div
             style={{
               boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 2px 1px',
             }}
-            className='flex flex-col w-[300px] rounded-md relative overflow-hidden   bg-white'
+            className='flex animate-zoom flex-col w-[300px] rounded-md relative overflow-hidden   bg-white'
           >
             <div className='flex justify-between px-3 py-1  items-center bg-green-300'>
               <div>Chat</div>
@@ -260,12 +321,24 @@ const ChatFirebase: NextPage = () => {
             </div>
           </div>
         ) : (
-          <MyImage
-            onClick={() => setEnableChat(true)}
-            alt='icon-message-chat'
-            src={images.icon.iconMessageChat}
-            className='!relative !w-[40px] !h-[40px] cursor-pointer'
-          />
+          <div className='relative'>
+            <MyImage
+              alt='icon-message-chat'
+              src={images.icon.iconMessageChat}
+              className='!relative select-none !w-[40px] !h-[40px] drop-shadow-img'
+            />
+            <div
+              onMouseDown={handleMouseDown}
+              onClick={handleClick}
+              // onTouchStart={handleTouchStart}
+              // onMouseMove={handleMouseMove}
+              // onTouchMove={handleTouchMove}
+              // onMouseUp={handleMouseUp}
+              // onTouchEnd={handleTouchEnd}
+              // onMouseLeave={handleMouseUp}
+              className='absolute inset-0 w-full h-full cursor-pointer '
+            />
+          </div>
         )}
       </div>
     )
@@ -273,7 +346,13 @@ const ChatFirebase: NextPage = () => {
 
   const renderMobile = () => {
     return (
-      <div className='fixed right-[10px] bottom-[10px]'>
+      <div
+        style={{
+          right: position.right,
+          bottom: position.bottom,
+        }}
+        className='fixed z-[11]'
+      >
         {enableChat ? (
           <div
             style={{
@@ -378,10 +457,6 @@ const ChatFirebase: NextPage = () => {
           </div>
         ) : (
           <MyImage
-            style={{
-              filter: 'drop-shadow(rgba(0, 0, 0, 0.1) 0px 2px 2px 1px)',
-              // boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 2px 1px',
-            }}
             onClick={() => setEnableChat(true)}
             alt='icon-message-chat'
             src={images.icon.iconMessageChat}
