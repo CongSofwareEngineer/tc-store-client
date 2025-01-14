@@ -68,6 +68,7 @@ export const images = {
     iconFacebook: '/images/Icon/iconFaboook.png',
     iconChecked: '/images/Icon/iconChecked.png',
     iconSuccessGif: '/images/Icon/iconSuccess.gif',
+    iconMessageChat: '/images/Icon/iconMessageChat.png',
   },
   userDetail: {
     iconUserDetail: '/images/Profile/Userdetail/iconUserDetail.png',

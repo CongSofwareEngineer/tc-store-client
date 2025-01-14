@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef } from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 type ChatMessageProps = {
   children?: React.ReactNode
@@ -7,7 +7,7 @@ type ChatMessageProps = {
   isLoadMore?: boolean
   isReverse?: boolean
   loading?: boolean
-  dependence?: any
+  data?: any[]
 }
 const ChatMessage = ({
   children = null,
@@ -16,7 +16,7 @@ const ChatMessage = ({
   loadMore = () => {},
   className = '',
   isReverse = true,
-  dependence = null,
+  data = [],
 }: ChatMessageProps) => {
   const [infiniteRef, { rootRef }] = useInfiniteScroll({
     loading: loading,
@@ -27,21 +27,15 @@ const ChatMessage = ({
   const scrollableRootRef = useRef<React.ComponentRef<'div'> | null>(null)
   const lastScrollDistanceToBottomRef = useRef<number>(0)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const scrollableRoot = scrollableRootRef.current
 
     const lastScrollDistanceToBottom = lastScrollDistanceToBottomRef.current ?? 0
 
     if (scrollableRoot && isReverse) {
-      console.log({
-        isReverse,
-        lastScrollDistanceToBottom,
-        scrollableRoot: scrollableRoot.scrollHeight,
-      })
-
       scrollableRoot.scrollTop = scrollableRoot.scrollHeight - lastScrollDistanceToBottom
     }
-  }, [children, isReverse, rootRef, dependence])
+  }, [data, isReverse, rootRef])
 
   const rootRefSetter = (node: HTMLDivElement) => {
     rootRef(node)
@@ -60,7 +54,7 @@ const ChatMessage = ({
     <div
       ref={rootRefSetter}
       onScroll={handleRootScroll}
-      className={`flex flex-col flex-1 min-h-full h-full max-h-full overflow-y-auto ${className}`}
+      className={`flex flex-col flex-1 min-h-full h-full overflow-y-auto ${className}`}
     >
       {isLoadMore && (
         <div ref={infiniteRef} className='flex w-full '>

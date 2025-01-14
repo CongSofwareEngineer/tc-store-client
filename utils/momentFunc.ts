@@ -12,6 +12,9 @@ const localMoment = () => {
 export const convertDateToNumber = (data?: any) => {
   try {
     let timeTemp = data
+    if (!timeTemp) {
+      timeTemp = Date.now()
+    }
     if (typeof data === 'string' && isNumericString(data)) {
       timeTemp = parseInt(data)
     }

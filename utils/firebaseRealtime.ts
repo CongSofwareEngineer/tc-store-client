@@ -16,9 +16,11 @@ import { PAGE_SIZE_LIMIT } from '../constant/app'
 
 class FBRealtimeUtils {
   private db: DatabaseReference
+  private nameDB: string
   private lastData?: number | null = null
 
   constructor(nameDB = 'Chat') {
+    this.nameDB = nameDB
     const fb = FirebaseServices.initRealtimeData()
     this.db = ref(fb, nameDB)
   }
@@ -34,7 +36,7 @@ class FBRealtimeUtils {
 
   async update(body: any) {
     try {
-      await set(this.db, body)
+      await update(this.db, body)
       return true
     } catch {
       return false
@@ -50,12 +52,10 @@ class FBRealtimeUtils {
     }
   }
 
-  listenerOnValue(callback: (value: any[]) => void) {
-    onValue(this.db, (snapshot) => {
+  listenerOnValue(callback: (value: any[]) => any) {
+    onValue(this.db, async (snapshot) => {
       const data = snapshot.val()
-      if (data) {
-        callback(data)
-      }
+      await callback(Object.values(data || {}))
     })
   }
 

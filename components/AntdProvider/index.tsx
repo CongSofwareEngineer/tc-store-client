@@ -58,7 +58,7 @@ const AntdProvider = ({ children }: { children: React.ReactNode }) => {
             trackBg: '#2ed569',
           },
           Input: {
-            paddingInline: 0,
+            paddingInline: 5,
           },
         },
         hashed: false,

@@ -230,6 +230,9 @@
     },
     "productGood": "Sản phẩm có tốt không ?"
   },
+  "placeholder": {
+    "enterContent": "Nhập nội dung"
+  },
   "warning": {
     "passAgain": "Mật khẩu nhập lại không đúng",
     "noData": "Sản phẩm đang cập nhật",
