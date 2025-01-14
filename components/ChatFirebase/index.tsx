@@ -273,13 +273,13 @@ const ChatFirebase: NextPage = () => {
 
   const renderMobile = () => {
     return (
-      <div className='fixed right-[20px] bottom-[20px]'>
+      <div className='fixed right-[10px] bottom-[10px]'>
         {enableChat ? (
           <div
             style={{
               boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 2px 1px',
             }}
-            className='flex flex-col w-[300px] rounded-md relative overflow-hidden   bg-white'
+            className='flex animate-zoom flex-col w-[300px] rounded-md relative overflow-hidden   bg-white'
           >
             <div className='flex justify-between px-3 py-1  items-center bg-green-300'>
               <div>Chat</div>
@@ -378,10 +378,14 @@ const ChatFirebase: NextPage = () => {
           </div>
         ) : (
           <MyImage
+            style={{
+              filter: 'drop-shadow(rgba(0, 0, 0, 0.1) 0px 2px 2px 1px)',
+              // boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 2px 1px',
+            }}
             onClick={() => setEnableChat(true)}
             alt='icon-message-chat'
             src={images.icon.iconMessageChat}
-            className='!relative !w-[40px] !h-[40px] cursor-pointer'
+            className='!relative !w-[40px] !h-[40px] cursor-pointer drop-shadow-img '
           />
         )}
       </div>
