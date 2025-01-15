@@ -42,6 +42,7 @@ export enum LOCAL_STORAGE_KEY {
   'IsFirstPermissionNoti' = 'IsFirstPermissionNoti',
   'ListSDTBuy' = 'ListSDTBuy',
   'TokenFirebase' = 'TokenFirebase',
+  'IDChatMessages' = 'IDChatMessages',
 }
 
 export enum FilterAPI {

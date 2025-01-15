@@ -10,151 +10,134 @@ import { images } from '@/configs/images'
 import { CloseCircleOutlined, SendOutlined } from '@ant-design/icons'
 import MyInput from '../MyInput'
 import ChatMessage from '../ChatMessage'
-import { parsePhoneNumber } from 'libphonenumber-js'
-import { uppercase } from '@/utils/functions'
+
 import Draggable from 'react-draggable'
+import { getDataLocal, saveDataLocal } from '@/utils/functions'
+import { LOCAL_STORAGE_KEY } from '@/constant/app'
 
 export type DataMessage = {
   date: number
   content: string
   isAdmin?: boolean
+  isSeen?: boolean
   attributes?: { [key: string]: any }
 }
 
 const ChatFirebase: NextPage = () => {
   const { isMobile } = useMedia()
   const { translate } = useLanguage()
-  const isNewChatRef = useRef(true)
   const isDragging = useRef(false)
+  const dbRef = useRef<FBRealtimeUtils | null>(null)
 
   const [listChats, setListChats] = useState<DataMessage[]>([])
   const { userData } = useUserData()
-  const [numberPhone, setNumberPhone] = useState('')
   const [content, setContent] = useState('')
   const [enableChat, setEnableChat] = useState(false)
-  const [isValidChat, setIsValidChat] = useState(false)
-  const [errorNumberPhone, setErrorNumberPhone] = useState(false)
-  const [db, setDB] = useState<FBRealtimeUtils | null>(null)
-  const [position, setPosition] = useState({ right: 20, bottom: 20 }) // Vị trí ban đầu
+  const [isSendMuchMessages, setIsSendMuchMessages] = useState(false)
+  const [position, setPosition] = useState({ right: 20, bottom: 20 })
 
   useEffect(() => {
-    if (userData) {
-      let numberPhoneString = userData.sdt!
+    const createDB = (keyName: string | number) => {
+      setIsSendMuchMessages(false)
+      dbRef.current = new FBRealtimeUtils(`Chat/${keyName}`)
+      setTimeout(() => {
+        dbRef.current?.listenerOnValue(async (message: DataMessage[]) => {
+          if (message.length > 0 && message[message.length - 1]?.isAdmin) {
+            setIsSendMuchMessages(false)
+          }
 
-      if (numberPhoneString.startsWith('+84')) {
-        numberPhoneString = numberPhoneString.replace('+84', '')
+          setListChats(message)
+        })
+      }, 200)
+    }
+
+    if (userData?.sdt) {
+      if (dbRef.current) {
+        dbRef.current?.remove().finally(() => {
+          createDB(userData?.sdt!)
+        })
+      } else {
+        createDB(userData?.sdt!)
       }
-      if (!numberPhoneString.startsWith('0')) {
-        numberPhoneString = `0${numberPhoneString}`
-      }
-      numberPhoneString = uppercase(numberPhoneString)
-      setNumberPhone(numberPhoneString)
-      setIsValidChat(true)
     } else {
-      setIsValidChat(false)
-      setListChats([])
-      setNumberPhone('')
+      const iDLocalStorage = getDataLocal(LOCAL_STORAGE_KEY.IDChatMessages)
+      const timeStamp = iDLocalStorage || Date.now()
+      if (!iDLocalStorage) {
+        saveDataLocal(LOCAL_STORAGE_KEY.IDChatMessages, timeStamp)
+      }
+      createDB(timeStamp)
     }
   }, [userData])
 
   useEffect(() => {
-    if (numberPhone && isValidChat) {
-      setDB(new FBRealtimeUtils(`Chat/${numberPhone}`))
-    } else {
-      db?.remove().finally(() => {
-        isNewChatRef.current = true
-      })
-      setDB(null)
-    }
-  }, [numberPhone, isValidChat])
+    // const handleBeforeUnload = () => {
+    //   if (!isLoginRef.current) {
+    //     db?.remove()
+    //   }
+    // }
+    // Gắn sự kiện trước khi rời trang
+    // window.addEventListener('beforeunload', handleBeforeUnload)
+    // return () => {
+    //   window.removeEventListener('beforeunload', handleBeforeUnload)
+    // }
+  }, [])
 
   useEffect(() => {
-    const handleBeforeUnload = () => {
-      db?.remove().finally(() => {
-        isNewChatRef.current = false
-      })
-    }
-
-    if (db) {
-      db.listenerOnValue(async (message: any[]) => {
-        if (message.length === 0) {
-          if (isNewChatRef.current) {
-            isNewChatRef.current = false
-            const toDateNumber = Date.now()
-            const body: DataMessage = {
-              content: 'Xin chào bạn. </br> Bạn cần tư vấn gì ạ?',
-              date: toDateNumber,
-              isAdmin: true,
-            }
-            await db.create({
-              [toDateNumber]: body,
-            })
+    if (enableChat) {
+      setListChats((pre) => {
+        const obUpdate: { [key: string | number]: any } = {}
+        const arrTemp: DataMessage[] = pre.map((e) => {
+          const itemSeen = { ...e, isSeen: true }
+          if (itemSeen.isAdmin) {
+            obUpdate[itemSeen.date] = itemSeen
           }
-        } else {
-          setListChats(message)
+          return itemSeen
+        })
+        if (dbRef.current) {
+          dbRef.current.update(obUpdate)
         }
+        return arrTemp
       })
-
-      // Gắn sự kiện trước khi rời trang
-      window.addEventListener('beforeunload', handleBeforeUnload)
     }
+  }, [enableChat])
 
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload)
-    }
-  }, [db])
+  const checkValidMess = (): boolean => {
+    let isErrorSendMuchMessages = false
+    let numberRequest = 0
+    listChats.forEach((e) => {
+      if (numberRequest === 3) {
+        isErrorSendMuchMessages = true
+      } else {
+        if (e.isAdmin) {
+          numberRequest = 0
+        } else {
+          numberRequest++
+        }
+      }
+    })
+
+    return !isErrorSendMuchMessages
+  }
 
   const handleSend = () => {
-    const text = content
-    if (content?.trim()) {
-      setContent('')
+    const isValidSend = checkValidMess()
+    if (isValidSend) {
+      const text = content
+      if (content?.trim()) {
+        setContent('')
 
-      const toDateNumber = Date.now()
-      const body: DataMessage = {
-        content: text,
-        date: toDateNumber,
-        isAdmin: false,
-      }
-      db?.create({
-        [toDateNumber]: body,
-      })
-    }
-  }
-
-  const handleCheckSDT = () => {
-    try {
-      let numberPhoneString = numberPhone
-      if (numberPhoneString) {
-        const phoneNumber = parsePhoneNumber(numberPhone, 'VN')
-        if (phoneNumber && phoneNumber.isValid()) {
-          if (numberPhoneString.startsWith('+84')) {
-            numberPhoneString = numberPhoneString.replace('+84', '')
-          }
-          if (!numberPhoneString.startsWith('0')) {
-            numberPhoneString = `0${numberPhoneString}`
-          }
-          numberPhoneString = uppercase(numberPhoneString)
-          setNumberPhone(numberPhoneString)
-          setTimeout(() => {
-            setIsValidChat(true)
-            setErrorNumberPhone(false)
-          }, 200)
-        } else {
-          setErrorNumberPhone(true)
+        const toDateNumber = Date.now()
+        const body: DataMessage = {
+          content: text,
+          date: toDateNumber,
         }
-      } else {
-        setErrorNumberPhone(true)
+        dbRef.current?.create({
+          [toDateNumber]: body,
+        })
       }
-    } catch (error) {
-      setErrorNumberPhone(true)
+    } else {
+      setIsSendMuchMessages(true)
     }
-  }
-
-  const onChangeSDT = (sdt: string) => {
-    if (errorNumberPhone) {
-      setErrorNumberPhone(false)
-    }
-    setNumberPhone(sdt)
   }
 
   const handleMouseMove = (e: MouseEvent) => {
@@ -215,6 +198,18 @@ const ChatFirebase: NextPage = () => {
     }
   }
 
+  const renderAmountNewMessage = () => {
+    const amountNew = listChats.filter((e) => !e.isSeen && e.isAdmin).length
+    if (amountNew === 0) {
+      return <></>
+    }
+    return (
+      <div className='absolute top-[-10px] right-[-10px] bg-red-300 px-2 py-1   rounded-[50%] text-[10px]  '>
+        {amountNew}
+      </div>
+    )
+  }
+
   const renderDesktop = () => {
     return (
       <div
@@ -243,87 +238,71 @@ const ChatFirebase: NextPage = () => {
             </div>
 
             <div className=' relative flex flex-col flex-1 min-h-[400px] max-h-[400px] overflow-y-auto'>
-              {isValidChat ? (
-                listChats.length > 0 && (
-                  <ChatMessage
-                    isLoadMore={listChats.length === 0}
-                    isReverse
-                    loading={false}
-                    data={listChats}
+              <ChatMessage isLoadMore={false} isReverse loading={false} data={listChats}>
+                <div className='flex w-full justify-start'>
+                  <div
+                    style={{
+                      borderRadius: 8,
+                      borderBottomLeftRadius: 0,
+                    }}
+                    className='px-3  w-max max-w-[70%] mx-3 text-xs my-2 py-2  bg-blue-200'
                   >
-                    {listChats.map((e: DataMessage) => {
-                      return (
-                        <div
-                          key={e.date}
-                          className='flex w-full'
-                          style={{
-                            justifyContent: e.isAdmin ? 'start' : 'end',
-                          }}
-                        >
-                          <div
-                            style={{
-                              borderRadius: 8,
-                              borderBottomLeftRadius: e.isAdmin ? 0 : 8,
-                              borderBottomRightRadius: !e.isAdmin ? 0 : 8,
-                            }}
-                            className='px-3  w-max max-w-[70%] mx-3 text-xs my-2 py-2  bg-blue-200'
-                          >
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html: e.content,
-                              }}
-                            />
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </ChatMessage>
-                )
-              ) : (
-                <div className='flex  px-3 flex-1 justify-between items-center'>
-                  <span className='text-center opacity-70'>
-                    Nhập số điện thoại của bạn để chúng tôi dễ dàng cung cáp dịch vụ tốt nhất cho
-                    bạn
-                  </span>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: translate('chat.helloUser'),
+                      }}
+                    />
+                  </div>
                 </div>
-              )}
-              {errorNumberPhone && (
-                <span className='text-red-500 absolute bottom-2 px-3'>
-                  {translate('warning.errorSDT')}
-                </span>
-              )}
+
+                {listChats.map((e: DataMessage) => {
+                  return (
+                    <div
+                      key={e.date}
+                      className='flex w-full'
+                      style={{
+                        justifyContent: e.isAdmin ? 'start' : 'end',
+                      }}
+                    >
+                      <div
+                        style={{
+                          borderRadius: 8,
+                          borderBottomLeftRadius: e.isAdmin ? 0 : 8,
+                          borderBottomRightRadius: !e.isAdmin ? 0 : 8,
+                        }}
+                        className='px-3  w-max max-w-[70%] mx-3 text-xs my-2 py-2  bg-blue-200'
+                      >
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: e.content,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  )
+                })}
+                {isSendMuchMessages && (
+                  <div className='w-full px-3 text-center text-[12px] text-red-400'>
+                    {translate('errors.sendMuchMessages')}
+                  </div>
+                )}
+              </ChatMessage>
             </div>
 
             <div className='flex w-full border-t-[1px] border-gray-300'>
-              {isValidChat ? (
-                <div className='flex flex-1'>
-                  <MyInput
-                    onPressEnter={handleSend}
-                    value={content}
-                    placeholder={translate('placeholder.enterContent')}
-                    onChangeText={(text) => setContent(text.toString())}
-                    className='w-full !pl-2'
-                    typeBtn={1}
-                  />
-                  <div className='h-full justify-center items-center flex px-2 bg-gray-300'>
-                    <SendOutlined onClick={handleSend} className='cursor-pointer' />
-                  </div>
+              <div className='flex flex-1'>
+                <MyInput
+                  onPressEnter={handleSend}
+                  value={content}
+                  placeholder={translate('placeholder.enterContent')}
+                  onChangeText={(text) => setContent(text.toString())}
+                  className='w-full !pl-2'
+                  typeBtn={1}
+                />
+                <div className='h-full justify-center items-center flex px-2 bg-gray-300'>
+                  <SendOutlined onClick={handleSend} className='cursor-pointer' />
                 </div>
-              ) : (
-                <div className='flex flex-1'>
-                  <MyInput
-                    onPressEnter={handleCheckSDT}
-                    value={numberPhone}
-                    placeholder={translate('productDetail.modalBuy.enterNumberPhone')}
-                    onChangeText={(text) => onChangeSDT(text.toString())}
-                    className='w-full !pl-2'
-                    typeBtn={1}
-                  />
-                  <div className='h-full justify-center items-center flex px-2 bg-gray-300'>
-                    <SendOutlined onClick={handleCheckSDT} className='cursor-pointer' />
-                  </div>
-                </div>
-              )}
+              </div>
             </div>
           </div>
         ) : (
@@ -347,6 +326,7 @@ const ChatFirebase: NextPage = () => {
                 src={images.icon.iconMessageChat}
                 className='!relative select-none !w-[40px] !h-[40px] drop-shadow-img'
               />
+              {renderAmountNewMessage()}
               <div
                 onClick={handleClick}
                 className='absolute inset-0 w-full h-full cursor-pointer '
@@ -386,87 +366,70 @@ const ChatFirebase: NextPage = () => {
             </div>
 
             <div className=' relative flex flex-col flex-1 min-h-[400px] max-h-[400px] overflow-y-auto'>
-              {isValidChat ? (
-                listChats.length > 0 && (
-                  <ChatMessage
-                    isLoadMore={listChats.length === 0}
-                    isReverse
-                    loading={false}
-                    data={listChats}
-                  >
-                    {listChats.map((e: DataMessage) => {
-                      return (
-                        <div
-                          key={e.date}
-                          className='flex w-full'
-                          style={{
-                            justifyContent: e.isAdmin ? 'start' : 'end',
-                          }}
-                        >
-                          <div
-                            style={{
-                              borderRadius: 8,
-                              borderBottomLeftRadius: e.isAdmin ? 0 : 8,
-                              borderBottomRightRadius: !e.isAdmin ? 0 : 8,
-                            }}
-                            className='px-3  w-max max-w-[70%] mx-3 text-xs my-2 py-2  bg-blue-200'
-                          >
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html: e.content,
-                              }}
-                            />
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </ChatMessage>
-                )
-              ) : (
-                <div className='flex  px-3 flex-1 justify-between items-center'>
-                  <span className='text-center opacity-70'>
-                    Nhập số điện thoại của bạn để chúng tôi dễ dàng cung cáp dịch vụ tốt nhất cho
-                    bạn
-                  </span>
+              <div className='flex w-full justify-start'>
+                <div
+                  style={{
+                    borderRadius: 8,
+                    borderBottomLeftRadius: 0,
+                  }}
+                  className='px-3  w-max max-w-[70%] mx-3 text-xs my-2 py-2  bg-blue-200'
+                >
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: translate('chat.helloUser'),
+                    }}
+                  />
                 </div>
-              )}
-              {errorNumberPhone && (
-                <span className='text-red-500 absolute bottom-2 px-3'>
-                  {translate('warning.errorSDT')}
-                </span>
+              </div>
+              <ChatMessage isReverse loading={false} data={listChats}>
+                {listChats.map((e: DataMessage) => {
+                  return (
+                    <div
+                      key={e.date}
+                      className='flex w-full'
+                      style={{
+                        justifyContent: e.isAdmin ? 'start' : 'end',
+                      }}
+                    >
+                      <div
+                        style={{
+                          borderRadius: 8,
+                          borderBottomLeftRadius: e.isAdmin ? 0 : 8,
+                          borderBottomRightRadius: !e.isAdmin ? 0 : 8,
+                        }}
+                        className='px-3  w-max max-w-[70%] mx-3 text-xs my-2 py-2  bg-blue-200'
+                      >
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: e.content,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  )
+                })}
+              </ChatMessage>
+              {isSendMuchMessages && (
+                <div className='w-full px-3 py-2 text-center text-[12px] text-red-400'>
+                  {translate('errors.sendMuchMessages')}
+                </div>
               )}
             </div>
 
             <div className='flex w-full border-t-[1px] border-gray-300'>
-              {isValidChat ? (
-                <div className='flex flex-1'>
-                  <MyInput
-                    onPressEnter={handleSend}
-                    value={content}
-                    placeholder={translate('placeholder.enterContent')}
-                    onChangeText={(text) => setContent(text.toString())}
-                    className='w-full !pl-2'
-                    typeBtn={1}
-                  />
-                  <div className='h-full justify-center items-center flex px-2 bg-gray-300'>
-                    <SendOutlined onClick={handleSend} className='cursor-pointer' />
-                  </div>
+              <div className='flex flex-1'>
+                <MyInput
+                  onPressEnter={handleSend}
+                  value={content}
+                  placeholder={translate('placeholder.enterContent')}
+                  onChangeText={(text) => setContent(text.toString())}
+                  className='w-full !pl-2'
+                  typeBtn={1}
+                />
+                <div className='h-full justify-center items-center flex px-2 bg-gray-300'>
+                  <SendOutlined onClick={handleSend} className='cursor-pointer' />
                 </div>
-              ) : (
-                <div className='flex flex-1'>
-                  <MyInput
-                    onPressEnter={handleCheckSDT}
-                    value={numberPhone}
-                    placeholder={translate('productDetail.modalBuy.enterNumberPhone')}
-                    onChangeText={(text) => onChangeSDT(text.toString())}
-                    className='w-full !pl-2'
-                    typeBtn={1}
-                  />
-                  <div className='h-full justify-center items-center flex px-2 bg-gray-300'>
-                    <SendOutlined onClick={handleCheckSDT} className='cursor-pointer' />
-                  </div>
-                </div>
-              )}
+              </div>
             </div>
           </div>
         ) : (
@@ -487,6 +450,7 @@ const ChatFirebase: NextPage = () => {
                 src={images.icon.iconMessageChat}
                 className='!relative select-none !w-[40px] !h-[40px] drop-shadow-img'
               />
+              {renderAmountNewMessage()}
               <div
                 onClick={handleClick}
                 onTouchEnd={handleClick}
