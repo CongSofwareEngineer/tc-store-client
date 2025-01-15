@@ -25,7 +25,7 @@ const Account = () => {
   const { openModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
   const { isLogin, userData } = useUserData()
-  const { isMobile } = useMedia(900)
+  const { isMobile, isClient } = useMedia(900)
   const route = useRoutePage()
   const pathName = usePathname()
 
@@ -95,6 +95,9 @@ const Account = () => {
   }
 
   const renderDesktop = () => {
+    if (!isClient) {
+      return <></>
+    }
     const items: MenuProps['items'] = [
       {
         key: '1',

@@ -2,9 +2,9 @@
 import React from 'react'
 import { images } from '@/configs/images'
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { LINK_CONTACT } from '@/constant/app'
+import dynamic from 'next/dynamic'
 const Nav = dynamic(() => import('./Component/Nav'), { ssr: true })
 const Account = dynamic(() => import('./Component/Account'), { ssr: true })
 

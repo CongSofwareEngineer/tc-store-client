@@ -44,9 +44,9 @@ const Notification = dynamic(() => import('@/components/Notification'), {
   ssr: false,
 })
 
-const ChatSocket = dynamic(() => import('@/components/ChatSocket'), {
-  ssr: false,
-})
+// const ChatSocket = dynamic(() => import('@/components/ChatSocket'), {
+//   ssr: false,
+// })
 
 const ChatFirebase = dynamic(() => import('@/components/ChatFirebase'), {
   ssr: false,
@@ -237,7 +237,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
                   >
                     <ClientRender menuCategory={menuCategory?.data || []}>{children}</ClientRender>
                     {/* load more option */}
-                    <ChatSocket />
+                    {/* <ChatSocket /> */}
                     <ChatFirebase />
                     <LoadingFirstPage />
                     <MyModal />

@@ -10,13 +10,12 @@ import {
   ref,
   remove,
   update,
-  set,
 } from 'firebase/database'
 import { PAGE_SIZE_LIMIT } from '../constant/app'
 
 class FBRealtimeUtils {
   private db: DatabaseReference
-  private nameDB: string
+  nameDB: string
   private lastData?: number | null = null
 
   constructor(nameDB = 'Chat') {

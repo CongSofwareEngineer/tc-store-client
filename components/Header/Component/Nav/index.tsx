@@ -28,7 +28,7 @@ const Nav = () => {
   const { userData, isLogin } = useUserData()
   const { translate } = useLanguage()
   const pathname = usePathname()
-  const { isMobile } = useMedia(900)
+  const { isMobile, isClient } = useMedia(900)
   const route = useRoutePage()
 
   const renderDesktop = () => {
@@ -46,10 +46,15 @@ const Nav = () => {
         <LinkUrl text={translate('textPopular.shoes')} url='/shoes' />
         <LinkUrl text={translate('header.contact')} url='/contact' />
         <LinkUrl text={translate('header.about')} url='/about' />
-        {/* <LinkUrl text={translate('textPopular.nest')} url='/nests' /> */}
+        {isClient ? (
+          <>
+            {!isLogin && <LinkUrl text={translate('header.register')} url='/register' />}
 
-        {!isLogin && <LinkUrl text={translate('header.register')} url='/register' />}
-        {!!userData?.isAdmin && <LinkUrl text={'Admin'} url='/admin' />}
+            {!!userData?.isAdmin && <LinkUrl text={'Admin'} url='/admin' />}
+          </>
+        ) : (
+          <LinkUrl text={translate('header.register')} url='/register' />
+        )}
       </div>
     )
   }

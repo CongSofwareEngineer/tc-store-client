@@ -9,6 +9,15 @@ const ClientApi = {
     return fetchData({ url: `/auth/ping` })
   },
 
+  sendNotiNewChatMessages: async (idChat: string) => {
+    try {
+      const urlExp = `https://ts-store-nodejs-noti.vercel.app/new-messages/${idChat}`
+      return fetch(urlExp)
+    } catch (error) {
+      console.log({ error })
+    }
+  },
+
   getVouchersByIdUser: async (id: string) => {
     return fetchData({ url: `/user/vouchers/${id}` })
   },

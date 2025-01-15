@@ -14,6 +14,8 @@ import ChatMessage from '../ChatMessage'
 import Draggable from 'react-draggable'
 import { getDataLocal, saveDataLocal } from '@/utils/functions'
 import { LOCAL_STORAGE_KEY } from '@/constant/app'
+import { Image } from 'antd'
+import ClientApi from '@/services/clientApi'
 
 export type DataMessage = {
   date: number
@@ -28,6 +30,7 @@ const ChatFirebase: NextPage = () => {
   const { translate } = useLanguage()
   const isDragging = useRef(false)
   const dbRef = useRef<FBRealtimeUtils | null>(null)
+  const idBDRef = useRef<number | string>(0)
 
   const [listChats, setListChats] = useState<DataMessage[]>([])
   const { userData } = useUserData()
@@ -38,6 +41,7 @@ const ChatFirebase: NextPage = () => {
 
   useEffect(() => {
     const createDB = (keyName: string | number) => {
+      idBDRef.current = keyName
       setIsSendMuchMessages(false)
       dbRef.current = new FBRealtimeUtils(`Chat/${keyName}`)
       setTimeout(() => {
@@ -119,7 +123,7 @@ const ChatFirebase: NextPage = () => {
     return !isErrorSendMuchMessages
   }
 
-  const handleSend = () => {
+  const handleSend = async () => {
     const isValidSend = checkValidMess()
     if (isValidSend) {
       const text = content
@@ -131,9 +135,10 @@ const ChatFirebase: NextPage = () => {
           content: text,
           date: toDateNumber,
         }
-        dbRef.current?.create({
+        await dbRef.current?.create({
           [toDateNumber]: body,
         })
+        ClientApi.sendNotiNewChatMessages(idBDRef.current.toString())
       }
     } else {
       setIsSendMuchMessages(true)
@@ -210,162 +215,34 @@ const ChatFirebase: NextPage = () => {
     )
   }
 
-  const renderDesktop = () => {
-    return (
-      <div
-        style={{
-          right: enableChat ? 20 : position.right,
-          bottom: enableChat ? 20 : position.bottom,
-        }}
-        className='fixed z-[11]'
-      >
-        {enableChat ? (
-          <div
-            style={{
-              boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 2px 1px',
-            }}
-            className='flex animate-zoom flex-col w-[300px] rounded-md relative overflow-hidden   bg-white'
-          >
-            <div className='flex justify-between px-3 py-1  items-center bg-green-300'>
-              <div>Chat</div>
+  return (
+    <div
+      style={{
+        right: enableChat ? 20 : position.right,
+        bottom: enableChat ? 20 : position.bottom,
+      }}
+      className='fixed z-[11]'
+    >
+      {enableChat ? (
+        <div
+          style={{
+            boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 2px 1px',
+          }}
+          className='flex animate-zoom flex-col w-[300px] rounded-md relative overflow-hidden   bg-white'
+        >
+          <div className='flex justify-between px-3 py-1  items-center bg-green-300'>
+            <div>Chat</div>
 
-              <div className='text-black text-xl'>
-                <CloseCircleOutlined
-                  className='cursor-pointer'
-                  onClick={() => setEnableChat(false)}
-                />
-              </div>
-            </div>
-
-            <div className=' relative flex flex-col flex-1 min-h-[400px] max-h-[400px] overflow-y-auto'>
-              <ChatMessage isLoadMore={false} isReverse loading={false} data={listChats}>
-                <div className='flex w-full justify-start'>
-                  <div
-                    style={{
-                      borderRadius: 8,
-                      borderBottomLeftRadius: 0,
-                    }}
-                    className='px-3  w-max max-w-[70%] mx-3 text-xs my-2 py-2  bg-blue-200'
-                  >
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: translate('chat.helloUser'),
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {listChats.map((e: DataMessage) => {
-                  return (
-                    <div
-                      key={e.date}
-                      className='flex w-full'
-                      style={{
-                        justifyContent: e.isAdmin ? 'start' : 'end',
-                      }}
-                    >
-                      <div
-                        style={{
-                          borderRadius: 8,
-                          borderBottomLeftRadius: e.isAdmin ? 0 : 8,
-                          borderBottomRightRadius: !e.isAdmin ? 0 : 8,
-                        }}
-                        className='px-3  w-max max-w-[70%] mx-3 text-xs my-2 py-2  bg-blue-200'
-                      >
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: e.content,
-                          }}
-                        />
-                      </div>
-                    </div>
-                  )
-                })}
-                {isSendMuchMessages && (
-                  <div className='w-full px-3 text-center text-[12px] text-red-400'>
-                    {translate('errors.sendMuchMessages')}
-                  </div>
-                )}
-              </ChatMessage>
-            </div>
-
-            <div className='flex w-full border-t-[1px] border-gray-300'>
-              <div className='flex flex-1'>
-                <MyInput
-                  onPressEnter={handleSend}
-                  value={content}
-                  placeholder={translate('placeholder.enterContent')}
-                  onChangeText={(text) => setContent(text.toString())}
-                  className='w-full !pl-2'
-                  typeBtn={1}
-                />
-                <div className='h-full justify-center items-center flex px-2 bg-gray-300'>
-                  <SendOutlined onClick={handleSend} className='cursor-pointer' />
-                </div>
-              </div>
+            <div className='text-black text-xl'>
+              <CloseCircleOutlined
+                className='cursor-pointer'
+                onClick={() => setEnableChat(false)}
+              />
             </div>
           </div>
-        ) : (
-          <Draggable
-            allowAnyClick
-            onStop={() => {
-              console.log('stop')
-              setTimeout(() => {
-                isDragging.current = false
-              }, 200)
-            }}
-            onDrag={(e: any) => {
-              console.log('onDrag')
 
-              handleMouseMove(e)
-            }}
-          >
-            <div onClick={handleClick} className='relative'>
-              <MyImage
-                alt='icon-message-chat'
-                src={images.icon.iconMessageChat}
-                className='!relative select-none !w-[40px] !h-[40px] drop-shadow-img'
-              />
-              {renderAmountNewMessage()}
-              <div
-                onClick={handleClick}
-                className='absolute inset-0 w-full h-full cursor-pointer '
-              />
-            </div>
-          </Draggable>
-        )}
-      </div>
-    )
-  }
-
-  const renderMobile = () => {
-    return (
-      <div
-        style={{
-          right: enableChat ? 20 : position.right,
-          bottom: enableChat ? 20 : position.bottom,
-        }}
-        className='fixed z-[11]'
-      >
-        {enableChat ? (
-          <div
-            style={{
-              boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 2px 1px',
-            }}
-            className='flex animate-zoom flex-col w-[300px] rounded-md relative overflow-hidden   bg-white'
-          >
-            <div className='flex justify-between px-3 py-1  items-center bg-green-300'>
-              <div>Chat</div>
-
-              <div className='text-black text-xl'>
-                <CloseCircleOutlined
-                  className='cursor-pointer'
-                  onClick={() => setEnableChat(false)}
-                />
-              </div>
-            </div>
-
-            <div className=' relative flex flex-col flex-1 min-h-[400px] max-h-[400px] overflow-y-auto'>
+          <div className=' relative flex flex-col flex-1 min-h-[400px] max-h-[400px] overflow-y-auto'>
+            <ChatMessage isLoadMore={false} isReverse loading={false} data={listChats}>
               <div className='flex w-full justify-start'>
                 <div
                   style={{
@@ -381,89 +258,86 @@ const ChatFirebase: NextPage = () => {
                   />
                 </div>
               </div>
-              <ChatMessage isReverse loading={false} data={listChats}>
-                {listChats.map((e: DataMessage) => {
-                  return (
+
+              {listChats.map((e: DataMessage) => {
+                return (
+                  <div
+                    key={e.date}
+                    className='flex w-full'
+                    style={{
+                      justifyContent: e.isAdmin ? 'start' : 'end',
+                    }}
+                  >
                     <div
-                      key={e.date}
-                      className='flex w-full'
                       style={{
-                        justifyContent: e.isAdmin ? 'start' : 'end',
+                        borderRadius: 8,
+                        borderBottomLeftRadius: e.isAdmin ? 0 : 8,
+                        borderBottomRightRadius: !e.isAdmin ? 0 : 8,
                       }}
+                      className='px-3  w-max max-w-[70%] mx-3 text-xs my-2 py-2  bg-blue-200'
                     >
                       <div
-                        style={{
-                          borderRadius: 8,
-                          borderBottomLeftRadius: e.isAdmin ? 0 : 8,
-                          borderBottomRightRadius: !e.isAdmin ? 0 : 8,
+                        dangerouslySetInnerHTML={{
+                          __html: e.content,
                         }}
-                        className='px-3  w-max max-w-[70%] mx-3 text-xs my-2 py-2  bg-blue-200'
-                      >
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: e.content,
-                          }}
-                        />
-                      </div>
+                      />
                     </div>
-                  )
-                })}
-              </ChatMessage>
+                  </div>
+                )
+              })}
               {isSendMuchMessages && (
-                <div className='w-full px-3 py-2 text-center text-[12px] text-red-400'>
+                <div className='w-full px-3 text-center text-[12px] text-red-400'>
                   {translate('errors.sendMuchMessages')}
                 </div>
               )}
-            </div>
+            </ChatMessage>
+          </div>
 
-            <div className='flex w-full border-t-[1px] border-gray-300'>
-              <div className='flex flex-1'>
-                <MyInput
-                  onPressEnter={handleSend}
-                  value={content}
-                  placeholder={translate('placeholder.enterContent')}
-                  onChangeText={(text) => setContent(text.toString())}
-                  className='w-full !pl-2'
-                  typeBtn={1}
-                />
-                <div className='h-full justify-center items-center flex px-2 bg-gray-300'>
-                  <SendOutlined onClick={handleSend} className='cursor-pointer' />
-                </div>
+          <div className='flex w-full border-t-[1px] border-gray-300'>
+            <div className='flex flex-1'>
+              <MyInput
+                onPressEnter={handleSend}
+                value={content}
+                placeholder={translate('placeholder.enterContent')}
+                onChangeText={(text) => setContent(text.toString())}
+                className='w-full !pl-2'
+                typeBtn={1}
+              />
+              <div className='h-full justify-center items-center flex px-2 bg-gray-300'>
+                <SendOutlined onClick={handleSend} className='cursor-pointer' />
               </div>
             </div>
           </div>
-        ) : (
-          <Draggable
-            allowAnyClick
-            onStop={() => {
-              setTimeout(() => {
-                isDragging.current = false
-              }, 200)
-            }}
-            onDrag={(e: any) => {
-              handleMouseMove(e)
-            }}
-          >
-            <div className='relative'>
-              <MyImage
-                alt='icon-message-chat'
-                src={images.icon.iconMessageChat}
-                className='!relative select-none !w-[40px] !h-[40px] drop-shadow-img'
-              />
-              {renderAmountNewMessage()}
-              <div
-                onClick={handleClick}
-                onTouchEnd={handleClick}
-                className='absolute inset-0 w-full h-full cursor-pointer '
-              />
-            </div>
-          </Draggable>
-        )}
-      </div>
-    )
-  }
+        </div>
+      ) : (
+        <Draggable
+          allowAnyClick
+          onStop={() => {
+            console.log('stop')
+            setTimeout(() => {
+              isDragging.current = false
+            }, 200)
+          }}
+          onDrag={(e: any) => {
+            console.log('onDrag')
 
-  return isMobile ? renderMobile() : renderDesktop()
+            handleMouseMove(e)
+          }}
+        >
+          <div onClick={handleClick} className='relative'>
+            <Image
+              preview={false}
+              alt='icon-message-chat'
+              src={images.icon.iconMessageChat}
+              className='!relative select-none !w-[40px] !h-[40px] drop-shadow-img'
+            />
+            {renderAmountNewMessage()}
+            <div onClick={handleClick} className='absolute inset-0 w-full h-full cursor-pointer ' />
+          </div>
+        </Draggable>
+      )}
+    </div>
+  )
 }
 
 export default ChatFirebase
