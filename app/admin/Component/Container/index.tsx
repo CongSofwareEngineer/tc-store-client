@@ -116,7 +116,9 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
               {renderMenu()}
             </div>
           )}
-          <div className='flex flex-1 md:p-4 p-5 md:max-w-[calc(100vw-212px)]'>{children}</div>
+          <div className='flex flex-1 md:p-4 p-5 md:max-w-[calc(100vw-212px)] overflow-y-auto'>
+            {children}
+          </div>
         </>
       )}
     </div>
