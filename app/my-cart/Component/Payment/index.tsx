@@ -12,7 +12,12 @@ import BillFinal from './Component/BillFinal'
 import ContentForm from './Component/ContentForm'
 import useOptionPayment from '@/hook/useOptionPayment'
 import ViewListOrder from './Component/ViewListOrder'
-import { DEFAULT_RATE_EXP_USER, FILTER_BILL, OPTIONS_PAYMENT } from '@/constant/app'
+import {
+  DEFAULT_FEE_SHIP,
+  DEFAULT_RATE_EXP_USER,
+  FILTER_BILL,
+  OPTIONS_PAYMENT,
+} from '@/constant/app'
 import ModalProcess from '@/components/ModalProcess'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalSuccess from '@/components/ModalSuccess'
@@ -71,7 +76,7 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
         }
       }
     })
-    return numberWithCommas(total + (plusFee ? 30000 : 0))
+    return numberWithCommas(total + (plusFee ? DEFAULT_FEE_SHIP : 0))
   }
 
   const getItemForShow = (e: any) => {
@@ -198,7 +203,7 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
           content: (
             <InfoBanking
               callback={(id, mess) => handleSubmitBuy(id, mess, bodyAPI)}
-              amount={totalBill}
+              amount={totalBill + DEFAULT_FEE_SHIP}
             />
           ),
           useDrawer: true,

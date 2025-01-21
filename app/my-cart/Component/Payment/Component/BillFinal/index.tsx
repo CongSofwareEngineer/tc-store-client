@@ -1,6 +1,8 @@
 import ButtonForm from '@/components/Form/ButtonForm'
 import { images } from '@/configs/images'
+import { DEFAULT_FEE_SHIP } from '@/constant/app'
 import useLanguage from '@/hook/useLanguage'
+import { numberWithCommas } from '@/utils/functions'
 import Image from 'next/image'
 import React from 'react'
 
@@ -37,7 +39,7 @@ const BillFinal = ({
       </div>
       <div className='flex justify-between w-full'>
         <span>{translate('textPopular.feeShip')}</span>
-        <span className='font-bold text-green-600'>30,000 VNĐ</span>
+        <span className='font-bold text-green-600'>{`${numberWithCommas(DEFAULT_FEE_SHIP)} VNĐ`}</span>
       </div>
       <div className='relative w-full border-[1px] my-3 border-gray-300' />
       <div className='flex justify-between w-full'>

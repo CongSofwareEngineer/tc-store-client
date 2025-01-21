@@ -15,7 +15,7 @@ import { BodyAddBill } from '@/constant/firebase'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ModalProcess from '@/components/ModalProcess'
 import ModalDelete from '@/components/ModalDelete'
-import { FILTER_BILL, LOCAL_STORAGE_KEY } from '@/constant/app'
+import { DEFAULT_FEE_SHIP, FILTER_BILL, LOCAL_STORAGE_KEY } from '@/constant/app'
 import ModalSuccess from '@/components/ModalSuccess'
 import ClientApi from '@/services/clientApi'
 import OptionsPayment from '@/app/my-cart/Component/Payment/Component/OptionsPayment'
@@ -206,7 +206,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
                 <BillFinal
                   disabledSubmit={!isValidSubmit}
                   loading={loading}
-                  totalBill={numberWithCommas(amount * data?.price)}
+                  totalBill={numberWithCommas(amount * data?.price + DEFAULT_FEE_SHIP)}
                   totalBillFeeShip={numberWithCommas(amount * data?.price + 30000)}
                 />
               </div>

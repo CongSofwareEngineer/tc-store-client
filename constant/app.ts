@@ -161,3 +161,5 @@ export const INIT_DATA_MY_BLOG = {
     },
   },
 }
+
+export const DEFAULT_FEE_SHIP = 30000

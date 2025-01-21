@@ -288,7 +288,6 @@ const ChatFirebase: NextPage = () => {
               isDragging.current = false
             }, 200)
           }}
-          enableUserSelectHack
           onDrag={(e: any) => {
             handleMouseMove(e)
           }}
