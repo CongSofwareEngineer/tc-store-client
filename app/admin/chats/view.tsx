@@ -22,11 +22,37 @@ const ChatsAdminScreen: NextPage = () => {
         delete e.key
         return { key, content: e }
       })
+
+      const hasIsSeen = (content: any) => {
+        try {
+          console.log({ content })
+
+          return Object.values(content).some((item: any) => item.hasOwnProperty('isSeen'))
+        } catch (error) {
+          return false
+        }
+      }
+      const sortedData = arr.sort((a, b) => {
+        const aHasIsSeen = hasIsSeen(a.content)
+        const bHasIsSeen = hasIsSeen(b.content)
+
+        // Đưa object không có `isSeen` lên đầu
+        if (!aHasIsSeen && bHasIsSeen) return -1
+        if (aHasIsSeen && !bHasIsSeen) return 1
+        return 0 // Giữ nguyên thứ tự nếu cả hai cùng có hoặc không có `isSeen`
+      })
+
+      console.log({ arr, sortedData })
+
       // arr=arr.sort((a,b)=>b.content.date-a.content.date)
 
       setListChat(arr)
     })
   }, [db])
+
+  useEffect(() => {
+    console.log({ listChat })
+  }, [listChat])
 
   const handleClick = (key: string, item: ContentItemChatProps | null) => {
     const listChatDetail = listChat.filter((e) => e.key === key)

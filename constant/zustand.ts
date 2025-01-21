@@ -51,6 +51,7 @@ export type TYPE_USER_DATA = {
   sdt?: string
   name?: string
   pass?: string
+  isAdmin?: boolean
   [key: string]: any
 }
 

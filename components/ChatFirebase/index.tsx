@@ -71,7 +71,6 @@ const ChatFirebase: NextPage = () => {
       }
       createDB(timeStamp)
     }
-    console.log({ userData })
   }, [userData])
 
   useEffect(() => {
@@ -203,6 +202,10 @@ const ChatFirebase: NextPage = () => {
         {amountNew}
       </div>
     )
+  }
+
+  if (userData?.isAdmin) {
+    return <></>
   }
 
   return (
