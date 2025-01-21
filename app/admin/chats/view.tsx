@@ -22,6 +22,7 @@ const ChatsAdminScreen: NextPage = () => {
         delete e.key
         return { key, content: e }
       })
+      // arr=arr.sort((a,b)=>b.content.date-a.content.date)
 
       setListChat(arr)
     })
@@ -43,7 +44,7 @@ const ChatsAdminScreen: NextPage = () => {
   }
 
   return (
-    <div className='flex flex-col gap-3 w-full'>
+    <div className='w-full h-fit max-w-[1200px] lg:grid lg:grid-cols-2 lg:gap-5  flex flex-col gap-2 overflow-y-auto'>
       {listChat.map((e) => {
         return <ItemChat onClick={handleClick} data={e} key={e.key} />
       })}
