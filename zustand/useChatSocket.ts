@@ -20,20 +20,19 @@ export const zustandLanguage = create<ChatSocketStore>()(
       [ZUSTAND.ChatSocket]: null,
 
       create: (sdt: string) => {
-        const socket = io(process.env.NEXT_PUBLIC_API_APP, {
-          reconnection: true,
-          reconnectionDelayMax: 10000,
-          auth: {
-            token: encryptData(sdt),
-          },
-          autoConnect: true,
-          secure: true,
-        })
-        socket.connect()
-
-        setTimeout(() => {
-          set({ [ZUSTAND.ChatSocket]: socket })
-        }, 1000)
+        // const socket = io(process.env.NEXT_PUBLIC_API_APP, {
+        //   reconnection: true,
+        //   reconnectionDelayMax: 10000,
+        //   auth: {
+        //     token: encryptData(sdt),
+        //   },
+        //   autoConnect: true,
+        //   secure: true,
+        // })
+        // socket.connect()
+        // setTimeout(() => {
+        //   set({ [ZUSTAND.ChatSocket]: socket })
+        // }, 1000)
       },
     }),
     {

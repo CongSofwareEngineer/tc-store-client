@@ -186,6 +186,8 @@ const ChatFirebase: NextPage = () => {
   }
 
   const handleClick = () => {
+    console.log('handleClick')
+
     if (!isDragging.current) {
       setEnableChat(true)
     }
@@ -278,14 +280,16 @@ const ChatFirebase: NextPage = () => {
         <Draggable
           allowAnyClick
           onStop={() => {
-            console.log('stop')
+            if (isMobile && !isDragging.current) {
+              handleClick()
+            }
+
             setTimeout(() => {
               isDragging.current = false
             }, 200)
           }}
+          enableUserSelectHack
           onDrag={(e: any) => {
-            console.log('onDrag')
-
             handleMouseMove(e)
           }}
         >
@@ -297,7 +301,10 @@ const ChatFirebase: NextPage = () => {
               className='!relative select-none !w-[40px] !h-[40px] drop-shadow-img'
             />
             {renderAmountNewMessage()}
-            <div onClick={handleClick} className='absolute inset-0 w-full h-full cursor-pointer ' />
+            <div
+              onClick={handleClick}
+              className='absolute inset-0 w-full h-full z-10 cursor-pointer '
+            />
           </div>
         </Draggable>
       )}
