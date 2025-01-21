@@ -5,7 +5,6 @@ import useUserData from '@/hook/useUserData'
 import FBRealtimeUtils from '@/utils/firebaseRealtime'
 import { NextPage } from 'next'
 import React, { useEffect, useRef, useState } from 'react'
-import MyImage from '../MyImage'
 import { images } from '@/configs/images'
 import { CloseCircleOutlined, SendOutlined } from '@ant-design/icons'
 import MyInput from '../MyInput'
@@ -16,6 +15,7 @@ import { getDataLocal, saveDataLocal } from '@/utils/functions'
 import { LOCAL_STORAGE_KEY } from '@/constant/app'
 import { Image } from 'antd'
 import ClientApi from '@/services/clientApi'
+import ItemChatDetail from '@/app/admin/chats/Components/ItemChatDetail'
 
 export type DataMessage = {
   date: number
@@ -56,7 +56,7 @@ const ChatFirebase: NextPage = () => {
     }
 
     if (userData?.sdt) {
-      if (dbRef.current) {
+      if (dbRef.current && dbRef.current.nameDB !== `Chat/${userData?.sdt}`) {
         dbRef.current?.remove().finally(() => {
           createDB(userData?.sdt!)
         })
@@ -71,20 +71,8 @@ const ChatFirebase: NextPage = () => {
       }
       createDB(timeStamp)
     }
+    console.log({ userData })
   }, [userData])
-
-  useEffect(() => {
-    // const handleBeforeUnload = () => {
-    //   if (!isLoginRef.current) {
-    //     db?.remove()
-    //   }
-    // }
-    // Gắn sự kiện trước khi rời trang
-    // window.addEventListener('beforeunload', handleBeforeUnload)
-    // return () => {
-    //   window.removeEventListener('beforeunload', handleBeforeUnload)
-    // }
-  }, [])
 
   useEffect(() => {
     if (enableChat) {
@@ -260,30 +248,7 @@ const ChatFirebase: NextPage = () => {
               </div>
 
               {listChats.map((e: DataMessage) => {
-                return (
-                  <div
-                    key={e.date}
-                    className='flex w-full'
-                    style={{
-                      justifyContent: e.isAdmin ? 'start' : 'end',
-                    }}
-                  >
-                    <div
-                      style={{
-                        borderRadius: 8,
-                        borderBottomLeftRadius: e.isAdmin ? 0 : 8,
-                        borderBottomRightRadius: !e.isAdmin ? 0 : 8,
-                      }}
-                      className='px-3  w-max max-w-[70%] mx-3 text-xs my-2 py-2  bg-blue-200'
-                    >
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: e.content,
-                        }}
-                      />
-                    </div>
-                  </div>
-                )
+                return <ItemChatDetail data={e} key={e.date} />
               })}
               {isSendMuchMessages && (
                 <div className='w-full px-3 text-center text-[12px] text-red-400'>

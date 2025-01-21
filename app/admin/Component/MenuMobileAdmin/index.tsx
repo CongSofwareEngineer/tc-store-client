@@ -5,6 +5,7 @@ import {
   HighlightOutlined,
   HomeOutlined,
   LineChartOutlined,
+  MessageOutlined,
   ProductOutlined,
   ShoppingCartOutlined,
   UsergroupAddOutlined,
@@ -57,6 +58,11 @@ const MenuAdminMobile = () => {
       title: 'User',
       url: '/admin/user',
       icon: <UsergroupAddOutlined />,
+    },
+    {
+      title: 'Chat',
+      url: '/admin/chats',
+      icon: <MessageOutlined />,
     },
   ]
   return (

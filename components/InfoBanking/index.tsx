@@ -26,13 +26,11 @@ const InfoBanking = ({
 
   useEffect(() => {
     ;(async () => {
-      const idBanking = VietcomBankService.generateSalt()
-      const mess = VietcomBankService.generateMess(idBanking)
-      const qr = VietcomBankService.createQR(amount, mess)
+      const infoBanking = new VietcomBankService(amount)
 
-      setQrCode(qr)
-      setMessage(mess)
-      setIdBanking(idBanking)
+      setQrCode(infoBanking.qrCode)
+      setMessage(infoBanking.message)
+      setIdBanking(infoBanking.idBanking)
     })()
   }, [])
 

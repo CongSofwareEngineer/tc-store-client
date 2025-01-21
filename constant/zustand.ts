@@ -92,6 +92,7 @@ export type TYPE_ZUSTAND = {
 
   [ZUSTAND.Drawer]: {
     content?: React.ReactNode
+    noPadding?: boolean
     afterClose?: ((param?: any) => any) | null
   } & DrawerProps
 }

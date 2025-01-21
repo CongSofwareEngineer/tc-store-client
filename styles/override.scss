@@ -59,6 +59,11 @@ p {
       padding: 10px 20px 20px 20px !important;
     }
   }
+  .body-no-padding {
+    .ant-drawer-body {
+      padding: 0px !important;
+    }
+  }
 }
 .ant-btn-primary {
   background: #fcd34d !important;

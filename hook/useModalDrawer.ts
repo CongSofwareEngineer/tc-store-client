@@ -24,6 +24,7 @@ const useModalDrawer = () => {
       placement: 'bottom',
       height: 'auto',
       width: '500px',
+      noPadding: false,
       ...config.configDrawer,
       title: config.configDrawer?.title || config?.title,
       open: true,

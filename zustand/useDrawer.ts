@@ -2,7 +2,7 @@ import { devtools } from 'zustand/middleware'
 import { create } from 'zustand'
 import { INIT_ZUSTAND, TYPE_ZUSTAND, ZUSTAND } from '@/constant/zustand'
 
-export type DrawerData = TYPE_ZUSTAND[typeof ZUSTAND.Drawer]
+export type DrawerData = TYPE_ZUSTAND[ZUSTAND.Drawer]
 
 type DrawerStoreState = { [ZUSTAND.Drawer]: DrawerData }
 

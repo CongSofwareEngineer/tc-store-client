@@ -79,6 +79,10 @@ const ContainerAdmin = ({ children }: { children: React.ReactNode }) => {
         title: 'User',
         url: '/admin/user',
       },
+      {
+        title: 'Chat',
+        url: '/admin/chats',
+      },
     ]
 
     return LIST_MENU.map((e) => {

@@ -54,7 +54,13 @@ class FBRealtimeUtils {
   listenerOnValue(callback: (value: any[]) => any) {
     onValue(this.db, async (snapshot) => {
       const data = snapshot.val()
-      await callback(Object.values(data || {}))
+
+      const arr = []
+      for (const key in data) {
+        arr.push({ key: key, ...data[key] })
+      }
+
+      await callback(arr)
     })
   }
 

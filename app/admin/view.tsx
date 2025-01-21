@@ -21,7 +21,6 @@ const RevenueScreen: NextPage = () => {
   })
 
   const { data } = useRevenue(PAGE_SIZE_LIMIT, queries)
-  console.log({ renderContent, translate, openModalDrawer })
 
   return (
     <div className='flex flex-col gap-3 w-full overflow-y-auto '>
