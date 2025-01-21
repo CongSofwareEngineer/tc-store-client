@@ -179,7 +179,12 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
     const callBack = async () => {
       if (optionSelected.value === OPTIONS_PAYMENT.banking) {
         openModalDrawer({
-          content: <InfoBanking callback={handleSubmitBuy} amount={data?.price * amount} />,
+          content: (
+            <InfoBanking
+              callback={handleSubmitBuy}
+              amount={data?.price * amount + DEFAULT_FEE_SHIP}
+            />
+          ),
           useDrawer: true,
           configModal: {
             className: '!w-[700px]',
