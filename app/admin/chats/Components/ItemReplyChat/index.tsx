@@ -56,8 +56,8 @@ const ItemReplyChat = ({ item, keyChat, listChats }: Props) => {
     })
   }
   return (
-    <div className='flex flex-col justify-between'>
-      <div className=' relative flex flex-col flex-1 min-h-[70vh] max-h-[70vh] overflow-y-auto'>
+    <div className='flex flex-col h-full justify-between'>
+      <div className=' relative flex flex-col flex-1 min-h-[70dvh] max-h-[70dvh] overflow-y-auto'>
         <ChatMessage isLoadMore={false} isReverse loading={false} data={listChats}>
           {renderItem()}
         </ChatMessage>

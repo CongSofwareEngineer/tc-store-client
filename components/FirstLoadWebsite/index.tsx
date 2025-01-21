@@ -1,11 +1,5 @@
 'use client'
-import {
-  COOKIE_EXPIRED,
-  COOKIE_KEY,
-  LANGUAGE_SUPPORT,
-  LOCAL_STORAGE_KEY,
-  OBSERVER_KEY,
-} from '@/constant/app'
+import { COOKIE_EXPIRED, COOKIE_KEY, LOCAL_STORAGE_KEY, OBSERVER_KEY } from '@/constant/app'
 import { TYPE_ZUSTAND, ZUSTAND } from '@/constant/zustand'
 import useCheckPatchName from '@/hook/tank-query/useCheckPatchName'
 import useVoucherUser from '@/hook/tank-query/useVoucherUser'
