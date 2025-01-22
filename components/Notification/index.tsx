@@ -1,4 +1,3 @@
-'use client'
 import { LOCAL_STORAGE_KEY } from '@/constant/app'
 import { TYPE_NOTIFICATION } from '@/constant/firebase'
 import useLanguage from '@/hook/useLanguage'

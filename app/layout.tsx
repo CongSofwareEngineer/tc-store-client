@@ -20,37 +20,18 @@ import ClientApi from '@/services/clientApi'
 import dynamic from 'next/dynamic'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-const MyModal = dynamic(() => import('@/components/MyModal'))
-const ModalDrawer = dynamic(() => import('@/components/MyDrawer'))
+
 const LoadingFirstPage = dynamic(() => import('@/components/LoadingFirstPage'), {
   ssr: true,
-})
-const MyModalAdmin = dynamic(() => import('@/components/MyModalAdmin'), {
-  ssr: false,
-})
-const CheckPingServer = dynamic(() => import('@/components/CheckPingServer'), {
-  ssr: false,
-})
-
-const FirstLoadWebsite = dynamic(() => import('@/components/FirstLoadWebsite'), {
-  ssr: false,
-})
-
-const ToastNoti = dynamic(() => import('@/components/ToastNoti'), {
-  ssr: false,
-})
-
-const Notification = dynamic(() => import('@/components/Notification'), {
-  ssr: false,
 })
 
 // const ChatSocket = dynamic(() => import('@/components/ChatSocket'), {
 //   ssr: false,
 // })
 
-const ChatFirebase = dynamic(() => import('@/components/ChatFirebase'), {
-  ssr: false,
-})
+// const ChatFirebase = dynamic(() => import('@/components/ChatFirebase'), {
+//   ssr: false,
+// })
 
 const BaseMeta = {
   title: process.env.NEXT_PUBLIC_TITLE,
@@ -238,15 +219,8 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
                     <ClientRender menuCategory={menuCategory?.data || []}>{children}</ClientRender>
                     {/* load more option */}
                     {/* <ChatSocket /> */}
-                    <ChatFirebase />
+                    {/* <ChatFirebase /> */}
                     <LoadingFirstPage />
-                    <MyModal />
-                    <ModalDrawer />
-                    <MyModalAdmin />
-                    <CheckPingServer />
-                    <FirstLoadWebsite />
-                    <ToastNoti />
-                    <Notification />
                   </section>
                 </main>
 

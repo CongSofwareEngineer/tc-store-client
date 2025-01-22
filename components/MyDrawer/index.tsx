@@ -1,5 +1,3 @@
-'use client'
-import useMedia from '@/hook/useMedia'
 import { useDrawer } from '@/zustand/useDrawer'
 import { Drawer } from 'antd'
 import { NextPage } from 'next'
@@ -7,7 +5,6 @@ import React, { useEffect } from 'react'
 import { isIOS } from 'react-device-detect'
 
 const ModalDrawer: NextPage = () => {
-  const { isClient } = useMedia()
   const { closeDrawer, drawer } = useDrawer()
 
   useEffect(() => {
@@ -18,9 +15,6 @@ const ModalDrawer: NextPage = () => {
     }
   }, [drawer])
 
-  if (!isClient) {
-    return <></>
-  }
   return (
     <Drawer
       onClose={closeDrawer}

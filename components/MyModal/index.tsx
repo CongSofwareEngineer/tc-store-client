@@ -1,16 +1,8 @@
-'use client'
-
-import useMedia from '@/hook/useMedia'
 import { useModal } from '@/zustand/useModal'
 import { Modal } from 'antd'
 
 const MyModalProvider = () => {
-  const { isClient } = useMedia()
   const { modal, closeModal } = useModal()
-
-  if (!isClient) {
-    return <></>
-  }
 
   return (
     <Modal

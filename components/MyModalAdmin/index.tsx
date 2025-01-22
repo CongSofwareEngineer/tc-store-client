@@ -1,4 +1,3 @@
-'use client'
 import { CloseOutlined } from '@ant-design/icons'
 import React from 'react'
 import { useModalAdmin as useModalAdminZustand } from '@/zustand/useModalAdmin'
@@ -11,8 +10,6 @@ const MyModalAdmin = () => {
       if (!modalAdmin.overClickClose) {
         closeModal(true)
       }
-    } else {
-      console.log('Child element clicked!')
     }
   }
   return modalAdmin.body ? (

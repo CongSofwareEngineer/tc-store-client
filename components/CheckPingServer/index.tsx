@@ -1,4 +1,3 @@
-'use client'
 import useModalDrawer from '@/hook/useModalDrawer'
 import ClientApi from '@/services/clientApi'
 import React, { useLayoutEffect } from 'react'
