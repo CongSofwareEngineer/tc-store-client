@@ -27,6 +27,7 @@ const ChatsAdminScreen: NextPage = () => {
         try {
           console.log({ content })
 
+          // eslint-disable-next-line no-prototype-builtins
           return Object.values(content).some((item: any) => item.hasOwnProperty('isSeen'))
         } catch (error) {
           return false
