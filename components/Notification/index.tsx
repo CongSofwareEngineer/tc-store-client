@@ -15,69 +15,71 @@ const NotificationClient: NextPage = () => {
   const { translate } = useLanguage()
   const router = useRoutePage()
 
-  const handleAddEvent = () => {
-    const handleOpenNoti = (dataMess: any) => {
-      const key = `open${Date.now()}`
-      const handleConfirm = (type: string) => {
-        switch (type) {
-          case TYPE_NOTIFICATION.myBill:
-            router.push('/my-page/bill')
-            break
+  useEffect(() => {
+    const handleAddEvent = () => {
+      const handleOpenNoti = (dataMess: any) => {
+        const key = `open${Date.now()}`
+        const handleConfirm = (type: string) => {
+          switch (type) {
+            case TYPE_NOTIFICATION.myBill:
+              router.push('/my-page/bill')
+              break
 
-          case TYPE_NOTIFICATION.myCart:
-            router.push('/my-cart')
-            break
+            case TYPE_NOTIFICATION.myCart:
+              router.push('/my-cart')
+              break
 
-          default:
-            router.push('/shoes')
-            break
+            default:
+              router.push('/shoes')
+              break
+          }
+          notification.destroy(key)
         }
-        notification.destroy(key)
-      }
-      const btn = (
-        <div className='flex w-full justify-end gap-2'>
-          <Button
-            type='default'
-            onClick={() => handleConfirm(dataMess.data.type)}
-            className='min-w-[50px]'
-          >
-            {translate('common.view')}
-          </Button>
-          <Button onClick={() => notification.destroy(key)} size='middle' type='primary'>
-            {translate('common.close')}
-          </Button>
-        </div>
-      )
+        const btn = (
+          <div className='flex w-full justify-end gap-2'>
+            <Button
+              type='default'
+              onClick={() => handleConfirm(dataMess.data.type)}
+              className='min-w-[50px]'
+            >
+              {translate('common.view')}
+            </Button>
+            <Button onClick={() => notification.destroy(key)} size='middle' type='primary'>
+              {translate('common.close')}
+            </Button>
+          </div>
+        )
 
-      notification.open({
-        message: (
-          <div className='text-black font-bold '>
-            {dataMess?.data?.title || dataMess?.notification?.title}
-          </div>
-        ),
-        description: (
-          <div className='max-h-[100px] overflow-scroll'>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: dataMess?.data?.body || dataMess?.notification?.body,
-              }}
-            />
-          </div>
-        ),
-        btn,
-        key,
-        duration: 10,
+        notification.open({
+          message: (
+            <div className='text-black font-bold '>
+              {dataMess?.data?.title || dataMess?.notification?.title}
+            </div>
+          ),
+          description: (
+            <div className='max-h-[100px] overflow-scroll'>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: dataMess?.data?.body || dataMess?.notification?.body,
+                }}
+              />
+            </div>
+          ),
+          btn,
+          key,
+          duration: 10,
+        })
+      }
+      FirebaseServices.addListenMessage((dataMess) => {
+        console.log({ dataMess })
+
+        handleOpenNoti(dataMess)
       })
     }
-    FirebaseServices.addListenMessage((dataMess) => {
-      handleOpenNoti(dataMess)
-    })
-  }
 
-  useEffect(() => {
     handleAddEvent()
     FirebaseServices.initFirebase()
-  }, [])
+  }, [router, translate])
 
   useEffect(() => {
     const updateToken = async (token: string) => {

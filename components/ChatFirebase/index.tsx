@@ -1,4 +1,3 @@
-'use client'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import useUserData from '@/hook/useUserData'
@@ -282,6 +281,7 @@ const ChatFirebase: NextPage = () => {
       ) : (
         <Draggable
           allowAnyClick
+          enableUserSelectHack
           onStop={() => {
             if (isMobile && !isDragging.current) {
               handleClick()

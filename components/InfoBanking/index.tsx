@@ -50,12 +50,10 @@ const InfoBanking = ({
   return (
     <div className='flex md:flex-row md:py-1 mt-2 overflow-y-auto flex-col md:gap-5 gap-2 md:justify-center w-full'>
       {isMobile ? (
-        <Image
-          preview={false}
-          src={qrCode}
-          alt='QR'
-          className='!relative !w-[90%] !h-auto m-auto '
-        />
+        <div className='relative w-[90%] flex-1  m-auto  flex md:pb-0  aspect-square overflow-hidden'>
+          {/* <Image preview={false} src={qrCode} alt='QR' className='!relative !w-full !h-auto' /> */}
+          <MyImage src={qrCode} alt='QR' className='!relative !w-full !h-auto' />
+        </div>
       ) : (
         <div className='relative w-full flex-1 flex md:pb-0  aspect-square overflow-hidden'>
           <div className='absolute w-full aspect-square flex justify-center items-center'>
