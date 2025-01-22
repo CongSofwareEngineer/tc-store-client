@@ -9,7 +9,7 @@ type ModalAdminStoreState = { [ZUSTAND.ModalAdmin]: ModalAdminData }
 type ModalAdminStoreActions = {
   setModalAdmin: (nextModalAdmin: ModalAdminStoreState[ZUSTAND.ModalAdmin]) => void
   openModal: (nextModalAdmin: ModalAdminStoreState[ZUSTAND.ModalAdmin]) => void
-  closeModal: () => void
+  closeModal: (isIconClose?: boolean) => void
 }
 
 type ModalAdminStore = ModalAdminStoreState & ModalAdminStoreActions
@@ -22,18 +22,26 @@ const zustandModalAdmin = create<ModalAdminStore>()(
       openModal: (param: ModalAdminData) => {
         set((state) => ({
           [ZUSTAND.ModalAdmin]: {
+            showBtnClose: true,
             ...state,
             ...param,
             open: true,
           },
         }))
       },
-      closeModal: () => {
-        set({
-          [ZUSTAND.ModalAdmin]: {
-            ...INIT_ZUSTAND[ZUSTAND.ModalAdmin],
-            open: false,
-          },
+      closeModal: (isIconClose: boolean = false) => {
+        set((state) => {
+          if (!isIconClose) {
+            if (state?.[ZUSTAND.ModalAdmin]?.callBackAfter) {
+              state?.[ZUSTAND.ModalAdmin].callBackAfter()
+            }
+          }
+          return {
+            [ZUSTAND.ModalAdmin]: {
+              ...INIT_ZUSTAND[ZUSTAND.ModalAdmin],
+              open: false,
+            },
+          }
         })
       },
     }),
