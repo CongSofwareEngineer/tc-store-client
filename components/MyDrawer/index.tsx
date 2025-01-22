@@ -28,7 +28,7 @@ const ModalDrawer: NextPage = () => {
         maxHeight: drawer.placement === 'right' || drawer.placement === 'left' ? 'unset' : '95dvh',
       }}
       {...drawer}
-      className={`${drawer?.noPadding ? 'body-no-padding' : ''} ${drawer.className}`}
+      className={`${drawer?.noPadding ? 'drawer-body-no-padding' : ''} ${drawer.className}`}
     >
       <div
         className='flex flex-col w-full'

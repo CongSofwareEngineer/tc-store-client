@@ -28,7 +28,7 @@ const zustandDrawer = create<DrawerStore>()(
               content: null,
               placement: state[ZUSTAND.Drawer].placement,
               width: state[ZUSTAND.Drawer].width,
-              afterClose: null,
+              height: state[ZUSTAND.Drawer].height,
               open: false,
             },
           }
