@@ -9,7 +9,7 @@ const MyModalAdmin = () => {
   const onClick = (event: any) => {
     if (event.target === event.currentTarget) {
       if (!modalAdmin.overClickClose) {
-        closeModal()
+        closeModal(true)
       }
     } else {
       console.log('Child element clicked!')
