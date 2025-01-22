@@ -3,7 +3,7 @@ import { VoucherProps } from '../../type'
 import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
 import useModalDrawer from '@/hook/useModalDrawer'
 import useCallbackToast from '@/hook/useCallbackToast'
-import { convertDateToNumber, diffTime, formatDatePicker, plusDay } from '@/utils/momentFunc'
+import { convertDateToNumber, diffTime, plusDay } from '@/utils/momentFunc'
 import MyForm from '@/components/Form/MyForm'
 import ButtonForm from '@/components/Form/ButtonForm'
 import InputForm from '@/components/Form/InputForm'
@@ -60,7 +60,7 @@ const ModalConfig = ({ data }: { data?: VoucherProps }) => {
       name: data?.name || 'Fee ship 10k',
       disCount: data?.disCount || 10000,
       categoriesProduct: data?.categoriesProduct || [],
-      expired: data?.expired || convertDateToNumber(plusDay(Date.now(), 7)),
+      expired: data?.expired || plusDay(Date.now(), 7).valueOf(),
     }
 
     setFormData(initData)
@@ -111,6 +111,7 @@ const ModalConfig = ({ data }: { data?: VoucherProps }) => {
     }
     setLoading(false)
   }
+  console.log({ formData })
 
   return (
     <MyForm
@@ -124,7 +125,7 @@ const ModalConfig = ({ data }: { data?: VoucherProps }) => {
         <MyDatePickerForm
           name='expired'
           label={`${translate('textPopular.dateEnd')} (${diffTime(formData?.expired) + 1} day)`}
-          defaultValue={formatDatePicker(formData?.expired)}
+          defaultValue={formData?.expired}
         />
 
         <SelectForm

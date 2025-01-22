@@ -1,12 +1,12 @@
 import { zustandLanguage } from '@/zustand/useLanguage'
-import moment from 'moment'
 import { isObject } from './functions'
-import dayjs from 'dayjs'
+import dayjs, { ManipulateType } from 'dayjs'
 
 const localMoment = () => {
   const { locale } = zustandLanguage.getState().language
-  moment.locale(locale)
-  return moment
+  // moment.locale(locale)
+  // return moment
+  return dayjs().locale(locale)
 }
 
 export const convertDateToNumber = (data?: any) => {
@@ -22,17 +22,17 @@ export const convertDateToNumber = (data?: any) => {
       timeTemp = timeTemp.toString()
     }
 
-    return localMoment()(timeTemp || moment()).valueOf()
+    return dayjs(timeTemp || dayjs().valueOf()).valueOf()
   } catch {
-    return localMoment()().valueOf()
+    return dayjs().valueOf()
   }
 }
 
-export const plusDay = (value?: any, amount = 7, type: moment.DurationInputArg2 = 'days') => {
+export const plusDay = (value?: any, amount = 7, type: ManipulateType = 'day') => {
   try {
-    return localMoment()(value || moment()).add(amount, type)
+    return dayjs(value || dayjs().valueOf()).add(amount, type)
   } catch {
-    return moment()
+    return dayjs()
   }
 }
 
@@ -55,9 +55,9 @@ export const formatDateTime = (data: any, format = 'DD / MM /YYYY') => {
       timeTemp = timeTemp.toString()
     }
 
-    return localMoment()(timeTemp).format(format)
+    return dayjs(timeTemp).format(format)
   } catch {
-    return localMoment()().format(format)
+    return dayjs(dayjs().valueOf()).format(format)
   }
 }
 
@@ -75,14 +75,14 @@ export const expiredTimeToNumber = (data: any) => {
       timeTemp = timeTemp.toString()
     }
 
-    const daysDifference = localMoment()(timeTemp).diff(moment(), 'days')
+    const daysDifference = dayjs(timeTemp).diff(dayjs(), 'days')
     return daysDifference
   } catch {
     return data
   }
 }
 
-export const diffTime = (data: any, type: moment.DurationInputArg2 = 'days') => {
+export const diffTime = (data: any, type: ManipulateType = 'days') => {
   try {
     let timeTemp = data
 
@@ -96,7 +96,7 @@ export const diffTime = (data: any, type: moment.DurationInputArg2 = 'days') => 
       timeTemp = timeTemp.toString()
     }
 
-    const daysDifference = localMoment()(timeTemp).diff(moment(), type)
+    const daysDifference = dayjs(timeTemp).diff(dayjs().valueOf(), type)
     return daysDifference
   } catch {
     return 0
@@ -106,9 +106,9 @@ export const diffTime = (data: any, type: moment.DurationInputArg2 = 'days') => 
 export const formatDatePicker = (data: any) => {
   try {
     let timeTemp = data
-    if (typeof data === typeof dayjs) {
-      return timeTemp
-    }
+    // if (typeof data === typeof dayjs) {
+    //   return timeTemp
+    // }
     timeTemp = formatDateTime(data, 'DD/MM/YYYY')
 
     return dayjs(timeTemp, 'DD/MM/YYYY')

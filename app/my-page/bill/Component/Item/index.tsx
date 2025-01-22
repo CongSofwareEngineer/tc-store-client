@@ -1,7 +1,6 @@
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
 import React from 'react'
-import moment from 'moment'
 import Link from 'next/link'
 import {
   detectImg,
@@ -19,6 +18,7 @@ import { Button } from 'antd'
 import MyImage from '@/components/MyImage'
 import ConfigBill from '@/components/ConfigBill'
 import styles from './style.module.scss'
+import { formatDateTime } from '@/utils/momentFunc'
 
 type Props = {
   data: { [key: string]: any }
@@ -94,7 +94,8 @@ const Item = ({ data, indexData }: Props) => {
               {getStatus(data.status)}
             </div>
             <span>|</span>
-            <div> {moment(Number(data.date)).format('DD/MM/YYYY')}</div>
+            {/* <div> {moment(Number(data.date)).format('DD/MM/YYYY')}</div> */}
+            <div> {formatDateTime(data.date, 'DD/MM/YYYY')}</div>
           </div>
         </div>
         <div className='flex gap-1'>
@@ -180,7 +181,7 @@ const Item = ({ data, indexData }: Props) => {
         <div className='flex items-center gap-1 text-[11px] px-3'>
           <span>{translate('bill.dateBuy')}</span>
           <span>:</span>
-          <div> {moment(Number(data.date)).format('DD/MM/YYYY')}</div>
+          <div> {formatDateTime(data.date, 'DD/MM/YYYY')}</div>
         </div>
 
         <div className='flex flex-col  w-full mt-2'>

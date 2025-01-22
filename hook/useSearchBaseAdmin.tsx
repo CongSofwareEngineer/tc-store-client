@@ -1,4 +1,3 @@
-import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import MyForm from '@/components/Form/MyForm'
 import InputForm from '@/components/Form/InputForm'
@@ -16,6 +15,7 @@ import { FILTER_BILL } from '@/constant/app'
 import { useLanguage as useLanguageZustand } from '@/zustand/useLanguage'
 import { Button } from 'antd'
 import { useCategoryMenu } from '@/zustand/useCategoryMenu'
+import { formatDatePicker, formatDateTime } from '@/utils/momentFunc'
 
 type KeySearchProps = {
   dateStart?: boolean
@@ -71,7 +71,7 @@ const useSearchBaseAdmin = (param?: KeySearchProps, paramTitle?: TitleProps) => 
         sdt: '',
         keyName: '',
         status: FILTER_BILL.All,
-        oneDate: moment().format('YYYY-MM-DD'),
+        oneDate: formatDateTime(Date.now(), 'YYYY-MM-DD'),
         admin: false,
         dateStart: '',
         dateEnd: '',
@@ -91,7 +91,7 @@ const useSearchBaseAdmin = (param?: KeySearchProps, paramTitle?: TitleProps) => 
       sdt: '',
       keyName: '',
       status: '',
-      oneDate: moment().format('YYYY-MM-DD'),
+      oneDate: formatDateTime(Date.now(), 'YYYY-MM-DD'),
       admin: false,
       dateStart: '',
       dateEnd: '',

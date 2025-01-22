@@ -1,15 +1,15 @@
 import { Button, DatePicker } from 'antd'
-import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import MyInput from '@/components/MyInput'
+import { formatDateTime, plusDay } from '@/utils/momentFunc'
 
 type Props = {
   onChangeDateTime?: (param: any) => any
   onSearchSDT?: () => any
   onSearchIDOther?: () => any
 }
-const dateStart = moment(Date.now()).add(-24, 'days').format('YYYY-MM-DD')
+const dateStart = plusDay(Date.now(), -24, 'days').format('YYYY-MM-DD')
 const { RangePicker } = DatePicker
 
 const OptionSearchBase = ({
@@ -17,7 +17,10 @@ const OptionSearchBase = ({
   onSearchSDT = () => {},
   onSearchIDOther = () => {},
 }: Props) => {
-  const [dateTimeBase, setDateTimeBase] = useState([dateStart, moment().format('YYYY-MM-DD')])
+  const [dateTimeBase, setDateTimeBase] = useState([
+    dateStart,
+    formatDateTime(Date.now(), 'YYYY-MM-DD'),
+  ])
 
   useEffect(() => {
     onChangeDateTime(dateTimeBase)
@@ -43,11 +46,11 @@ const OptionSearchBase = ({
         style={{ minWidth: 250 }}
         defaultValue={[
           dayjs(dateStart, 'YYYY-MM-DD'),
-          dayjs(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'),
+          dayjs(formatDateTime(Date.now(), 'YYYY-MM-DD'), 'YYYY-MM-DD'),
         ]}
         defaultPickerValue={[
           dayjs(dateStart, 'YYYY-MM-DD'),
-          dayjs(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'),
+          dayjs(formatDateTime(Date.now(), 'YYYY-MM-DD'), 'YYYY-MM-DD'),
         ]}
         onChange={(_, dateString) => {
           setDateTimeBase(dateString)

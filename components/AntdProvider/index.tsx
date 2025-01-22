@@ -60,6 +60,9 @@ const AntdProvider = ({ children }: { children: React.ReactNode }) => {
           Input: {
             paddingInline: 5,
           },
+          InputNumber: {
+            paddingInline: 5,
+          },
         },
         hashed: false,
       }}
