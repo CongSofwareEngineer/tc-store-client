@@ -4,32 +4,38 @@ import useAos from '@/hook/useAos'
 import { useCategoryMenu } from '@/zustand/useCategoryMenu'
 import dynamic from 'next/dynamic'
 import useMedia from '@/hook/useMedia'
+import ChatFirebase from '../ChatFirebase'
+import MyModalAdmin from '../MyModalAdmin'
+import CheckPingServer from '../CheckPingServer'
+import FirstLoadWebsite from '../FirstLoadWebsite'
+import ToastNoti from '../ToastNoti'
+import NotificationClient from '../Notification'
 
 const MyModal = dynamic(() => import('@/components/MyModal'))
 const ModalDrawer = dynamic(() => import('@/components/MyDrawer'))
 
-const ChatFirebase = dynamic(() => import('@/components/ChatFirebase'), {
-  ssr: false,
-})
+// const ChatFirebase = dynamic(() => import('@/components/ChatFirebase'), {
+//   ssr: false,
+// })
 
-const MyModalAdmin = dynamic(() => import('@/components/MyModalAdmin'), {
-  ssr: false,
-})
-const CheckPingServer = dynamic(() => import('@/components/CheckPingServer'), {
-  ssr: false,
-})
+// const MyModalAdmin = dynamic(() => import('@/components/MyModalAdmin'), {
+//   ssr: false,
+// })
+// const CheckPingServer = dynamic(() => import('@/components/CheckPingServer'), {
+//   ssr: false,
+// })
 
-const FirstLoadWebsite = dynamic(() => import('@/components/FirstLoadWebsite'), {
-  ssr: false,
-})
+// const FirstLoadWebsite = dynamic(() => import('@/components/FirstLoadWebsite'), {
+//   ssr: false,
+// })
 
-const ToastNoti = dynamic(() => import('@/components/ToastNoti'), {
-  ssr: false,
-})
+// const ToastNoti = dynamic(() => import('@/components/ToastNoti'), {
+//   ssr: false,
+// })
 
-const Notification = dynamic(() => import('@/components/Notification'), {
-  ssr: false,
-})
+// const Notification = dynamic(() => import('@/components/Notification'), {
+//   ssr: false,
+// })
 
 const ClientRender = ({
   children,
@@ -54,7 +60,7 @@ const ClientRender = ({
       <CheckPingServer />
       <FirstLoadWebsite />
       <ToastNoti />
-      <Notification />
+      <NotificationClient />
 
       {isClient && (
         <>

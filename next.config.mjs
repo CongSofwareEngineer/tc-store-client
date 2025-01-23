@@ -18,7 +18,7 @@ const nextConfig = {
   },
   experimental: {
     // optimisticClientCache: true,
-    // workerThreads: true,
+    workerThreads: true,
     // optimizeCss: true,
     // nextScriptWorkers: true,
     gzipSize: true,
