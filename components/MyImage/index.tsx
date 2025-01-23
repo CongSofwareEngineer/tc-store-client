@@ -1,6 +1,7 @@
 // import Image from 'next/image'
+import { Image } from 'antd'
 import React from 'react'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+// import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 const MyImage = (props: any) => {
   // const [isLoaded, setIsLoaded] = useState(false)
@@ -14,7 +15,7 @@ const MyImage = (props: any) => {
         fill
         {...props}
       /> */}
-      <LazyLoadImage effect='blur' loading='lazy' {...props} />
+      <Image preview={false} loading='lazy' {...props} />
       {/* {!isLoaded && (
         <Image
           fill
