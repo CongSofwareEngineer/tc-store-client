@@ -8,23 +8,34 @@ import { NextPage } from 'next'
 import React from 'react'
 import GraphRevenue from './Component/GraphRevenue'
 import useFirstLoadPage from '@/hook/useFirstLoadPage'
+import { plusDay } from '@/utils/momentFunc'
+
+const DATE_START = plusDay(null, -30).valueOf()
+const DATE_END = Date.now()
 
 const RevenueScreen: NextPage = () => {
   useFirstLoadPage()
-  const { queries } = useQuerySearch()
+  const { queries, updateQuery } = useQuerySearch()
   const { translate } = useLanguage()
   const { openModalDrawer } = useModalDrawer()
 
-  const { renderContent } = useSearchBaseAdmin({
-    dateEnd: true,
-    dateStart: true,
-  })
+  const { renderContent } = useSearchBaseAdmin(
+    {
+      dateEnd: true,
+      dateStart: true,
+    },
+    {},
+    {
+      dateStart: DATE_START,
+      dateEnd: DATE_END,
+    }
+  )
 
   const { data } = useRevenue(PAGE_SIZE_LIMIT, queries)
 
   return (
     <div className='flex flex-col gap-3 w-full overflow-y-auto '>
-      {/* {renderContent()} */}
+      {renderContent()}
       <GraphRevenue data={data} />
     </div>
   )

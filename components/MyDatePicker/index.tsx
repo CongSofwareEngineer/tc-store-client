@@ -2,17 +2,19 @@ import { DatePicker } from 'antd'
 import React from 'react'
 import { formatDatePicker } from '@/utils/momentFunc'
 import dayjs from 'dayjs'
+import type { DatePickerProps } from 'antd'
+
 const DATE_START = dayjs(new Date(Date.now()).setDate(new Date().getDate() - 1))
 
 // const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY', 'DD-MM-YYYY', 'DD-MM-YY']
 
-type Props = {
+export type DatePickerProp = {
   onChange?: (param?: any) => any
   className?: string
   allowClear?: boolean
   disabled?: boolean
   defaultValue?: any
-}
+} & DatePickerProps
 
 const MyDatePicker = ({
   className,
@@ -20,7 +22,8 @@ const MyDatePicker = ({
   allowClear = true,
   disabled = false,
   defaultValue = DATE_START,
-}: Props) => {
+  // ...props
+}: DatePickerProp) => {
   return (
     <DatePicker
       inputReadOnly
@@ -31,6 +34,7 @@ const MyDatePicker = ({
       format={'DD/MM/YYYY'}
       lang='vn'
       allowClear={allowClear}
+      // {...props}
     />
   )
 }

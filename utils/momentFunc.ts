@@ -9,6 +9,17 @@ const localMoment = () => {
   return dayjs().locale(locale)
 }
 
+export const formatDayjs = (date?: any) => {
+  try {
+    if (!date) {
+      return null
+    }
+    return dayjs(date)
+  } catch {
+    return dayjs(dayjs().valueOf())
+  }
+}
+
 export const convertDateToNumber = (data?: any) => {
   try {
     let timeTemp = data

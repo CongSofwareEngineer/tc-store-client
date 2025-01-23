@@ -37,7 +37,10 @@ const useQuerySearch = () => {
     value: string | string[] | number | number[],
     isReplace = true
   ) => {
-    const searchPareClone = cloneData(queries)
+    let searchPareClone = cloneData(queries)
+    if (!searchPareClone) {
+      searchPareClone = {}
+    }
 
     if (searchPareClone[key]) {
       if (!searchPareClone[key].includes(value?.toString())) {

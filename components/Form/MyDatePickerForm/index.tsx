@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form } from 'antd'
-import MyDatePicker from '@/components/MyDatePicker'
+import MyDatePicker, { DatePickerProp } from '@/components/MyDatePicker'
 
 type InputFormType = {
   label?: string
@@ -10,6 +10,7 @@ type InputFormType = {
   disabled?: boolean
   defaultValue?: any
   noPaddingBottom?: boolean
+  configInput?: DatePickerProp | null
 }
 
 const MyDatePickerForm = ({
@@ -19,6 +20,7 @@ const MyDatePickerForm = ({
   name = '',
   defaultValue,
   noPaddingBottom = false,
+  configInput = null,
 }: InputFormType) => {
   return (
     <Form.Item
@@ -26,7 +28,7 @@ const MyDatePickerForm = ({
       name={name}
       className={`form-item-date-picker ${noPaddingBottom ? 'no-padding-bottom' : 'padding-bottom'} ${classFromItem}`}
     >
-      <MyDatePicker defaultValue={defaultValue} disabled={disabled} />
+      <MyDatePicker defaultValue={defaultValue} disabled={disabled} {...configInput} />
     </Form.Item>
   )
 }
