@@ -14,7 +14,7 @@ const MyImage = (props: any) => {
         fill
         {...props}
       /> */}
-      <LazyLoadImage loading='lazy' {...props} />
+      <LazyLoadImage effect='blur' loading='lazy' {...props} />
       {/* {!isLoaded && (
         <Image
           fill
