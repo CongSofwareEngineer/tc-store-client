@@ -101,6 +101,7 @@ const NotificationClient: NextPage = () => {
       const isSupport = await FirebaseServices.isSupportedNotification()
 
       if (isSupport) {
+        await FirebaseServices.updateServiceWorker()
         Notification.requestPermission()
           .then(async (permission: any) => {
             console.log({ permission })

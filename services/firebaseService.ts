@@ -62,14 +62,21 @@ export const FirebaseServices = {
       'Notification' in window
     )
   },
-  createToken: async (callback: (e?: any) => Promise<void>) => {
+  serviceWorker: async () => {
     const firebaseUrl = encodeURIComponent(JSON.stringify(FirebaseServices.config))
 
     const registration = await navigator.serviceWorker.register(
       `/firebase-messaging-sw.js?firebaseConfig=${firebaseUrl}`,
       { scope: '/' }
     )
-    await registration.update()
+    return registration
+  },
+  updateServiceWorker: async () => {
+    const registration = await FirebaseServices.serviceWorker()
+    registration.update()
+  },
+  createToken: async (callback: (e?: any) => Promise<void>) => {
+    const registration = await FirebaseServices.serviceWorker()
 
     return await FirebaseServices.recursiveCreateToken(callback, registration, 0)
   },
