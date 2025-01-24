@@ -26,6 +26,7 @@ messaging.onBackgroundMessage((payload) => {
 })
 
 self.addEventListener('notificationclick', (event) => {
+  console.log('Notification clicked:', event.notification);
   event.notification.close()
   const notificationData = event.notification.data;
 
