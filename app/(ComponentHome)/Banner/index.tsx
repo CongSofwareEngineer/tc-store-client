@@ -88,7 +88,7 @@ const Banner = () => {
                   minHeight: '100%',
                   maxWidth: 'unset',
                 }}
-                className='select-none !w-auto !h-auto'
+                className='absolute select-none !w-auto !h-auto'
               />
             </div>
           )
