@@ -11,7 +11,8 @@ messaging.onBackgroundMessage((payload) => {
     const notificationTitle = payload?.data?.title
     const notificationOptions = {
       body: payload?.data?.body || null,
-      icon: payload?.data?.icon || './favicon.ico',
+      icon: 'https://skywalker.infura-ipfs.io/ipfs/QmTZBqX5FbMPQEC6AaTmhaqDSPv3gpp5hb3XzZN7piA534',
+      image: 'https://skywalker.infura-ipfs.io/ipfs/QmTZBqX5FbMPQEC6AaTmhaqDSPv3gpp5hb3XzZN7piA534',
       actions: [
         {
           action: 'action',
