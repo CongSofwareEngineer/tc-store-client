@@ -66,7 +66,8 @@ export const FirebaseServices = {
     const firebaseUrl = encodeURIComponent(JSON.stringify(FirebaseServices.config))
 
     const registration = await navigator.serviceWorker.register(
-      `/firebase-messaging-sw.js?firebaseConfig=${firebaseUrl}`
+      `/firebase-messaging-sw.js?firebaseConfig=${firebaseUrl}`,
+      { scope: '/' }
     )
 
     return await FirebaseServices.recursiveCreateToken(callback, registration, 0)

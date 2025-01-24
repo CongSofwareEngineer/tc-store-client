@@ -15,28 +15,28 @@ messaging.onBackgroundMessage((payload) => {
       actions: [
         {
           action: 'action',
-          title: payload.data?.titleConfirm || 'Confirm',
+          title: payload.data?.titleConfirm || 'Kiểm tra',
         },
       ],
     }
     self.registration.showNotification(notificationTitle, notificationOptions)
 
-    self.addEventListener('notificationclick', (event) => {
-      event.notification.close()
-      event.waitUntil(
-        clients
-          .matchAll({
-            type: 'window',
-          })
-          .then((clientList) => {
-            for (const client of clientList) {
-              if (client.url === '/' && 'focus' in client) return client.focus()
-            }
-            if (clients.openWindow) {
-              return clients.openWindow(payload.data?.link_confirm)
-            }
-          })
-      )
-    })
+
+  }
+})
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close()
+  const notificationData = event.notification.data;
+
+  if (notificationData?.url) {
+    event.waitUntil(
+      clients.openWindow(notificationData.url) // Open the URL in a new window/tab
+    );
+  } else {
+    // Default behavior: Open the app's root URL
+    event.waitUntil(
+      clients.openWindow('/') // Replace '/' with your app's root URL
+    );
   }
 })
