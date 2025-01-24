@@ -116,6 +116,7 @@ export const FirebaseServices = {
     const isSupportFirebaseMess = await FirebaseServices.isSupportedNotification()
     if (isSupportFirebaseMess) {
       onMessage(FirebaseServices.createMessage(), (payload) => {
+        payload
         callback(payload)
       })
     }

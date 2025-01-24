@@ -16,6 +16,8 @@ const NotificationClient: NextPage = () => {
   const router = useRoutePage()
 
   useEffect(() => {
+    self.registration.showNotification(notificationTitle, notificationOptions)
+
     const handleAddEvent = () => {
       const handleOpenNoti = (dataMess: any) => {
         const key = `open${Date.now()}`
