@@ -59,11 +59,7 @@ const ListItemCart = ({
       <>
         <div className='w-full flex gap-3 items-center p-3 pb-4  border-b-[3px] border-gray-200 font-bold'>
           <div className='w-8 flex items-center justify-center'>
-            <MyCheckBox
-              alt='check-all'
-              value={allSelected}
-              onClick={() => callBackSelectAll(!allSelected)}
-            />
+            <MyCheckBox value={allSelected} onClick={() => callBackSelectAll(!allSelected)} />
           </div>
           <div className='w-[120px] text-center'>{translate('textPopular.image')}</div>
           <div className='flex flex-1 justify-center-center items-center'>

@@ -1,36 +1,31 @@
 import React from 'react'
-import { images } from '@/configs/images'
-import Image from 'next/image'
+import styled from 'styled-components'
+import { Checkbox } from 'antd'
+
+const CheckBoxCustom = styled(Checkbox)<{ $size?: number }>`
+  .ant-checkbox-inner {
+    width: ${({ $size }) => $size || 22}px !important;
+    height: ${({ $size }) => $size || 22}px !important;
+    @media (max-width: 768px) {
+      width: ${({ $size }) => $size || 16}px !important;
+      height: ${({ $size }) => $size || 16}px !important;
+    }
+  }
+`
+
 type MyCheckBoxProps = {
   className?: string
   onClick?: (param?: any) => any
   size?: number
-  alt?: string
   value?: boolean
 }
 const MyCheckBox = ({
   className = '',
   onClick = () => {},
-  size = 22,
-  alt = '',
+  size,
   value = false,
 }: MyCheckBoxProps) => {
-  return value ? (
-    <Image
-      fill
-      priority
-      src={images.icon.iconChecked}
-      alt={`icon-MyCheckBox-${alt}`}
-      className={`!relative !w-[${size}px] !h-[${size}px] transition-all duration-500 cursor-pointer select-none ${className}`}
-      onClick={() => onClick(!value)}
-    />
-  ) : (
-    <div
-      style={{ width: size }}
-      onClick={() => onClick(!value)}
-      className={`cursor-pointer aspect-square rounded-md border-2 border-green-500 ${className}`}
-    />
-  )
+  return <CheckBoxCustom checked={value} onClick={onClick} $size={size} className={className} />
 }
 
 export default MyCheckBox

@@ -106,11 +106,7 @@ const CartNoLogin = () => {
         className='w-full flex align-middle  gap-3 md:py-6 py-4 first:pt-0 border-b-2 border-gray-300'
       >
         <div className='flex flex-col gap-2 self-stretch justify-center align-middle'>
-          <MyCheckBox
-            alt={item.more_data?.keyName}
-            onClick={(e: boolean) => selectedItem(index, e)}
-            value={!!item?.selected}
-          />
+          <MyCheckBox onClick={(e: boolean) => selectedItem(index, e)} value={!!item?.selected} />
           <DeleteOutlined
             style={{ color: 'red', fontSize: 25 }}
             onClick={() => handleDelete(index)}

@@ -69,11 +69,8 @@ const ItemCart = ({
         className={`w-full flex gap-3 items-center p-3 pb-4 ${!noBorder && 'border-b-[3px] border-gray-200'}`}
       >
         <div className='w-8 flex flex-col gap-3 items-center'>
-          <MyCheckBox
-            alt={data?.more_data?.keyName}
-            onClick={selectedItem}
-            value={!!data?.selected}
-          />
+          <MyCheckBox onClick={selectedItem} value={!!data?.selected} />
+
           <DeleteOutlined style={{ color: 'red', fontSize: 25 }} onClick={handleDelete} />
         </div>
         <div className='relative aspect-square w-[120px] overflow-hidden'>
@@ -127,7 +124,7 @@ const ItemCart = ({
       <div className='flex gap-2 w-full pb-4 pt-2 pl-3 relative'>
         {!noEdit && (
           <div className='h-auto flex justify-center flex-col gap-3  items-end'>
-            <Checkbox checked={!!data?.selected} onClick={selectedItem} />
+            <MyCheckBox onClick={selectedItem} value={!!data?.selected} />
             <DeleteOutlined style={{ color: 'red', fontSize: 18 }} onClick={handleDelete} />
           </div>
         )}
