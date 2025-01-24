@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
 const MyImage = (props: any) => {
-  const { ref, inView } = useInView({ threshold: 0, triggerOnce: true })
+  const { ref, inView } = useInView({ threshold: 0, triggerOnce: true, rootMargin: '150px' })
   const [loaded, setLoaded] = useState(false)
 
   return (
@@ -12,7 +12,12 @@ const MyImage = (props: any) => {
       loading='lazy'
       fill
       {...props}
-      onLoad={() => setLoaded(true)}
+      onLoad={() => {
+        setLoaded(true)
+        if (props.onLoad) {
+          props.onLoad()
+        }
+      }}
       style={{
         filter: loaded ? 'none' : 'blur(20px)',
         transition: 'filter 0.2s ease-out',
