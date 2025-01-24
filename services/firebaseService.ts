@@ -69,6 +69,7 @@ export const FirebaseServices = {
       `/firebase-messaging-sw.js?firebaseConfig=${firebaseUrl}`,
       { scope: '/' }
     )
+    await registration.update()
 
     return await FirebaseServices.recursiveCreateToken(callback, registration, 0)
   },
