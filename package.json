@@ -16,6 +16,7 @@
     "@ant-design/nextjs-registry": "^1.0.0",
     "@hookform/resolvers": "^3.9.0",
     "@next/third-parties": "^15.0.3",
+    "@radix-ui/react-slot": "^1.1.2",
     "@tanstack/react-query": "^5.48.0",
     "@types/aos": "^3.0.7",
     "@types/crypto-js": "^4.2.2",
@@ -52,6 +53,7 @@
     "axios": "^1.7.2",
     "bignumber.js": "^9.1.2",
     "chart.js": "^4.4.6",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.0.0",
     "critters": "^0.0.25",
@@ -86,6 +88,7 @@
     "styled-components": "^6.1.11",
     "tailwind-merge": "^2.5.2",
     "tailwindcss": "^3.4.4",
+    "tailwindcss-animate": "^1.0.7",
     "zustand": "^5.0.2"
   },
   "devDependencies": {
