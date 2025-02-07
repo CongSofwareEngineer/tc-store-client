@@ -9,7 +9,6 @@ import {
   numberWithCommas,
 } from '@/utils/functions'
 import { DeleteOutlined } from '@ant-design/icons'
-import { Checkbox } from 'antd'
 import BigNumber from 'bignumber.js'
 import React from 'react'
 import { ItemCartType } from '../../type'

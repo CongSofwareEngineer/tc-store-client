@@ -16,14 +16,14 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
 const PageNests: NextPage = () => {
   return (
     <>
-      <h1 className='absolute opacity-0'>TC Store - Yến Sào Cao Cấp, Chất Lượng Từ Thiên Nhiên</h1>
-      <h2 className='absolute opacity-0'>Yến Sào Tổ Trắng - Tinh Túy Dinh Dưỡng</h2>
-      <h2 className='absolute opacity-0'>Yến Sào Tổ Vàng - Thượng Hạng Cho Sức Khỏe</h2>
-      <h2 className='absolute opacity-0'>Yến Sào Nguyên Tổ - Tự Nhiên & Tinh Khiết</h2>
-      <h2 className='absolute opacity-0'>Đặc Điểm Nổi Bật Của Yến Sào Tại TC Store</h2>
-      <h2 className='absolute opacity-0'>Hướng Dẫn Sử Dụng Yến Sào Hiệu Quả</h2>
-      <h2 className='absolute opacity-0'>Ưu Đãi Đặc Biệt Khi Mua Yến Sào Tại TC Store</h2>
-      <h2 className='absolute opacity-0'>Phản Hồi Tích Cực Từ Khách Hàng</h2>
+      <h1 className='sr-only'>TC Store - Yến Sào Cao Cấp, Chất Lượng Từ Thiên Nhiên</h1>
+      <h2 className='sr-only'>Yến Sào Tổ Trắng - Tinh Túy Dinh Dưỡng</h2>
+      <h2 className='sr-only'>Yến Sào Tổ Vàng - Thượng Hạng Cho Sức Khỏe</h2>
+      <h2 className='sr-only'>Yến Sào Nguyên Tổ - Tự Nhiên & Tinh Khiết</h2>
+      <h2 className='sr-only'>Đặc Điểm Nổi Bật Của Yến Sào Tại TC Store</h2>
+      <h2 className='sr-only'>Hướng Dẫn Sử Dụng Yến Sào Hiệu Quả</h2>
+      <h2 className='sr-only'>Ưu Đãi Đặc Biệt Khi Mua Yến Sào Tại TC Store</h2>
+      <h2 className='sr-only'>Phản Hồi Tích Cực Từ Khách Hàng</h2>
       <Suspense>
         <PageNestsScreen />
       </Suspense>

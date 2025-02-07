@@ -209,7 +209,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
           <ReactQueryProvider>
             <StyledComponentsRegistry>
               <AntdRegistry>
-                <Header />
+                {/* <Header /> */}
 
                 <main className='main-content w-full flex justify-center min-h-[calc(100dvh-56px)]'>
                   <section
@@ -224,7 +224,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
                   </section>
                 </main>
 
-                <Footer />
+                {/* <Footer /> */}
               </AntdRegistry>
             </StyledComponentsRegistry>
           </ReactQueryProvider>

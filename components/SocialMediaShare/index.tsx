@@ -11,7 +11,7 @@ const url = 'https://tcstore.vercel.app/shop'
 const title = 'TC Store - Uy tín khách hàng là chất lượng chúng tôi'
 const SocialMediaShare = () => {
   return (
-    <div className={'absolute opacity-0 z-[-1]'}>
+    <div className={'sr-only z-[-1]'}>
       <FacebookShareButton url={url} title={title}>
         <span>Facebook</span>
       </FacebookShareButton>

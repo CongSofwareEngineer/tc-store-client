@@ -16,16 +16,14 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
 const PageShoes: NextPage = () => {
   return (
     <>
-      <h1 className='absolute opacity-0'>
-        TC Store - Cửa Hàng Giày Dép Thời Trang & Chất Lượng Cao
-      </h1>
-      <h2 className='absolute opacity-0'>Giày Nam - Phong Cách & Bền Bỉ</h2>
-      <h2 className='absolute opacity-0'>Giày Nữ - Sang Trọng & Thanh Lịch</h2>
-      <h2 className='absolute opacity-0'>Giày Thể Thao - Năng Động & Êm Ái</h2>
-      <h2 className='absolute opacity-0'>Giày Trẻ Em - Đáng Yêu & Thoải Mái</h2>
-      <h2 className='absolute opacity-0'>Ưu Đãi Đặc Biệt Cho Các Mẫu Giày Hot</h2>
-      <h2 className='absolute opacity-0'>Hướng Dẫn Chọn Size Giày Chính Xác</h2>
-      <h2 className='absolute opacity-0'>Đánh Giá & Phản Hồi Từ Khách Hàng</h2>
+      <h1 className='sr-only'>TC Store - Cửa Hàng Giày Dép Thời Trang & Chất Lượng Cao</h1>
+      <h2 className='sr-only'>Giày Nam - Phong Cách & Bền Bỉ</h2>
+      <h2 className='sr-only'>Giày Nữ - Sang Trọng & Thanh Lịch</h2>
+      <h2 className='sr-only'>Giày Thể Thao - Năng Động & Êm Ái</h2>
+      <h2 className='sr-only'>Giày Trẻ Em - Đáng Yêu & Thoải Mái</h2>
+      <h2 className='sr-only'>Ưu Đãi Đặc Biệt Cho Các Mẫu Giày Hot</h2>
+      <h2 className='sr-only'>Hướng Dẫn Chọn Size Giày Chính Xác</h2>
+      <h2 className='sr-only'>Đánh Giá & Phản Hồi Từ Khách Hàng</h2>
       <Suspense>
         <ShoesScreen />
       </Suspense>

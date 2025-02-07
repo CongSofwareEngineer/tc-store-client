@@ -18,16 +18,16 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
 const ShopPage: NextPage = () => {
   return (
     <>
-      <h1 className='absolute opacity-0'>
+      <h1 className='sr-only'>
         TC Store - Cửa Hàng Đa Dạng Sản Phẩm: Giày, Yến Sào, Laptop, Cà Phê & Hơn Thế Nữa
       </h1>
-      <h2 className='absolute opacity-0'>Khám Phá Bộ Sưu Tập Giày Dép Thời Trang</h2>
-      <h2 className='absolute opacity-0'>Yến Sào Cao Cấp - Lựa Chọn Hoàn Hảo Cho Sức Khỏe</h2>
-      <h2 className='absolute opacity-0'>Laptop Chính Hãng - Hiệu Suất Cao</h2>
-      <h2 className='absolute opacity-0'>Cà Phê Nguyên Chất - Hương Vị Đậm Đà</h2>
-      <h2 className='absolute opacity-0'>Mua Sắm Các Mặt Hàng Tiện Ích Khác</h2>
-      <h2 className='absolute opacity-0'>Ưu Đãi Đặc Biệt & Sản Phẩm Hot Nhất</h2>
-      <h2 className='absolute opacity-0'>Phản Hồi & Đánh Giá Từ Khách Hàng</h2>
+      <h2 className='sr-only'>Khám Phá Bộ Sưu Tập Giày Dép Thời Trang</h2>
+      <h2 className='sr-only'>Yến Sào Cao Cấp - Lựa Chọn Hoàn Hảo Cho Sức Khỏe</h2>
+      <h2 className='sr-only'>Laptop Chính Hãng - Hiệu Suất Cao</h2>
+      <h2 className='sr-only'>Cà Phê Nguyên Chất - Hương Vị Đậm Đà</h2>
+      <h2 className='sr-only'>Mua Sắm Các Mặt Hàng Tiện Ích Khác</h2>
+      <h2 className='sr-only'>Ưu Đãi Đặc Biệt & Sản Phẩm Hot Nhất</h2>
+      <h2 className='sr-only'>Phản Hồi & Đánh Giá Từ Khách Hàng</h2>
       <Suspense>
         <ShopScreen />
       </Suspense>

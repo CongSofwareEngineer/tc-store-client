@@ -85,7 +85,7 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
 
   return (
     <div className='flex flex-col gap-3'>
-      <div id='recaptcha-container' className='absolute opacity-0 z-[-1]'></div>
+      <div id='recaptcha-container' className='sr-only z-[-1]'></div>
       <div className='flex relative justify-center mt-5 mb-2'>
         <OtpInput
           value={pinCode}
