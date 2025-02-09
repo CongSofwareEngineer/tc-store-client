@@ -1,36 +1,60 @@
-import { Collapse, CollapseProps } from 'antd'
-import React from 'react'
-
-export type ItemCollapseProps = CollapseProps['items']
+import { cn } from '@/utils/functions'
+import { CaretRightOutlined } from '@ant-design/icons'
+import { Box, Collapse } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
+import React, { useEffect, useLayoutEffect } from 'react'
 
 type CollapseType = {
-  items: ItemCollapseProps
-  defaultActiveKey?: Array<string>
-  onChange?: any
+  children?: React.ReactNode
+  isDefaultActive?: boolean
+  onChange?: (open?: boolean) => void
   className?: string
-  expandIcon?: any
-  rootClassName?: string
-} & CollapseProps
+  classNameTitle?: string
+  title?: React.ReactNode
+  noLeftIcon?: boolean
+  noBorderBottom?: boolean
+  leftIcon?: React.ReactNode
+}
 
 const MyCollapse = ({
-  items,
-  defaultActiveKey,
+  children,
+  isDefaultActive = false,
   onChange,
   className = '',
-  expandIcon = null,
-  rootClassName = '',
-  ...props
+  title = null,
+  noLeftIcon = false,
+  noBorderBottom = false,
+  leftIcon = null,
+  classNameTitle = '',
 }: CollapseType) => {
+  const [opened, { toggle }] = useDisclosure(false)
+
+  useLayoutEffect(() => {
+    if (isDefaultActive) {
+      toggle()
+    }
+  }, [isDefaultActive])
+
+  useEffect(() => {
+    onChange && onChange(opened)
+  }, [opened])
+
   return (
-    <Collapse
-      expandIcon={expandIcon}
-      items={items}
-      defaultActiveKey={defaultActiveKey}
-      onChange={onChange}
-      className={className}
-      rootClassName={rootClassName}
-      {...props}
-    />
+    <Box className={cn('w-full', className)}>
+      <div
+        onClick={toggle}
+        className={cn(
+          'flex py-2 px-3 cursor-pointer  items-center w-full gap-2  border-b-2 border-gray-300',
+
+          classNameTitle
+        )}
+      >
+        {!noLeftIcon && (leftIcon || <CaretRightOutlined rotate={opened ? 90 : 0} />)}
+        <div className='flex flex-1 items-center '>{title}</div>
+      </div>
+      <Collapse in={opened}>{children}</Collapse>
+      {!noBorderBottom && opened && <div className='w-full border-b-2 border-gray-300' />}
+    </Box>
   )
 }
 

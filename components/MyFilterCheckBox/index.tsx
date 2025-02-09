@@ -1,11 +1,13 @@
 import useQuerySearch from '@/hook/useQuerySearch'
 import { Checkbox } from 'antd'
-import React from 'react'
-import MyCollapse from '../MyCollapse'
+import React, { useLayoutEffect } from 'react'
 import { AlignLeftOutlined, CaretRightOutlined } from '@ant-design/icons'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
-import { isEqual } from 'lodash'
+import { Box, Collapse } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
+import { cn } from '@/utils/functions'
+import MyCollapse from '../MyCollapse'
 
 type MyFilterCheckBox = {
   data?: Record<string, any>[]
@@ -13,6 +15,7 @@ type MyFilterCheckBox = {
   titleFilter?: string
   isDefault?: boolean
   isReplace?: boolean
+  noBorderBottom?: boolean
 }
 
 const MyFilterCheckBox = ({
@@ -21,10 +24,18 @@ const MyFilterCheckBox = ({
   titleFilter = '',
   isDefault = false,
   isReplace = true,
+  noBorderBottom = false,
 }: MyFilterCheckBox) => {
   const { queries, updateQuery } = useQuerySearch()
   const { translate } = useLanguage()
   const { isClient, isMobile } = useMedia()
+  const [opened, { toggle }] = useDisclosure(false)
+
+  useLayoutEffect(() => {
+    if (isDefault) {
+      toggle()
+    }
+  }, [isDefault])
 
   const renderContent = () => {
     return (
@@ -50,25 +61,20 @@ const MyFilterCheckBox = ({
   }
 
   const render = () => {
-    const items = [
-      {
-        key: typeChecked,
-        expandIcon: <AlignLeftOutlined style={{ fontSize: 20 }} />,
-        label: (
-          <div className='flex justify-between items-center'>
-            <div className='text-medium '>{titleFilter || translate('menuProduct.category')}</div>
-          </div>
-        ),
-        children: renderContent(),
-      },
-    ]
-
     return isClient ? (
       <MyCollapse
-        expandIcon={({ isActive }: any) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-        defaultActiveKey={isDefault || !isMobile ? [typeChecked] : []}
-        items={items}
-      />
+        title={
+          <div className='flex items-center flex-1'>
+            <div className='flex justify-between items-center'>
+              <div className='text-medium '>{titleFilter || translate('menuProduct.category')}</div>
+            </div>
+          </div>
+        }
+        noBorderBottom={noBorderBottom}
+        isDefaultActive={isMobile ? false : isDefault}
+      >
+        {renderContent()}
+      </MyCollapse>
     ) : (
       <></>
     )
@@ -76,8 +82,4 @@ const MyFilterCheckBox = ({
   return render()
 }
 
-const compareValueRender = (a: any, b: any): boolean => {
-  return !isEqual(a, b)
-}
-
-export default React.memo(MyFilterCheckBox, compareValueRender)
+export default MyFilterCheckBox

@@ -1,8 +1,5 @@
-/** @type {import('postcss-load-config').Config} */
-const config = {
+module.exports = {
   plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
     "postcss-preset-mantine": {},
     "postcss-simple-vars": {
       variables: {
@@ -13,8 +10,5 @@ const config = {
         "mantine-breakpoint-xl": "88em",
       },
     },
-    ...(process.env.NODE_ENV === 'production' ? { cssnano: {} } : {})
   },
-}
-
-export default config
+};

@@ -3,6 +3,8 @@
 import { TYPE_PRODUCT } from '@/constant/admin'
 import { COLOR, FILTER_BILL } from '@/constant/app'
 import BigNumber from 'bignumber.js'
+import { clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
 
 export const cloneData = (data: any, defaultValue: any = '') => {
   try {
@@ -268,4 +270,8 @@ export const getUrlProduct = (product: any) => {
   }
 
   return `/shop/${product?.more_data?.keyName || product?.keyName}`
+}
+
+export function cn(...inputs: any[]) {
+  return twMerge(clsx(inputs))
 }

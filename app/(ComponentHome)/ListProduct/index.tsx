@@ -10,10 +10,13 @@ import useProductByLimit from '@/hook/tank-query/useProductByLimit'
 import { TYPE_PRODUCT } from '@/constant/admin'
 import LoadingGetData from '@/components/LoadingGetData'
 import { getUrlProduct } from '@/utils/functions'
+import { Box, Button, Collapse, Group } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
 
 const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   const { data, isLoading } = useProductByLimit(type, 5)
   const { translate } = useLanguage()
+  const [opened, { toggle }] = useDisclosure(false)
 
   const getUrl = () => {
     if (type === TYPE_PRODUCT.shoes) {
@@ -72,12 +75,18 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   ]
 
   return (
-    <CollapseCustom
-      expandIcon={({ isActive }: any) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-      defaultActiveKey={[type]}
-      items={items}
-      style={{ background: 'transparent' }}
-    />
+    <Box>
+      <Button onClick={toggle}>Toggle content</Button>
+
+      <Collapse in={opened}>{renderListItem()}</Collapse>
+    </Box>
+
+    // <CollapseCustom
+    //   expandIcon={({ isActive }: any) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+    //   defaultActiveKey={[type]}
+    //   items={items}
+    //   style={{ background: 'transparent' }}
+    // />
   )
 }
 

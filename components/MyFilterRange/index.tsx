@@ -1,11 +1,9 @@
 import { DEFAULT_VALUE_RANGE } from '@/constant/app'
 import useQuerySearch from '@/hook/useQuerySearch'
 import { numberWithCommas } from '@/utils/functions'
-import { AlignLeftOutlined, CaretRightOutlined } from '@ant-design/icons'
 import { Slider } from 'antd'
 import React, { useEffect, useMemo, useState } from 'react'
 import MyCollapse from '../MyCollapse'
-import { isEqual } from 'lodash'
 
 type Props = {
   minSlider?: number
@@ -66,52 +64,34 @@ const MyFilterRange = ({
     return renderTooltip ? renderTooltip(value) : <div>{numberWithCommas(value)}</div>
   }
 
-  // Memoize the items array to prevent unnecessary re-renders
-  const itemsRangeSize = useMemo(
-    () => [
-      {
-        key: `${keyMax}${keyMin}`,
-        expandIcon: <AlignLeftOutlined style={{ fontSize: 20 }} />,
-        label: <div className='flex text-medium justify-between items-center'>{title}</div>,
-        children: (
-          <div className='px-4 py-2 flex flex-col gap-1'>
-            <div className='flex items-center mt-2 justify-between'>
-              <div className='px-3 text-sm py-1 rounded-xl border-[1px] border-gray-400'>
-                {numberWithCommas(slider[0])}
-              </div>
-              <div className='pb-[2px] w-[10px] bg-gray-400' />
-              <div className='px-3 py-1 text-sm rounded-xl border-[1px] border-gray-400'>
-                {numberWithCommas(slider[1])}
-              </div>
-            </div>
-            <Slider
-              onChangeComplete={handleChangeComplete}
-              range
-              onChange={handleChange}
-              value={slider}
-              defaultValue={sliderFromQuery}
-              min={minSlider}
-              max={maxSlider}
-              step={stepRange}
-              tooltip={{
-                formatter: renderTooltips,
-              }}
-            />
-          </div>
-        ),
-      },
-    ],
-    [keyMax, slider, sliderFromQuery, keyMin, title, minSlider, maxSlider, stepRange, renderTooltip]
-  )
-
   return (
-    <MyCollapse
-      expandIcon={({ isActive }: any) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-      items={itemsRangeSize}
-    />
+    <MyCollapse title={title}>
+      <div className='px-4 py-2 flex flex-col gap-1'>
+        <div className='flex items-center mt-2 justify-between'>
+          <div className='px-3 text-sm py-1 rounded-xl border-[1px] border-gray-400'>
+            {numberWithCommas(slider[0])}
+          </div>
+          <div className='pb-[2px] w-[10px] bg-gray-400' />
+          <div className='px-3 py-1 text-sm rounded-xl border-[1px] border-gray-400'>
+            {numberWithCommas(slider[1])}
+          </div>
+        </div>
+        <Slider
+          onChangeComplete={handleChangeComplete}
+          range
+          onChange={handleChange}
+          value={slider}
+          defaultValue={sliderFromQuery}
+          min={minSlider}
+          max={maxSlider}
+          step={stepRange}
+          tooltip={{
+            formatter: renderTooltips,
+          }}
+        />
+      </div>
+    </MyCollapse>
   )
 }
 
-const compareValueRender = (a: any, b: any): boolean => !isEqual(a, b)
-
-export default React.memo(MyFilterRange, compareValueRender)
+export default MyFilterRange

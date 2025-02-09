@@ -7,6 +7,7 @@ const config = {
     './hook/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './hook/**/*.{ts,tsx}',
+    // './node_modules/@mantine/core/**/*.js',
   ],
 
   prefix: '',

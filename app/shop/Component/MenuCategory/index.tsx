@@ -17,6 +17,7 @@ const MenuCategory = () => {
       }
     })
   }, [categoryMenu, lang])
+  console.log({ itemMenu })
 
   return (
     <MyFilter titleHeader={translate('menuProduct.category')}>
@@ -25,6 +26,7 @@ const MenuCategory = () => {
         titleFilter={translate('menuProduct.product')}
         typeChecked={FilterAPI.Category}
         isReplace={false}
+        isDefault
       />
     </MyFilter>
   )

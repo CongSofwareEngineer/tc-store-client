@@ -15,6 +15,9 @@
     "@ant-design/icons": "^5.3.7",
     "@ant-design/nextjs-registry": "^1.0.0",
     "@hookform/resolvers": "^3.9.0",
+    "@mantine/core": "^7.16.2",
+    "@mantine/form": "^7.16.3",
+    "@mantine/hooks": "^7.16.2",
     "@next/third-parties": "^15.0.3",
     "@tanstack/react-query": "^5.48.0",
     "@types/aos": "^3.0.7",
@@ -99,7 +102,9 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react-hooks": "^5.1.0",
-    "postcss": "^8.4.49",
+    "postcss": "^8.5.1",
+    "postcss-preset-mantine": "^1.17.0",
+    "postcss-simple-vars": "^7.0.1",
     "prettier": "^3.4.2",
     "typescript": "^5"
   }

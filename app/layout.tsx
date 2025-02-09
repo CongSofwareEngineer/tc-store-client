@@ -6,7 +6,7 @@ import AntdProvider from '@/components/AntdProvider'
 import '@/styles/globals.scss'
 import '@/styles/override.scss'
 import '@/styles/aos.css'
-
+import '@mantine/core/styles.css'
 import { AntdRegistry } from '@ant-design/nextjs-registry'
 import StyledComponentsRegistry from '@/components/RegistryApp'
 import ClientRender from '@/components/ClientRender'
@@ -20,6 +20,8 @@ import ClientApi from '@/services/clientApi'
 import dynamic from 'next/dynamic'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import MantineConfig, { theme } from '@/components/MantineConfig'
+import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core'
 
 const LoadingFirstPage = dynamic(() => import('@/components/LoadingFirstPage'), {
   ssr: true,
@@ -123,9 +125,11 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
   // return menuCategory?.data || []
 
   return (
-    <html lang='en'>
+    <html lang='en' {...mantineHtmlProps}>
       {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <GoogleTagManager gtmId='GTM-T7S7DKJ4' />}
       <head>
+        <ColorSchemeScript />
+
         {/* Google / Search Engine Tags  */}
         <meta itemProp='name' content={process.env.NEXT_PUBLIC_TITLE} />
         <meta itemProp='description' content={process.env.NEXT_PUBLIC_TITLE_DES} />
@@ -144,7 +148,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
               {` window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
-                
+
                   gtag('config', 'G-QH99F8WFPW');`}
             </Script> */}
             {/* <script
@@ -163,11 +167,11 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
 
             {/* <script
               dangerouslySetInnerHTML={{
-                __html: ` 
+                __html: `
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
-                
+
                   gtag('config', 'G-QH99F8WFPW');`,
               }}
             /> */}
@@ -204,31 +208,35 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
             />
           </>
         )}
+        <MantineProvider>
+          <AntdProvider>
+            <ReactQueryProvider>
+              <StyledComponentsRegistry>
+                <AntdRegistry>
+                  <Header />
 
-        <AntdProvider>
-          <ReactQueryProvider>
-            <StyledComponentsRegistry>
-              <AntdRegistry>
-                <Header />
+                  <main className='main-content w-full flex justify-center min-h-[calc(100dvh-56px)]'>
+                    <section
+                      id='id-section-content'
+                      className='section-content  w-full max-w-[1350px]  md:px-12 px-[20px]  md:pt-5 pt-2'
+                    >
+                      <ClientRender menuCategory={menuCategory?.data || []}>
+                        {children}
+                      </ClientRender>
+                      {/* load more option */}
+                      {/* <ChatSocket /> */}
+                      {/* <ChatFirebase /> */}
+                      <LoadingFirstPage />
+                    </section>
+                  </main>
 
-                <main className='main-content w-full flex justify-center min-h-[calc(100dvh-56px)]'>
-                  <section
-                    id='id-section-content'
-                    className='section-content  w-full max-w-[1350px]  md:px-12 px-[20px]  md:pt-5 pt-2'
-                  >
-                    <ClientRender menuCategory={menuCategory?.data || []}>{children}</ClientRender>
-                    {/* load more option */}
-                    {/* <ChatSocket /> */}
-                    {/* <ChatFirebase /> */}
-                    <LoadingFirstPage />
-                  </section>
-                </main>
+                  <Footer />
+                </AntdRegistry>
+              </StyledComponentsRegistry>
+            </ReactQueryProvider>
+          </AntdProvider>
+        </MantineProvider>
 
-                <Footer />
-              </AntdRegistry>
-            </StyledComponentsRegistry>
-          </ReactQueryProvider>
-        </AntdProvider>
         {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <SpeedInsights />}
       </body>
       {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <GoogleAnalytics gaId='G-QH99F8WFPW' />}

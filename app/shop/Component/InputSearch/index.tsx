@@ -1,13 +1,12 @@
 import useDebounce from '@/hook/useDebounce'
 import useLanguage from '@/hook/useLanguage'
-import useRoutePage from '@/hook/useRoutePage'
 import { SearchOutlined } from '@ant-design/icons'
-import { Input } from 'antd'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { Input } from '@mantine/core'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 const InputSearch = ({ keySearch = 'name' }: { keySearch?: string }) => {
-  const router = useRoutePage()
+  const router = useRouter()
   const pathname = usePathname()
   const { translate } = useLanguage()
   const searchParam = useSearchParams()
@@ -45,9 +44,8 @@ const InputSearch = ({ keySearch = 'name' }: { keySearch?: string }) => {
 
   return (
     <Input
-      onPressEnter={handlePressSearch}
       className='w-full'
-      suffix={
+      rightSection={
         <SearchOutlined
           className='cursor-pointer hover:scale-105'
           placeholder={translate('textPopular.searchNameProduct')}
