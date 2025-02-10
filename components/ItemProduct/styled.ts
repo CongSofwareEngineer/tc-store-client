@@ -1,4 +1,4 @@
-import { Rate } from 'antd'
+import { Rating } from '@mantine/core'
 import styled from 'styled-components'
 export const Discount = styled.div`
   position: absolute;
@@ -28,7 +28,7 @@ export const TextPrice = styled.span`
   }
 `
 
-export const RateCustom = styled(Rate)`
+export const RateCustom = styled(Rating)`
   @media screen and (max-width: 768px) {
     .ant-rate-star {
       margin-inline-end: 0px !important;

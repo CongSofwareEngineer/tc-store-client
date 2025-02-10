@@ -24,7 +24,7 @@ const MyFilterCheckBox = ({
 }: MyFilterCheckBox) => {
   const { queries, updateQuery } = useQuerySearch()
   const { translate } = useLanguage()
-  const { isClient, isMobile } = useMedia()
+  const { isClient } = useMedia()
 
   const renderContent = () => {
     return (
@@ -59,7 +59,7 @@ const MyFilterCheckBox = ({
         </div>
       }
       noBorderBottom={noBorderBottom}
-      isDefaultActive={isMobile ? false : isDefault}
+      isDefaultActive={isDefault}
     >
       {renderContent()}
     </MyCollapse>

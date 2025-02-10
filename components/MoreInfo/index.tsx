@@ -1,8 +1,9 @@
 import React from 'react'
-import { Tabs, TabsProps } from 'antd'
 import useLanguage from '@/hook/useLanguage'
 import dynamic from 'next/dynamic'
 import MyLoading from '../MyLoading'
+
+import MyTabs, { MyTabsProps } from '@/components/MantineUI/MyTabs'
 const MyBlog = dynamic(() => import('@/components/MyBlog'), {
   ssr: true,
   loading: () => {
@@ -20,7 +21,7 @@ const Comment = dynamic(() => import('@/components/Comment'), {
 const MoreInfo = ({ data }: { data: any }) => {
   const { translate } = useLanguage()
 
-  const items: TabsProps['items'] = [
+  const items: MyTabsProps['data'] = [
     {
       key: 'info',
       label: translate('textPopular.infor'),
@@ -33,7 +34,7 @@ const MoreInfo = ({ data }: { data: any }) => {
     },
   ]
 
-  return <Tabs className='p-0' items={items} />
+  return <MyTabs data={items} />
 }
 
 export default MoreInfo

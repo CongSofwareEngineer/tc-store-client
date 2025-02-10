@@ -1,10 +1,10 @@
 import React from 'react'
 import { ItemDetailType } from './type'
 import { TYPE_PRODUCT_EX } from '@/constant/mongoDB'
-import { Rate } from 'antd'
 import useMedia from '@/hook/useMedia'
 import useLanguage from '@/hook/useLanguage'
 import { numberWithCommas } from '@/utils/functions'
+import { Rating } from '@mantine/core'
 
 const InfoItemDetail = ({ data }: { data: ItemDetailType }) => {
   const { isMobile } = useMedia()
@@ -44,7 +44,7 @@ const InfoItemDetail = ({ data }: { data: ItemDetailType }) => {
     return (
       <div className='w-full flex flex-col gap-2  '>
         <div className='flex gap-1 items-center'>
-          <Rate disabled defaultValue={4.5} style={{ fontSize: 18 }} />
+          <Rating readOnly defaultValue={4.5} style={{ fontSize: 18 }} />
         </div>
         {renderItemDes(translate('textPopular.description'), data.des)}
         {renderItemDes(translate('productDetail.sold'), Number(data.sold))}
@@ -60,7 +60,7 @@ const InfoItemDetail = ({ data }: { data: ItemDetailType }) => {
     return (
       <div className='w-full flex flex-col gap-2 '>
         <div className='flex gap-1 items-center'>
-          <Rate disabled defaultValue={4.5} style={{ fontSize: 18 }} />
+          <Rating readOnly defaultValue={4.5} style={{ fontSize: 18 }} />
         </div>
         {renderItemDes(translate('textPopular.description'), data.des)}
         {renderItemDes(translate('productDetail.sold'), Number(data.sold))}

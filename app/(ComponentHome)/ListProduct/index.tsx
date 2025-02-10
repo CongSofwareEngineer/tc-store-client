@@ -4,14 +4,14 @@ import ItemProduct from '@/components/ItemProduct'
 import useLanguage from '@/hook/useLanguage'
 import Link from 'next/link'
 import { FilterAPI } from '@/constant/app'
-import { AlignLeftOutlined, CaretRightOutlined, RightOutlined } from '@ant-design/icons'
-import { CollapseCustom } from './styled'
+import { AlignLeftOutlined, RightOutlined } from '@ant-design/icons'
 import useProductByLimit from '@/hook/tank-query/useProductByLimit'
 import { TYPE_PRODUCT } from '@/constant/admin'
 import LoadingGetData from '@/components/LoadingGetData'
 import { getUrlProduct } from '@/utils/functions'
-import { Box, Button, Collapse, Group } from '@mantine/core'
+import { Box, Button, Collapse } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import MyCollapse from '@/components/MyCollapse'
 
 const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   const { data, isLoading } = useProductByLimit(type, 5)
@@ -74,12 +74,26 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
     },
   ]
 
-  return (
-    <Box>
-      <Button onClick={toggle}>Toggle content</Button>
+  const renderTitle = () => {
+    return (
+      <div className='flex flex-1 justify-between'>
+        <div>{title}</div>
+        <Link
+          onClick={(event) => event.stopPropagation()}
+          href={getUrl()}
+          className='text-medium cursor-pointer hover:font-semibold  text-green-600'
+        >
+          <span> {translate('textPopular.viewMore')}</span>
+          <RightOutlined className='text-sm ml-2' />
+        </Link>
+      </div>
+    )
+  }
 
-      <Collapse in={opened}>{renderListItem()}</Collapse>
-    </Box>
+  return (
+    <MyCollapse classNameTitle='pl-0' title={renderTitle()}>
+      {renderListItem()}
+    </MyCollapse>
 
     // <CollapseCustom
     //   expandIcon={({ isActive }: any) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}

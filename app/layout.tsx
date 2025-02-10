@@ -211,32 +211,30 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
           </>
         )}
         <MantineConfig>
-          <AntdProvider>
-            <ReactQueryProvider>
-              <StyledComponentsRegistry>
-                <AntdRegistry>
-                  {/* <Header /> */}
+          {/* <AntdProvider> */}
+          <ReactQueryProvider>
+            <StyledComponentsRegistry>
+              <AntdRegistry>
+                {/* <Header /> */}
 
-                  <main className='main-content w-full flex justify-center min-h-[calc(100dvh-56px)]'>
-                    <section
-                      id='id-section-content'
-                      className='section-content  w-full max-w-[1350px]  md:px-12 px-[20px]  md:pt-5 pt-2'
-                    >
-                      <ClientRender menuCategory={menuCategory?.data || []}>
-                        {children}
-                      </ClientRender>
-                      {/* load more option */}
-                      {/* <ChatSocket /> */}
-                      {/* <ChatFirebase /> */}
-                      <LoadingFirstPage />
-                    </section>
-                  </main>
+                <main className='main-content w-full flex justify-center min-h-[calc(100dvh-56px)]'>
+                  <section
+                    id='id-section-content'
+                    className='section-content  w-full max-w-[1350px]  md:px-12 px-[20px]  md:pt-5 pt-2'
+                  >
+                    <ClientRender menuCategory={menuCategory?.data || []}>{children}</ClientRender>
+                    {/* load more option */}
+                    {/* <ChatSocket /> */}
+                    {/* <ChatFirebase /> */}
+                    <LoadingFirstPage />
+                  </section>
+                </main>
 
-                  <Footer />
-                </AntdRegistry>
-              </StyledComponentsRegistry>
-            </ReactQueryProvider>
-          </AntdProvider>
+                <Footer />
+              </AntdRegistry>
+            </StyledComponentsRegistry>
+          </ReactQueryProvider>
+          {/* </AntdProvider> */}
         </MantineConfig>
 
         {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <SpeedInsights />}

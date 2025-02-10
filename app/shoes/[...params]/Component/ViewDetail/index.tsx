@@ -19,9 +19,9 @@ import { images } from '@/configs/images'
 import ClientApi from '@/services/clientApi'
 import { DataItemType } from '@/app/my-cart/type'
 import { showNotificationSuccess } from '@/utils/notification'
-import { Button } from 'antd'
 import Attributes from '../Attributes'
 import MyImage from '@/components/MyImage'
+import { Button } from '@mantine/core'
 // import MoreCollections from '@/components/MoreCollections'
 
 const MoreInfo = dynamic(() => import('@/components/MoreInfo'), {
@@ -191,12 +191,12 @@ const ViewDetail = ({
                 {translate('common.buyNow')}
               </Button>
               <Button
-                type='primary'
+                variant='filled'
                 onClick={handleAddCart}
                 className='min-w-[30%] !h-[40px]'
                 loading={loadingAddCart}
               >
-                <div className='flex gap-3 whitespace-nowrap'>
+                <div className='flex gap-3 items-center whitespace-nowrap'>
                   <MyImage
                     src={images.icon.iconCart}
                     alt='btn-add-cart'

@@ -5,7 +5,6 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { PaymentShopType } from '../../type'
 import useOptionPayment from '@/hook/useOptionPayment'
 import BillFinal from '@/app/my-cart/Component/Payment/Component/BillFinal'
-import MyForm from '@/components/Form/MyForm'
 import ContentFormPayment from '@/components/ContentFormPayment'
 import BtnBackUI from '@/components/BtnBackUI'
 import { getDataLocal, numberWithCommas, saveDataLocal, scrollTop } from '@/utils/functions'
@@ -22,6 +21,10 @@ import OptionsPayment from '@/app/my-cart/Component/Payment/Component/OptionsPay
 import { showNotificationError } from '@/utils/notification'
 import useRoutePage from '@/hook/useRoutePage'
 import InfoBanking from '@/components/InfoBanking'
+import { useForm } from '@mantine/form'
+import { DataPaymentType } from './type'
+import MyForm from '@/components/MantineUI/Form/MyForm'
+import InputForm from '@/components/MantineUI/Form/Input'
 
 const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const { translate } = useLanguage()
@@ -31,36 +34,55 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()
   const { onChangeOptions, listOptions, optionSelected } = useOptionPayment(null, { banking: true })
 
-  const [formData, setFormData] = useState<Record<string, any> | null>(null)
+  // const [formData, setFormData] = useState<Record<string, any> | null>(null)
   const [loading, setLoading] = useState(false)
+  const formData = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      sdt: '',
+      name: '',
+      linkContact: '',
+      gmail: '',
+      noteBil: '',
+      addressShip: {
+        addressDetail: '',
+      },
+    },
+    validate: {},
+  })
 
   useEffect(() => {
     scrollTop()
     const initData = {
-      sdt: userData?.sdt,
-      name: userData?.name,
+      sdt: userData?.sdt!,
+      name: userData?.name!,
       addressShip: userData?.addressShipper[0]!,
       linkContact: userData?.linkContact!,
       gmail: userData?.gmail,
       noteBil: '',
     }
-    setFormData(initData)
+    formData.setInitialValues(initData)
   }, [userData, isLogin])
 
+  useEffect(() => {
+    console.log({ formData: formData.getValues() })
+  }, [formData])
+
   const isValidSubmit = useMemo(() => {
-    if (!formData?.addressShip) {
+    if (!formData.getValues()?.addressShip) {
       return false
     }
-    return !!formData?.addressShip.addressDetail
+    return !!formData.getValues()?.addressShip?.addressDetail
   }, [formData])
 
   const onChangeAddressShip = (item: any) => {
-    setFormData({
-      ...formData,
-      addressShip: {
-        ...item,
-      },
-    })
+    // setFormData({
+    //   ...formData,
+    //   addressShip: {
+    //     ...item,
+    //   },
+    // })
+    formData.setFieldValue('addressShip', item)
   }
 
   const callbackSuccessBuy = async () => {
@@ -119,7 +141,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const handleUpdateAddressShip = async () => {
     if (isLogin && userData?.addressShipper?.length === 0) {
       await ClientApi.updateUser(userData._id, {
-        addressShipper: [formData?.addressShip],
+        addressShipper: [formData.getValues()?.addressShip],
       })
     }
   }
@@ -131,10 +153,10 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
       let res
 
       const bodyBill: BodyAddBill = {
-        addressShip: formData?.addressShip,
+        addressShip: formData.getValues()?.addressShip,
         discount: 0,
-        sdt: formData?.sdt,
-        name: formData?.name,
+        sdt: formData.getValues()?.sdt,
+        name: formData.getValues()?.name,
         idUser: isLogin ? userData?._id : 'no-id',
         listBill: [
           {
@@ -216,7 +238,16 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         titlePage={data?.name}
       />
       <div className='flex flex-col gap-3 w-full mt-1'>
-        <MyForm
+        <MyForm form={formData} className='flex lg:flex-row flex-col lg:gap-6 gap-5'>
+          <div className='flex flex-1 h-full overflow-y-auto  flex-col lg:max-w-[calc(100%-300px)]'>
+            <ContentFormPayment onChange={onChangeAddressShip} />
+            <InfoBill data={data} amountBuy={amount} />
+            {/* <ContentFormPayment onChange={onChangeAddressShip} />
+             */}
+          </div>
+          <InputForm key={'sdt'} form={formData} />
+        </MyForm>
+        {/* <MyForm
           onFinish={handleSubmit}
           formData={formData}
           onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
@@ -241,7 +272,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
               />
             </div>
           </div>
-        </MyForm>
+        </MyForm> */}
       </div>
     </div>
   )

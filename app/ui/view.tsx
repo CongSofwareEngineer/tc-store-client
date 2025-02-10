@@ -26,6 +26,7 @@ const UiView = () => {
       name: '',
       termsOfService: false,
       date: dayjs(),
+      item: 'react',
     },
 
     validate: {
@@ -61,8 +62,25 @@ const UiView = () => {
       <Button variant='filled' onClick={open}>
         Open Drawer
       </Button>
-
+      <div>form.........</div>
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <Select
+          label='Your favorite library'
+          placeholder='Pick value'
+          data={[
+            {
+              label: 'React',
+              value: 'react',
+            },
+            'Angular',
+            'Vue',
+            'Svelte',
+          ]}
+          searchable
+          key={form.key('item')}
+          {...form.getInputProps('item')}
+        />
+
         <DatePickerInput
           label='Pick date'
           placeholder='Pick date'
@@ -87,6 +105,7 @@ const UiView = () => {
         />
 
         <Checkbox
+          className='cursor-pointer'
           mt='md'
           label='I agree to sell my privacy'
           key={form.key('termsOfService')}
@@ -97,6 +116,8 @@ const UiView = () => {
           <Button type='submit'>Submit</Button>
         </Group>
       </form>
+
+      <div>Rating</div>
 
       <Rating defaultValue={2} />
 

@@ -81,7 +81,7 @@ const ItemProduct = ({
 
               {showFeedback && (
                 <div className='flex gap-1 items-center'>
-                  <RateCustom disabled defaultValue={5} style={{ fontSize: 12 }} />
+                  <RateCustom readOnly defaultValue={5} style={{ fontSize: 12 }} />
                 </div>
               )}
             </div>

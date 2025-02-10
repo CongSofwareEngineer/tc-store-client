@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react'
 import { ItemDetailType } from '../../type'
-import { Checkbox, Select } from 'antd'
 import useLanguage from '@/hook/useLanguage'
 import { cloneData } from '@/utils/functions'
+import { Checkbox, Select } from '@mantine/core'
 
 type IAttributes = {
   data: ItemDetailType
@@ -52,12 +52,11 @@ const Attributes = ({ data, onChange = () => {} }: IAttributes) => {
             return (
               <div key={`color-${index}`} className='flex items-center'>
                 <Checkbox
-                  disabled={Number(e.amount) === 0}
+                  readOnly={Number(e.amount) === 0}
                   onChange={() => onChangeValueData(e.color)}
                   checked={configBill.color === e.color}
-                >
-                  {translate(keyLocal) || e.color}
-                </Checkbox>
+                  label={translate(keyLocal) || e.color}
+                />
                 {Number(e.amount) === 0 && <span className='text-red-600 text-sm'>(Hết hàng)</span>}
               </div>
             )
@@ -72,13 +71,13 @@ const Attributes = ({ data, onChange = () => {} }: IAttributes) => {
         <div>Size :</div>
         <div className='flex gap-2 items-center'>
           <Select
-            value={Number(data?.configBill?.size)}
-            className='w-[100px]'
-            onChange={(e) => onChangeKeyData(e)}
-            options={optionSizes.map((e) => {
+            value={data?.configBill?.size?.toString()}
+            className='w-[100px] !bg-transparent'
+            onChange={(e) => onChangeKeyData(Number(e))}
+            data={optionSizes.map((e) => {
               return {
-                label: e,
-                value: e,
+                label: e.toFixed(),
+                value: e.toFixed(),
               }
             })}
           />

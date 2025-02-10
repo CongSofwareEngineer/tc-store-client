@@ -30,9 +30,7 @@ const MyCollapse = ({
   const [opened, { toggle }] = useDisclosure(false)
 
   useLayoutEffect(() => {
-    if (isDefaultActive) {
-      toggle()
-    }
+    toggle()
   }, [isDefaultActive])
 
   useEffect(() => {

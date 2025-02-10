@@ -1,6 +1,6 @@
 import React from 'react'
 import { detectImg } from '@/utils/functions'
-import { Image } from 'antd'
+import { Image } from '@mantine/core'
 
 const ImgMoreProduct = ({
   data,
@@ -25,7 +25,7 @@ const ImgMoreProduct = ({
               onMouseLeave={() => onHover('')}
               onMouseOver={() => onHover(e)}
             >
-              <Image alt={e} src={detectImg(e)} />
+              <Image className='cursor-pointer' alt={e} src={detectImg(e)} />
             </div>
           )
         })}
