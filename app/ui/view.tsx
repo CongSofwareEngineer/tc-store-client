@@ -105,7 +105,15 @@ const UiView = () => {
       <Select
         label='Your favorite library'
         placeholder='Pick value'
-        data={['React', 'Angular', 'Vue', 'Svelte']}
+        data={[
+          {
+            label: 'React',
+            value: 'react',
+          },
+          'Angular',
+          'Vue',
+          'Svelte',
+        ]}
         searchable
       />
 
