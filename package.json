@@ -16,6 +16,7 @@
     "@ant-design/nextjs-registry": "^1.0.0",
     "@hookform/resolvers": "^3.9.0",
     "@mantine/core": "^7.16.2",
+    "@mantine/dates": "^7.16.3",
     "@mantine/form": "^7.16.3",
     "@mantine/hooks": "^7.16.2",
     "@next/third-parties": "^15.0.3",

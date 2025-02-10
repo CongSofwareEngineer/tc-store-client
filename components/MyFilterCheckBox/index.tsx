@@ -1,12 +1,8 @@
 import useQuerySearch from '@/hook/useQuerySearch'
 import { Checkbox } from 'antd'
-import React, { useLayoutEffect } from 'react'
-import { AlignLeftOutlined, CaretRightOutlined } from '@ant-design/icons'
+import React from 'react'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
-import { Box, Collapse } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
-import { cn } from '@/utils/functions'
 import MyCollapse from '../MyCollapse'
 
 type MyFilterCheckBox = {
@@ -29,13 +25,6 @@ const MyFilterCheckBox = ({
   const { queries, updateQuery } = useQuerySearch()
   const { translate } = useLanguage()
   const { isClient, isMobile } = useMedia()
-  const [opened, { toggle }] = useDisclosure(false)
-
-  useLayoutEffect(() => {
-    if (isDefault) {
-      toggle()
-    }
-  }, [isDefault])
 
   const renderContent = () => {
     return (
@@ -60,26 +49,23 @@ const MyFilterCheckBox = ({
     )
   }
 
-  const render = () => {
-    return isClient ? (
-      <MyCollapse
-        title={
-          <div className='flex items-center flex-1'>
-            <div className='flex justify-between items-center'>
-              <div className='text-medium '>{titleFilter || translate('menuProduct.category')}</div>
-            </div>
+  return isClient ? (
+    <MyCollapse
+      title={
+        <div className='flex items-center flex-1'>
+          <div className='flex justify-between items-center'>
+            <div className='text-medium '>{titleFilter || translate('menuProduct.category')}</div>
           </div>
-        }
-        noBorderBottom={noBorderBottom}
-        isDefaultActive={isMobile ? false : isDefault}
-      >
-        {renderContent()}
-      </MyCollapse>
-    ) : (
-      <></>
-    )
-  }
-  return render()
+        </div>
+      }
+      noBorderBottom={noBorderBottom}
+      isDefaultActive={isMobile ? false : isDefault}
+    >
+      {renderContent()}
+    </MyCollapse>
+  ) : (
+    <></>
+  )
 }
 
 export default MyFilterCheckBox

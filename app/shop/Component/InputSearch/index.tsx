@@ -16,25 +16,17 @@ const InputSearch = ({ keySearch = 'name' }: { keySearch?: string }) => {
 
   useEffect(() => {
     setNameSearch(searchParam.get(keySearch) || '')
-  }, [searchParam])
+  }, [searchParam, keySearch])
 
   useEffect(() => {
     if (nameSearchDebounce) {
-      router.push(`${pathname}?${keySearch}=${nameSearch}`)
+      router.push(`${pathname}?${keySearch}=${nameSearchDebounce}`)
     } else {
       router.push(pathname)
     }
-  }, [nameSearchDebounce])
+  }, [nameSearchDebounce, keySearch, router, pathname])
 
   const handleSearch = () => {
-    if (!nameSearch) {
-      router.push(pathname)
-    } else {
-      router.push(`${pathname}?${keySearch}=${nameSearch}`)
-    }
-  }
-
-  const handlePressSearch = () => {
     if (!nameSearch) {
       router.push(pathname)
     } else {

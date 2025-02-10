@@ -8,9 +8,10 @@ import dynamic from 'next/dynamic'
 const Nav = dynamic(() => import('./Component/Nav'), { ssr: true })
 const Account = dynamic(() => import('./Component/Account'), { ssr: true })
 
-const Header = () => {
+const Header = ({ children }: { children?: React.ReactNode }) => {
   return (
     <header className='header-main'>
+      {children}
       <a
         aria-label={LINK_CONTACT.Mail}
         href={LINK_CONTACT.Mail}

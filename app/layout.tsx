@@ -7,6 +7,8 @@ import '@/styles/globals.scss'
 import '@/styles/override.scss'
 import '@/styles/aos.css'
 import '@mantine/core/styles.css'
+import '@mantine/dates/styles.css'
+
 import { AntdRegistry } from '@ant-design/nextjs-registry'
 import StyledComponentsRegistry from '@/components/RegistryApp'
 import ClientRender from '@/components/ClientRender'
@@ -208,12 +210,12 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
             />
           </>
         )}
-        <MantineProvider>
+        <MantineConfig>
           <AntdProvider>
             <ReactQueryProvider>
               <StyledComponentsRegistry>
                 <AntdRegistry>
-                  <Header />
+                  {/* <Header /> */}
 
                   <main className='main-content w-full flex justify-center min-h-[calc(100dvh-56px)]'>
                     <section
@@ -235,7 +237,7 @@ const LayoutMain = async ({ children }: { children: React.ReactNode }) => {
               </StyledComponentsRegistry>
             </ReactQueryProvider>
           </AntdProvider>
-        </MantineProvider>
+        </MantineConfig>
 
         {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <SpeedInsights />}
       </body>
