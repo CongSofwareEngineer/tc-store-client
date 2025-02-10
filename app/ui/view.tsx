@@ -12,7 +12,7 @@ import { MultiSelect } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { DatePicker } from 'antd'
 import { DatePickerInput } from '@mantine/dates'
-
+import dayjs from 'dayjs'
 const UiView = () => {
   const [valueDate, setValueDate] = useState<Date | null>(null)
 
@@ -25,7 +25,7 @@ const UiView = () => {
       email: '',
       name: '',
       termsOfService: false,
-      date: '',
+      date: dayjs(),
     },
 
     validate: {
@@ -37,7 +37,16 @@ const UiView = () => {
     setTimeout(() => {
       form.setFieldValue('name', 'setNameUser')
     }, 2000)
+
+    setTimeout(() => {
+      form.setFieldValue('date', dayjs().add(4, 'days'))
+    }, 5000)
     console.log({ form: form.getValues() })
+  }, [])
+  useEffect(() => {
+    console.log('====================================')
+    console.log({ form: form.getValues() })
+    console.log('====================================')
   }, [form])
 
   return (
