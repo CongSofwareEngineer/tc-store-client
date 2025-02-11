@@ -24,12 +24,12 @@ const MoreInfo = ({ data }: { data: any }) => {
   const items: MyTabsProps['data'] = [
     {
       key: 'info',
-      label: translate('textPopular.infor'),
+      label: <div className='font-bold'>{translate('textPopular.infor')}</div>,
       children: <MyBlog className='!p-0' value={JSON.parse(data?.des2 || '{}')} disabled />,
     },
     {
       key: 'Comment',
-      label: translate('textPopular.comment'),
+      label: <div className='font-bold'>{translate('textPopular.comment')}</div>,
       children: <Comment dataItem={data} />,
     },
   ]

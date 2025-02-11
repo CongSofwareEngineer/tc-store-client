@@ -19,6 +19,15 @@ const useCheckForm = () => {
     }
   }
 
+  const checkNameUser = (name: string) => {
+    if (!name) {
+      return translate('errors.empty')
+    }
+    if (name.length > 24) {
+      return translate('errors.maxNameUser')
+    }
+  }
+
   const checkIsNumber = (value: any) => {
     try {
       if (!value) {
@@ -72,6 +81,7 @@ const useCheckForm = () => {
     checkEmail,
     checkPassword,
     checkIsNumber,
+    checkNameUser,
   }
 }
 

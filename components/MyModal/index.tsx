@@ -1,5 +1,6 @@
+import { cn } from '@/utils/functions'
 import { useModal } from '@/zustand/useModal'
-import { Modal } from 'antd'
+import { Modal } from '@mantine/core'
 
 const MyModalProvider = () => {
   const { modal, closeModal } = useModal()
@@ -7,16 +8,14 @@ const MyModalProvider = () => {
   return (
     <Modal
       title={modal?.title || <></>}
-      open={modal?.open || false}
-      onCancel={closeModal}
-      footer={<></>}
+      onClose={() => closeModal()}
       centered
-      {...modal}
-      closable={modal.showBtnClose}
-      keyboard={modal?.overClickClose}
-      maskClosable={modal?.overClickClose}
+      opened={modal?.open!}
+      withCloseButton={modal.showBtnClose}
+      closeOnClickOutside={modal?.overClickClose}
+      size={modal.width}
     >
-      <div className={`w-full h-full max-h-[90dvh]  overflow-y-auto ${modal?.classContent}`}>
+      <div className={cn('w-full h-full max-h-[90dvh]  overflow-y-auto ', modal?.classContent)}>
         {modal?.content}
       </div>
     </Modal>

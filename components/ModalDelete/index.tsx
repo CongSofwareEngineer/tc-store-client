@@ -3,8 +3,8 @@ import { useState } from 'react'
 import { images } from '@/configs/images'
 import useModalDrawer from '@/hook/useModalDrawer'
 import Image from 'next/image'
-import { Button } from 'antd'
 import { useModalAdmin } from '@/zustand/useModalAdmin'
+import { Button } from '@mantine/core'
 
 type ModalDeleteType = {
   des?: string
@@ -94,7 +94,7 @@ const ModalDelete = ({
             <Button
               loading={loadingReject}
               disabled={loading}
-              type='primary'
+              variant='filled'
               className='w-full'
               onClick={handleCancel}
             >

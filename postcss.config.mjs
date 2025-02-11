@@ -8,9 +8,9 @@ const config = {
     },
     "postcss-simple-vars": {
       variables: {
-        "mantine-breakpoint-xs": "36em",
-        "mantine-breakpoint-sm": "48em",
-        "mantine-breakpoint-md": "62em",
+        "mantine-breakpoint-xs": "568px",
+        "mantine-breakpoint-sm": "568px",
+        "mantine-breakpoint-md": "768px",
         "mantine-breakpoint-lg": "75em",
         "mantine-breakpoint-xl": "88em",
         'mantine-color-body': 'green'

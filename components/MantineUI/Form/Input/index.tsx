@@ -1,16 +1,16 @@
-import { TextInput } from '@mantine/core'
+import { TextInput, TextInputProps } from '@mantine/core'
 import React from 'react'
 type InputFormProps = {
   form: any
   keyName?: string
   className?: string
-}
-const InputForm = ({ form, keyName = '', className = '' }: InputFormProps) => {
+} & TextInputProps
+const InputForm = ({ form, keyName = '', className = '', ...props }: InputFormProps) => {
   return (
     <TextInput
-      withAsterisk
       key={form.key(keyName)}
       className={className}
+      {...props}
       {...form.getInputProps(keyName)}
     />
   )

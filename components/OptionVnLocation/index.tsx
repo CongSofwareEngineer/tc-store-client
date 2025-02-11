@@ -1,10 +1,10 @@
 import useAddressShip from '@/hook/useAddressShip'
 import React, { useEffect, useState } from 'react'
-import MySelect from '../MySelect'
-import MyInput from '../MyInput'
+
 import { useProvinces } from '@/zustand/useProvinces'
 import { useUserData } from '@/zustand/useUserData'
 import useLanguage from '@/hook/useLanguage'
+import { Select, Textarea } from '@mantine/core'
 
 const OptionVnLocation = ({
   callback,
@@ -62,30 +62,37 @@ const OptionVnLocation = ({
       return {
         label: e.full_name,
         value: e.id,
-        name: e.full_name,
       }
     })
   }
 
   const onChangeProvince = (id: string) => {
-    setDistricts(null)
-    setAddressDetail('')
-    setWard(null)
-    const data = provinces.find((e) => e.id === id)
-    setProvence(data)
+    console.log({ id })
+
+    if (id) {
+      setDistricts(null)
+      setAddressDetail('')
+      setWard(null)
+      const data = provinces.find((e) => e.id === id)
+      setProvence(data)
+    }
   }
 
   const onChangeDistrict = (id: string) => {
-    setWard(null)
-    setAddressDetail('')
-    const data = listDistrict.find((e: any) => e.id === id)
-    setDistricts(data)
+    if (id) {
+      setWard(null)
+      setAddressDetail('')
+      const data = listDistrict.find((e: any) => e.id === id)
+      setDistricts(data)
+    }
   }
 
   const onChangeWard = (id: string) => {
-    setAddressDetail('')
-    const data = listWards.find((e: any) => e.id === id)
-    setWard(data)
+    if (id) {
+      setAddressDetail('')
+      const data = listWards.find((e: any) => e.id === id)
+      setWard(data)
+    }
   }
 
   const onChangeNote = (note: string) => {
@@ -101,22 +108,19 @@ const OptionVnLocation = ({
     <div className='w-full flex flex-col gap-4'>
       <div className={`flex flex-col  gap-2 w-full md:flex-row ${className}`}>
         <div className='w-full flex flex-col gap-2'>
-          <div>{translate('textPopular.province')}</div>
-          <MySelect
+          <Select
+            label={translate('textPopular.province')}
             value={provence?.id}
             placeholder={translate('textPopular.province')}
-            optionFilterProp='label'
-            showSearch
-            fullImage
+            searchable
             className='w-full'
-            option={getOption(provinces)}
-            onChange={onChangeProvince}
+            data={getOption(provinces)}
+            onChange={(id) => onChangeProvince(id?.toString()!)}
           />
         </div>
 
         <div className='w-full flex flex-col gap-2'>
-          <div>{translate('textPopular.district')}</div>
-          <MySelect
+          {/* <MySelect
             loading={loadingDistrict}
             value={districts?.id}
             placeholder={translate('textPopular.district')}
@@ -126,13 +130,35 @@ const OptionVnLocation = ({
             className='w-full'
             option={getOption(listDistrict || [])}
             onChange={onChangeDistrict}
+          /> */}
+
+          <Select
+            label={translate('textPopular.district')}
+            disabled={loadingDistrict}
+            value={districts?.id}
+            placeholder={translate('textPopular.district')}
+            searchable
+            className='w-full'
+            data={getOption(listDistrict || [])}
+            nothingFoundMessage={translate('textPopular.notData')}
+            onChange={(id) => onChangeDistrict(id?.toString()!)}
           />
         </div>
 
         <div className='w-full flex flex-col gap-2'>
-          <div>{translate('textPopular.ward')}</div>
+          <Select
+            label={translate('textPopular.ward')}
+            disabled={loadingWard}
+            value={ward?.id}
+            placeholder={translate('textPopular.ward')}
+            searchable
+            className='w-full'
+            data={getOption(listWards || [])}
+            nothingFoundMessage={translate('textPopular.notData')}
+            onChange={(id) => onChangeWard(id?.toString()!)}
+          />
 
-          <MySelect
+          {/* <MySelect
             loading={loadingWard}
             value={ward?.id}
             placeholder={translate('textPopular.ward')}
@@ -142,17 +168,17 @@ const OptionVnLocation = ({
             className='w-full'
             option={getOption(listWards || [])}
             onChange={onChangeWard}
-          />
+          /> */}
         </div>
       </div>
       <div className='w-full flex flex-col gap-2 mb-[10px]'>
-        <div>{translate('textPopular.addressDetail')}</div>
-        <MyInput
+        <Textarea
+          label={translate('textPopular.addressDetail')}
           disabled={!districts || !provence || !ward}
           value={addressDetail}
-          onChangeText={(e) => onChangeNote(e?.toString() || '')}
-          type='string'
+          onChange={(e) => onChangeNote(e.target.value)}
           className='w-full'
+          rows={1}
         />
       </div>
     </div>

@@ -258,13 +258,13 @@ const ViewDetail = ({
                 {translate('common.buyNow')}
               </Button>
               <Button
-                type='primary'
+                variant='filled'
                 onClick={handleAddCart}
-                className='min-w-[30%] '
+                className='min-w-[30%]   '
                 style={{ height: 40 }}
                 loading={loadingAddCart}
               >
-                <div className='flex gap-3 whitespace-nowrap'>
+                <div className='flex items-center gap-3 whitespace-nowrap'>
                   <MyImage
                     src={images.icon.iconCart}
                     alt='btn-add-cart'

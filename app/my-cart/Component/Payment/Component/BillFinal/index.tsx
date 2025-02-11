@@ -1,4 +1,4 @@
-import ButtonForm from '@/components/Form/ButtonForm'
+import ButtonForm from '@/components/MantineUI/Form/ButtonForm'
 import { images } from '@/configs/images'
 import { DEFAULT_FEE_SHIP } from '@/constant/app'
 import useLanguage from '@/hook/useLanguage'
@@ -48,9 +48,7 @@ const BillFinal = ({
       </div>
       <ButtonForm
         disabledSubmit={disabledSubmit}
-        classNameItem={'w-full'}
-        classBtnSubmit='w-full  rounded-none'
-        className='mt-5'
+        classBtnSubmit='w-full mt-3  !rounded-[4px]'
         loading={loading}
         disableClose
       />

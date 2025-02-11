@@ -1,6 +1,7 @@
 import MessageVN from '@/public/assets/language/vn.json'
 import { LANGUAGE_SUPPORT } from './app'
-import { DrawerProps, ModalProps } from 'antd'
+import { DrawerProps } from 'antd'
+import { ModalProps } from '@mantine/core'
 
 const localeVN = {
   locale: LANGUAGE_SUPPORT.VN,
@@ -89,7 +90,9 @@ export type TYPE_ZUSTAND = {
     title?: React.ReactNode | string | undefined
     overClickClose?: boolean | true
     showBtnClose?: boolean | true
-  } & ModalProps
+    width?: string | number
+    height?: string | number
+  }
 
   [ZUSTAND.Drawer]: {
     content?: React.ReactNode

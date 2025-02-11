@@ -308,6 +308,7 @@
     "minimumPass": "Mật khảu tối thiểu 4 ký tự",
     "minimumText": "Tối thiểu 4 ký tự",
     "pinCode": "Pin code sai",
+    "maxNameUser": "Tên không quá 24 ký tự",
     "sendMuchMessages": " Xin lỗi bạn, mong bạn chờ Shop phản hồi rồi nhắn tiếp ạ!"
   },
   "chat": {

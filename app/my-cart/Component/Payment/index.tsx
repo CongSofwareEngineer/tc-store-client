@@ -208,7 +208,7 @@ const Payment = ({ dataCart, clickBack, showBack = true }: PaymentPageType) => {
           ),
           useDrawer: true,
           configModal: {
-            className: '!w-[700px]',
+            width: '!w-[700px]',
           },
           title: translate('banking.title'),
         })

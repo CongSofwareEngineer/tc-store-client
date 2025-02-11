@@ -50,6 +50,13 @@ body {
   }
 }
 
+div {
+  font-size: 15px;
+  @media screen and (max-width: 768px) {
+    font-size: 13px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .desktop {
     display: none;

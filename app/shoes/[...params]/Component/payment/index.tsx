@@ -22,9 +22,8 @@ import { showNotificationError } from '@/utils/notification'
 import useRoutePage from '@/hook/useRoutePage'
 import InfoBanking from '@/components/InfoBanking'
 import { useForm } from '@mantine/form'
-import { DataPaymentType } from './type'
 import MyForm from '@/components/MantineUI/Form/MyForm'
-import InputForm from '@/components/MantineUI/Form/Input'
+import useCheckForm from '@/hook/useCheckForm'
 
 const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const { translate } = useLanguage()
@@ -33,6 +32,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   const { refreshListQuery } = useRefreshQuery()
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()
   const { onChangeOptions, listOptions, optionSelected } = useOptionPayment(null, { banking: true })
+  const { checkNumberPhone, checkNameUser } = useCheckForm()
 
   // const [formData, setFormData] = useState<Record<string, any> | null>(null)
   const [loading, setLoading] = useState(false)
@@ -48,7 +48,11 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         addressDetail: '',
       },
     },
-    validate: {},
+    validate: {
+      sdt: (sdt) => checkNumberPhone(sdt),
+      name: (name) => checkNameUser(name),
+    },
+    validateInputOnChange: true,
   })
 
   useEffect(() => {
@@ -76,12 +80,6 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
   }, [formData])
 
   const onChangeAddressShip = (item: any) => {
-    // setFormData({
-    //   ...formData,
-    //   addressShip: {
-    //     ...item,
-    //   },
-    // })
     formData.setFieldValue('addressShip', item)
   }
 
@@ -149,9 +147,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
     try {
       setLoading(true)
       callbackProcessingBuy()
-
       let res
-
       const bodyBill: BodyAddBill = {
         addressShip: formData.getValues()?.addressShip,
         discount: 0,
@@ -169,14 +165,12 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         status: FILTER_BILL.Processing,
         totalBill: data?.price * amount,
       }
-
       if (idBanking) {
         bodyBill.infoBanking = {
           id: idBanking,
           messages: messBanking,
         }
       }
-
       if (isLogin) {
         handleUpdateAddressShip()
         res = await ClientApi.buy(bodyBill)
@@ -184,14 +178,12 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         saveDataNoLogin(bodyBill)
         res = await ClientApi.buyNoLogin(bodyBill)
       }
-
       if (res.data) {
         await callbackSuccessBuy()
       } else {
         showNotificationError(translate('productDetail.modalBuy.error'))
         closeModalDrawer()
       }
-
       setLoading(false)
     } catch {
       setLoading(false)
@@ -238,14 +230,28 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
         titlePage={data?.name}
       />
       <div className='flex flex-col gap-3 w-full mt-1'>
-        <MyForm form={formData} className='flex lg:flex-row flex-col lg:gap-6 gap-5'>
+        <MyForm
+          submit={handleSubmit}
+          form={formData}
+          className='flex lg:flex-row flex-col lg:gap-6 gap-5'
+        >
           <div className='flex flex-1 h-full overflow-y-auto  flex-col lg:max-w-[calc(100%-300px)]'>
-            <ContentFormPayment onChange={onChangeAddressShip} />
+            <ContentFormPayment form={formData} onChange={onChangeAddressShip} />
             <InfoBill data={data} amountBuy={amount} />
-            {/* <ContentFormPayment onChange={onChangeAddressShip} />
-             */}
           </div>
-          <InputForm key={'sdt'} form={formData} />
+          <div className='lg:w-[350px] flex flex-col md:gap-6 gap-5'>
+            <OptionsPayment
+              onChangeOptions={onChangeOptions}
+              listOptions={listOptions}
+              optionSelected={optionSelected}
+            />
+            <BillFinal
+              disabledSubmit={!isValidSubmit}
+              loading={loading}
+              totalBill={numberWithCommas(amount * data?.price)}
+              totalBillFeeShip={numberWithCommas(amount * data?.price + DEFAULT_FEE_SHIP)}
+            />
+          </div>
         </MyForm>
         {/* <MyForm
           onFinish={handleSubmit}

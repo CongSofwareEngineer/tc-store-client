@@ -3,19 +3,31 @@ import React from 'react'
 import {
   Button,
   Checkbox,
-  CSSVariablesResolver,
+  createTheme,
   Input,
   MantineProvider,
+  Modal,
   RangeSlider,
   Select,
+  Textarea,
   TextInput,
 } from '@mantine/core'
-
-import { createTheme } from '@mantine/core'
 
 export const theme = createTheme({
   /* Put your mantine theme override here */
   components: {
+    Modal: Modal.extend({
+      defaultProps: {
+        w: 500,
+      },
+      styles: {
+        content: {
+          width: 500,
+          padding: 5,
+          borderRadius: 8,
+        },
+      },
+    }),
     Button: Button.extend({
       defaultProps: {
         radius: 8,
@@ -47,6 +59,41 @@ export const theme = createTheme({
     TextInput: TextInput.extend({
       defaultProps: {
         radius: 6,
+        height: 30,
+        pos: 'relative',
+        pb: 20,
+        mb: 0,
+      },
+      styles: {
+        input: {
+          minHeight: 30,
+          height: 30,
+          marginBottom: 0,
+        },
+        error: {
+          position: 'absolute',
+          bottom: 0,
+        },
+        wrapper: {
+          marginBottom: 0,
+        },
+        label: {
+          marginBottom: 4,
+        },
+      },
+    }),
+    Textarea: Textarea.extend({
+      defaultProps: {
+        radius: 6,
+        mih: 30,
+      },
+      styles: {
+        input: {
+          minHeight: 30,
+        },
+        label: {
+          marginBottom: 4,
+        },
       },
     }),
     RangeSlider: RangeSlider.extend({
@@ -54,14 +101,25 @@ export const theme = createTheme({
         color: '#03a92182',
         size: 'sm',
       },
+      styles: {
+        label: {
+          marginBottom: 4,
+        },
+      },
     }),
     Select: Select.extend({
       defaultProps: {
         radius: 6,
+        height: 30,
       },
       styles: {
         input: {
           cursor: 'pointer',
+          minHeight: 30,
+          height: 30,
+        },
+        label: {
+          marginBottom: 4,
         },
       },
     }),
@@ -73,8 +131,26 @@ export const theme = createTheme({
         input: {
           cursor: 'pointer',
         },
+        error: {
+          position: 'absolute',
+          bottom: -10,
+        },
+        label: {
+          marginBottom: 4,
+        },
       },
     }),
+  },
+  fontSizes: {
+    // sm: '13px',
+    // lg: '15px',
+    // xl: '15px',
+    // md: '15px',
+    // xs: '15px',
+  },
+  breakpoints: {
+    sm: '568px',
+    md: '768px',
   },
 })
 
