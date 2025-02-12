@@ -14,7 +14,7 @@ import { getDataLocal, saveDataLocal } from '@/utils/functions'
 import { LOCAL_STORAGE_KEY } from '@/constant/app'
 import { Image } from 'antd'
 import ClientApi from '@/services/clientApi'
-import ItemChatDetail from '@/app/admin/chats/Components/ItemChatDetail'
+import ItemChatDetail from './ItemChatDetail'
 
 export type DataMessage = {
   date: number

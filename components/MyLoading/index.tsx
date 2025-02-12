@@ -1,5 +1,6 @@
 import React from 'react'
-import { LoadingOutlined } from '@ant-design/icons'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+
 import Image from 'next/image'
 // import MyLottie from '../MyLottie'
 // import MyLottie from '../MyLottie'
@@ -16,7 +17,7 @@ const MyLoading = ({ icon, className, size = 36 }: MyLoadingType) => {
         <Image className='!relative' fill src={icon} alt='icon loading' />
       ) : (
         <div className='my-5 text-2xl text-green-500'>
-          <LoadingOutlined style={{ fontSize: size }} />
+          <AiOutlineLoading3Quarters style={{ fontSize: size }} />
         </div>
       )}
     </div>

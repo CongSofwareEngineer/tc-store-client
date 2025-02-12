@@ -3,7 +3,7 @@ import { Checkbox } from 'antd'
 import React from 'react'
 import useLanguage from '@/hook/useLanguage'
 import useMedia from '@/hook/useMedia'
-import MyCollapse from '../MyCollapse'
+import MyCollapse from '../MantineUI/MyCollapse'
 
 type MyFilterCheckBox = {
   data?: Record<string, any>[]

@@ -201,7 +201,7 @@ const PaymentShop = ({ data, callBack, amount }: PaymentShopType) => {
           ),
           useDrawer: true,
           configModal: {
-            className: '!w-[700px]',
+            // className: '!w-[700px]',
           },
           title: translate('banking.title'),
         })

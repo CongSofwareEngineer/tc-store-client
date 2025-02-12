@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import MyCollapse, { ItemCollapseProps } from '@/components/MyCollapse'
+import MyCollapse, { ItemCollapseProps } from '@/components/MantineUI/MyCollapse'
 import { Button, Input, Select } from 'antd'
 import useLanguage from '@/hook/useLanguage'
 import { DeleteOutlined, DiffOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons'

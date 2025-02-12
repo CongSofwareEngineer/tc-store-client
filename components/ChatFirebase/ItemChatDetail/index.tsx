@@ -1,6 +1,17 @@
-import React from 'react'
-import { ContentItemChatProps } from '../../type'
 import { formatDateTime } from '@/utils/momentFunc'
+
+export type ContentItemChatProps = {
+  date: number
+  content: string
+  isAdmin?: boolean
+  isSeen?: boolean
+  attributes?: { [key: string]: any }
+}
+
+export type ItemChatProps = {
+  key: string
+  content: ContentItemChatProps
+}
 
 const ItemChatDetail = ({ data }: { data: ContentItemChatProps }) => {
   return (

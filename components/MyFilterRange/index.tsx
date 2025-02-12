@@ -3,7 +3,7 @@ import useQuerySearch from '@/hook/useQuerySearch'
 import { numberWithCommas } from '@/utils/functions'
 import { RangeSlider } from '@mantine/core'
 import React, { useEffect, useMemo, useState } from 'react'
-import MyCollapse from '../MyCollapse'
+import MyCollapse from '../MantineUI/MyCollapse'
 import { isEqual } from 'lodash'
 import useMedia from '@/hook/useMedia'
 

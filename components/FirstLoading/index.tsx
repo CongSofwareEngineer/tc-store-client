@@ -1,6 +1,6 @@
 'use client'
-import { Spin } from 'antd'
 import React, { useLayoutEffect, useState } from 'react'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
 const FirstLoading = () => {
   const [isClient, setIsClient] = useState(false)
@@ -8,9 +8,9 @@ const FirstLoading = () => {
   useLayoutEffect(() => {
     setIsClient(true)
   }, [])
-  return !isClient ? (
+  return isClient ? (
     <div className='fixed h-screen w-screen inset-0 bg-white flex justify-center items-center'>
-      <Spin style={{ fontSize: 20 }} />
+      <AiOutlineLoading3Quarters style={{ fontSize: 20 }} />
     </div>
   ) : (
     <></>

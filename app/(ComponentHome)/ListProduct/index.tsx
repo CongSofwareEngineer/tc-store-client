@@ -4,19 +4,16 @@ import ItemProduct from '@/components/ItemProduct'
 import useLanguage from '@/hook/useLanguage'
 import Link from 'next/link'
 import { FilterAPI } from '@/constant/app'
-import { AlignLeftOutlined, RightOutlined } from '@ant-design/icons'
+import { RightOutlined } from '@ant-design/icons'
 import useProductByLimit from '@/hook/tank-query/useProductByLimit'
 import { TYPE_PRODUCT } from '@/constant/admin'
 import LoadingGetData from '@/components/LoadingGetData'
 import { getUrlProduct } from '@/utils/functions'
-import { Box, Button, Collapse } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
-import MyCollapse from '@/components/MyCollapse'
+import MyCollapse from '@/components/MantineUI/MyCollapse'
 
 const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   const { data, isLoading } = useProductByLimit(type, 5)
   const { translate } = useLanguage()
-  const [opened, { toggle }] = useDisclosure(false)
 
   const getUrl = () => {
     if (type === TYPE_PRODUCT.shoes) {
@@ -51,29 +48,6 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
     )
   }
 
-  const items = [
-    {
-      key: type,
-      expandIcon: <AlignLeftOutlined style={{ fontSize: 20 }} />,
-      label: (
-        <div className='flex justify-between items-center'>
-          <div className='flex text-medium w-full '>{title}</div>
-        </div>
-      ),
-      children: renderListItem(),
-      extra: (
-        <Link
-          onClick={(event) => event.stopPropagation()}
-          href={getUrl()}
-          className='text-medium cursor-pointer hover:font-semibold hover:text-green-600'
-        >
-          <span> {translate('textPopular.viewMore')}</span>
-          <RightOutlined className='text-sm ml-2' />
-        </Link>
-      ),
-    },
-  ]
-
   const renderTitle = () => {
     return (
       <div className='flex flex-1 justify-between'>
@@ -94,13 +68,6 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
     <MyCollapse classNameTitle='pl-0' title={renderTitle()}>
       {renderListItem()}
     </MyCollapse>
-
-    // <CollapseCustom
-    //   expandIcon={({ isActive }: any) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-    //   defaultActiveKey={[type]}
-    //   items={items}
-    //   style={{ background: 'transparent' }}
-    // />
   )
 }
 

@@ -1,4 +1,4 @@
-import MyCollapse from '@/components/MyCollapse'
+import MyCollapse from '@/components/MantineUI/MyCollapse'
 import styled from 'styled-components'
 
 export const CollapseCustom = styled(MyCollapse)`
