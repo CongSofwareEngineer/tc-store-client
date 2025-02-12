@@ -1,15 +1,13 @@
-import type { Config } from 'tailwindcss'
 import plugin from 'tailwindcss/plugin'
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const config = {
+import type { Config } from "tailwindcss";
+
+export default {
   content: [
     './components/**/*.{ts,tsx}',
     './hook/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './hook/**/*.{ts,tsx}',
   ],
-
-  prefix: '',
   theme: {
     extend: {
       keyframes: {
@@ -32,9 +30,6 @@ const config = {
     },
   },
   darkMode: 'class',
-  // corePlugins: {
-  //   preflight: false // <== disable this!
-  // },
   plugins: [
     plugin(function ({ addUtilities }) {
       const newUtilities = {
@@ -56,6 +51,4 @@ const config = {
       addUtilities(newUtilities)
     }),
   ],
-} satisfies Config
-
-export default config
+} satisfies Config;
