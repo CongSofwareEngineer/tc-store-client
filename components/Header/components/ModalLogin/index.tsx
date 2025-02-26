@@ -57,14 +57,12 @@ const ModalLogin = () => {
           keyName='sdt'
           label={translate('userDetail.sdt')}
           placeholder={translate('userDetail.sdt')}
-          autoComplete='username'
         />
         <InputPasswordForm
           required
           label={translate('userDetail.pass')}
           placeholder={translate('userDetail.pass')}
           keyName='pass'
-          autoComplete='current-password'
           formData={formData}
         />
         <div className='flex md:flex-row justify-between w-full md:gap-0 gap-2 mb-3'>
