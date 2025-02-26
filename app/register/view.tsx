@@ -8,7 +8,7 @@ import useModalDrawer from '@/hooks/useModalDrawer'
 import useRoutePage from '@/hooks/useRoutePage'
 import useUserData from '@/hooks/useUserData'
 import { useForm } from '@mantine/form'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IFormRegister } from './type'
 import { BodyUserData } from '@/constants/firebase'
 import { encryptData } from '@/utils/crypto'
@@ -58,6 +58,15 @@ const RegisterScreen = () => {
       },
     },
   })
+
+  useEffect(() => {
+    const footer = window.document.getElementsByClassName('main-content')[0]
+    if (footer) {
+      footer.classList.add('bg-custom-register')
+    }
+
+    return () => footer.classList.remove('bg-custom-register')
+  }, [])
 
   const handleRegister = async (formData: IFormRegister) => {
     const bodyUser: BodyUserData = {

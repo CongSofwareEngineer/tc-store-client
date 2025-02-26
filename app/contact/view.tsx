@@ -50,6 +50,16 @@ const ContactScreen = () => {
       nameUser: checkNameUser,
     },
   })
+
+  useEffect(() => {
+    const footer = window.document.getElementsByClassName('main-content')[0]
+    if (footer) {
+      footer.classList.add('bg-custom-register')
+    }
+
+    return () => footer.classList.remove('bg-custom-register')
+  }, [])
+
   useEffect(() => {
     const initData: DataAddContact = {
       sdt: userData?.sdt || '',
