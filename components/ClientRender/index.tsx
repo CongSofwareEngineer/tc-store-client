@@ -1,30 +1,56 @@
-'use client';
-import React, { useLayoutEffect } from 'react';
-import MyModal from '../MyModal';
-import { useCategoryMenu } from '@/zustand/useCategoryMenu';
-import dynamic from 'next/dynamic';
-const MyModalAdmin = dynamic(() => import('@/components/MyModalAdmin'));
-const MyDrawer = dynamic(() => import('@/components/MyDrawer'));
+'use client'
+import React, { useLayoutEffect } from 'react'
+import MyModal from '../MyModal'
+import { useCategoryMenu } from '@/zustand/useCategoryMenu'
+import dynamic from 'next/dynamic'
+
+const MyModalAdmin = dynamic(() => import('@/components/MyModalAdmin'), { ssr: false })
+const MyDrawer = dynamic(() => import('@/components/MyDrawer'), { ssr: false })
 const ToastNoti = dynamic(() => import('@/components/ToastNoti'), {
-	ssr: false,
-});
+  ssr: false,
+})
+const FirstLoadWebsite = dynamic(() => import('@/components/FirstLoadWebsite'), {
+  ssr: false,
+})
 
-const ClientRender = ({ children, menuCategory = [] }: { children: React.ReactNode; menuCategory?: any[] }) => {
-	const { setCategoryMenu } = useCategoryMenu();
+const CheckPingServer = dynamic(() => import('@/components/CheckPingServer'), {
+  ssr: false,
+})
 
-	useLayoutEffect(() => {
-		setCategoryMenu(menuCategory);
-	}, [menuCategory, setCategoryMenu]);
+const Notification = dynamic(() => import('@/components/Notification'), {
+  ssr: false,
+})
 
-	return (
-		<>
-			{children}
-			<MyModal />
-			<MyDrawer />
-			<ToastNoti />
-			<MyModalAdmin />
-		</>
-	);
-};
+const ChatFirebase = dynamic(() => import('@/components/ChatFirebase'), {
+  ssr: false,
+})
 
-export default ClientRender;
+const ClientRender = ({
+  children,
+  menuCategory = [],
+}: {
+  menuCategory: any
+  children: React.ReactNode
+}) => {
+  const { setCategoryMenu } = useCategoryMenu()
+
+  useLayoutEffect(() => {
+    setCategoryMenu(menuCategory)
+  }, [menuCategory, setCategoryMenu])
+
+  return (
+    <>
+      {children}
+      <MyModal />
+      <MyDrawer />
+      <ToastNoti />
+      <MyModalAdmin />
+      <FirstLoadWebsite />
+      <CheckPingServer />
+      <Notification />
+      {process.env.NEXT_PUBLIC_ENABLE_CHAT && <ChatFirebase />}
+    </>
+  )
+}
+
+export default ClientRender

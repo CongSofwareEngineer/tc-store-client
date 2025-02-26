@@ -1,19 +1,18 @@
-import { COOKIE_EXPIRED, COOKIE_KEY, LOCAL_STORAGE_KEY, OBSERVER_KEY } from '@/constant/app'
-import { TYPE_ZUSTAND, ZUSTAND } from '@/constant/zustand'
-import useCheckPatchName from '@/hook/tank-query/useCheckPatchName'
-import useVoucherUser from '@/hook/tank-query/useVoucherUser'
+import { COOKIE_EXPIRED, COOKIE_KEY, LOCAL_STORAGE_KEY, OBSERVER_KEY } from '@/constants/app'
+import { TYPE_ZUSTAND, ZUSTAND } from '@/constants/zustand'
+import useVoucherUser from '@/hooks/tank-query/useVoucherUser'
+import useCheckPatchName from '@/hooks/useCheckPatchName'
 import ClientApi from '@/services/clientApi'
-import { deleteCookie, getCookie, setCookie } from '@/services/CookiesService'
+import { deleteCookie, getCookie, setCookie } from '@/services/cookiesService'
 import ObserverService from '@/services/observer'
 import { decryptData } from '@/utils/crypto'
 import { getDataLocal, removeDataLocal, scrollTop } from '@/utils/functions'
-import { useCategoryMenu } from '@/zustand/useCategoryMenu'
 import { useProvinces } from '@/zustand/useProvinces'
 import { useUserData } from '@/zustand/useUserData'
-import { LoadingOutlined } from '@ant-design/icons'
 import { NextPage } from 'next'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import secureLocalStorage from 'react-secure-storage'
 
 const FirstLoadWebsite: NextPage = () => {
@@ -21,7 +20,6 @@ const FirstLoadWebsite: NextPage = () => {
 
   useCheckPatchName()
   const pathName = usePathname()
-  const { fetchData: fetchCategoryMenu } = useCategoryMenu()
   const { fetchData: fetchDataProvinces } = useProvinces()
   const { reset: resetUser, userData, setUserData } = useUserData()
   const { data: dataVoucher } = useVoucherUser()
@@ -30,9 +28,8 @@ const FirstLoadWebsite: NextPage = () => {
   const userRef = useRef<TYPE_ZUSTAND[ZUSTAND.UserData]>(null)
 
   useLayoutEffect(() => {
-    fetchCategoryMenu()
     fetchDataProvinces()
-  }, [fetchDataProvinces, fetchCategoryMenu])
+  }, [fetchDataProvinces])
 
   useEffect(() => {
     if (!userRef.current) {
@@ -41,10 +38,8 @@ const FirstLoadWebsite: NextPage = () => {
   }, [userData])
 
   useEffect(() => {
-    if (userData && dataVoucher) {
-      console.log({ dataVoucher, userData })
-    }
-  }, [userData, dataVoucher])
+    listUrlExitedRef.current.push(window.location.pathname)
+  }, [])
 
   useEffect(() => {
     scrollTop()
@@ -146,7 +141,7 @@ const FirstLoadWebsite: NextPage = () => {
       }}
     >
       <div className='text-2xl text-green-600'>
-        <LoadingOutlined style={{ fontSize: 35 }} />
+        <AiOutlineLoading3Quarters className=' animation_spin1s ' style={{ fontSize: 35 }} />
       </div>
     </div>
   ) : (

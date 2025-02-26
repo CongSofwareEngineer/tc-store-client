@@ -1,6 +1,8 @@
 import React from 'react'
 import { generateMetaBase } from '@/utils/serverNext'
 import { NextPage, ResolvingMetadata } from 'next'
+import Header from '@/components/Header'
+import ContainerContent from '@/components/ContainerContent'
 import ContactScreen from './view'
 
 export async function generateMetadata(_: any, parent: ResolvingMetadata) {
@@ -16,13 +18,17 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
 const ContactLayout: NextPage = () => {
   return (
     <>
-      <h1 className='absolute opacity-0'>Liên Hệ TC Store - Kết Nối Với Chúng Tôi Ngay Hôm Nay</h1>
-      <h2 className='absolute opacity-0'>Thông Tin Liên Hệ Chính Thức Của TC Store</h2>
-      <h2 className='absolute opacity-0'>Hỗ Trợ Khách Hàng 24/7 - Giải Đáp Mọi Thắc Mắc</h2>
-      <h2 className='absolute opacity-0'>Địa Chỉ Showroom & Văn Phòng TC Store</h2>
-      <h2 className='absolute opacity-0'>Gửi Tin Nhắn Trực Tiếp Cho Đội Ngũ Hỗ Trợ</h2>
-      <h2 className='absolute opacity-0'>Câu Hỏi Thường Gặp (FAQs) Về Liên Hệ</h2>
-      <ContactScreen />
+      <Header>
+        <h1 className='sr-only'>Liên Hệ TC Store - Kết Nối Với Chúng Tôi Ngay Hôm Nay</h1>
+      </Header>
+      <ContainerContent>
+        <h2 className='sr-only'>Thông Tin Liên Hệ Chính Thức Của TC Store</h2>
+        <h2 className='sr-only'>Hỗ Trợ Khách Hàng 24/7 - Giải Đáp Mọi Thắc Mắc</h2>
+        <h2 className='sr-only'>Địa Chỉ Showroom & Văn Phòng TC Store</h2>
+        <h2 className='sr-only'>Gửi Tin Nhắn Trực Tiếp Cho Đội Ngũ Hỗ Trợ</h2>
+        <h2 className='sr-only'>Câu Hỏi Thường Gặp (FAQs) Về Liên Hệ</h2>
+        <ContactScreen />
+      </ContainerContent>
     </>
   )
 }

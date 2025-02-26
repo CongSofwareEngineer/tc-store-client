@@ -1,33 +1,33 @@
 'use client'
 import React, { useState } from 'react'
-import { ItemDetailType } from './type'
-import useGetProductByID from '@/hook/tank-query/useGetProductByID'
-import useUserData from '@/hook/useUserData'
 
 import { useEffect } from 'react'
-import useAos from '@/hook/useAos'
-import ViewDetail from './Component/ViewDetail'
 import { cloneData } from '@/utils/functions'
 import dynamic from 'next/dynamic'
 import MyLoading from '@/components/MyLoading'
-import useFirstLoadPage from '@/hook/useFirstLoadPage'
+import useFirstLoadPage from '@/hooks/useFirstLoadPage'
+import { IProduct } from './type'
+import useAos from '@/hooks/useAos'
+import useUserData from '@/hooks/useUserData'
+import useGetProductByID from '@/hooks/tank-query/useGetProductByID'
+import ViewDetail from './Component/ViewDetail'
 
-const PaymentShop = dynamic(() => import('./Component/payment'), {
+const Payment = dynamic(() => import('@/components/Payment'), {
   ssr: true,
   loading: () => {
     return <MyLoading />
   },
 })
 
-const ShoesDetailScreen = ({ productDetail }: { productDetail: ItemDetailType }) => {
+const ShoesDetailScreen = ({ productDetail }: { productDetail: IProduct }) => {
   const [amountBuy, setAmountBuy] = useState(1)
   const [isPayment, setIsPayment] = useState(false)
-  const [productState, setProductState] = useState<ItemDetailType>(productDetail)
+  const [productState, setProductState] = useState<IProduct>(productDetail)
 
   useAos()
   useFirstLoadPage()
   const { isLogin } = useUserData()
-  const { data } = useGetProductByID(productDetail?.id)
+  const { data } = useGetProductByID(productDetail?._id!)
   const dataItem = data?.data ?? productDetail
 
   useEffect(() => {
@@ -50,7 +50,16 @@ const ShoesDetailScreen = ({ productDetail }: { productDetail: ItemDetailType })
 
   if (isPayment) {
     return (
-      <PaymentShop callBack={() => setIsPayment(false)} data={productState} amount={amountBuy} />
+      <Payment
+        clickBack={() => setIsPayment(false)}
+        data={[
+          {
+            ...productState,
+            amountBuy: amountBuy,
+            selected: true,
+          },
+        ]}
+      />
     )
   }
 

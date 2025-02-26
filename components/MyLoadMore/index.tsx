@@ -1,6 +1,6 @@
 import React from 'react'
-import useLanguage from '@/hook/useLanguage'
-import { Button } from 'antd'
+import useLanguage from '@/hooks/useLanguage'
+import { Button } from '@mantine/core'
 
 type Props = {
   hasLoadMore?: boolean

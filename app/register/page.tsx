@@ -1,6 +1,8 @@
 import { generateMetaBase } from '@/utils/serverNext'
 import { NextPage, ResolvingMetadata } from 'next'
 import RegisterScreen from './view'
+import Header from '@/components/Header'
+import ContainerContent from '@/components/ContainerContent'
 
 export async function generateMetadata(_: any, parent: ResolvingMetadata) {
   const dataBase = await parent
@@ -16,14 +18,18 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
 const RegisterPage: NextPage = () => {
   return (
     <>
-      <h1 className='absolute opacity-0'>
-        Đăng Ký Tài Khoản Tại TC Store - Bắt Đầu Hành Trình Mua Sắm Dễ Dàng
-      </h1>
-      <h2 className='absolute opacity-0'>Lợi Ích Khi Đăng Ký Tài Khoản TC Store</h2>
-      <h2 className='absolute opacity-0'>Cách Đăng Ký Tài Khoản Nhanh Chóng</h2>
-      <h2 className='absolute opacity-0'>Ưu Đãi Đặc Biệt Dành Cho Thành Viên Mới</h2>
-      <h2 className='absolute opacity-0'>Hỗ Trợ Khách Hàng 24/7 Trong Quá Trình Đăng Ký</h2>
-      <RegisterScreen />
+      <Header>
+        <h1 className='sr-only'>
+          Đăng Ký Tài Khoản Tại TC Store - Bắt Đầu Hành Trình Mua Sắm Dễ Dàng
+        </h1>
+      </Header>
+      <ContainerContent>
+        <h2 className='sr-only'>Lợi Ích Khi Đăng Ký Tài Khoản TC Store</h2>
+        <h2 className='sr-only'>Cách Đăng Ký Tài Khoản Nhanh Chóng</h2>
+        <h2 className='sr-only'>Ưu Đãi Đặc Biệt Dành Cho Thành Viên Mới</h2>
+        <h2 className='sr-only'>Hỗ Trợ Khách Hàng 24/7 Trong Quá Trình Đăng Ký</h2>
+        <RegisterScreen />
+      </ContainerContent>
     </>
   )
 }

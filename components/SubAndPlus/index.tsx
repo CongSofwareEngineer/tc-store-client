@@ -1,6 +1,6 @@
-import useMedia from '@/hook/useMedia'
-import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons'
+import useMedia from '@/hooks/useMedia'
 import React from 'react'
+import { AiOutlineMinusCircle, AiOutlinePlusCircle } from 'react-icons/ai'
 
 type SubAndPlusType = {
   callBackSub?: (value: number) => void
@@ -45,14 +45,14 @@ const SubAndPlus = ({
         </div>
       ) : (
         <>
-          <MinusCircleOutlined
+          <AiOutlineMinusCircle
             onClick={() => callBackSub(value === 1 ? 1 : Number(value) - 1)}
             className='cursor-pointer'
             style={{ fontSize: isMobile ? 22 : 25, color: 'green' }}
           />
           <span className='min-w-[22px] text-center '>{value}</span>
 
-          <PlusCircleOutlined
+          <AiOutlinePlusCircle
             className='cursor-pointer'
             onClick={() =>
               callBackPlus(

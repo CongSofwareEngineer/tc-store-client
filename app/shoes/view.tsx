@@ -1,14 +1,14 @@
 'use client'
-import useQuerySearch from '@/hook/useQuerySearch'
+import useQuerySearch from '@/hooks/useQuerySearch'
 import React from 'react'
-import MenuShoes from './Components/MenuShoes'
-import InputSearch from '../shop/Component/InputSearch'
-import useShoesShop from '@/hook/tank-query/useShoesShop'
 import MyLoadMore from '@/components/MyLoadMore'
-import ItemProduct from '@/components/ItemProduct'
-import useAos from '@/hook/useAos'
+import useAos from '@/hooks/useAos'
 import LoadingGetData from '@/components/LoadingGetData'
-import useFirstLoadPage from '@/hook/useFirstLoadPage'
+import useFirstLoadPage from '@/hooks/useFirstLoadPage'
+import MenuShoes from './Components/MenuShoes'
+import useShoesShop from '@/hooks/tank-query/useShoesShop'
+import ItemProduct from '@/components/ItemProduct'
+import InputSearch from '@/components/InputSearch'
 
 const ShoesScreen = () => {
   useAos()
@@ -45,6 +45,7 @@ const ShoesScreen = () => {
           loading={isLoading}
           isFetchingNextPage={isFetchingNextPage}
         />
+        {isLoading && <div className='w-full mt-2' />}
         <LoadingGetData colSurface={3} rows={2} loading={isLoading} />
       </div>
     </div>

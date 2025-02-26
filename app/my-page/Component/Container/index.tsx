@@ -1,17 +1,17 @@
 'use client'
 
 import { images } from '@/configs/images'
-import useLanguage from '@/hook/useLanguage'
-import useMedia from '@/hook/useMedia'
-import useUserData from '@/hook/useUserData'
-import { Col, Row } from 'antd'
+import useLanguage from '@/hooks/useLanguage'
+import useMedia from '@/hooks/useMedia'
+import useUserData from '@/hooks/useUserData'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { PropsWithChildren } from 'react'
-import Avatar from '../Avatar'
 import Image from 'next/image'
-import useRoutePage from '@/hook/useRoutePage'
+import useRoutePage from '@/hooks/useRoutePage'
+import { Grid } from '@mantine/core'
+import Avatar from '../Avatar'
 const Container = ({ children }: PropsWithChildren) => {
   const { isMobile } = useMedia()
   const { translate } = useLanguage()
@@ -51,15 +51,17 @@ const Container = ({ children }: PropsWithChildren) => {
       <div className='bg-white w-[calc(100%+40px)]  p-4 top-[-6px] relative left-[-20px]'>
         <div className='w-full relative '>
           <div className='fixed bg-white  w-full flex justify-around bottom-0 left-0 py-3  border-t-[1px] shadow-gray1 border-gray-300 z-10'>
-            <Row className='w-full'>
-              <Col span={8}>{renderItem(images.icon.iconHome, translate('header.home'), '/')}</Col>
-              <Col span={8}>
+            <Grid className='w-full'>
+              <Grid.Col span={4}>
+                {renderItem(images.icon.iconHome, translate('header.home'), '/')}
+              </Grid.Col>
+              <Grid.Col span={4}>
                 {renderItem(images.icon.iconHistory, translate('myPage.myOder'), '/my-page/bill')}
-              </Col>
-              <Col span={8}>
+              </Grid.Col>
+              <Grid.Col span={4}>
                 {renderItem(images.icon.iconMyUser, translate('myPage.myUser'), '/my-page')}
-              </Col>
-            </Row>
+              </Grid.Col>
+            </Grid>
           </div>
           <div className='w-full mb-[75px]'>{children}</div>
         </div>

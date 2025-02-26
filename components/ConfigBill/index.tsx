@@ -1,4 +1,4 @@
-import useLanguage from '@/hook/useLanguage'
+import useLanguage from '@/hooks/useLanguage'
 import React from 'react'
 
 const ConfigBill = ({ item }: { item?: any }) => {

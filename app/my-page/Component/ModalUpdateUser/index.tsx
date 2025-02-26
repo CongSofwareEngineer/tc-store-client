@@ -1,18 +1,18 @@
-import useCheckForm from '@/hook/useCheckForm'
-import useLanguage from '@/hook/useLanguage'
-import useModalDrawer from '@/hook/useModalDrawer'
+import useCheckForm from '@/hooks/useCheckForm'
+import useLanguage from '@/hooks/useLanguage'
+import useModalDrawer from '@/hooks/useModalDrawer'
 import { useUserData as useUserDataZustand } from '@/zustand/useUserData'
 import ClientApi from '@/services/clientApi'
 import { decryptData, encryptData } from '@/utils/crypto'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 
-import { Button, Checkbox, Input } from 'antd'
 import { isEmpty } from 'lodash'
 import React, { useEffect, useState } from 'react'
-import { ZUSTAND } from '@/constant/zustand'
+import { ZUSTAND } from '@/constants/zustand'
 import secureLocalStorage from 'react-secure-storage'
 import ObserverService from '@/services/observer'
-import { OBSERVER_KEY } from '@/constant/app'
+import { OBSERVER_KEY } from '@/constants/app'
+import { Button, Checkbox, Input, Textarea } from '@mantine/core'
 
 type PropsType = {
   keyType: string
@@ -118,12 +118,16 @@ const ModalUpdateUser = ({ keyType, callBack, initValue, maxLength = 20 }: Props
         <div className=''>
           {keyType === 'sex' ? (
             <div className='flex gap-2'>
-              <Checkbox checked={!!getOldValue()} disabled>
-                {translate('textPopular.female')}
-              </Checkbox>
-              <Checkbox checked={!getOldValue()} disabled>
-                {translate('textPopular.male')}
-              </Checkbox>
+              <Checkbox
+                defaultChecked={!getOldValue()}
+                disabled
+                label={translate('textPopular.female')}
+              />
+              <Checkbox
+                defaultChecked={!!getOldValue()}
+                disabled
+                label={translate('textPopular.male')}
+              />
             </div>
           ) : (
             <Input value={getOldValue()?.toString()} disabled />
@@ -136,25 +140,28 @@ const ModalUpdateUser = ({ keyType, callBack, initValue, maxLength = 20 }: Props
         <div className='w-full mt-1'>
           {keyType === 'sex' ? (
             <div className='flex gap-2'>
-              <Checkbox checked={!!valueNew} onClick={() => setValueNew(true)}>
-                {translate('textPopular.female')}
-              </Checkbox>
-              <Checkbox checked={!valueNew} onClick={() => setValueNew(false)}>
-                {translate('textPopular.male')}
-              </Checkbox>
+              <Checkbox
+                value={!valueNew as any}
+                onChange={() => setValueNew(true)}
+                label={translate('textPopular.female')}
+              />
+              <Checkbox
+                value={!!valueNew as any}
+                onChange={() => setValueNew(false)}
+                label={translate('textPopular.male')}
+              />
             </div>
           ) : (
-            <Input.TextArea
+            <Textarea
               rows={2}
               value={valueNew?.toString()}
               onChange={(e) => setValueNew(e.target.value)}
               maxLength={maxLength}
-              showCount
             />
           )}
         </div>
         <div className='w-full mt-6'>
-          <Button className='w-full' loading={loading} onClick={handleSubmit}>
+          <Button className='!w-full' loading={loading} onClick={handleSubmit}>
             {translate('common.save')}
           </Button>
         </div>

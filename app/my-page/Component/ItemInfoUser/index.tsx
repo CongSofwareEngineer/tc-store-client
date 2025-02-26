@@ -1,12 +1,12 @@
 import React from 'react'
-import { ItemInfoUserType } from '../../type'
-import { RightOutlined } from '@ant-design/icons'
-import useLanguage from '@/hook/useLanguage'
-import useModalDrawer from '@/hook/useModalDrawer'
+import useLanguage from '@/hooks/useLanguage'
+import useModalDrawer from '@/hooks/useModalDrawer'
 import ModalUpdateUser from '../ModalUpdateUser'
 import ModalEnterPassAgain from '../ModalEnterPassAgain'
+import { AiOutlineRight } from 'react-icons/ai'
+import { IItemInfoUser } from './type'
 
-const ItemInfoUser = ({ value, keyType, title }: ItemInfoUserType) => {
+const ItemInfoUser = ({ value, keyType, title }: IItemInfoUser) => {
   const { translate } = useLanguage()
   const { openModalDrawer } = useModalDrawer()
 
@@ -32,9 +32,8 @@ const ItemInfoUser = ({ value, keyType, title }: ItemInfoUserType) => {
         useDrawer: true,
         title: `${translate('common.edit')} ${getLanguage()}`,
         configDrawer: {
-          height: '300px',
-          placement: 'bottom',
-          maskClosable: false,
+          position: 'bottom',
+          overClickOutside: false,
         },
       })
     }
@@ -72,7 +71,7 @@ const ItemInfoUser = ({ value, keyType, title }: ItemInfoUserType) => {
           <span>{getDataEx()}</span>
         )}
 
-        <RightOutlined />
+        <AiOutlineRight />
       </span>
     </div>
   )

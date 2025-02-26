@@ -1,23 +1,17 @@
-import { Form, FormProps } from 'antd'
-import React from 'react'
-
-type FormPropsType = {
-  children?: React.ReactNode | null
-  formData?: Record<string, any> | null
-} & FormProps
-
-const MyForm = ({ formData, children, ...props }: FormPropsType) => {
-  if (!formData) {
-    return <></>
-  }
-  return (
-    <Form
-      initialValues={formData}
-      {...props}
-      className={`form-container ${props?.className || ''}`}
-    >
+import React, { FormHTMLAttributes } from 'react'
+export type MyFormProps = {
+  form: any
+  children?: React.ReactNode
+  submit?: (values: any) => any
+  className?: string
+} & FormHTMLAttributes<HTMLFormElement>
+const MyForm = ({ form, children, submit = () => {}, className = '', ...props }: MyFormProps) => {
+  return form ? (
+    <form {...props} onSubmit={form.onSubmit(submit)} className={className}>
       {children}
-    </Form>
+    </form>
+  ) : (
+    <></>
   )
 }
 

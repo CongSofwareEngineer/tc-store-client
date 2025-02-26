@@ -1,6 +1,6 @@
 import { devtools } from 'zustand/middleware'
 import { create } from 'zustand'
-import { INIT_ZUSTAND, TYPE_ZUSTAND, ZUSTAND } from '@/constant/zustand'
+import { INIT_ZUSTAND, TYPE_ZUSTAND, ZUSTAND } from '@/constants/zustand'
 import axios from 'axios'
 
 type ProvincesStoreState = { [ZUSTAND.Provinces]: TYPE_ZUSTAND[ZUSTAND.Provinces] }

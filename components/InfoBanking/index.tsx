@@ -1,12 +1,12 @@
 import VietcomBankService from '@/services/vietcombank'
 import React, { useEffect, useState } from 'react'
 import MyImage from '../MyImage'
-import useLanguage from '@/hook/useLanguage'
-import TextCopy from '../TextCopy'
-import { ExclamationCircleOutlined } from '@ant-design/icons'
-import { Button, Image } from 'antd'
+import useLanguage from '@/hooks/useLanguage'
 import { images } from '@/configs/images'
-import useMedia from '@/hook/useMedia'
+import useMedia from '@/hooks/useMedia'
+import { AiOutlineExclamationCircle } from 'react-icons/ai'
+import { Button, Image } from '@mantine/core'
+import TextCopy from '../TextCopy'
 
 const InfoBanking = ({
   amount,
@@ -32,7 +32,7 @@ const InfoBanking = ({
       setMessage(infoBanking.message)
       setIdBanking(infoBanking.idBanking)
     })()
-  }, [])
+  }, [amount])
 
   const checkBanking = async () => {
     if (isMobile) {
@@ -58,7 +58,7 @@ const InfoBanking = ({
         <div className='relative w-full flex-1 flex md:pb-0  aspect-square overflow-hidden'>
           <div className='absolute w-full aspect-square flex justify-center items-center'>
             <div className='relative md:w-full   aspect-square '>
-              <Image preview={false} src={qrCode} alt='QR' className='!relative !w-full !h-auto ' />
+              <Image src={qrCode} alt='QR' className='!relative !w-full !h-auto ' />
             </div>
           </div>
         </div>
@@ -85,7 +85,7 @@ const InfoBanking = ({
         </div>
         <div className='rounded-lg mt-1 flex p-3 w-full bg-[#f6cf83]'>
           <span className='mr-1'>
-            <ExclamationCircleOutlined />
+            <AiOutlineExclamationCircle />
           </span>
           <span>Nội dung chuyển khoản phải ghi đúng để bạn khiếu nãi và kiểm tra hoá đơn.</span>
         </div>
@@ -98,7 +98,7 @@ const InfoBanking = ({
               <Button
                 onClick={handleCallBack}
                 disabled={isBanking}
-                type='primary'
+                variant='filled'
                 className='flex-1'
               >
                 {translate('textPopular.sended')}

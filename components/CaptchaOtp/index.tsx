@@ -1,10 +1,11 @@
-import useLanguage from '@/hook/useLanguage'
-import useModalDrawer from '@/hook/useModalDrawer'
+import useLanguage from '@/hooks/useLanguage'
+import useModalDrawer from '@/hooks/useModalDrawer'
 import { FirebaseServices } from '@/services/firebaseService'
-import { Button, Image, Input } from 'antd'
+import { Button, Input } from '@mantine/core'
 import { Auth, ConfirmationResult, RecaptchaVerifier } from 'firebase/auth'
 import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import OtpInput from 'react-otp-input'
+import MyImage from '../MyImage'
 
 type CaptchaOtpProps = {
   callback?: (param?: any) => any
@@ -103,11 +104,10 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
       {isPending && !isErrorManyRequest && (
         <div className='flex justify-center items-center'>
           <div className='md:w-[80px] w-[60px] aspect-square overflow-hidden relative '>
-            <Image
-              className='!relative animate-spin3s'
+            <MyImage
+              className='animate-spin3s'
               src={'https://smart.keyring.app/assets/images/Icon/ic_creating_passkey.png'}
               alt='loading'
-              preview={false}
             />
           </div>
         </div>
@@ -133,7 +133,7 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
           </Button>
         )}
 
-        <Button className='flex-1' onClick={closeModalDrawer} type='primary'>
+        <Button className='flex-1' onClick={closeModalDrawer} variant='filled'>
           {translate('common.close')}
         </Button>
       </div>

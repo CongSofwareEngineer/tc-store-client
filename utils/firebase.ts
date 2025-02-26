@@ -1,4 +1,4 @@
-import { DatabaseDocsType, DatabaseQueryType, DatabaseType, QueryData } from '@/constant/firebase'
+import { DatabaseDocsType, DatabaseQueryType, DatabaseType, QueryData } from '@/constants/firebase'
 import {
   WhereFilterOp,
   addDoc,
@@ -14,7 +14,7 @@ import {
   where,
 } from 'firebase/firestore/lite'
 import { encryptData } from './crypto'
-import { PAGE_SIZE_LIMIT } from '@/constant/app'
+import { PAGE_SIZE_LIMIT } from '@/constants/app'
 
 export default class FirebaseFun {
   db: DatabaseType

@@ -1,6 +1,6 @@
 import { devtools, persist } from 'zustand/middleware'
-import { createStore } from 'zustand'
-import { INIT_ZUSTAND, TYPE_ZUSTAND, ZUSTAND } from '@/constant/zustand'
+import { create } from 'zustand'
+import { INIT_ZUSTAND, TYPE_ZUSTAND, ZUSTAND } from '@/constants/zustand'
 import secureLocalStorage from 'react-secure-storage'
 import { decryptData } from '@/utils/crypto'
 
@@ -13,7 +13,7 @@ type UserDataStoreActions = {
 
 type UserDataStore = UserDataStoreState & UserDataStoreActions
 
-const zustandUserData = createStore<UserDataStore>()(
+const zustandUserData = create<UserDataStore>()(
   devtools(
     persist(
       (set) => ({
@@ -26,8 +26,10 @@ const zustandUserData = createStore<UserDataStore>()(
         storage: {
           getItem: () => {
             const dataSecure = secureLocalStorage.getItem(ZUSTAND.UserData)
+
             if (dataSecure) {
               const dataDecode = decryptData(dataSecure.toString())
+
               return {
                 state: {
                   userData: JSON.parse(dataDecode),
@@ -39,13 +41,6 @@ const zustandUserData = createStore<UserDataStore>()(
           removeItem: () => null,
           setItem: () => null,
         },
-        merge: (preState: any, currentState: UserDataStore) => {
-          if (preState?.userData) {
-            currentState[ZUSTAND.UserData] = preState?.userData
-          }
-
-          return currentState
-        },
       }
     ),
     {
@@ -56,5 +51,5 @@ const zustandUserData = createStore<UserDataStore>()(
 )
 
 export const useUserData = () => {
-  return zustandUserData.getState()
+  return zustandUserData((state) => state)
 }

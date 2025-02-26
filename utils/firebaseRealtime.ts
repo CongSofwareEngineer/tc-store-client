@@ -11,7 +11,7 @@ import {
   remove,
   update,
 } from 'firebase/database'
-import { PAGE_SIZE_LIMIT } from '../constant/app'
+import { PAGE_SIZE_LIMIT } from '../constants/app'
 
 class FBRealtimeUtils {
   private db: DatabaseReference

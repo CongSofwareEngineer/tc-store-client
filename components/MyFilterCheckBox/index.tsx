@@ -1,11 +1,9 @@
-import useQuerySearch from '@/hook/useQuerySearch'
-import { Checkbox } from 'antd'
-import React from 'react'
+import useLanguage from '@/hooks/useLanguage'
+import useMedia from '@/hooks/useMedia'
+import useQuerySearch from '@/hooks/useQuerySearch'
+import { Checkbox } from '@mantine/core'
 import MyCollapse from '../MyCollapse'
-import { AlignLeftOutlined, CaretRightOutlined } from '@ant-design/icons'
-import useLanguage from '@/hook/useLanguage'
-import useMedia from '@/hook/useMedia'
-import { isEqual } from 'lodash'
+import { useEffect } from 'react'
 
 type MyFilterCheckBox = {
   data?: Record<string, any>[]
@@ -13,6 +11,7 @@ type MyFilterCheckBox = {
   titleFilter?: string
   isDefault?: boolean
   isReplace?: boolean
+  noBorderBottom?: boolean
 }
 
 const MyFilterCheckBox = ({
@@ -21,10 +20,11 @@ const MyFilterCheckBox = ({
   titleFilter = '',
   isDefault = false,
   isReplace = true,
+  noBorderBottom = false,
 }: MyFilterCheckBox) => {
   const { queries, updateQuery } = useQuerySearch()
   const { translate } = useLanguage()
-  const { isClient, isMobile } = useMedia()
+  const { isClient } = useMedia()
 
   const renderContent = () => {
     return (
@@ -36,11 +36,11 @@ const MyFilterCheckBox = ({
               key={`menu_${typeChecked}_${index}`}
             >
               <Checkbox
+                key={`menu_${typeChecked}_${index}_${queries?.[typeChecked]?.includes(menu?.value || menu.key)}`}
                 checked={queries?.[typeChecked]?.includes(menu?.value || menu.key)}
                 onChange={() => updateQuery(typeChecked, menu?.value || menu.key, isReplace)}
-              >
-                <div className='whitespace-nowrap'>{menu.name || menu.label}</div>
-              </Checkbox>
+                label={<div className='whitespace-nowrap'>{menu.name || menu.label}</div>}
+              />
             </div>
           )
         })}
@@ -49,35 +49,23 @@ const MyFilterCheckBox = ({
     )
   }
 
-  const render = () => {
-    const items = [
-      {
-        key: typeChecked,
-        expandIcon: <AlignLeftOutlined style={{ fontSize: 20 }} />,
-        label: (
+  return isClient ? (
+    <MyCollapse
+      title={
+        <div className='flex items-center flex-1'>
           <div className='flex justify-between items-center'>
             <div className='text-medium '>{titleFilter || translate('menuProduct.category')}</div>
           </div>
-        ),
-        children: renderContent(),
-      },
-    ]
-
-    return isClient ? (
-      <MyCollapse
-        expandIcon={({ isActive }: any) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-        defaultActiveKey={isDefault || !isMobile ? [typeChecked] : []}
-        items={items}
-      />
-    ) : (
-      <></>
-    )
-  }
-  return render()
+        </div>
+      }
+      noBorderBottom={noBorderBottom}
+      isDefaultActive={isDefault}
+    >
+      {renderContent()}
+    </MyCollapse>
+  ) : (
+    <></>
+  )
 }
 
-const compareValueRender = (a: any, b: any): boolean => {
-  return !isEqual(a, b)
-}
-
-export default React.memo(MyFilterCheckBox, compareValueRender)
+export default MyFilterCheckBox

@@ -1,8 +1,7 @@
-import MyInput from '@/components/MyInput'
-import useLanguage from '@/hook/useLanguage'
-import useUserData from '@/hook/useUserData'
+import useLanguage from '@/hooks/useLanguage'
+import useUserData from '@/hooks/useUserData'
 import { encryptData } from '@/utils/crypto'
-import { Button } from 'antd'
+import { Button, PasswordInput } from '@mantine/core'
 import React, { useEffect, useState } from 'react'
 
 const ModalEnterPassAgain = ({ callBack }: { callBack: () => void }) => {
@@ -31,17 +30,18 @@ const ModalEnterPassAgain = ({ callBack }: { callBack: () => void }) => {
       </p>
       <div className='flex flex-col gap-2 w-full'>
         <div>{translate('userDetail.pass')} :</div>
-        <MyInput
+        <PasswordInput
           type='password'
+          className='!pb-0'
           maxLength={15}
           value={passAgain}
-          onChangeText={(e) => setPassAgain(e?.toString() || '')}
+          onChange={(e) => setPassAgain(e.target.value)}
         />
         <span className='text-xs text-red-600 h-4'>
           {isError && translate('warning.inValidPassWordAgain')}
         </span>
         <div className='flex justify-center w-full mt-2'>
-          <Button onClick={handleSubmit} className='w-full'>
+          <Button onClick={handleSubmit} className='!w-full'>
             {translate('common.ok')}
           </Button>
         </div>

@@ -1,7 +1,7 @@
-import useLanguage from '@/hook/useLanguage'
-import useQuerySearch from '@/hook/useQuerySearch'
-import { AlignLeftOutlined } from '@ant-design/icons'
-import React, { useMemo } from 'react'
+import useLanguage from '@/hooks/useLanguage'
+import useQuerySearch from '@/hooks/useQuerySearch'
+import { useMemo } from 'react'
+import { AiOutlineAlignLeft } from 'react-icons/ai'
 
 type MyFilterType = {
   titleHeader?: string
@@ -53,7 +53,7 @@ const MyFilter = ({
         className={`border-b-[1px] border-zinc-500 w-full flex justify-between items-center  md:py-3 py-2 px-3 bg-green-200  ${classNameHeader}`}
       >
         <div className='flex items-center gap-2'>
-          <AlignLeftOutlined style={{ fontSize: 20 }} />
+          <AiOutlineAlignLeft style={{ fontSize: 20 }} />
           <div className='text-medium '>{titleHeader || translate('menuProduct.category')}</div>
         </div>
         {!disableShowClear && (

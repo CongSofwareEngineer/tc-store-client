@@ -1,21 +1,20 @@
-import MyInput from '@/components/MyInput'
-import MyLoading from '@/components/MyLoading'
-import UploadImage from '@/components/UploadImg'
-import { DataAddComment } from '@/constant/mongoDB'
-import { QUERY_KEY } from '@/constant/reactQuery'
-import useCommentDetail from '@/hook/tank-query/useCommentDetail'
-import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
-import useLanguage from '@/hook/useLanguage'
-import useModalDrawer from '@/hook/useModalDrawer'
-import useUserData from '@/hook/useUserData'
 import ClientApi from '@/services/clientApi'
 import { detectImg } from '@/utils/functions'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
-import { ArrowLeftOutlined, CameraOutlined, CloseCircleOutlined } from '@ant-design/icons'
-import { Button, Image, Rate } from 'antd'
 import ImageNext from 'next/image'
 import React, { useEffect, useState } from 'react'
 import ViewDetailBill from '../ViewDetailBill'
+import useUserData from '@/hooks/useUserData'
+import useLanguage from '@/hooks/useLanguage'
+import useModalDrawer from '@/hooks/useModalDrawer'
+import useRefreshQuery from '@/hooks/tank-query/useRefreshQuery'
+import useCommentDetail from '@/hooks/tank-query/useCommentDetail'
+import { DataAddComment } from '@/constants/mongoDB'
+import { QUERY_KEY } from '@/constants/reactQuery'
+import { AiOutlineArrowLeft, AiOutlineCloseCircle } from 'react-icons/ai'
+import Image from 'next/image'
+import MyLoading from '@/components/MyLoading'
+import { Button, Rating, Textarea } from '@mantine/core'
 
 const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
   const { translate } = useLanguage()
@@ -131,7 +130,7 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
         {listImgFeeBack.map((item: any, index: number) => (
           <div key={`img-${index}`} className='relative w-[70px] '>
             <Image alt='img' className='w-[70px]' src={detectImg(item?.base64 || item)} />
-            <CloseCircleOutlined
+            <AiOutlineCloseCircle
               onClick={() => deleteImg(index)}
               className='absolute text-[20px] z-10 cursor-pointer right-0 top-0'
             />
@@ -157,7 +156,7 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
         onClick={handleBack}
         className='w-max mb-4 flex items-center gap-2 cursor-pointer font-bold'
       >
-        <ArrowLeftOutlined />
+        <AiOutlineArrowLeft />
         <div>{translate('common.back')}</div>
       </div>
       <div className='flex gap-2'>
@@ -172,20 +171,13 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
         <div className='flex flex-col gap-2'>
           <div className='font-bold text-lg'>{data?.more_data?.name}</div>
           <div>{getQuality()}</div>
-          <Rate value={rate} onChange={(e) => setRate(e)} />
+          <Rating value={rate} onChange={(e) => setRate(e)} />
         </div>
       </div>
       <div className='mt-2 mb-1'>{`${translate('textPopular.note')} :`}</div>
-      <MyInput
-        onChangeText={(e) => setDes(e.toString())}
-        type='area'
-        rows={3}
-        showCount
-        value={des}
-        maxLength={150}
-      />
+      <Textarea onChange={(e) => setDes(e.target.value)} rows={3} value={des} maxLength={150} />
       <div className='mb-3' />
-      <UploadImage
+      {/* <UploadImage
         handleUpload={handleUpload}
         disabled={listImgFeeBack.length >= 2}
         listData={listImgFeeBack}
@@ -196,7 +188,7 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
           <CameraOutlined className='cursor-pointer' style={{ fontSize: 25, color: 'blue' }} />
           <span>{translate('comment.uploadImg_des')}</span>
         </div>
-      </UploadImage>
+      </UploadImage> */}
       {renderListImg()}
       <Button
         onClick={handleSubmit}

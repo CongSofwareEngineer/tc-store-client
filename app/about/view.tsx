@@ -1,20 +1,20 @@
 'use client'
 import React, { useState } from 'react'
-import { AboutProps } from './type'
 
-import useUserData from '@/hook/useUserData'
-import useLanguage from '@/hook/useLanguage'
-import { PATH_IMG } from '@/constant/mongoDB'
-import useModalDrawer from '@/hook/useModalDrawer'
-import { Button, Input } from 'antd'
+import useUserData from '@/hooks/useUserData'
+import useLanguage from '@/hooks/useLanguage'
+import { PATH_IMG } from '@/constants/mongoDB'
+import useModalDrawer from '@/hooks/useModalDrawer'
 import ModalDelete from '@/components/ModalDelete'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import MyBlog from '@/components/MyBlog'
-import { INIT_DATA_MY_BLOG } from '@/constant/app'
+import { INIT_DATA_MY_BLOG } from '@/constants/app'
 import { FirebaseAbout } from '@/services/firebaseService'
-import useFirstLoadPage from '@/hook/useFirstLoadPage'
+import useFirstLoadPage from '@/hooks/useFirstLoadPage'
+import { TAbout } from './type'
+import { Button, Input } from '@mantine/core'
 
-const AboutScreen = ({ data }: AboutProps) => {
+const AboutScreen = ({ data }: TAbout) => {
   useFirstLoadPage()
   const { openModalDrawer } = useModalDrawer()
   const { userData } = useUserData()

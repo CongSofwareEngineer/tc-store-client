@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import MyCollections from '../MyCollections'
 import ItemProduct from '../ItemProduct'
-import { TYPE_PRODUCT } from '@/constant/admin'
+import { TYPE_PRODUCT } from '@/constants/admin'
 import { useParams } from 'next/navigation'
 import LoadingGetData from '../LoadingGetData'
 import ClientApi from '@/services/clientApi'
-import useRoutePage from '@/hook/useRoutePage'
+import useRoutePage from '@/hooks/useRoutePage'
 
 const MoreCollections = () => {
   const router = useRoutePage()
@@ -43,7 +43,7 @@ const MoreCollections = () => {
       <MyCollections isClickItem={isClickItemRef}>
         <>
           {data.map((e, index: number) => {
-            if (e.keyName !== param.params[0]) {
+            if (e.keyName !== param.params?.[0]) {
               return (
                 <div key={`item-MyCollections-${index}`} className=' min-w-[200px] select-none'>
                   <ItemProduct

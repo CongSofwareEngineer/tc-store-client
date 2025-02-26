@@ -1,21 +1,19 @@
 'use client'
-import useMedia from '@/hook/useMedia'
-import useUserData from '@/hook/useUserData'
-import { CopyOutlined, EditOutlined, RightOutlined } from '@ant-design/icons'
+import useMedia from '@/hooks/useMedia'
+import useUserData from '@/hooks/useUserData'
 import React from 'react'
-import ItemInfoUser from './Component/ItemInfoUser'
-import useLanguage from '@/hook/useLanguage'
+import useLanguage from '@/hooks/useLanguage'
 // import AddressShip from './Component/AddressShip'
 import { numberWithCommas } from '@/utils/functions'
-import MyInput from '@/components/MyInput'
-import useModalDrawer from '@/hook/useModalDrawer'
-import ModalUpdateUser from './Component/ModalUpdateUser'
-import ModalEnterPassAgain from './Component/ModalEnterPassAgain'
-import MyCheckBox from '@/components/MyCheckBox'
+import useModalDrawer from '@/hooks/useModalDrawer'
 import Avatar from './Component/Avatar'
 import { copyToClipboard } from '@/utils/notification'
-import ModalUpdateAddressShip from './Component/ModalUpdateAddressShip'
-import useFirstLoadPage from '@/hook/useFirstLoadPage'
+import useFirstLoadPage from '@/hooks/useFirstLoadPage'
+import { Checkbox, Input } from '@mantine/core'
+import ItemInfoUser from './Component/ItemInfoUser'
+import ModalEnterPassAgain from './Component/ModalEnterPassAgain'
+import ModalUpdateUser from './Component/ModalUpdateUser'
+import { AiOutlineCopy, AiOutlineEdit, AiOutlineRight } from 'react-icons/ai'
 
 const MyProfile = () => {
   const { isMobile } = useMedia()
@@ -39,11 +37,11 @@ const MyProfile = () => {
     }
   }
   const updateAddressShip = () => {
-    openModalDrawer({
-      content: <ModalUpdateAddressShip />,
-      title: `${translate('common.update')} ${translate('textPopular.addressShip')}`,
-      useDrawer: true,
-    })
+    // openModalDrawer({
+    //   content: <ModalUpdateAddressShip />,
+    //   title: `${translate('common.update')} ${translate('textPopular.addressShip')}`,
+    //   useDrawer: true,
+    // })
   }
 
   const handleEditName = (key: string) => {
@@ -78,7 +76,7 @@ const MyProfile = () => {
         <div className='flex flex-1 flex-nowrap'>
           <div className='flex flex-1 justify-end gap-2  '>
             <span>{addressString || translate('textPopular.notData')}</span>
-            <RightOutlined onClick={updateAddressShip} />
+            <AiOutlineRight onClick={updateAddressShip} />
           </div>
         </div>
       </div>
@@ -86,9 +84,9 @@ const MyProfile = () => {
       <div className='flex gap-2'>
         <span className='w-[140px]'>{translate('textPopular.address')}</span>
         <div className='flex flex-1 flex-nowrap'>
-          <div className='flex flex-1 justify-between gap-2  '>
+          <div className='flex flex-1   gap-2  '>
             <span>{addressString || translate('textPopular.notData')}</span>
-            <EditOutlined
+            <AiOutlineEdit
               onClick={updateAddressShip}
               className='text-xl cursor-pointer hover:scale-110 ml-1'
               style={{ color: 'green' }}
@@ -109,34 +107,28 @@ const MyProfile = () => {
           <div className='flex flex-1 flex-col gap-5'>
             <div className='flex gap-2'>
               <span className='w-[140px]'>{translate('userDetail.sdt')}</span>
-              <div className='flex gap-1 text-green-500'>
+              <div className='flex items-center gap-1 text-green-500'>
                 {userData?.sdt}
-                <CopyOutlined onClick={() => copyToClipboard(userData?.sdt)} />
+                <AiOutlineCopy onClick={() => copyToClipboard(userData?.sdt)} />
               </div>
             </div>
 
             <div className='flex gap-2'>
               <span className='w-[140px]'>{translate('userDetail.name')}</span>
-              <div className='flex flex-1 gap-2 items-end'>
-                <MyInput className='w-[90%]' typeBtn={1} value={userData?.name} />
-                <EditOutlined
+              <div className='flex flex-1 gap-2 items-center'>
+                <Input className='flex-1' value={userData?.name} />
+                <AiOutlineEdit
                   onClick={() => handleEditName('name')}
                   className='text-xl cursor-pointer hover:scale-110 ml-1'
                   style={{ color: 'green' }}
                 />
               </div>
             </div>
-            <div className='flex gap-2'>
+            <div className='flex gap-2 items-center'>
               <span className='w-[140px]'>{translate('userDetail.pass')}</span>
-              <div className='flex flex-1 gap-2 items-end'>
-                <MyInput
-                  className='w-[90%]'
-                  typeBtn={1}
-                  type='password'
-                  value={userData?.pass}
-                  disabled
-                />
-                <EditOutlined
+              <div className='flex flex-1  gap-2 items-center'>
+                <Input className='flex-1' type='password' value={userData?.pass} disabled />
+                <AiOutlineEdit
                   onClick={() => handleEditName('pass')}
                   className='text-xl cursor-pointer hover:scale-110 ml-1'
                   style={{ color: 'green' }}
@@ -146,13 +138,17 @@ const MyProfile = () => {
             <div className='flex gap-2'>
               <span className='w-[140px]'>{translate('userDetail.sex')}</span>
               <div className='flex flex-1 gap-2 items-end'>
-                <div className='flex gap-2 items-end'>
-                  <MyCheckBox value={userData?.sex} />
-                  <span>
-                    {translate(userData?.sex ? 'textPopular.female' : 'textPopular.male')}
-                  </span>
+                <div className='flex gap-2 items-center'>
+                  <Checkbox
+                    label={
+                      <span>
+                        {translate(userData?.sex ? 'textPopular.female' : 'textPopular.male')}
+                      </span>
+                    }
+                    defaultChecked
+                  />
                 </div>
-                <EditOutlined
+                <AiOutlineEdit
                   onClick={() => handleEditName('sex')}
                   className='text-xl cursor-pointer hover:scale-110 ml-1'
                   style={{ color: 'green' }}

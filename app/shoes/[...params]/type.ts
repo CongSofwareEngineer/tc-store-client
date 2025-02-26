@@ -1,25 +1,35 @@
-export type ItemDetailType = {
+export type IProduct = {
   imageMain?: string
   typeProduct?: string
   des?: string
   name: string
   _id?: string
   keyName?: string
-  [key: string]: any
+  price?: number
+  amount?: number
+  more_data?: IProduct
+  discount?: number
+  category?: string
+  sold?: number
+  disCount?: number
+  configBill?: {
+    [key: string]: unknown
+  }
+  [key: string]: unknown
 }
 
-export type ModalBuyLoginType = {
-  data?: ItemDetailType
+export type IModalBuyLogin = {
+  data?: IProduct
   amount: number
 }
 
-export type PaymentShopType = {
-  data?: ItemDetailType
+export type IPaymentShop = {
+  data?: IProduct
   callBack: () => void
   amount: number
 }
 
-export type InfoBillType = {
-  data?: ItemDetailType
+export type IInfoBill = {
+  data?: IProduct
   amountBuy: number
 }

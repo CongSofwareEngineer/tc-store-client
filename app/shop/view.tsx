@@ -1,10 +1,11 @@
 'use client'
 import React from 'react'
-import useAos from '@/hook/useAos'
-import MenuCategory from './Component/MenuCategory'
-import InputSearch from './Component/InputSearch'
-import Content from './Component/Content'
-import useFirstLoadPage from '@/hook/useFirstLoadPage'
+import useAos from '@/hooks/useAos'
+
+import useFirstLoadPage from '@/hooks/useFirstLoadPage'
+import MenuCategory from './Components/MenuCategory'
+import InputSearch from '@/components/InputSearch'
+import Content from './Components/Content'
 
 const ShopScreen = () => {
   useAos()

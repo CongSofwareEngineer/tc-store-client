@@ -1,25 +1,26 @@
 'use client'
-import ButtonForm from '@/components/Form/ButtonForm'
-import InputForm from '@/components/Form/InputForm'
-// import ModalProcess from '@/components/ModalProcess'
-import MyForm from '@/components/Form/MyForm'
 
-import { images } from '@/configs/images'
-import useAos from '@/hook/useAos'
-import useCheckForm from '@/hook/useCheckForm'
-import useLanguage from '@/hook/useLanguage'
-import useMedia from '@/hook/useMedia'
-import useModalDrawer from '@/hook/useModalDrawer'
-import useUserData from '@/hook/useUserData'
-import React, { useEffect, useState } from 'react'
-import dynamic from 'next/dynamic'
-import { DataAddContact } from '@/constant/mongoDB'
-
-import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
+import { DataAddContact } from '@/constants/mongoDB'
+import useAos from '@/hooks/useAos'
+import useCheckForm from '@/hooks/useCheckForm'
+import useFirstLoadPage from '@/hooks/useFirstLoadPage'
+import useLanguage from '@/hooks/useLanguage'
+import useMedia from '@/hooks/useMedia'
+import useModalDrawer from '@/hooks/useModalDrawer'
+import useRoutePage from '@/hooks/useRoutePage'
+import useUserData from '@/hooks/useUserData'
 import ClientApi from '@/services/clientApi'
-import Image from 'next/image'
-import useRoutePage from '@/hook/useRoutePage'
-import useFirstLoadPage from '@/hook/useFirstLoadPage'
+import { showNotificationSuccess } from '@/utils/notification'
+import { useForm } from '@mantine/form'
+import dynamic from 'next/dynamic'
+import { useEffect, useState } from 'react'
+import { showNotificationError } from '../../utils/notification'
+import MyImage from '@/components/MyImage'
+import { images } from '@/configs/images'
+import MyForm from '@/components/Form/MyForm'
+import InputForm from '@/components/Form/Input'
+import InputAreaForm from '@/components/Form/InputArea'
+import ButtonForm from '@/components/Form/ButtonForm'
 
 const ModalProcess = dynamic(() => import('@/components/ModalProcess'), {
   ssr: true,
@@ -30,36 +31,42 @@ const ContactScreen = () => {
   const { isMobile } = useMedia()
   const router = useRoutePage()
   const { translate } = useLanguage()
-  const { checkNumberPhone } = useCheckForm()
+  const { checkNumberPhone, checkEmail, checkNameUser } = useCheckForm()
   const { userData } = useUserData()
   const { closeModalDrawer, openModalDrawer } = useModalDrawer()
 
   const [loading, setLoading] = useState(false)
-  const [formData, setFormData] = useState<any>(null)
-
+  const form = useForm<DataAddContact>({
+    validateInputOnChange: true,
+    initialValues: {
+      sdt: '',
+      emailUser: '',
+      nameUser: '',
+      des: '',
+    },
+    validate: {
+      sdt: checkNumberPhone,
+      emailUser: checkEmail,
+      nameUser: checkNameUser,
+    },
+  })
   useEffect(() => {
-    const content = window.document.getElementsByClassName('main-content')[0]
-    if (content) {
-      content.classList.add('bg-custom-register')
-    }
-
-    const initData = {
+    const initData: DataAddContact = {
       sdt: userData?.sdt || '',
-      email: userData?.email || '',
-      name: userData?.name || '',
-      note: '',
+      emailUser: userData?.email || '',
+      nameUser: userData?.name || '',
+      des: '',
     }
-    setFormData(initData)
-    return () => content.classList.remove('bg-custom-register')
+    form.setValues(initData)
   }, [userData])
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (formData: DataAddContact) => {
     setLoading(true)
     const dataAPI: DataAddContact = {
-      des: formData?.note,
+      des: formData?.des,
       sdt: formData?.sdt,
-      emailUser: formData?.email,
-      nameUser: formData?.name,
+      emailUser: formData?.emailUser,
+      nameUser: formData?.nameUser,
     }
     openModalDrawer({
       content: <ModalProcess />,
@@ -88,10 +95,9 @@ const ContactScreen = () => {
             data-aos='fade-right'
             className='flex-1 flex flex-col justify-center items-center max-w-[450px]'
           >
-            <Image
-              fill
+            <MyImage
               alt={'tc-store-logo-register'}
-              className='!relative cursor-pointer !max-w-0['
+              className='  cursor-pointer !max-w-0['
               onClick={() => router.push('/')}
               src={images.logoStore}
             />
@@ -100,13 +106,52 @@ const ContactScreen = () => {
 
         <div data-aos='fade-left' className='flex flex-1 justify-start items-start md:w-fit w-full'>
           <div className='m-auto flex flex-col   md:w-[80%] w-full shadow-md p-8 rounded-[16px] justify-center align-middle bg-white'>
-            <h1 className='mb- uppercase font-bold text-center text-[16px]'>
+            <p className='mb- uppercase font-bold text-center text-[16px]'>
               {translate('header.contact')}
-            </h1>
-            <h2 className='opacity-0 h-0 w-0 overflow-hidden absolute -z-10'>
-              Liên hệ với Shop nếu cần có thắc mắc cũng như muốn hợp tác với Shop
-            </h2>
-            {formData && (
+            </p>
+            <MyForm form={form} submit={handleSubmit}>
+              <InputForm
+                required
+                placeholder={translate('productDetail.modalBuy.enterNumberPhone')}
+                formData={form}
+                keyName='sdt'
+                label={translate('productDetail.modalBuy.enterNumberPhone')}
+              />
+              <InputForm
+                required
+                placeholder={translate('productDetail.modalBuy.enterName')}
+                formData={form}
+                keyName='nameUser'
+                label={translate('productDetail.modalBuy.enterName')}
+                showCount
+                maxLength={14}
+              />
+              <InputForm
+                required
+                placeholder={'Email'}
+                formData={form}
+                keyName='emailUser'
+                label={'Email'}
+              />
+              <InputAreaForm
+                required
+                placeholder={translate('textPopular.note')}
+                formData={form}
+                keyName='desá'
+                label={translate('textPopular.note')}
+                showCount
+                rows={5}
+                maxLength={300}
+              />
+              <ButtonForm
+                classBtnSubmit='mt-6'
+                loading={loading}
+                disableClose
+                titleSubmit={translate('common.Send')}
+              />
+            </MyForm>
+
+            {/* {formData && (
               <MyForm
                 onValuesChange={(_, value) => setFormData({ ...formData, ...value })}
                 formData={formData}
@@ -139,14 +184,12 @@ const ContactScreen = () => {
 
                   <ButtonForm
                     loading={loading}
-                    classNameItem='w-full'
-                    className='w-full'
-                    disableClose
+                     disableClose
                     titleSubmit={translate('common.Send')}
                   />
                 </div>
               </MyForm>
-            )}
+            )} */}
           </div>
         </div>
       </div>

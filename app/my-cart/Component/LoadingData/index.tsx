@@ -1,8 +1,7 @@
-import { LoadingDataProps } from '@/app/my-page/bill/Component/LoadingData'
 import MySkeleton from '@/components/MySkeleton'
 import React from 'react'
 
-const LoadingData = ({ loading }: LoadingDataProps) => {
+const LoadingData = ({ loading }: { loading: boolean }) => {
   if (!loading) {
     return <></>
   }

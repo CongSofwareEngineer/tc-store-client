@@ -1,39 +1,39 @@
 'use client'
 import BtnBack from '@/components/BtnBack'
-import useMyCart from '@/hook/tank-query/useMyCart'
-import useLanguage from '@/hook/useLanguage'
-import useMedia from '@/hook/useMedia'
+import useMyCart from '@/hooks/tank-query/useMyCart'
+import useLanguage from '@/hooks/useLanguage'
+import useMedia from '@/hooks/useMedia'
 import { useEffect, useState } from 'react'
-import { PAGE_SIZE_LIMIT } from '@/constant/app'
+import { PAGE_SIZE_LIMIT } from '@/constants/app'
 import { cloneData, numberWithCommas } from '@/utils/functions'
-import ListItemCart from './Component/ListItemCart'
 // import Payment from './Component/Payment'
 import ClientApi from '@/services/clientApi'
-import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
-import { QUERY_KEY } from '@/constant/reactQuery'
+import useRefreshQuery from '@/hooks/tank-query/useRefreshQuery'
+import { QUERY_KEY } from '@/constants/reactQuery'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
-import { Button } from 'antd'
-import LoadingData from './Component/LoadingData'
 import MyLoading from '@/components/MyLoading'
-import useFirstLoadPage from '@/hook/useFirstLoadPage'
+import useFirstLoadPage from '@/hooks/useFirstLoadPage'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
+import { Button } from '@mantine/core'
+import ListItemCart from '@/components/ListItemCart'
+import LoadingData from './Component/LoadingData'
+import { IProduct } from '../shoes/[...params]/type'
 
-const Payment = dynamic(() => import('./Component/Payment'), {
+const Payment = dynamic(() => import('@/components/Payment'), {
   ssr: false,
   loading: () => <MyLoading />,
 })
 
 const MyCartScreen = () => {
-  const [listCartFormat, setListCartFormat] = useState<any[]>([])
-  const [isPayment, setIsPayment] = useState(false)
-  const [allSelected, setAllSelected] = useState(false)
+  const [listCartFormat, setListCartFormat] = useState<IProduct[]>([])
+  const [listPaymentFormat, setListPaymentFormat] = useState<IProduct[]>([])
   const [pageSize] = useState(PAGE_SIZE_LIMIT)
 
   useFirstLoadPage()
   const { data, isLoading } = useMyCart(pageSize)
   const { translate } = useLanguage()
-  const { isMobile, isClient } = useMedia()
+  const { isMobile } = useMedia()
   const { refreshListQuery } = useRefreshQuery()
 
   useEffect(() => {
@@ -83,7 +83,7 @@ const MyCartScreen = () => {
 
   const handleDelete = async (index: number) => {
     const dataRemove = listCartFormat[index]
-    const data = await ClientApi.deleteCart(dataRemove._id)
+    const data = await ClientApi.deleteCart(dataRemove._id!)
     if (data.data) {
       await refreshListQuery([QUERY_KEY.MyCartUser, QUERY_KEY.LengthCartUser])
       showNotificationSuccess(translate('success.delete'))
@@ -101,7 +101,11 @@ const MyCartScreen = () => {
       }
     })
     setListCartFormat(dataClone)
-    setAllSelected(isSelect)
+  }
+
+  const handlePayment = () => {
+    const arrTemp = listCartFormat.filter((e) => e?.selected)
+    setListPaymentFormat(arrTemp)
   }
 
   const renderDesktop = () => {
@@ -117,7 +121,6 @@ const MyCartScreen = () => {
               className='flex-1 max-h-[calc(100dvh-150px)]  border-2 border-gray-300  overflow-y-auto bg-white'
             >
               <ListItemCart
-                allSelected={allSelected}
                 dataCart={listCartFormat}
                 callBackClick={handleSelect}
                 callBackDelete={handleDelete}
@@ -138,9 +141,9 @@ const MyCartScreen = () => {
               </div>
               <div className='border-[1px] border-gray-300 w-full' />
               <Button
-                className='w-full'
+                className='!w-full'
                 disabled={Number(calculatePayment()) <= 1}
-                onClick={() => setIsPayment(true)}
+                onClick={handlePayment}
               >
                 {`${translate('cart.payment')} (${calculateItemPayment()})`}
               </Button>
@@ -169,7 +172,6 @@ const MyCartScreen = () => {
                 className='mt-1 flex-1 flex-col  border-[.5px] border-gray-300 bg-white '
               >
                 <ListItemCart
-                  allSelected={allSelected}
                   dataCart={listCartFormat}
                   callBackClick={handleSelect}
                   callBackDelete={handleDelete}
@@ -196,7 +198,7 @@ const MyCartScreen = () => {
             </div>
             <div className='w-full border-[1px] border-gray-200  relative  ' />
 
-            <Button disabled={Number(calculatePayment()) <= 1} onClick={() => setIsPayment(true)}>
+            <Button disabled={Number(calculatePayment()) <= 1} onClick={handlePayment}>
               {`${translate('cart.payment')} (${numberWithCommas(calculatePayment())} VNĐ)`}
             </Button>
           </div>
@@ -207,16 +209,12 @@ const MyCartScreen = () => {
 
   return (
     <>
-      {isClient && (
-        <>
-          {isPayment ? (
-            <Payment clickBack={() => setIsPayment(false)} dataCart={listCartFormat} />
-          ) : isMobile ? (
-            renderMobile()
-          ) : (
-            renderDesktop()
-          )}
-        </>
+      {listPaymentFormat?.length > 0 ? (
+        <Payment clickBack={() => setListPaymentFormat([])} data={listPaymentFormat} />
+      ) : isMobile ? (
+        renderMobile()
+      ) : (
+        renderDesktop()
       )}
     </>
   )

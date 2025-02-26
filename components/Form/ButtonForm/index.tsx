@@ -1,57 +1,51 @@
-import { Button, Form } from 'antd'
+import useLanguage from '@/hooks/useLanguage'
+import useModalDrawer from '@/hooks/useModalDrawer'
+import { cn } from '@/utils/tailwind'
+import { Button, Group } from '@mantine/core'
 import React from 'react'
-
-import useLanguage from '@/hook/useLanguage'
-import useModalDrawer from '@/hook/useModalDrawer'
 
 type ButtonFormType = {
   loading?: boolean
   disableClose?: boolean
   titleSubmit?: string
   titleClose?: string
-  className?: string
-  classNameItem?: string
   classBtnSubmit?: string
   classBtnCancel?: string
   disabledSubmit?: boolean
 }
+
 const ButtonForm = ({
   loading,
   disableClose = false,
   titleSubmit = '',
-  className = '',
   titleClose = '',
   classBtnSubmit = '',
   classBtnCancel = '',
-  classNameItem = '',
   disabledSubmit = false,
 }: ButtonFormType) => {
   const { translate } = useLanguage()
   const { closeModalDrawer } = useModalDrawer()
 
   return (
-    <div className={`w-full flex justify-center items-center gap-4 mt-2 ${className}`}>
-      <Form.Item className={`flex flex-1 form-item-button  ${classNameItem}`}>
-        <Button
-          disabled={disabledSubmit}
-          className={`w-full m-auto ${classBtnSubmit}`}
-          loading={loading}
-          htmlType='submit'
-        >
-          {titleSubmit || translate('cart.payment')}
-        </Button>
-      </Form.Item>
+    <Group justify='center' className='w-full '>
+      <Button
+        loading={loading}
+        disabled={disabledSubmit}
+        type='submit'
+        className={cn('flex flex-1 !w-full', classBtnSubmit)}
+      >
+        {titleSubmit || translate('cart.payment')}
+      </Button>
       {!disableClose && (
         <Button
-          disabled={loading}
-          className={`flex flex-1 w-[150px] ${classBtnCancel}`}
+          className={cn('flex flex-1', classBtnCancel)}
           onClick={closeModalDrawer}
-          type='primary'
+          variant='filled'
         >
           {titleClose || translate('common.close')}
         </Button>
       )}
-    </div>
+    </Group>
   )
 }
 

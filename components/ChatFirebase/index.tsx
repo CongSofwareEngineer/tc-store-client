@@ -1,20 +1,21 @@
-import useLanguage from '@/hook/useLanguage'
-import useMedia from '@/hook/useMedia'
-import useUserData from '@/hook/useUserData'
+'use client'
+import useLanguage from '@/hooks/useLanguage'
+import useMedia from '@/hooks/useMedia'
+import useUserData from '@/hooks/useUserData'
 import FBRealtimeUtils from '@/utils/firebaseRealtime'
 import { NextPage } from 'next'
 import React, { useEffect, useRef, useState } from 'react'
 import { images } from '@/configs/images'
-import { CloseCircleOutlined, SendOutlined } from '@ant-design/icons'
-import MyInput from '../MyInput'
-import ChatMessage from '../ChatMessage'
 
-import Draggable from 'react-draggable'
 import { getDataLocal, saveDataLocal } from '@/utils/functions'
-import { LOCAL_STORAGE_KEY } from '@/constant/app'
-import { Image } from 'antd'
+import { LOCAL_STORAGE_KEY } from '@/constants/app'
 import ClientApi from '@/services/clientApi'
-import ItemChatDetail from '@/app/admin/chats/Components/ItemChatDetail'
+import { AiOutlineCloseCircle, AiOutlineSend } from 'react-icons/ai'
+import ChatMessage from '../ChatMessage'
+import MyImage from '../MyImage'
+import ItemChatDetail from '../ItemChatDetail'
+import { Input } from '@mantine/core'
+import { useDragControls, motion } from 'framer-motion'
 
 export type DataMessage = {
   date: number
@@ -30,13 +31,14 @@ const ChatFirebase: NextPage = () => {
   const isDragging = useRef(false)
   const dbRef = useRef<FBRealtimeUtils | null>(null)
   const idBDRef = useRef<number | string>(0)
+  const controls = useDragControls()
 
   const [listChats, setListChats] = useState<DataMessage[]>([])
   const { userData } = useUserData()
   const [content, setContent] = useState('')
   const [enableChat, setEnableChat] = useState(false)
   const [isSendMuchMessages, setIsSendMuchMessages] = useState(false)
-  const [position, setPosition] = useState({ right: 20, bottom: 20 })
+  const [position] = useState({ right: 20, bottom: 20 })
 
   useEffect(() => {
     const createDB = (keyName: string | number) => {
@@ -132,62 +134,19 @@ const ChatFirebase: NextPage = () => {
   }
 
   const handleMouseMove = (e: MouseEvent) => {
-    if (isMobile) {
-      handleTouchMove(e)
-      return
-    }
     isDragging.current = true
-    const right = window.innerWidth - e.clientX - 25
-    const bottom = window.innerHeight - e.clientY - 25
-
-    const checkValidPosition = (value: number, max: number) => {
-      if (value > 0) {
-        if (value > max - 40) {
-          return max - 40
-        }
-        return value
-      } else {
-        return 0
-      }
-    }
-    setPosition({
-      right: checkValidPosition(right, window.innerWidth), // 25 là nửa width icon
-      bottom: checkValidPosition(bottom, window.innerHeight), // 25 là nửa width icon
-    })
-
-    e.preventDefault()
-  }
-
-  const handleTouchMove = (e: any) => {
-    isDragging.current = true
-    const touch = e.touches[0]
-    const right = window.innerWidth - touch.clientX - 25
-    const bottom = window.innerHeight - touch.clientY - 25
-
-    const checkValidPosition = (value: number, max: number) => {
-      if (value > 0) {
-        if (value > max - 40) {
-          return max - 40
-        }
-        return value
-      } else {
-        return 0
-      }
-    }
-    setPosition({
-      right: checkValidPosition(right, window.innerWidth), // 25 là nửa width icon
-      bottom: checkValidPosition(bottom, window.innerHeight), // 25 là nửa width icon
-    })
-
-    // Ngừng cuộn trang khi di chuyển icon
     e.preventDefault()
   }
 
   const handleClick = () => {
-    console.log('handleClick')
-
     if (!isDragging.current) {
       setEnableChat(true)
+    }
+  }
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSend()
     }
   }
 
@@ -226,7 +185,7 @@ const ChatFirebase: NextPage = () => {
             <div>Chat</div>
 
             <div className='text-black text-xl'>
-              <CloseCircleOutlined
+              <AiOutlineCloseCircle
                 className='cursor-pointer'
                 onClick={() => setEnableChat(false)}
               />
@@ -264,25 +223,44 @@ const ChatFirebase: NextPage = () => {
 
           <div className='flex w-full border-t-[1px] border-gray-300'>
             <div className='flex flex-1'>
-              <MyInput
-                onPressEnter={handleSend}
+              <Input
+                onKeyDown={handleKeyDown}
                 value={content}
                 placeholder={translate('placeholder.enterContent')}
-                onChangeText={(text) => setContent(text.toString())}
-                className='w-full !pl-2'
-                typeBtn={1}
+                onChange={(text) => setContent(text.target.value)}
+                className='w-full !pl-2 '
+                styles={{
+                  input: {
+                    border: 0,
+                    paddingLeft: 5,
+                  },
+                }}
               />
               <div className='h-full justify-center items-center flex px-2 bg-gray-300'>
-                <SendOutlined onClick={handleSend} className='cursor-pointer' />
+                <AiOutlineSend onClick={handleSend} className='cursor-pointer' />
               </div>
             </div>
           </div>
         </div>
       ) : (
-        <Draggable
-          allowAnyClick
-          enableUserSelectHack
-          onStop={() => {
+        <motion.div
+          drag
+          // dragListener={false}
+          dragConstraints={{
+            left: -window.innerWidth + 50,
+            right: 20,
+            top: -window.innerHeight + 50,
+            bottom: 0,
+          }}
+          style={{ touchAction: 'none' }}
+          animate={false}
+          dragControls={controls}
+          dragElastic={false}
+          onDrag={(e: any) => {
+            console.log({ onDrag: e })
+            handleMouseMove(e)
+          }}
+          onDragEnd={() => {
             if (isMobile && !isDragging.current) {
               handleClick()
             }
@@ -291,13 +269,9 @@ const ChatFirebase: NextPage = () => {
               isDragging.current = false
             }, 200)
           }}
-          onDrag={(e: any) => {
-            handleMouseMove(e)
-          }}
         >
           <div onClick={handleClick} className='relative'>
-            <Image
-              preview={false}
+            <MyImage
               alt='icon-message-chat'
               src={images.icon.iconMessageChat}
               className='!relative select-none !w-[40px] !h-[40px] drop-shadow-img'
@@ -308,7 +282,7 @@ const ChatFirebase: NextPage = () => {
               className='absolute inset-0 w-full h-full z-10 cursor-pointer '
             />
           </div>
-        </Draggable>
+        </motion.div>
       )}
     </div>
   )

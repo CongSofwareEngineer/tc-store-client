@@ -1,5 +1,5 @@
 import MySkeleton from '@/components/MySkeleton'
-import useMedia from '@/hook/useMedia'
+import useMedia from '@/hooks/useMedia'
 import React from 'react'
 export type LoadingDataProps = {
   loading?: boolean

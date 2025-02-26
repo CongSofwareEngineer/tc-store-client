@@ -1,12 +1,12 @@
-import { LOCAL_STORAGE_KEY } from '@/constant/app'
-import { TYPE_NOTIFICATION } from '@/constant/firebase'
-import useLanguage from '@/hook/useLanguage'
-import useRoutePage from '@/hook/useRoutePage'
-import useUserData from '@/hook/useUserData'
+import { LOCAL_STORAGE_KEY } from '@/constants/app'
+import { TYPE_NOTIFICATION } from '@/constants/firebase'
+import useLanguage from '@/hooks/useLanguage'
+import useRoutePage from '@/hooks/useRoutePage'
+import useUserData from '@/hooks/useUserData'
 import ClientApi from '@/services/clientApi'
 import { FirebaseServices } from '@/services/firebaseService'
 import { saveDataLocal } from '@/utils/functions'
-import { Button, notification } from 'antd'
+import { Button } from '@mantine/core'
 import { NextPage } from 'next'
 import React, { useEffect } from 'react'
 
@@ -33,42 +33,42 @@ const NotificationClient: NextPage = () => {
               router.push('/shoes')
               break
           }
-          notification.destroy(key)
+          // notification.destroy(key)
         }
-        const btn = (
-          <div className='flex w-full justify-end gap-2'>
-            <Button
-              type='default'
-              onClick={() => handleConfirm(dataMess.data.type)}
-              className='min-w-[50px]'
-            >
-              {translate('common.view')}
-            </Button>
-            <Button onClick={() => notification.destroy(key)} size='middle' type='primary'>
-              {translate('common.close')}
-            </Button>
-          </div>
-        )
+        // const btn = (
+        //   <div className='flex w-full justify-end gap-2'>
+        //     <Button
+        //       type='default'
+        //       onClick={() => handleConfirm(dataMess.data.type)}
+        //       className='min-w-[50px]'
+        //     >
+        //       {translate('common.view')}
+        //     </Button>
+        //     <Button onClick={() => notification.destroy(key)} size='middle' type='primary'>
+        //       {translate('common.close')}
+        //     </Button>
+        //   </div>
+        // )
 
-        notification.open({
-          message: (
-            <div className='text-black font-bold '>
-              {dataMess?.data?.title || dataMess?.notification?.title}
-            </div>
-          ),
-          description: (
-            <div className='max-h-[100px] overflow-scroll'>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: dataMess?.data?.body || dataMess?.notification?.body,
-                }}
-              />
-            </div>
-          ),
-          btn,
-          key,
-          duration: 10,
-        })
+        // notification.open({
+        //   message: (
+        //     <div className='text-black font-bold '>
+        //       {dataMess?.data?.title || dataMess?.notification?.title}
+        //     </div>
+        //   ),
+        //   description: (
+        //     <div className='max-h-[100px] overflow-scroll'>
+        //       <div
+        //         dangerouslySetInnerHTML={{
+        //           __html: dataMess?.data?.body || dataMess?.notification?.body,
+        //         }}
+        //       />
+        //     </div>
+        //   ),
+        //   btn,
+        //   key,
+        //   duration: 10,
+        // })
       }
       FirebaseServices.addListenMessage((dataMess) => {
         console.log({ dataMess })

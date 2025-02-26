@@ -1,8 +1,8 @@
-import { RightOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 import { images } from '@/configs/images'
 import Image from 'next/image'
-import useRoutePage from '@/hook/useRoutePage'
+import useRoutePage from '@/hooks/useRoutePage'
+import { AiOutlineRight } from 'react-icons/ai'
 
 type BtnBackType = {
   children?: React.ReactNode | undefined
@@ -41,7 +41,7 @@ const BtnBack = ({ title, url = [], onClick = null, className = '' }: BtnBackTyp
                   onClick={() => router.push(url[index])}
                 >
                   <span>{item}</span>
-                  <RightOutlined className='black' />
+                  <AiOutlineRight className='black' />
                 </Link>
               )
             }

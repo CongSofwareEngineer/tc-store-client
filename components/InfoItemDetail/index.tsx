@@ -1,12 +1,12 @@
 import React from 'react'
-import { ItemDetailType } from './type'
-import { TYPE_PRODUCT_EX } from '@/constant/mongoDB'
-import { Rate } from 'antd'
-import useMedia from '@/hook/useMedia'
-import useLanguage from '@/hook/useLanguage'
+import { TYPE_PRODUCT_EX } from '@/constants/mongoDB'
+import useMedia from '@/hooks/useMedia'
+import useLanguage from '@/hooks/useLanguage'
 import { numberWithCommas } from '@/utils/functions'
+import { Rating } from '@mantine/core'
+import { IProduct } from '@/app/shoes/[...params]/type'
 
-const InfoItemDetail = ({ data }: { data: ItemDetailType }) => {
+const InfoItemDetail = ({ data }: { data: IProduct }) => {
   const { isMobile } = useMedia()
   const { translate } = useLanguage()
 
@@ -44,7 +44,7 @@ const InfoItemDetail = ({ data }: { data: ItemDetailType }) => {
     return (
       <div className='w-full flex flex-col gap-2  '>
         <div className='flex gap-1 items-center'>
-          <Rate disabled defaultValue={4.5} style={{ fontSize: 18 }} />
+          <Rating readOnly defaultValue={4.5} style={{ fontSize: 18 }} />
         </div>
         {renderItemDes(translate('textPopular.description'), data.des)}
         {renderItemDes(translate('productDetail.sold'), Number(data.sold))}
@@ -60,7 +60,7 @@ const InfoItemDetail = ({ data }: { data: ItemDetailType }) => {
     return (
       <div className='w-full flex flex-col gap-2 '>
         <div className='flex gap-1 items-center'>
-          <Rate disabled defaultValue={4.5} style={{ fontSize: 18 }} />
+          <Rating readOnly defaultValue={4.5} style={{ fontSize: 18 }} />
         </div>
         {renderItemDes(translate('textPopular.description'), data.des)}
         {renderItemDes(translate('productDetail.sold'), Number(data.sold))}

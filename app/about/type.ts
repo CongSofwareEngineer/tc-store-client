@@ -1,4 +1,4 @@
-export type AboutProps = {
+export type TAbout = {
   data?: {
     id: string
     des: string

@@ -1,5 +1,5 @@
-import useLanguage from '@/hook/useLanguage'
-import useMedia from '@/hook/useMedia'
+import useLanguage from '@/hooks/useLanguage'
+import useMedia from '@/hooks/useMedia'
 import React from 'react'
 import Link from 'next/link'
 import {
@@ -9,16 +9,16 @@ import {
   getUrlProduct,
   numberWithCommas,
 } from '@/utils/functions'
-import { COLOR, FILTER_BILL } from '@/constant/app'
-import useModalDrawer from '@/hook/useModalDrawer'
-import ViewDetailBill from '../ViewDetailBill'
-import ModalCancelOrder from '../ModalCancelOrder'
+import { COLOR, FILTER_BILL } from '@/constants/app'
+import useModalDrawer from '@/hooks/useModalDrawer'
 import TextCopy from '@/components/TextCopy'
-import { Button } from 'antd'
 import MyImage from '@/components/MyImage'
 import ConfigBill from '@/components/ConfigBill'
 import styles from './style.module.scss'
 import { formatDateTime } from '@/utils/momentFunc'
+import { Button } from '@mantine/core'
+import ModalCancelOrder from '../ModalCancelOrder'
+import ViewDetailBill from '../ViewDetailBill'
 
 type Props = {
   data: { [key: string]: any }
@@ -149,7 +149,7 @@ const Item = ({ data, indexData }: Props) => {
         </div>
         <div className='flex w-full justify-end gap-2 mt-1 px-3'>
           {data.status === FILTER_BILL.Processing && (
-            <Button type='primary' onClick={() => handleCancelOrder(data)}>
+            <Button variant='filled' onClick={() => handleCancelOrder(data)}>
               {translate('common.cancelOrder')}
             </Button>
           )}
@@ -226,7 +226,7 @@ const Item = ({ data, indexData }: Props) => {
         </div>
         <div className='flex w-full justify-end gap-2 mt-1 px-3'>
           {data.status === FILTER_BILL.Processing && (
-            <Button type='primary' onClick={() => handleCancelOrder(data)}>
+            <Button variant='filled' onClick={() => handleCancelOrder(data)}>
               {translate('common.cancelOrder')}
             </Button>
           )}

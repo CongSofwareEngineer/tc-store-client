@@ -18,8 +18,8 @@ import Toolbar, { DefaultToolbarRender } from '@yoopta/toolbar'
 import LinkTool, { DefaultLinkToolRender } from '@yoopta/link-tool'
 import YooptaEditor, { createYooptaEditor } from '@yoopta/editor'
 import ClientApi from '@/services/clientApi'
-import { PATH_IMG } from '@/constant/mongoDB'
-import useBase64Img from '@/hook/useBase64Img'
+import { PATH_IMG } from '@/constants/mongoDB'
+import useBase64Img from '@/hooks/useBase64Img'
 import { detectImg } from '@/utils/functions'
 
 const TOOLS = {

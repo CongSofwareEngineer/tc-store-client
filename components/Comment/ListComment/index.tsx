@@ -1,25 +1,24 @@
-import ImageAdmin from '@/components/ImageAdmin'
-import { ItemDetailType } from '@/components/InfoItemDetail/type'
 import MyLoadMore from '@/components/MyLoadMore'
-import useComment from '@/hook/tank-query/useComment'
-import { detectAvatar, ellipsisText, numberWithCommas } from '@/utils/functions'
-import { Rate } from 'antd'
+import useComment from '@/hooks/tank-query/useComment'
+import { detectAvatar, detectImg, ellipsisText, numberWithCommas } from '@/utils/functions'
 import React, { useEffect, useState } from 'react'
-import LoadingData from './LoadingData'
 import Image from 'next/image'
-import useLanguage from '@/hook/useLanguage'
-import useUserData from '@/hook/useUserData'
+import useLanguage from '@/hooks/useLanguage'
+import useUserData from '@/hooks/useUserData'
 import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import ClientApi from '@/services/clientApi'
-import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
-import { QUERY_KEY } from '@/constant/reactQuery'
+import useRefreshQuery from '@/hooks/tank-query/useRefreshQuery'
+import { QUERY_KEY } from '@/constants/reactQuery'
 import { formatDateTime } from '@/utils/momentFunc'
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
-import useModalDrawer from '@/hook/useModalDrawer'
+import useModalDrawer from '@/hooks/useModalDrawer'
 import ModalDelete from '@/components/ModalDelete'
-import ModalWrite from '../WriteComment/ModalWrite'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
+import { Rating } from '@mantine/core'
+import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
+import { IProduct } from '@/app/shoes/[...params]/type'
+import ModalWrite from '../ModalWrite'
+import LoadingData from './LoadingData'
 
 const Like = ({
   data,
@@ -126,19 +125,19 @@ const Like = ({
       </span>
       {isYourComment && (
         <span className='text-green-500 text-lg '>
-          <EditOutlined onClick={handleEdit} className='text-green-500 cursor-pointer' />
+          <AiOutlineEdit onClick={handleEdit} className='text-green-500 cursor-pointer' />
         </span>
       )}
 
       {userData?.isAdmin && (
         <span className='text-red-500 text-lg'>
-          <DeleteOutlined className='cursor-pointer' onClick={handleDelete} />
+          <AiOutlineDelete className='cursor-pointer' onClick={handleDelete} />
         </span>
       )}
     </div>
   )
 }
-const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
+const ListComment = ({ dataItem }: { dataItem: IProduct }) => {
   const { translate } = useLanguage()
   const { userData } = useUserData()
   const { data, isLoading, hasNextPage, isFetchingNextPage, loadMore } = useComment(dataItem?._id)
@@ -175,7 +174,7 @@ const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
                     <span>|</span>
                     <div>{`SĐT : ${ellipsisText(e.sdt, 4, 3)}`}</div>
                   </div>
-                  <Rate disabled value={e.rate} style={{ fontSize: 15 }} />
+                  <Rating readOnly value={e.rate} style={{ fontSize: 15 }} />
 
                   <div className='md:my-1 mt-1'>{e.note}</div>
                   <div className='flex flex-wrap w-full gap-2 mt-1 '>
@@ -185,7 +184,7 @@ const ListComment = ({ dataItem }: { dataItem: ItemDetailType }) => {
                           key={img}
                           className='md:w-[60px] w-[50px]  aspect-square relative overflow-hidden '
                         >
-                          <ImageAdmin key={img} src={img} alt={img} className='w-full' />
+                          <MyImage key={img} src={detectImg(img)} alt={img} className='w-full' />
                         </div>
                       )
                     })}

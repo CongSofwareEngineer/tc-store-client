@@ -1,11 +1,10 @@
-import MyInput from '@/components/MyInput'
-import { QUERY_KEY } from '@/constant/reactQuery'
-import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
-import useLanguage from '@/hook/useLanguage'
-import useModalDrawer from '@/hook/useModalDrawer'
+import { QUERY_KEY } from '@/constants/reactQuery'
+import useRefreshQuery from '@/hooks/tank-query/useRefreshQuery'
+import useLanguage from '@/hooks/useLanguage'
+import useModalDrawer from '@/hooks/useModalDrawer'
 import ClientApi from '@/services/clientApi'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
-import { Button } from 'antd'
+import { Button, Textarea } from '@mantine/core'
 import React, { useState } from 'react'
 
 const ModalCancelOrder = ({ data }: { data: any }) => {
@@ -33,13 +32,13 @@ const ModalCancelOrder = ({ data }: { data: any }) => {
     <div className='flex flex-col gap-2 w-full items-center'>
       <p className='text-medium font-bold'>{translate('myBill.cancelOrder.cancelOrder')}</p>
       <div className='w-full font-medium'>{translate('textPopular.reason')}:</div>
-      <MyInput type='area' rows={3} onChangeText={(e) => setTextWhy(e?.toString() || '')} />
+      <Textarea rows={3} onChange={(e) => setTextWhy(e.target.value)} />
       <div className='flex gap-3 w-full mt-4'>
+        <Button className='!w-full' variant='filled' onClick={closeModalDrawer}>
+          {translate('common.close')}
+        </Button>
         <Button disabled={!textWhy} className={'!w-full'} loading={loading} onClick={handleSubmit}>
           {translate('common.submit')}
-        </Button>
-        <Button className='!w-full' type='primary' onClick={closeModalDrawer}>
-          {translate('common.close')}
         </Button>
       </div>
     </div>

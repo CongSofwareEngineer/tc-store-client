@@ -1,7 +1,7 @@
 import React from 'react'
 import { images } from '@/configs/images'
-import { RightOutlined } from '@ant-design/icons'
 import Image from 'next/image'
+import { AiOutlineRight } from 'react-icons/ai'
 
 type PropsType = {
   clickBack: () => void
@@ -19,14 +19,18 @@ const BtnBackUI = ({ clickBack, titlePageMain, titlePage }: PropsType) => {
         className='cursor-pointer !relative !w-[25px] !h-[25px]'
         fill
       />
-      <a
-        onClick={clickBack}
-        className='cursor-pointer whitespace-nowrap hover:underline text-[16px] text-blue-700 flex gap-1'
-      >
-        <h2>{titlePageMain}</h2>
-        <RightOutlined className='black' />
-      </a>
-      <h1 className='whitespace-nowrap text-ellipsis overflow-hidden '>{titlePage}</h1>
+      {titlePageMain && (
+        <a
+          onClick={clickBack}
+          className='cursor-pointer whitespace-nowrap hover:underline text-[16px] text-blue-700 flex gap-1'
+        >
+          <h2>{titlePageMain}</h2>
+          <AiOutlineRight className='black' />
+        </a>
+      )}
+      {titlePage && (
+        <h1 className='whitespace-nowrap text-ellipsis overflow-hidden '>{titlePage}</h1>
+      )}
     </div>
   )
 }

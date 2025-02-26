@@ -1,4 +1,4 @@
-import useMedia from '@/hook/useMedia'
+import useMedia from '@/hooks/useMedia'
 import React, { useEffect } from 'react'
 
 const MyCollections = ({

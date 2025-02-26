@@ -1,8 +1,9 @@
 import React from 'react'
-import { Tabs, TabsProps } from 'antd'
-import useLanguage from '@/hook/useLanguage'
+import useLanguage from '@/hooks/useLanguage'
 import dynamic from 'next/dynamic'
 import MyLoading from '../MyLoading'
+import MyTabs, { MyTabsProps } from '../MyTabs'
+
 const MyBlog = dynamic(() => import('@/components/MyBlog'), {
   ssr: true,
   loading: () => {
@@ -20,20 +21,36 @@ const Comment = dynamic(() => import('@/components/Comment'), {
 const MoreInfo = ({ data }: { data: any }) => {
   const { translate } = useLanguage()
 
-  const items: TabsProps['items'] = [
+  const checkMyBlog = () => {
+    try {
+      return Object.keys(JSON.parse(data?.des2 || '{}')).length > 1
+    } catch {
+      return false
+    }
+  }
+
+  const items: MyTabsProps['data'] = [
     {
       key: 'info',
-      label: translate('textPopular.infor'),
-      children: <MyBlog className='!p-0' value={JSON.parse(data?.des2 || '{}')} disabled />,
+      label: <div className='font-bold'>{translate('textPopular.infor')}</div>,
+      children: (
+        <>
+          {checkMyBlog() ? (
+            <MyBlog className='!p-0' value={JSON.parse(data?.des2 || '{}')} disabled />
+          ) : (
+            <div className='pt-3'>{translate('warning.noData')}</div>
+          )}
+        </>
+      ),
     },
     {
       key: 'Comment',
-      label: translate('textPopular.comment'),
+      label: <div className='font-bold'>{translate('textPopular.comment')}</div>,
       children: <Comment dataItem={data} />,
     },
   ]
 
-  return <Tabs className='p-0' items={items} />
+  return <MyTabs data={items} />
 }
 
 export default MoreInfo

@@ -1,8 +1,10 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import { generateMetaBase } from '@/utils/serverNext'
 import { ResolvingMetadata } from 'next'
 import AboutScreen from './view'
 import { FirebaseAbout } from '@/services/firebaseService'
+import Header from '@/components/Header'
+import ContainerContent from '@/components/ContainerContent'
 
 export async function generateMetadata(_: any, parent: ResolvingMetadata) {
   const dataBase = await parent
@@ -21,12 +23,14 @@ const AboutLayout = async () => {
 
   return (
     <>
-      <h1 className='absolute opacity-0'>
-        Giới thiệu về TC Store - Hành trình mang giá trị đến khách hàng
-      </h1>
-      <Suspense>
+      <Header>
+        <h1 className='absolute opacity-0'>
+          Giới thiệu về TC Store - Hành trình mang giá trị đến khách hàng
+        </h1>
+      </Header>
+      <ContainerContent>
         <AboutScreen data={res[0]} />
-      </Suspense>
+      </ContainerContent>
     </>
   )
 }

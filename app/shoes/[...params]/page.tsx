@@ -1,20 +1,25 @@
 import { generateMetaBase } from '@/utils/serverNext'
 import { ResolvingMetadata } from 'next'
-import ShopDetail from './view'
-import { ItemDetailType } from './type'
 import { notFound } from 'next/navigation'
 import ClientApi from '@/services/clientApi'
+import { IProduct } from './type'
+import ShoesDetailScreen from './view'
+import ContainerContent from '@/components/ContainerContent'
+import Header from '@/components/Header'
+import { PageProps } from '@/.next/types/app/page'
 
-const getCoffeeDetail = async (keyName: string): Promise<ItemDetailType> => {
+const getCoffeeDetail = async (keyName: string): Promise<IProduct> => {
   const data = await ClientApi.getProductByKeyName(keyName)
 
   return data.data
 }
 
-export async function generateMetadata({ params }: any, parent: ResolvingMetadata) {
+export async function generateMetadata({ params }: PageProps, parent: ResolvingMetadata) {
+  const { params: paramsProduct } = await params
+
   const [dataBase, data]: any[] = await Promise.allSettled([
     parent,
-    getCoffeeDetail(params.params[0]),
+    getCoffeeDetail(paramsProduct[0]),
   ])
 
   const metaData = generateMetaBase({
@@ -26,12 +31,21 @@ export async function generateMetadata({ params }: any, parent: ResolvingMetadat
   })
   return metaData
 }
-const ShopPageDetail = async ({ params }: { params: Record<string, string[]> }) => {
-  const productDetail = await getCoffeeDetail(params.params[0])
+const ShopPageDetail = async ({ params }: PageProps) => {
+  const { params: paramsProduct } = await params
+
+  const productDetail = await getCoffeeDetail(paramsProduct[0])
   if (!productDetail) {
     return notFound()
   }
-  return <ShopDetail productDetail={productDetail} />
+  return (
+    <>
+      <Header />
+      <ContainerContent>
+        <ShoesDetailScreen productDetail={productDetail} />
+      </ContainerContent>
+    </>
+  )
 }
 
 export default ShopPageDetail

@@ -1,7 +1,8 @@
-import useLanguage from '@/hook/useLanguage'
-import { CopyOutlined } from '@ant-design/icons'
+import { copyToClipboard } from '@/utils/notification'
+import { cn } from '@/utils/tailwind'
 import Link from 'next/link'
 import React from 'react'
+import { AiOutlineCopy } from 'react-icons/ai'
 type Props = {
   textView?: string
   value?: string
@@ -10,9 +11,8 @@ type Props = {
   className?: string
 }
 const TextCopy = ({ textView = '', value = '', isLink = false, ...props }: Props) => {
-  const { copyToClipboard } = useLanguage()
   return (
-    <div className={`flex gap-2 ${props?.className}`}>
+    <div className={cn(`flex gap-2 items-center `, props?.className)}>
       {isLink ? (
         <Link target='_blank' href={value || textView}>
           {value || textView}
@@ -20,7 +20,10 @@ const TextCopy = ({ textView = '', value = '', isLink = false, ...props }: Props
       ) : (
         <div className={props?.classText}>{textView || value}</div>
       )}
-      <CopyOutlined onClick={() => copyToClipboard(value || textView)} />
+      <AiOutlineCopy
+        className='cursor-pointer'
+        onClick={() => copyToClipboard(value || textView)}
+      />
     </div>
   )
 }

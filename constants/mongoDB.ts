@@ -12,7 +12,7 @@ export type DataAddCart = {
   date?: string
   idProduct?: string
   idUser?: string
-  configBill?: { [key: string]: any }
+  configBill?: { [key: string]: unknown }
 }
 
 export type DataAddComment = {

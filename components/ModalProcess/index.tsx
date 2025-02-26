@@ -1,4 +1,4 @@
-import useLanguage from '@/hook/useLanguage'
+import useLanguage from '@/hooks/useLanguage'
 import React from 'react'
 import { images } from '@/configs/images'
 import Image from 'next/image'

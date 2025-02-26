@@ -1,8 +1,9 @@
 import { generateMetaBase } from '@/utils/serverNext'
 import { NextPage, ResolvingMetadata } from 'next'
+import { PropsWithChildren } from 'react'
 import Container from './Component/Container'
-import { PropsWithChildren, Suspense } from 'react'
-import MyLoading from '@/components/MyLoading'
+import Header from '@/components/Header'
+import ContainerContent from '@/components/ContainerContent'
 
 export async function generateMetadata(_: any, parent: ResolvingMetadata) {
   const dataBase = await parent
@@ -16,15 +17,12 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
 
 const MyPageLayout: NextPage = ({ children }: PropsWithChildren) => {
   return (
-    <Suspense
-      fallback={
-        <div className=' flex justify-center items-center w-screen h-screen'>
-          <MyLoading />
-        </div>
-      }
-    >
-      <Container>{children}</Container>
-    </Suspense>
+    <>
+      <Header />
+      <ContainerContent>
+        <Container>{children}</Container>
+      </ContainerContent>
+    </>
   )
 }
 

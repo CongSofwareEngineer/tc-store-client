@@ -1,8 +1,15 @@
 import { collection, getFirestore } from 'firebase/firestore/lite'
+
+declare global {
+  interface Window {
+    recaptchaVerifier: RecaptchaVerifier
+  }
+}
+
 import { initializeApp, getApps } from 'firebase/app'
 import { deleteToken, getMessaging, getToken, isSupported, onMessage } from 'firebase/messaging'
 import FirebaseFun from '@/utils/firebase'
-import { DATA_BASE, DatabaseCollectionType } from '@/constant/firebase'
+import { DATA_BASE, DatabaseCollectionType } from '@/constants/firebase'
 import { Auth, getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 import { getDatabase } from 'firebase/database'
 

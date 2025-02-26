@@ -1,9 +1,9 @@
-import useLanguage from '@/hook/useLanguage'
+import useLanguage from '@/hooks/useLanguage'
 import React from 'react'
 import { images } from '@/configs/images'
-import useModalDrawer from '@/hook/useModalDrawer'
-import { Button } from 'antd'
+import useModalDrawer from '@/hooks/useModalDrawer'
 import Image from 'next/image'
+import { Button } from '@mantine/core'
 
 type Props = {
   title?: string
@@ -36,13 +36,13 @@ const ModalSuccess = ({ showClose = false, callback = null, ...props }: Props) =
 
       <div className='flex w-full gap-3'>
         <div className='flex flex-1'>
-          <Button className='w-full' onClick={() => (callback ? callback() : closeModalDrawer())}>
+          <Button className='!w-full' onClick={() => (callback ? callback() : closeModalDrawer())}>
             {props.titleSubmit || translate('common.ok')}
           </Button>
         </div>
         {showClose && (
           <div className='flex flex-1'>
-            <Button className='w-full' type='primary' onClick={() => closeModalDrawer()}>
+            <Button className='!w-full' variant='filled' onClick={() => closeModalDrawer()}>
               {props.titleClose || translate('common.close')}
             </Button>
           </div>

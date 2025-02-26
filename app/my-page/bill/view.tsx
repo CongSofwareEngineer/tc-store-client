@@ -1,14 +1,14 @@
 'use client'
-import useBill from '@/hook/tank-query/useBill'
-import useLanguage from '@/hook/useLanguage'
+import useLanguage from '@/hooks/useLanguage'
 import React from 'react'
 import Link from 'next/link'
-import Item from './Component/Item'
-import useQuerySearch from '@/hook/useQuerySearch'
+import useQuerySearch from '@/hooks/useQuerySearch'
 import MyLoadMore from '@/components/MyLoadMore'
-import OptionFilter from './Component/OptionFilter'
+import useFirstLoadPage from '@/hooks/useFirstLoadPage'
+import useBill from '@/hooks/tank-query/useBill'
 import LoadingData from './Component/LoadingData'
-import useFirstLoadPage from '@/hook/useFirstLoadPage'
+import Item from './Component/Item'
+import OptionFilter from './Component/OptionFilter'
 // import MyDatePicker from '@/components/MyDatePicker'
 
 const BillScreen = () => {
@@ -17,6 +17,7 @@ const BillScreen = () => {
   const { translate } = useLanguage()
 
   const { data, hasNextPage, isLoading, loadMore, isFetchingNextPage } = useBill(queries, '')
+  console.log({ data, isLoading })
 
   return (
     <div className='flex flex-col gap-3 w-full '>
@@ -40,7 +41,9 @@ const BillScreen = () => {
         {!isLoading && data?.length === 0 && (
           <div className='flex gap-3 w-full  mt-3 text-medium'>
             <span>{translate('cart.empty')}</span>
-            <Link href={'/shop'}>{translate('textPopular.buyNow')}</Link>
+            <Link href={'/shop'} className='text-green-600 hover:underline'>
+              {translate('textPopular.buyNow')}
+            </Link>
           </div>
         )}
         <MyLoadMore

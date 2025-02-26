@@ -1,16 +1,15 @@
-import useLanguage from '@/hook/useLanguage'
-import useMedia from '@/hook/useMedia'
-import useModalDrawer from '@/hook/useModalDrawer'
-import { detectImg, formatPrice } from '@/utils/functions'
-import React from 'react'
-import ModalFeedBack from '../ModalFeedBack'
-import { FILTER_BILL } from '@/constant/app'
-import { Button } from 'antd'
-import MyImage from '@/components/MyImage'
 import ConfigBill from '@/components/ConfigBill'
-import { TYPE_PRODUCT } from '@/constant/admin'
-import useRoutePage from '@/hook/useRoutePage'
+import MyImage from '@/components/MyImage'
 import TextCopy from '@/components/TextCopy'
+import { TYPE_PRODUCT } from '@/constants/admin'
+import { FILTER_BILL } from '@/constants/app'
+import useLanguage from '@/hooks/useLanguage'
+import useMedia from '@/hooks/useMedia'
+import useModalDrawer from '@/hooks/useModalDrawer'
+import useRoutePage from '@/hooks/useRoutePage'
+import { detectImg, formatPrice } from '@/utils/functions'
+import { Button } from '@mantine/core'
+import ModalFeedBack from '../ModalFeedBack'
 type Props = {
   data?: any
 }
@@ -43,9 +42,9 @@ const ViewDetailBill = ({ data }: Props) => {
   }
 
   return (
-    <div className='flex flex-col w-full gap-4 overflow-y-auto'>
-      <div className='flex flex-col  w-full gap-1 '>
-        <div className='flex gap-1'>
+    <div className='flex flex-col w-full pt-2 gap-2 overflow-y-auto'>
+      <div className='flex flex-col  w-full  '>
+        <div className='flex gap-1 items-center'>
           <span className='font-bold'>{`SĐT :`}</span>
           <TextCopy textView={data.sdt} value={data.sdt} />
         </div>
@@ -73,24 +72,23 @@ const ViewDetailBill = ({ data }: Props) => {
       <div className='w-full font-bold'>{`${translate('bill.listBill')} :`}</div>
       {data && (
         <div className='flex flex-col gap-4 w-full overflow-y-auto'>
-          {data?.listBill?.map((e: any, index: number) => {
-            const isHasBorder = index < data?.listBill.length - 1
+          {data?.listBill?.map((e: any) => {
             return (
               <div
                 style={{
-                  borderBottom: `${isHasBorder ? 2 : 0}px solid #e5e7eb `,
+                  borderBottom: `2px solid #e5e7eb `,
                 }}
                 key={e._id}
                 className={`flex gap-3 w-full pb-4 `}
               >
-                <div className='aspect-square w-[100px]  flex justify-center align-middle  relative rounded-md overflow-hidden'>
+                <div className='  w-[100px] h-max   relative rounded-md overflow-hidden'>
                   <MyImage
                     alt={`icon-product-bill-${e._id}`}
                     src={detectImg(e.more_data.imageMain)}
-                    className='!relative !w-full !h-auto'
+                    className='  !w-full !h-auto'
                   />
                 </div>
-                <div className='flex flex-col md:gap-2 gap-1'>
+                <div className='flex flex-col  gap-1'>
                   <p onClick={() => handleRoute(e)} className='font-bold'>
                     {e.more_data.name}
                   </p>
@@ -103,7 +101,7 @@ const ViewDetailBill = ({ data }: Props) => {
                   <div className='flex gap-2 items-center'>
                     {enableFeedback && (
                       <Button
-                        type='primary'
+                        variant='filled'
                         onClick={() => handleFeedback(e)}
                         size='small'
                         className='w-max'
@@ -112,7 +110,7 @@ const ViewDetailBill = ({ data }: Props) => {
                       </Button>
                     )}
                     {data?.status !== FILTER_BILL.Processing && (
-                      <Button onClick={() => handleRoute(e)} size='small' className='w-max'>
+                      <Button onClick={() => handleRoute(e)} size='xs' className='w-max'>
                         {translate('common.buyAgain')}
                       </Button>
                     )}
@@ -123,7 +121,7 @@ const ViewDetailBill = ({ data }: Props) => {
           })}
         </div>
       )}
-      <div className='text-medium gap-1 md:border-t-0 md:pt-0 pt-3 border-t-2 border-gray-200 flex w-full justify-end font-bold text-green-500 '>
+      <div className='text-medium gap-1   pt-3 flex w-full justify-end font-bold text-green-500 '>
         <span>{translate('textPopular.totalMoney')} : </span>
         <span>{`${formatPrice(data.totalBill || '0')} VNĐ`}</span>
       </div>

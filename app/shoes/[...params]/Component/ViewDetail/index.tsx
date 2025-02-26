@@ -1,43 +1,41 @@
 import dynamic from 'next/dynamic'
 import React, { useState } from 'react'
-import { ItemDetailType } from '../../type'
-import useAos from '@/hook/useAos'
-import useMedia from '@/hook/useMedia'
-import { DataAddCart } from '@/constant/mongoDB'
-import { COOKIE_KEY } from '@/constant/app'
-import useRefreshQuery from '@/hook/tank-query/useRefreshQuery'
-import useLanguage from '@/hook/useLanguage'
-import useUserData from '@/hook/useUserData'
+import useAos from '@/hooks/useAos'
+import useMedia from '@/hooks/useMedia'
+import { DataAddCart } from '@/constants/mongoDB'
+import { COOKIE_KEY } from '@/constants/app'
+import useRefreshQuery from '@/hooks/tank-query/useRefreshQuery'
+import useLanguage from '@/hooks/useLanguage'
+import useUserData from '@/hooks/useUserData'
 import { detectImg, formatPrice, formatPriceBase } from '@/utils/functions'
-import { QUERY_KEY } from '@/constant/reactQuery'
-import { getCookie, setCookie } from '@/services/CookiesService'
-import BtnBack from '@/components/BtnBack'
-import InfoItemDetail from '@/components/InfoItemDetail'
+import { QUERY_KEY } from '@/constants/reactQuery'
 import SubAndPlus from '@/components/SubAndPlus'
 
 import { images } from '@/configs/images'
 import ClientApi from '@/services/clientApi'
-import { DataItemType } from '@/app/my-cart/type'
 import { showNotificationSuccess } from '@/utils/notification'
-import { Button } from 'antd'
-import Attributes from '../Attributes'
 import MyImage from '@/components/MyImage'
+import { IProduct } from '../../type'
+import BtnBack from '@/components/BtnBack'
+import { Button } from '@mantine/core'
+import { getCookie, setCookie } from '@/services/cookiesService'
+import InfoItemDetail from '@/components/InfoItemDetail'
+import Attributes from '@/components/Attributes'
+import { ItemCartBody } from '@/app/my-cart/type'
 // import MoreCollections from '@/components/MoreCollections'
 
 const MoreInfo = dynamic(() => import('@/components/MoreInfo'), {
   ssr: true,
 })
 
-const ImageMore = dynamic(() => import('@/components/ImgMoreProduct'), {
-  ssr: false,
-})
+const ImageMore = dynamic(() => import('@/components/ImgMoreProduct'))
 
 const MoreCollections = dynamic(() => import('@/components/MoreCollections'), {
   ssr: false,
 })
 
 type Props = {
-  productDetail: ItemDetailType
+  productDetail: IProduct
   isPayment: boolean
   amountBuy: number
   setIsPayment: (e: any) => void
@@ -84,15 +82,15 @@ const ViewDetail = ({
     }
   }
 
-  const addCartNoLogin = async (body: DataItemType) => {
+  const addCartNoLogin = async (body: ItemCartBody) => {
     const dataCart = await getCookie(COOKIE_KEY.MyCart)
-    const arrTemp: Array<DataItemType> = []
+    const arrTemp: Array<ItemCartBody> = []
     if (Array.isArray(dataCart)) {
       let isExited = false
-      dataCart.forEach((e: DataItemType) => {
+      dataCart.forEach((e: ItemCartBody) => {
         const itemTemp = e
         if (itemTemp.idProduct === body.idProduct) {
-          itemTemp.amount = itemTemp.amount + body.amount
+          itemTemp.amount = itemTemp.amount! + body.amount!
           itemTemp.date = body.date
           isExited = true
         }
@@ -120,7 +118,7 @@ const ViewDetail = ({
         body.idUser = userData?._id
         await handleAddCartLogin(body)
       } else {
-        const bodyOther: DataItemType = {
+        const bodyOther: ItemCartBody = {
           amount: Number(body.amount),
           idProduct: body.idProduct!.toString(),
           keyNameProduct: productDetail?.keyName!,
@@ -178,12 +176,14 @@ const ViewDetail = ({
             <div className='text-title font-bold text-green-500'>{`${formatPrice(
               Number(productDetail.price || '0') * amountBuy
             )} VNĐ`}</div>
-            <Attributes onChange={onChangeData} data={productDetail} />
+            {productDetail?.attributes! && (
+              <Attributes onChange={onChangeData} data={productDetail} />
+            )}
             <div />
             <SubAndPlus
               callBackSub={(e) => setAmountBuy(e)}
               value={amountBuy}
-              maxAmount={productDetail.amount - productDetail.sold}
+              maxAmount={productDetail.amount! - productDetail.sold!}
               callBackPlus={(e) => setAmountBuy(e)}
             />
             <div className='flex gap-6 mt-4'>
@@ -191,12 +191,12 @@ const ViewDetail = ({
                 {translate('common.buyNow')}
               </Button>
               <Button
-                type='primary'
+                variant='filled'
                 onClick={handleAddCart}
                 className='min-w-[30%] !h-[40px]'
                 loading={loadingAddCart}
               >
-                <div className='flex gap-3 whitespace-nowrap'>
+                <div className='flex gap-3 items-center whitespace-nowrap'>
                   <MyImage
                     src={images.icon.iconCart}
                     alt='btn-add-cart'
@@ -250,7 +250,7 @@ const ViewDetail = ({
             <SubAndPlus
               callBackSub={(e) => setAmountBuy(e)}
               value={amountBuy}
-              maxAmount={productDetail.amount - productDetail.sold}
+              maxAmount={productDetail.amount! - productDetail.sold!}
               callBackPlus={(e) => setAmountBuy(e)}
             />
             <div className='flex sm:gap-6 gap-2 mt-4 mb-3 sm:flex-row flex-col'>
@@ -258,13 +258,13 @@ const ViewDetail = ({
                 {translate('common.buyNow')}
               </Button>
               <Button
-                type='primary'
+                variant='filled'
                 onClick={handleAddCart}
                 className='min-w-[30%] '
                 style={{ height: 40 }}
                 loading={loadingAddCart}
               >
-                <div className='flex gap-3 whitespace-nowrap'>
+                <div className='flex gap-3  items-center  whitespace-nowrap'>
                   <MyImage
                     src={images.icon.iconCart}
                     alt='btn-add-cart'
