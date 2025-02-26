@@ -57,7 +57,7 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
         <Link
           onClick={(event) => event.stopPropagation()}
           href={getUrl()}
-          className='text-medium flex items-center  cursor-pointer hover:font-semibold transition-all duration-300  text-green-600'
+          className='text-medium flex items-center  cursor-pointer hover:font-semibold transition-all duration-300 font-bold  text-green-600'
         >
           <span> {translate('textPopular.viewMore')}</span>
           <AiOutlineRight className='text-sm ml-2' />
