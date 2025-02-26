@@ -19,7 +19,7 @@
     "@types/aos": "^3.0.7",
     "@types/crypto-js": "^4.2.2",
     "@types/lodash": "^4.17.15",
-    "@vercel/speed-insights": "^1.0.12",
+    "@vercel/speed-insights": "^1.2.0",
     "@yoopta/accordion": "^4.9.2",
     "@yoopta/action-menu-list": "^4.9.2",
     "@yoopta/blockquote": "^4.6.9",

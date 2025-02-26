@@ -15,6 +15,7 @@ import Footer from '@/components/Footer'
 import ClientApi from '@/services/clientApi'
 import Script from 'next/script'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const LoadingFirstPage = dynamic(() => import('@/components/LoadingFirstPage'))
 
@@ -201,6 +202,7 @@ export default async function RootLayout({
             </StyledComponentsRegistry>
           </ReactQueryProvider>
         </MantineConfig>
+        {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <SpeedInsights />}
       </body>
       {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <GoogleAnalytics gaId='G-QH99F8WFPW' />}
     </html>
