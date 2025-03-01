@@ -24,7 +24,6 @@ const FirstLoadWebsite: NextPage = () => {
   const { reset: resetUser, userData, setUserData } = useUserData()
   const { data: dataVoucher } = useVoucherUser()
 
-  const listUrlExitedRef = useRef<string[]>([])
   const userRef = useRef<TYPE_ZUSTAND[ZUSTAND.UserData]>(null)
 
   useLayoutEffect(() => {
@@ -36,10 +35,6 @@ const FirstLoadWebsite: NextPage = () => {
       userRef.current = userData
     }
   }, [userData])
-
-  useEffect(() => {
-    listUrlExitedRef.current.push(window.location.pathname)
-  }, [])
 
   useEffect(() => {
     scrollTop()
@@ -107,14 +102,7 @@ const FirstLoadWebsite: NextPage = () => {
       }
     }
 
-    const routePage = ({ url = '' }: { url?: string }) => {
-      if (!listUrlExitedRef.current.includes(url)) {
-        setIsLoading(true)
-        listUrlExitedRef.current.push(url)
-      }
-    }
-
-    ObserverService.on(OBSERVER_KEY.RoutePage, routePage)
+    ObserverService.on(OBSERVER_KEY.RoutePage, () => setIsLoading(true))
     ObserverService.on(OBSERVER_KEY.FirstLoadPage, () => setIsLoading(false))
     ObserverService.on(OBSERVER_KEY.LogOut, handleLogout)
 

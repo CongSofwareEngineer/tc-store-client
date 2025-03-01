@@ -19,9 +19,11 @@ export enum ZUSTAND {
   ConnectedChain = 'connectedChain',
   CategoryMenu = 'categoryMenu',
   Provinces = 'provinces',
+  RoutePage = 'routePage',
 }
 
 export const INIT_ZUSTAND = {
+  [ZUSTAND.RoutePage]: new Map(),
   [ZUSTAND.Language]: localeVN,
   [ZUSTAND.Setting]: null,
   [ZUSTAND.UserData]: null,
@@ -57,6 +59,8 @@ export type TYPE_USER_DATA = {
 }
 
 export type TYPE_ZUSTAND = {
+  [ZUSTAND.RoutePage]: Map<string, string>
+
   [ZUSTAND.Language]: {
     locale: string
     messages: any
