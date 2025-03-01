@@ -15,23 +15,19 @@ import useRoutePage from '@/hooks/useRoutePage'
 import { AiOutlineDown, AiOutlineMenu, AiOutlineUser } from 'react-icons/ai'
 import MyDropDown, { IItemDropDown } from '@/components/MyDropDown'
 import { FiLogOut } from 'react-icons/fi'
-import { useUserData as useUserDataZustand } from '@/zustand/useUserData'
 const CartUser = dynamic(() => import('./cartUser'), { ssr: false })
 
 const Account = () => {
   const { openModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
   const { isLogin, userData } = useUserData()
-  const { reset: resetUser } = useUserDataZustand()
 
   const { isMobile, isClient } = useMedia(900)
   const route = useRoutePage()
 
   const handleLogin = () => {
     if (isLogin) {
-      resetUser()
       ObserverService.emit(OBSERVER_KEY.LogOut, false)
-      resetUser()
     } else {
       openModalDrawer({
         content: <ModalLogin />,

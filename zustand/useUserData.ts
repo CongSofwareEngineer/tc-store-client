@@ -41,6 +41,13 @@ const zustandUserData = create<UserDataStore>()(
           removeItem: () => null,
           setItem: () => null,
         },
+        merge: (preState: any, currentState: UserDataStore) => {
+          if (preState?.userData) {
+            currentState[ZUSTAND.UserData] = preState?.userData
+          }
+
+          return currentState
+        },
       }
     ),
     {
