@@ -19,10 +19,16 @@ const nextConfig: NextConfig = {
       '@tanstack/react-query',
       'styled-components',
     ],
+    turbo: {
+      minify: true,
+    },
   },
+  output: 'standalone',
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },
+  reactStrictMode: true,
+
   compress: true,
   productionBrowserSourceMaps: false,
   // productionBrowserSourceMaps: true,
@@ -45,10 +51,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // webpack: (config) => {
-  // 	config.externals.push('pino-pretty', 'lokijs', 'encoding');
-  // 	return config;
-  // },
 }
 
 export default nextConfig
