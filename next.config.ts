@@ -24,11 +24,11 @@ const nextConfig: NextConfig = {
     includePaths: [path.join(__dirname, 'styles')],
   },
   compress: true,
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: false,
+  // productionBrowserSourceMaps: true,
   cleanDistDir: true,
   compiler: {
     removeConsole: !!process.env.REMOVE_CONSOLE_LOG,
-    reactRemoveProperties: true,
     styledComponents: {
       displayName: true,
       ssr: true,
