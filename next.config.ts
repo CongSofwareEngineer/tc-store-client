@@ -29,6 +29,7 @@ const nextConfig: NextConfig = {
   cleanDistDir: true,
   compiler: {
     removeConsole: !!process.env.REMOVE_CONSOLE_LOG,
+    reactRemoveProperties: true,
     styledComponents: {
       displayName: true,
       ssr: true,
