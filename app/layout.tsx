@@ -111,7 +111,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const menuCategory = await ClientApi.getCategory(true)
+  const menuCategory = await ClientApi.getCategory()
 
   return (
     <html lang='en' {...mantineHtmlProps}>

@@ -124,12 +124,8 @@ const ClientApi = {
     })
   },
 
-  getCategory: async (isClient = false) => {
-    const url = 'category/all?isShow=true'
-    if (isClient) {
-      // url += `&timeStamp=${new Date().getTime()}`
-      // url += `&timeStamp=${new Date().getTime()}`
-    }
+  getCategory: async () => {
+    const url = `category/all?isShow=true&timeStamp=${new Date().getTime()}`
 
     return fetchData({
       url,

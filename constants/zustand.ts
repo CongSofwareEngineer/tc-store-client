@@ -86,6 +86,7 @@ export type TYPE_ZUSTAND = {
     title?: React.ReactNode
     showBtnClose?: boolean
     overClickClose?: boolean
+    position?: 'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
   }
   [ZUSTAND.Modal]: {
     classContent?: string | ''
