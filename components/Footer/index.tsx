@@ -44,7 +44,7 @@ const Footer = () => {
 
               <Item
                 icon={images.footer.iconZalo}
-                value={'0392225405'}
+                value={'+84392225405'}
                 link={LINK_CONTACT.Zalo}
                 type={'zalo'}
               />
