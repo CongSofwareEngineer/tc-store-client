@@ -98,6 +98,16 @@ export const metadata: Metadata = {
   facebook: {
     appId: 'tcstore.gl',
   },
+  other: {
+    '@context': 'https://schema.org',
+    '@type': 'Store',
+    name: 'TC Store',
+    url: 'https://tcstore.vercel.app',
+    logo: 'https://bafybeie4dqtbl5dco4qgqbepjttfqrppawkj4evdgoytgoupfdjmfrne2m.ipfs.w3s.link/logo_tc_store.png',
+    description: 'Mua sắm giày dép, yến sào, laptop, cà phê và nhiều sản phẩm chất lượng.',
+
+    sameAs: ['https://www.facebook.com/tcstore.gl'],
+  },
 }
 
 export const viewport: Viewport = {
