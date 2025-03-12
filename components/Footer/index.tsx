@@ -75,7 +75,7 @@ const Footer = () => {
         <div className='flex gap-2 justify-center mb-2'>
           <span>Copyright © 2024</span>
           <Link href={LINK_CONTACT.HoDieCong} target='_blank'>
-            <span className='hover:underline hover:scale-105'>CÔNG</span>
+            <span className='hover:underline hover:scale-105 text-green-500'>CÔNG</span>
           </Link>
           <span>All Rights Reserved</span>
         </div>
