@@ -51,10 +51,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  i18n: {
-    locales: ['vi', 'en'],
-    defaultLocale: 'vi',
-  },
 }
 
 export default nextConfig
