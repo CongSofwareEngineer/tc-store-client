@@ -13,7 +13,6 @@ import ReactQueryProvider from '@/components/ReactQueryProvider'
 import StyledComponentsRegistry from '@/components/StyledComponentsRegistry'
 import Footer from '@/components/Footer'
 import ClientApi from '@/services/clientApi'
-import Script from 'next/script'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
@@ -52,7 +51,7 @@ export const metadata: Metadata = {
     images: BaseMeta.images,
     siteName: BaseMeta.title,
     url: BaseMeta.url,
-    phoneNumbers: ['0392225405', '0397373405'],
+    phoneNumbers: ['+84392225405', '+84397373405'],
     locale: 'vi',
     emails: 'hodiencong2000@gmail.com',
     countryName: 'Vietnamese',
@@ -119,65 +118,33 @@ export default async function RootLayout({
   return (
     <html {...mantineHtmlProps} lang='vi'>
       {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <GoogleTagManager gtmId='GTM-T7S7DKJ4' />}
-
+      <link rel='canonical' href={'https://tcstore.vercel.app'} />
       <head>
         <ColorSchemeScript />
 
         {process.env.NEXT_PUBLIC_MODE_PRODUCTION && (
           <>
-            {/* <GoogleTagManager gtmId="GTM-T7S7DKJ4" /> */}
-
-            {/* <Script
-              async
-              src="https://www.googletagmanager.com/gtag/js?id=G-QH99F8WFPW"
-              id="google-analytics"
-              strategy="afterInteractive"
-            >
-              {` window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                
-                  gtag('config', 'G-QH99F8WFPW');`}
-            </Script> */}
-            {/* <script
-              dangerouslySetInnerHTML={{
-                __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                  })(window,document,'script','dataLayer','GTM-T7S7DKJ4')`,
-              }}
-            /> */}
-            {/* <script
-              async
-              src="https://www.googletagmanager.com/gtag/js?id=G-QH99F8WFPW"
-            /> */}
-
-            {/* <script
-              dangerouslySetInnerHTML={{
-                __html: ` 
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                
-                  gtag('config', 'G-QH99F8WFPW');`,
-              }}
-            /> */}
-            <Script
-              id='schema'
-              strategy='worker'
+            <script
               type='application/ld+json'
               dangerouslySetInnerHTML={{
                 __html: JSON.stringify({
                   '@context': 'https://schema.org',
-                  '@type': 'WebSite',
+                  '@type': 'Store',
                   name: 'TC Store',
                   url: 'https://tcstore.vercel.app',
+                  logo: 'https://bafybeie4dqtbl5dco4qgqbepjttfqrppawkj4evdgoytgoupfdjmfrne2m.ipfs.w3s.link/logo_tc_store.png',
                   description:
-                    'Chào mừng đến với TC Store! Khám phá đa dạng sản phẩm từ yến sào cao cấp, laptop mới nhất, cây cảnh xanh mát, nước hoa sang trọng đến cà phê thơm ngon và các sản phẩm chất lượng khác. Mua sắm dễ dàng, dịch vụ tận tâm và ưu đãi hấp dẫn đang chờ bạn!',
-                  publisher: {
-                    '@type': 'Organization',
-                    name: 'TC Store',
+                    'Mua sắm giày dép, yến sào, laptop, cà phê và nhiều sản phẩm chất lượng.',
+                  address: {
+                    '@type': 'PostalAddress',
+                    streetAddress: 'Thủ Dầu Một',
+                    addressLocality: 'Bình Dương',
+                    addressCountry: 'Việt nam',
+                  },
+                  contactPoint: {
+                    '@type': 'ContactPoint',
+                    telephone: '+84-392-225-405',
+                    contactType: 'hodiencong2000@gmail.com',
                   },
                 }),
               }}
