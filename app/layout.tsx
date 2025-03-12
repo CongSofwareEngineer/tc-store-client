@@ -96,6 +96,9 @@ export const metadata: Metadata = {
     },
   },
   category: 'fashion',
+  facebook: {
+    appId: 'tcstore.gl',
+  },
 }
 
 export const viewport: Viewport = {
@@ -114,7 +117,7 @@ export default async function RootLayout({
   const menuCategory = await ClientApi.getCategory()
 
   return (
-    <html lang='en' {...mantineHtmlProps}>
+    <html {...mantineHtmlProps} lang='vi'>
       {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <GoogleTagManager gtmId='GTM-T7S7DKJ4' />}
 
       <head>
