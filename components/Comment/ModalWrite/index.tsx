@@ -74,7 +74,19 @@ const ModalWrite = ({ dataItem }: { dataItem: IProduct }) => {
     getData()
   }, [userData, dataItem, dataApi])
 
-  console.log({ formData: formData.values })
+  const getQuality = () => {
+    if (formData.values?.rate >= 4) {
+      return translate('comment.veryGood')
+    }
+    if (formData.values?.rate >= 3) {
+      return translate('comment.good')
+    }
+
+    if (formData.values?.rate >= 2) {
+      return translate('comment.wellwell')
+    }
+    return translate('comment.normal')
+  }
 
   const getDataToUpdate = () => {
     const data: { [key: string]: any } = {}
@@ -179,7 +191,10 @@ const ModalWrite = ({ dataItem }: { dataItem: IProduct }) => {
               </div>
               <div className='flex flex-1 flex-col gap-2 h-auto justify-center'>
                 <p className='text-medium font-bold'>{dataItem.name}</p>
-                <RatingForm formData={formData} keyName='rate' />
+                <div className='flex flex-col gap-1'>
+                  <div>{getQuality()}</div>
+                  <RatingForm formData={formData} keyName='rate' />
+                </div>
               </div>
             </div>
 

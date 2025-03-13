@@ -6,10 +6,27 @@ const __filename = fileURLToPath(import.meta.url) // get the resolved path to th
 const __dirname = path.dirname(__filename) // get the name of the directory
 
 const nextConfig: NextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'styles')],
   },
-  experimental: {
+  productionBrowserSourceMaps: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+        pathname: '/**',
+      },
+    ],
+  },
+}
+
+//for production
+if (process.env.REMOVE_CONSOLE_LOG) {
+  nextConfig.eslint = {
+    ignoreDuringBuilds: true,
+  }
+  nextConfig.experimental = {
     optimizePackageImports: [
       'moment',
       'lodash',
@@ -22,35 +39,23 @@ const nextConfig: NextConfig = {
     turbo: {
       minify: true,
     },
-  },
-  output: 'standalone',
-  sassOptions: {
-    includePaths: [path.join(__dirname, 'styles')],
-  },
-  reactStrictMode: true,
+  }
+  nextConfig.output = 'standalone'
+  nextConfig.reactStrictMode = true
 
-  compress: true,
-  productionBrowserSourceMaps: !process.env.REMOVE_CONSOLE_LOG,
-  // productionBrowserSourceMaps: true,
-  cleanDistDir: true,
-  compiler: {
-    removeConsole: !!process.env.REMOVE_CONSOLE_LOG,
+  nextConfig.compress = true
+  nextConfig.productionBrowserSourceMaps = false
+
+  nextConfig.cleanDistDir = true
+  nextConfig.compiler = {
+    removeConsole: true,
     reactRemoveProperties: true,
     styledComponents: {
       displayName: true,
       ssr: true,
       minify: true,
     },
-  },
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-        pathname: '/**',
-      },
-    ],
-  },
+  }
 }
 
 export default nextConfig
