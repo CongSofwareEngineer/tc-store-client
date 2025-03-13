@@ -27,7 +27,8 @@ const ShoesDetailScreen = ({ productDetail }: { productDetail: IProduct }) => {
   useAos()
   useFirstLoadPage()
   const { isLogin } = useUserData()
-  const { data } = useGetProductByID(productDetail?._id!)
+  const { data } = useGetProductByID(productDetail._id)
+
   const dataItem = data?.data ?? productDetail
 
   useEffect(() => {

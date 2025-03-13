@@ -1,22 +1,12 @@
+import { IClientApi } from '@/services/ClientApi/type'
+
 export type IProduct = {
-  imageMain?: string
   typeProduct?: string
-  des?: string
-  name: string
-  _id?: string
-  keyName?: string
-  price?: number
-  amount?: number
-  more_data?: IProduct
-  discount?: number
-  category?: string
-  sold?: number
   disCount?: number
   configBill?: {
     [key: string]: unknown
   }
-  [key: string]: unknown
-}
+} & IClientApi['product']
 
 export type IModalBuyLogin = {
   data?: IProduct

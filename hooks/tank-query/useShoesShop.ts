@@ -1,6 +1,7 @@
 import { PAGE_SIZE_LIMIT } from '@/constants/app'
-import { QUERY_KEY, TypeHookReactQuery } from '@/constants/reactQuery'
-import ClientApi from '@/services/clientApi'
+import { QUERY_KEY } from '@/constants/reactQuery'
+import ClientApi from '@/services/ClientApi/index'
+import { IProduct } from '@/services/ClientApi/type'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 
@@ -10,7 +11,10 @@ const getAllProduct = async ({
 }: {
   queryKey: any
   pageParam: number
-}): Promise<TypeHookReactQuery> => {
+}): Promise<{
+  data: IProduct[]
+  page: number
+}> => {
   const query = queryKey[2]
 
   let queryUrl = `/shoes?page=${pageParam}&limit=${queryKey[1]}`
@@ -20,10 +24,10 @@ const getAllProduct = async ({
     })
   }
 
-  const dataServer = await ClientApi.getProducts(queryUrl)
+  const dataServer = await ClientApi.getListProducts(queryUrl)
 
   return {
-    data: dataServer?.data || [],
+    data: dataServer,
     page: pageParam,
   }
 }

@@ -8,9 +8,10 @@ import useMedia from '@/hooks/useMedia'
 import useRoutePage from '@/hooks/useRoutePage'
 import { RateCustom, TextPriceBase } from './styled'
 import MySliderSell from '../MySliderSell'
+import { IClientApi } from '@/services/ClientApi/type'
 
 type ItemType = {
-  item: any
+  item: IClientApi['product']
   callback?: () => void
   className?: string | ''
   classImage?: string | ''

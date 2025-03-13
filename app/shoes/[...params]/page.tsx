@@ -1,17 +1,17 @@
 import { generateMetaBase } from '@/utils/serverNext'
 import { ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
-import ClientApi from '@/services/clientApi'
 import { IProduct } from './type'
 import ShoesDetailScreen from './view'
 import ContainerContent from '@/components/ContainerContent'
 import Header from '@/components/Header'
 import { PageProps } from '@/.next/types/app/page'
+import ClientApi from '@/services/ClientApi/index'
 
 const getCoffeeDetail = async (keyName: string): Promise<IProduct> => {
-  const data = await ClientApi.getProductByKeyName(keyName)
+  const data: IProduct = await ClientApi.getProductByKeyName(keyName)
 
-  return data.data
+  return data
 }
 
 export async function generateMetadata({ params }: PageProps, parent: ResolvingMetadata) {

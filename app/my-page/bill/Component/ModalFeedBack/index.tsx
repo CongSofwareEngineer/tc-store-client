@@ -11,10 +11,11 @@ import useRefreshQuery from '@/hooks/tank-query/useRefreshQuery'
 import useCommentDetail from '@/hooks/tank-query/useCommentDetail'
 import { DataAddComment } from '@/constants/mongoDB'
 import { QUERY_KEY } from '@/constants/reactQuery'
-import { AiOutlineArrowLeft, AiOutlineCloseCircle } from 'react-icons/ai'
+import { AiOutlineArrowLeft, AiOutlineCamera, AiOutlineCloseCircle } from 'react-icons/ai'
 import Image from 'next/image'
 import MyLoading from '@/components/MyLoading'
 import { Button, Rating, Textarea } from '@mantine/core'
+import UploadImage from '@/components/UploadImage'
 
 const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
   const { translate } = useLanguage()
@@ -177,19 +178,19 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
       <div className='mt-2 mb-1'>{`${translate('textPopular.note')} :`}</div>
       <Textarea onChange={(e) => setDes(e.target.value)} rows={3} value={des} maxLength={150} />
       <div className='mb-3' />
-      {/* <UploadImage
-        handleUpload={handleUpload}
-        disabled={listImgFeeBack.length >= 2}
-        listData={listImgFeeBack}
+      {renderListImg()}
+      <UploadImage
+        callback={handleUpload}
+        disabled={listImgFeeBack?.length >= 2}
         maxSizeOutputKB={200}
         maxPixelReduce={400}
       >
-        <div className='flex gap-2 item-center w-full mb-2'>
-          <CameraOutlined className='cursor-pointer' style={{ fontSize: 25, color: 'blue' }} />
-          <span>{translate('comment.uploadImg_des')}</span>
+        <div className='flex gap-2 items-center w-full mt-3'>
+          <AiOutlineCamera className='cursor-pointer' style={{ fontSize: 25, color: 'blue' }} />
+          <div className='text-black'>{translate('comment.uploadImg_des')}</div>
         </div>
-      </UploadImage> */}
-      {renderListImg()}
+      </UploadImage>
+
       <Button
         onClick={handleSubmit}
         loading={loading}
