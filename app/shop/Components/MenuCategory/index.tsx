@@ -4,10 +4,12 @@ import React, { useMemo } from 'react'
 import MyFilter from '@/components/MyFilter'
 import MyFilterCheckBox from '@/components/MyFilterCheckBox'
 import { useCategoryMenu } from '@/zustand/useCategoryMenu'
+import useMedia from '@/hooks/useMedia'
 
 const MenuCategory = () => {
   const { translate, lang } = useLanguage()
   const { categoryMenu } = useCategoryMenu()
+  const { isMobile } = useMedia()
   const itemMenu = useMemo(() => {
     return categoryMenu.map((e) => {
       return {
@@ -25,6 +27,7 @@ const MenuCategory = () => {
         titleFilter={translate('menuProduct.product')}
         typeChecked={FilterAPI.Category}
         isReplace={false}
+        isDefault={!isMobile}
       />
     </MyFilter>
   )

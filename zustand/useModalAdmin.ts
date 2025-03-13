@@ -38,10 +38,7 @@ const zustandModalAdmin = create<ModalAdminStore>()(
             }
           }
           return {
-            [ZUSTAND.ModalAdmin]: {
-              ...INIT_ZUSTAND[ZUSTAND.ModalAdmin],
-              open: false,
-            },
+            [ZUSTAND.ModalAdmin]: INIT_ZUSTAND[ZUSTAND.ModalAdmin],
           }
         })
       },

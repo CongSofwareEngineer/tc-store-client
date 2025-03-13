@@ -3,7 +3,6 @@ import useMedia from '@/hooks/useMedia'
 import useQuerySearch from '@/hooks/useQuerySearch'
 import { Checkbox } from '@mantine/core'
 import MyCollapse from '../MyCollapse'
-import { useEffect } from 'react'
 
 type MyFilterCheckBox = {
   data?: Record<string, any>[]
