@@ -103,7 +103,7 @@ const ViewDetailBill = ({ data }: Props) => {
                       <Button
                         variant='filled'
                         onClick={() => handleFeedback(e)}
-                        size='small'
+                        size='xs'
                         className='w-max'
                       >
                         {translate('common.feedback')}

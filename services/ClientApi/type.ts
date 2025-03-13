@@ -53,8 +53,30 @@ export type IMyCart = {
 export type ILengthCart = {
   lengthCart: number
 }
+
+export type IComment = {
+  _id: string
+  date: string
+  sdt: string
+  name: string
+  note: string
+  idProduct: string
+  listReply: Array<{
+    like: number
+    date: string
+    note: string
+  }>
+  userLikes: string[]
+  rate: number
+  listImg: string[]
+  user: Array<{
+    avatar: string
+    [key: string]: unknown
+  }>
+}
 export type IClientApi = {
   product: IProduct
   myCart: IMyCart
   lengthCart: ILengthCart
+  comment: IComment
 }

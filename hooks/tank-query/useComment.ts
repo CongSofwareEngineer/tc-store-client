@@ -1,21 +1,25 @@
 import { PAGE_SIZE_LIMIT } from '@/constants/app'
-import { QUERY_KEY, TypeHookReactQuery } from '@/constants/reactQuery'
-import ClientApi from '@/services/clientApi'
+import { QUERY_KEY } from '@/constants/reactQuery'
+import ClientApi from '@/services/ClientApi/index'
+import { IClientApi } from '@/services/ClientApi/type'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 const getAllProduct = async ({
   queryKey,
   pageParam,
 }: {
-  queryKey: any
+  queryKey: string[]
   pageParam: number
-}): Promise<TypeHookReactQuery> => {
+}): Promise<{
+  data: IClientApi['comment'][]
+  page: number
+}> => {
   const queryUrl = `${queryKey[1]}?page=${pageParam}&limit=${PAGE_SIZE_LIMIT}`
 
   const dataServer = await ClientApi.getCommentById(queryUrl)
 
   return {
-    data: dataServer?.data || [],
+    data: dataServer,
     page: pageParam,
   }
 }

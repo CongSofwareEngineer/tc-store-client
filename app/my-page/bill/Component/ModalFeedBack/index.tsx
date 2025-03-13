@@ -12,10 +12,10 @@ import useCommentDetail from '@/hooks/tank-query/useCommentDetail'
 import { DataAddComment } from '@/constants/mongoDB'
 import { QUERY_KEY } from '@/constants/reactQuery'
 import { AiOutlineArrowLeft, AiOutlineCamera, AiOutlineCloseCircle } from 'react-icons/ai'
-import Image from 'next/image'
 import MyLoading from '@/components/MyLoading'
 import { Button, Rating, Textarea } from '@mantine/core'
 import UploadImage from '@/components/UploadImage'
+import MyImage from '@/components/MyImage'
 
 const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
   const { translate } = useLanguage()
@@ -28,6 +28,8 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
   const [loading, setLoading] = useState(false)
   const [rate, setRate] = useState(5)
   const [des, setDes] = useState('')
+
+  console.log({ listImgFeeBack, rate, des })
 
   useEffect(() => {
     const getData = async () => {
@@ -130,7 +132,7 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
       <div className='flex gap-3'>
         {listImgFeeBack.map((item: any, index: number) => (
           <div key={`img-${index}`} className='relative w-[70px] '>
-            <Image alt='img' className='w-[70px]' src={detectImg(item?.base64 || item)} />
+            <MyImage alt='img' className='!w-[70px]' src={detectImg(item?.base64 || item)} />
             <AiOutlineCloseCircle
               onClick={() => deleteImg(index)}
               className='absolute text-[20px] z-10 cursor-pointer right-0 top-0'
@@ -195,7 +197,7 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
         onClick={handleSubmit}
         loading={loading}
         disabled={!des}
-        className='mt-4 md:mb-0 mb-2 w-full'
+        className='mt-4 md:mb-0 mb-2 w-full mx-auto min-w-[50%]'
       >
         {dataGetApi?.note ? translate('common.update') : translate('common.save')}
       </Button>

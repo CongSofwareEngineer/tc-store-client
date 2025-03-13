@@ -228,15 +228,17 @@ const ClientApi = {
   },
 
   // -> comment
-  getCommentById: async (queryUrl: string) => {
-    return fetchData({
+  getCommentById: async (queryUrl: string): Promise<IClientApi['comment'][]> => {
+    const data = await fetchData({
       url: `/comment/detail/${queryUrl}`,
     })
+    return data.data || []
   },
-  getCommentByIdAndSDT: async (idProduct: string, sdt: string) => {
-    return fetchData({
+  getCommentByIdAndSDT: async (idProduct: string, sdt: string): Promise<IClientApi['comment']> => {
+    const data = await fetchData({
       url: `/comment/detail/${idProduct}/${sdt}`,
     })
+    return data.data
   },
   createComment: async (body: any) => {
     return fetchData({

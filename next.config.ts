@@ -30,7 +30,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
 
   compress: true,
-  productionBrowserSourceMaps: false,
+  productionBrowserSourceMaps: !process.env.REMOVE_CONSOLE_LOG,
   // productionBrowserSourceMaps: true,
   cleanDistDir: true,
   compiler: {
