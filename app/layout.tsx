@@ -127,12 +127,12 @@ export default async function RootLayout({
 
   return (
     <html {...mantineHtmlProps} lang='vi'>
-      {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <GoogleTagManager gtmId='GTM-T7S7DKJ4' />}
+      {process.env.NEXT_PUBLIC_ENV === 'production' && <GoogleTagManager gtmId='GTM-T7S7DKJ4' />}
       <link rel='canonical' href={'https://tcstore.vercel.app'} />
       <head>
         <ColorSchemeScript />
 
-        {process.env.NEXT_PUBLIC_MODE_PRODUCTION && (
+        {process.env.NEXT_PUBLIC_ENV === 'production' && (
           <>
             <script
               type='application/ld+json'
@@ -163,7 +163,7 @@ export default async function RootLayout({
         )}
       </head>
       <body className={`${inter.className} antialiased`}>
-        {process.env.NEXT_PUBLIC_MODE_PRODUCTION && (
+        {process.env.NEXT_PUBLIC_ENV === 'production' && (
           <>
             <noscript
               dangerouslySetInnerHTML={{
@@ -182,9 +182,9 @@ export default async function RootLayout({
             </StyledComponentsRegistry>
           </ReactQueryProvider>
         </MantineConfig>
-        {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <SpeedInsights />}
+        {process.env.NEXT_PUBLIC_ENV === 'production' && <SpeedInsights />}
       </body>
-      {process.env.NEXT_PUBLIC_MODE_PRODUCTION && <GoogleAnalytics gaId='G-QH99F8WFPW' />}
+      {process.env.NEXT_PUBLIC_ENV === 'production' && <GoogleAnalytics gaId='G-QH99F8WFPW' />}
     </html>
   )
 }

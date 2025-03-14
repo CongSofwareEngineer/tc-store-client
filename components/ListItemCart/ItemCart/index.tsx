@@ -152,7 +152,7 @@ const ItemCart = ({
               {data.name}
             </p>
             <span className='text-[12px] opacity-70 line-through'>
-              {formatPriceBase(data.more_data?.price, data.more_data?.discount)} VNĐ
+              {formatPriceBase(data.more_data?.price, data.more_data?.disCount)} VNĐ
             </span>
           </div>
 

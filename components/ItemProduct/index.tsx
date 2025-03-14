@@ -45,7 +45,7 @@ const ItemProduct = ({
       <div
         className={`  group relative item-list cursor-pointer px-3 md:pt-6 pt-4 md:pb-4 pb-3 gap-3 flex items-center justify-between flex-col ${styles['item-coffee']} ${className}`}
       >
-        {showDiscount && item?.disCount > 0 && (
+        {showDiscount && item?.disCount! > 0 && (
           <div className='absolute text-black right-0 top-4 bg-green-300   px-2  rounded-l-md z-[1]'>
             -{item?.disCount}%
           </div>

@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
 }
 
 //for production
-if (process.env.REMOVE_CONSOLE_LOG) {
+if (process.env.NEXT_PUBLIC_ENV === 'production') {
   nextConfig.eslint = {
     ignoreDuringBuilds: true,
   }

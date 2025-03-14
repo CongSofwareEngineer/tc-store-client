@@ -39,9 +39,9 @@ const ContactScreen = () => {
   const form = useForm<DataAddContact>({
     validateInputOnChange: true,
     initialValues: {
-      sdt: '',
-      emailUser: '',
-      nameUser: '',
+      sdt: userData?.sdt || '',
+      emailUser: userData?.email || '',
+      nameUser: userData?.name || '',
       des: '',
     },
     validate: {
@@ -59,16 +59,6 @@ const ContactScreen = () => {
 
     return () => footer.classList.remove('bg-custom-register')
   }, [])
-
-  useEffect(() => {
-    const initData: DataAddContact = {
-      sdt: userData?.sdt || '',
-      emailUser: userData?.email || '',
-      nameUser: userData?.name || '',
-      des: '',
-    }
-    form.setValues(initData)
-  }, [userData])
 
   const handleSubmit = async (formData: DataAddContact) => {
     setLoading(true)

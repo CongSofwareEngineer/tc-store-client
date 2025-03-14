@@ -171,7 +171,7 @@ const ViewDetail = ({
             <h1 className='text-title font-bold'>{productDetail.name}</h1>
             <InfoItemDetail data={productDetail} />
             <div className='text-medium  line-through text-green-400'>
-              {formatPriceBase(productDetail.price, productDetail.discount)} VNĐ
+              {formatPriceBase(productDetail.price, productDetail?.disCount!)} VNĐ
             </div>
             <div className='text-title font-bold text-green-500'>{`${formatPrice(
               Number(productDetail.price || '0') * amountBuy
@@ -240,7 +240,7 @@ const ViewDetail = ({
             <h1 className='text-title font-bold'>{productDetail.name}</h1>
             <InfoItemDetail data={productDetail} />
             <div className='text-medium  line-through'>
-              {formatPriceBase(productDetail?.price, productDetail?.discount)} VNĐ
+              {formatPriceBase(productDetail?.price, productDetail?.disCount)} VNĐ
             </div>
             <div className='text-title font-bold text-green-500'>{`${formatPrice(
               Number(productDetail?.price || '0') * amountBuy

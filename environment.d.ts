@@ -9,6 +9,7 @@ interface EnvironmentVariables {
   readonly NEXT_PUBLIC_TITLE_DES: string
   readonly NEXT_PUBLIC_IMAGE: string
   readonly NEXT_PUBLIC_KEY_SALT: string
+  readonly NEXT_PUBLIC_ENV: string
   readonly NEXT_PUBLIC_KEY_IV_ENCODE: string
   readonly NEXT_PUBLIC_API_KEY_GG_MAP: string
   readonly NEXT_PUBLIC_FIREBASE_API_KEY: string

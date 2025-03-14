@@ -25,7 +25,7 @@ const zustandRoutePage = create<RoutePageStore>()(
     }),
     {
       name: `zustand-${ZUSTAND.RoutePage}`,
-      enabled: process.env.NEXT_PUBLIC_DISABLE_DEV === undefined,
+      enabled: process.env.NEXT_PUBLIC_ENV !== 'production',
     }
   )
 )

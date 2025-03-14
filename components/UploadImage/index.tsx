@@ -1,5 +1,3 @@
-import useLanguage from '@/hooks/useLanguage'
-import useModalDrawer from '@/hooks/useModalDrawer'
 import { Button, FileButton } from '@mantine/core'
 import React, { useMemo } from 'react'
 import CropImg from '../CropImg'

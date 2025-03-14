@@ -25,7 +25,7 @@ const ShopDetailScreen = ({ productDetail }: { productDetail: IProduct }) => {
   useFirstLoadPage()
   const { isLogin } = useUserData()
   const { data } = useGetProductByID(productDetail?._id!)
-  const dataItem = data?.data ?? productDetail
+  const dataItem = data ?? productDetail
 
   useEffect(() => {
     if (dataItem) {

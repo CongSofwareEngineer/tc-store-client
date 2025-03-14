@@ -2,6 +2,7 @@ import { IProduct } from '../shoes/[...params]/type'
 
 export type ItemCart = {
   selected?: boolean
+  more_data?: IProduct
 } & IProduct
 
 export type ItemCartBody = {

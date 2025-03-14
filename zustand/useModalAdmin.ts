@@ -45,7 +45,7 @@ const zustandModalAdmin = create<ModalAdminStore>()(
     }),
     {
       name: `zustand-${ZUSTAND.ModalAdmin}`,
-      enabled: process.env.NEXT_PUBLIC_DISABLE_DEV === undefined,
+      enabled: process.env.NEXT_PUBLIC_ENV !== 'production',
     }
   )
 )

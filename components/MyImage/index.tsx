@@ -8,7 +8,7 @@ type IImage = {
   onLoaded?: () => any
   showPreView?: boolean
 } & ImageProps
-const MyImage = ({ showPreView = false, ...props }: IImage) => {
+const MyImage = ({ ...props }: IImage) => {
   const { ref, inView } = useInView({ threshold: 0, triggerOnce: true, rootMargin: '150px' })
   const [loaded, setLoaded] = useState(false)
 

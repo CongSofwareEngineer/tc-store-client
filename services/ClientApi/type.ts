@@ -13,24 +13,24 @@ export type IAttributes = {
 
 export type IProduct = {
   _id: string
-  amount: number
-  disCount: number
-  dateEndSale: string
-  dateSale: string
-  imageMore: string[]
+  amount?: number
+  disCount?: number
+  dateEndSale?: string
+  dateSale?: string
+  imageMore?: string[]
   imageMain: string
-  des: string
-  des2: string
+  des?: string
+  des2?: string
   name: string
   keyName: string
   linkShoppe?: string
   linkFacebook?: string
-  numberLike: number
-  price: number
-  sold: number
-  category: string
-  weight: string
-  titleSeo: string
+  numberLike?: number
+  price?: number
+  sold?: number
+  category?: string
+  weight?: string
+  titleSeo?: string
   desSeo?: string
   attributes?: IAttributes
   [key: string]: unknown

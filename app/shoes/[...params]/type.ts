@@ -2,7 +2,6 @@ import { IClientApi } from '@/services/ClientApi/type'
 
 export type IProduct = {
   typeProduct?: string
-  disCount?: number
   configBill?: {
     [key: string]: unknown
   }
