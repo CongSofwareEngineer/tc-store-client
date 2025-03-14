@@ -7,7 +7,7 @@ export type MyFormProps = {
 } & FormHTMLAttributes<HTMLFormElement>
 const MyForm = ({ form, children, submit = () => {}, className = '', ...props }: MyFormProps) => {
   return form ? (
-    <form {...props} onSubmit={form.onSubmit(submit)} className={className}>
+    <form method='POST' {...props} onSubmit={form.onSubmit(submit)} className={className}>
       {children}
     </form>
   ) : (
