@@ -16,7 +16,6 @@ const ShopScreen = () => {
         <MenuCategory />
       </div>
       <div className='flex-1 w-full  h-full' data-aos='fade-left'>
-        <InputSearch />
         <Content />
       </div>
     </div>

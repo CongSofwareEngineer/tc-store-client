@@ -51,7 +51,7 @@ const Content = () => {
             })}
           </div>
         ) : (
-          <div className='mt-3'>Chưa có sản phẩm</div>
+          <div className='mt-3'>{translate('textPopular.empty')}</div>
         )}
 
         <MyLoadMore

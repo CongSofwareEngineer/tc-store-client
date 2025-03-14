@@ -10,11 +10,13 @@ import useShoesShop from '@/hooks/tank-query/useShoesShop'
 import ItemProduct from '@/components/ItemProduct'
 import InputSearch from '@/components/InputSearch'
 import MySkeleton from '@/components/MySkeleton'
+import useLanguage from '@/hooks/useLanguage'
 
 const ShoesScreen = () => {
   useAos()
   useFirstLoadPage()
   const { queries } = useQuerySearch()
+  const { translate } = useLanguage()
   const { data, isLoading, hasNextPage, loadMore, isFetchingNextPage } = useShoesShop(queries)
 
   const renderLoading = () => {
@@ -47,7 +49,7 @@ const ShoesScreen = () => {
             })}
           </div>
         ) : (
-          <div className='mt-3'>Chưa có sản phẩm</div>
+          <div className='mt-3'>{translate('textPopular.empty')}</div>
         )}
 
         <MyLoadMore
