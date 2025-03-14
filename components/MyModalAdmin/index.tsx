@@ -8,7 +8,7 @@ const MyModalAdmin = () => {
 
   const onClick = (event: any) => {
     if (event.target === event.currentTarget) {
-      if (!modalAdmin.overClickClose) {
+      if (modalAdmin.overClickClose) {
         closeModal(true)
       }
     }
