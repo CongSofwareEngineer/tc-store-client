@@ -96,12 +96,14 @@ const ChatFirebase: NextPage = () => {
   const checkValidMess = (): boolean => {
     let isErrorSendMuchMessages = false
     let numberRequest = 0
+
     listChats.forEach((e) => {
-      if (numberRequest === 3) {
-        isErrorSendMuchMessages = true
+      isErrorSendMuchMessages = false
+      if (e.isAdmin) {
+        numberRequest = 0
       } else {
-        if (e.isAdmin) {
-          numberRequest = 0
+        if (numberRequest === 3) {
+          isErrorSendMuchMessages = true
         } else {
           numberRequest++
         }
@@ -113,6 +115,7 @@ const ChatFirebase: NextPage = () => {
 
   const handleSend = async () => {
     const isValidSend = checkValidMess()
+
     if (isValidSend) {
       const text = content
       if (content?.trim()) {
