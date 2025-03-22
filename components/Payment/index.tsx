@@ -29,6 +29,7 @@ import { IFormPayment, IPayment } from './type'
 import { useForm } from '@mantine/form'
 import useCheckForm from '@/hooks/useCheckForm'
 import ContentFormPayment from './ContentFormPayment'
+import { useModalAdmin } from '@/zustand/useModalAdmin'
 
 const INIt_FORM: IFormPayment = {
   sdt: '',
@@ -46,6 +47,7 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
   const { userData, isLogin } = useUserData()
   const { refreshListQuery } = useRefreshQuery()
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()
+  const { closeModal: closeModalAdmin } = useModalAdmin()
   const route = useRoutePage()
 
   const [loading, setLoading] = useState(false)
@@ -168,8 +170,10 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
     if (res?.data) {
       await callbackSuccess()
       clickBack()
+      closeModalAdmin()
     } else {
       showNotificationError(translate('productDetail.modalBuy.error'))
+      closeModalAdmin()
     }
   }
 
@@ -222,6 +226,9 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
         openModalDrawer({
           content: (
             <InfoBanking
+              callbackError={() => {
+                setLoading(false)
+              }}
               callback={(id, mess) => handleSubmitBuy(id, mess, bodyAPI)}
               amount={totalBill + DEFAULT_FEE_SHIP}
             />

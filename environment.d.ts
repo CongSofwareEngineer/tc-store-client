@@ -19,6 +19,7 @@ interface EnvironmentVariables {
   readonly NEXT_PUBLIC_FIREBASE_MESSAGINGSENDER_ID: string
   readonly NEXT_PUBLIC_FIREBASE_APPID: string0
   readonly NEXT_PUBLIC_FIREBASE_VERIFIED_API_KEY: string
+  readonly SEPAY_API_KEY: string
 }
 
 declare namespace NodeJS {

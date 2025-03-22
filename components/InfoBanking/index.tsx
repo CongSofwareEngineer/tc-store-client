@@ -1,22 +1,29 @@
-import VietcomBankService from '@/services/vietcombank'
 import React, { useEffect, useState } from 'react'
 import MyImage from '../MyImage'
 import useLanguage from '@/hooks/useLanguage'
-import { images } from '@/configs/images'
 import useMedia from '@/hooks/useMedia'
 import { AiOutlineExclamationCircle } from 'react-icons/ai'
 import { Button, Image } from '@mantine/core'
 import TextCopy from '../TextCopy'
+import VPBankService from '@/services/VPBank'
+import { useModalAdmin } from '@/zustand/useModalAdmin'
+import ModalProcess from '../ModalProcess'
+import { delayTime } from '@/utils/functions'
+import SepayServices from '@/services/Sepay'
+import { showNotificationError } from '@/utils/notification'
 
 const InfoBanking = ({
   amount,
   callback = () => {},
+  callbackError = () => {},
 }: {
   amount: number
   callback?: (id?: string, mess?: string) => any
+  callbackError?: () => any
 }) => {
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
+  const { openModal, closeModal } = useModalAdmin()
 
   const [qrCode, setQrCode] = useState<string>('')
   const [message, setMessage] = useState<string>('')
@@ -26,7 +33,7 @@ const InfoBanking = ({
 
   useEffect(() => {
     ;(async () => {
-      const infoBanking = new VietcomBankService(amount)
+      const infoBanking = new VPBankService(amount)
 
       setQrCode(infoBanking.qrCode)
       setMessage(infoBanking.message)
@@ -36,15 +43,50 @@ const InfoBanking = ({
 
   const checkBanking = async () => {
     if (isMobile) {
-      VietcomBankService.openDeepLink(amount, message)
+      VPBankService.openDeepLink(amount, message)
     } else {
       setLoadingCheck(true)
       setLoadingCheck(false)
     }
   }
 
-  const handleCallBack = () => {
-    callback(idBanking, message)
+  const tracking = async (amountRequest = 40) => {
+    if (amountRequest > 0) {
+      await delayTime(3000)
+      amountRequest -= 1
+
+      const listPayment = await SepayServices.getListPayment()
+
+      if (
+        listPayment?.transactions &&
+        Array.isArray(listPayment?.transactions) &&
+        listPayment?.transactions?.length > 0
+      ) {
+        const inValid = listPayment?.transactions.some((e) => {
+          return e.transaction_content.includes(idBanking)
+        })
+        if (inValid) {
+          callback(idBanking, message)
+        } else {
+          await tracking(amountRequest)
+        }
+      } else {
+        callback(idBanking, message)
+      }
+    } else {
+      closeModal()
+      callbackError()
+      showNotificationError('Bạn chưa chuyển tiền.')
+    }
+  }
+
+  const handleCallBack = async () => {
+    openModal({
+      body: <ModalProcess title={translate('banking.tracking')} />,
+      showBtnClose: false,
+      overClickClose: false,
+    })
+    tracking()
   }
 
   return (
@@ -66,18 +108,19 @@ const InfoBanking = ({
 
       <div className='flex flex-col flex-1 gap-2  '>
         <div className='flex gap-2'>
-          <div className='font-bold'>NH : VietCombank</div>
+          <div className='font-bold'>NH : VP Bank</div>
 
-          <div className='relative w-6 rounded-lg aspect-square overflow-auto'>
-            <MyImage src={images.logoVCB} alt='logo VCB' className='!relative !w-full !h-auto ' />
+          <div className='relative justify-center w-5 rounded-lg aspect-square overflow-auto'>
+            <MyImage
+              src={'https://www.vpbank.com.vn/assets/images/favicons/favicon-32x32.png'}
+              alt='logo VCB'
+              className='!relative !w-full !h-auto '
+            />
           </div>
         </div>
         <div className='flex  md:gap-2 gap-1'>
           <span className='font-bold'>{`STK : `}</span>
-          <TextCopy
-            value={process.env.NEXT_PUBLIC_VCB_STK}
-            textView={process.env.NEXT_PUBLIC_VCB_STK}
-          />
+          <TextCopy value={'0392225405'} textView={'0392225405'} />
         </div>
         <div className='flex  flex-col  gap-1'>
           <span className='font-bold'>{translate('textPopular.content')} :</span>
