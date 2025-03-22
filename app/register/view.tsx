@@ -69,6 +69,9 @@ const RegisterScreen = () => {
   }, [])
 
   const handleRegister = async (formData: IFormRegister) => {
+    console.log('====================================')
+    console.log({ formData })
+    console.log('====================================')
     const bodyUser: BodyUserData = {
       addressShipper: [],
       exp: 0,

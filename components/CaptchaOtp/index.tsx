@@ -35,6 +35,10 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
     return `+840${numberPhone}`
   }, [numberPhone])
 
+  console.log('====================================')
+  console.log({ phoneMemo })
+  console.log('====================================')
+
   useLayoutEffect(() => {
     const auth = FirebaseServices.initAuth()
     setAuth(auth)
@@ -62,7 +66,10 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
       setIsPending(true)
       const otpRes = await FirebaseServices.sendNumberToGetOtp(phoneMemo, auth!, reCaptchaVerifier!)
       setOtpReceived(otpRes)
-    } catch {
+    } catch (error) {
+      console.log('====================================')
+      console.log({ error })
+      console.log('====================================')
       setIsErrorManyRequest(true)
     }
   }
@@ -72,12 +79,18 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
       setLoadingCheckPinCode(true)
       if (otpReceived) {
         const isVerify = await otpReceived.confirm(pinCode!)
+        console.log('====================================')
+        console.log({ isVerify })
+        console.log('====================================')
 
         if (isVerify && callback) {
           await callback()
         }
       }
-    } catch {
+    } catch (error) {
+      console.log('====================================')
+      console.log({ error })
+      console.log('====================================')
       setIsErrorCode(true)
     } finally {
       setLoadingCheckPinCode(false)
