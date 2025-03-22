@@ -24,7 +24,7 @@ export function middleware(request: Request) {
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
   } else {
-    return new Response('Forbidden', { status: 403 })
+    return new Response('You are hacker', { status: 403 })
   }
 
   return response
