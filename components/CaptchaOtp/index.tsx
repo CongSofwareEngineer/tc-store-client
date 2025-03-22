@@ -3,9 +3,10 @@ import useModalDrawer from '@/hooks/useModalDrawer'
 import { FirebaseServices } from '@/services/firebaseService'
 import { Button, Input } from '@mantine/core'
 import { Auth, ConfirmationResult, RecaptchaVerifier } from 'firebase/auth'
-import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import OtpInput from 'react-otp-input'
 import MyImage from '../MyImage'
+import { getPhoneFormat } from '@/utils/phone'
 
 type CaptchaOtpProps = {
   callback?: (param?: any) => any
@@ -18,26 +19,14 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
   const [otpReceived, setOtpReceived] = useState<ConfirmationResult | null>(null)
   const [pinCode, setPinCode] = useState<string>()
   const [isErrorManyRequest, setIsErrorManyRequest] = useState(false)
+  const [phoneFormat] = useState(getPhoneFormat(numberPhone))
 
   const [reCaptchaVerifier, setReCaptchaVerifier] = useState<RecaptchaVerifier | null>(null)
   const [auth, setAuth] = useState<Auth | null>(null)
 
   const { closeModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
-
-  const phoneMemo = useMemo(() => {
-    if (numberPhone.startsWith('0')) {
-      return '+84' + numberPhone.slice(1)
-    }
-    if (numberPhone.startsWith('+84')) {
-      return numberPhone
-    }
-    return `+840${numberPhone}`
-  }, [numberPhone])
-
-  console.log('====================================')
-  console.log({ phoneMemo })
-  console.log('====================================')
+  console.log({ phoneFormat })
 
   useLayoutEffect(() => {
     const auth = FirebaseServices.initAuth()
@@ -64,7 +53,11 @@ const CaptchaOtp = ({ numberPhone = '', callback }: CaptchaOtpProps) => {
   const handleSendOtp = async () => {
     try {
       setIsPending(true)
-      const otpRes = await FirebaseServices.sendNumberToGetOtp(phoneMemo, auth!, reCaptchaVerifier!)
+      const otpRes = await FirebaseServices.sendNumberToGetOtp(
+        phoneFormat,
+        auth!,
+        reCaptchaVerifier!
+      )
       setOtpReceived(otpRes)
     } catch (error) {
       console.log('====================================')
