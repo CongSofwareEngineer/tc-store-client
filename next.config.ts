@@ -19,6 +19,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  compiler: {
+    reactRemoveProperties: true,
+    styledComponents: {
+      displayName: true,
+      ssr: true,
+      minify: true,
+    },
+  },
 }
 
 //for production
@@ -48,13 +56,8 @@ if (process.env.NEXT_PUBLIC_ENV === 'production') {
 
   nextConfig.cleanDistDir = true
   nextConfig.compiler = {
+    ...nextConfig.compiler,
     removeConsole: true,
-    reactRemoveProperties: true,
-    styledComponents: {
-      displayName: true,
-      ssr: true,
-      minify: true,
-    },
   }
 }
 

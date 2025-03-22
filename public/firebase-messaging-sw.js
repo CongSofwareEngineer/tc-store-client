@@ -22,50 +22,23 @@ messaging.onBackgroundMessage((payload) => {
       data: payload?.data, // Pass any additional data
     }
     self.registration.showNotification(notificationTitle, notificationOptions)
-
+    self.addEventListener('notificationclick', (event) => {
+      event.notification.close()
+      event.waitUntil(
+        clients
+          .matchAll({
+            type: 'window'
+          })
+          .then((clientList) => {
+            for (const client of clientList) {
+              if (client.url === '/' && 'focus' in client) return client.focus()
+            }
+            if (clients.openWindow) {
+              return clients.openWindow(payload.data?.link_confirm || '/')
+            }
+          })
+      )
+    })
 
   }
-})
-
-self.addEventListener('notificationclick', (event) => {
-  event.notification.close()
-
-  event.waitUntil(
-    clients.openWindow('/my-page') // Open the URL in a new window/tab
-  );
-  // console.log('Notification clicked:', event.notification);
-  // event.notification.close()
-  // const notificationData = event.notification.data;
-
-  // event.waitUntil(
-  //   clients
-  //     .matchAll({
-  //       type: "window",
-  //     })
-  //     .then((clientList) => {
-  //       clients.openWindow('/my-page')
-  //       // if (notificationData?.url) {
-  //       //   event.waitUntil(
-  //       //     clients.openWindow(notificationData.url) // Open the URL in a new window/tab
-  //       //   );
-  //       // } else {
-  //       //   // Default behavior: Open the app's root URL
-  //       //   event.waitUntil(
-  //       //     clients.openWindow('/') // Replace '/' with your app's root URL
-  //       //   );
-  //       // }
-  //     }),
-  // );
-
-
-  // if (notificationData?.url) {
-  //   event.waitUntil(
-  //     clients.openWindow(notificationData.url) // Open the URL in a new window/tab
-  //   );
-  // } else {
-  //   // Default behavior: Open the app's root URL
-  //   event.waitUntil(
-  //     clients.openWindow('/') // Replace '/' with your app's root URL
-  //   );
-  // }
 })
