@@ -108,7 +108,9 @@ const RegisterScreen = () => {
       showNotificationError(translate('register.exitSDT'))
     } else {
       openModalDrawer({
-        content: <CaptchaOtp numberPhone={formData.sdt} callback={handleRegister} />,
+        content: (
+          <CaptchaOtp numberPhone={formData.sdt} callback={() => handleRegister(formData)} />
+        ),
         title: translate('verifyNumberPhone.title'),
         configModal: {
           overClickClose: false,
