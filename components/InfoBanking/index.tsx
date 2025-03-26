@@ -62,13 +62,20 @@ const InfoBanking = ({
         Array.isArray(listPayment?.transactions) &&
         listPayment?.transactions?.length > 0
       ) {
-        const inValid = listPayment?.transactions.some((e) => {
-          const isValidContent = e.transaction_content.includes(idBanking)
-          const isValidMoney = Number(e.amount_in) === amount
-          return isValidContent && isValidMoney
+        const isValidContent = listPayment?.transactions.some((e) => {
+          return e.transaction_content.includes(idBanking)
         })
-        if (inValid) {
-          callback(idBanking, message)
+        const isValidMoney = listPayment?.transactions.some((e) => {
+          return Number(e.amount_in) === amount
+        })
+        if (isValidContent) {
+          if (isValidMoney) {
+            callback(idBanking, message)
+          } else {
+            closeModal()
+            callbackError()
+            showNotificationError('Bạn chuyển tiền chưa đủ.')
+          }
         } else {
           await tracking(amountRequest)
         }
