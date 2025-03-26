@@ -63,7 +63,7 @@ const InfoBanking = ({
         listPayment?.transactions?.length > 0
       ) {
         const isValidContent = listPayment?.transactions.some((e) => {
-          return e.transaction_content.includes(idBanking)
+          return e.transaction_content.includes(message)
         })
         const isValidMoney = listPayment?.transactions.some((e) => {
           return Number(e.amount_in) === amount

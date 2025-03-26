@@ -13,7 +13,7 @@ class VPBankService {
   }
 
   generateMess(salt: string): string {
-    return `Ma ID ${salt}  Ngay ${formatDateTime(new Date(), 'DD MM YYYY')}`
+    return `MaID ${salt} Ngay ${formatDateTime(new Date(), 'DD MM YYYY')}`
   }
 
   generateSalt(): string {
