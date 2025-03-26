@@ -63,7 +63,9 @@ const InfoBanking = ({
         listPayment?.transactions?.length > 0
       ) {
         const inValid = listPayment?.transactions.some((e) => {
-          return e.transaction_content.includes(idBanking)
+          const isValidContent = e.transaction_content.includes(idBanking)
+          const isValidMoney = Number(e.amount_in) === amount
+          return isValidContent && isValidMoney
         })
         if (inValid) {
           callback(idBanking, message)

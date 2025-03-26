@@ -188,7 +188,7 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
 
       data.forEach((e) => {
         if (e.selected) {
-          totalBill += (e.amount || e.more_data?.price!) * getItemForShow(e).price
+          totalBill += (e.amountBuy || e.amount!) * (getItemForShow(e).price || e.price)
           const itemBill = {
             _id: getItemForShow(e)._id,
             keyName: getItemForShow(e).keyName,
@@ -222,6 +222,7 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
         const expUser = totalBill * DEFAULT_RATE_EXP_USER + (userData?.exp || 0)
         bodyAPI.expUser = expUser
       }
+
       if (optionSelected.value === OPTIONS_PAYMENT.banking) {
         openModalDrawer({
           content: (
@@ -230,7 +231,7 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
                 setLoading(false)
               }}
               callback={(id, mess) => handleSubmitBuy(id, mess, bodyAPI)}
-              amount={totalBill + DEFAULT_FEE_SHIP}
+              amount={Number(totalBill) + DEFAULT_FEE_SHIP}
             />
           ),
           useDrawer: true,
