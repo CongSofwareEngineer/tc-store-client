@@ -53,7 +53,7 @@ const ItemProduct = ({
 
         <div className='m-auto max-w-[85%] relative w-full aspect-square  overflow-hidden'>
           <MyImage
-            src={detectImg(item?.imageMain || images.userDetail.iconUserDetail, 350)}
+            src={detectImg(item?.images![0].url.toString(), 350)}
             alt={`item-${item?.name || href}`}
             className='!h-auto group-hover:scale-110 transform !transition !duration-300 !ease-in-out select-none'
           />
@@ -68,9 +68,9 @@ const ItemProduct = ({
             {formatPrice(item?.price || 150)}
             VNĐ
           </div>
-          {!isMobile && (
+          {/* {!isMobile && (
             <MySliderSell total={item.amount} sell={item.sold} className={'text-[12px]'} />
-          )}
+          )} */}
 
           {showSold && (
             <div className='md:mt-2 text-[11px] flex w-full justify-between items-center'>

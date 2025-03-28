@@ -1,13 +1,16 @@
 'use client'
-import ViewDetail from '@/app/shoes/[...params]/Component/ViewDetail'
-import { IProduct } from '@/app/shoes/[...params]/type'
-import MyLoading from '@/components/MyLoading'
+import React, { useState } from 'react'
+import { IPaymentShop } from './type'
 import useGetProductByID from '@/hooks/tank-query/useGetProductByID'
-import useAos from '@/hooks/useAos'
-import useFirstLoadPage from '@/hooks/useFirstLoadPage'
 import useUserData from '@/hooks/useUserData'
+// import PaymentShop from './Component/payment'
+import { useEffect } from 'react'
+import useAos from '@/hooks/useAos'
 import dynamic from 'next/dynamic'
-import React, { useEffect, useState } from 'react'
+import { cloneData } from '@/utils/functions'
+import MyLoading from '@/components/MyLoading'
+import useFirstLoadPage from '@/hooks/useFirstLoadPage'
+import ViewDetail from './Component/ViewDetail'
 
 const Payment = dynamic(() => import('@/components/Payment'), {
   ssr: true,
@@ -15,27 +18,34 @@ const Payment = dynamic(() => import('@/components/Payment'), {
     return <MyLoading />
   },
 })
-
-const ShopDetailScreen = ({ productDetail }: { productDetail: IProduct }) => {
+const ShopDetailScreen = ({ productDetail }: { productDetail: IPaymentShop['data'] }) => {
   const [amountBuy, setAmountBuy] = useState(1)
   const [isPayment, setIsPayment] = useState(false)
-  const [productState, setProductState] = useState<IProduct>(productDetail)
+  const [productState, setProductState] = useState<IPaymentShop['data']>(productDetail)
 
   useAos()
   useFirstLoadPage()
   const { isLogin } = useUserData()
-  const { data } = useGetProductByID(productDetail?._id!)
-  const dataItem = data ?? productDetail
-
-  useEffect(() => {
-    if (dataItem) {
-      setProductState(dataItem)
-    }
-  }, [dataItem])
+  const { data } = useGetProductByID(productDetail?._id)
+  const dataItem = data?.data ?? productDetail
 
   useEffect(() => {
     setIsPayment(false)
   }, [isLogin])
+
+  useEffect(() => {
+    const dataClone: IPaymentShop['data'] = cloneData(dataItem)
+    if (dataClone) {
+      const modelInit = dataClone.models[0]
+      const sizeDefault = modelInit.sizes.find((size) => size.amount > size.sold)
+
+      dataClone.configBill = {
+        model: modelInit.model,
+        size: sizeDefault?.size || 0,
+      }
+      setProductState(dataClone)
+    }
+  }, [dataItem])
 
   if (isPayment) {
     return (

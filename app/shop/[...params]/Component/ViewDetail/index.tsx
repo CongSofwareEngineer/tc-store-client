@@ -15,13 +15,15 @@ import { images } from '@/configs/images'
 import ClientApi from '@/services/clientApi'
 import { showNotificationSuccess } from '@/utils/notification'
 import MyImage from '@/components/MyImage'
-import { IProduct } from '../../type'
 import BtnBack from '@/components/BtnBack'
 import { Button } from '@mantine/core'
 import { getCookie, setCookie } from '@/services/cookiesService'
 import InfoItemDetail from '@/components/InfoItemDetail'
 import Attributes from '@/components/Attributes'
 import { ItemCartBody } from '@/app/my-cart/type'
+import { IProduct } from '../../type'
+import Models from '../Models'
+import { IImageProduct } from '@/services/ClientApi/type'
 // import MoreCollections from '@/components/MoreCollections'
 
 const MoreInfo = dynamic(() => import('@/components/MoreInfo'), {
@@ -40,7 +42,7 @@ type Props = {
   amountBuy: number
   setIsPayment: (e: any) => void
   setAmountBuy: (e: any) => void
-  onChangeData?: (param: any) => void
+  onChangeData: (param: IProduct) => void
 }
 const ViewDetail = ({
   onChangeData,
@@ -55,7 +57,7 @@ const ViewDetail = ({
   const { refreshQuery } = useRefreshQuery()
   const { translate } = useLanguage()
   const { userData, isLogin } = useUserData()
-  const [imageShow, setImageShow] = useState('')
+  const [imageShow, setImageShow] = useState<IImageProduct>()
 
   const [loadingAddCart, setLoadingAddCart] = useState(false)
 
@@ -151,6 +153,51 @@ const ViewDetail = ({
     }
   }
 
+  const renderSubAndPlus = () => {
+    const maxAmount = 0
+    productDetail.models.some((model) => {
+      let isValidSize = false
+      const isValidModel = model.model === productDetail.configBill?.model
+      model.sizes.some((size) => {
+        if (size.size === productDetail.configBill?.size) {
+          isValidSize = true
+        }
+        return isValidSize
+      })
+      return isValidSize && isValidModel
+    })
+    return (
+      <SubAndPlus
+        callBackSub={(e) => setAmountBuy(e)}
+        value={amountBuy}
+        maxAmount={maxAmount}
+        callBackPlus={(e) => setAmountBuy(e)}
+      />
+    )
+  }
+
+  const renderImageMain = () => {
+    const img = productDetail.images?.find((img) => img.model === productDetail.configBill?.model)
+    const modelSelected = productDetail.models.find((model) => {
+      if (imageShow) {
+        return model.model === imageShow.model
+      }
+      return model.model === productDetail.configBill?.model
+    })
+    return (
+      <div className='relative w-full'>
+        <MyImage
+          src={detectImg(imageShow?.url?.toString() || img?.url.toString())}
+          alt={`img-main--${productDetail.name}`}
+          className='!relative !w-full !h-auto'
+        />
+        <div className=' bg-green-400 rounded-md px-2 py-1 text-center absolute left-2 top-2'>
+          {modelSelected?.name}
+        </div>
+      </div>
+    )
+  }
+
   const renderDesktop = () => {
     return (
       <div className='flex flex-col'>
@@ -160,12 +207,8 @@ const ViewDetail = ({
             data-aos='fade-right'
             className='relative min-w-[300px] max-w-[450px] w-[50%] p-5 overflow-hidden '
           >
-            <MyImage
-              src={detectImg(imageShow || productDetail.imageMain || '')}
-              alt={`img-main--${productDetail.name}`}
-              className='!relative !w-full !h-auto'
-            />
-            <ImageMore onHover={(url) => setImageShow(url!)} data={productDetail} />
+            {renderImageMain()}
+            <ImageMore onHover={(url) => setImageShow(url!)} data={productDetail.images!} />
           </div>
           <div className='flex-1 flex flex-col gap-2 justify-center  ' data-aos='fade-left'>
             <h1 className='text-title font-bold'>{productDetail.name}</h1>
@@ -176,16 +219,15 @@ const ViewDetail = ({
             <div className='text-title font-bold text-green-500'>{`${formatPrice(
               Number(productDetail.price || '0') * amountBuy
             )} VNĐ`}</div>
-            {productDetail?.attributes! && (
-              <Attributes onChange={onChangeData} data={productDetail} />
-            )}
-            <div />
-            <SubAndPlus
-              callBackSub={(e) => setAmountBuy(e)}
-              value={amountBuy}
-              maxAmount={productDetail.amount! - productDetail.sold!}
-              callBackPlus={(e) => setAmountBuy(e)}
+            <Models
+              onChange={(e) => {
+                onChangeData({ ...productDetail, configBill: e })
+              }}
+              listModels={productDetail.models}
+              value={productDetail.configBill}
             />
+            {renderSubAndPlus()}
+
             <div className='flex gap-6 mt-4'>
               <Button onClick={handleBuy} className='min-w-[30%] !h-[40px]'>
                 {translate('common.buyNow')}
@@ -229,12 +271,8 @@ const ViewDetail = ({
         <BtnBack title={[translate('textPopular.shoes'), productDetail.name]} url={['/shoes']} />
         <div className='pt-8 pb-2 shadow-lg shadow-yellow-50 bg-white   w-full flex flex-col justify-center items-center'>
           <div data-aos='fade-right' className='w-[80%]  overflow-hidden '>
-            <MyImage
-              src={detectImg(productDetail.imageMain || images.userDetail.iconUserDetail)}
-              alt={productDetail.des || ''}
-              className='!relative !w-full !h-auto'
-            />
-            <ImageMore onHover={(url) => setImageShow(url!)} data={productDetail} />
+            {renderImageMain()}
+            <ImageMore onHover={(url) => setImageShow(url!)} data={productDetail.images!} />
           </div>
           <div data-aos='fade-right' className='w-full flex-col gap-2 px-5 pt-5'>
             <h1 className='text-title font-bold'>{productDetail.name}</h1>
@@ -245,14 +283,17 @@ const ViewDetail = ({
             <div className='text-title font-bold text-green-500'>{`${formatPrice(
               Number(productDetail?.price || '0') * amountBuy
             )} VNĐ`}</div>
-            <Attributes onChange={onChangeData} data={productDetail} />
-            <div className='mb-3' />
-            <SubAndPlus
-              callBackSub={(e) => setAmountBuy(e)}
-              value={amountBuy}
-              maxAmount={productDetail.amount! - productDetail.sold!}
-              callBackPlus={(e) => setAmountBuy(e)}
+
+            <Models
+              onChange={(e) => {
+                onChangeData({ ...productDetail, configBill: e })
+              }}
+              listModels={productDetail.models}
+              value={productDetail.configBill}
             />
+            <div className='mb-3' />
+            {renderSubAndPlus()}
+
             <div className='flex sm:gap-6 gap-2 mt-4 mb-3 sm:flex-row flex-col'>
               <Button onClick={handleBuy} className='min-w-[30%] ' style={{ height: 40 }}>
                 {translate('common.buyNow')}

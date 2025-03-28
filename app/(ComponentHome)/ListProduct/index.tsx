@@ -18,9 +18,9 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   const { translate } = useLanguage()
 
   const getUrl = () => {
-    if (type === TYPE_PRODUCT.shoes) {
-      return 'shoes'
-    }
+    // if (type === TYPE_PRODUCT.shoes) {
+    //   return 'shoes'
+    // }
     return `shop?${FilterAPI.Category}=${type || 'all'}`
   }
 

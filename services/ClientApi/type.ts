@@ -1,38 +1,49 @@
-export type IAttributes = {
-  sex?: string[]
-  sizes?: Array<{
-    size: string
-    colors?: Array<{
-      color: string
-      sold: number
-      amount: number
-    }>
-  }>
-  [key: string]: unknown
+export type ISizesModel = {
+  size: number
+  sold: number
+  amount: number
+}
+
+export type IModels = {
+  model: string
+  name: string
+  sizes: Array<ISizesModel>
+}
+
+export type IImageProduct = {
+  url:
+    | string
+    | {
+        base64: string
+        [key: string]: any
+      }
+  model: string
 }
 
 export type IProduct = {
-  _id: string
+  _id?: string
+  cost?: number
   amount?: number
   disCount?: number
   dateEndSale?: string
   dateSale?: string
-  imageMore?: string[]
-  imageMain: string
+  nsx?: string
+  hsd?: string
+  images?: Array<IImageProduct>
   des?: string
   des2?: string
-  name: string
-  keyName: string
+  name?: string
+  keyName?: string
   linkShoppe?: string
   linkFacebook?: string
+  name2?: string
   numberLike?: number
   price?: number
-  sold?: number
   category?: string
-  weight?: string
   titleSeo?: string
   desSeo?: string
-  attributes?: IAttributes
+  attributes?: { [key: string]: any }
+  models: Array<IModels>
   [key: string]: unknown
 }
 
@@ -43,10 +54,10 @@ export type IMyCart = {
   idProduct: string
   idUser: string
   configBill: {
+    models: string
     size: string
-    color: string
   }
-  more_data: IProduct
+  moreData: IProduct
   [key: string]: unknown
 }
 
