@@ -47,7 +47,7 @@ export const formatPriceBase = (data: any, discount = 20) => {
     const rate = (Number(discount) + 100) / 100
 
     // const rate = (100 + discount) / 100
-    return data + rate
+    return data * rate
     // return numberWithCommas(rate * rate)
   } catch {
     return 0
@@ -261,12 +261,5 @@ export const stringToArrayBuffer = (str: string) => {
 }
 
 export const getUrlProduct = (product: any) => {
-  if (
-    product?.more_data?.category === TYPE_PRODUCT.shoes ||
-    product?.category === TYPE_PRODUCT.shoes
-  ) {
-    return `/shoes/${product?.more_data?.keyName || product?.keyName}`
-  }
-
   return `/shop/${product?.more_data?.keyName || product?.keyName}`
 }

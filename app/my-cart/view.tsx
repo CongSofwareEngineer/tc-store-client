@@ -18,7 +18,7 @@ import { showNotificationError, showNotificationSuccess } from '@/utils/notifica
 import { Button } from '@mantine/core'
 import ListItemCart from '@/components/ListItemCart'
 import LoadingData from './Component/LoadingData'
-import { IProduct } from '../shoes/[...params]/type'
+import { IItemCart } from './type'
 
 const Payment = dynamic(() => import('@/components/Payment'), {
   ssr: false,
@@ -26,8 +26,8 @@ const Payment = dynamic(() => import('@/components/Payment'), {
 })
 
 const MyCartScreen = () => {
-  const [listCartFormat, setListCartFormat] = useState<IProduct[]>([])
-  const [listPaymentFormat, setListPaymentFormat] = useState<IProduct[]>([])
+  const [listCartFormat, setListCartFormat] = useState<IItemCart[]>([])
+  const [listPaymentFormat, setListPaymentFormat] = useState<IItemCart[]>([])
   const [pageSize] = useState(PAGE_SIZE_LIMIT)
 
   useFirstLoadPage()
@@ -54,12 +54,13 @@ const MyCartScreen = () => {
 
     return () => setListCartFormat([])
   }, [data])
+  console.log({ listCartFormat })
 
   const calculatePayment = () => {
     let total = 0
-    listCartFormat.forEach((e: any) => {
+    listCartFormat.forEach((e) => {
       if (e.selected) {
-        total += e.more_data.price * e.amount
+        total += e.moreData!.price! * e.amountBuy!
       }
     })
     return total

@@ -5,8 +5,11 @@ import { AiOutlineUpload } from 'react-icons/ai'
 import { isIOS, isMacOs } from 'react-device-detect'
 import { MAX_PIXEL_REDUCE } from '@/constants/app'
 import { useModalAdmin } from '@/zustand/useModalAdmin'
+
+export type IFileImage = { type?: string; base64?: string; name: string; file: File }
+
 type IUploadImage = {
-  callback: (file: File) => any
+  callback: (param: IFileImage) => any
   disabled?: boolean
   children?: React.ReactNode
   fullQuality?: boolean
@@ -30,10 +33,12 @@ const UploadImage = ({
   }, [])
 
   const handleUploadImg = (file: File | null) => {
-    const callbackCrop = async (fileCrop: File | null) => {
+    const callbackCrop = async (fileCrop: IFileImage | null) => {
       console.log({ fileCrop })
+      // const formData = new FormData()
+      // formData.append('file', file!)
 
-      callback(fileCrop as File)
+      callback(fileCrop!)
       closeModal()
     }
 

@@ -20,15 +20,18 @@ export type IImageProduct = {
   model: string
 }
 
+export type IConfigCart = {
+  model: string
+  size: number
+}
 export type IProduct = {
   _id?: string
   cost?: number
   amount?: number
+  amountBuy?: number
   disCount?: number
   dateEndSale?: string
   dateSale?: string
-  nsx?: string
-  hsd?: string
   images?: Array<IImageProduct>
   des?: string
   des2?: string
@@ -36,7 +39,6 @@ export type IProduct = {
   keyName?: string
   linkShoppe?: string
   linkFacebook?: string
-  name2?: string
   numberLike?: number
   price?: number
   category?: string
@@ -44,6 +46,10 @@ export type IProduct = {
   desSeo?: string
   attributes?: { [key: string]: any }
   models: Array<IModels>
+  configBill?: {
+    price?: number
+  } & IConfigCart
+  configCart?: IConfigCart
   [key: string]: unknown
 }
 

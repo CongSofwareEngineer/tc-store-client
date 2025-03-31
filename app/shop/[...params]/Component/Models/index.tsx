@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react'
-import { IProduct } from '../../type'
 import { Checkbox, ComboboxItem, Select } from '@mantine/core'
-import { ISizesModel } from '@/services/ClientApi/type'
+import { IProduct, ISizesModel } from '@/services/ClientApi/type'
 
 type IModels = {
   listModels: IProduct['models']
@@ -29,7 +28,7 @@ const Models = ({ listModels, onChange, value }: IModels) => {
   const optionModel = useMemo(() => {
     return listModels.map((model) => {
       const isOutSold = model.sizes.some((size) => {
-        if (size.amount <= size.sold && size.size === value.size) {
+        if (size.amount <= size.sold && size.size === value?.size) {
           return true
         }
         return false
@@ -45,14 +44,14 @@ const Models = ({ listModels, onChange, value }: IModels) => {
 
   const onChangeModel = (model: string) => {
     onChange({
-      ...value,
+      ...value!,
       model,
     })
   }
 
   const onChangeSize = (size: string) => {
     onChange({
-      ...value,
+      ...value!,
       size: Number(size),
     })
   }

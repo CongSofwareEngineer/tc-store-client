@@ -1,3 +1,4 @@
+import { IConfigCart } from '@/services/ClientApi/type'
 import { FILTER_BILL } from './app'
 
 export type DataAddContact = {
@@ -8,11 +9,11 @@ export type DataAddContact = {
 }
 
 export type DataAddCart = {
-  amount: number
+  amountBuy: number
   date?: string
   idProduct?: string
   idUser?: string
-  configBill?: { [key: string]: unknown }
+  configCart?: IConfigCart
 }
 
 export type DataAddComment = {

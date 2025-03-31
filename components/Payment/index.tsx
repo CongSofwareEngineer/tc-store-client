@@ -50,6 +50,8 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
   const { closeModal: closeModalAdmin } = useModalAdmin()
   const route = useRoutePage()
 
+  console.log({ Payment: data })
+
   const [loading, setLoading] = useState(false)
   const { onChangeOptions, listOptions, optionSelected } = useOptionPayment(null, { banking: true })
   const { checkNumberPhone, checkNameUser } = useCheckForm()
@@ -93,7 +95,7 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
 
     data.forEach((e) => {
       if (e.selected) {
-        total = Number(e.amountBuy || e.amount) * Number(e?.price || e.more_data?.price) + total
+        total = Number(e.amountBuy || e.amount) * Number(e?.price || e.moreData?.price) + total
       }
     })
     console.log({ total })
@@ -105,7 +107,7 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
     if (e?.moreConfig) {
       return e?.moreConfig
     }
-    return e.more_data || {}
+    return e.moreData || {}
   }
 
   const callbackProcessing = () => {
@@ -184,24 +186,26 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
 
       let totalBill = 0
       const listBill: any[] = []
-      const listNewSoldProduct: any[] = []
 
       data.forEach((e) => {
         if (e.selected) {
-          totalBill += (e.amountBuy || e.amount!) * (getItemForShow(e).price || e.price)
-          const itemBill = {
-            _id: getItemForShow(e)._id,
-            keyName: getItemForShow(e).keyName,
-            amount: e.amount,
-            idCart: e._id,
-            configBill: e?.configBill || {},
-          }
-          const itemNewSold = {
-            idProduct: getItemForShow(e)._id,
-            sold: Number(e.amount) + Number(getItemForShow(e).sold),
+          totalBill += e.amountBuy! * e.moreData?.price!
+
+          const itemBill: { [key: string]: any } = {
+            idProduct: e.moreData?._id || e._id,
+            amountBuy: e.amountBuy,
+
+            price: e.moreData?.price || e.price,
+            models: {
+              ...e?.configCart,
+              ...e?.configBill,
+            },
           }
 
-          listNewSoldProduct.push(itemNewSold)
+          if (e.configCart) {
+            itemBill.idCart = e._id
+          }
+
           listBill.push(itemBill)
         }
       })
@@ -215,12 +219,6 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
         totalBill: totalBill,
         sdt: valueForm?.sdt!,
         status: FILTER_BILL.Processing,
-        listNewSoldProduct,
-      }
-
-      if (isLogin) {
-        const expUser = totalBill * DEFAULT_RATE_EXP_USER + (userData?.exp || 0)
-        bodyAPI.expUser = expUser
       }
 
       if (optionSelected.value === OPTIONS_PAYMENT.banking) {

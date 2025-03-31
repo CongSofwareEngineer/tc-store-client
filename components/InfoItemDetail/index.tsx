@@ -4,7 +4,7 @@ import useMedia from '@/hooks/useMedia'
 import useLanguage from '@/hooks/useLanguage'
 import { numberWithCommas } from '@/utils/functions'
 import { Rating } from '@mantine/core'
-import { IProduct } from '@/app/shoes/[...params]/type'
+import { IProduct } from '@/services/ClientApi/type'
 
 const InfoItemDetail = ({ data }: { data: IProduct }) => {
   const { isMobile } = useMedia()

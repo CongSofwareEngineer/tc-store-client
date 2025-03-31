@@ -1,7 +1,8 @@
-import { IProduct } from '@/app/shoes/[...params]/type'
+import { IProduct } from '@/services/ClientApi/type'
+
 export type IProductCart = {
   selected?: boolean
-  more_data?: IProduct
+  moreData?: IProduct
 } & IProduct
 
 export type IListItemCart = {

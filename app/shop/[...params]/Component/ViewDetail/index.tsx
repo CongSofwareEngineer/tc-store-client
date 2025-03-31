@@ -19,11 +19,9 @@ import BtnBack from '@/components/BtnBack'
 import { Button } from '@mantine/core'
 import { getCookie, setCookie } from '@/services/cookiesService'
 import InfoItemDetail from '@/components/InfoItemDetail'
-import Attributes from '@/components/Attributes'
 import { ItemCartBody } from '@/app/my-cart/type'
-import { IProduct } from '../../type'
 import Models from '../Models'
-import { IImageProduct } from '@/services/ClientApi/type'
+import { IImageProduct, IProduct } from '@/services/ClientApi/type'
 // import MoreCollections from '@/components/MoreCollections'
 
 const MoreInfo = dynamic(() => import('@/components/MoreInfo'), {
@@ -73,8 +71,8 @@ const ViewDetail = ({
       await ClientApi.createMyCart(data)
     } else {
       const body: DataAddCart = {
-        amount: Number(dataExited.amount) + Number(amountBuy),
-        configBill: data.configBill,
+        amountBuy: Number(dataExited.amountBuy) + Number(amountBuy),
+        configCart: data.configCart,
       }
       const dataAddCart = await ClientApi.updateMyCart(dataExited._id, body)
 
@@ -92,7 +90,7 @@ const ViewDetail = ({
       dataCart.forEach((e: ItemCartBody) => {
         const itemTemp = e
         if (itemTemp.idProduct === body.idProduct) {
-          itemTemp.amount = itemTemp.amount! + body.amount!
+          itemTemp.amountBuy = itemTemp.amountBuy! + body.amountBuy!
           itemTemp.date = body.date
           isExited = true
         }
@@ -112,24 +110,24 @@ const ViewDetail = ({
     try {
       setLoadingAddCart(true)
       const body: DataAddCart = {
-        amount: amountBuy,
+        amountBuy: amountBuy,
         idProduct: productDetail._id?.toString(),
-        configBill: productDetail.configBill,
+        configCart: productDetail.configCart!,
       }
       if (isLogin) {
         body.idUser = userData?._id
         await handleAddCartLogin(body)
       } else {
         const bodyOther: ItemCartBody = {
-          amount: Number(body.amount),
+          amountBuy: Number(body.amountBuy),
           idProduct: body.idProduct!.toString(),
           keyNameProduct: productDetail?.keyName!,
           selected: true,
           id: '',
-          configBill: productDetail.configBill,
+          configCart: productDetail.configBill,
         }
         bodyOther.date = new Date().getTime().toFixed()
-        bodyOther.more_data = {
+        bodyOther.moreData = {
           imageMain: productDetail.imageMain,
           name: productDetail.name,
           keyName: productDetail.keyName,
@@ -138,6 +136,7 @@ const ViewDetail = ({
           disCount: productDetail.disCount,
           _id: productDetail._id,
           sold: productDetail.sold,
+          models: productDetail.models,
         }
         await addCartNoLogin(bodyOther)
       }

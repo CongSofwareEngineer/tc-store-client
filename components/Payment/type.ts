@@ -1,8 +1,8 @@
-import { IProduct } from '@/app/shoes/[...params]/type'
+import { IProduct } from '@/services/ClientApi/type'
 
 export type IItemInfoBill = {
   amountBuy?: number
-  more_data?: IProduct
+  moreData?: IProduct
 } & IProduct
 
 export type IInfoBill = {

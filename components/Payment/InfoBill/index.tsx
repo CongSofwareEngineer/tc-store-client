@@ -2,10 +2,11 @@ import React from 'react'
 import { images } from '@/configs/images'
 import useLanguage from '@/hooks/useLanguage'
 import useMedia from '@/hooks/useMedia'
-import { detectImg, numberWithCommas } from '@/utils/functions'
+import { detectImg, formatPriceBase, numberWithCommas } from '@/utils/functions'
 import MyImage from '@/components/MyImage'
 import useRoutePage from '@/hooks/useRoutePage'
 import { IInfoBill, IItemInfoBill } from '../type'
+import ConfigBill from '@/components/ConfigBill'
 
 const InfoBill = ({ data }: IInfoBill) => {
   const { translate } = useLanguage()
@@ -13,25 +14,17 @@ const InfoBill = ({ data }: IInfoBill) => {
   const router = useRoutePage()
 
   const handleClickName = (data: IItemInfoBill) => {
-    router.push(`/shoes/${data?.idProduct}/${data?.keyName}`)
+    router.push(`/shop/${data?.idProduct}/${data?.keyName}`)
   }
 
-  const renderConfigBill = (data: IItemInfoBill) => {
-    return (
-      <div className='flex md:flex-col flex-row  md:gap-1 gap-3'>
-        {Object.entries(data?.configBill || {}).map(([key, value]) => {
-          const keyLocal: any = `textPopular.${key}`
-          const valueLocal: any = `admin.${key}.${value}`
-          return (
-            <div key={`renderConfigBill-${key}`} className='flex gap-1 text-xs'>
-              <div>{translate(keyLocal) || key}</div>
-              <span>:</span>
-              <div>{translate(valueLocal) || value}</div>
-            </div>
-          )
-        })}
-      </div>
-    )
+  const getUrlImgMain = (item: IItemInfoBill) => {
+    let url = ''
+    if (item.moreData) {
+      url = item.moreData?.images?.[0]?.url.toString() || ''
+    } else {
+      url = item.images?.[0].url.toString() || ''
+    }
+    return detectImg(url)
   }
 
   const renderItemMobile = () => {
@@ -50,22 +43,24 @@ const InfoBill = ({ data }: IInfoBill) => {
                 <div className='flex justify-center mt-2'>
                   <MyImage
                     className='!relative !w-auto !h-[80px]'
-                    src={detectImg(item?.imageMain || item?.more_data?.imageMain || '')}
+                    src={getUrlImgMain(item)}
                     alt={`item-${item?.name}`}
                   />
                 </div>
               </div>
               <div className='w-[100px] flex flex-1'>
                 <div className='flex flex-col gap-1 w-full'>
-                  <div className='text-medium font-bold'>{item?.name || item?.more_data?.name}</div>
-                  <div className='text-[12px] opacity-60'>{renderConfigBill(item)}</div>
+                  <div className='text-medium font-bold'>{item?.name || item?.moreData?.name}</div>
+                  <div className='text-[12px] opacity-60'>
+                    <ConfigBill className='flex-col !gap-0' noCommas item={item} />
+                  </div>
                   <div>{`${translate('textPopular.amount')} : x${item?.amountBuy || item?.amount!}`}</div>
                   <div className='flex gap-1'>
                     <span>{translate('textPopular.totalMoney')} :</span>
                     <span className='font-bold text-green-700'>
                       {numberWithCommas(
                         (item?.amountBuy || item?.amount!) *
-                          (item?.price || item?.more_data?.price || 0)
+                          (item?.price || item?.moreData?.price || 0)
                       )}{' '}
                       VNĐ
                     </span>
@@ -98,8 +93,8 @@ const InfoBill = ({ data }: IInfoBill) => {
                 <div className='relative flex justify-center mt-2'>
                   <MyImage
                     className='!relative !w-auto !h-[80px]'
-                    src={detectImg(item?.imageMain || item?.more_data?.imageMain || '')}
-                    alt={`item-${item?.name || item?.more_data?.name}`}
+                    src={getUrlImgMain(item)}
+                    alt={`item-${item?.name}`}
                   />
                 </div>
               </div>
@@ -109,26 +104,30 @@ const InfoBill = ({ data }: IInfoBill) => {
                     className='font-semibold   cursor-pointer md:hover:underline'
                     onClick={() => handleClickName(item)}
                   >
-                    {item?.name || item?.more_data?.name}
+                    {item?.name || item?.moreData?.name}
                   </div>
-
-                  {renderConfigBill(item)}
+                  <ConfigBill className='flex-col !gap-0' noCommas item={item} />
                 </div>
               </div>
               <div className='w-[20%] '>
                 <div className='  text-green-800 flex flex-col  justify-items-start items-center gap-2'>
                   <span className='line-through text-xs'>
-                    {numberWithCommas((item?.price || item?.more_data?.price || 0) * 1.2)}
+                    {numberWithCommas(
+                      formatPriceBase(
+                        item?.price || item?.moreData?.price,
+                        item.disCount || item.moreData?.disCount
+                      )
+                    )}
                   </span>
                   <div className=' text-green-800'>
-                    {numberWithCommas(item?.price || item?.more_data?.price || 0)}
+                    {numberWithCommas(item?.price || item?.moreData?.price || 0)}
                   </div>
                 </div>
               </div>
               <div className='w-[10%] text-center'>{`x${item?.amountBuy || item?.amount}`}</div>
               <div className='w-[20%] text-green-500 font-bold text-center'>
                 {numberWithCommas(
-                  (item?.amountBuy || item?.amount!) * (item?.price || item?.more_data?.price || 0)
+                  (item?.amountBuy || item?.amount!) * (item?.price || item?.moreData?.price || 0)
                 )}{' '}
                 VNĐ
               </div>

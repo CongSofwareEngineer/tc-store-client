@@ -6,6 +6,7 @@ import { useModalAdmin } from '@/zustand/useModalAdmin'
 import { Button } from '@mantine/core'
 import React, { useState } from 'react'
 import Cropper, { Area } from 'react-easy-crop'
+import { IFileImage } from '../UploadImage'
 
 type ICropImg = {
   src?: string
@@ -13,7 +14,7 @@ type ICropImg = {
   fullQuantity?: boolean
   maxSizeOutputKB?: number
   maxScale?: number
-  onCropComplete: (croppedFile: File | null) => void
+  onCropComplete: (croppedFile: IFileImage | null) => void
 }
 
 const CropImg = ({
@@ -48,12 +49,22 @@ const CropImg = ({
       if (croppedFile) {
         if (fullQuantity) {
           await getBase64Full(croppedFile, (e: any) => {
-            onCropComplete(e)
+            onCropComplete({
+              file: e,
+              base64: e.base64,
+              name: e.name,
+              type: e.type,
+            })
             setLoading(false)
           })
         } else {
           await getBase64(croppedFile, (e: any) => {
-            onCropComplete(e)
+            onCropComplete({
+              file: e.file,
+              base64: e.base64,
+              name: e.name,
+              type: e.type,
+            })
             setLoading(false)
           })
         }

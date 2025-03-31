@@ -1,11 +1,4 @@
-import { IProduct as IProductBase } from '@/services/ClientApi/type'
-
-export type IProduct = {
-  configBill: {
-    model: string
-    size: number
-  }
-} & IProductBase
+import { IProduct } from '@/services/ClientApi/type'
 
 export type ModalBuyLoginType = {
   data?: IProduct

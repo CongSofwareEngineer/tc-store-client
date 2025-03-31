@@ -1,5 +1,5 @@
 import useLanguage from '@/hooks/useLanguage'
-import { IItemCart } from '../type'
+import { IItemCart, IProductCart } from '../type'
 import useMedia from '@/hooks/useMedia'
 import useModalDrawer from '@/hooks/useModalDrawer'
 import useRoutePage from '@/hooks/useRoutePage'
@@ -40,12 +40,12 @@ const ItemCart = ({
   }
 
   const onChangeAmountBuy = (isPlus = true) => {
-    const dataClone = cloneData(data)
+    const dataClone: IProductCart = cloneData(data)
     if (isPlus) {
-      dataClone.amount = Number(dataClone.amount) + 1
+      dataClone.amountBuy = Number(dataClone.amountBuy) + 1
     } else {
-      if (dataClone?.amount > 1) {
-        dataClone.amount = Number(dataClone.amount) - 1
+      if (dataClone?.amountBuy! > 1) {
+        dataClone.amountBuy = Number(dataClone.amountBuy) - 1
       }
     }
     callBack(dataClone)
@@ -58,6 +58,17 @@ const ItemCart = ({
         width: '500px',
       },
     })
+  }
+
+  const renderImg = () => {
+    const img = data?.moreData?.images?.find((e) => e.model === data.configCart?.model)
+    return (
+      <MyImage
+        src={detectImg(img?.url?.toString() || '')}
+        alt={`item-${data?.moreData?.keyName}`}
+        className=' !w-full !h-auto'
+      />
+    )
   }
 
   const renderDesktop = () => {
@@ -74,43 +85,37 @@ const ItemCart = ({
             onClick={handleDelete}
           />
         </div>
-        <div className='relative aspect-square w-[120px] overflow-hidden'>
-          <MyImage
-            src={detectImg(data?.more_data?.imageMain?.toString() || '')}
-            alt={`item-${data?.more_data?.keyName}`}
-            className=' !w-full !h-auto'
-          />
-        </div>
+        <div className='relative aspect-square w-[120px] overflow-hidden'>{renderImg()}</div>
         <div className='flex flex-col flex-1 gap-1'>
           <div
             onClick={() => router.push(getUrlProduct(data))}
             className='text-medium font-medium mb-1 hover:underline cursor-pointer '
           >
-            {data?.more_data?.name}
+            {data?.moreData?.name}
           </div>
           <div className='opacity-80 text-xs flex gap-1 items-center '>
             <span>{translate('category')}</span>
             <span>:</span>
-            <span>{getLabelCategory(data?.more_data?.category!)}</span>
+            <span>{getLabelCategory(data?.moreData?.category!)}</span>
           </div>
           <ConfigBill item={data} />
 
           <div className='flex w-full gap-2 items-center'>
             <div className=' text-green-800 font-medium'>
-              {numberWithCommas(data?.more_data?.price)} đ
+              {numberWithCommas(data?.moreData?.price)} đ
             </div>
             <div className='line-through font-medium'>
-              {numberWithCommas((data?.more_data?.price || 0) * 1.2)}
+              {numberWithCommas((data?.moreData?.price || 0) * 1.2)}
             </div>
           </div>
 
           <div className='w-full flex items-center justify-between'>
             <div className='font-bold text-green-500'>
-              {numberWithCommas((data?.amount || 0) * (data?.more_data?.price || 0))} VNĐ
+              {numberWithCommas((data?.amountBuy || 0) * (data?.moreData?.price || 0))} VNĐ
             </div>
             <SubAndPlus
               isSquare
-              value={data?.amount || 1}
+              value={data?.amountBuy || 1}
               callBackPlus={() => onChangeAmountBuy()}
               callBackSub={() => onChangeAmountBuy(false)}
             />
@@ -130,19 +135,13 @@ const ItemCart = ({
           </div>
         )}
 
-        <div className='w-[100px] relative justify-center flex m-auto'>
-          <MyImage
-            src={detectImg(data?.more_data?.imageMain?.toString() || '')}
-            alt={`item-${data.id}`}
-            className='!relative !w-auto !h-[80px]'
-          />
-        </div>
+        <div className='w-[100px] relative justify-center flex m-auto'>{renderImg()}</div>
         <div className='flex flex-1 gap-1 flex-col max-w-[calc(100%-130px)] pr-2'>
           <div
             onClick={() => router.push(getUrlProduct(data))}
             className=' font-bold   hover:underline cursor-pointer '
           >
-            {data?.more_data?.name}
+            {data?.moreData?.name}
           </div>
 
           <ConfigBill item={data} />
@@ -152,17 +151,17 @@ const ItemCart = ({
               {data.name}
             </p>
             <span className='text-[12px] opacity-70 line-through'>
-              {formatPriceBase(data.more_data?.price, data.more_data?.disCount)} VNĐ
+              {formatPriceBase(data.moreData?.price, data.moreData?.disCount)} VNĐ
             </span>
           </div>
 
           <div className='w-full flex justify-between items-baseline'>
             {noEdit ? (
-              <div>{`x${data.amount}`}</div>
+              <div>{`x${data.amountBuy}`}</div>
             ) : (
               <SubAndPlus
                 isSquare
-                value={data?.amount || 1}
+                value={data?.amountBuy || 1}
                 callBackPlus={() => onChangeAmountBuy()}
                 callBackSub={() => onChangeAmountBuy(false)}
               />
@@ -170,7 +169,7 @@ const ItemCart = ({
           </div>
           <div className='font-bold  text-green-500'>
             {' '}
-            {numberWithCommas(data.amount! * data.more_data?.price!)} VNĐ
+            {numberWithCommas(data.amountBuy! * data.moreData?.price!)} VNĐ
           </div>
         </div>
 

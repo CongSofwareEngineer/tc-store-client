@@ -4,8 +4,8 @@ import useLanguage from '@/hooks/useLanguage'
 import { Button, Rating } from '@mantine/core'
 import useComment from '@/hooks/tank-query/useComment'
 import useModalDrawer from '@/hooks/useModalDrawer'
-import { IProduct } from '@/app/shoes/[...params]/type'
 import ModalWrite from '../ModalWrite'
+import { IProduct } from '@/services/ClientApi/type'
 
 const WriteComment = ({ dataItem }: { dataItem: IProduct }) => {
   const { openModalDrawer } = useModalDrawer()

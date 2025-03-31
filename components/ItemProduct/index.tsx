@@ -1,14 +1,12 @@
 import styles from './style.module.css'
 import Link from 'next/link'
-import { images } from '@/configs/images'
 import { detectImg, formatPrice, formatPriceBase, numberWithCommas } from '@/utils/functions'
 import MyImage from '../MyImage'
 import useLanguage from '@/hooks/useLanguage'
-import useMedia from '@/hooks/useMedia'
 import useRoutePage from '@/hooks/useRoutePage'
 import { RateCustom, TextPriceBase } from './styled'
-import MySliderSell from '../MySliderSell'
 import { IClientApi } from '@/services/ClientApi/type'
+import { cn } from '@/utils/tailwind'
 
 type ItemType = {
   item: IClientApi['product']
@@ -32,7 +30,6 @@ const ItemProduct = ({
   noClick = false,
 }: ItemType) => {
   const { translate } = useLanguage()
-  const { isMobile } = useMedia()
   const { push } = useRoutePage()
 
   const handleClick = () => {
@@ -43,7 +40,11 @@ const ItemProduct = ({
   const renderContent = () => {
     return (
       <div
-        className={`  group relative item-list cursor-pointer px-3 md:pt-6 pt-4 md:pb-4 pb-3 gap-3 flex items-center justify-between flex-col ${styles['item-coffee']} ${className}`}
+        className={cn(
+          `  group relative item-list cursor-pointer px-3 md:pt-6 pt-4 md:pb-4 pb-3 gap-3 flex items-center justify-between flex-col `,
+          styles['item-coffee'],
+          className
+        )}
       >
         {showDiscount && item?.disCount! > 0 && (
           <div className='absolute text-black right-0 top-4 bg-green-300   px-2  rounded-l-md z-[1]'>

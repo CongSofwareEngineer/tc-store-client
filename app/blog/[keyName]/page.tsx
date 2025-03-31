@@ -2,8 +2,8 @@ import { PageProps } from '@/.next/types/app/page'
 import React from 'react'
 import BlogScreen from './view'
 import ClientApi from '@/services/clientApi'
-import { IProduct } from '@/app/shoes/[...params]/type'
 import { notFound } from 'next/navigation'
+import { IProduct } from '@/services/ClientApi/type'
 
 const getData = async (keyName: string): Promise<IProduct> => {
   const data = await ClientApi.getProductByKeyName(keyName)
@@ -16,9 +16,9 @@ const BlogPage = async ({ params }: PageProps) => {
   console.log({ keyName })
 
   const productDetail = await getData(keyName)
-  // if (!productDetail) {
-  //   return notFound()
-  // }
+  if (!productDetail) {
+    return notFound()
+  }
 
   return <BlogScreen data={productDetail as any} />
 }

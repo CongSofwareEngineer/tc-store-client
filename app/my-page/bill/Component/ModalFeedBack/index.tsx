@@ -14,7 +14,7 @@ import { QUERY_KEY } from '@/constants/reactQuery'
 import { AiOutlineArrowLeft, AiOutlineCamera, AiOutlineCloseCircle } from 'react-icons/ai'
 import MyLoading from '@/components/MyLoading'
 import { Button, Rating, Textarea } from '@mantine/core'
-import UploadImage from '@/components/UploadImage'
+import UploadImage, { IFileImage } from '@/components/UploadImage'
 import MyImage from '@/components/MyImage'
 
 const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
@@ -24,7 +24,7 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
   const { refreshQuery } = useRefreshQuery()
   const { data: dataGetApi, isLoading: loadingAPI } = useCommentDetail(data._id)
 
-  const [listImgFeeBack, setListImgFeeBack] = useState<any[]>([])
+  const [listImgFeeBack, setListImgFeeBack] = useState<IFileImage[]>([])
   const [loading, setLoading] = useState(false)
   const [rate, setRate] = useState(5)
   const [des, setDes] = useState('')
@@ -40,7 +40,7 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
     dataGetApi && getData()
   }, [dataGetApi])
 
-  const handleUpload = async (file: any) => {
+  const handleUpload = async (file: IFileImage) => {
     setListImgFeeBack([...listImgFeeBack, file])
   }
 
@@ -76,9 +76,14 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
     try {
       setLoading(true)
       let res
+      const arrImg = listImgFeeBack.map((e) => {
+        delete e.base64
+        delete e.type
+        return e
+      })
       const body: DataAddComment = {
         idProduct: data._id,
-        listImg: listImgFeeBack,
+        listImg: arrImg,
         note: des,
         name: userData?.name,
         rate: Number(rate),

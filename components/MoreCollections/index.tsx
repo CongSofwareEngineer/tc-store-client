@@ -27,7 +27,7 @@ const MoreCollections = () => {
   const getRouteProduct = (product: any) => {
     if (isClickItemRef.current) {
       if (product.category === TYPE_PRODUCT.shoes) {
-        router.push(`/shoes/${product.keyName}`)
+        router.push(`/shop/${product.keyName}`)
       } else {
         router.push(`/shop/${product.keyName}`)
       }

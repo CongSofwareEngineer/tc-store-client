@@ -1,17 +1,17 @@
-import { IProduct } from '../shoes/[...params]/type'
+import { IProduct } from '@/services/ClientApi/type'
 
-export type ItemCart = {
+export type IItemCart = {
   selected?: boolean
-  more_data?: IProduct
+  moreData?: IProduct
 } & IProduct
 
 export type ItemCartBody = {
   idUser?: string
-  amount: number
+  amountBuy: number
   idProduct: string
   keyNameProduct: string
   id: string
   selected?: boolean
-  more_data?: IProduct
+  moreData?: IProduct
   [key: string]: unknown
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import WriteComment from './WriteComment'
-import { IProduct } from '@/app/shoes/[...params]/type'
 import ListComment from './ListComment'
+import { IProduct } from '@/services/ClientApi/type'
 
 const Comment = ({ dataItem }: { dataItem: IProduct }) => {
   return (

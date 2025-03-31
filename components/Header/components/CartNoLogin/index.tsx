@@ -15,13 +15,13 @@ import { AiOutlineDelete } from 'react-icons/ai'
 import useMyCart from '@/hooks/tank-query/useMyCart'
 import ConfigBill from '@/components/ConfigBill'
 import Payment from '@/components/Payment'
-import { ItemCart } from '@/app/my-cart/type'
+import { IItemCart } from '@/app/my-cart/type'
 
 const CartNoLogin = () => {
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
   const { data, isLoading } = useMyCart()
-  const [listArr, setListArr] = useState<Array<ItemCart>>([])
+  const [listArr, setListArr] = useState<Array<IItemCart>>([])
 
   useEffect(() => {
     if (!isLoading) {
@@ -29,16 +29,16 @@ const CartNoLogin = () => {
     }
   }, [data, isLoading])
 
-  const refreshData = (listData: Array<ItemCart>) => {
+  const refreshData = (listData: Array<IItemCart>) => {
     setCookie(COOKIE_KEY.MyCart, listData)
     setListArr(listData)
   }
 
   const getTotalsBill = () => {
     let total = 0
-    listArr.forEach((item: ItemCart) => {
+    listArr.forEach((item: IItemCart) => {
       if (item?.selected) {
-        total += item.amount! * item?.more_data?.price!
+        total += item.amount! * item?.moreData?.price!
       }
     })
     return numberWithCommas(total)
@@ -90,7 +90,7 @@ const CartNoLogin = () => {
 
   const getAmountBill = () => {
     let total = 0
-    listArr.forEach((item: ItemCart) => {
+    listArr.forEach((item: IItemCart) => {
       if (item?.selected) {
         total += item.amount!
       }
@@ -98,7 +98,7 @@ const CartNoLogin = () => {
     return total
   }
 
-  const renderItem = (item: ItemCart, index: number) => {
+  const renderItem = (item: IItemCart, index: number) => {
     return (
       <div
         key={`item-cart-${item.idProduct}`}
@@ -117,22 +117,22 @@ const CartNoLogin = () => {
         <div className='md:w-[120px] w-[100px] aspect-square relative overflow-hidden'>
           <Image
             fill
-            src={detectImg(item.more_data?.imageMain)}
-            alt={`cart-${item.more_data?.name}`}
+            src={detectImg(item.moreData?.imageMain)}
+            alt={`cart-${item.moreData?.name}`}
             className='!relative !w-full !h-auto'
           />
         </div>
         <div className='flex flex-1 flex-col self-stretch gap-1'>
-          <Link href={`/shop/${item.more_data?.keyName}`}>
-            <p className='font-bold text-black hover:underline'>{item.more_data?.name}</p>
+          <Link href={`/shop/${item.moreData?.keyName}`}>
+            <p className='font-bold text-black hover:underline'>{item.moreData?.name}</p>
           </Link>
           <ConfigBill item={item} />
           <div className='line-through font-medium'>
-            {formatPriceBase(item.more_data?.price, item.more_data?.disCount)}
+            {formatPriceBase(item.moreData?.price, item.moreData?.disCount)}
           </div>
           <div className='text-green-500 font-bold mb-2'>
             {`
-                ${numberWithCommas(item.more_data?.price)}
+                ${numberWithCommas(item.moreData?.price)}
                 VNĐ
               `}
           </div>

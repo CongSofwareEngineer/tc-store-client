@@ -1,6 +1,7 @@
 import CropImg from '@/components/CropImg'
 import ModalProcess from '@/components/ModalProcess'
 import MyImage from '@/components/MyImage'
+import { IFileImage } from '@/components/UploadImage'
 import useLanguage from '@/hooks/useLanguage'
 import useModalDrawer from '@/hooks/useModalDrawer'
 import useUserData from '@/hooks/useUserData'
@@ -25,7 +26,7 @@ const Avatar = () => {
   }, [])
 
   const handleUploadImg = (file: File | null) => {
-    const callback = async (fileCrop: File | null) => {
+    const callback = async (fileCrop: IFileImage | null) => {
       console.log({ fileCrop })
 
       openModalDrawer({

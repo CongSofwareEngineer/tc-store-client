@@ -16,9 +16,9 @@ import ModalDelete from '@/components/ModalDelete'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import { Rating } from '@mantine/core'
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
-import { IProduct } from '@/app/shoes/[...params]/type'
 import ModalWrite from '../ModalWrite'
 import LoadingData from './LoadingData'
+import { IProduct } from '@/services/ClientApi/type'
 
 const Like = ({
   data,

@@ -14,16 +14,16 @@ import React, { useEffect, useState } from 'react'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import useCommentDetail from '@/hooks/tank-query/useCommentDetail'
 import { useForm } from '@mantine/form'
-import { IProduct } from '@/app/shoes/[...params]/type'
 import { AiOutlineCamera, AiOutlineCloseCircle } from 'react-icons/ai'
 import MyForm from '@/components/Form/MyForm'
 import MyImage from '@/components/MyImage'
 import RatingForm from '@/components/Form/Rating'
 import InputForm from '@/components/Form/Input'
 import InputAreaForm from '@/components/Form/InputArea'
-import UploadImage from '@/components/UploadImage'
+import UploadImage, { IFileImage } from '@/components/UploadImage'
 import ButtonForm from '@/components/Form/ButtonForm'
 import { IDataWriteComment } from './type'
+import { IProduct } from '@/services/ClientApi/type'
 
 const ModalWrite = ({ dataItem }: { dataItem: IProduct }) => {
   const [loading, setLoading] = useState(false)
@@ -114,9 +114,14 @@ const ModalWrite = ({ dataItem }: { dataItem: IProduct }) => {
 
   const handleSubmit = async () => {
     setLoading(true)
+    const arrImg = formData.values?.listImg.map((e) => {
+      delete e.base64
+      delete e.type
+      return e
+    })
     const body: DataAddComment = {
       idProduct: formData.values?.idProduct,
-      listImg: formData.values?.listImg,
+      listImg: arrImg,
       note: formData.values?.note,
       name: formData.values?.name,
       rate: formData.values?.rate || 5,
@@ -143,7 +148,7 @@ const ModalWrite = ({ dataItem }: { dataItem: IProduct }) => {
     setLoading(false)
   }
 
-  const handleUpload = async (file: any) => {
+  const handleUpload = async (file: IFileImage) => {
     const prevTemp = formData.values.listImg
     formData.setFieldValue('listImg', [...prevTemp, file])
   }
@@ -159,20 +164,22 @@ const ModalWrite = ({ dataItem }: { dataItem: IProduct }) => {
     return (
       formData.values?.listImg?.length > 0 && (
         <div className='flex gap-3 mt-2'>
-          {formData.values?.listImg?.map((item: any, index: number) => (
-            <div key={`img-${index}`} className='relative w-[70px] '>
-              <ImageNext
-                alt='img'
-                className='!relative !h-auto !-[70px]'
-                src={detectImg(item?.base64 || item)}
-                fill
-              />
-              <AiOutlineCloseCircle
-                onClick={() => deleteImg(index)}
-                className='absolute text-[20px] z-10 cursor-pointer right-0 top-0'
-              />
-            </div>
-          ))}
+          {formData.values?.listImg?.map((item, index: number) => {
+            return (
+              <div key={`img-${index}`} className='relative w-[70px] '>
+                <ImageNext
+                  alt='img'
+                  className='!relative !h-auto !-[70px]'
+                  src={detectImg(item?.base64 || item)}
+                  fill
+                />
+                <AiOutlineCloseCircle
+                  onClick={() => deleteImg(index)}
+                  className='absolute text-[20px] z-10 cursor-pointer right-0 top-0'
+                />
+              </div>
+            )
+          })}
         </div>
       )
     )
@@ -187,7 +194,7 @@ const ModalWrite = ({ dataItem }: { dataItem: IProduct }) => {
           <div className='flex w-full flex-col overflow-y-auto'>
             <div className='flex gap-2 w-full mb-3'>
               <div className='w-[100px] aspect-square overflow-hidden'>
-                <MyImage alt='avatar-product' src={detectImg(dataItem.imageMain)} />
+                <MyImage alt='avatar-product' src={detectImg(dataItem.images![0].url.toString())} />
               </div>
               <div className='flex flex-1 flex-col gap-2 h-auto justify-center'>
                 <p className='text-medium font-bold'>{dataItem.name}</p>
