@@ -261,5 +261,5 @@ export const stringToArrayBuffer = (str: string) => {
 }
 
 export const getUrlProduct = (product: any) => {
-  return `/shop/${product?.more_data?.keyName || product?.keyName}`
+  return `/shop/${product?.moreData?.keyName || product?.keyName}`
 }

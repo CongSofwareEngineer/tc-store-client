@@ -120,19 +120,19 @@ const Item = ({ data, indexData }: Props) => {
                 <div className='w-[70px]  rounded-md aspect-square overflow-hidden relative flex justify-center items-center'>
                   <MyImage
                     className='!relative '
-                    alt={e?.more_data?.name}
-                    src={detectImg(e?.more_data?.imageMain)}
+                    alt={e?.moreData?.name}
+                    src={detectImg(e?.moreData?.imageMain)}
                   />
                 </div>
                 <div className='flex justify-between flex-1 gap-2'>
                   <div className='flex flex-col gap-1'>
                     <Link href={getUrlProduct(e)}>
                       <span className='hover:underline text-black font-bold '>
-                        {e?.more_data?.name}
+                        {e?.moreData?.name}
                       </span>
                     </Link>
                     <ConfigBill item={e} />
-                    <div className=' text-sm text-green-600'>{`${formatPrice(e?.more_data?.price)} VNĐ`}</div>
+                    <div className=' text-sm text-green-600'>{`${formatPrice(e?.moreData?.price)} VNĐ`}</div>
                   </div>
                   <div>x{e.amount}</div>
                 </div>
@@ -201,15 +201,15 @@ const Item = ({ data, indexData }: Props) => {
                 <div className='w-[70px]  rounded-md aspect-square overflow-hidden relative flex justify-center items-center'>
                   <MyImage
                     className='!relative !h-auto '
-                    alt={e?.more_data?.name}
-                    src={detectImg(e?.more_data?.imageMain)}
+                    alt={e?.moreData?.name}
+                    src={detectImg(e?.moreData?.imageMain)}
                   />
                 </div>
                 <div className='flex justify-between flex-1 gap-2'>
                   <div className='flex flex-col gap-1'>
-                    <div>{e?.more_data?.name}</div>
+                    <div>{e?.moreData?.name}</div>
                     <ConfigBill item={e} />
-                    <div className=' text-sm text-green-600'>{`${formatPrice(e?.more_data?.price)} VNĐ`}</div>
+                    <div className=' text-sm text-green-600'>{`${formatPrice(e?.moreData?.price)} VNĐ`}</div>
                   </div>
                   <div>x{e.amount}</div>
                 </div>

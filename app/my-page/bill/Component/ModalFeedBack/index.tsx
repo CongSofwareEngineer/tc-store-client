@@ -170,14 +170,14 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
       <div className='flex gap-2'>
         <div className='md:w-[100px] w-[80px] aspect-square'>
           <ImageNext
-            src={detectImg(data?.more_data?.imageMain)}
+            src={detectImg(data?.moreData?.imageMain)}
             alt={data.keyName}
             fill
             className='!relative '
           />
         </div>
         <div className='flex flex-col gap-2'>
-          <div className='font-bold text-lg'>{data?.more_data?.name}</div>
+          <div className='font-bold text-lg'>{data?.moreData?.name}</div>
           <div>{getQuality()}</div>
           <Rating value={rate} onChange={(e) => setRate(e)} />
         </div>

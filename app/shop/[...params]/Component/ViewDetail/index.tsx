@@ -105,6 +105,7 @@ const ViewDetail = ({
 
     await setCookie(COOKIE_KEY.MyCart, arrTemp)
   }
+  console.log({ productDetail })
 
   const handleAddCart = async () => {
     try {
@@ -112,10 +113,12 @@ const ViewDetail = ({
       const body: DataAddCart = {
         amountBuy: amountBuy,
         idProduct: productDetail._id?.toString(),
-        configCart: productDetail.configCart!,
+        configCart: productDetail.configBill!,
       }
       if (isLogin) {
         body.idUser = userData?._id
+        console.log({ body })
+
         await handleAddCartLogin(body)
       } else {
         const bodyOther: ItemCartBody = {

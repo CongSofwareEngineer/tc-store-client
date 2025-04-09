@@ -1,5 +1,4 @@
 import { INIT_ZUSTAND, TYPE_ZUSTAND, ZUSTAND } from '@/constants/zustand'
-import ClientApi from '@/services/clientApi'
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 

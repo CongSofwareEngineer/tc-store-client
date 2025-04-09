@@ -56,6 +56,7 @@ const ShopDetailScreen = ({ productDetail }: { productDetail: IPaymentShop['data
             ...productState,
             amountBuy: amountBuy,
             selected: true,
+            moreData: productState,
           },
         ]}
       />

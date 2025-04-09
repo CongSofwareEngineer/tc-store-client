@@ -1,9 +1,4 @@
-import {
-  DEFAULT_FEE_SHIP,
-  DEFAULT_RATE_EXP_USER,
-  FILTER_BILL,
-  OPTIONS_PAYMENT,
-} from '@/constants/app'
+import { DEFAULT_FEE_SHIP, FILTER_BILL, OPTIONS_PAYMENT } from '@/constants/app'
 import useRefreshQuery from '@/hooks/tank-query/useRefreshQuery'
 import useLanguage from '@/hooks/useLanguage'
 import useModalDrawer from '@/hooks/useModalDrawer'
@@ -92,22 +87,13 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
 
   const getTotalPayBill = (plusFee = false) => {
     let total = 0
-
     data.forEach((e) => {
       if (e.selected) {
-        total = Number(e.amountBuy || e.amount) * Number(e?.price || e.moreData?.price) + total
+        total = Number(e.amountBuy) * Number(e.moreData?.price) + total
       }
     })
-    console.log({ total })
 
     return numberWithCommas(total + (plusFee ? DEFAULT_FEE_SHIP : 0))
-  }
-
-  const getItemForShow = (e: any) => {
-    if (e?.moreConfig) {
-      return e?.moreConfig
-    }
-    return e.moreData || {}
   }
 
   const callbackProcessing = () => {
@@ -195,7 +181,7 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
             idProduct: e.moreData?._id || e._id,
             amountBuy: e.amountBuy,
 
-            price: e.moreData?.price || e.price,
+            price: e.moreData?.price,
             models: {
               ...e?.configCart,
               ...e?.configBill,

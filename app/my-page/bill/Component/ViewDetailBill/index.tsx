@@ -34,7 +34,7 @@ const ViewDetailBill = ({ data }: Props) => {
   }
 
   const handleRoute = (e: any) => {
-    route.push(`/shop/${e.more_data.keyName}`)
+    route.push(`/shop/${e.moreData.keyName}`)
   }
 
   return (
@@ -80,19 +80,19 @@ const ViewDetailBill = ({ data }: Props) => {
                 <div className='  w-[100px] h-max   relative rounded-md overflow-hidden'>
                   <MyImage
                     alt={`icon-product-bill-${e._id}`}
-                    src={detectImg(e.more_data.imageMain)}
+                    src={detectImg(e.moreData.imageMain)}
                     className='  !w-full !h-auto'
                   />
                 </div>
                 <div className='flex flex-col  gap-1'>
                   <p onClick={() => handleRoute(e)} className='font-bold'>
-                    {e.more_data.name}
+                    {e.moreData.name}
                   </p>
                   <div>{`${translate('textPopular.amount')} : x${e.amount}`}</div>
                   <ConfigBill item={e} />
                   <div className='text-green-700 font-bold'>
                     <span className='mr-1'>{translate('productDetail.price')} :</span>
-                    <span>{formatPrice(e.more_data.price)} VNĐ</span>
+                    <span>{formatPrice(e.moreData.price)} VNĐ</span>
                   </div>
                   <div className='flex gap-2 items-center'>
                     {enableFeedback && (
