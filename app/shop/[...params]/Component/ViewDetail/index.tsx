@@ -200,7 +200,7 @@ const ViewDetail = ({
   const renderDesktop = () => {
     return (
       <div className='flex flex-col'>
-        <BtnBack title={[translate('textPopular.shoes'), productDetail.name]} url={['/shoes']} />
+        <BtnBack title={[translate('textPopular.shoes'), productDetail.name]} url={['/shop']} />
         <div className='w-full flex gap-6 bg-white rounded-xl p-6'>
           <div
             data-aos='fade-right'
@@ -267,7 +267,7 @@ const ViewDetail = ({
   const renderMobile = () => {
     return (
       <div className='flex flex-col gap-2'>
-        <BtnBack title={[translate('textPopular.shoes'), productDetail.name]} url={['/shoes']} />
+        <BtnBack title={[translate('textPopular.shoes'), productDetail.name]} url={['/shop']} />
         <div className='pt-8 pb-2 shadow-lg shadow-yellow-50 bg-white   w-full flex flex-col justify-center items-center'>
           <div data-aos='fade-right' className='w-[80%]  overflow-hidden '>
             {renderImageMain()}

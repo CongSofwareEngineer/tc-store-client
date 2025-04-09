@@ -17,7 +17,7 @@ const getAllProduct = async ({
 }> => {
   const query = queryKey[2]
 
-  let queryUrl = `/shoes?page=${pageParam}&limit=${queryKey[1]}`
+  let queryUrl = `/shop?page=${pageParam}&category=shoes&limit=${queryKey[1]}`
   if (query) {
     Object.entries(query).forEach(([key, value]) => {
       queryUrl += `&${key}=${value?.toString()}`

@@ -3,7 +3,6 @@ import MyLoadMore from '@/components/MyLoadMore'
 import { PAGE_SIZE_LIMIT } from '@/constants/app'
 import useQuerySearch from '@/hooks/useQuerySearch'
 import React from 'react'
-import { TYPE_PRODUCT } from '@/constants/admin'
 import useLanguage from '@/hooks/useLanguage'
 import LoadingGetData from '@/components/LoadingGetData'
 import useListProducts from '@/hooks/tank-query/useListProducts'
@@ -18,9 +17,6 @@ const Content = () => {
   )
 
   const getUrl = (item: any) => {
-    if (item.category === TYPE_PRODUCT.shoes) {
-      return `/shoes/${item.keyName}`
-    }
     return `/shop/${item.keyName}`
   }
 

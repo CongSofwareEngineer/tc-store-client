@@ -4,7 +4,6 @@ import useAos from '@/hooks/useAos'
 
 import useFirstLoadPage from '@/hooks/useFirstLoadPage'
 import MenuCategory from './Components/MenuCategory'
-import InputSearch from '@/components/InputSearch'
 import Content from './Components/Content'
 
 const ShopScreen = () => {

@@ -34,11 +34,7 @@ const ViewDetailBill = ({ data }: Props) => {
   }
 
   const handleRoute = (e: any) => {
-    if (e.more_data.category == TYPE_PRODUCT.shoes) {
-      route.push(`/shoes/${e.more_data.keyName}`)
-    } else {
-      route.push(`/shop/${e.more_data.keyName}`)
-    }
+    route.push(`/shop/${e.more_data.keyName}`)
   }
 
   return (
