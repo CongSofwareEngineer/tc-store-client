@@ -16,6 +16,7 @@ import { AiOutlineDelete } from 'react-icons/ai'
 import MyImage from '@/components/MyImage'
 import ConfigBill from '@/components/ConfigBill'
 import SubAndPlus from '@/components/SubAndPlus'
+import ImageMain from '@/components/ImageMain'
 
 const ItemCart = ({
   data,
@@ -60,18 +61,6 @@ const ItemCart = ({
     })
   }
 
-  const renderImg = () => {
-    const img = data?.moreData?.images?.find((e) => e.model === data.configCart?.model)
-    return (
-      // <MyImage
-      //   src={detectImg(img?.url?.toString() || '')}
-      //   alt={`item-${data?.moreData?.keyName}`}
-      //   className=' !w-full !h-auto'
-      // />
-      <></>
-    )
-  }
-
   const renderDesktop = () => {
     return (
       <div
@@ -86,7 +75,9 @@ const ItemCart = ({
             onClick={handleDelete}
           />
         </div>
-        <div className='relative aspect-square w-[120px] overflow-hidden'>{renderImg()}</div>
+        <div className='relative aspect-square w-[120px] overflow-hidden'>
+          <ImageMain listImage={data.moreData?.images} model={data.configCart?.model} />
+        </div>
         <div className='flex flex-col flex-1 gap-1'>
           <div
             onClick={() => router.push(getUrlProduct(data))}
@@ -136,7 +127,9 @@ const ItemCart = ({
           </div>
         )}
 
-        <div className='w-[100px] relative justify-center flex m-auto'>{renderImg()}</div>
+        <div className='w-[100px] relative justify-center flex m-auto'>
+          <ImageMain listImage={data.moreData?.images} model={data.configCart?.model} />
+        </div>
         <div className='flex flex-1 gap-1 flex-col max-w-[calc(100%-130px)] pr-2'>
           <div
             onClick={() => router.push(getUrlProduct(data))}
@@ -169,7 +162,6 @@ const ItemCart = ({
             )}
           </div>
           <div className='font-bold  text-green-500'>
-            {' '}
             {numberWithCommas(data.amountBuy! * data.moreData?.price!)} VNĐ
           </div>
         </div>

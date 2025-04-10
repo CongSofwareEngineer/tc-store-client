@@ -219,7 +219,7 @@ const MyProfile = () => {
     )
   }
 
-  return isMobile ? renderMobile() : renderDesktop()
+  return <>{isMobile ? renderMobile() : renderDesktop()}</>
 }
 
 export default MyProfile

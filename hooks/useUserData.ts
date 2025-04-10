@@ -12,8 +12,9 @@ import { setCookie } from '@/services/cookiesService'
 
 const useUserData = () => {
   const { translate } = useLanguage()
+
   const { closeModalDrawer } = useModalDrawer()
-  const { setUserData: setUserDataZustand, userData } = userUserDataZustand()
+  const { setUserData: setUserDataZustand, userData, connecting } = userUserDataZustand()
 
   const loginWithDB = async (sdt: string, pass: string) => {
     const data = await ClientApi.login(sdt, pass)
@@ -68,6 +69,7 @@ const useUserData = () => {
     isLogin: !!userData,
     login,
     refreshLogin,
+    connecting,
   }
 }
 

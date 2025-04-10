@@ -26,7 +26,7 @@ const InputSearch = ({ keySearch = 'name' }: { keySearch?: string }) => {
 
   const handleSearch = () => {
     if (!nameSearch) {
-      router.push(pathname)
+      router.push(window.location.href)
     } else {
       router.push(`${pathname}?${keySearch}=${nameSearch}`)
     }
@@ -36,8 +36,16 @@ const InputSearch = ({ keySearch = 'name' }: { keySearch?: string }) => {
     <Input
       className='w-full'
       rightSection={
-        <AiOutlineSearch className='cursor-pointer hover:scale-105' onClick={handleSearch} />
+        <div
+          onClick={() => {
+            console.log('hello')
+          }}
+          className='cursor-pointer w-full p-2 h-full hover:scale-110'
+        >
+          <AiOutlineSearch className='w-full h-full' onClick={handleSearch} />
+        </div>
       }
+      rightSectionPointerEvents={'auto'}
       placeholder={translate('textPopular.searchNameProduct')}
       value={nameSearch}
       onChange={(e) => setNameSearch(e.target.value)}

@@ -4,7 +4,10 @@ import { INIT_ZUSTAND, TYPE_ZUSTAND, ZUSTAND } from '@/constants/zustand'
 import secureLocalStorage from 'react-secure-storage'
 import { decryptData } from '@/utils/crypto'
 
-type UserDataStoreState = { [ZUSTAND.UserData]: TYPE_ZUSTAND[ZUSTAND.UserData] }
+type UserDataStoreState = {
+  [ZUSTAND.UserData]: TYPE_ZUSTAND[ZUSTAND.UserData]
+  connecting: boolean
+}
 
 type UserDataStoreActions = {
   setUserData: (nextUserData: UserDataStoreState[ZUSTAND.UserData]) => void
@@ -17,8 +20,16 @@ const zustandUserData = create<UserDataStore>()(
   devtools(
     persist(
       (set) => ({
+        connecting: true,
         [ZUSTAND.UserData]: INIT_ZUSTAND[ZUSTAND.UserData],
-        setUserData: (user: TYPE_ZUSTAND[ZUSTAND.UserData]) => set({ [ZUSTAND.UserData]: user }),
+        setUserData: (user: TYPE_ZUSTAND[ZUSTAND.UserData]) => {
+          console.log('setUserData')
+
+          set({
+            [ZUSTAND.UserData]: user,
+            connecting: false,
+          })
+        },
         reset: () => set({ [ZUSTAND.UserData]: INIT_ZUSTAND[ZUSTAND.UserData] }),
       }),
       {

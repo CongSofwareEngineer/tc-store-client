@@ -115,7 +115,7 @@ const Item = ({ data, indexData }: Props) => {
           <div>{getAddressShip(data)}</div>
         </div>
         <div className='flex flex-col w-full mt-2'>
-          {data?.listBill?.map((e: any, index: number) => {
+          {data?.listBill?.map((e, index: number) => {
             const isHasBorder = index < data?.listBill.length - 1
 
             return (
@@ -125,7 +125,7 @@ const Item = ({ data, indexData }: Props) => {
                   paddingBottom: isHasBorder ? 15 : 0,
                   paddingTop: index > 0 ? 15 : 0,
                 }}
-                key={e._id}
+                key={e.idProduct}
                 className='flex gap-3 '
               >
                 <div className='w-[70px]  rounded-md aspect-square overflow-hidden relative flex justify-center items-center'>
@@ -210,7 +210,7 @@ const Item = ({ data, indexData }: Props) => {
                   paddingBottom: isHasBorder ? 15 : 0,
                   paddingTop: index > 0 ? 15 : 0,
                 }}
-                key={e._id}
+                key={e.idProduct}
                 className='flex gap-3 px-3 '
               >
                 <div className='w-[70px]  rounded-md aspect-square overflow-hidden relative flex justify-center items-center'>

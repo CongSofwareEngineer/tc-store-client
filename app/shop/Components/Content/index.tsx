@@ -6,7 +6,6 @@ import React from 'react'
 import useLanguage from '@/hooks/useLanguage'
 import LoadingGetData from '@/components/LoadingGetData'
 import useListProducts from '@/hooks/tank-query/useListProducts'
-import MySkeleton from '@/components/MySkeleton'
 import InputSearch from '@/components/InputSearch'
 
 const Content = () => {
@@ -21,19 +20,9 @@ const Content = () => {
     return `/shop/${item.keyName}`
   }
 
-  const renderLoading = () => {
-    return (
-      <>
-        <MySkeleton className='w-full min-h-10 h-10 rounded-lg' />
-        <LoadingGetData colSurface={3} rows={2} loading />
-      </>
-    )
-  }
-
   const renderContent = () => {
     return (
       <>
-        <InputSearch />
         {data.length > 0 ? (
           <div className='  w-full grid grid-cols-2 sm:grid-cols-3  lg:grid-cols-4   gap-3 xl:gap-6 md:gap-4'>
             {data.map((item) => {
@@ -63,7 +52,10 @@ const Content = () => {
   }
 
   return (
-    <div className='flex flex-col gap-3 mt-2'>{isLoading ? renderLoading() : renderContent()}</div>
+    <div className='flex flex-col gap-3 mt-2'>
+      <InputSearch />
+      {isLoading ? <LoadingGetData colSurface={3} rows={2} loading /> : renderContent()}
+    </div>
   )
 }
 
