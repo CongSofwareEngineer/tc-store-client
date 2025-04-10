@@ -157,10 +157,12 @@ const ClientApi = {
     }
     return fetchData(config)
   },
-  getBills: async (queryUrl: string) => {
-    return fetchData({
+  getBills: async (queryUrl: string): Promise<IClientApi['bill'][]> => {
+    const data = await fetchData({
       url: `bill/detail/${queryUrl}`,
     })
+
+    return data?.data || []
   },
 
   // -> cart

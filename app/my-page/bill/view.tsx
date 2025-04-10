@@ -17,7 +17,6 @@ const BillScreen = () => {
   const { translate } = useLanguage()
 
   const { data, hasNextPage, isLoading, loadMore, isFetchingNextPage } = useBill(queries, '')
-  console.log({ data, isLoading })
 
   return (
     <div className='flex flex-col gap-3 w-full '>

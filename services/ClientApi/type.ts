@@ -1,3 +1,5 @@
+import { FILTER_BILL } from '@/constants/app'
+
 export type ISizesModel = {
   size: number
   sold: number
@@ -91,9 +93,45 @@ export type IComment = {
     [key: string]: unknown
   }>
 }
+
+export type IItemListBill = {
+  idProduct: number
+  amountBuy: number
+  price: number
+  models: {
+    model: string
+    size: number
+  }
+  moreData: IProduct
+}
+
+export type IInfoBanking = {
+  id: string
+  messages: string
+}
+export type IBill = {
+  _id: string
+  date: string
+  totalBill: string
+  discount: number
+  idUser: string
+  addressShip: {
+    addressDetail: string
+    address: string
+  }
+  abort: boolean
+  note: string | null
+  name: string
+  sdt: string
+  status: FILTER_BILL
+  infoBanking?: IInfoBanking
+  listBill: Array<IItemListBill>
+}
+
 export type IClientApi = {
   product: IProduct
   myCart: IMyCart
   lengthCart: ILengthCart
   comment: IComment
+  bill: IBill
 }

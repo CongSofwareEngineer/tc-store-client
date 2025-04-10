@@ -153,7 +153,7 @@ export const viewExternal = (url: string) => {
   window.open(url, '_blank')
 }
 
-export const detectImg = (src: any, maxWidthScale = 0) => {
+export const detectImg = (src?: any, maxWidthScale = 0) => {
   try {
     if (!src) {
       return images.icon.unknowTokenIcon

@@ -21,8 +21,6 @@ const InputSearch = ({ keySearch = 'name' }: { keySearch?: string }) => {
   useEffect(() => {
     if (nameSearchDebounce) {
       router.push(`${pathname}?${keySearch}=${nameSearchDebounce}`)
-    } else {
-      router.push(pathname)
     }
   }, [nameSearchDebounce, keySearch, router, pathname])
 

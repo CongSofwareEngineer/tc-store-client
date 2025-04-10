@@ -1,7 +1,6 @@
 import ConfigBill from '@/components/ConfigBill'
 import MyImage from '@/components/MyImage'
 import TextCopy from '@/components/TextCopy'
-import { TYPE_PRODUCT } from '@/constants/admin'
 import { FILTER_BILL } from '@/constants/app'
 import useLanguage from '@/hooks/useLanguage'
 import useMedia from '@/hooks/useMedia'
@@ -10,8 +9,10 @@ import useRoutePage from '@/hooks/useRoutePage'
 import { detectImg, formatPrice } from '@/utils/functions'
 import { Button } from '@mantine/core'
 import ModalFeedBack from '../ModalFeedBack'
+import ImageMain from '@/components/ImageMain'
+import { IClientApi } from '@/services/ClientApi/type'
 type Props = {
-  data?: any
+  data?: IClientApi['bill']
 }
 const ViewDetailBill = ({ data }: Props) => {
   const { translate } = useLanguage()
@@ -19,6 +20,8 @@ const ViewDetailBill = ({ data }: Props) => {
   const route = useRoutePage()
   const { openModalDrawer } = useModalDrawer()
   const enableFeedback = data?.status === FILTER_BILL.DeliverySuccess
+
+  console.log({ ViewDetailBill: data })
 
   const getAddressShip = (item: any) => {
     const address = { ...item.addressShip }
@@ -68,28 +71,33 @@ const ViewDetailBill = ({ data }: Props) => {
       <div className='w-full font-bold'>{`${translate('bill.listBill')} :`}</div>
       {data && (
         <div className='flex flex-col gap-4 w-full overflow-y-auto'>
-          {data?.listBill?.map((e: any) => {
+          {data?.listBill?.map((e) => {
             return (
               <div
                 style={{
                   borderBottom: `2px solid #e5e7eb `,
                 }}
-                key={e._id}
+                key={e.moreData._id}
                 className={`flex gap-3 w-full pb-4 `}
               >
                 <div className='  w-[100px] h-max   relative rounded-md overflow-hidden'>
-                  <MyImage
-                    alt={`icon-product-bill-${e._id}`}
-                    src={detectImg(e.moreData.imageMain)}
-                    className='  !w-full !h-auto'
-                  />
+                  <ImageMain listImage={e.moreData.images} model={e.models.model} />
                 </div>
                 <div className='flex flex-col  gap-1'>
                   <p onClick={() => handleRoute(e)} className='font-bold'>
                     {e.moreData.name}
                   </p>
-                  <div>{`${translate('textPopular.amount')} : x${e.amount}`}</div>
-                  <ConfigBill item={e} />
+                  <div>{`${translate('textPopular.amount')} : x${e.amountBuy}`}</div>
+                  <ConfigBill
+                    item={{
+                      ...e,
+                      configBill: {
+                        model: e.models.model,
+                        size: e.models.size,
+                      },
+                      models: e.moreData.models,
+                    }}
+                  />
                   <div className='text-green-700 font-bold'>
                     <span className='mr-1'>{translate('productDetail.price')} :</span>
                     <span>{formatPrice(e.moreData.price)} VNĐ</span>

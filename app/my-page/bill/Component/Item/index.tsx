@@ -2,30 +2,27 @@ import useLanguage from '@/hooks/useLanguage'
 import useMedia from '@/hooks/useMedia'
 import React from 'react'
 import Link from 'next/link'
-import {
-  detectImg,
-  ellipsisText,
-  formatPrice,
-  getUrlProduct,
-  numberWithCommas,
-} from '@/utils/functions'
-import { COLOR, FILTER_BILL } from '@/constants/app'
+import { ellipsisText, formatPrice, getUrlProduct, numberWithCommas } from '@/utils/functions'
+import { COLOR, DEFAULT_FEE_SHIP, FILTER_BILL } from '@/constants/app'
 import useModalDrawer from '@/hooks/useModalDrawer'
 import TextCopy from '@/components/TextCopy'
-import MyImage from '@/components/MyImage'
 import ConfigBill from '@/components/ConfigBill'
 import styles from './style.module.scss'
 import { formatDateTime } from '@/utils/momentFunc'
 import { Button } from '@mantine/core'
 import ModalCancelOrder from '../ModalCancelOrder'
 import ViewDetailBill from '../ViewDetailBill'
+import { IClientApi, IItemListBill } from '@/services/ClientApi/type'
+import ImageMain from '@/components/ImageMain'
 
 type Props = {
-  data: { [key: string]: any }
+  data: IClientApi['bill']
   indexData: number
 }
 
 const Item = ({ data, indexData }: Props) => {
+  console.log({ data })
+
   const { isMobile } = useMedia(1000)
   const { translate } = useLanguage()
   const { openModalDrawer } = useModalDrawer()
@@ -62,7 +59,7 @@ const Item = ({ data, indexData }: Props) => {
     return `${address.addressDetail} (${address.address})`
   }
 
-  const handleViewDetail = (item: any) => {
+  const handleViewDetail = (item: IClientApi['bill']) => {
     openModalDrawer({
       content: <ViewDetailBill data={item} />,
       useDrawer: true,
@@ -74,6 +71,20 @@ const Item = ({ data, indexData }: Props) => {
     openModalDrawer({
       content: <ModalCancelOrder data={item} />,
     })
+  }
+
+  const renderTotalBill = () => {
+    let total = 0
+    data.listBill.forEach((bill) => {
+      total += bill.amountBuy * bill.moreData.price!
+    })
+    total += DEFAULT_FEE_SHIP
+    total -= data.discount
+    return <span className='text-green-600 font-bold'>{`${numberWithCommas(total)} VNĐ`}</span>
+  }
+
+  const renderImgMain = (item: IItemListBill) => {
+    return <ImageMain listImage={item.moreData.images} model={item.models.model} />
   }
 
   const renderDesktop = () => {
@@ -118,11 +129,7 @@ const Item = ({ data, indexData }: Props) => {
                 className='flex gap-3 '
               >
                 <div className='w-[70px]  rounded-md aspect-square overflow-hidden relative flex justify-center items-center'>
-                  <MyImage
-                    className='!relative '
-                    alt={e?.moreData?.name}
-                    src={detectImg(e?.moreData?.imageMain)}
-                  />
+                  {renderImgMain(e)}
                 </div>
                 <div className='flex justify-between flex-1 gap-2'>
                   <div className='flex flex-col gap-1'>
@@ -131,10 +138,18 @@ const Item = ({ data, indexData }: Props) => {
                         {e?.moreData?.name}
                       </span>
                     </Link>
-                    <ConfigBill item={e} />
+                    <ConfigBill
+                      item={{
+                        configBill: {
+                          model: e.models.model,
+                          size: e.models.size,
+                        },
+                        ...e,
+                      }}
+                    />
                     <div className=' text-sm text-green-600'>{`${formatPrice(e?.moreData?.price)} VNĐ`}</div>
                   </div>
-                  <div>x{e.amount}</div>
+                  <div>x{e.amountBuy}</div>
                 </div>
               </div>
             )
@@ -145,7 +160,7 @@ const Item = ({ data, indexData }: Props) => {
         <div className='flex w-full justify-end gap-1 px-3'>
           <span>{translate('bill.totalBill')}</span>
           <span>:</span>
-          <span className='text-green-600 font-bold'>{`${numberWithCommas(data.totalBill || '0')} VNĐ`}</span>
+          {renderTotalBill()}
         </div>
         <div className='flex w-full justify-end gap-2 mt-1 px-3'>
           {data.status === FILTER_BILL.Processing && (
@@ -199,11 +214,7 @@ const Item = ({ data, indexData }: Props) => {
                 className='flex gap-3 px-3 '
               >
                 <div className='w-[70px]  rounded-md aspect-square overflow-hidden relative flex justify-center items-center'>
-                  <MyImage
-                    className='!relative !h-auto '
-                    alt={e?.moreData?.name}
-                    src={detectImg(e?.moreData?.imageMain)}
-                  />
+                  {renderImgMain(e)}
                 </div>
                 <div className='flex justify-between flex-1 gap-2'>
                   <div className='flex flex-col gap-1'>
@@ -211,7 +222,7 @@ const Item = ({ data, indexData }: Props) => {
                     <ConfigBill item={e} />
                     <div className=' text-sm text-green-600'>{`${formatPrice(e?.moreData?.price)} VNĐ`}</div>
                   </div>
-                  <div>x{e.amount}</div>
+                  <div>x{e.amountBuy}</div>
                 </div>
               </div>
             )
@@ -222,7 +233,7 @@ const Item = ({ data, indexData }: Props) => {
         <div className='flex w-full justify-end gap-1 px-3'>
           <span>{translate('bill.totalBill')}</span>
           <span>:</span>
-          <span className='text-green-600 font-bold'>{`${numberWithCommas(data.totalBill || '0')} VNĐ`}</span>
+          {renderTotalBill()}
         </div>
         <div className='flex w-full justify-end gap-2 mt-1 px-3'>
           {data.status === FILTER_BILL.Processing && (

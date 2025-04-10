@@ -63,11 +63,12 @@ const ItemCart = ({
   const renderImg = () => {
     const img = data?.moreData?.images?.find((e) => e.model === data.configCart?.model)
     return (
-      <MyImage
-        src={detectImg(img?.url?.toString() || '')}
-        alt={`item-${data?.moreData?.keyName}`}
-        className=' !w-full !h-auto'
-      />
+      // <MyImage
+      //   src={detectImg(img?.url?.toString() || '')}
+      //   alt={`item-${data?.moreData?.keyName}`}
+      //   className=' !w-full !h-auto'
+      // />
+      <></>
     )
   }
 

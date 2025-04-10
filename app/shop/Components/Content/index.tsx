@@ -7,6 +7,7 @@ import useLanguage from '@/hooks/useLanguage'
 import LoadingGetData from '@/components/LoadingGetData'
 import useListProducts from '@/hooks/tank-query/useListProducts'
 import MySkeleton from '@/components/MySkeleton'
+import InputSearch from '@/components/InputSearch'
 
 const Content = () => {
   const { queries } = useQuerySearch()
@@ -32,6 +33,7 @@ const Content = () => {
   const renderContent = () => {
     return (
       <>
+        <InputSearch />
         {data.length > 0 ? (
           <div className='  w-full grid grid-cols-2 sm:grid-cols-3  lg:grid-cols-4   gap-3 xl:gap-6 md:gap-4'>
             {data.map((item) => {

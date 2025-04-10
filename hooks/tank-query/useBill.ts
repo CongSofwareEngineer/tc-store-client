@@ -3,7 +3,7 @@ import { QUERY_KEY, TypeHookReactQuery } from '@/constants/reactQuery'
 import { PAGE_SIZE_LIMIT } from '@/constants/app'
 import { useMemo } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
-import ClientApi from '@/services/clientApi'
+import ClientApi from '@/services/ClientApi/index'
 
 const getData = async ({
   queryKey,
@@ -27,7 +27,7 @@ const getData = async ({
   const dataServer = await ClientApi.getBills(queryUrl)
 
   return {
-    data: dataServer?.data || [],
+    data: dataServer,
     page: pageParam,
   }
 }

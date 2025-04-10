@@ -139,7 +139,7 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
   }
 
   const handleSubmitBuy = async (idBanking?: string, mess?: string, bodyAPI?: BodyAddBill) => {
-    let res: any = null
+    const res: any = null
 
     if (idBanking) {
       bodyAPI!.infoBanking = {
@@ -147,22 +147,25 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
         messages: mess,
       }
     }
+    console.log('====================================')
+    console.log({ bodyAPI })
+    console.log('====================================')
+    closeModalAdmin()
+    // if (isLogin) {
+    //   res = await ClientApi.buy(bodyAPI!)
+    // } else {
+    //   res = await ClientApi.buyNoLogin(bodyAPI!)
+    // }
+    // console.log({ res })
 
-    if (isLogin) {
-      res = await ClientApi.buy(bodyAPI!)
-    } else {
-      res = await ClientApi.buyNoLogin(bodyAPI!)
-    }
-    console.log({ res })
-
-    if (res?.data) {
-      await callbackSuccess()
-      clickBack()
-      closeModalAdmin()
-    } else {
-      showNotificationError(translate('productDetail.modalBuy.error'))
-      closeModalAdmin()
-    }
+    // if (res?.data) {
+    //   await callbackSuccess()
+    //   clickBack()
+    //   closeModalAdmin()
+    // } else {
+    //   showNotificationError(translate('productDetail.modalBuy.error'))
+    //   closeModalAdmin()
+    // }
   }
 
   const handleSubmit = async (valueForm: IFormPayment) => {
@@ -170,13 +173,11 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
       setLoading(true)
       callbackProcessing()
 
-      let totalBill = 0
       const listBill: any[] = []
-
+      let totalBill = 0
       data.forEach((e) => {
         if (e.selected) {
           totalBill += e.amountBuy! * e.moreData?.price!
-
           const itemBill: { [key: string]: any } = {
             idProduct: e.moreData?._id || e._id,
             amountBuy: e.amountBuy,
@@ -202,7 +203,6 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
         idUser: userData?._id || undefined,
         listBill,
         name: userData?.name || 'no-name',
-        totalBill: totalBill,
         sdt: valueForm?.sdt!,
         status: FILTER_BILL.Processing,
       }
