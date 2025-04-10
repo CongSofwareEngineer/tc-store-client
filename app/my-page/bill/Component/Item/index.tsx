@@ -145,6 +145,7 @@ const Item = ({ data, indexData }: Props) => {
                           size: e.models.size,
                         },
                         ...e,
+                        models: e.moreData.models,
                       }}
                     />
                     <div className=' text-sm text-green-600'>{`${formatPrice(e?.moreData?.price)} VNĐ`}</div>
@@ -219,7 +220,16 @@ const Item = ({ data, indexData }: Props) => {
                 <div className='flex justify-between flex-1 gap-2'>
                   <div className='flex flex-col gap-1'>
                     <div>{e?.moreData?.name}</div>
-                    <ConfigBill item={e} />
+                    <ConfigBill
+                      item={{
+                        configBill: {
+                          model: e.models.model,
+                          size: e.models.size,
+                        },
+                        ...e,
+                        models: e.moreData.models,
+                      }}
+                    />
                     <div className=' text-sm text-green-600'>{`${formatPrice(e?.moreData?.price)} VNĐ`}</div>
                   </div>
                   <div>x{e.amountBuy}</div>
