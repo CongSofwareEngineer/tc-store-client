@@ -10,8 +10,6 @@ import { useEffect, useMemo, useState } from 'react'
 import ModalProcess from '../ModalProcess'
 import { QUERY_KEY } from '@/constants/reactQuery'
 import ModalSuccess from '../ModalSuccess'
-import ClientApi from '@/services/clientApi'
-import { showNotificationError } from '@/utils/notification'
 import { BodyAddBill } from '@/constants/firebase'
 import InfoBanking from '../InfoBanking'
 import ModalDelete from '../ModalDelete'
@@ -25,6 +23,8 @@ import { useForm } from '@mantine/form'
 import useCheckForm from '@/hooks/useCheckForm'
 import ContentFormPayment from './ContentFormPayment'
 import { useModalAdmin } from '@/zustand/useModalAdmin'
+import ClientApi from '@/services/ClientApi/index'
+import { showNotificationError } from '@/utils/notification'
 
 const INIt_FORM: IFormPayment = {
   sdt: '',
@@ -106,6 +106,7 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
       ),
       configModal: {
         overClickClose: false,
+        showBtnClose: false,
       },
     })
   }
@@ -139,33 +140,27 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
   }
 
   const handleSubmitBuy = async (idBanking?: string, mess?: string, bodyAPI?: BodyAddBill) => {
-    const res: any = null
-
+    let res: any = null
     if (idBanking) {
       bodyAPI!.infoBanking = {
         id: idBanking,
         messages: mess,
       }
     }
-    console.log('====================================')
-    console.log({ bodyAPI })
-    console.log('====================================')
-    closeModalAdmin()
-    // if (isLogin) {
-    //   res = await ClientApi.buy(bodyAPI!)
-    // } else {
-    //   res = await ClientApi.buyNoLogin(bodyAPI!)
-    // }
-    // console.log({ res })
-
-    // if (res?.data) {
-    //   await callbackSuccess()
-    //   clickBack()
-    //   closeModalAdmin()
-    // } else {
-    //   showNotificationError(translate('productDetail.modalBuy.error'))
-    //   closeModalAdmin()
-    // }
+    if (isLogin) {
+      res = await ClientApi.buy(bodyAPI!)
+    } else {
+      res = await ClientApi.buyNoLogin(bodyAPI!)
+    }
+    console.log({ res })
+    if (res?.data) {
+      await callbackSuccess()
+      clickBack()
+      closeModalAdmin()
+    } else {
+      showNotificationError(translate('productDetail.modalBuy.error'))
+      closeModalAdmin()
+    }
   }
 
   const handleSubmit = async (valueForm: IFormPayment) => {
