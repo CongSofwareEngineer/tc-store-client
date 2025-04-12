@@ -7,7 +7,7 @@ import { COOKIE_KEY } from '@/constants/app'
 import useRefreshQuery from '@/hooks/tank-query/useRefreshQuery'
 import useLanguage from '@/hooks/useLanguage'
 import useUserData from '@/hooks/useUserData'
-import { detectImg, formatPrice, formatPriceBase } from '@/utils/functions'
+import { detectImg, formatPrice, formatPriceBase, numberWithCommas } from '@/utils/functions'
 import { QUERY_KEY } from '@/constants/reactQuery'
 import SubAndPlus from '@/components/SubAndPlus'
 
@@ -216,7 +216,7 @@ const ViewDetail = ({
             <h1 className='text-title font-bold'>{productDetail.name}</h1>
             <InfoItemDetail data={productDetail} />
             <div className='text-medium  line-through text-green-400'>
-              {formatPriceBase(productDetail.price, productDetail?.disCount!)} VNĐ
+              {numberWithCommas(formatPriceBase(productDetail.price, productDetail?.disCount!))} VNĐ
             </div>
             <div className='text-title font-bold text-green-500'>{`${formatPrice(
               Number(productDetail.price || '0') * amountBuy
