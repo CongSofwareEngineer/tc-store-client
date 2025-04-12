@@ -112,7 +112,6 @@ export type IInfoBanking = {
 export type IBill = {
   _id: string
   date: string
-  totalBill: string
   discount: number
   idUser: string
   addressShip: {

@@ -32,7 +32,7 @@ const ModalCancelOrder = ({ data }: { data: any }) => {
     <div className='flex flex-col gap-2 w-full items-center'>
       <p className='text-medium font-bold'>{translate('myBill.cancelOrder.cancelOrder')}</p>
       <div className='w-full font-medium'>{translate('textPopular.reason')}:</div>
-      <Textarea rows={3} onChange={(e) => setTextWhy(e.target.value)} />
+      <Textarea className='w-full' rows={3} onChange={(e) => setTextWhy(e.target.value)} />
       <div className='flex gap-3 w-full mt-4'>
         <Button className='!w-full' variant='filled' onClick={closeModalDrawer}>
           {translate('common.close')}

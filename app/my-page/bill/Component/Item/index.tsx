@@ -84,7 +84,7 @@ const Item = ({ data, indexData }: Props) => {
   }
 
   const renderImgMain = (item: IItemListBill) => {
-    return <ImageMain listImage={item.moreData.images} model={item.models.model} />
+    return <ImageMain isZoom listImage={item.moreData.images} model={item.models.model} />
   }
 
   const renderDesktop = () => {

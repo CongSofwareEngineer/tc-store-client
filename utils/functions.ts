@@ -1,8 +1,8 @@
 // import lodash from 'lodash'
 
 import { images } from '@/configs/images'
-import { TYPE_PRODUCT } from '@/constants/admin'
-import { COLOR, FILTER_BILL } from '@/constants/app'
+import { COLOR, DEFAULT_FEE_SHIP, FILTER_BILL } from '@/constants/app'
+import { IItemListBill } from '@/services/ClientApi/type'
 
 export const cloneData = (data: any, defaultValue: any = '') => {
   try {
@@ -262,4 +262,18 @@ export const stringToArrayBuffer = (str: string) => {
 
 export const getUrlProduct = (product: any) => {
   return `/shop/${product?.moreData?.keyName || product?.keyName}`
+}
+
+export const totalBill = (listBill: IItemListBill[] = [], discount = 0) => {
+  try {
+    let totalBill = 0
+    listBill.forEach((bill) => {
+      totalBill += bill.amountBuy * bill.price
+    })
+    totalBill += DEFAULT_FEE_SHIP
+    totalBill -= discount
+    return totalBill
+  } catch {
+    return 0
+  }
 }

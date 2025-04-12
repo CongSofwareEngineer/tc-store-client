@@ -1,12 +1,11 @@
 import ConfigBill from '@/components/ConfigBill'
-import MyImage from '@/components/MyImage'
 import TextCopy from '@/components/TextCopy'
 import { FILTER_BILL } from '@/constants/app'
 import useLanguage from '@/hooks/useLanguage'
 import useMedia from '@/hooks/useMedia'
 import useModalDrawer from '@/hooks/useModalDrawer'
 import useRoutePage from '@/hooks/useRoutePage'
-import { detectImg, formatPrice } from '@/utils/functions'
+import { formatPrice, numberWithCommas, totalBill } from '@/utils/functions'
 import { Button } from '@mantine/core'
 import ModalFeedBack from '../ModalFeedBack'
 import ImageMain from '@/components/ImageMain'
@@ -45,7 +44,7 @@ const ViewDetailBill = ({ data }: Props) => {
       <div className='flex flex-col  w-full  '>
         <div className='flex gap-1 items-center'>
           <span className='font-bold'>{`SĐT :`}</span>
-          <TextCopy textView={data.sdt} value={data.sdt} />
+          <TextCopy textView={data?.sdt} value={data?.sdt} />
         </div>
         {data?.infoBanking?.id && (
           <div className='flex flex-col mt-1   gap-1'>
@@ -127,7 +126,7 @@ const ViewDetailBill = ({ data }: Props) => {
       )}
       <div className='text-medium gap-1   pt-3 flex w-full justify-end font-bold text-green-500 '>
         <span>{translate('textPopular.totalMoney')} : </span>
-        <span>{`${formatPrice(data.totalBill || '0')} VNĐ`}</span>
+        <span>{`${numberWithCommas(totalBill(data?.listBill, data?.discount))} VNĐ`}</span>
       </div>
     </div>
   )
