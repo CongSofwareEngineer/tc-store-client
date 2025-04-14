@@ -7,8 +7,9 @@ import { useInView } from 'react-intersection-observer'
 type IImage = {
   onLoaded?: () => any
   showPreView?: boolean
+  isNoAnimation?: boolean
 } & ImageProps
-const MyImage = ({ ...props }: IImage) => {
+const MyImage = ({ isNoAnimation = false, ...props }: IImage) => {
   const { ref, inView } = useInView({ threshold: 0, triggerOnce: true, rootMargin: '150px' })
   const [loaded, setLoaded] = useState(false)
 
@@ -27,7 +28,7 @@ const MyImage = ({ ...props }: IImage) => {
       className={cn('!relative', props?.className)}
       style={{
         filter: loaded ? 'none' : 'blur(20px)',
-        transition: 'filter 0.08s ease-out',
+        transition: isNoAnimation ? 'none' : 'filter 0.08s ease-out',
         ...props.style,
       }}
       src={

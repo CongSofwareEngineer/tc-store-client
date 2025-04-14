@@ -15,7 +15,6 @@ const getData = async ({
   const query = queryKey[2]
   const dateTime = queryKey[3]
   const { type = null } = query
-  console.log({ type, dateTime })
 
   let queryUrl = `${queryKey[1]}?page=${pageParam}&limit=${PAGE_SIZE_LIMIT}`
   if (type) {

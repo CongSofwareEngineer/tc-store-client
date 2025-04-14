@@ -1,3 +1,4 @@
+import { IProductCart } from '@/components/ListItemCart/type'
 import { IProduct } from '@/services/ClientApi/type'
 
 export type IItemCart = {
@@ -13,5 +14,6 @@ export type ItemCartBody = {
   id: string
   selected?: boolean
   moreData?: IProduct
+  configCart?: IProductCart['configCart']
   [key: string]: unknown
 }

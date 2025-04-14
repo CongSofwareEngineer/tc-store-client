@@ -2,96 +2,44 @@ import { FILTER_BILL } from '@/constants/app'
 import useLanguage from '@/hooks/useLanguage'
 import useQuerySearch from '@/hooks/useQuerySearch'
 import { Checkbox } from '@mantine/core'
-import React, { useEffect, useState } from 'react'
+import React, { useMemo } from 'react'
 
 const OptionFilter = () => {
-  const [isDeliverySuccess, setIsDeliverySuccess] = useState(false)
-  const [isDelivering, setIsDelivering] = useState(false)
-  const [isProcessing, setIsProcessing] = useState(false)
-
   const { translate } = useLanguage()
-  const { queries, currentQueries, updateQuery } = useQuerySearch()
+  const { queries, updateQuery } = useQuerySearch()
 
-  useEffect(() => {
+  const typeBill: FILTER_BILL = useMemo(() => {
     if (queries?.type && queries?.type?.length > 0) {
-      switch (queries?.type[0]) {
-        case FILTER_BILL.Processing:
-          setIsProcessing(true)
-          break
-        case FILTER_BILL.Delivering:
-          setIsDelivering(true)
-          break
-        case FILTER_BILL.DeliverySuccess:
-          setIsDeliverySuccess(true)
-          break
-        default:
-          setIsDelivering(false)
-          setIsDeliverySuccess(false)
-          setIsProcessing(false)
-          break
-      }
+      return queries?.type[0]! as FILTER_BILL
     }
-    if (!queries?.type) {
-      setIsDelivering(false)
-      setIsDeliverySuccess(false)
-      setIsProcessing(false)
-    }
-    if (!queries?.date) {
-      console.log({})
-    }
-  }, [queries, currentQueries])
+    return FILTER_BILL.All
+  }, [queries])
 
   const onChangeFilter = (key: FILTER_BILL) => {
-    switch (key) {
-      case FILTER_BILL.All:
-        setIsDelivering(false)
-        setIsDeliverySuccess(false)
-        setIsProcessing(false)
-        updateQuery('type', FILTER_BILL.All)
-        break
-      case FILTER_BILL.Processing:
-        setIsDelivering(false)
-        setIsDeliverySuccess(false)
-        setIsProcessing(true)
-        updateQuery('type', FILTER_BILL.Processing)
-        break
-      case FILTER_BILL.Delivering:
-        setIsDelivering(true)
-        setIsDeliverySuccess(false)
-        setIsProcessing(false)
-        updateQuery('type', FILTER_BILL.Delivering)
-        break
-      default:
-        setIsDelivering(false)
-        setIsDeliverySuccess(true)
-        setIsProcessing(false)
-        updateQuery('type', FILTER_BILL.DeliverySuccess)
-        break
-    }
+    updateQuery('type', key)
   }
 
   return (
     <div className='flex flex-wrap gap-4 align-middle   '>
       <div className='flex gap-4 flex-wrap items-center '>
-        {/* <MyDatePicker onChange={(e) => setDateTime(e?.toString() || '')} /> */}
         <Checkbox
           onChange={() => onChangeFilter(FILTER_BILL.All)}
-          checked={!isDelivering && !isDeliverySuccess && !isProcessing}
+          checked={typeBill === FILTER_BILL.All}
           label={<div className='text-nowrap'>{translate('textPopular.all')}</div>}
         />
         <Checkbox
           onChange={() => onChangeFilter(FILTER_BILL.DeliverySuccess)}
-          checked={isDeliverySuccess}
+          checked={typeBill === FILTER_BILL.DeliverySuccess}
           label={<div className='text-nowrap'>{translate('myBill.deliverySuccess')}</div>}
         />
         <Checkbox
           onChange={() => onChangeFilter(FILTER_BILL.Delivering)}
-          checked={isDelivering}
+          checked={typeBill === FILTER_BILL.Delivering}
           label={<div className='text-nowrap'>{translate('myBill.delivering')}</div>}
         />
         <Checkbox
           onChange={() => onChangeFilter(FILTER_BILL.Processing)}
-          checked={isProcessing}
+          checked={typeBill === FILTER_BILL.Processing}
           label={<div className='text-nowrap'>{translate('myBill.processing')}</div>}
         />
       </div>

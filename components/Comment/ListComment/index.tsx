@@ -19,6 +19,7 @@ import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
 import ModalWrite from '../ModalWrite'
 import LoadingData from './LoadingData'
 import { IProduct } from '@/services/ClientApi/type'
+import MyImageZoom from '@/components/MyImageZoom'
 
 const Like = ({
   data,
@@ -184,7 +185,7 @@ const ListComment = ({ dataItem }: { dataItem: IProduct }) => {
                           key={img}
                           className='md:w-[60px] w-[50px]  aspect-square relative overflow-hidden '
                         >
-                          <MyImage key={img} src={detectImg(img)} alt={img} className='w-full' />
+                          <MyImageZoom url={detectImg(img || images.logoVCB)} />
                         </div>
                       )
                     })}

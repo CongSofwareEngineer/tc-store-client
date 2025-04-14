@@ -21,8 +21,6 @@ type Props = {
 }
 
 const Item = ({ data, indexData }: Props) => {
-  console.log({ data })
-
   const { isMobile } = useMedia(1000)
   const { translate } = useLanguage()
   const { openModalDrawer } = useModalDrawer()

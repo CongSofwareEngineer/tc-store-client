@@ -32,6 +32,7 @@ const ViewDetailBill = ({ data }: Props) => {
     openModalDrawer({
       content: <ModalFeedBack item={data} data={item} />,
       title: translate('feedback.title'),
+      useDrawer: true,
     })
   }
 

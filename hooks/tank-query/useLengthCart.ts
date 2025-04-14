@@ -2,9 +2,9 @@ import { QUERY_KEY } from '@/constants/reactQuery'
 import { useQuery } from '@tanstack/react-query'
 import useUserData from '../useUserData'
 import { COOKIE_KEY } from '@/constants/app'
-import { getCookie } from '@/services/cookiesService'
 import { IClientApi } from '@/services/ClientApi/type'
 import ClientApi from '@/services/ClientApi/index'
+import { getDataLocal } from '@/utils/functions'
 const getData = async ({ queryKey }: any) => {
   const isLogin = queryKey[2]
   if (isLogin) {
@@ -12,7 +12,7 @@ const getData = async ({ queryKey }: any) => {
 
     return lengthCart
   } else {
-    const data = await getCookie(COOKIE_KEY.MyCart)
+    const data = getDataLocal(COOKIE_KEY.MyCart)
 
     if (Array.isArray(data)) {
       return { lengthCart: data.length }

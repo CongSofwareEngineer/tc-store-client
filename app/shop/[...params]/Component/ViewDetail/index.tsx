@@ -7,7 +7,15 @@ import { COOKIE_KEY } from '@/constants/app'
 import useRefreshQuery from '@/hooks/tank-query/useRefreshQuery'
 import useLanguage from '@/hooks/useLanguage'
 import useUserData from '@/hooks/useUserData'
-import { detectImg, formatPrice, formatPriceBase, numberWithCommas } from '@/utils/functions'
+import {
+  delayTime,
+  detectImg,
+  formatPrice,
+  formatPriceBase,
+  getDataLocal,
+  numberWithCommas,
+  saveDataLocal,
+} from '@/utils/functions'
 import { QUERY_KEY } from '@/constants/reactQuery'
 import SubAndPlus from '@/components/SubAndPlus'
 
@@ -17,7 +25,6 @@ import { showNotificationSuccess } from '@/utils/notification'
 import MyImage from '@/components/MyImage'
 import BtnBack from '@/components/BtnBack'
 import { Button } from '@mantine/core'
-import { getCookie, setCookie } from '@/services/cookiesService'
 import InfoItemDetail from '@/components/InfoItemDetail'
 import { ItemCartBody } from '@/app/my-cart/type'
 import Models from '../Models'
@@ -83,19 +90,23 @@ const ViewDetail = ({
   }
 
   const addCartNoLogin = async (body: ItemCartBody) => {
-    const dataCart = await getCookie(COOKIE_KEY.MyCart)
+    const dataCart = getDataLocal(COOKIE_KEY.MyCart)
     const arrTemp: Array<ItemCartBody> = []
     if (Array.isArray(dataCart)) {
       let isExited = false
       dataCart.forEach((e: ItemCartBody) => {
         const itemTemp = e
-        if (itemTemp.idProduct === body.idProduct) {
+        if (
+          itemTemp.idProduct === body.idProduct &&
+          itemTemp.configCart?.model === body.configCart?.model
+        ) {
           itemTemp.amountBuy = itemTemp.amountBuy! + body.amountBuy!
-          itemTemp.date = body.date
           isExited = true
         }
         arrTemp.push(itemTemp)
       })
+      console.log({ isExited })
+
       if (!isExited) {
         arrTemp.push(body)
       }
@@ -103,9 +114,9 @@ const ViewDetail = ({
       arrTemp.push(body)
     }
 
-    await setCookie(COOKIE_KEY.MyCart, arrTemp)
+    saveDataLocal(COOKIE_KEY.MyCart, arrTemp)
+    await delayTime(1000)
   }
-  console.log({ productDetail })
 
   const handleAddCart = async () => {
     try {
@@ -129,17 +140,14 @@ const ViewDetail = ({
           id: '',
           configCart: productDetail.configBill,
         }
-        bodyOther.date = new Date().getTime().toFixed()
         bodyOther.moreData = {
-          imageMain: productDetail.imageMain,
           name: productDetail.name,
           keyName: productDetail.keyName,
           price: productDetail.price,
           category: productDetail.category,
           disCount: productDetail.disCount,
-          _id: productDetail._id,
-          sold: productDetail.sold,
           models: productDetail.models,
+          images: productDetail.images,
         }
         await addCartNoLogin(bodyOther)
       }

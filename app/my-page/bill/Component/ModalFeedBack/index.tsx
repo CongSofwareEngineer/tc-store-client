@@ -1,7 +1,6 @@
 import ClientApi from '@/services/clientApi'
 import { detectImg } from '@/utils/functions'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
-import ImageNext from 'next/image'
 import React, { useEffect, useState } from 'react'
 import ViewDetailBill from '../ViewDetailBill'
 import useUserData from '@/hooks/useUserData'
@@ -13,11 +12,14 @@ import { DataAddComment } from '@/constants/mongoDB'
 import { QUERY_KEY } from '@/constants/reactQuery'
 import { AiOutlineArrowLeft, AiOutlineCamera, AiOutlineCloseCircle } from 'react-icons/ai'
 import MyLoading from '@/components/MyLoading'
-import { Button, Rating, Textarea } from '@mantine/core'
+import { Button, Rating } from '@mantine/core'
 import UploadImage, { IFileImage } from '@/components/UploadImage'
 import MyImage from '@/components/MyImage'
+import { IItemListBill } from '@/services/ClientApi/type'
+import ImageMain from '@/components/ImageMain'
+import InputArea from '@/components/Input/area'
 
-const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
+const ModalFeedBack = ({ data, item }: { data: IItemListBill; item: any }) => {
   const { translate } = useLanguage()
   const { userData } = useUserData()
   const { closeModalDrawer, openModalDrawer } = useModalDrawer()
@@ -28,8 +30,6 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
   const [loading, setLoading] = useState(false)
   const [rate, setRate] = useState(5)
   const [des, setDes] = useState('')
-
-  console.log({ listImgFeeBack, rate, des })
 
   useEffect(() => {
     const getData = async () => {
@@ -82,7 +82,7 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
         return e
       })
       const body: DataAddComment = {
-        idProduct: data._id,
+        idProduct: data.moreData._id,
         listImg: arrImg,
         note: des,
         name: userData?.name,
@@ -169,12 +169,7 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
       </div>
       <div className='flex gap-2'>
         <div className='md:w-[100px] w-[80px] aspect-square'>
-          <ImageNext
-            src={detectImg(data?.moreData?.imageMain)}
-            alt={data.keyName}
-            fill
-            className='!relative '
-          />
+          <ImageMain listImage={data?.moreData?.images} model={data?.models?.model} />
         </div>
         <div className='flex flex-col gap-2'>
           <div className='font-bold text-lg'>{data?.moreData?.name}</div>
@@ -183,7 +178,14 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
         </div>
       </div>
       <div className='mt-2 mb-1'>{`${translate('textPopular.note')} :`}</div>
-      <Textarea onChange={(e) => setDes(e.target.value)} rows={3} value={des} maxLength={150} />
+      <InputArea
+        onChange={(e) => setDes(e.target.value)}
+        rows={3}
+        value={des}
+        maxLength={100}
+        showCount
+      />
+      {/* <Textarea  onChange={(e) => setDes(e.target.value)} rows={3} value={des}  maxLength={150} /> */}
       <div className='mb-3' />
       {renderListImg()}
       <UploadImage
@@ -202,7 +204,7 @@ const ModalFeedBack = ({ data, item }: { data: any; item: any }) => {
         onClick={handleSubmit}
         loading={loading}
         disabled={!des}
-        className='mt-4 md:mb-0 mb-2 w-full mx-auto min-w-[50%]'
+        className='mt-4 md:mb-0 mb-2 !w-full mx-auto min-w-[50%]'
       >
         {dataGetApi?.note ? translate('common.update') : translate('common.save')}
       </Button>

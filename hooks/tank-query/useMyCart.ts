@@ -4,7 +4,7 @@ import useUserData from '../useUserData'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import ClientApi from '@/services/clientApi'
-import { getCookie } from '@/services/cookiesService'
+import { getDataLocal } from '@/utils/functions'
 
 const getData = async ({
   queryKey,
@@ -23,7 +23,8 @@ const getData = async ({
       page: pageParam,
     }
   } else {
-    const data = await getCookie(COOKIE_KEY.MyCart)
+    const data = getDataLocal(COOKIE_KEY.MyCart)
+    console.log({ getDataLocal: data })
 
     if (Array.isArray(data)) {
       return {
