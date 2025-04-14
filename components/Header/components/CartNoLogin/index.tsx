@@ -16,12 +16,17 @@ import Payment from '@/components/Payment'
 import { IItemCart } from '@/app/my-cart/type'
 import ImageMain from '@/components/ImageMain'
 import { useModalAdmin } from '@/zustand/useModalAdmin'
+import { useDrawer } from '@/zustand/useDrawer'
+import useMedia from '@/hooks/useMedia'
 
 const CartNoLogin = () => {
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()
   const { closeModal, openModal } = useModalAdmin()
+  const { closeDrawer, openDrawer } = useDrawer()
   const { translate } = useLanguage()
   const { data, isLoading } = useMyCart()
+  const { isMobile } = useMedia()
+
   const [listArr, setListArr] = useState<Array<IItemCart>>([])
 
   useEffect(() => {
@@ -81,18 +86,26 @@ const CartNoLogin = () => {
   }
 
   const handlePayment = () => {
-    openModalDrawer({
-      content: (
-        <div className='md:w-screen w-full md:max-w-[1000px] overflow-auto'>
-          <Payment showBack={false} data={listArr} clickBack={() => closeModalDrawer()} />
-        </div>
-      ),
-      title: translate('bill.title'),
-      onlyDrawer: true,
-      configModal: {
-        width: 'auto',
-      },
-    })
+    if (isMobile) {
+      openModalDrawer({
+        content: <Payment showBack={false} data={listArr} clickBack={() => closeModalDrawer()} />,
+        title: translate('bill.title'),
+        useDrawer: true,
+        configModal: {
+          width: 'auto',
+        },
+      })
+    } else {
+      openModalDrawer({
+        content: <Payment showBack={false} data={listArr} clickBack={() => closeModalDrawer()} />,
+        title: translate('bill.title'),
+        onlyDrawer: true,
+        configDrawer: {
+          position: 'right',
+          width: '1100px',
+        },
+      })
+    }
   }
 
   const getAmountBill = () => {
