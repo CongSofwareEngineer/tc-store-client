@@ -12,11 +12,11 @@ const MenuShoes = () => {
 
   const menuShoes = [
     {
-      value: 'male',
+      value: 'nam',
       label: translate('textPopular.male'),
     },
     {
-      value: 'female',
+      value: 'nữ',
       label: translate('textPopular.female'),
     },
   ]
