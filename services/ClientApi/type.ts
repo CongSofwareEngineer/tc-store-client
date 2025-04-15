@@ -95,6 +95,7 @@ export type IComment = {
 }
 
 export type IItemListBill = {
+  _id?: string
   idProduct: number
   amountBuy: number
   price: number
