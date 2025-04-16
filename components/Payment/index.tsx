@@ -1,11 +1,11 @@
-import { DEFAULT_FEE_SHIP, FILTER_BILL, OPTIONS_PAYMENT } from '@/constants/app'
+import { COOKIE_KEY, DEFAULT_FEE_SHIP, FILTER_BILL, OPTIONS_PAYMENT } from '@/constants/app'
 import useRefreshQuery from '@/hooks/tank-query/useRefreshQuery'
 import useLanguage from '@/hooks/useLanguage'
 import useModalDrawer from '@/hooks/useModalDrawer'
 import useOptionPayment from '@/hooks/useOptionPayment'
 import useRoutePage from '@/hooks/useRoutePage'
 import useUserData from '@/hooks/useUserData'
-import { numberWithCommas } from '@/utils/functions'
+import { delayTime, numberWithCommas, removeDataLocal, saveDataLocal } from '@/utils/functions'
 import { useEffect, useMemo, useState } from 'react'
 import ModalProcess from '../ModalProcess'
 import { QUERY_KEY } from '@/constants/reactQuery'
@@ -24,7 +24,8 @@ import useCheckForm from '@/hooks/useCheckForm'
 import ContentFormPayment from './ContentFormPayment'
 import { useModalAdmin } from '@/zustand/useModalAdmin'
 import ClientApi from '@/services/ClientApi/index'
-import { showNotificationError } from '@/utils/notification'
+import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
+import { ID_USER_NO_LOGIN } from '@/constants/mongoDB'
 
 const INIt_FORM: IFormPayment = {
   sdt: '',
@@ -42,17 +43,15 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
   const { userData, isLogin } = useUserData()
   const { refreshListQuery } = useRefreshQuery()
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()
-  const { closeModal: closeModalAdmin } = useModalAdmin()
+  const { closeModal: closeModalAdmin, openModal: openModalAdmin } = useModalAdmin()
   const route = useRoutePage()
-
-  console.log({ Payment: data })
 
   const [loading, setLoading] = useState(false)
   const { onChangeOptions, listOptions, optionSelected } = useOptionPayment(null, { banking: true })
   const { checkNumberPhone, checkNameUser } = useCheckForm()
 
   const formData = useForm({
-    // mode: 'uncontrolled',
+    mode: 'controlled',
     initialValues: INIt_FORM,
     validate: {
       sdt: (sdt) => checkNumberPhone(sdt),
@@ -60,6 +59,8 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
     },
     validateInputOnChange: true,
   })
+
+  console.log({ Payment: data })
 
   useEffect(() => {
     const initData: IFormPayment = {
@@ -97,21 +98,38 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
   }
 
   const callbackProcessing = () => {
-    openModalDrawer({
-      content: (
-        <ModalProcess
-          title={translate('confirm.bill.createBill')}
-          des={translate('confirm.bill.createBill_Des')}
-        />
-      ),
-      configModal: {
-        overClickClose: false,
+    if (isLogin) {
+      openModalDrawer({
+        content: (
+          <ModalProcess
+            title={translate('confirm.bill.createBill')}
+            des={translate('confirm.bill.createBill_Des')}
+          />
+        ),
+        configModal: {
+          overClickClose: false,
+          showBtnClose: false,
+        },
+      })
+    } else {
+      openModalAdmin({
+        body: (
+          <ModalProcess
+            title={translate('confirm.bill.createBill')}
+            des={translate('confirm.bill.createBill_Des')}
+          />
+        ),
         showBtnClose: false,
-      },
-    })
+        overClickClose: false,
+      })
+    }
   }
 
   const callbackSuccess = async () => {
+    if (!isLogin) {
+      removeDataLocal(COOKIE_KEY.MyCart)
+      await delayTime(1000)
+    }
     await refreshListQuery([
       QUERY_KEY.LengthCartUser,
       QUERY_KEY.MyCartUser,
@@ -119,24 +137,30 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
       QUERY_KEY.GetAllProduct,
       QUERY_KEY.GetShoesShop,
     ])
-    openModalDrawer({
-      content: (
-        <ModalSuccess
-          showClose
-          title={translate('productDetail.modalBuy.success')}
-          des={translate('productDetail.modalBuy.successDes')}
-          titleSubmit={translate('common.viewBill')}
-          titleClose={translate('common.ok')}
-          callback={() => {
-            route.push('/my-page/bill')
-            closeModalDrawer()
-          }}
-        />
-      ),
-      configModal: {
-        width: '500px',
-      },
-    })
+    closeModalAdmin()
+    if (isLogin) {
+      openModalDrawer({
+        content: (
+          <ModalSuccess
+            showClose
+            title={translate('productDetail.modalBuy.success')}
+            des={translate('productDetail.modalBuy.successDes')}
+            titleSubmit={translate('common.viewBill')}
+            titleClose={translate('common.ok')}
+            callback={() => {
+              route.push('/my-page/bill')
+              closeModalDrawer()
+            }}
+          />
+        ),
+        configModal: {
+          width: '500px',
+        },
+      })
+    } else {
+      showNotificationSuccess(translate('productDetail.modalBuy.success'))
+      closeModalDrawer()
+    }
   }
 
   const handleSubmitBuy = async (idBanking?: string, mess?: string, bodyAPI?: BodyAddBill) => {
@@ -147,19 +171,22 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
         messages: mess,
       }
     }
+    console.log({ bodyAPI })
+
     if (isLogin) {
       res = await ClientApi.buy(bodyAPI!)
     } else {
       res = await ClientApi.buyNoLogin(bodyAPI!)
     }
     console.log({ res })
+
     if (res?.data) {
       await callbackSuccess()
-      clickBack()
-      closeModalAdmin()
+      clickBack && clickBack()
     } else {
       showNotificationError(translate('productDetail.modalBuy.error'))
       closeModalAdmin()
+      closeModalDrawer()
     }
   }
 
@@ -174,7 +201,7 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
         if (e.selected) {
           totalBill += e.amountBuy! * e.moreData?.price!
           const itemBill: { [key: string]: any } = {
-            idProduct: e.moreData?._id || e._id,
+            idProduct: e.moreData?._id || e.idProduct,
             amountBuy: e.amountBuy,
 
             price: e.moreData?.price,
@@ -184,7 +211,7 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
             },
           }
 
-          if (e.configCart) {
+          if (e.configCart && e._id) {
             itemBill.idCart = e._id
           }
 
@@ -195,7 +222,7 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
       const bodyAPI: BodyAddBill = {
         addressShip: valueForm?.addressShip,
         discount: 0,
-        idUser: userData?._id || undefined,
+        idUser: userData?._id || ID_USER_NO_LOGIN,
         listBill,
         name: userData?.name || 'no-name',
         sdt: valueForm?.sdt!,
@@ -231,17 +258,33 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
       }
     }
 
-    openModalDrawer({
-      content: (
-        <ModalDelete
-          autoClose={false}
-          callback={callBack}
-          title={translate('confirm.bill.confirm')}
-          des={translate('confirm.bill.confirm_des')}
-          titleConfirm={translate('common.submit')}
-        />
-      ),
-    })
+    if (isLogin) {
+      openModalDrawer({
+        content: (
+          <ModalDelete
+            autoClose={false}
+            callback={callBack}
+            title={translate('confirm.bill.confirm')}
+            des={translate('confirm.bill.confirm_des')}
+            titleConfirm={translate('common.submit')}
+          />
+        ),
+      })
+    } else {
+      openModalAdmin({
+        body: (
+          <ModalDelete
+            isModalAdmin
+            autoClose={false}
+            callback={callBack}
+            title={translate('confirm.bill.confirm')}
+            des={translate('confirm.bill.confirm_des')}
+            titleConfirm={translate('common.submit')}
+          />
+        ),
+        overClickClose: false,
+      })
+    }
   }
 
   return (

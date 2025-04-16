@@ -99,3 +99,5 @@ export enum PATH_IMG {
   Category = 'category',
   About = 'About',
 }
+
+export const ID_USER_NO_LOGIN = 'no-login'

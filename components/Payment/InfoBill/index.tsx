@@ -36,9 +36,12 @@ const InfoBill = ({ data }: IInfoBill) => {
           <div className='w-[100px]  flex flex-1'>{translate('textPopular.infor')}</div>
         </div>
         {/* content */}
-        {data?.map((item) => {
+        {data?.map((item, index) => {
           return (
-            <div key={item._id} className='w-full flex gap-4 relative py-2 items-center'>
+            <div
+              key={`info-bill-${index}`}
+              className='w-full flex gap-4 relative py-2 items-center'
+            >
               <div className='w-[100px] '>
                 <div className='flex justify-center mt-2'>
                   <MyImage
@@ -86,9 +89,12 @@ const InfoBill = ({ data }: IInfoBill) => {
           <div className='w-[20%] text-center '>{translate('textPopular.totalMoney')}</div>
         </div>
         {/* content */}
-        {data?.map((item) => {
+        {data?.map((item, index) => {
           return (
-            <div key={item._id} className='w-full flex gap-4 relative py-2 items-center'>
+            <div
+              key={`info-bill-${index}`}
+              className='w-full flex gap-4 relative py-2 items-center'
+            >
               <div className='w-[100px] '>
                 <div className='relative flex justify-center mt-2'>
                   <MyImage
