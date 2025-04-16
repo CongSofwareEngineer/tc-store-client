@@ -207,19 +207,11 @@ export function isObject(value: any): boolean {
 }
 
 export function lowercase(value: any) {
-  try {
-    return value.toLowerCase()
-  } catch {
-    return value
-  }
+  return typeof value === 'string' ? value.toLowerCase() : value
 }
 
 export function uppercase(value: any) {
-  try {
-    return value.toUpperCase()
-  } catch {
-    return value
-  }
+  return typeof value === 'string' ? value.toUpperCase() : value
 }
 
 export const getColorStatus = (key: FILTER_BILL) => {
@@ -236,14 +228,8 @@ export const getColorStatus = (key: FILTER_BILL) => {
 }
 
 export function convertBoolean(value: any): boolean {
-  try {
-    if (lowercase(value) === 'true' || value === true) {
-      return true
-    }
-    return false
-  } catch {
-    return false
-  }
+  const str = String(value).toLowerCase()
+  return str === 'true' || str === '1'
 }
 
 export const stringToArrayBuffer = (str: string) => {

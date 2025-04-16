@@ -16,13 +16,11 @@ import Payment from '@/components/Payment'
 import { IItemCart } from '@/app/my-cart/type'
 import ImageMain from '@/components/ImageMain'
 import { useModalAdmin } from '@/zustand/useModalAdmin'
-import { useDrawer } from '@/zustand/useDrawer'
 import useMedia from '@/hooks/useMedia'
 
 const CartNoLogin = () => {
   const { openModalDrawer, closeModalDrawer } = useModalDrawer()
   const { closeModal, openModal } = useModalAdmin()
-  const { closeDrawer, openDrawer } = useDrawer()
   const { translate } = useLanguage()
   const { data, isLoading } = useMyCart()
   const { isMobile } = useMedia()
@@ -35,11 +33,7 @@ const CartNoLogin = () => {
     }
   }, [data, isLoading])
 
-  console.log({ listArr })
-
   const refreshData = (listData: Array<IItemCart>) => {
-    console.log({ listData })
-
     saveDataLocal(COOKIE_KEY.MyCart, listData)
     setListArr(listData)
   }
