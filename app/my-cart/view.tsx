@@ -19,6 +19,7 @@ import { Button } from '@mantine/core'
 import ListItemCart from '@/components/ListItemCart'
 import LoadingData from './Component/LoadingData'
 import { IItemCart } from './type'
+import { useListState } from '@mantine/hooks'
 
 const Payment = dynamic(() => import('@/components/Payment'), {
   ssr: false,
@@ -26,7 +27,6 @@ const Payment = dynamic(() => import('@/components/Payment'), {
 })
 
 const MyCartScreen = () => {
-  const [listCartFormat, setListCartFormat] = useState<IItemCart[]>([])
   const [listPaymentFormat, setListPaymentFormat] = useState<IItemCart[]>([])
   const [pageSize] = useState(PAGE_SIZE_LIMIT)
 
@@ -35,30 +35,15 @@ const MyCartScreen = () => {
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
   const { refreshListQuery } = useRefreshQuery()
+  const [listCarts, updateList] = useListState<IItemCart>(data)
 
   useEffect(() => {
-    if (data) {
-      setListCartFormat((e) => {
-        const arr = data.map((eChil: any) => {
-          if (e.length > 0) {
-            const item = e.find((temp) => temp.id === eChil?.id)
-            if (item) {
-              return item
-            }
-          }
-          return { ...eChil, selected: false }
-        })
-        return arr
-      })
-    }
-
-    return () => setListCartFormat([])
+    updateList.setState(data)
   }, [data])
-  console.log({ listCartFormat })
 
   const calculatePayment = () => {
     let total = 0
-    listCartFormat.forEach((e) => {
+    listCarts.forEach((e) => {
       if (e.selected) {
         total += e.moreData!.price! * e.amountBuy!
       }
@@ -68,7 +53,7 @@ const MyCartScreen = () => {
 
   const calculateItemPayment = () => {
     let total = 0
-    listCartFormat.forEach((e: any) => {
+    listCarts.forEach((e) => {
       if (e.selected) {
         total++
       }
@@ -76,14 +61,12 @@ const MyCartScreen = () => {
     return total
   }
 
-  const handleSelect = (item: any, index?: number) => {
-    const dataClone = cloneData(listCartFormat)
-    dataClone[Number(index)] = item
-    setListCartFormat(dataClone)
+  const handleSelect = (item: IItemCart, index?: number) => {
+    updateList.setItem(index!, item)
   }
 
   const handleDelete = async (index: number) => {
-    const dataRemove = listCartFormat[index]
+    const dataRemove = listCarts[index]
     const data = await ClientApi.deleteCart(dataRemove._id!)
     if (data.data) {
       await refreshListQuery([QUERY_KEY.MyCartUser, QUERY_KEY.LengthCartUser])
@@ -94,18 +77,18 @@ const MyCartScreen = () => {
   }
 
   const handleSelectAll = (isSelect = false) => {
-    let dataClone = cloneData(listCartFormat)
+    let dataClone = cloneData(listCarts)
     dataClone = dataClone.map((e: any) => {
       return {
         ...e,
         selected: isSelect,
       }
     })
-    setListCartFormat(dataClone)
+    updateList.setState(dataClone)
   }
 
   const handlePayment = () => {
-    const arrTemp = listCartFormat.filter((e) => e?.selected)
+    const arrTemp = listCarts.filter((e) => e?.selected)
     setListPaymentFormat(arrTemp)
   }
 
@@ -122,13 +105,13 @@ const MyCartScreen = () => {
               className='flex-1 max-h-[calc(100dvh-150px)]  border-2 border-gray-300  overflow-y-auto bg-white'
             >
               <ListItemCart
-                dataCart={listCartFormat}
+                dataCart={listCarts}
                 callBackClick={handleSelect}
                 callBackDelete={handleDelete}
                 callBackSelectAll={handleSelectAll}
                 loading={isLoading}
               />
-              {listCartFormat.length === 0 && (
+              {listCarts.length === 0 && (
                 <div className='w-full flex gap-1 mt-3 pl-3'>
                   <span>{translate('textPopular.notData')}</span>
                   <Link href={'/shop'}>{translate('common.buyNow')}</Link>
@@ -173,13 +156,13 @@ const MyCartScreen = () => {
                 className='mt-1 flex-1 flex-col  border-[.5px] border-gray-300 bg-white '
               >
                 <ListItemCart
-                  dataCart={listCartFormat}
+                  dataCart={listCarts}
                   callBackClick={handleSelect}
                   callBackDelete={handleDelete}
                   callBackSelectAll={handleSelectAll}
                   loading={isLoading}
                 />
-                {listCartFormat.length === 0 && (
+                {listCarts.length === 0 && (
                   <div className='w-full flex gap-1 my-2 pl-3'>
                     <span>{translate('textPopular.notData')}</span>
                     <Link href={'/shop'}>{translate('common.buyNow')}</Link>
