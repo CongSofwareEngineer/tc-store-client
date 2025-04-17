@@ -4,6 +4,7 @@ import BlogScreen from './view'
 import ClientApi from '@/services/clientApi'
 import { notFound } from 'next/navigation'
 import { IProduct } from '@/services/ClientApi/type'
+import Header from '@/components/Header'
 
 const getData = async (keyName: string): Promise<IProduct> => {
   const data = await ClientApi.getProductByKeyName(keyName)
@@ -12,15 +13,20 @@ const getData = async (keyName: string): Promise<IProduct> => {
 }
 
 const BlogPage = async ({ params }: PageProps) => {
-  const { keyName } = await params
-  console.log({ keyName })
+  // const { keyName } = await params
+  // console.log({ keyName })
 
-  const productDetail = await getData(keyName)
-  if (!productDetail) {
-    return notFound()
-  }
+  // const productDetail = await getData(keyName)
+  // if (!productDetail) {
+  //   return notFound()
+  // }
 
-  return <BlogScreen data={productDetail as any} />
+  return (
+    <>
+      <Header />
+      <BlogScreen data={null as any} />
+    </>
+  )
 }
 
 export default BlogPage

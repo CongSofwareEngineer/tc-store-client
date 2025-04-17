@@ -171,14 +171,12 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
         messages: mess,
       }
     }
-    console.log({ bodyAPI })
 
     if (isLogin) {
       res = await ClientApi.buy(bodyAPI!)
     } else {
       res = await ClientApi.buyNoLogin(bodyAPI!)
     }
-    console.log({ res })
 
     if (res?.data) {
       await callbackSuccess()

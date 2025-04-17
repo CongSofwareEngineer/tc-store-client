@@ -51,13 +51,18 @@ class FBRealtimeUtils {
     }
   }
 
-  listenerOnValue(callback: (value: any[]) => any) {
+  listenerOnValue<T>(callback: (value: T[]) => any) {
     onValue(this.db, async (snapshot) => {
       const data = snapshot.val()
 
       const arr = []
+
       for (const key in data) {
-        arr.push({ key: key, ...data[key] })
+        if (typeof data[key] === 'object') {
+          arr.push({ key: key, date: key, ...data[key] })
+        } else {
+          arr.push({ key: key, date: data[key], content: data[key] })
+        }
       }
 
       await callback(arr)

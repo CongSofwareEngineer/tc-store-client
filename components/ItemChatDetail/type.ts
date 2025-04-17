@@ -1,5 +1,5 @@
 export type IContentItemChat = {
-  date: number
+  date?: number
   content: string
   isAdmin?: boolean
   isSeen?: boolean

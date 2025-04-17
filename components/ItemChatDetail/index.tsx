@@ -2,8 +2,9 @@ import React from 'react'
 import { formatDateTime } from '@/utils/momentFunc'
 import { IContentItemChat } from './type'
 import useRoutePage from '@/hooks/useRoutePage'
+import { IInfoChat } from '../ChatFirebase/type'
 
-const ItemChatDetail = ({ data }: { data: IContentItemChat }) => {
+const ItemChatDetail = ({ data }: { data: IInfoChat }) => {
   const router = useRoutePage()
 
   const renderContent = (content: string) => {

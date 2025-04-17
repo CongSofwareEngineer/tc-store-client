@@ -9,21 +9,13 @@ import { images } from '@/configs/images'
 
 import { getDataLocal, saveDataLocal } from '@/utils/functions'
 import { LOCAL_STORAGE_KEY } from '@/constants/app'
-import ClientApi from '@/services/clientApi'
 import { AiOutlineCloseCircle, AiOutlineSend } from 'react-icons/ai'
 import ChatMessage from '../ChatMessage'
 import MyImage from '../MyImage'
 import ItemChatDetail from '../ItemChatDetail'
 import { Input } from '@mantine/core'
 import { useDragControls, motion } from 'framer-motion'
-
-export type DataMessage = {
-  date: number
-  content: string
-  isAdmin?: boolean
-  isSeen?: boolean
-  attributes?: { [key: string]: any }
-}
+import { IChatRes, IContentChat, IItemChat } from './type'
 
 const ChatFirebase: NextPage = () => {
   const { isMobile } = useMedia()
@@ -33,7 +25,8 @@ const ChatFirebase: NextPage = () => {
   const idBDRef = useRef<number | string>(0)
   const controls = useDragControls()
 
-  const [listChats, setListChats] = useState<DataMessage[]>([])
+  const [listChats, setListChats] = useState<IItemChat[]>([])
+
   const { userData } = useUserData()
   const [content, setContent] = useState('')
   const [enableChat, setEnableChat] = useState(false)
@@ -46,12 +39,29 @@ const ChatFirebase: NextPage = () => {
       setIsSendMuchMessages(false)
       dbRef.current = new FBRealtimeUtils(`Chat/${keyName}`)
       setTimeout(() => {
-        dbRef.current?.listenerOnValue(async (message: DataMessage[]) => {
+        dbRef.current?.listenerOnValue(async (message: IChatRes[]) => {
           if (message.length > 0 && message[message.length - 1]?.isAdmin) {
             setIsSendMuchMessages(false)
           }
 
-          setListChats(message)
+          const dataChatTemp = message
+            .map((e) => {
+              const { key, date, ...res } = e
+              const content = res as IItemChat['content']
+              const itemTemp = {
+                key: key.toString(),
+                date: Number(date),
+                content: {
+                  ...content,
+                  date: Number(date),
+                },
+              }
+              return itemTemp
+            })
+            .filter((e) => e.key !== 'date')
+            .sort((a, b) => a.date - b.date)
+
+          setListChats(dataChatTemp)
         })
       }, 200)
     }
@@ -76,22 +86,28 @@ const ChatFirebase: NextPage = () => {
 
   useEffect(() => {
     if (enableChat) {
+      const obUpdate: IContentChat = {}
       setListChats((pre) => {
-        const obUpdate: { [key: string | number]: any } = {}
-        const arrTemp: DataMessage[] = pre.map((e) => {
-          const itemSeen = { ...e, isSeen: true }
-          if (itemSeen.isAdmin) {
-            obUpdate[itemSeen.date] = itemSeen
+        const arrTemp: IItemChat[] = pre.map((e) => {
+          if (e.content.isAdmin && !e?.content?.isSeen) {
+            e.content.isSeen = true
+            obUpdate[e.key] = e.content
           }
-          return itemSeen
+          return e
         })
-        if (dbRef.current) {
+
+        if (Object.keys(obUpdate).length > 0 && dbRef.current) {
           dbRef.current.update(obUpdate)
         }
+
         return arrTemp
       })
     }
   }, [enableChat])
+
+  useEffect(() => {
+    console.log({ listChats })
+  }, [listChats])
 
   const checkValidMess = (): boolean => {
     let isErrorSendMuchMessages = false
@@ -99,7 +115,7 @@ const ChatFirebase: NextPage = () => {
 
     listChats.forEach((e) => {
       isErrorSendMuchMessages = false
-      if (e.isAdmin) {
+      if (e.content.isAdmin) {
         numberRequest = 0
       } else {
         if (numberRequest === 3) {
@@ -115,21 +131,18 @@ const ChatFirebase: NextPage = () => {
 
   const handleSend = async () => {
     const isValidSend = checkValidMess()
-
     if (isValidSend) {
-      const text = content
       if (content?.trim()) {
         setContent('')
-
-        const toDateNumber = Date.now()
-        const body: DataMessage = {
-          content: text,
-          date: toDateNumber,
+        const toDate = Date.now()
+        const data = {
+          [toDate]: {
+            content: content,
+          },
+          date: toDate,
         }
-        await dbRef.current?.create({
-          [toDateNumber]: body,
-        })
-        ClientApi.sendNotiNewChatMessages(idBDRef.current.toString())
+        setContent('')
+        await dbRef.current?.create(data)
       }
     } else {
       setIsSendMuchMessages(true)
@@ -154,7 +167,7 @@ const ChatFirebase: NextPage = () => {
   }
 
   const renderAmountNewMessage = () => {
-    const amountNew = listChats.filter((e) => !e.isSeen && e.isAdmin).length
+    const amountNew = listChats.filter((e) => !e.content?.isSeen && e.content?.isAdmin).length
     if (amountNew === 0) {
       return <></>
     }
@@ -213,8 +226,8 @@ const ChatFirebase: NextPage = () => {
                 </div>
               </div>
 
-              {listChats.map((e: DataMessage) => {
-                return <ItemChatDetail data={e} key={e.date} />
+              {listChats.map((e) => {
+                return <ItemChatDetail data={e.content} key={e.date} />
               })}
               {isSendMuchMessages && (
                 <div className='w-full px-3 text-center text-[12px] text-red-400'>
