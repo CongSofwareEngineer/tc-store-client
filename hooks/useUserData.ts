@@ -9,6 +9,7 @@ import { showNotificationError, showNotificationSuccess } from '@/utils/notifica
 import { useUserData as userUserDataZustand } from '@/zustand/useUserData'
 import { ZUSTAND } from '@/constants/zustand'
 import { setCookie } from '@/services/cookiesService'
+import { removeDataLocal } from '@/utils/functions'
 
 const useUserData = () => {
   const { translate } = useLanguage()
@@ -21,6 +22,7 @@ const useUserData = () => {
 
     if (data?.data) {
       setUserDataZustand(data?.data)
+      removeDataLocal(COOKIE_KEY.MyCart)
       await Promise.all([
         setCookie(COOKIE_KEY.Auth, data?.data.auth?.toString(), COOKIE_EXPIRED.ExpiredAuth),
         setCookie(

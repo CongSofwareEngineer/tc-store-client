@@ -56,18 +56,9 @@ export type IProduct = {
 }
 
 export type IMyCart = {
-  _id: string
-  amount: number
-  date: string
-  idProduct: string
-  idUser: string
-  configBill: {
-    models: string
-    size: string
-  }
-  moreData: IProduct
-  [key: string]: unknown
-}
+  selected?: boolean
+  moreData?: IProduct
+} & IProduct
 
 export type ILengthCart = {
   lengthCart: number

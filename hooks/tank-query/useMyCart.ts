@@ -1,10 +1,11 @@
 import { COOKIE_KEY, PAGE_SIZE_LIMIT } from '@/constants/app'
-import { QUERY_KEY, TypeHookReactQuery } from '@/constants/reactQuery'
+import { QUERY_KEY } from '@/constants/reactQuery'
 import useUserData from '../useUserData'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
-import ClientApi from '@/services/clientApi'
 import { getDataLocal } from '@/utils/functions'
+import { IClientApi } from '@/services/ClientApi/type'
+import ClientApi from '@/services/ClientApi/index'
 
 const getData = async ({
   queryKey,
@@ -12,31 +13,21 @@ const getData = async ({
 }: {
   queryKey: any
   pageParam: any
-}): Promise<TypeHookReactQuery> => {
+}): Promise<{ data: IClientApi['myCart'][]; page: number }> => {
   const isLogin = queryKey[3]
   if (isLogin) {
     const queryUrl = `${queryKey[1]}?page=${pageParam}&limit=${queryKey[2]}`
     const dataServer = await ClientApi.getMyCart(queryUrl)
-
     return {
-      data: dataServer?.data || [],
+      data: dataServer,
       page: pageParam,
     }
   } else {
     const data = getDataLocal(COOKIE_KEY.MyCart)
-    console.log({ getDataLocal: data })
-
-    if (Array.isArray(data)) {
-      return {
-        data,
-        page: pageParam,
-      }
+    return {
+      data: data || [],
+      page: pageParam,
     }
-  }
-
-  return {
-    data: [],
-    page: pageParam,
   }
 }
 
@@ -48,7 +39,7 @@ const useMyCart = (pageSize = PAGE_SIZE_LIMIT) => {
     queryFn: getData,
     initialPageParam: 1,
     getNextPageParam: (lastPage: { data: any; page: number }) => {
-      if (lastPage?.data?.length == pageSize) {
+      if (lastPage?.data?.length === pageSize) {
         return lastPage.page + 1
       }
       return null
@@ -59,7 +50,7 @@ const useMyCart = (pageSize = PAGE_SIZE_LIMIT) => {
     if (!data) {
       return []
     }
-    const dataFormat = data?.pages.flatMap((e: any) => e.data)
+    const dataFormat = data?.pages.flatMap((e) => e.data)
     return dataFormat
   }, [data])
 
