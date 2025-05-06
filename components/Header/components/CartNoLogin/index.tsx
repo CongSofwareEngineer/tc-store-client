@@ -45,7 +45,7 @@ const CartNoLogin = () => {
         total += item.amountBuy! * item?.moreData?.price!
       }
     })
-    total += DEFAULT_FEE_SHIP
+    total
     return numberWithCommas(total)
   }
 
@@ -80,9 +80,10 @@ const CartNoLogin = () => {
   }
 
   const handlePayment = () => {
+    const arrFilter = listArr.filter((item: IItemCart) => item?.selected)
     if (isMobile) {
       openModalDrawer({
-        content: <Payment showBack={false} data={listArr} clickBack={() => closeModalDrawer()} />,
+        content: <Payment showBack={false} data={arrFilter} clickBack={() => closeModalDrawer()} />,
         title: translate('bill.title'),
         useDrawer: true,
         configModal: {
@@ -91,7 +92,7 @@ const CartNoLogin = () => {
       })
     } else {
       openModalDrawer({
-        content: <Payment showBack={false} data={listArr} clickBack={() => closeModalDrawer()} />,
+        content: <Payment showBack={false} data={arrFilter} clickBack={() => closeModalDrawer()} />,
         title: translate('bill.title'),
         onlyDrawer: true,
         configDrawer: {

@@ -82,7 +82,15 @@ const MyModalAdmin = () => {
       >
         {modalAdmin.showBtnClose && (
           <div className='absolute z-10 text-xl right-5 top-5 flex justify-end'>
-            <AiOutlineClose className='cursor-pointer' onClick={() => closeModal(true)} />
+            <AiOutlineClose
+              className='cursor-pointer'
+              onClick={() => {
+                closeModal(true)
+                if (modalAdmin?.onClose) {
+                  modalAdmin.onClose()
+                }
+              }}
+            />
           </div>
         )}
         {modalAdmin.title && (

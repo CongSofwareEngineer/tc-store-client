@@ -51,7 +51,6 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
   const { checkNumberPhone, checkNameUser } = useCheckForm()
 
   const formData = useForm({
-    mode: 'controlled',
     initialValues: INIt_FORM,
     validate: {
       sdt: (sdt) => checkNumberPhone(sdt),
@@ -160,10 +159,12 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
     } else {
       showNotificationSuccess(translate('productDetail.modalBuy.success'))
       closeModalDrawer()
+      closeModalAdmin()
     }
   }
 
   const handleSubmitBuy = async (idBanking?: string, mess?: string, bodyAPI?: BodyAddBill) => {
+    callbackProcessing()
     let res: any = null
     if (idBanking) {
       bodyAPI!.infoBanking = {
@@ -191,8 +192,7 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
   const handleSubmit = async (valueForm: IFormPayment) => {
     const callBack = async () => {
       setLoading(true)
-      callbackProcessing()
-
+      closeModalAdmin()
       const listBill: any[] = []
       let totalBill = 0
       data.forEach((e) => {
@@ -228,29 +228,47 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
       }
 
       if (optionSelected.value === OPTIONS_PAYMENT.banking) {
-        openModalDrawer({
-          content: (
-            <InfoBanking
-              callbackError={() => {
-                setLoading(false)
-              }}
-              callback={(id, mess) => handleSubmitBuy(id, mess, bodyAPI)}
-              amount={Number(totalBill) + DEFAULT_FEE_SHIP}
-            />
-          ),
-          useDrawer: true,
-          configModal: {
-            width: '700px',
+        if (isLogin) {
+          openModalDrawer({
+            content: (
+              <InfoBanking
+                callbackError={() => {
+                  setLoading(false)
+                }}
+                callback={(id, mess) => handleSubmitBuy(id, mess, bodyAPI)}
+                amount={Number(totalBill) + DEFAULT_FEE_SHIP}
+              />
+            ),
+            useDrawer: true,
+            configModal: {
+              width: '700px',
+              onClose: () => setLoading(false),
+              overClickClose: false,
+              showBtnClose: true,
+            },
+            configDrawer: {
+              afterClose: () => setLoading(false),
+              overClickOutside: false,
+            },
+            title: translate('banking.title'),
+          })
+        } else {
+          openModalAdmin({
+            body: (
+              <InfoBanking
+                callbackError={() => {
+                  setLoading(false)
+                }}
+                callback={(id, mess) => handleSubmitBuy(id, mess, bodyAPI)}
+                amount={Number(totalBill) + DEFAULT_FEE_SHIP}
+              />
+            ),
+            className: 'md:w-[700px]',
             onClose: () => setLoading(false),
             overClickClose: false,
-            showBtnClose: true,
-          },
-          configDrawer: {
-            afterClose: () => setLoading(false),
-            overClickOutside: false,
-          },
-          title: translate('banking.title'),
-        })
+            title: translate('banking.title'),
+          })
+        }
       } else {
         handleSubmitBuy('', '', bodyAPI)
       }

@@ -1,25 +1,35 @@
 import { devtools } from 'zustand/middleware'
 import { create } from 'zustand'
-import { INIT_ZUSTAND, TYPE_ZUSTAND, ZUSTAND } from '@/constants/zustand'
+import { INIT_ZUSTAND, ZUSTAND } from '@/constants/zustand'
 
-type ModalAdminData = TYPE_ZUSTAND[typeof ZUSTAND.ModalAdmin]
-
-type ModalAdminStoreState = { [ZUSTAND.ModalAdmin]: ModalAdminData }
-
-type ModalAdminStoreActions = {
-  setModalAdmin: (nextModalAdmin: ModalAdminStoreState[ZUSTAND.ModalAdmin]) => void
-  openModal: (nextModalAdmin: ModalAdminStoreState[ZUSTAND.ModalAdmin]) => void
-  closeModal: (isIconClose?: boolean) => void
+type IModalAdmin = {
+  open?: boolean
+  body?: React.ReactNode
+  className?: string
+  classNameContent?: string
+  width?: string
+  height?: string
+  onCloseAfter?: (param?: any) => any
+  onClose?: () => any
+  title?: React.ReactNode
+  showBtnClose?: boolean
+  overClickClose?: boolean
+  position?: 'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 }
 
-type ModalAdminStore = ModalAdminStoreState & ModalAdminStoreActions
+type ModalAdminStore = {
+  [ZUSTAND.ModalAdmin]: IModalAdmin
+  setModalAdmin: (nextModalAdmin: IModalAdmin) => void
+  openModal: (nextModalAdmin: IModalAdmin) => void
+  closeModal: (isIconClose?: boolean) => void
+}
 
 const zustandModalAdmin = create<ModalAdminStore>()(
   devtools(
     (set) => ({
       [ZUSTAND.ModalAdmin]: INIT_ZUSTAND[ZUSTAND.ModalAdmin],
-      setModalAdmin: (param: ModalAdminData) => set({ [ZUSTAND.ModalAdmin]: param }),
-      openModal: (param: ModalAdminData) => {
+      setModalAdmin: (param: IModalAdmin) => set({ [ZUSTAND.ModalAdmin]: param }),
+      openModal: (param: IModalAdmin) => {
         set({
           [ZUSTAND.ModalAdmin]: {
             showBtnClose: true,
@@ -33,8 +43,8 @@ const zustandModalAdmin = create<ModalAdminStore>()(
       closeModal: (isIconClose: boolean = false) => {
         set((state) => {
           if (!isIconClose) {
-            if (state?.[ZUSTAND.ModalAdmin]?.callBackAfter) {
-              state?.[ZUSTAND.ModalAdmin].callBackAfter()
+            if (state?.[ZUSTAND.ModalAdmin]?.onCloseAfter) {
+              state?.[ZUSTAND.ModalAdmin].onCloseAfter()
             }
           }
           return {

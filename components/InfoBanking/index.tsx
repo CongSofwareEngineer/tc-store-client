@@ -13,11 +13,11 @@ import SepayServices from '@/services/Sepay'
 import { showNotificationError } from '@/utils/notification'
 
 const InfoBanking = ({
-  amount,
+  amount = 0,
   callback = () => {},
   callbackError = () => {},
 }: {
-  amount: number
+  amount?: number
   callback?: (id?: string, mess?: string) => any
   callbackError?: () => any
 }) => {

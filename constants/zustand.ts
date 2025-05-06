@@ -75,19 +75,7 @@ export type TYPE_ZUSTAND = {
     [key: string]: any
   }>
   [ZUSTAND.Provinces]: any[]
-  [ZUSTAND.ModalAdmin]: {
-    open?: boolean
-    body?: React.ReactNode
-    className?: string
-    classNameContent?: string
-    width?: string
-    height?: string
-    callBackAfter?: (param?: any) => any
-    title?: React.ReactNode
-    showBtnClose?: boolean
-    overClickClose?: boolean
-    position?: 'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
-  }
+
   [ZUSTAND.Modal]: {
     classContent?: string | ''
     content?: React.ReactNode
