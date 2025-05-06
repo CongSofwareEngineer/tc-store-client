@@ -5,7 +5,13 @@ import useModalDrawer from '@/hooks/useModalDrawer'
 import useOptionPayment from '@/hooks/useOptionPayment'
 import useRoutePage from '@/hooks/useRoutePage'
 import useUserData from '@/hooks/useUserData'
-import { delayTime, numberWithCommas, removeDataLocal, saveDataLocal } from '@/utils/functions'
+import {
+  delayTime,
+  getDataLocal,
+  numberWithCommas,
+  removeDataLocal,
+  saveDataLocal,
+} from '@/utils/functions'
 import { useEffect, useMemo, useState } from 'react'
 import ModalProcess from '../ModalProcess'
 import { QUERY_KEY } from '@/constants/reactQuery'
@@ -18,7 +24,7 @@ import OptionsPayment from '../OptionsPayment'
 import BillFinal from '../BillFinal'
 import MyForm from '../Form/MyForm'
 import InfoBill from './InfoBill'
-import { IFormPayment, IPayment } from './type'
+import { IFormPayment, IItemInfoBill, IPayment } from './type'
 import { useForm } from '@mantine/form'
 import useCheckForm from '@/hooks/useCheckForm'
 import ContentFormPayment from './ContentFormPayment'
@@ -58,8 +64,6 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
     },
     validateInputOnChange: true,
   })
-
-  console.log({ Payment: data })
 
   useEffect(() => {
     const initData: IFormPayment = {
@@ -126,7 +130,12 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
 
   const callbackSuccess = async () => {
     if (!isLogin) {
-      removeDataLocal(COOKIE_KEY.MyCart)
+      const dataLocal = getDataLocal(COOKIE_KEY.MyCart) as IItemInfoBill[]
+      const arrFilter = dataLocal.filter((item: IItemInfoBill) => {
+        return !data.some((e) => e.idProduct === item.idProduct)
+      })
+
+      saveDataLocal(COOKIE_KEY.MyCart, arrFilter)
       await delayTime(1000)
     }
     await refreshListQuery([
