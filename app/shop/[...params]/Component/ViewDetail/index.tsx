@@ -265,7 +265,7 @@ const ViewDetail = ({
           <MoreInfo data={productDetail} />
         </div>
 
-        <div data-aos='fade-up' className='w-full bg-white py-4 px-4   rounded-xl  mt-6'>
+        <div className='w-full bg-white py-4 px-4   rounded-xl  mt-6'>
           <div className='text-medium capitalize font-bold'>
             {translate('textPopular.moreLike')}
           </div>
@@ -333,7 +333,7 @@ const ViewDetail = ({
         >
           <MoreInfo data={productDetail} />
         </div>
-        <div data-aos='fade-right' className='w-full bg-white p-4  mt-2 '>
+        <div className='w-full bg-white p-4  mt-2 '>
           <div className='text-medium capitalize font-bold mb-1'>
             {translate('textPopular.moreLike')}
           </div>
