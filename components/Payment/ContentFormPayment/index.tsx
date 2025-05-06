@@ -5,10 +5,12 @@ import dynamic from 'next/dynamic'
 import MyImage from '../../MyImage'
 import InputAreaForm from '@/components/Form/InputArea'
 import InputForm from '@/components/Form/Input'
+import useUserData from '@/hooks/useUserData'
 const OptionVnLocation = dynamic(() => import('../../OptionVnLocation'), { ssr: false })
 
 const ContentFormPayment = ({ onChange, form }: { form: any; onChange: (param: any) => void }) => {
   const { translate } = useLanguage()
+  const { isLogin } = useUserData()
 
   return (
     <div className='bg-white flex flex-col w-full border-[1px] shadow-gray1 border-gray-300  px-4 pt-4 lg:pb-0 pb-3'>
@@ -32,6 +34,7 @@ const ContentFormPayment = ({ onChange, form }: { form: any; onChange: (param: a
           label={translate('userDetail.sdt')}
           formData={form}
           keyName='sdt'
+          disabled={isLogin}
         />
         <InputForm
           placeholder={translate('userDetail.name')}
