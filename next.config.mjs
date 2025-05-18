@@ -1,15 +1,16 @@
-import type { NextConfig } from 'next'
+/** @type {import('next').NextConfig} */
 import path from 'path'
 import { fileURLToPath } from 'url'
 
 const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
 const __dirname = path.dirname(__filename) // get the name of the directory
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },
   productionBrowserSourceMaps: true,
+  swcMinify: true,
   images: {
     remotePatterns: [
       {
@@ -44,9 +45,7 @@ if (process.env.NEXT_PUBLIC_ENV === 'production') {
       '@tanstack/react-query',
       'styled-components',
     ],
-    turbo: {
-      minify: true,
-    },
+
   }
   nextConfig.reactStrictMode = true
 

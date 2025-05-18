@@ -1,5 +1,6 @@
 import { METHOD_SUPPORT } from '@/constants/sepay'
 import axios from 'axios'
+import { NextRequest } from 'next/server'
 
 const confgBase = {
   baseURL: 'https://my.sepay.vn/',
@@ -9,10 +10,10 @@ const confgBase = {
   },
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const { method = 'GET', body = null, url, type } = await req.json()
-    console.log({ method, body, url, type })
+    console.log({ body, url, type })
 
     if (url && !METHOD_SUPPORT[type as keyof typeof METHOD_SUPPORT]) {
       return new Response(
@@ -35,6 +36,30 @@ export async function POST(req: Request) {
     return new Response(JSON.stringify(data.data), {
       status: 200,
     })
+  } catch (error) {
+    console.log({ error })
+
+    return new Response(
+      JSON.stringify({
+        error,
+      }),
+      {
+        status: 500,
+      }
+    )
+  }
+}
+
+export async function GET() {
+  try {
+    return new Response(
+      JSON.stringify({
+        error: 'Not support',
+      }),
+      {
+        status: 200,
+      }
+    )
   } catch (error) {
     console.log({ error })
 

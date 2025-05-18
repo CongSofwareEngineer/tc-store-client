@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 // Danh sách các domain được phép
 const allowedOrigins = [
@@ -13,8 +13,8 @@ export const config = {
   matcher: '/api/:path*', // Chỉ áp dụng cho các route trong /api
 }
 
-export function middleware(request: Request) {
-  const origin = request.headers.get('origin') // Lấy Origin từ request
+export function middleware(request: NextRequest) {
+  const origin = request.nextUrl.origin // Lấy Origin từ request
 
   const response = NextResponse.next()
 
