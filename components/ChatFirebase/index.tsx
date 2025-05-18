@@ -105,10 +105,6 @@ const ChatFirebase: NextPage = () => {
     }
   }, [enableChat])
 
-  useEffect(() => {
-    console.log({ listChats })
-  }, [listChats])
-
   const checkValidMess = (): boolean => {
     let isErrorSendMuchMessages = false
     let numberRequest = 0

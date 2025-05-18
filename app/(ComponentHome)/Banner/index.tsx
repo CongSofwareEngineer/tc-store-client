@@ -89,6 +89,7 @@ const Banner = () => {
                   minHeight: '100%',
                   maxWidth: 'unset',
                 }}
+                isAnimation
                 className='!absolute select-none !w-auto !h-auto'
               />
             </div>

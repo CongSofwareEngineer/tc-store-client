@@ -7,10 +7,12 @@ import { Button, Image } from '@mantine/core'
 import TextCopy from '../TextCopy'
 import VPBankService from '@/services/VPBank'
 import { useModalAdmin } from '@/zustand/useModalAdmin'
-import ModalProcess from '../ModalProcess'
 import { delayTime } from '@/utils/functions'
 import SepayServices from '@/services/Sepay'
 import { showNotificationError } from '@/utils/notification'
+import { useModal } from '@/zustand/useModal'
+import useUserData from '@/hooks/useUserData'
+import { cn } from '@/utils/tailwind'
 
 const InfoBanking = ({
   amount = 0,
@@ -23,13 +25,35 @@ const InfoBanking = ({
 }) => {
   const { translate } = useLanguage()
   const { isMobile } = useMedia()
-  const { openModal, closeModal } = useModalAdmin()
+  const { closeModal } = useModalAdmin()
+
+  const isStopRef = React.useRef(false)
 
   const [qrCode, setQrCode] = useState<string>('')
   const [message, setMessage] = useState<string>('')
   const [loadingCheck, setLoadingCheck] = useState(false)
   const [isBanking] = useState(false)
   const [idBanking, setIdBanking] = useState('')
+  const [isTracking, setIsTracking] = useState(false)
+  const [time, setCount] = useState(120)
+
+  useEffect(() => {
+    isStopRef.current = false
+    return () => {
+      isStopRef.current = true
+    }
+  }, [])
+
+  useEffect(() => {
+    const countDown = () => {
+      if (time > 0) {
+        setTimeout(() => {
+          setCount(time - 1)
+        }, 1000)
+      }
+    }
+    isTracking && countDown()
+  }, [time, isTracking])
 
   useEffect(() => {
     ;(async () => {
@@ -50,7 +74,12 @@ const InfoBanking = ({
     }
   }
 
-  const tracking = async (amountRequest = 40) => {
+  const tracking = async (amountRequest = 39) => {
+    //120s
+
+    if (isStopRef.current) {
+      return
+    }
     if (amountRequest > 0) {
       await delayTime(3000)
       amountRequest -= 1
@@ -90,11 +119,7 @@ const InfoBanking = ({
   }
 
   const handleCallBack = async () => {
-    openModal({
-      body: <ModalProcess title={translate('banking.tracking')} />,
-      showBtnClose: false,
-      overClickClose: false,
-    })
+    setIsTracking(true)
     tracking()
   }
 
@@ -141,23 +166,45 @@ const InfoBanking = ({
           </span>
           <span>Nội dung chuyển khoản phải ghi đúng để bạn khiếu nãi và kiểm tra hoá đơn.</span>
         </div>
-        <div className='flex gap-3 mt-3'>
+
+        <div
+          className={cn(
+            'w-full gap-1 text-base flex  items-center relative ',
+            isTracking ? 'opacity-100' : 'opacity-0'
+          )}
+        >
+          <span>{translate('banking.tracking')}:</span>
+          <span className='font-bold'>{time}</span>
+          <span>(s)</span>
+        </div>
+        <div className='flex gap-3  '>
           {isMobile ? (
             <>
-              <Button onClick={checkBanking} loading={loadingCheck} className='flex-1'>
+              <Button
+                disabled={isTracking}
+                onClick={checkBanking}
+                loading={loadingCheck}
+                className='flex-1'
+                variant='filled'
+              >
                 {translate('banking.openApp')}
               </Button>
               <Button
                 onClick={handleCallBack}
                 disabled={isBanking}
-                variant='filled'
                 className='flex-1'
+                loading={isTracking}
               >
                 {translate('textPopular.sended')}
               </Button>
             </>
           ) : (
-            <Button onClick={handleCallBack} disabled={isBanking} className='flex-1'>
+            <Button
+              loading={isTracking}
+              onClick={handleCallBack}
+              disabled={isBanking}
+              className='flex-1'
+            >
               {translate('textPopular.sended')}
             </Button>
           )}

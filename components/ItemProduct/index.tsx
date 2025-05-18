@@ -56,6 +56,7 @@ const ItemProduct = ({
           <MyImage
             src={detectImg(item?.images![0].url.toString(), 350)}
             alt={`item-${item?.name || href}`}
+            isAnimation
             className='!h-auto group-hover:scale-110 transform !transition !duration-300 !ease-in-out select-none'
           />
         </div>
