@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import { generateMetaBase } from '@/utils/serverNext'
 import { NextPage, ResolvingMetadata } from 'next'
 import Header from '@/components/Header'
@@ -30,9 +30,7 @@ const PageShoes: NextPage = () => {
       <h2 className='sr-only'>Hướng Dẫn Chọn Size Giày Chính Xác</h2>
       <h2 className='sr-only'>Đánh Giá & Phản Hồi Từ Khách Hàng</h2>
       <ContainerContent>
-        <Suspense>
-          <ShoesScreen />
-        </Suspense>
+        <ShoesScreen />
       </ContainerContent>
     </>
   )

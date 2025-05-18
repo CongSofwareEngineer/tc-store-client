@@ -18,12 +18,12 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
 
 const MyPageLayout: NextPage = ({ children }: PropsWithChildren) => {
   return (
-    <Suspense fallback={<MyLoading />}>
+    <>
       <Header />
       <ContainerContent>
         <Container>{children}</Container>
       </ContainerContent>
-    </Suspense>
+    </>
   )
 }
 

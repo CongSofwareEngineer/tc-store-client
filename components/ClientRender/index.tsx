@@ -1,5 +1,5 @@
 'use client'
-import React, { useLayoutEffect } from 'react'
+import React, { Suspense, useLayoutEffect } from 'react'
 import MyModal from '../MyModal'
 import { useCategoryMenu } from '@/zustand/useCategoryMenu'
 import dynamic from 'next/dynamic'
@@ -39,7 +39,7 @@ const ClientRender = ({
   }, [menuCategory, setCategoryMenu])
 
   return (
-    <>
+    <Suspense>
       {children}
       <MyModal />
       <MyDrawer />
@@ -49,7 +49,7 @@ const ClientRender = ({
       <CheckPingServer />
       <Notification />
       {process.env.NEXT_PUBLIC_ENABLE_CHAT && <ChatFirebase />}
-    </>
+    </Suspense>
   )
 }
 

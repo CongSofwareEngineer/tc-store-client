@@ -13,7 +13,7 @@ import useRoutePage from '@/hooks/useRoutePage'
 import { Grid } from '@mantine/core'
 import Avatar from '../Avatar'
 const Container = ({ children }: PropsWithChildren) => {
-  const { isMobile } = useMedia()
+  const { isMobile, isClient } = useMedia()
   const { translate } = useLanguage()
   const { userData, isLogin } = useUserData()
   const patchName = usePathname()
@@ -88,7 +88,7 @@ const Container = ({ children }: PropsWithChildren) => {
     )
   }
 
-  return <>{isLogin && (isMobile ? renderMobile() : renderDesktop())}</>
+  return <>{isLogin && isClient && (isMobile ? renderMobile() : renderDesktop())}</>
 }
 
 export default Container

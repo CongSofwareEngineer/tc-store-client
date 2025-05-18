@@ -1,7 +1,6 @@
 import { generateMetaBase } from '@/utils/serverNext'
 import { NextPage, ResolvingMetadata } from 'next'
 import ShopScreen from './view'
-import { Suspense } from 'react'
 import Header from '@/components/Header'
 import ContainerContent from '@/components/ContainerContent'
 
@@ -33,9 +32,7 @@ const ShopPage: NextPage = () => {
         <h2 className='sr-only'>Mua Sắm Các Mặt Hàng Tiện Ích Khác</h2>
         <h2 className='sr-only'>Ưu Đãi Đặc Biệt & Sản Phẩm Hot Nhất</h2>
         <h2 className='sr-only'>Phản Hồi & Đánh Giá Từ Khách Hàng</h2>
-        <Suspense>
-          <ShopScreen />
-        </Suspense>
+        <ShopScreen />
       </ContainerContent>
     </>
   )
