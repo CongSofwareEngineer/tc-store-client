@@ -4,17 +4,12 @@ import { INIT_ZUSTAND, TYPE_ZUSTAND, ZUSTAND } from '@/constants/zustand'
 import secureLocalStorage from 'react-secure-storage'
 import { decryptData } from '@/utils/crypto'
 
-type UserDataStoreState = {
+type UserDataStore = {
+  setUserData: (nextUserData: TYPE_ZUSTAND[ZUSTAND.UserData]) => void
+  setConnecting: (connecting: boolean) => void
   [ZUSTAND.UserData]: TYPE_ZUSTAND[ZUSTAND.UserData]
   connecting: boolean
 }
-
-type UserDataStoreActions = {
-  setUserData: (nextUserData: UserDataStoreState[ZUSTAND.UserData]) => void
-  reset: () => void
-}
-
-type UserDataStore = UserDataStoreState & UserDataStoreActions
 
 const zustandUserData = create<UserDataStore>()(
   devtools(
@@ -22,42 +17,29 @@ const zustandUserData = create<UserDataStore>()(
       (set) => ({
         connecting: true,
         [ZUSTAND.UserData]: INIT_ZUSTAND[ZUSTAND.UserData],
+        setConnecting: (connecting: boolean) => set({ connecting }),
         setUserData: (user: TYPE_ZUSTAND[ZUSTAND.UserData]) => {
-          console.log('setUserData')
-
           set({
             [ZUSTAND.UserData]: user,
             connecting: false,
           })
         },
-        reset: () => set({ [ZUSTAND.UserData]: INIT_ZUSTAND[ZUSTAND.UserData] }),
       }),
       {
+        onRehydrateStorage: (state) => {
+          const dataSecure = secureLocalStorage.getItem(ZUSTAND.UserData)
+
+          if (dataSecure) {
+            const dataDecode = decryptData(dataSecure.toString())
+            state[ZUSTAND.UserData] = JSON.parse(dataDecode)
+            state.connecting = false
+          }
+        },
         name: `zustand-${ZUSTAND.UserData}`,
         storage: {
-          getItem: () => {
-            const dataSecure = secureLocalStorage.getItem(ZUSTAND.UserData)
-
-            if (dataSecure) {
-              const dataDecode = decryptData(dataSecure.toString())
-
-              return {
-                state: {
-                  userData: JSON.parse(dataDecode),
-                },
-              }
-            }
-            return null
-          },
-          removeItem: () => null,
-          setItem: () => null,
-        },
-        merge: (preState: any, currentState: UserDataStore) => {
-          if (preState?.userData) {
-            currentState[ZUSTAND.UserData] = preState?.userData
-          }
-
-          return currentState
+          getItem: () => null,
+          removeItem: () => {},
+          setItem: () => {},
         },
       }
     ),

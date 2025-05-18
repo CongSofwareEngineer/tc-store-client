@@ -48,7 +48,6 @@ if (process.env.NEXT_PUBLIC_ENV === 'production') {
       minify: true,
     },
   }
-  nextConfig.output = 'standalone'
   nextConfig.reactStrictMode = true
 
   nextConfig.compress = true

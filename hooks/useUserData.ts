@@ -15,7 +15,12 @@ const useUserData = () => {
   const { translate } = useLanguage()
 
   const { closeModalDrawer } = useModalDrawer()
-  const { setUserData: setUserDataZustand, userData, connecting } = userUserDataZustand()
+  const {
+    setUserData: setUserDataZustand,
+    userData,
+    connecting,
+    setConnecting,
+  } = userUserDataZustand()
 
   const loginWithDB = async (sdt: string, pass: string) => {
     const data = await ClientApi.login(sdt, pass)
@@ -32,22 +37,31 @@ const useUserData = () => {
         ),
       ])
     }
+
     return data?.data || null
   }
 
   const refreshLogin = async () => {
-    if (userData) {
-      const data = await loginWithDB(userData?.sdt!, userData?.pass!)
-      if (!data) {
+    try {
+      setConnecting(true)
+      if (userData) {
+        const data = await loginWithDB(userData?.sdt!, userData?.pass!)
+        if (!data) {
+          ObserverService.emit(OBSERVER_KEY.LogOut)
+        }
+      } else {
         ObserverService.emit(OBSERVER_KEY.LogOut)
       }
-    } else {
+    } catch {
       ObserverService.emit(OBSERVER_KEY.LogOut)
+    } finally {
+      setConnecting(false)
     }
   }
 
   const login = async (numberPhone: string, pass: string, saveLogin = true) => {
     try {
+      setConnecting(true)
       const encodePass = encryptData(pass)
       const data = await loginWithDB(numberPhone, encodePass)
 
@@ -63,6 +77,8 @@ const useUserData = () => {
       }
     } catch {
       showNotificationError(translate('noti.loginError'))
+    } finally {
+      setConnecting(false)
     }
   }
 

@@ -21,7 +21,7 @@ const FirstLoadWebsite: NextPage = () => {
   useCheckPatchName()
   const pathName = usePathname()
   const { fetchData: fetchDataProvinces } = useProvinces()
-  const { reset: resetUser, userData, setUserData } = useUserData()
+  const { userData, setUserData, setConnecting } = useUserData()
   const { data: dataVoucher } = useVoucherUser()
 
   const userRef = useRef<TYPE_ZUSTAND[ZUSTAND.UserData]>(null)
@@ -53,6 +53,7 @@ const FirstLoadWebsite: NextPage = () => {
     }
 
     const refreshLogin = async () => {
+      setConnecting(true)
       const dataSecure = secureLocalStorage.getItem(ZUSTAND.UserData)
       if (dataSecure) {
         const dataDecode = decryptData(dataSecure.toString())
@@ -72,9 +73,10 @@ const FirstLoadWebsite: NextPage = () => {
           ObserverService.emit(OBSERVER_KEY.LogOut, false)
         }
       }
+      setConnecting(false)
     }
     refreshLogin()
-  }, [setUserData])
+  }, [setUserData, setConnecting])
 
   //logout
   useEffect(() => {
@@ -90,7 +92,7 @@ const FirstLoadWebsite: NextPage = () => {
 
         userRef.current = null
       }
-      resetUser()
+      setUserData(null)
       setTimeout(() => {
         secureLocalStorage.removeItem(ZUSTAND.UserData)
         deleteCookie(COOKIE_KEY.Auth)
@@ -111,7 +113,7 @@ const FirstLoadWebsite: NextPage = () => {
       ObserverService.removeListener(OBSERVER_KEY.LogOut)
       ObserverService.removeListener(OBSERVER_KEY.FirstLoadPage)
     }
-  }, [resetUser])
+  }, [setUserData])
 
   return isLoading ? (
     <div
