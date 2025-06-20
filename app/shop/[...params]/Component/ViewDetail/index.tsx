@@ -1,6 +1,5 @@
 import dynamic from 'next/dynamic'
 import React, { useState } from 'react'
-import useAos from '@/hooks/useAos'
 import useMedia from '@/hooks/useMedia'
 import { DataAddCart } from '@/constants/mongoDB'
 import { COOKIE_KEY } from '@/constants/app'
@@ -56,8 +55,6 @@ const ViewDetail = ({
   setIsPayment,
   setAmountBuy,
 }: Props) => {
-  useAos(500)
-
   const { isMobile } = useMedia()
   const { refreshQuery } = useRefreshQuery()
   const { translate } = useLanguage()

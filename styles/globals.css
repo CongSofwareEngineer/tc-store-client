@@ -51,7 +51,12 @@ body {
 }
 
 .skeleton-loading {
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.06) 25%, rgba(0, 0, 0, 0.15) 37%, rgba(0, 0, 0, 0.06) 63%);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.06) 25%,
+    rgba(0, 0, 0, 0.15) 37%,
+    rgba(0, 0, 0, 0.06) 63%
+  );
   background-size: 400% 100%;
   background-size: 400% 100%;
   animation-name: loading;
@@ -62,7 +67,7 @@ body {
   @keyframes loading {
     0% {
       background-position: 100% 50%;
-    }
+  }
 
     100% {
       background-position: 0 50%;

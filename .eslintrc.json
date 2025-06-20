@@ -39,9 +39,9 @@
     "@typescript-eslint/no-unused-vars": "warn",
     "no-empty": "off",
     "no-unused-vars": "warn"
-  },
-  "ignorePatterns": [
-    "node_modules/",
-    ".next/"
-  ]
+  }
+  // "ignorePatterns": [
+  //   "node_modules",
+  //   ".next"
+  // ]
 }

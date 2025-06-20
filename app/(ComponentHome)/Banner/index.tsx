@@ -1,6 +1,5 @@
 import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
-import useAos from '@/hooks/useAos'
 import useMedia from '@/hooks/useMedia'
 
 import React, { useEffect, useRef, useState } from 'react'
@@ -17,7 +16,6 @@ const ContainerList = styled.div`
   }
 `
 const Banner = () => {
-  useAos()
   const { isMobile } = useMedia()
 
   const [index, setIndex] = useState(0)

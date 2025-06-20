@@ -1,7 +1,6 @@
 'use client'
 import ContainerContent from '@/components/ContainerContent'
 import Header from '@/components/Header'
-import useAos from '@/hooks/useAos'
 import useFirstLoadPage from '@/hooks/useFirstLoadPage'
 import useLanguage from '@/hooks/useLanguage'
 import useMedia from '@/hooks/useMedia'
@@ -20,7 +19,6 @@ const ListProduct = dynamic(() => import('./(ComponentHome)/ListProduct'), {
   // ssr:false
 })
 const HomeScreen: NextPage = () => {
-  useAos()
   useFirstLoadPage()
   const { translate } = useLanguage()
   const { isMobile } = useMedia()

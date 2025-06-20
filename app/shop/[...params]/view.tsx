@@ -5,7 +5,6 @@ import useGetProductByID from '@/hooks/tank-query/useGetProductByID'
 import useUserData from '@/hooks/useUserData'
 // import PaymentShop from './Component/payment'
 import { useEffect } from 'react'
-import useAos from '@/hooks/useAos'
 import dynamic from 'next/dynamic'
 import { cloneData } from '@/utils/functions'
 import MyLoading from '@/components/MyLoading'
@@ -23,7 +22,6 @@ const ShopDetailScreen = ({ productDetail }: { productDetail: IPaymentShop['data
   const [isPayment, setIsPayment] = useState(false)
   const [productState, setProductState] = useState<IPaymentShop['data']>(productDetail)
 
-  useAos()
   useFirstLoadPage()
   const { isLogin } = useUserData()
   const { data } = useGetProductByID(productDetail?._id)

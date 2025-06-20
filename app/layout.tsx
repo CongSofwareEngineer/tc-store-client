@@ -4,7 +4,7 @@ import '@/styles/globals.css'
 import '@mantine/dates/styles.css'
 import '@mantine/core/styles/global.css'
 
-import '@/styles/aos.css'
+// import '@/styles/aos.css'
 import ClientRender from '@/components/ClientRender'
 import MantineConfig from '@/components/MantineConfig'
 import { ColorSchemeScript, mantineHtmlProps } from '@mantine/core'

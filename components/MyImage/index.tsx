@@ -40,7 +40,7 @@ const MyImage = ({ isAnimation = false, ...props }: IImage) => {
         currentTarget.onerror = null
         currentTarget.src = images.icon.unknowTokenIcon
       }}
-    />
+    />    
   )
 }
 

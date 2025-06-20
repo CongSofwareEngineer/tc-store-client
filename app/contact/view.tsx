@@ -1,7 +1,6 @@
 'use client'
 
 import { DataAddContact } from '@/constants/mongoDB'
-import useAos from '@/hooks/useAos'
 import useCheckForm from '@/hooks/useCheckForm'
 import useFirstLoadPage from '@/hooks/useFirstLoadPage'
 import useLanguage from '@/hooks/useLanguage'
@@ -26,7 +25,6 @@ const ModalProcess = dynamic(() => import('@/components/ModalProcess'), {
   ssr: true,
 })
 const ContactScreen = () => {
-  useAos()
   useFirstLoadPage()
   const { isMobile } = useMedia()
   const router = useRoutePage()

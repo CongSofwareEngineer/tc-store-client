@@ -2,7 +2,6 @@
 import useQuerySearch from '@/hooks/useQuerySearch'
 import React from 'react'
 import MyLoadMore from '@/components/MyLoadMore'
-import useAos from '@/hooks/useAos'
 import LoadingGetData from '@/components/LoadingGetData'
 import useFirstLoadPage from '@/hooks/useFirstLoadPage'
 import MenuShoes from './Components/MenuShoes'
@@ -13,7 +12,6 @@ import MySkeleton from '@/components/MySkeleton'
 import useLanguage from '@/hooks/useLanguage'
 
 const ShoesScreen = () => {
-  useAos()
   useFirstLoadPage()
   const { queries } = useQuerySearch()
   const { translate } = useLanguage()

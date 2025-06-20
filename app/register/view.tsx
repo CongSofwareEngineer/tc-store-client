@@ -1,5 +1,4 @@
 'use client'
-import useAos from '@/hooks/useAos'
 import useCheckForm from '@/hooks/useCheckForm'
 import useFirstLoadPage from '@/hooks/useFirstLoadPage'
 import useLanguage from '@/hooks/useLanguage'
@@ -25,7 +24,6 @@ import { Checkbox } from '@mantine/core'
 import CaptchaOtp from '@/components/CaptchaOtp'
 
 const RegisterScreen = () => {
-  useAos()
   useFirstLoadPage()
 
   const [loadingRegister, setLoadingRegister] = useState(false)
