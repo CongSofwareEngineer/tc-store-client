@@ -35,7 +35,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Access-Control-Allow-Origin',
-            value: 'tcstore.vercel.app', // Set your origin
+            value: 'https://tcstore.vercel.app', // Set your origin
           },
           {
             key: 'Access-Control-Allow-Methods',
@@ -85,7 +85,7 @@ if (process.env.NEXT_PUBLIC_ENV === 'production') {
         headers: [
           {
             key: 'Access-Control-Allow-Origin',
-            value: 'tcstore.vercel.app', // Set your origin
+            value: 'https://tcstore.vercel.app', // Set your origin
           },
           {
             key: 'Access-Control-Allow-Methods',
