@@ -1,6 +1,6 @@
+import { METHOD_SUPPORT } from '@/constants/sepay'
 import axios from 'axios'
 import { IBody, IResListPayment } from './type'
-import { METHOD_SUPPORT } from '@/constants/sepay'
 
 class Sepay {
   stk = '0392225405'
@@ -24,13 +24,17 @@ class Sepay {
   async getCountTransactions() {
     return this.post({
       type: METHOD_SUPPORT.getCountPayment,
-      url: `/userapi/transactions/count?account_number=${this.stk}`,
+      body: {
+        account_number: this.stk,
+      },
     })
   }
-  async getListPayment(limit = 5): Promise<IResListPayment> {
+  async getListPayment(): Promise<IResListPayment> {
     const data = await this.post({
-      url: `/userapi/transactions/list?account_number=${this.stk}&limit=${limit}`,
       type: METHOD_SUPPORT.getListPayment,
+      body: {
+        account_number: this.stk,
+      },
     })
     return data.data
   }

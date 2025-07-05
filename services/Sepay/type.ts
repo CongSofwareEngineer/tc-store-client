@@ -1,9 +1,9 @@
 import { METHOD_SUPPORT } from '@/constants/sepay'
 
 export type IBody = {
-  url: string
+  url?: string
   body?: any
-  type: keyof typeof METHOD_SUPPORT
+  type?: keyof typeof METHOD_SUPPORT
 }
 
 export type IPayment = {

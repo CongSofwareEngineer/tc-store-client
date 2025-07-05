@@ -28,6 +28,27 @@ const nextConfig = {
       minify: true,
     },
   },
+  headers: async () => {
+    return [
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: 'tcstore.vercel.app', // Set your origin
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, POST, PUT, DELETE, OPTIONS',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'Content-Type, Authorization',
+          },
+        ],
+      },
+    ]
+  },
 }
 
 //for production
@@ -45,7 +66,6 @@ if (process.env.NEXT_PUBLIC_ENV === 'production') {
       '@tanstack/react-query',
       'styled-components',
     ],
-
   }
   nextConfig.reactStrictMode = true
 
@@ -56,6 +76,28 @@ if (process.env.NEXT_PUBLIC_ENV === 'production') {
   nextConfig.compiler = {
     ...nextConfig.compiler,
     removeConsole: true,
+  }
+
+  nextConfig.headers = async () => {
+    return [
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: 'tcstore.vercel.app', // Set your origin
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, POST, PUT, DELETE, OPTIONS',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'Content-Type, Authorization',
+          },
+        ],
+      },
+    ]
   }
 }
 

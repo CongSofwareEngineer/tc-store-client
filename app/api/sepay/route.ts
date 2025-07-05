@@ -1,8 +1,8 @@
-import { METHOD_SUPPORT } from '@/constants/sepay'
+import SepayUtils from '@/utils/sepay'
 import axios from 'axios'
 import { NextRequest } from 'next/server'
 
-const confgBase = {
+const configBase = {
   baseURL: 'https://my.sepay.vn/',
   headers: {
     Authorization: `Bearer ${process.env.SEPAY_API_KEY}`,
@@ -12,24 +12,14 @@ const confgBase = {
 
 export async function POST(req: NextRequest) {
   try {
-    const { method = 'GET', body = null, url, type } = await req.json()
-    console.log({ body, url, type })
+    const { method = 'GET', body = null, type } = await req.json()
 
-    if (url && !METHOD_SUPPORT[type as keyof typeof METHOD_SUPPORT]) {
-      return new Response(
-        JSON.stringify({
-          error: 'no support',
-        }),
-        {
-          status: 500,
-        }
-      )
-    }
+    const urlFinal = SepayUtils.getUrlByType(type, body)
 
     const data = await axios.request({
-      ...confgBase,
+      ...configBase,
       method,
-      url,
+      url: urlFinal,
       data: body,
     })
 
