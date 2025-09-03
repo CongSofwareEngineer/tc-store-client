@@ -1,20 +1,22 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+
 import '@/styles/globals.css'
-import '@mantine/dates/styles.css'
 import '@mantine/core/styles/global.css'
+import '@mantine/dates/styles.css'
+import { Inter } from 'next/font/google'
 
 // import '@/styles/aos.css'
-import ClientRender from '@/components/ClientRender'
-import MantineConfig from '@/components/MantineConfig'
 import { ColorSchemeScript, mantineHtmlProps } from '@mantine/core'
-import dynamic from 'next/dynamic'
-import ReactQueryProvider from '@/components/ReactQueryProvider'
-import StyledComponentsRegistry from '@/components/StyledComponentsRegistry'
-import Footer from '@/components/Footer'
-import ClientApi from '@/services/clientApi'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import dynamic from 'next/dynamic'
+
+import ClientRender from '@/components/ClientRender'
+import Footer from '@/components/Footer'
+import MantineConfig from '@/components/MantineConfig'
+import ReactQueryProvider from '@/components/ReactQueryProvider'
+import StyledComponentsRegistry from '@/components/StyledComponentsRegistry'
+import ClientApi from '@/services/clientApi'
 
 const LoadingFirstPage = dynamic(() => import('@/components/LoadingFirstPage'))
 
@@ -23,9 +25,10 @@ const inter = Inter({ subsets: ['latin'] })
 const BaseMeta = {
   title: process.env.NEXT_PUBLIC_TITLE,
   description: process.env.NEXT_PUBLIC_TITLE_DES,
-  images: process.env.NEXT_PUBLIC_IMAGE,
+  images: '/favicon.ico',
   url: 'https://tcstore.vercel.app',
 }
+
 export const metadata: Metadata = {
   metadataBase: new URL(BaseMeta.url),
   title: BaseMeta.title,
@@ -103,7 +106,7 @@ export const metadata: Metadata = {
     '@type': 'Store',
     name: 'TC Store',
     url: 'https://tcstore.vercel.app',
-    logo: 'https://bafybeie4dqtbl5dco4qgqbepjttfqrppawkj4evdgoytgoupfdjmfrne2m.ipfs.w3s.link/logo_tc_store.png',
+    logo: BaseMeta.images,
     description: 'Mua sắm giày dép, yến sào, laptop, cà phê và nhiều sản phẩm chất lượng.',
 
     sameAs: ['https://www.facebook.com/tcstore.gl'],
@@ -128,14 +131,13 @@ export default async function RootLayout({
   return (
     <html {...mantineHtmlProps} lang='vi'>
       {process.env.NEXT_PUBLIC_ENV === 'production' && <GoogleTagManager gtmId='GTM-T7S7DKJ4' />}
-      <link rel='canonical' href={'https://tcstore.vercel.app'} />
+      <link href={'https://tcstore.vercel.app'} rel='canonical' />
       <head>
         <ColorSchemeScript />
 
         {process.env.NEXT_PUBLIC_ENV === 'production' && (
           <>
             <script
-              type='application/ld+json'
               dangerouslySetInnerHTML={{
                 __html: JSON.stringify({
                   '@context': 'https://schema.org',
@@ -143,8 +145,7 @@ export default async function RootLayout({
                   name: 'TC Store',
                   url: 'https://tcstore.vercel.app',
                   logo: 'https://bafybeie4dqtbl5dco4qgqbepjttfqrppawkj4evdgoytgoupfdjmfrne2m.ipfs.w3s.link/logo_tc_store.png',
-                  description:
-                    'Mua sắm giày dép, yến sào, laptop, cà phê và nhiều sản phẩm chất lượng.',
+                  description: 'Mua sắm giày dép, yến sào, laptop, cà phê và nhiều sản phẩm chất lượng.',
                   address: {
                     '@type': 'PostalAddress',
                     streetAddress: 'Thủ Dầu Một',
@@ -158,6 +159,7 @@ export default async function RootLayout({
                   },
                 }),
               }}
+              type='application/ld+json'
             />
           </>
         )}

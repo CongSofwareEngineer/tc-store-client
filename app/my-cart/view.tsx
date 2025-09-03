@@ -1,25 +1,27 @@
 'use client'
+import { Button } from '@mantine/core'
+import { useListState } from '@mantine/hooks'
+import dynamic from 'next/dynamic'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+
+import LoadingData from './Component/LoadingData'
+import { IItemCart } from './type'
+
 import BtnBack from '@/components/BtnBack'
+import { PAGE_SIZE_LIMIT } from '@/constants/app'
 import useMyCart from '@/hooks/tank-query/useMyCart'
 import useLanguage from '@/hooks/useLanguage'
 import useMedia from '@/hooks/useMedia'
-import { useEffect, useState } from 'react'
-import { PAGE_SIZE_LIMIT } from '@/constants/app'
 import { cloneData, numberWithCommas } from '@/utils/functions'
 // import Payment from './Component/Payment'
-import ClientApi from '@/services/clientApi'
-import useRefreshQuery from '@/hooks/tank-query/useRefreshQuery'
-import { QUERY_KEY } from '@/constants/reactQuery'
-import Link from 'next/link'
-import dynamic from 'next/dynamic'
-import MyLoading from '@/components/MyLoading'
-import useFirstLoadPage from '@/hooks/useFirstLoadPage'
-import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
-import { Button } from '@mantine/core'
 import ListItemCart from '@/components/ListItemCart'
-import LoadingData from './Component/LoadingData'
-import { IItemCart } from './type'
-import { useListState } from '@mantine/hooks'
+import MyLoading from '@/components/MyLoading'
+import { QUERY_KEY } from '@/constants/reactQuery'
+import useRefreshQuery from '@/hooks/tank-query/useRefreshQuery'
+import useFirstLoadPage from '@/hooks/useFirstLoadPage'
+import ClientApi from '@/services/clientApi'
+import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 
 const Payment = dynamic(() => import('@/components/Payment'), {
   ssr: false,
@@ -43,21 +45,25 @@ const MyCartScreen = () => {
 
   const calculatePayment = () => {
     let total = 0
+
     listCarts.forEach((e) => {
       if (e.selected) {
         total += e.moreData!.price! * e.amountBuy!
       }
     })
+
     return total
   }
 
   const calculateItemPayment = () => {
     let total = 0
+
     listCarts.forEach((e) => {
       if (e.selected) {
         total++
       }
     })
+
     return total
   }
 
@@ -68,6 +74,7 @@ const MyCartScreen = () => {
   const handleDelete = async (index: number) => {
     const dataRemove = listCarts[index]
     const data = await ClientApi.deleteCart(dataRemove._id!)
+
     if (data.data) {
       await refreshListQuery([QUERY_KEY.MyCartUser, QUERY_KEY.LengthCartUser])
       showNotificationSuccess(translate('success.delete'))
@@ -78,6 +85,7 @@ const MyCartScreen = () => {
 
   const handleSelectAll = (isSelect = false) => {
     let dataClone = cloneData(listCarts)
+
     dataClone = dataClone.map((e: any) => {
       return {
         ...e,
@@ -89,6 +97,7 @@ const MyCartScreen = () => {
 
   const handlePayment = () => {
     const arrTemp = listCarts.filter((e) => e?.selected)
+
     setListPaymentFormat(arrTemp)
   }
 
@@ -101,14 +110,14 @@ const MyCartScreen = () => {
         {!isLoading && (
           <div className='w-full flex   gap-5 overflow-hidden '>
             <div
-              style={{ boxShadow: '3px 3px 6px rgba(0,0,0,.0509803922)' }}
               className='flex-1 max-h-[calc(100dvh-150px)]  border-2 border-gray-300  overflow-y-auto bg-white'
+              style={{ boxShadow: '3px 3px 6px rgba(0,0,0,.0509803922)' }}
             >
               <ListItemCart
-                dataCart={listCarts}
                 callBackClick={handleSelect}
                 callBackDelete={handleDelete}
                 callBackSelectAll={handleSelectAll}
+                dataCart={listCarts}
                 loading={isLoading}
               />
               {listCarts.length === 0 && (
@@ -124,11 +133,7 @@ const MyCartScreen = () => {
                 <span className='font-bold text-green-500'>{`${numberWithCommas(calculatePayment())} VNĐ`}</span>
               </div>
               <div className='border-[1px] border-gray-300 w-full' />
-              <Button
-                className='!w-full'
-                disabled={Number(calculatePayment()) <= 1}
-                onClick={handlePayment}
-              >
+              <Button className='!w-full' disabled={Number(calculatePayment()) <= 1} onClick={handlePayment}>
                 {`${translate('cart.payment')} (${calculateItemPayment()})`}
               </Button>
             </div>
@@ -142,24 +147,17 @@ const MyCartScreen = () => {
     return (
       <div className=' flex flex-1 flex-col h-full  max-h-full w-[calc(100%+40px)] ml-[-20px] overflow-hidden justify-between'>
         <div className='w-full px-5 flex flex-col max-h-[calc(100dvh-175px)]  overflow-y-auto  '>
-          <BtnBack
-            className='!mb-0'
-            title={[translate('header.shop'), translate('header.cart')]}
-            url={['/shop']}
-          />
+          <BtnBack className='!mb-0' title={[translate('header.shop'), translate('header.cart')]} url={['/shop']} />
 
           <LoadingData loading={isLoading} />
           {!isLoading && (
             <>
-              <div
-                style={{ boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px' }}
-                className='mt-1 flex-1 flex-col  border-[.5px] border-gray-300 bg-white '
-              >
+              <div className='mt-1 flex-1 flex-col  border-[.5px] border-gray-300 bg-white ' style={{ boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px' }}>
                 <ListItemCart
-                  dataCart={listCarts}
                   callBackClick={handleSelect}
                   callBackDelete={handleDelete}
                   callBackSelectAll={handleSelectAll}
+                  dataCart={listCarts}
                   loading={isLoading}
                 />
                 {listCarts.length === 0 && (
@@ -176,9 +174,7 @@ const MyCartScreen = () => {
           <div className='relative flex flex-col gap-2'>
             <div className='flex gap-2 w-full'>
               <div className='font-semibold'>{translate('textPopular.totalMoney')} :</div>
-              <span className='font-bold text-green-700'>
-                {numberWithCommas(calculatePayment())} VNĐ
-              </span>
+              <span className='font-bold text-green-700'>{numberWithCommas(calculatePayment())} VNĐ</span>
             </div>
             <div className='w-full border-[1px] border-gray-200  relative  ' />
 

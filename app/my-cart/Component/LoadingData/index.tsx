@@ -1,5 +1,4 @@
 import MySkeleton from '@/components/MySkeleton'
-import React from 'react'
 
 const LoadingData = ({ loading }: { loading: boolean }) => {
   if (!loading) {
