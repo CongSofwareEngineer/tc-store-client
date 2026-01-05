@@ -170,9 +170,16 @@ export default async function RootLayout({
             style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
             font-src 'self' https://fonts.gstatic.com;
             img-src 'self' data: https: blob:;
-            connect-src 'self' https://tcstore.vercel.app;
+            connect-src 
+              'self' 
+              https://tcstore.vercel.app 
+              https://exuberant-jade-diencong-6e4aa722.koyeb.app
+              https://vercel.live
+              wss://*.vercel.live;
             frame-src 'self' vercel.live;
             frame-ancestors 'self';
+            form-action 'self';
+            base-uri 'self';
           "
           httpEquiv='Content-Security-Policy'
         />
