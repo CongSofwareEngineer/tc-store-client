@@ -1,6 +1,6 @@
+// middleware.ts
 import { NextRequest, NextResponse } from 'next/server'
 
-// Danh sách các domain được phép
 const allowedOrigins = [
   'https://tcstore.vercel.app',
   'http://localhost:3016',
@@ -8,24 +8,56 @@ const allowedOrigins = [
   'https://tc-store-admin-client.vercel.app',
 ]
 
-// Áp dụng middleware cho folder /api
 export const config = {
-  matcher: '/api/:path*', // Chỉ áp dụng cho các route trong /api
+  matcher: '/api/:path*',
 }
 
 export function middleware(request: NextRequest) {
-  const origin = request.nextUrl.origin // Lấy Origin từ request
+  const origin = request.headers.get('origin') || ''
 
   const response = NextResponse.next()
 
-  // Kiểm tra xem origin có trong danh sách được phép hay không
-  if (origin && allowedOrigins.includes(origin)) {
-    response.headers.set('Access-Control-Allow-Origin', origin) // Chỉ cho phép origin cụ thể
-    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-  } else {
-    return new Response('You are hacker', { status: 403 })
+  // 1. CORS headers
+  if (allowedOrigins.includes(origin)) {
+    response.headers.set('Access-Control-Allow-Origin', origin)
+    response.headers.set('Access-Control-Allow-Credentials', 'true')
   }
+
+  // 2. Security headers
+  response.headers.set('X-Frame-Options', 'DENY')
+  response.headers.set('X-Content-Type-Options', 'nosniff')
+  response.headers.set('X-XSS-Protection', '1; mode=block')
+  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
+
+  // 3. CSP cho API (nếu cần)
+  response.headers.set('Content-Security-Policy', "default-src 'none'; frame-ancestors 'none';")
+
+  // 5. Preflight request
+  if (request.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204,
+      headers: {
+        'Access-Control-Allow-Origin': allowedOrigins.includes(origin) ? origin : '',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-CSRF-Token',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Max-Age': '86400',
+      },
+    })
+  }
+
+  // Thêm CSP header
+  response.headers.set(
+    'Content-Security-Policy',
+    "default-src 'self' vercel.live; " +
+      "script-src 'self' 'unsafe-eval' 'unsafe-inline' vercel.live https://va.vercel-scripts.com/; " +
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+      "font-src 'self' https://fonts.gstatic.com; " +
+      "img-src 'self' data: https: blob:; " +
+      "connect-src 'self' https://tcstore.vercel.app; " +
+      "frame-src 'self' vercel.live; " +
+      "frame-ancestors 'self';"
+  )
 
   return response
 }
