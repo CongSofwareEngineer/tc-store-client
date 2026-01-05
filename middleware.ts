@@ -46,18 +46,5 @@ export function middleware(request: NextRequest) {
     })
   }
 
-  // Thêm CSP header
-  response.headers.set(
-    'Content-Security-Policy',
-    "default-src 'self' vercel.live; " +
-      "script-src 'self' 'unsafe-eval' 'unsafe-inline' vercel.live https://va.vercel-scripts.com/; " +
-      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
-      "font-src 'self' https://fonts.gstatic.com; " +
-      "img-src 'self' data: https: blob:; " +
-      "connect-src 'self' https://tcstore.vercel.app; " +
-      "frame-src 'self' vercel.live; " +
-      "frame-ancestors 'self';"
-  )
-
   return response
 }
