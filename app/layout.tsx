@@ -174,6 +174,7 @@ export default async function RootLayout({
               'self' 
               https://tcstore.vercel.app 
               https://exuberant-jade-diencong-6e4aa722.koyeb.app
+              https://esgoo.net/api-tinhthanh/1/0.htm
               https://vercel.live
               wss://*.vercel.live;
             frame-src 'self' vercel.live;
