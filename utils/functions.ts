@@ -9,6 +9,7 @@ export const cloneData = (data: any, defaultValue: any = '') => {
     if (!data) {
       return data
     }
+
     return JSON.parse(JSON.stringify(data))
   } catch {
     return defaultValue
@@ -28,7 +29,9 @@ export const numberWithCommas = (x?: any) => {
     return 0
   }
   const parts = x.toString().split('.')
+
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+
   return parts.join('.')
 }
 
@@ -69,6 +72,7 @@ export const saveDataLocal = (key: string, data: any) => {
 export const getDataLocal = (key = '', defaultValue: any = '') => {
   try {
     const data: string = localStorage.getItem(key) || ''
+
     return JSON.parse(data)
   } catch {
     return defaultValue
@@ -83,6 +87,7 @@ export const removeDataLocal = (key: string): void => {
 
 export const getBase642 = (file: any, callback: any): void => {
   const reader = new FileReader()
+
   reader.addEventListener('load', () => callback(reader.result))
   reader.readAsDataURL(file)
 }
@@ -90,6 +95,7 @@ export const getBase642 = (file: any, callback: any): void => {
 export const getBase64 = (file: File, callback: (parma?: any) => void) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
+
     reader.readAsDataURL(file)
     reader.onload = () => {
       callback &&
@@ -107,6 +113,7 @@ export const getBase64 = (file: File, callback: (parma?: any) => void) => {
 export const isURL = (link: string) => {
   try {
     const url = new URL(link)
+
     return url.protocol === 'http:' || url.protocol === 'https:'
   } catch {
     return false
@@ -169,6 +176,7 @@ export const detectImg = (src?: any, maxWidthScale = 0) => {
     if (maxWidthScale > 0) {
       return `https://res.cloudinary.com/tc-store/image/upload/c_scale,w_${maxWidthScale}/v1722158972/${src}`
     }
+
     return `https://res.cloudinary.com/tc-store/image/upload/v1722158972/${src}`
   } catch {
     return images.icon.unknowTokenIcon
@@ -184,6 +192,7 @@ export const detectAvatar = (src: any) => {
     if (src?.startsWith('https')) {
       return src
     }
+
     return `https://res.cloudinary.com/tc-store/image/upload/v1722158972/${src}`
   } catch {
     return '/images/Profile/Userdetail/iconUserDetail.png'
@@ -192,6 +201,7 @@ export const detectAvatar = (src: any) => {
 
 export const ellipsisText = (text: string, prefixLength = 13, suffixLength = 4): string => {
   text = text || ''
+
   return `${text.substr(0, prefixLength)}...${text.substr(text.length - suffixLength, suffixLength)}`
 }
 
@@ -200,6 +210,7 @@ export function isObject(value: any): boolean {
     if (!value) {
       return false
     }
+
     return Object.prototype.toString.call(value) === '[object Object]'
   } catch {
     return false
@@ -229,6 +240,7 @@ export const getColorStatus = (key: FILTER_BILL) => {
 
 export function convertBoolean(value: any): boolean {
   const str = String(value).toLowerCase()
+
   return str === 'true' || str === '1'
 }
 
@@ -253,11 +265,13 @@ export const getUrlProduct = (product: any) => {
 export const totalBill = (listBill: IItemListBill[] = [], discount = 0) => {
   try {
     let totalBill = 0
+
     listBill.forEach((bill) => {
       totalBill += bill.amountBuy * bill.price
     })
     totalBill += DEFAULT_FEE_SHIP
     totalBill -= discount
+
     return totalBill
   } catch {
     return 0
