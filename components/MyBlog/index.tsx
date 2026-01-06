@@ -1,5 +1,4 @@
 import React, { useMemo, useRef } from 'react'
-
 import Paragraph from '@yoopta/paragraph'
 import Blockquote from '@yoopta/blockquote'
 import Embed from '@yoopta/embed'
@@ -17,6 +16,7 @@ import ActionMenuList, { DefaultActionMenuRender } from '@yoopta/action-menu-lis
 import Toolbar, { DefaultToolbarRender } from '@yoopta/toolbar'
 import LinkTool, { DefaultLinkToolRender } from '@yoopta/link-tool'
 import YooptaEditor, { createYooptaEditor } from '@yoopta/editor'
+
 import ClientApi from '@/services/clientApi'
 import { PATH_IMG } from '@/constants/mongoDB'
 import useBase64Img from '@/hooks/useBase64Img'
@@ -162,19 +162,19 @@ const MyBlog = ({
 
   return (
     <div className='flex flex-col flex-1  h-full  w-full  relative'>
-      <div className={`w-full h-full p-2 min-h-10  ${className}`} ref={selectionRef}>
+      <div ref={selectionRef} className={`w-full h-full p-2 min-h-10  ${className}`}>
         <YooptaEditor
-          editor={editor}
-          plugins={plugins}
-          tools={TOOLS}
-          marks={MARKS}
-          selectionBoxRoot={selectionRef}
-          value={value}
-          onChange={onChange}
-          placeholder='Start typing here...'
           autoFocus
           className='!relative !h-full !w-full !pb-2 cursor-pointer'
+          editor={editor}
+          marks={MARKS}
+          placeholder='Start typing here...'
+          plugins={plugins}
           readOnly={disabled}
+          selectionBoxRoot={selectionRef}
+          tools={TOOLS}
+          value={value}
+          onChange={onChange}
         />
       </div>
     </div>

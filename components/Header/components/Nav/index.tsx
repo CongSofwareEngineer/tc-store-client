@@ -1,11 +1,12 @@
-import useLanguage from '@/hooks/useLanguage'
-import useMedia from '@/hooks/useMedia'
-import useRoutePage from '@/hooks/useRoutePage'
-import useUserData from '@/hooks/useUserData'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 import styled from 'styled-components'
+
+import useLanguage from '@/hooks/useLanguage'
+import useMedia from '@/hooks/useMedia'
+import useRoutePage from '@/hooks/useRoutePage'
+import useUserData from '@/hooks/useUserData'
 
 const LinkCustom = styled(styled(Link)<{ $isSelected?: boolean }>``).attrs({
   className: 'hover:underline hover:text-blue-700 uppercase whitespace-nowrap',
@@ -34,11 +35,7 @@ const Nav = () => {
   const renderDesktop = () => {
     return (
       <div className='flex flex-1 gap-5 ml-2 '>
-        <LinkCustom
-          $isSelected={pathname === '/' || pathname === ''}
-          href={'/'}
-          onClick={() => route.push('/')}
-        >
+        <LinkCustom $isSelected={pathname === '/' || pathname === ''} href={'/'} onClick={() => route.push('/')}>
           {translate('header.home')}
         </LinkCustom>
 

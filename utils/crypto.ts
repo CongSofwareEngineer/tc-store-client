@@ -1,9 +1,22 @@
-import crypto from 'crypto-js'
-const getIV = () => crypto.enc.Hex.parse(process.env.NEXT_PUBLIC_KEY_IV_ENCODE!)
+import AES from 'crypto-js/aes'
+import EncUtf8 from 'crypto-js/enc-utf8'
+
+const getIV = () => {
+  return {
+    words: [10430314, -140825763, -493589880, -1325521129, 831492685, 2080374784],
+    sigBytes: 21,
+  } as any
+}
+
+const encUtf8 = (pinCode: string) => {
+  const key = new TextEncoder().encode(pinCode)
+
+  return key as any
+}
 
 export const encryptData = (value: string | object, pinCode: string = process.env.NEXT_PUBLIC_KEY_SALT) => {
   try {
-    return crypto.AES.encrypt(JSON.stringify(value), crypto.enc.Utf8.parse(pinCode), {
+    return AES.encrypt(JSON.stringify(value), encUtf8(pinCode), {
       iv: getIV(),
     }).toString()
   } catch {
@@ -13,11 +26,11 @@ export const encryptData = (value: string | object, pinCode: string = process.en
 
 export const decryptData = (value: any, pinCode: string = process.env.NEXT_PUBLIC_KEY_SALT) => {
   try {
-    const bytes = crypto.AES.decrypt(value.toString(), crypto.enc.Utf8.parse(pinCode), {
+    const bytes = AES.decrypt(value.toString(), encUtf8(pinCode), {
       iv: getIV(),
     })
 
-    const decryptedData = JSON.parse(bytes.toString(crypto.enc.Utf8))
+    const decryptedData = JSON.parse(bytes.toString(EncUtf8))
 
     return decryptedData
   } catch {

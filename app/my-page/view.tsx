@@ -1,25 +1,28 @@
 'use client'
+import React from 'react'
+import { Checkbox, Input } from '@mantine/core'
+import { AiOutlineCopy, AiOutlineEdit, AiOutlineRight } from 'react-icons/ai'
+
+import Avatar from './Component/Avatar'
+import ItemInfoUser from './Component/ItemInfoUser'
+import ModalEnterPassAgain from './Component/ModalEnterPassAgain'
+import ModalUpdateUser from './Component/ModalUpdateUser'
+
 import useMedia from '@/hooks/useMedia'
 import useUserData from '@/hooks/useUserData'
-import React from 'react'
 import useLanguage from '@/hooks/useLanguage'
 // import AddressShip from './Component/AddressShip'
 import { numberWithCommas } from '@/utils/functions'
 import useModalDrawer from '@/hooks/useModalDrawer'
-import Avatar from './Component/Avatar'
 import { copyToClipboard } from '@/utils/notification'
 import useFirstLoadPage from '@/hooks/useFirstLoadPage'
-import { Checkbox, Input } from '@mantine/core'
-import ItemInfoUser from './Component/ItemInfoUser'
-import ModalEnterPassAgain from './Component/ModalEnterPassAgain'
-import ModalUpdateUser from './Component/ModalUpdateUser'
-import { AiOutlineCopy, AiOutlineEdit, AiOutlineRight } from 'react-icons/ai'
 
 const MyProfile = () => {
   const { isMobile } = useMedia()
   const { userData } = useUserData()
   const { translate } = useLanguage()
   const { openModalDrawer } = useModalDrawer()
+
   useFirstLoadPage()
 
   const getLanguage = (keyType: string) => {
@@ -48,9 +51,7 @@ const MyProfile = () => {
     const callback = () => {
       openModalDrawer({
         content: <ModalUpdateUser keyType={key} />,
-        title: (
-          <div className='text-medium '>{`${translate('common.edit')} ${getLanguage(key)}`}</div>
-        ),
+        title: <div className='text-medium '>{`${translate('common.edit')} ${getLanguage(key)}`}</div>,
       })
     }
 
@@ -66,10 +67,13 @@ const MyProfile = () => {
   const renderAddressShip = () => {
     const addressUser = userData?.addressShipper[0]
     let addressString = ''
+
     if (addressUser) {
       const addressBase = addressUser.address.replaceAll('---', ',')
+
       addressString = `${addressUser.addressDetail}, ${addressBase}`
     }
+
     return isMobile ? (
       <div className='flex gap-2'>
         <span className='w-[100px]'>{translate('textPopular.address')}</span>
@@ -86,11 +90,7 @@ const MyProfile = () => {
         <div className='flex flex-1 flex-nowrap'>
           <div className='flex flex-1   gap-2  '>
             <span>{addressString || translate('textPopular.notData')}</span>
-            <AiOutlineEdit
-              onClick={updateAddressShip}
-              className='text-xl cursor-pointer hover:scale-110 ml-1'
-              style={{ color: 'green' }}
-            />
+            <AiOutlineEdit className='text-xl cursor-pointer hover:scale-110 ml-1' style={{ color: 'green' }} onClick={updateAddressShip} />
           </div>
         </div>
       </div>
@@ -118,20 +118,20 @@ const MyProfile = () => {
               <div className='flex flex-1 gap-2 items-center'>
                 <Input className='flex-1' value={userData?.name} />
                 <AiOutlineEdit
-                  onClick={() => handleEditName('name')}
                   className='text-xl cursor-pointer hover:scale-110 ml-1'
                   style={{ color: 'green' }}
+                  onClick={() => handleEditName('name')}
                 />
               </div>
             </div>
             <div className='flex gap-2 items-center'>
               <span className='w-[140px]'>{translate('userDetail.pass')}</span>
               <div className='flex flex-1  gap-2 items-center'>
-                <Input className='flex-1' type='password' value={userData?.pass} disabled />
+                <Input disabled className='flex-1' type='password' value={userData?.pass} />
                 <AiOutlineEdit
-                  onClick={() => handleEditName('pass')}
                   className='text-xl cursor-pointer hover:scale-110 ml-1'
                   style={{ color: 'green' }}
+                  onClick={() => handleEditName('pass')}
                 />
               </div>
             </div>
@@ -139,19 +139,12 @@ const MyProfile = () => {
               <span className='w-[140px]'>{translate('userDetail.sex')}</span>
               <div className='flex flex-1 gap-2 items-end'>
                 <div className='flex gap-2 items-center'>
-                  <Checkbox
-                    label={
-                      <span>
-                        {translate(userData?.sex ? 'textPopular.female' : 'textPopular.male')}
-                      </span>
-                    }
-                    defaultChecked
-                  />
+                  <Checkbox defaultChecked label={<span>{translate(userData?.sex ? 'textPopular.female' : 'textPopular.male')}</span>} />
                 </div>
                 <AiOutlineEdit
-                  onClick={() => handleEditName('sex')}
                   className='text-xl cursor-pointer hover:scale-110 ml-1'
                   style={{ color: 'green' }}
+                  onClick={() => handleEditName('sex')}
                 />
               </div>
             </div>
@@ -179,28 +172,16 @@ const MyProfile = () => {
         <div className='relative w-full border-[.5px] my-3 border-gray-300' />
 
         <div className='w-full flex flex-col'>
-          <ItemInfoUser
-            value={userData?.name?.toString()}
-            title={translate('header.name')}
-            keyType='name'
-          />
+          <ItemInfoUser keyType='name' title={translate('header.name')} value={userData?.name?.toString()} />
           <div className='relative w-full border-[.5px] my-3 border-gray-300' />
 
-          <ItemInfoUser
-            value={userData?.sdt?.toString()}
-            title={translate('userDetail.sdt')}
-            keyType='sdt'
-          />
+          <ItemInfoUser keyType='sdt' title={translate('userDetail.sdt')} value={userData?.sdt?.toString()} />
           <div className='relative w-full border-[.5px] my-3 border-gray-300' />
 
-          <ItemInfoUser
-            value={userData?.pass?.toString()}
-            title={translate('userDetail.pass')}
-            keyType='pass'
-          />
+          <ItemInfoUser keyType='pass' title={translate('userDetail.pass')} value={userData?.pass?.toString()} />
           <div className='relative w-full border-[.5px] my-3 border-gray-300' />
 
-          <ItemInfoUser value={!!userData?.sex} title={translate('userDetail.sex')} keyType='sex' />
+          <ItemInfoUser keyType='sex' title={translate('userDetail.sex')} value={!!userData?.sex} />
           <div className='relative w-full border-[.5px] my-3 border-gray-300' />
           {renderAddressShip()}
           <div className='relative w-full border-[.5px] my-3 border-gray-300' />

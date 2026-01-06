@@ -1,5 +1,8 @@
 'use client'
 import React, { useState } from 'react'
+import { Button, Input } from '@mantine/core'
+
+import { TAbout } from './type'
 
 import useUserData from '@/hooks/useUserData'
 import useLanguage from '@/hooks/useLanguage'
@@ -11,8 +14,6 @@ import MyBlog from '@/components/MyBlog'
 import { INIT_DATA_MY_BLOG } from '@/constants/app'
 import { FirebaseAbout } from '@/services/firebaseService'
 import useFirstLoadPage from '@/hooks/useFirstLoadPage'
-import { TAbout } from './type'
-import { Button, Input } from '@mantine/core'
 
 const AboutScreen = ({ data }: TAbout) => {
   useFirstLoadPage()
@@ -21,14 +22,13 @@ const AboutScreen = ({ data }: TAbout) => {
   const { translate } = useLanguage()
   const [category, setCategory] = useState(data?.category || '')
   const [loading, setLoading] = useState(false)
-  const [dataAbout, setDataAbout] = useState<any>(
-    data?.des ? JSON.parse(data.des) : INIT_DATA_MY_BLOG
-  )
+  const [dataAbout, setDataAbout] = useState<any>(data?.des ? JSON.parse(data.des) : INIT_DATA_MY_BLOG)
 
   const handleSubmit = async () => {
     const callBack = async () => {
       setLoading(true)
       let res
+
       if (data) {
         res = await FirebaseAbout.updateData(data.id, { category, des: JSON.stringify(dataAbout) })
         // res = await ClientApi.updateAbout(data.id, { des: JSON.stringify(dataAbout) })
@@ -55,13 +55,7 @@ const AboutScreen = ({ data }: TAbout) => {
     }
 
     openModalDrawer({
-      content: (
-        <ModalDelete
-          title={translate(data ? 'common.update' : 'common.create')}
-          des=''
-          callback={callBack}
-        />
-      ),
+      content: <ModalDelete callback={callBack} des='' title={translate(data ? 'common.update' : 'common.create')} />,
     })
   }
 
@@ -71,17 +65,8 @@ const AboutScreen = ({ data }: TAbout) => {
         <Button loading={loading} onClick={handleSubmit}>
           {translate('common.save')}
         </Button>
-        <Input
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          placeholder={translate('textPopular.menuCategory')}
-        />
-        <MyBlog
-          className='w-full h-full'
-          pathFile={PATH_IMG.About}
-          value={dataAbout}
-          setValue={setDataAbout}
-        />
+        <Input placeholder={translate('textPopular.menuCategory')} value={category} onChange={(e) => setCategory(e.target.value)} />
+        <MyBlog className='w-full h-full' pathFile={PATH_IMG.About} setValue={setDataAbout} value={dataAbout} />
       </div>
     )
   }
@@ -89,7 +74,7 @@ const AboutScreen = ({ data }: TAbout) => {
   return (
     <div className='flex w-full  justify-center items-center '>
       {dataAbout ? (
-        <MyBlog className='!p-0' pathFile={PATH_IMG.About} value={dataAbout} disabled />
+        <MyBlog disabled className='!p-0' pathFile={PATH_IMG.About} value={dataAbout} />
       ) : (
         <span className='text-2xl py-5 '>{translate('textPopular.notData')}</span>
       )}

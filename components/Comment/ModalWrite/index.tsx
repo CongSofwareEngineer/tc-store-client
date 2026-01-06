@@ -1,4 +1,11 @@
 import ImageNext from 'next/image'
+import { isEqual } from 'lodash'
+import React, { useEffect, useState } from 'react'
+import { useForm } from '@mantine/form'
+import { AiOutlineCamera, AiOutlineCloseCircle } from 'react-icons/ai'
+
+import { IDataWriteComment } from './type'
+
 import MyLoading from '@/components/MyLoading'
 import { DataAddComment } from '@/constants/mongoDB'
 import { QUERY_KEY } from '@/constants/reactQuery'
@@ -9,12 +16,8 @@ import useModalDrawer from '@/hooks/useModalDrawer'
 import useUserData from '@/hooks/useUserData'
 import ClientApi from '@/services/clientApi'
 import { detectImg } from '@/utils/functions'
-import { isEqual } from 'lodash'
-import React, { useEffect, useState } from 'react'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
 import useCommentDetail from '@/hooks/tank-query/useCommentDetail'
-import { useForm } from '@mantine/form'
-import { AiOutlineCamera, AiOutlineCloseCircle } from 'react-icons/ai'
 import MyForm from '@/components/Form/MyForm'
 import MyImage from '@/components/MyImage'
 import RatingForm from '@/components/Form/Rating'
@@ -22,7 +25,6 @@ import InputForm from '@/components/Form/Input'
 import InputAreaForm from '@/components/Form/InputArea'
 import UploadImage, { IFileImage } from '@/components/UploadImage'
 import ButtonForm from '@/components/Form/ButtonForm'
-import { IDataWriteComment } from './type'
 import { IProduct } from '@/services/ClientApi/type'
 
 const ModalWrite = ({ dataItem }: { dataItem: IProduct }) => {
@@ -63,6 +65,7 @@ const ModalWrite = ({ dataItem }: { dataItem: IProduct }) => {
         rate: 5,
         listImg: [],
       }
+
       if (userData && dataApi) {
         initData.listImg = dataApi.listImg
         initData.note = dataApi.note
@@ -71,6 +74,7 @@ const ModalWrite = ({ dataItem }: { dataItem: IProduct }) => {
       }
       formData.setValues(initData)
     }
+
     getData()
   }, [userData, dataItem, dataApi])
 
@@ -85,11 +89,13 @@ const ModalWrite = ({ dataItem }: { dataItem: IProduct }) => {
     if (formData.values?.rate >= 2) {
       return translate('comment.wellwell')
     }
+
     return translate('comment.normal')
   }
 
   const getDataToUpdate = () => {
     const data: { [key: string]: any } = {}
+
     for (const key in dataExited) {
       if (!isEqual(formData.values?.[key as keyof IDataWriteComment], dataExited[key])) {
         if (formData.values?.[key as keyof IDataWriteComment]) {
@@ -117,6 +123,7 @@ const ModalWrite = ({ dataItem }: { dataItem: IProduct }) => {
     const arrImg = formData.values?.listImg.map((e) => {
       delete e.base64
       delete e.type
+
       return e
     })
     const body: DataAddComment = {
@@ -135,11 +142,7 @@ const ModalWrite = ({ dataItem }: { dataItem: IProduct }) => {
       res = await ClientApi.createComment(body)
     }
     if (res?.data) {
-      await refreshListQuery([
-        QUERY_KEY.GetCommentProduction,
-        QUERY_KEY.GetProductByID,
-        QUERY_KEY.GetCommentDetail,
-      ])
+      await refreshListQuery([QUERY_KEY.GetCommentProduction, QUERY_KEY.GetProductByID, QUERY_KEY.GetCommentDetail])
       closeModalDrawer()
       showNotificationSuccess(translate('comment.feedbackSuccess'))
     } else {
@@ -150,13 +153,13 @@ const ModalWrite = ({ dataItem }: { dataItem: IProduct }) => {
 
   const handleUpload = async (file: IFileImage) => {
     const prevTemp = formData.values.listImg
+
     formData.setFieldValue('listImg', [...prevTemp, file])
   }
 
   const deleteImg = (index: number) => {
-    const data = formData.values?.listImg.filter(
-      (_: any, indexFilter: number) => indexFilter !== index
-    )
+    const data = formData.values?.listImg.filter((_: any, indexFilter: number) => indexFilter !== index)
+
     formData.setFieldValue('listImg', data)
   }
 
@@ -167,16 +170,8 @@ const ModalWrite = ({ dataItem }: { dataItem: IProduct }) => {
           {formData.values?.listImg?.map((item, index: number) => {
             return (
               <div key={`img-${index}`} className='relative w-[70px] '>
-                <ImageNext
-                  alt='img'
-                  className='!relative !h-auto !-[70px]'
-                  src={detectImg(item?.base64 || item)}
-                  fill
-                />
-                <AiOutlineCloseCircle
-                  onClick={() => deleteImg(index)}
-                  className='absolute text-[20px] z-10 cursor-pointer right-0 top-0'
-                />
+                <ImageNext fill alt='img' className='!relative !h-auto !-[70px]' src={detectImg(item?.base64 || item)} />
+                <AiOutlineCloseCircle className='absolute text-[20px] z-10 cursor-pointer right-0 top-0' onClick={() => deleteImg(index)} />
               </div>
             )
           })}
@@ -190,7 +185,7 @@ const ModalWrite = ({ dataItem }: { dataItem: IProduct }) => {
       {loadingApi ? (
         <MyLoading />
       ) : (
-        <MyForm form={formData} className='!w-full' submit={handleSubmit}>
+        <MyForm className='!w-full' form={formData} submit={handleSubmit}>
           <div className='flex w-full flex-col overflow-y-auto'>
             <div className='flex gap-2 w-full mb-3'>
               <div className='w-[100px] aspect-square overflow-hidden'>
@@ -207,57 +202,43 @@ const ModalWrite = ({ dataItem }: { dataItem: IProduct }) => {
 
             <InputForm
               required
+              disabled={!!isLogin}
               formData={formData}
               keyName={'name'}
               label={translate('header.name')}
               placeholder={translate('header.name')}
-              disabled={!!isLogin}
             />
 
             <InputForm
               required
+              disabled={!!isLogin}
               formData={formData}
               keyName={'sdt'}
               label={translate('userDetail.sdt')}
               placeholder={translate('userDetail.sdt')}
-              disabled={!!isLogin}
             />
 
             <InputAreaForm
+              required
+              showCount
               formData={formData}
               keyName={'note'}
-              required
               label={translate('textPopular.note')}
-              placeholder={translate('textPopular.note')}
               maxLength={200}
-              showCount
+              placeholder={translate('textPopular.note')}
             />
             {renderListImg()}
             <div className='w-full'>
-              <UploadImage
-                callback={handleUpload}
-                disabled={formData.values?.listImg?.length >= 2}
-                maxSizeOutputKB={200}
-                maxPixelReduce={400}
-              >
+              <UploadImage callback={handleUpload} disabled={formData.values?.listImg?.length >= 2} maxPixelReduce={400} maxSizeOutputKB={200}>
                 <div className='flex gap-2 items-center w-full mt-3'>
-                  <AiOutlineCamera
-                    className='cursor-pointer'
-                    style={{ fontSize: 25, color: 'blue' }}
-                  />
+                  <AiOutlineCamera className='cursor-pointer' style={{ fontSize: 25, color: 'blue' }} />
                   <div className='text-black'>{translate('comment.uploadImg_des')}</div>
                 </div>
               </UploadImage>
             </div>
 
             <div className='flex flex-col w-full gap-2 mt-5 '>
-              <ButtonForm
-                loading={loading}
-                disableClose
-                titleSubmit={translate(
-                  dataExited ? 'common.updateFeedback' : 'common.sendFeedback'
-                )}
-              />
+              <ButtonForm disableClose loading={loading} titleSubmit={translate(dataExited ? 'common.updateFeedback' : 'common.sendFeedback')} />
             </div>
           </div>
         </MyForm>
