@@ -2,8 +2,7 @@ export const images = {
   bgWhiteBlur: '/images/CoffeeDetail/bgWhiteBlur.avif',
   logo: '/logo_tc_store.png',
   logoStore: '/logo_tc_store.png',
-  logoVCB:
-    'https://play-lh.googleusercontent.com/hRq2DVKkzBXQkyftxr0e2ytl0fS2hEWx3UTe3V652RfJVYWqVRGgBNhmZgqNzJ8PKHE',
+  logoVCB: 'https://play-lh.googleusercontent.com/hRq2DVKkzBXQkyftxr0e2ytl0fS2hEWx3UTe3V652RfJVYWqVRGgBNhmZgqNzJ8PKHE',
   footer: {
     iconAddress: '/images/Footer/iconAddress.png',
     iconGmail: '/images/Footer/iconGmail.png',

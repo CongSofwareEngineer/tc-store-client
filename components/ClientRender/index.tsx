@@ -1,8 +1,10 @@
 'use client'
 import React, { Suspense, useLayoutEffect } from 'react'
-import MyModal from '../MyModal'
-import { useCategoryMenu } from '@/zustand/useCategoryMenu'
 import dynamic from 'next/dynamic'
+
+import MyModal from '../MyModal'
+
+import { useCategoryMenu } from '@/zustand/useCategoryMenu'
 
 const MyModalAdmin = dynamic(() => import('@/components/MyModalAdmin'), { ssr: false })
 const MyDrawer = dynamic(() => import('@/components/MyDrawer'), { ssr: false })
@@ -25,13 +27,7 @@ const ChatFirebase = dynamic(() => import('@/components/ChatFirebase'), {
   ssr: false,
 })
 
-const ClientRender = ({
-  children,
-  menuCategory = [],
-}: {
-  menuCategory: any
-  children: React.ReactNode
-}) => {
+const ClientRender = ({ children, menuCategory = [] }: { menuCategory: any; children: React.ReactNode }) => {
   const { setCategoryMenu } = useCategoryMenu()
 
   useLayoutEffect(() => {

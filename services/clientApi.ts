@@ -12,6 +12,7 @@ const ClientApi = {
   sendNotiNewChatMessages: async (idChat: string) => {
     try {
       const urlExp = `https://ts-store-nodejs-noti.vercel.app/new-messages/${idChat}`
+
       return fetch(urlExp)
     } catch (error) {
       console.log({ error })
@@ -27,6 +28,7 @@ const ClientApi = {
   // -> about
   getAbout: async () => {
     const res = await fetchData({ url: `/about/category/shoes` })
+
     if (res.data) {
       return {
         _id: res.data._id,
@@ -34,6 +36,7 @@ const ClientApi = {
         category: res.data.category,
       }
     }
+
     return null
   },
   createAbout: async (body: any) => {
@@ -87,6 +90,7 @@ const ClientApi = {
     const body = {
       data: dataBody,
     }
+
     return fetchData({
       url: `user/login`,
       method: REQUEST_TYPE.POST,
@@ -106,7 +110,9 @@ const ClientApi = {
   // -> user
   updateAvatar: async (id: string | undefined, file: any) => {
     const publicId = file.public_id
+
     delete file.public_id
+
     return fetchData({
       url: `user/update-avatar/${id}`,
       body: {
@@ -136,6 +142,7 @@ const ClientApi = {
   // -> bill
   buyNoLogin: async (bodyAPI: BodyAddBill) => {
     const dataEncode = encryptData(bodyAPI)
+
     return fetchData({
       url: `bill/no-login/create?data=${dataEncode}`,
       isAuth: false,
@@ -147,6 +154,7 @@ const ClientApi = {
       body: bodyAPI,
       method: REQUEST_TYPE.POST,
     }
+
     return fetchData(config)
   },
   deleteBill: async (idBill: string) => {
@@ -154,6 +162,7 @@ const ClientApi = {
       url: `bill/delete/${idBill}`,
       method: REQUEST_TYPE.DELETE,
     }
+
     return fetchData(config)
   },
   getBills: async (queryUrl: string) => {
@@ -267,4 +276,5 @@ const ClientApi = {
     })
   },
 }
+
 export default ClientApi

@@ -1,17 +1,8 @@
-import { FirebaseServices } from '@/services/firebaseService'
-import {
-  DatabaseReference,
-  endAt,
-  get,
-  limitToLast,
-  onValue,
-  orderByChild,
-  query,
-  ref,
-  remove,
-  update,
-} from 'firebase/database'
+import { DatabaseReference, endAt, get, limitToLast, onValue, orderByChild, query, ref, remove, update } from 'firebase/database'
+
 import { PAGE_SIZE_LIMIT } from '../constants/app'
+
+import { FirebaseServices } from '@/services/firebaseService'
 
 class FBRealtimeUtils {
   private db: DatabaseReference
@@ -21,12 +12,14 @@ class FBRealtimeUtils {
   constructor(nameDB = 'Chat') {
     this.nameDB = nameDB
     const fb = FirebaseServices.initRealtimeData()
+
     this.db = ref(fb, nameDB)
   }
 
   async remove() {
     try {
       await remove(this.db)
+
       return true
     } catch {
       return false
@@ -36,6 +29,7 @@ class FBRealtimeUtils {
   async update(body: any) {
     try {
       await update(this.db, body)
+
       return true
     } catch {
       return false
@@ -45,6 +39,7 @@ class FBRealtimeUtils {
   async create(body: any) {
     try {
       await update(this.db, body)
+
       return true
     } catch {
       return false
@@ -75,6 +70,7 @@ class FBRealtimeUtils {
 
       if (typeof this.lastData === 'number' && this.lastData <= 0) {
         this.lastData = null
+
         return {
           data: [],
           loadMore: true,
@@ -95,6 +91,7 @@ class FBRealtimeUtils {
       })
       if (data.length === 0) {
         this.lastData = null
+
         return {
           data: [],
           loadMore: true,
@@ -108,6 +105,7 @@ class FBRealtimeUtils {
       }
     } catch {
       this.lastData = null
+
       return {
         data: [],
         loadMore: true,
