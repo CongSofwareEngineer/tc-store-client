@@ -163,8 +163,9 @@ export default async function RootLayout({
             />
           </>
         )}
-        <meta
-          content="
+        {process.env.NEXT_PUBLIC_ENV === 'production' && (
+          <meta
+            content="
             default-src 'self' vercel.live *.vercel.app;
             script-src 'self' 'unsafe-eval' 'unsafe-inline' vercel.live https://va.vercel-scripts.com/;
             style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
@@ -182,8 +183,9 @@ export default async function RootLayout({
             form-action 'self';
             base-uri 'self';
           "
-          httpEquiv='Content-Security-Policy'
-        />
+            httpEquiv='Content-Security-Policy'
+          />
+        )}
       </head>
       <body className={`${inter.className} antialiased`}>
         {process.env.NEXT_PUBLIC_ENV === 'production' && (

@@ -1,19 +1,24 @@
-import { METHOD_SUPPORT } from '@/constants/sepay'
 import axios from 'axios'
+
 import { IBody, IResListPayment } from './type'
 
-class Sepay {
-  stk = '0392225405'
+import { METHOD_SUPPORT } from '@/constants/sepay'
+import { FINANCE } from '@/constants/finance'
 
-  async post(body: IBody) {
+class SepayServices {
+  static stk = FINANCE.STK
+
+  static async post(body: IBody) {
     try {
       const data = await axios.post('/api/sepay', body)
+
       return {
         data: data.data,
         status: 200,
       }
     } catch (error) {
       console.log({ errorPost: error })
+
       return {
         error: null,
         status: 200,
@@ -21,7 +26,7 @@ class Sepay {
     }
   }
 
-  async getCountTransactions() {
+  static async getCountTransactions() {
     return this.post({
       type: METHOD_SUPPORT.getCountPayment,
       body: {
@@ -29,16 +34,16 @@ class Sepay {
       },
     })
   }
-  async getListPayment(): Promise<IResListPayment> {
+  static async getListPayment(): Promise<IResListPayment> {
     const data = await this.post({
       type: METHOD_SUPPORT.getListPayment,
       body: {
         account_number: this.stk,
       },
     })
+
     return data.data
   }
 }
-const SepayServices = new Sepay()
 
 export default SepayServices

@@ -1,11 +1,12 @@
-import { formatDateTime } from '@/utils/momentFunc'
 import { randomBytes } from 'crypto'
+
+import { FINANCE } from '@/constants/finance'
+import { formatDateTime } from '@/utils/momentFunc'
 
 class VPBankService {
   idBanking: string
   message: string
   qrCode: string
-  stk = '0392225405'
   constructor(amount: number) {
     this.idBanking = this.generateSalt()
     this.message = this.generateMess(this.idBanking)
@@ -21,8 +22,9 @@ class VPBankService {
   }
 
   static openDeepLink(amount: number, mess: string) {
-    const urlFinal = `https://dl.vietqr.io/pay?app=vpb&ba=0392225405@vpb&am=${amount}&tn=${mess}`
+    const urlFinal = `https://dl.vietqr.io/pay?app=vpb&ba=${FINANCE.STK}@vpb&am=${amount}&tn=${mess}`
     const link = document.createElement('a')
+
     link.href = urlFinal
     document.body.appendChild(link)
     link.click()
@@ -31,7 +33,8 @@ class VPBankService {
   }
 
   createQR(amount: number, mess: string) {
-    const img = `https://api.vietqr.io/image/970432-0392225405-amEksIA.jpg?accountName=HO%20DIEN%20CONG&amount=${amount}&addInfo=${mess}`
+    const img = `https://api.vietqr.io/image/970432-${FINANCE.STK}-amEksIA.jpg?accountName=HO%20DIEN%20CONG&amount=${amount}&addInfo=${mess}`
+
     return img
   }
 }
