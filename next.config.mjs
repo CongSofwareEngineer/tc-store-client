@@ -58,7 +58,7 @@ if (process.env.NEXT_PUBLIC_ENV === 'production') {
   }
   nextConfig.experimental = {
     optimizePackageImports: [
-      'moment',
+      'dayjs',
       'lodash',
       '@mantine/core',
       '@mantine/dates',

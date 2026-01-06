@@ -1,5 +1,6 @@
+import { parsePhoneNumberWithError } from 'libphonenumber-js/min'
+
 import useLanguage from './useLanguage'
-import { parsePhoneNumber } from 'libphonenumber-js'
 
 const useCheckForm = () => {
   const { translate } = useLanguage()
@@ -9,10 +10,12 @@ const useCheckForm = () => {
       if (!sdt) {
         return translate('warning.errorSDT')
       }
-      const phoneNumber = parsePhoneNumber(sdt, 'VN')
+      const phoneNumber = parsePhoneNumberWithError(sdt, 'VN')
+
       if (phoneNumber && phoneNumber.isValid()) {
         return null
       }
+
       return translate('warning.errorSDT')
     } catch {
       return translate('warning.errorSDT')
@@ -25,9 +28,11 @@ const useCheckForm = () => {
         return translate('errors.empty')
       }
       const hasNumbers = /[0-9]/.test(value)
+
       if (hasNumbers) {
         return null
       }
+
       return translate('errors.inValueNumber')
     } catch {
       return translate('errors.inValueNumber')
@@ -44,9 +49,11 @@ const useCheckForm = () => {
       .match(
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       )
+
     if (validEmail) {
       return null
     }
+
     return translate('errors.gmail')
   }
 
@@ -64,6 +71,7 @@ const useCheckForm = () => {
     if (noSQLInjectionPattern.test(pass)) {
       return translate('errors.invalidPass')
     }
+
     return null
   }
 

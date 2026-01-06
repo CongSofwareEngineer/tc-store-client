@@ -1,8 +1,8 @@
 import ImageNext from 'next/image'
-import { isEqual } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { useForm } from '@mantine/form'
 import { AiOutlineCamera, AiOutlineCloseCircle } from 'react-icons/ai'
+import isEqual from 'lodash/isEqual'
 
 import { IDataWriteComment } from './type'
 

@@ -1,3 +1,8 @@
+import isEmpty from 'lodash/isEmpty'
+import React, { useEffect, useState } from 'react'
+import secureLocalStorage from 'react-secure-storage'
+import { Button, Checkbox, Input, Textarea } from '@mantine/core'
+
 import useCheckForm from '@/hooks/useCheckForm'
 import useLanguage from '@/hooks/useLanguage'
 import useModalDrawer from '@/hooks/useModalDrawer'
@@ -5,14 +10,9 @@ import { useUserData as useUserDataZustand } from '@/zustand/useUserData'
 import ClientApi from '@/services/clientApi'
 import { decryptData, encryptData } from '@/utils/crypto'
 import { showNotificationError, showNotificationSuccess } from '@/utils/notification'
-
-import { isEmpty } from 'lodash'
-import React, { useEffect, useState } from 'react'
 import { ZUSTAND } from '@/constants/zustand'
-import secureLocalStorage from 'react-secure-storage'
 import ObserverService from '@/services/observer'
 import { OBSERVER_KEY } from '@/constants/app'
-import { Button, Checkbox, Input, Textarea } from '@mantine/core'
 
 type PropsType = {
   keyType: string
@@ -54,6 +54,7 @@ const ModalUpdateUser = ({ keyType, callBack, initValue, maxLength = 20 }: Props
     setLoading(true)
     let error = false
     let valueTemp = valueNew?.toString() || ''
+
     if (isEmpty(valueTemp)) {
       showNotificationError(translate('errors.empty'))
       error = true
@@ -78,6 +79,7 @@ const ModalUpdateUser = ({ keyType, callBack, initValue, maxLength = 20 }: Props
 
     if (error) {
       setLoading(false)
+
       return
     }
     if (callBack) {
@@ -98,6 +100,7 @@ const ModalUpdateUser = ({ keyType, callBack, initValue, maxLength = 20 }: Props
         setUserData(userTemp)
         if (secureLocalStorage.getItem(ZUSTAND.UserData)) {
           const userEncode = encryptData(JSON.stringify(userTemp))
+
           secureLocalStorage.setItem(ZUSTAND.UserData, userEncode)
         }
 
@@ -118,46 +121,23 @@ const ModalUpdateUser = ({ keyType, callBack, initValue, maxLength = 20 }: Props
         <div className=''>
           {keyType === 'sex' ? (
             <div className='flex gap-2'>
-              <Checkbox
-                defaultChecked={!getOldValue()}
-                disabled
-                label={translate('textPopular.female')}
-              />
-              <Checkbox
-                defaultChecked={!!getOldValue()}
-                disabled
-                label={translate('textPopular.male')}
-              />
+              <Checkbox disabled defaultChecked={!getOldValue()} label={translate('textPopular.female')} />
+              <Checkbox disabled defaultChecked={!!getOldValue()} label={translate('textPopular.male')} />
             </div>
           ) : (
-            <Input value={getOldValue()?.toString()} disabled />
+            <Input disabled value={getOldValue()?.toString()} />
           )}
         </div>
 
-        <div className='md:text-[14px] text-medium font-bold mt-2'>
-          {translate('textPopular.newValue')} :
-        </div>
+        <div className='md:text-[14px] text-medium font-bold mt-2'>{translate('textPopular.newValue')} :</div>
         <div className='w-full mt-1'>
           {keyType === 'sex' ? (
             <div className='flex gap-2'>
-              <Checkbox
-                value={!valueNew as any}
-                onChange={() => setValueNew(true)}
-                label={translate('textPopular.female')}
-              />
-              <Checkbox
-                value={!!valueNew as any}
-                onChange={() => setValueNew(false)}
-                label={translate('textPopular.male')}
-              />
+              <Checkbox label={translate('textPopular.female')} value={!valueNew as any} onChange={() => setValueNew(true)} />
+              <Checkbox label={translate('textPopular.male')} value={!!valueNew as any} onChange={() => setValueNew(false)} />
             </div>
           ) : (
-            <Textarea
-              rows={2}
-              value={valueNew?.toString()}
-              onChange={(e) => setValueNew(e.target.value)}
-              maxLength={maxLength}
-            />
+            <Textarea maxLength={maxLength} rows={2} value={valueNew?.toString()} onChange={(e) => setValueNew(e.target.value)} />
           )}
         </div>
         <div className='w-full mt-6'>

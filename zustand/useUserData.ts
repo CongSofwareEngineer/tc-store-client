@@ -1,7 +1,8 @@
 import { devtools, persist } from 'zustand/middleware'
 import { create } from 'zustand'
-import { INIT_ZUSTAND, TYPE_ZUSTAND, ZUSTAND } from '@/constants/zustand'
 import secureLocalStorage from 'react-secure-storage'
+
+import { INIT_ZUSTAND, TYPE_ZUSTAND, ZUSTAND } from '@/constants/zustand'
 import { decryptData } from '@/utils/crypto'
 
 type UserDataStore = {

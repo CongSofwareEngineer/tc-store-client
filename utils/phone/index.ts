@@ -1,6 +1,7 @@
-import { parsePhoneNumber } from 'libphonenumber-js'
+import { parsePhoneNumberWithError } from 'libphonenumber-js/min'
 
 export const getPhoneFormat = (phone: string) => {
-  const phoneNumber = parsePhoneNumber(phone, 'VN')
+  const phoneNumber = parsePhoneNumberWithError(phone, 'VN')
+
   return phoneNumber.number
 }

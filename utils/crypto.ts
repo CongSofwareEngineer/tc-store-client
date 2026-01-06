@@ -1,17 +1,13 @@
 import AES from 'crypto-js/aes'
 import EncUtf8 from 'crypto-js/enc-utf8'
+import EncHex from 'crypto-js/enc-hex'
 
 const getIV = () => {
-  return {
-    words: [10430314, -140825763, -493589880, -1325521129, 831492685, 2080374784],
-    sigBytes: 21,
-  } as any
+  return EncHex.parse(process.env.NEXT_PUBLIC_KEY_IV_ENCODE!)
 }
 
 const encUtf8 = (pinCode: string) => {
-  const key = new TextEncoder().encode(pinCode)
-
-  return key as any
+  return EncUtf8.parse(pinCode)
 }
 
 export const encryptData = (value: string | object, pinCode: string = process.env.NEXT_PUBLIC_KEY_SALT) => {
