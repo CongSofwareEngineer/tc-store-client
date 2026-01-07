@@ -8,14 +8,7 @@ type IRatingForm = {
 } & RatingProps
 
 const RatingForm = ({ formData, keyName = '', className = '', ...props }: IRatingForm) => {
-  return (
-    <Rating
-      key={formData.key(keyName)}
-      className={className}
-      {...props}
-      {...formData.getInputProps(keyName)}
-    />
-  )
+  return <Rating key={formData.key(keyName)} className={className} {...props} {...formData.getInputProps(keyName)} />
 }
 
 export default RatingForm

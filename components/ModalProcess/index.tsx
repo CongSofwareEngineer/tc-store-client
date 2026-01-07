@@ -23,6 +23,7 @@ const ModalProcess = ({ icon, des, title, isCountDown = false, timeCountDown = 6
         }, 1000)
       }
     }
+
     if (isCountDown) {
       countDown()
     }
@@ -36,19 +37,19 @@ const ModalProcess = ({ icon, des, title, isCountDown = false, timeCountDown = 6
         <div className='animation_spin25s '>
           {isCountDown ? (
             <Image
-              src={'https://smart.keyring.app/assets/images/Icon/ic_creating_passkey.png'}
+              fill
+              priority
               alt='icon-modal-delete'
               className='animate-pulse !w-auto !relative md:!h-[120px] !h-[70px]'
-              priority
-              fill
+              src={'https://smart.keyring.app/assets/images/Icon/ic_creating_passkey.png'}
             />
           ) : (
             <Image
-              src={icon || images.icon.iconLoadingModal}
+              fill
+              priority
               alt='icon-modal-delete'
               className='animate-pulse !w-auto !relative md:!h-[120px] !h-[70px]'
-              priority
-              fill
+              src={icon || images.icon.iconLoadingModal}
             />
           )}
         </div>
@@ -58,4 +59,5 @@ const ModalProcess = ({ icon, des, title, isCountDown = false, timeCountDown = 6
     </div>
   )
 }
+
 export default ModalProcess

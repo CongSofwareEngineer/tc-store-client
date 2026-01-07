@@ -9,17 +9,12 @@ type Props = {
   loading?: boolean
   isFetchingNextPage?: boolean
 }
-const MyLoadMore = ({
-  loading = false,
-  hasLoadMore = false,
-  isFetchingNextPage = false,
-  title = '',
-  callback,
-}: Props) => {
+const MyLoadMore = ({ loading = false, hasLoadMore = false, isFetchingNextPage = false, title = '', callback }: Props) => {
   const { translate } = useLanguage()
+
   return !loading && hasLoadMore ? (
     <div className='mt-4 w-full flex justify-center items-center'>
-      <Button onClick={callback} loading={isFetchingNextPage}>
+      <Button loading={isFetchingNextPage} onClick={callback}>
         {title || translate('textPopular.loadMore')}
       </Button>
     </div>

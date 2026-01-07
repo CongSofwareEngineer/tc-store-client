@@ -23,12 +23,7 @@ const BillFinal = ({
     <div className='bg-white w-full  flex flex-col  border-[1px] shadow-gray1 border-gray-300 md:p-3 px-4 py-4'>
       <div className='flex w-full gap-2'>
         <div>
-          <Image
-            src={images.icon.iconBill}
-            alt='my-cart-bill'
-            fill
-            className='!relative !w-[25px] !h-[25px]'
-          />
+          <Image fill alt='my-cart-bill' className='!relative !w-[25px] !h-[25px]' src={images.icon.iconBill} />
         </div>
         <div className='text-medium font-semibold'>{translate('bill.detailPayment')}</div>
       </div>
@@ -46,12 +41,7 @@ const BillFinal = ({
         <span>{translate('bill.totalBill')}</span>
         <span className='font-bold text-green-600'>{totalBillFeeShip} VNĐ</span>
       </div>
-      <ButtonForm
-        disabledSubmit={disabledSubmit}
-        classBtnSubmit='w-full mt-3  !rounded-[4px]'
-        loading={loading}
-        disableClose
-      />
+      <ButtonForm disableClose classBtnSubmit='w-full mt-3  !rounded-[4px]' disabledSubmit={disabledSubmit} loading={loading} />
     </div>
   )
 }

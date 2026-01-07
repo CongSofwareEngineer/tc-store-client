@@ -40,6 +40,7 @@ export const fetchData = async (
         if (!authRefresh) {
           showNotificationError('Bạn đã hết hạn đăng nhập')
           ObserverService.emit(OBSERVER_KEY.LogOut, false)
+
           return {
             data: null,
             messages: 'fail',
@@ -52,7 +53,8 @@ export const fetchData = async (
           auth: authRefresh.toString(),
           method: REQUEST_TYPE.POST,
         })
-        console.log({ newAuth })
+
+        // console.log({ newAuth })
 
         if (newAuth?.data?.token) {
           auth = newAuth?.data?.token
@@ -60,6 +62,7 @@ export const fetchData = async (
         }
       }
     }
+
     return fetchConfig({ ...config, auth: auth || '' })
   } catch {
     return {
@@ -115,6 +118,7 @@ const fetchConfig = async ({
           messages: 'success',
         }
       }
+
       return {
         data: null,
         messages: 'fail',
@@ -128,4 +132,5 @@ const fetchConfig = async ({
       }
     })
 }
+
 export default fetchConfig

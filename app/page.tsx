@@ -76,10 +76,7 @@ const HomeScreen: NextPage = () => {
   return (
     <>
       <Header>
-        <h1 className='sr-only'>
-          TC Store - Cửa Hàng Đa Dạng Sản Phẩm: Giày Dép, Yến Sào, Laptop, Cà Phê & Nhiều Mặt Hàng
-          Khác
-        </h1>
+        <h1 className='sr-only'>TC Store - Cửa Hàng Đa Dạng Sản Phẩm: Giày Dép, Yến Sào, Laptop, Cà Phê & Nhiều Mặt Hàng Khác</h1>
       </Header>
       <ContainerContent>
         {renderHToSEO()}

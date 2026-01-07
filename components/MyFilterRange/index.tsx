@@ -39,6 +39,7 @@ const MyFilterRange = ({
   const sliderFromQuery: [number, number] = useMemo(() => {
     const min = Number(queries?.[keyMin]?.[0] || minSlider)
     const max = Number(queries?.[keyMax]?.[0] || maxSlider)
+
     return [min, max]
   }, [queries, keyMin, keyMax, minSlider, maxSlider])
 
@@ -67,31 +68,27 @@ const MyFilterRange = ({
   }
 
   return (
-    <MyCollapse title={title} isDefaultActive={isDefault}>
+    <MyCollapse isDefaultActive={isDefault} title={title}>
       <div className='px-4 py-2 flex flex-col gap-1'>
         <div className='flex items-center mt-2 justify-between'>
-          <div className='px-3 text-sm py-1 rounded-xl border-[1px] border-gray-400'>
-            {numberWithCommas(slider[0])}
-          </div>
+          <div className='px-3 text-sm py-1 rounded-xl border-[1px] border-gray-400'>{numberWithCommas(slider[0])}</div>
           <div className='pb-[2px] w-[10px] bg-gray-400' />
-          <div className='px-3 py-1 text-sm rounded-xl border-[1px] border-gray-400'>
-            {numberWithCommas(slider[1])}
-          </div>
+          <div className='px-3 py-1 text-sm rounded-xl border-[1px] border-gray-400'>{numberWithCommas(slider[1])}</div>
         </div>
         <RangeSlider
           aria-hidden='true'
           aria-label={`Range-slider-${title}`}
-          size={isMobile ? 'xs' : 'sm'}
           className='!relative my-2'
+          defaultValue={sliderFromQuery}
           label={renderTooltips}
-          min={minSlider}
           max={maxSlider}
+          min={minSlider}
+          minRange={stepRange}
+          size={isMobile ? 'xs' : 'sm'}
           step={stepRange}
           value={slider}
-          minRange={stepRange}
           onChange={handleChange}
           onChangeEnd={handleChangeComplete}
-          defaultValue={sliderFromQuery}
         />
       </div>
     </MyCollapse>

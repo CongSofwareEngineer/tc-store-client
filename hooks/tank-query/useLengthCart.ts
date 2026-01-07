@@ -7,6 +7,7 @@ import ClientApi from '@/services/ClientApi/index'
 import { getDataLocal } from '@/utils/functions'
 const getData = async ({ queryKey }: any) => {
   const isLogin = queryKey[2]
+
   if (isLogin) {
     const lengthCart = await ClientApi.getLengthCart(queryKey[1])
 
@@ -18,6 +19,7 @@ const getData = async ({ queryKey }: any) => {
       return { lengthCart: data.length }
     }
   }
+
   return { lengthCart: 0 }
 }
 const useLengthCart = (id = '') => {

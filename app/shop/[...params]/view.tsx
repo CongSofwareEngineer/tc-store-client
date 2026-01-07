@@ -33,6 +33,7 @@ const ShopDetailScreen = ({ productDetail }: { productDetail: IPaymentShop['data
 
   useEffect(() => {
     const dataClone: IPaymentShop['data'] = cloneData(dataItem)
+
     if (dataClone) {
       const modelInit = dataClone.models[0]
       const sizeDefault = modelInit.sizes.find((size) => size.amount > size.sold)

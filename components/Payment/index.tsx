@@ -5,13 +5,7 @@ import useModalDrawer from '@/hooks/useModalDrawer'
 import useOptionPayment from '@/hooks/useOptionPayment'
 import useRoutePage from '@/hooks/useRoutePage'
 import useUserData from '@/hooks/useUserData'
-import {
-  delayTime,
-  getDataLocal,
-  numberWithCommas,
-  removeDataLocal,
-  saveDataLocal,
-} from '@/utils/functions'
+import { delayTime, getDataLocal, numberWithCommas, saveDataLocal } from '@/utils/functions'
 import { useEffect, useMemo, useState } from 'react'
 import ModalProcess from '../ModalProcess'
 import { QUERY_KEY } from '@/constants/reactQuery'
@@ -82,6 +76,7 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
     if (!formData.values?.addressShip) {
       return false
     }
+
     return !!formData.values.addressShip?.addressDetail
   }, [formData])
 
@@ -91,6 +86,7 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
 
   const getTotalPayBill = (plusFee = false) => {
     let total = 0
+
     data.forEach((e) => {
       if (e.selected) {
         total = Number(e.amountBuy) * Number(e.moreData?.price) + total
@@ -103,12 +99,7 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
   const callbackProcessing = () => {
     if (isLogin) {
       openModalDrawer({
-        content: (
-          <ModalProcess
-            title={translate('confirm.bill.createBill')}
-            des={translate('confirm.bill.createBill_Des')}
-          />
-        ),
+        content: <ModalProcess des={translate('confirm.bill.createBill_Des')} title={translate('confirm.bill.createBill')} />,
         configModal: {
           overClickClose: false,
           showBtnClose: false,
@@ -116,12 +107,7 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
       })
     } else {
       openModalAdmin({
-        body: (
-          <ModalProcess
-            title={translate('confirm.bill.createBill')}
-            des={translate('confirm.bill.createBill_Des')}
-          />
-        ),
+        body: <ModalProcess des={translate('confirm.bill.createBill_Des')} title={translate('confirm.bill.createBill')} />,
         showBtnClose: false,
         overClickClose: false,
       })
@@ -138,27 +124,21 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
       saveDataLocal(COOKIE_KEY.MyCart, arrFilter)
       await delayTime(1000)
     }
-    await refreshListQuery([
-      QUERY_KEY.LengthCartUser,
-      QUERY_KEY.MyCartUser,
-      QUERY_KEY.GetAllNests,
-      QUERY_KEY.GetAllProduct,
-      QUERY_KEY.GetShoesShop,
-    ])
+    await refreshListQuery([QUERY_KEY.LengthCartUser, QUERY_KEY.MyCartUser, QUERY_KEY.GetAllNests, QUERY_KEY.GetAllProduct, QUERY_KEY.GetShoesShop])
     closeModalAdmin()
     if (isLogin) {
       openModalDrawer({
         content: (
           <ModalSuccess
             showClose
-            title={translate('productDetail.modalBuy.success')}
-            des={translate('productDetail.modalBuy.successDes')}
-            titleSubmit={translate('common.viewBill')}
-            titleClose={translate('common.ok')}
             callback={() => {
               route.push('/my-page/bill')
               closeModalDrawer()
             }}
+            des={translate('productDetail.modalBuy.successDes')}
+            title={translate('productDetail.modalBuy.success')}
+            titleClose={translate('common.ok')}
+            titleSubmit={translate('common.viewBill')}
           />
         ),
         configModal: {
@@ -175,6 +155,7 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
   const handleSubmitBuy = async (idBanking?: string, mess?: string, bodyAPI?: BodyAddBill) => {
     callbackProcessing()
     let res: any = null
+
     if (idBanking) {
       bodyAPI!.infoBanking = {
         id: idBanking,
@@ -204,6 +185,7 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
       closeModalAdmin()
       const listBill: any[] = []
       let totalBill = 0
+
       data.forEach((e) => {
         if (e.selected) {
           totalBill += e.amountBuy! * e.moreData?.price!
@@ -241,11 +223,11 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
           openModalDrawer({
             content: (
               <InfoBanking
+                amount={Number(totalBill) + DEFAULT_FEE_SHIP}
+                callback={(id, mess) => handleSubmitBuy(id, mess, bodyAPI)}
                 callbackError={() => {
                   setLoading(false)
                 }}
-                callback={(id, mess) => handleSubmitBuy(id, mess, bodyAPI)}
-                amount={Number(totalBill) + DEFAULT_FEE_SHIP}
               />
             ),
             useDrawer: true,
@@ -265,11 +247,11 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
           openModalAdmin({
             body: (
               <InfoBanking
+                amount={Number(totalBill) + DEFAULT_FEE_SHIP}
+                callback={(id, mess) => handleSubmitBuy(id, mess, bodyAPI)}
                 callbackError={() => {
                   setLoading(false)
                 }}
-                callback={(id, mess) => handleSubmitBuy(id, mess, bodyAPI)}
-                amount={Number(totalBill) + DEFAULT_FEE_SHIP}
               />
             ),
             className: 'md:w-[700px]',
@@ -289,8 +271,8 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
           <ModalDelete
             autoClose={false}
             callback={callBack}
-            title={translate('confirm.bill.confirm')}
             des={translate('confirm.bill.confirm_des')}
+            title={translate('confirm.bill.confirm')}
             titleConfirm={translate('common.submit')}
           />
         ),
@@ -302,8 +284,8 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
             isModalAdmin
             autoClose={false}
             callback={callBack}
-            title={translate('confirm.bill.confirm')}
             des={translate('confirm.bill.confirm_des')}
+            title={translate('confirm.bill.confirm')}
             titleConfirm={translate('common.submit')}
           />
         ),
@@ -317,27 +299,14 @@ const Payment = ({ data, clickBack, showBack = true }: IPayment) => {
       {showBack && <BtnBackUI clickBack={clickBack} />}
 
       <div className='flex flex-col gap-3 w-full mt-1'>
-        <MyForm
-          submit={handleSubmit}
-          form={formData}
-          className='flex lg:flex-row flex-col lg:gap-6 gap-5'
-        >
+        <MyForm className='flex lg:flex-row flex-col lg:gap-6 gap-5' form={formData} submit={handleSubmit}>
           <div className='flex flex-1 h-full overflow-y-auto  flex-col lg:max-w-[calc(100%-300px)]'>
             <ContentFormPayment form={formData} onChange={onChangeAddressShip} />
             <InfoBill data={data} />
           </div>
           <div className='lg:w-[350px] flex flex-col md:gap-6 gap-5'>
-            <OptionsPayment
-              onChangeOptions={onChangeOptions}
-              listOptions={listOptions}
-              optionSelected={optionSelected}
-            />
-            <BillFinal
-              disabledSubmit={!isValidSubmit}
-              loading={loading}
-              totalBill={getTotalPayBill()}
-              totalBillFeeShip={getTotalPayBill(true)}
-            />
+            <OptionsPayment listOptions={listOptions} optionSelected={optionSelected} onChangeOptions={onChangeOptions} />
+            <BillFinal disabledSubmit={!isValidSubmit} loading={loading} totalBill={getTotalPayBill()} totalBillFeeShip={getTotalPayBill(true)} />
           </div>
         </MyForm>
       </div>

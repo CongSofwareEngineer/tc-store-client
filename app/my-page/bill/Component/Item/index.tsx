@@ -53,7 +53,9 @@ const Item = ({ data, indexData }: Props) => {
 
   const getAddressShip = (item: any) => {
     const address = { ...item.addressShip }
+
     address.address = address.address.replaceAll('---', ' ')
+
     return `${address.addressDetail} (${address.address})`
   }
 
@@ -73,11 +75,13 @@ const Item = ({ data, indexData }: Props) => {
 
   const renderTotalBill = () => {
     let total = 0
+
     data.listBill.forEach((bill) => {
       total += bill.amountBuy * bill.moreData.price!
     })
     total += DEFAULT_FEE_SHIP
     total -= data.discount
+
     return <span className='text-green-600 font-bold'>{`${numberWithCommas(total)} VNĐ`}</span>
   }
 
@@ -88,15 +92,15 @@ const Item = ({ data, indexData }: Props) => {
   const renderDesktop = () => {
     return (
       <div
+        className={`shadow-md mb-1  p-4 flex flex-col gap-2 w-full bg-slate-50 ${styles['item-coffee']}`}
         style={{
           background: indexData % 2 !== 0 ? 'white' : '#f3f3f3',
         }}
-        className={`shadow-md mb-1  p-4 flex flex-col gap-2 w-full bg-slate-50 ${styles['item-coffee']}`}
       >
         <div className='flex justify-between w-full'>
           <div className='flex gap-2  '>
             <span>{`${translate('myBill.idOrder')} : `}</span>
-            <TextCopy value={data._id} textView={ellipsisText(data._id)} />
+            <TextCopy textView={ellipsisText(data._id)} value={data._id} />
           </div>
           <div className='flex gap-2 '>
             <div className=' text-center font-bold' style={{ color: getColorStatus(data.status) }}>
@@ -118,23 +122,19 @@ const Item = ({ data, indexData }: Props) => {
 
             return (
               <div
+                key={e.idProduct}
+                className='flex gap-3 '
                 style={{
                   borderBottom: `${isHasBorder ? 1 : 0}px solid #e5e7eb `,
                   paddingBottom: isHasBorder ? 15 : 0,
                   paddingTop: index > 0 ? 15 : 0,
                 }}
-                key={e.idProduct}
-                className='flex gap-3 '
               >
-                <div className='w-[70px]  rounded-md aspect-square overflow-hidden relative flex justify-center items-center'>
-                  {renderImgMain(e)}
-                </div>
+                <div className='w-[70px]  rounded-md aspect-square overflow-hidden relative flex justify-center items-center'>{renderImgMain(e)}</div>
                 <div className='flex justify-between flex-1 gap-2'>
                   <div className='flex flex-col gap-1'>
                     <Link href={getUrlProduct(e)}>
-                      <span className='hover:underline text-black font-bold '>
-                        {e?.moreData?.name}
-                      </span>
+                      <span className='hover:underline text-black font-bold '>{e?.moreData?.name}</span>
                     </Link>
                     <ConfigBill
                       item={{
@@ -178,15 +178,15 @@ const Item = ({ data, indexData }: Props) => {
   const renderMobile = () => {
     return (
       <div
+        className={`w-full shadow-md  flex flex-col md:gap-2 gap-1 py-3 bg-slate-50 ${styles['item-coffee']}`}
         style={{
           background: indexData % 2 !== 0 ? 'white' : '#f3f3f3',
         }}
-        className={`w-full shadow-md  flex flex-col md:gap-2 gap-1 py-3 bg-slate-50 ${styles['item-coffee']}`}
       >
         <div className='justify-between w-full flex px-3'>
           <div className='flex gap-2  '>
             <span>{`${translate('myBill.idOrder')} : `}</span>
-            <TextCopy value={data._id} textView={ellipsisText(data._id, 4, 3)} />
+            <TextCopy textView={ellipsisText(data._id, 4, 3)} value={data._id} />
           </div>
           <div className=' text-center font-bold' style={{ color: getColorStatus(data.status) }}>
             {getStatus(data.status)}
@@ -204,17 +204,15 @@ const Item = ({ data, indexData }: Props) => {
 
             return (
               <div
+                key={e.idProduct}
+                className='flex gap-3 px-3 '
                 style={{
                   borderBottom: `${isHasBorder ? 1 : 0}px solid #e5e7eb `,
                   paddingBottom: isHasBorder ? 15 : 0,
                   paddingTop: index > 0 ? 15 : 0,
                 }}
-                key={e.idProduct}
-                className='flex gap-3 px-3 '
               >
-                <div className='w-[70px]  rounded-md aspect-square overflow-hidden relative flex justify-center items-center'>
-                  {renderImgMain(e)}
-                </div>
+                <div className='w-[70px]  rounded-md aspect-square overflow-hidden relative flex justify-center items-center'>{renderImgMain(e)}</div>
                 <div className='flex justify-between flex-1 gap-2'>
                   <div className='flex flex-col gap-1'>
                     <div>{e?.moreData?.name}</div>

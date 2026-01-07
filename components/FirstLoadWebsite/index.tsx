@@ -49,23 +49,28 @@ const FirstLoadWebsite: NextPage = () => {
         setUserData(data?.data)
         await setCookie(COOKIE_KEY.Auth, data?.data.auth?.toString(), COOKIE_EXPIRED.ExpiredAuth)
       }
+
       return data?.data || null
     }
 
     const refreshLogin = async () => {
       setConnecting(true)
       const dataSecure = secureLocalStorage.getItem(ZUSTAND.UserData)
+
       if (dataSecure) {
         const dataDecode = decryptData(dataSecure.toString())
+
         if (dataDecode) {
           const userData = JSON.parse(dataDecode)
           const refreshAuth = await getCookie(COOKIE_KEY.AuthRefresh)
 
           if (!refreshAuth) {
             ObserverService.emit(OBSERVER_KEY.LogOut, false)
+
             return
           }
           const data = await loginWithDB(userData.sdt!, userData.pass!)
+
           if (!data) {
             ObserverService.emit(OBSERVER_KEY.LogOut, false)
           }
@@ -75,6 +80,7 @@ const FirstLoadWebsite: NextPage = () => {
       }
       setConnecting(false)
     }
+
     refreshLogin()
   }, [setUserData, setConnecting])
 

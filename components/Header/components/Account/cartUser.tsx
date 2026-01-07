@@ -39,6 +39,7 @@ const CartUser = () => {
       })
     }
   }
+
   return (
     <div className='relative' onClick={handleClick}>
       {data?.lengthCart > 0 && (
@@ -46,12 +47,7 @@ const CartUser = () => {
           {data?.lengthCart}
         </span>
       )}
-      <Image
-        fill
-        src={images.icon.iconCart}
-        alt='my-cart'
-        className='!relative !w-[25px] !h-[25px'
-      />
+      <Image fill alt='my-cart' className='!relative !w-[25px] !h-[25px' src={images.icon.iconCart} />
     </div>
   )
 }

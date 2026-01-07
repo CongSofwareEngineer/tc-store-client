@@ -8,9 +8,11 @@ const useBase64Img = (maxSizeOutputKB = 15, maxScale = MAX_PIXEL_REDUCE) => {
 
   const reduceImageSize = (imageFile: File, maxSizeInKB = 5, quality = 0.7, callback: any) => {
     const reader = new FileReader()
+
     reader.readAsDataURL(imageFile)
     reader.onload = (event) => {
       const imgElement = document.createElement('img')
+
       imgElement.src = event.target?.result + ''
       imgElement.onload = () => {
         const canvas = document.createElement('canvas')
@@ -19,12 +21,13 @@ const useBase64Img = (maxSizeOutputKB = 15, maxScale = MAX_PIXEL_REDUCE) => {
         // Adjust canvas size to reduce the dimensions of the image
         const MAX_WIDTH: any = maxScale // Adjust width as needed
         const scaleSize = MAX_WIDTH / imgElement.width
+
         canvas.width = MAX_WIDTH
         canvas.height = imgElement.height * scaleSize
         context?.drawImage(imgElement, 0, 0, canvas.width, canvas.height)
 
         const compressImage = (currentQuality: any) => {
-          console.log({ maxSizeInKB })
+          // console.log({ maxSizeInKB })
 
           canvas.toBlob(
             (blob: any) => {
@@ -62,7 +65,9 @@ const useBase64Img = (maxSizeOutputKB = 15, maxScale = MAX_PIXEL_REDUCE) => {
       return new Promise((resolve) => {
         if (fileUpload.size > 30 * 1048576) {
           const text = translate('warning.maxSizeFile').replace('{size}', `30 MB`)
+
           showNotificationError(text)
+
           return
         }
 
@@ -86,6 +91,7 @@ const useBase64Img = (maxSizeOutputKB = 15, maxScale = MAX_PIXEL_REDUCE) => {
       })
     } catch {
       showNotificationError(translate('errors.file'))
+
       return null
     }
   }
@@ -94,13 +100,16 @@ const useBase64Img = (maxSizeOutputKB = 15, maxScale = MAX_PIXEL_REDUCE) => {
     try {
       if (fileUpload.size > 30 * 1048576) {
         const text = translate('warning.maxSizeFile').replace('{size}', `30 MB`)
+
         showNotificationError(text)
+
         return
       }
 
       getBase64Base(fileUpload, callBack)
     } catch {
       showNotificationError(translate('errors.file'))
+
       return null
     }
   }

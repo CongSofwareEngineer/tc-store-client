@@ -36,7 +36,7 @@ const MoreInfo = ({ data }: { data: any }) => {
       children: (
         <>
           {checkMyBlog() ? (
-            <MyBlog className='!p-0' value={JSON.parse(data?.des2 || '{}')} disabled />
+            <MyBlog disabled className='!p-0' value={JSON.parse(data?.des2 || '{}')} />
           ) : (
             <div className='pt-3'>{translate('warning.noData')}</div>
           )}

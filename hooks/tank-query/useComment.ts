@@ -32,6 +32,7 @@ const useComment = (isProduct = '') => {
       if (lastPage.data.length == PAGE_SIZE_LIMIT) {
         return lastPage.page + 1
       }
+
       return null
     },
   })
@@ -41,6 +42,7 @@ const useComment = (isProduct = '') => {
       return []
     }
     const dataFormat = data?.pages.flatMap((e) => e.data)
+
     return dataFormat
   }, [data])
 

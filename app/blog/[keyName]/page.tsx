@@ -12,7 +12,7 @@ const getData = async (keyName: string): Promise<IProduct> => {
 
 const BlogPage = async ({ params }: any) => {
   // const { keyName } = await params
-  // console.log({ keyName })
+  //  // console.log({ keyName })
 
   // const productDetail = await getData(keyName)
   // if (!productDetail) {

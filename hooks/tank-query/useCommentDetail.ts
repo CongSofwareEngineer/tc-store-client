@@ -7,6 +7,7 @@ const getData = async ({ queryKey }: any) => {
   const idProduct = queryKey[1]
   const userData = queryKey[2]
   const res = await ClientApi.getCommentByIdAndSDT(idProduct, userData?.sdt)
+
   return res?.data || null
 }
 
@@ -18,6 +19,7 @@ const useCommentDetail = (idProduct?: string) => {
     enabled: !!idProduct && isLogin,
     queryFn: getData,
   })
+
   return { data, isLoading }
 }
 

@@ -29,12 +29,13 @@ const UploadImage = ({
     if (isIOS || isMacOs) {
       return 'image/*'
     }
+
     return '.png,.jpg,.jpeg,.gif,.svg'
   }, [])
 
   const handleUploadImg = (file: File | null) => {
     const callbackCrop = async (fileCrop: IFileImage | null) => {
-      console.log({ fileCrop })
+      // console.log({ fileCrop })
       // const formData = new FormData()
       // formData.append('file', file!)
 
@@ -44,13 +45,7 @@ const UploadImage = ({
 
     openModal({
       body: (
-        <CropImg
-          fullQuantity={fullQuality}
-          maxScale={maxPixelReduce}
-          maxSizeOutputKB={maxSizeOutputKB}
-          onCropComplete={callbackCrop}
-          file={file!}
-        />
+        <CropImg file={file!} fullQuantity={fullQuality} maxScale={maxPixelReduce} maxSizeOutputKB={maxSizeOutputKB} onCropComplete={callbackCrop} />
       ),
       title: 'Cắt ảnh',
       overClickClose: false,
@@ -59,15 +54,15 @@ const UploadImage = ({
   }
 
   return (
-    <FileButton onChange={handleUploadImg} disabled={disabled} accept={typeFile}>
+    <FileButton accept={typeFile} disabled={disabled} onChange={handleUploadImg}>
       {(props) => (
         <Button
           {...props}
           className='!p-0 !bg-transparent'
+          disabled={disabled}
           style={{
             opacity: disabled ? 0.5 : 1,
           }}
-          disabled={disabled}
         >
           {children || (
             <div className='text-white !text-2xl cursor-pointer transition-all duration-300 hover:!text-3xl'>

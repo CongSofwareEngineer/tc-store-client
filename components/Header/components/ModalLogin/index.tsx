@@ -53,37 +53,33 @@ const ModalLogin = () => {
     <div className='w-full flex flex-col gap-2 justify-start '>
       <MyForm autoComplete='on' form={formData} submit={handleLogin}>
         <InputForm
+          autoComplete='username'
           formData={formData}
           keyName='sdt'
-          name='username'
-          autoComplete='username'
           label={translate('userDetail.sdt')}
+          name='username'
           placeholder={translate('userDetail.sdt')}
         />
         <InputPasswordForm
           required
-          label={translate('userDetail.pass')}
-          placeholder={translate('userDetail.pass')}
-          keyName='pass'
-          name='current-password'
           autoComplete='current-password'
           formData={formData}
+          keyName='pass'
+          label={translate('userDetail.pass')}
+          name='current-password'
+          placeholder={translate('userDetail.pass')}
         />
         <div className='flex md:flex-row justify-between w-full md:gap-0 gap-2 mb-3'>
-          <CheckboxForm
-            keyName={'saveLogin'}
-            formData={formData}
-            label={translate('register.saveRegister')}
-          />
+          <CheckboxForm formData={formData} keyName={'saveLogin'} label={translate('register.saveRegister')} />
           <div className='flex-1  text-blue-500 flex justify-end items-end'>
-            <div onClick={handleRegister} className='md:hover:underline cursor-pointer'>
+            <div className='md:hover:underline cursor-pointer' onClick={handleRegister}>
               {translate('register.title')}
             </div>
           </div>
         </div>
 
         <div className='w-full mt-4' />
-        <ButtonForm loading={loading} disableClose titleSubmit={translate('common.login')} />
+        <ButtonForm disableClose loading={loading} titleSubmit={translate('common.login')} />
       </MyForm>
     </div>
   )

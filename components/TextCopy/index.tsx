@@ -14,16 +14,13 @@ const TextCopy = ({ textView = '', value = '', isLink = false, ...props }: Props
   return (
     <div className={cn(`flex gap-2 items-center `, props?.className)}>
       {isLink ? (
-        <Link target='_blank' href={value || textView}>
+        <Link href={value || textView} target='_blank'>
           {value || textView}
         </Link>
       ) : (
         <div className={props?.classText}>{textView || value}</div>
       )}
-      <AiOutlineCopy
-        className='cursor-pointer'
-        onClick={() => copyToClipboard(value || textView)}
-      />
+      <AiOutlineCopy className='cursor-pointer' onClick={() => copyToClipboard(value || textView)} />
     </div>
   )
 }

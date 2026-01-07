@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
       status: 200,
     })
   } catch (error) {
-    console.log({ error })
+    // console.log({ error })
 
     return new Response(
       JSON.stringify({
@@ -52,7 +52,7 @@ export async function GET() {
       }
     )
   } catch (error) {
-    console.log({ error })
+    // console.log({ error })
 
     return new Response(
       JSON.stringify({

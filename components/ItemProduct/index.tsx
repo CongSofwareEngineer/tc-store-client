@@ -47,23 +47,19 @@ const ItemProduct = ({
         )}
       >
         {showDiscount && item?.disCount! > 0 && (
-          <div className='absolute text-black right-0 top-4 bg-green-300   px-2  rounded-l-md z-[1]'>
-            -{item?.disCount}%
-          </div>
+          <div className='absolute text-black right-0 top-4 bg-green-300   px-2  rounded-l-md z-[1]'>-{item?.disCount}%</div>
         )}
 
         <div className='m-auto max-w-[85%] relative w-full aspect-square  overflow-hidden'>
           <MyImage
-            src={detectImg(item?.images![0].url.toString(), 350)}
-            alt={`item-${item?.name || href}`}
             isAnimation
+            alt={`item-${item?.name || href}`}
             className='!h-auto group-hover:scale-110 transform !transition !duration-300 !ease-in-out select-none'
+            src={detectImg(item?.images![0].url.toString(), 350)}
           />
         </div>
         <div className='w-full gap-1 flex flex-col'>
-          <p className='w-full md:text-medium font-bold whitespace-nowrap overflow-hidden text-ellipsis'>
-            {item?.name}
-          </p>
+          <p className='w-full md:text-medium font-bold whitespace-nowrap overflow-hidden text-ellipsis'>{item?.name}</p>
           <TextPriceBase className=' w-full   '>{`${numberWithCommas(formatPriceBase(item?.price || 150, item?.disCount))} VNĐ`}</TextPriceBase>
 
           <div className='w-full  text-green-600 xl:text-[24px] md:text-[18px] text-[13px] font-bold flex justify-between  '>
@@ -89,6 +85,7 @@ const ItemProduct = ({
       </div>
     )
   }
+
   if (noClick) {
     return (
       <div className='group w-full select-none' onClick={callback}>
@@ -98,7 +95,7 @@ const ItemProduct = ({
   }
 
   return (
-    <Link className='group' onClick={handleClick} href={href}>
+    <Link className='group' href={href} onClick={handleClick}>
       {renderContent()}
     </Link>
   )

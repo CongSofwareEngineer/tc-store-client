@@ -15,13 +15,7 @@ type IMyDropDown = {
   className?: string
   classItem?: string
 }
-const MyDropDown = ({
-  children,
-  items = [],
-  onClick = () => {},
-  classItem = '',
-  className = '',
-}: IMyDropDown) => {
+const MyDropDown = ({ children, items = [], onClick = () => {}, classItem = '', className = '' }: IMyDropDown) => {
   return (
     <Menu shadow='md'>
       <Menu.Target>{children}</Menu.Target>
@@ -31,12 +25,7 @@ const MyDropDown = ({
             <React.Fragment key={`Dropdown-item-${index}`}>
               {e.label && <Menu.Label>{e.label}</Menu.Label>}
               {e.children && (
-                <Menu.Item
-                  onClick={onClick}
-                  className={classItem}
-                  leftSection={e.leftIcon}
-                  rightSection={e.rightIcon}
-                >
+                <Menu.Item className={classItem} leftSection={e.leftIcon} rightSection={e.rightIcon} onClick={onClick}>
                   {e.children}
                 </Menu.Item>
               )}

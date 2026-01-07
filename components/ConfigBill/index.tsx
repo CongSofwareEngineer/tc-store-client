@@ -24,6 +24,7 @@ const ConfigBill = ({
 
         if (key === 'model') {
           const info = item?.moreData?.models.find((e) => e.model === value)
+
           valueLocal = info?.name
         }
 
@@ -37,8 +38,7 @@ const ConfigBill = ({
               <div className='whitespace-nowrap'>{translate(valueLocal) || value}</div>
             )}
 
-            {index + 1 < Object.entries(item?.configBill || item?.configCart || {}).length &&
-              !noCommas && <span>,</span>}
+            {index + 1 < Object.entries(item?.configBill || item?.configCart || {}).length && !noCommas && <span>,</span>}
           </div>
         )
       })}

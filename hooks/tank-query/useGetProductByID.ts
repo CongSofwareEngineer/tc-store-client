@@ -13,6 +13,7 @@ const useGetProductByID = (id = '') => {
     enabled: !!id,
     queryFn: getData,
   })
+
   return {
     data,
     isLoading,

@@ -37,6 +37,7 @@ const ModalFeedBack = ({ data, item }: { data: IItemListBill; item: any }) => {
       setDes(dataGetApi.note || '')
       setRate(Number(dataGetApi.rate || 5))
     }
+
     dataGetApi && getData()
   }, [dataGetApi])
 
@@ -46,6 +47,7 @@ const ModalFeedBack = ({ data, item }: { data: IItemListBill; item: any }) => {
 
   const deleteImg = (index: number) => {
     const data = listImgFeeBack.filter((_: any, indexFilter: number) => indexFilter !== index)
+
     setListImgFeeBack(data)
   }
 
@@ -79,6 +81,7 @@ const ModalFeedBack = ({ data, item }: { data: IItemListBill; item: any }) => {
       const arrImg = listImgFeeBack.map((e) => {
         delete e.base64
         delete e.type
+
         return e
       })
       const body: DataAddComment = {
@@ -129,6 +132,7 @@ const ModalFeedBack = ({ data, item }: { data: IItemListBill; item: any }) => {
     if (rate >= 2) {
       return translate('comment.wellwell')
     }
+
     return translate('comment.normal')
   }
 
@@ -138,10 +142,7 @@ const ModalFeedBack = ({ data, item }: { data: IItemListBill; item: any }) => {
         {listImgFeeBack.map((item: any, index: number) => (
           <div key={`img-${index}`} className='relative w-[70px] '>
             <MyImage alt='img' className='!w-[70px]' src={detectImg(item?.base64 || item)} />
-            <AiOutlineCloseCircle
-              onClick={() => deleteImg(index)}
-              className='absolute text-[20px] z-10 cursor-pointer right-0 top-0'
-            />
+            <AiOutlineCloseCircle className='absolute text-[20px] z-10 cursor-pointer right-0 top-0' onClick={() => deleteImg(index)} />
           </div>
         ))}
       </div>
@@ -160,10 +161,7 @@ const ModalFeedBack = ({ data, item }: { data: IItemListBill; item: any }) => {
 
   return (
     <div className='fex flex-col gap-3 '>
-      <div
-        onClick={handleBack}
-        className='w-max mb-4 flex items-center gap-2 cursor-pointer font-bold'
-      >
+      <div className='w-max mb-4 flex items-center gap-2 cursor-pointer font-bold' onClick={handleBack}>
         <AiOutlineArrowLeft />
         <div>{translate('common.back')}</div>
       </div>
@@ -178,34 +176,18 @@ const ModalFeedBack = ({ data, item }: { data: IItemListBill; item: any }) => {
         </div>
       </div>
       <div className='mt-2 mb-1'>{`${translate('textPopular.note')} :`}</div>
-      <InputArea
-        onChange={(e) => setDes(e.target.value)}
-        rows={3}
-        value={des}
-        maxLength={100}
-        showCount
-      />
+      <InputArea showCount maxLength={100} rows={3} value={des} onChange={(e) => setDes(e.target.value)} />
       {/* <Textarea  onChange={(e) => setDes(e.target.value)} rows={3} value={des}  maxLength={150} /> */}
       <div className='mb-3' />
       {renderListImg()}
-      <UploadImage
-        callback={handleUpload}
-        disabled={listImgFeeBack?.length >= 2}
-        maxSizeOutputKB={200}
-        maxPixelReduce={400}
-      >
+      <UploadImage callback={handleUpload} disabled={listImgFeeBack?.length >= 2} maxPixelReduce={400} maxSizeOutputKB={200}>
         <div className='flex gap-2 items-center w-full mt-3'>
           <AiOutlineCamera className='cursor-pointer' style={{ fontSize: 25, color: 'blue' }} />
           <div className='text-black'>{translate('comment.uploadImg_des')}</div>
         </div>
       </UploadImage>
 
-      <Button
-        onClick={handleSubmit}
-        loading={loading}
-        disabled={!des}
-        className='mt-4 md:mb-0 mb-2 !w-full mx-auto min-w-[50%]'
-      >
+      <Button className='mt-4 md:mb-0 mb-2 !w-full mx-auto min-w-[50%]' disabled={!des} loading={loading} onClick={handleSubmit}>
         {dataGetApi?.note ? translate('common.update') : translate('common.save')}
       </Button>
     </div>

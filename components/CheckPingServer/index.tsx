@@ -7,17 +7,19 @@ import ModalDelete from '../ModalDelete'
 const CheckPingServer = () => {
   const { openModalDrawer } = useModalDrawer()
   const { translate } = useLanguage()
+
   useEffect(() => {
     ;(async () => {
       const res = await ClientApi.pingServer()
+
       if (!res?.data && process.env.NEXT_PUBLIC_ENABLE_CHECK_SERVER_WORKING) {
         openModalDrawer({
           content: (
             <ModalDelete
-              titleConfirm={translate('common.continue')}
               disableCancel
-              title={translate('pingServer.title')}
               des={translate('pingServer.des')}
+              title={translate('pingServer.title')}
+              titleConfirm={translate('common.continue')}
             />
           ),
           configModal: {

@@ -28,19 +28,14 @@ const Container = ({ children }: PropsWithChildren) => {
   const renderItem = (icon: string, name: string, link: string) => {
     return (
       <Link
-        href={link}
         className='cursor-pointer text-black  flex md:flex-row flex-col gap-1 md:items-start items-center hover:underline'
+        href={link}
         style={{
           fontWeight: patchName === link ? 'bold' : 'normal',
           color: 'black',
         }}
       >
-        <Image
-          src={icon}
-          alt={`icon-menu-my-profile-${name}`}
-          fill
-          className='!relative md:!w-[25px] md:!h-[25px] !w-5 !h-5'
-        />
+        <Image fill alt={`icon-menu-my-profile-${name}`} className='!relative md:!w-[25px] md:!h-[25px] !w-5 !h-5' src={icon} />
         <span>{name}</span>
       </Link>
     )
@@ -52,15 +47,9 @@ const Container = ({ children }: PropsWithChildren) => {
         <div className='w-full relative '>
           <div className='fixed bg-white  w-full flex justify-around bottom-0 left-0 py-3  border-t-[1px] shadow-gray1 border-gray-300 z-10'>
             <Grid className='w-full'>
-              <Grid.Col span={4}>
-                {renderItem(images.icon.iconHome, translate('header.home'), '/')}
-              </Grid.Col>
-              <Grid.Col span={4}>
-                {renderItem(images.icon.iconHistory, translate('myPage.myOder'), '/my-page/bill')}
-              </Grid.Col>
-              <Grid.Col span={4}>
-                {renderItem(images.icon.iconMyUser, translate('myPage.myUser'), '/my-page')}
-              </Grid.Col>
+              <Grid.Col span={4}>{renderItem(images.icon.iconHome, translate('header.home'), '/')}</Grid.Col>
+              <Grid.Col span={4}>{renderItem(images.icon.iconHistory, translate('myPage.myOder'), '/my-page/bill')}</Grid.Col>
+              <Grid.Col span={4}>{renderItem(images.icon.iconMyUser, translate('myPage.myUser'), '/my-page')}</Grid.Col>
             </Grid>
           </div>
           <div className='w-full mb-[75px]'>{children}</div>
@@ -81,9 +70,7 @@ const Container = ({ children }: PropsWithChildren) => {
             {renderItem(images.icon.iconCart, translate('header.cart'), '/my-cart')}
           </div>
         </div>
-        <div className='flex flex-1 bg-white p-4 h-fit max-h-[calc(100vh-80px)] overflow-y-auto '>
-          {children}
-        </div>
+        <div className='flex flex-1 bg-white p-4 h-fit max-h-[calc(100vh-80px)] overflow-y-auto '>{children}</div>
       </div>
     )
   }

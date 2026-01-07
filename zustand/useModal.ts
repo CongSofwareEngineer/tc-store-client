@@ -23,6 +23,7 @@ const zustandModal = create<ModalStore>()(
           if (pre?.[ZUSTAND.Modal]?.afterCose) {
             pre?.[ZUSTAND.Modal].afterCose()
           }
+
           return {
             [ZUSTAND.Modal]: {
               ...pre?.[ZUSTAND.Modal],

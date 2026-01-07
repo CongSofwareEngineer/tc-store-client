@@ -17,7 +17,7 @@ class SepayServices {
         status: 200,
       }
     } catch (error) {
-      console.log({ errorPost: error })
+      // console.log({ errorPost: error })
 
       return {
         error: null,

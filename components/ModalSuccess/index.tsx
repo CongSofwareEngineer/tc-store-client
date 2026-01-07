@@ -20,16 +20,14 @@ const ModalSuccess = ({ showClose = false, callback = null, ...props }: Props) =
 
   return (
     <div className='flex flex-col w-full gap-4 justify-center align-middle'>
-      <p className='text-title text-center'>
-        {props?.title || translate('warning.doYouWantDetele')}
-      </p>
+      <p className='text-title text-center'>{props?.title || translate('warning.doYouWantDetele')}</p>
       <div className='m-auto my-2 relative overflow-hidden'>
         <Image
-          src={props.icon || images.icon.iconSuccess}
-          alt='icon-modal-success'
-          priority
           fill
+          priority
+          alt='icon-modal-success'
           className='!relative !w-auto md:!h-[100px] !h-[70px]'
+          src={props.icon || images.icon.iconSuccess}
         />
       </div>
       {props?.des && <div className='text-center mb-2 md:max-w-[90%] m-auto'>{props.des}</div>}

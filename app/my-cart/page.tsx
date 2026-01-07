@@ -11,6 +11,7 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
     dataBase,
     title: 'Giỏ hàng',
   })
+
   return metaData
 }
 const MyCartPage: NextPage = () => {

@@ -37,12 +37,7 @@ const ListItemCart = ({
       <>
         {!noTitle && (
           <table className='w-full md:min-w-[700px] '>
-            <TitleItem
-              allSelected={isSelectedAll}
-              noEdit={noEdit}
-              dataCart={dataCart}
-              callBack={handleSelectedAll}
-            />
+            <TitleItem allSelected={isSelectedAll} callBack={handleSelectedAll} dataCart={dataCart} noEdit={noEdit} />
           </table>
         )}
         {loading && (
@@ -53,12 +48,12 @@ const ListItemCart = ({
         {dataCart.map((e, index) => {
           return (
             <ItemCart
-              noEdit={noEdit}
+              key={index}
               callBack={(e) => handleCliCkItem(e, index)}
               callBackDelete={() => callBackDelete(index)}
-              key={index}
               data={e}
               noBorder={index === dataCart.length - 1}
+              noEdit={noEdit}
             />
           )
         })}
@@ -81,12 +76,12 @@ const ListItemCart = ({
         {dataCart.map((e, index) => {
           return (
             <ItemCart
-              noEdit={noEdit}
+              key={index}
               callBack={(e) => handleCliCkItem(e, index)}
               callBackDelete={async () => callBackDelete(index)}
-              key={index}
               data={e}
               noBorder={index === dataCart.length - 1}
+              noEdit={noEdit}
             />
           )
         })}

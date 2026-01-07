@@ -14,24 +14,13 @@ export type MyTabsProps = {
   classTabs?: string
 }
 
-const MyTabs = ({
-  data = [],
-  defaultValue = '',
-  onChange = () => {},
-  classLabel = '',
-  classPanel = '',
-  classTabs = '',
-}: MyTabsProps) => {
+const MyTabs = ({ data = [], defaultValue = '', onChange = () => {}, classLabel = '', classPanel = '', classTabs = '' }: MyTabsProps) => {
   return (
-    <Tabs
-      onChange={(tabs) => onChange(tabs)}
-      defaultValue={defaultValue || data[0]?.key}
-      className={classTabs}
-    >
+    <Tabs className={classTabs} defaultValue={defaultValue || data[0]?.key} onChange={(tabs) => onChange(tabs)}>
       <Tabs.List className={cn('mb-2', classLabel)}>
         {data.map((e) => {
           return (
-            <Tabs.Tab value={e.key} key={`${e.key}-List`}>
+            <Tabs.Tab key={`${e.key}-List`} value={e.key}>
               {e.label}
             </Tabs.Tab>
           )
@@ -40,7 +29,7 @@ const MyTabs = ({
 
       {data.map((e) => {
         return (
-          <Tabs.Panel className={classPanel} value={e.key} key={`${e.key}-Panel`}>
+          <Tabs.Panel key={`${e.key}-Panel`} className={classPanel} value={e.key}>
             {e.children}
           </Tabs.Panel>
         )

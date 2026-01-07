@@ -31,15 +31,18 @@ export async function generateMetadata({ params }: any, parent: ResolvingMetadat
     des: data?.value?.desSeo || data?.value?.des,
     override: true,
   })
+
   return metaData
 }
 const ShopPageDetail = async ({ params }: PageProps) => {
   const { params: paramsProduct } = await params
 
   const productDetail = await getData(paramsProduct[0])
+
   if (!productDetail) {
     return notFound()
   }
+
   return (
     <>
       <Header />

@@ -14,6 +14,7 @@ export const generateMetaBase = ({
   overrideImage?: boolean
 }) => {
   const dataClone = JSON.parse(JSON.stringify(dataBase))
+
   if (title) {
     dataClone.title = override ? title : `${process.env.NEXT_PUBLIC_TITLE} | ${title}`
     dataClone.openGraph.title = override ? title : `${process.env.NEXT_PUBLIC_TITLE} | ${title}`
@@ -35,5 +36,6 @@ export const generateMetaBase = ({
     ]
     dataClone.twitter.images = image
   }
+
   return dataClone
 }

@@ -7,23 +7,20 @@ import { getDataLocal } from '@/utils/functions'
 import { IClientApi } from '@/services/ClientApi/type'
 import ClientApi from '@/services/ClientApi/index'
 
-const getData = async ({
-  queryKey,
-  pageParam = 1,
-}: {
-  queryKey: any
-  pageParam: any
-}): Promise<{ data: IClientApi['myCart'][]; page: number }> => {
+const getData = async ({ queryKey, pageParam = 1 }: { queryKey: any; pageParam: any }): Promise<{ data: IClientApi['myCart'][]; page: number }> => {
   const isLogin = queryKey[3]
+
   if (isLogin) {
     const queryUrl = `${queryKey[1]}?page=${pageParam}&limit=${queryKey[2]}`
     const dataServer = await ClientApi.getMyCart(queryUrl)
+
     return {
       data: dataServer,
       page: pageParam,
     }
   } else {
     const data = getDataLocal(COOKIE_KEY.MyCart)
+
     return {
       data: data || [],
       page: pageParam,
@@ -42,6 +39,7 @@ const useMyCart = (pageSize = PAGE_SIZE_LIMIT) => {
       if (lastPage?.data?.length === pageSize) {
         return lastPage.page + 1
       }
+
       return null
     },
   })
@@ -51,6 +49,7 @@ const useMyCart = (pageSize = PAGE_SIZE_LIMIT) => {
       return []
     }
     const dataFormat = data?.pages.flatMap((e) => e.data)
+
     return dataFormat
   }, [data])
 

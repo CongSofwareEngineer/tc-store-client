@@ -24,10 +24,10 @@ const MenuCategory = () => {
     <MyFilter titleHeader={translate('menuProduct.category')}>
       <MyFilterCheckBox
         data={itemMenu || []}
+        isDefault={!isMobile}
+        isReplace={false}
         titleFilter={translate('menuProduct.product')}
         typeChecked={FilterAPI.Category}
-        isReplace={false}
-        isDefault={!isMobile}
       />
     </MyFilter>
   )

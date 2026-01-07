@@ -61,6 +61,7 @@ class VietcomBankService {
   static openDeepLink(amount: number, mess: string) {
     const urlFinal = `https://dl.vietqr.io/pay?app=vcb&ba=${process.env.NEXT_PUBLIC_VCB_STK}@vcb&am=$${amount}&tn=${mess}`
     const link = document.createElement('a')
+
     link.href = urlFinal
     document.body.appendChild(link)
     link.click()
@@ -70,6 +71,7 @@ class VietcomBankService {
 
   createQR(amount: number, mess: string) {
     const img = `https://img.vietqr.io/image/970436-${process.env.NEXT_PUBLIC_VCB_STK}-yWeQQO1.jpg?accountName=HO%20DIEN%20CONG&amount=${amount}&addInfo=${mess}`
+
     return img
   }
 }

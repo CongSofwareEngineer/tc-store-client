@@ -25,28 +25,28 @@ const MenuShoes = () => {
     <MyFilter titleHeader={translate('menuProduct.category')}>
       <MyFilterCheckBox
         data={menuShoes}
+        isDefault={!isMobile}
+        isReplace={false}
         titleFilter={translate('menuProduct.product')}
         typeChecked={FilterAPI.Sex}
-        isReplace={false}
-        isDefault={!isMobile}
       />
 
       <MyFilterRange
+        isDefault={!isMobile}
         keyMax='maxSize'
         keyMin='minSize'
         maxSlider={DEFAULT_VALUE_RANGE.Shoes.maxSize}
         minSlider={DEFAULT_VALUE_RANGE.Shoes.minSize}
         title={translate('textPopular.size')}
-        isDefault={!isMobile}
       />
 
       <MyFilterRange
         isDefault={!isMobile}
-        stepRange={100000}
         keyMax='maxPrice'
         keyMin='minPrice'
         maxSlider={DEFAULT_VALUE_RANGE.Price.max}
         minSlider={DEFAULT_VALUE_RANGE.Price.min}
+        stepRange={100000}
         title={`${translate('productDetail.price')} (VNĐ)`}
       />
     </MyFilter>

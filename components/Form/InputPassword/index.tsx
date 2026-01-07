@@ -7,20 +7,8 @@ type IInputPasswordForm = {
   className?: string
 } & PasswordInputProps
 
-const InputPasswordForm = ({
-  formData,
-  keyName = '',
-  className = '',
-  ...props
-}: IInputPasswordForm) => {
-  return (
-    <PasswordInput
-      key={formData.key(keyName)}
-      className={className}
-      {...props}
-      {...formData.getInputProps(keyName)}
-    />
-  )
+const InputPasswordForm = ({ formData, keyName = '', className = '', ...props }: IInputPasswordForm) => {
+  return <PasswordInput key={formData.key(keyName)} className={className} {...props} {...formData.getInputProps(keyName)} />
 }
 
 export default InputPasswordForm

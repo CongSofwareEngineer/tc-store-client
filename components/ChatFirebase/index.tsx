@@ -56,6 +56,7 @@ const ChatFirebase: NextPage = () => {
                   date: Number(date),
                 },
               }
+
               return itemTemp
             })
             .filter((e) => e.key !== 'date')
@@ -77,6 +78,7 @@ const ChatFirebase: NextPage = () => {
     } else {
       const iDLocalStorage = getDataLocal(LOCAL_STORAGE_KEY.IDChatMessages)
       const timeStamp = iDLocalStorage || Date.now()
+
       if (!iDLocalStorage) {
         saveDataLocal(LOCAL_STORAGE_KEY.IDChatMessages, timeStamp)
       }
@@ -87,12 +89,14 @@ const ChatFirebase: NextPage = () => {
   useEffect(() => {
     if (enableChat) {
       const obUpdate: IContentChat = {}
+
       setListChats((pre) => {
         const arrTemp: IItemChat[] = pre.map((e) => {
           if (e.content.isAdmin && !e?.content?.isSeen) {
             e.content.isSeen = true
             obUpdate[e.key] = e.content
           }
+
           return e
         })
 
@@ -127,6 +131,7 @@ const ChatFirebase: NextPage = () => {
 
   const handleSend = async () => {
     const isValidSend = checkValidMess()
+
     if (isValidSend) {
       if (content?.trim()) {
         setContent('')
@@ -137,6 +142,7 @@ const ChatFirebase: NextPage = () => {
           },
           date: toDate,
         }
+
         setContent('')
         await dbRef.current?.create(data)
       }
@@ -164,14 +170,12 @@ const ChatFirebase: NextPage = () => {
 
   const renderAmountNewMessage = () => {
     const amountNew = listChats.filter((e) => !e.content?.isSeen && e.content?.isAdmin).length
+
     if (amountNew === 0) {
       return <></>
     }
-    return (
-      <div className='absolute top-[-10px] right-[-10px] bg-red-300 px-2 py-1   rounded-[50%] text-[10px]  '>
-        {amountNew}
-      </div>
-    )
+
+    return <div className='absolute top-[-10px] right-[-10px] bg-red-300 px-2 py-1   rounded-[50%] text-[10px]  '>{amountNew}</div>
   }
 
   if (userData?.isAdmin) {
@@ -180,39 +184,36 @@ const ChatFirebase: NextPage = () => {
 
   return (
     <div
+      className='fixed z-[11]'
       style={{
         right: enableChat ? 20 : position.right,
         bottom: enableChat ? 20 : position.bottom,
       }}
-      className='fixed z-[11]'
     >
       {enableChat ? (
         <div
+          className='flex animate-zoom flex-col w-[300px] rounded-md relative overflow-hidden   bg-white'
           style={{
             boxShadow: 'rgba(0, 0, 0, 0.1) 0px 2px 2px 1px',
           }}
-          className='flex animate-zoom flex-col w-[300px] rounded-md relative overflow-hidden   bg-white'
         >
           <div className='flex justify-between px-3 py-1  items-center bg-green-300'>
             <div>Chat</div>
 
             <div className='text-black text-xl'>
-              <AiOutlineCloseCircle
-                className='cursor-pointer'
-                onClick={() => setEnableChat(false)}
-              />
+              <AiOutlineCloseCircle className='cursor-pointer' onClick={() => setEnableChat(false)} />
             </div>
           </div>
 
           <div className=' relative flex flex-col flex-1 min-h-[400px] max-h-[400px] overflow-y-auto'>
-            <ChatMessage isLoadMore={false} isReverse loading={false} data={listChats}>
+            <ChatMessage isReverse data={listChats} isLoadMore={false} loading={false}>
               <div className='flex w-full justify-start'>
                 <div
+                  className='px-3  w-max max-w-[70%] mx-3 text-xs my-2 py-2  bg-blue-200'
                   style={{
                     borderRadius: 8,
                     borderBottomLeftRadius: 0,
                   }}
-                  className='px-3  w-max max-w-[70%] mx-3 text-xs my-2 py-2  bg-blue-200'
                 >
                   <div
                     dangerouslySetInnerHTML={{
@@ -223,53 +224,41 @@ const ChatFirebase: NextPage = () => {
               </div>
 
               {listChats.map((e) => {
-                return <ItemChatDetail data={e.content} key={e.date} />
+                return <ItemChatDetail key={e.date} data={e.content} />
               })}
-              {isSendMuchMessages && (
-                <div className='w-full px-3 text-center text-[12px] text-red-400'>
-                  {translate('errors.sendMuchMessages')}
-                </div>
-              )}
+              {isSendMuchMessages && <div className='w-full px-3 text-center text-[12px] text-red-400'>{translate('errors.sendMuchMessages')}</div>}
             </ChatMessage>
           </div>
 
           <div className='flex w-full border-t-[1px] border-gray-300'>
             <div className='flex flex-1'>
               <Input
-                onKeyDown={handleKeyDown}
-                value={content}
-                placeholder={translate('placeholder.enterContent')}
-                onChange={(text) => setContent(text.target.value)}
                 className='w-full !pl-2 '
+                placeholder={translate('placeholder.enterContent')}
                 styles={{
                   input: {
                     border: 0,
                     paddingLeft: 5,
                   },
                 }}
+                value={content}
+                onChange={(text) => setContent(text.target.value)}
+                onKeyDown={handleKeyDown}
               />
               <div className='h-full justify-center items-center flex px-2 bg-gray-300'>
-                <AiOutlineSend onClick={handleSend} className='cursor-pointer' />
+                <AiOutlineSend className='cursor-pointer' onClick={handleSend} />
               </div>
             </div>
           </div>
         </div>
       ) : (
         <motion.div
-          drag
-          // dragListener={false}
-          dragConstraints={{
-            left: -window.innerWidth + 50,
-            right: 20,
-            top: -window.innerHeight + 50,
-            bottom: 0,
-          }}
-          style={{ touchAction: 'none' }}
           animate={false}
           dragControls={controls}
           dragElastic={false}
+          style={{ touchAction: 'none' }}
           onDrag={(e: any) => {
-            console.log({ onDrag: e })
+             // console.log({ onDrag: e })
             handleMouseMove(e)
           }}
           onDragEnd={() => {
@@ -281,18 +270,23 @@ const ChatFirebase: NextPage = () => {
               isDragging.current = false
             }, 200)
           }}
+          drag
+          // dragListener={false}
+          dragConstraints={{
+            left: -window.innerWidth + 50,
+            right: 20,
+            top: -window.innerHeight + 50,
+            bottom: 0,
+          }}
         >
-          <div onClick={handleClick} className='relative'>
+          <div className='relative' onClick={handleClick}>
             <MyImage
               alt='icon-message-chat'
-              src={images.icon.iconMessageChat}
               className='!relative select-none !w-[40px] !h-[40px] drop-shadow-img'
+              src={images.icon.iconMessageChat}
             />
             {renderAmountNewMessage()}
-            <div
-              onClick={handleClick}
-              className='absolute inset-0 w-full h-full z-10 cursor-pointer '
-            />
+            <div className='absolute inset-0 w-full h-full z-10 cursor-pointer ' onClick={handleClick} />
           </div>
         </motion.div>
       )}

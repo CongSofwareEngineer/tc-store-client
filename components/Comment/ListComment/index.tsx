@@ -21,15 +21,7 @@ import LoadingData from './LoadingData'
 import { IProduct } from '@/services/ClientApi/type'
 import MyImageZoom from '@/components/MyImageZoom'
 
-const Like = ({
-  data,
-  isYourComment = false,
-  dataProduct,
-}: {
-  data: any
-  isYourComment: boolean
-  dataProduct: any
-}) => {
+const Like = ({ data, isYourComment = false, dataProduct }: { data: any; isYourComment: boolean; dataProduct: any }) => {
   const [isLike, setIsLike] = useState(false)
   const { userData, isLogin } = useUserData()
   const { translate } = useLanguage()
@@ -39,6 +31,7 @@ const Like = ({
   useEffect(() => {
     if (isLogin) {
       const isLike = data?.userLikes?.some((id: string) => id === userData?._id)
+
       setIsLike(isLike)
     } else {
       setIsLike(true)
@@ -52,6 +45,7 @@ const Like = ({
         idUser: userData?._id,
         isLike: !isLike,
       }
+
       await ClientApi.likeComment(data._id, body)
       refreshQuery(QUERY_KEY.GetCommentProduction)
     }
@@ -75,6 +69,7 @@ const Like = ({
         id: data._id,
       }
       const res = await ClientApi.deleteComment(bodyDelete)
+
       if (res.data) {
         await refreshQuery(QUERY_KEY.GetCommentProduction)
         showNotificationSuccess(translate('success.delete'))
@@ -97,23 +92,23 @@ const Like = ({
       <div className='!w-4 relative overflow-hidden cursor-pointer'>
         {isLike ? (
           <MyImage
-            onClick={handleLike}
+            alt='liked'
             className='!relative   !w-4 !h-auto'
             src={images.icon.iconHeart}
-            alt='liked'
             style={{
               cursor: isYourComment || !isLogin ? 'default' : 'pointer',
             }}
+            onClick={handleLike}
           />
         ) : (
           <MyImage
-            onClick={handleLike}
+            alt='unlike'
             className='!relative cursor-pointer !w-4 !h-auto'
             src={images.icon.iconHeart1}
-            alt='unlike'
             style={{
               cursor: isYourComment || !isLogin ? 'default' : 'pointer',
             }}
+            onClick={handleLike}
           />
         )}
       </div>
@@ -126,7 +121,7 @@ const Like = ({
       </span>
       {isYourComment && (
         <span className='text-green-500 text-lg '>
-          <AiOutlineEdit onClick={handleEdit} className='text-green-500 cursor-pointer' />
+          <AiOutlineEdit className='text-green-500 cursor-pointer' onClick={handleEdit} />
         </span>
       )}
 
@@ -156,17 +151,9 @@ const ListComment = ({ dataItem }: { dataItem: IProduct }) => {
             const isYourComment = userData?.sdt === e?.sdt
 
             return (
-              <div
-                key={e?.sdt}
-                className='flex md:gap-4 gap-3 pb-3 border-b-[1px] mt-1 border-b-gray-200'
-              >
+              <div key={e?.sdt} className='flex md:gap-4 gap-3 pb-3 border-b-[1px] mt-1 border-b-gray-200'>
                 <div className='aspect-square h-fit rounded-lg relative overflow-hidden w-[20%] md:min-w-[50px] min-w-[20px]  max-w-[40px]'>
-                  <Image
-                    src={detectAvatar(e.user[0]?.avatar)}
-                    alt={e.sdt}
-                    fill
-                    className='!relative !w-full !h-auto'
-                  />
+                  <Image fill alt={e.sdt} className='!relative !w-full !h-auto' src={detectAvatar(e.user[0]?.avatar)} />
                 </div>
                 <div className='flex flex-col gap-1'>
                   <p className='font-bold'>{e.name}</p>
@@ -175,32 +162,25 @@ const ListComment = ({ dataItem }: { dataItem: IProduct }) => {
                     <span>|</span>
                     <div>{`SĐT : ${ellipsisText(e.sdt, 4, 3)}`}</div>
                   </div>
-                  <Rating readOnly value={e.rate} style={{ fontSize: 15 }} />
+                  <Rating readOnly style={{ fontSize: 15 }} value={e.rate} />
 
                   <div className='md:my-1 mt-1'>{e.note}</div>
                   <div className='flex flex-wrap w-full gap-2 mt-1 '>
                     {e.listImg.map((img: string) => {
                       return (
-                        <div
-                          key={img}
-                          className='md:w-[60px] w-[50px]  aspect-square relative overflow-hidden '
-                        >
+                        <div key={img} className='md:w-[60px] w-[50px]  aspect-square relative overflow-hidden '>
                           <MyImageZoom url={detectImg(img || images.logoVCB)} />
                         </div>
                       )
                     })}
                   </div>
-                  <Like dataProduct={dataItem} isYourComment={isYourComment} data={e} />
+                  <Like data={e} dataProduct={dataItem} isYourComment={isYourComment} />
                 </div>
               </div>
             )
           })}
 
-          <MyLoadMore
-            hasLoadMore={hasNextPage}
-            isFetchingNextPage={isFetchingNextPage}
-            callback={loadMore}
-          />
+          <MyLoadMore callback={loadMore} hasLoadMore={hasNextPage} isFetchingNextPage={isFetchingNextPage} />
         </div>
       )}
     </div>

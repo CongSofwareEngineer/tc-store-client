@@ -30,7 +30,7 @@ const BillScreen = () => {
         {data.length > 0 && (
           <div className='flex gap-3 w-full flex-col mb-10'>
             {data.map((e, index) => {
-              return <Item indexData={index} data={e} key={e?._id} />
+              return <Item key={e?._id} data={e} indexData={index} />
             })}
           </div>
         )}
@@ -40,17 +40,12 @@ const BillScreen = () => {
         {!isLoading && data?.length === 0 && (
           <div className='flex gap-3 w-full  mt-3 text-medium'>
             <span>{translate('cart.empty')}</span>
-            <Link href={'/shop'} className='text-green-600 hover:underline'>
+            <Link className='text-green-600 hover:underline' href={'/shop'}>
               {translate('textPopular.buyNow')}
             </Link>
           </div>
         )}
-        <MyLoadMore
-          callback={loadMore}
-          hasLoadMore={hasNextPage}
-          loading={isLoading}
-          isFetchingNextPage={isFetchingNextPage}
-        />
+        <MyLoadMore callback={loadMore} hasLoadMore={hasNextPage} isFetchingNextPage={isFetchingNextPage} loading={isLoading} />
       </div>
     </div>
   )

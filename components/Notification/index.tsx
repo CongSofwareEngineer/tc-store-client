@@ -6,7 +6,6 @@ import useUserData from '@/hooks/useUserData'
 import ClientApi from '@/services/clientApi'
 import { FirebaseServices } from '@/services/firebaseService'
 import { saveDataLocal } from '@/utils/functions'
-import { Button } from '@mantine/core'
 import { NextPage } from 'next'
 import React, { useEffect } from 'react'
 
@@ -70,8 +69,9 @@ const NotificationClient: NextPage = () => {
         //   duration: 10,
         // })
       }
+
       FirebaseServices.addListenMessage((dataMess) => {
-        console.log({ dataMess })
+        // console.log({ dataMess })
 
         handleOpenNoti(dataMess)
       })
@@ -104,7 +104,7 @@ const NotificationClient: NextPage = () => {
         await FirebaseServices.updateServiceWorker()
         Notification.requestPermission()
           .then(async (permission: any) => {
-            console.log({ permission })
+            // console.log({ permission })
 
             // If the user accepts, let's create a notification
             if (permission === 'granted') {
@@ -117,6 +117,7 @@ const NotificationClient: NextPage = () => {
           .catch(() => {})
       }
     }
+
     if (isLogin) {
       getData()
     }

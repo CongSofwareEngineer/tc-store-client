@@ -14,6 +14,7 @@ const InfoItemDetail = ({ data }: { data: IProduct }) => {
     if (data?.category === 'shoes') {
       return TYPE_PRODUCT_EX.shoes
     }
+
     // if (data?.category === 'nests') {
     //   return TYPE_PRODUCT_EX.nests
     // }
@@ -28,10 +29,10 @@ const InfoItemDetail = ({ data }: { data: IProduct }) => {
           <span>{typeof des === 'number' ? numberWithCommas(des) : des}</span>
         ) : (
           <div
-            className='whitespace-break-spaces'
             dangerouslySetInnerHTML={{
               __html: des,
             }}
+            className='whitespace-break-spaces'
           />
         )}
       </div>
@@ -48,8 +49,7 @@ const InfoItemDetail = ({ data }: { data: IProduct }) => {
         </div>
         {renderItemDes(translate('textPopular.description'), data.des)}
         {renderItemDes(translate('productDetail.sold'), Number(data.sold))}
-        {getTypeProduct() === TYPE_PRODUCT_EX.normal &&
-          renderItemDes(translate('productDetail.weight'), data.weight)}
+        {getTypeProduct() === TYPE_PRODUCT_EX.normal && renderItemDes(translate('productDetail.weight'), data.weight)}
         {renderItemDes(translate('productDetail.totalNumber'), Number(data.amount))}
         {renderItemDes(translate('textPopular.freeShip'), 'Free ship trong 20 KM')}
       </div>
@@ -64,8 +64,7 @@ const InfoItemDetail = ({ data }: { data: IProduct }) => {
         </div>
         {renderItemDes(translate('textPopular.description'), data.des)}
         {renderItemDes(translate('productDetail.sold'), Number(data.sold))}
-        {getTypeProduct() === TYPE_PRODUCT_EX.normal &&
-          renderItemDes(translate('productDetail.weight'), data.weight)}
+        {getTypeProduct() === TYPE_PRODUCT_EX.normal && renderItemDes(translate('productDetail.weight'), data.weight)}
         {renderItemDes(translate('productDetail.totalNumber'), Number(data.amount))}
         {renderItemDes(translate('textPopular.freeShip'), 'Free ship trong 20 KM')}
       </div>

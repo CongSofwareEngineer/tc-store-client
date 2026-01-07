@@ -35,18 +35,18 @@ const InputSearch = ({ keySearch = 'name' }: { keySearch?: string }) => {
   return (
     <Input
       className='w-full'
+      placeholder={translate('textPopular.searchNameProduct')}
       rightSection={
         <div
-          onClick={() => {
-            console.log('hello')
-          }}
           className='cursor-pointer w-full p-2 h-full hover:scale-110'
+          onClick={() => {
+            // console.log('hello')
+          }}
         >
           <AiOutlineSearch className='w-full h-full' onClick={handleSearch} />
         </div>
       }
       rightSectionPointerEvents={'auto'}
-      placeholder={translate('textPopular.searchNameProduct')}
       value={nameSearch}
       onChange={(e) => setNameSearch(e.target.value)}
     />

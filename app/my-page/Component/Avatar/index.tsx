@@ -22,12 +22,13 @@ const Avatar = () => {
     if (isIOS || isMacOs) {
       return 'image/*'
     }
+
     return '.png,.jpg,.jpeg,.gif,.svg'
   }, [])
 
   const handleUploadImg = (file: File | null) => {
     const callback = async (fileCrop: IFileImage | null) => {
-      console.log({ fileCrop })
+      // console.log({ fileCrop })
 
       openModalDrawer({
         content: <ModalProcess title={translate('textPopular.updating')} />,
@@ -54,7 +55,7 @@ const Avatar = () => {
     }
 
     openModalDrawer({
-      content: <CropImg onCropComplete={callback} file={file!} />,
+      content: <CropImg file={file!} onCropComplete={callback} />,
       title: 'Cắt ảnh',
       configModal: {
         overClickClose: false,
@@ -62,19 +63,16 @@ const Avatar = () => {
       },
     })
   }
+
   return (
     <div className='w-[150px] min-h-[150px] relative overflow-hidden rounded-[50%]'>
       {/* <div className=' relative w-full  '> */}
       <div className='absolute w-full h-full'>
-        <MyImage
-          src={detectAvatar(userData?.avatar?.toString())}
-          alt='avatar'
-          className='!relative !w-full !h-full'
-        />
+        <MyImage alt='avatar' className='!relative !w-full !h-full' src={detectAvatar(userData?.avatar?.toString())} />
       </div>
 
       <div className='absolute-center mt-2 text-2xl '>
-        <FileButton onChange={handleUploadImg} accept={typeFile}>
+        <FileButton accept={typeFile} onChange={handleUploadImg}>
           {(props) => (
             <Button {...props} className='!p-0 !bg-transparent'>
               <div className='text-white !text-2xl cursor-pointer transition-all duration-300 hover:!text-3xl'>

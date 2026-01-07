@@ -30,6 +30,7 @@ const Banner = () => {
   useEffect(() => {
     resetTimeout()
     timeoutRef.current = setTimeout(() => handleControl(false), 3000)
+
     return () => {
       resetTimeout()
     }
@@ -78,17 +79,17 @@ const Banner = () => {
       <ContainerList style={{ transform: `translateX(${-index * 100}%)` }}>
         {listBanner.map((e) => {
           return (
-            <div className='flex flex-shrink-0  relative overflow-hidden w-full h-full' key={e.url}>
+            <div key={e.url} className='flex flex-shrink-0  relative overflow-hidden w-full h-full'>
               <MyImage
+                isAnimation
                 alt={`img-banner-${e.url}`}
+                className='!absolute select-none !w-auto !h-auto'
                 src={e.url}
                 style={{
                   minWidth: '100%',
                   minHeight: '100%',
                   maxWidth: 'unset',
                 }}
-                isAnimation
-                className='!absolute select-none !w-auto !h-auto'
               />
             </div>
           )
@@ -103,27 +104,23 @@ const Banner = () => {
         <div className='absolute md:top-[50%] top-[45%] left-3 right-[-20px]'>
           <MyImage
             alt={`icon-btnPre`}
+            className='!relative !w-[45px] !h-auto cursor-pointer hover:scale-110'
             src={images.home.banner.btnSlider}
             onClick={() => handleControl()}
-            className='!relative !w-[45px] !h-auto cursor-pointer hover:scale-110'
           />
         </div>
         <div className='absolute md:bottom-[5vh] bottom-[5vw] flex md:gap-4 gap-3 w-full justify-center items-center'>
           {listBanner.map((_, indexItem) => {
             return (
               <div
-                onClick={() => setIndex(indexItem)}
                 key={`icon-${indexItem}`}
                 className='  hover:scale-110 cursor-pointer md:w-9 w-8  flex justify-center items-center relative'
+                onClick={() => setIndex(indexItem)}
               >
                 <MyImage
                   alt={`icon-${index}`}
-                  src={
-                    images.home.banner[
-                      indexItem === index ? 'btnPositionActive' : 'btnPositionUnActive'
-                    ]
-                  }
                   className='!relative !w-full !h-auto '
+                  src={images.home.banner[indexItem === index ? 'btnPositionActive' : 'btnPositionUnActive']}
                 />
                 <div className='absolute-center text-white  text-center'>{indexItem + 1}</div>
               </div>
@@ -133,14 +130,15 @@ const Banner = () => {
         <div className='absolute right-5 md:top-[50%] top-[45%]'>
           <MyImage
             alt={`icon-btnPre`}
+            className=' rotate-180 !relative !w-[45px] !h-auto cursor-pointer hover:scale-110'
             src={images.home.banner.btnSlider}
             onClick={() => handleControl(false)}
-            className=' rotate-180 !relative !w-[45px] !h-auto cursor-pointer hover:scale-110'
           />
         </div>
       </>
     )
   }
+
   return (
     <div className='w-full overflow-hidden relative' data-aos={isMobile ? '' : 'fade-left'}>
       {renderListImg()}

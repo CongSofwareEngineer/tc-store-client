@@ -18,6 +18,7 @@ const getAllProduct = async ({
   const query = queryKey[2]
 
   let queryUrl = `?page=${pageParam}&category=shoes&limit=${queryKey[1]}`
+
   if (query) {
     Object.entries(query).forEach(([key, value]) => {
       queryUrl += `&${key}=${value?.toString()}`
@@ -41,6 +42,7 @@ const useShoesShop = (query: any, pageSize = PAGE_SIZE_LIMIT) => {
       if (lastPage.data.length == pageSize) {
         return lastPage.page + 1
       }
+
       return null
     },
   })
@@ -50,6 +52,7 @@ const useShoesShop = (query: any, pageSize = PAGE_SIZE_LIMIT) => {
       return []
     }
     const dataFormat = data?.pages.flatMap((e: any) => e.data)
+
     return dataFormat
   }, [data])
 

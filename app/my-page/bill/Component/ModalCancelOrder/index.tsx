@@ -18,6 +18,7 @@ const ModalCancelOrder = ({ data }: { data: any }) => {
   const handleSubmit = async () => {
     setLoading(true)
     const res = await ClientApi.deleteBill(data._id)
+
     if (res.data) {
       await refreshQuery(QUERY_KEY.MyBillUser)
       showNotificationSuccess(translate('myBill.cancelOrder.cancelSuccess'))
@@ -37,7 +38,7 @@ const ModalCancelOrder = ({ data }: { data: any }) => {
         <Button className='!w-full' variant='filled' onClick={closeModalDrawer}>
           {translate('common.close')}
         </Button>
-        <Button disabled={!textWhy} className={'!w-full'} loading={loading} onClick={handleSubmit}>
+        <Button className={'!w-full'} disabled={!textWhy} loading={loading} onClick={handleSubmit}>
           {translate('common.submit')}
         </Button>
       </div>

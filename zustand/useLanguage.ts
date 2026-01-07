@@ -15,6 +15,7 @@ type LanguageStoreActions = {
 
 type LanguageStore = LanguageStoreState & LanguageStoreActions
 const nameZustand = `zustand-${ZUSTAND.Language}`
+
 export const zustandLanguage = createStore<LanguageStore>()(
   devtools(
     persist(

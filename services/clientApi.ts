@@ -15,7 +15,7 @@ const ClientApi = {
 
       return fetch(urlExp)
     } catch (error) {
-      console.log({ error })
+      // console.log({ error })
     }
   },
 

@@ -27,21 +27,12 @@ const ButtonForm = ({
   const { closeModalDrawer } = useModalDrawer()
 
   return (
-    <Group justify='center' className='w-full '>
-      <Button
-        loading={loading}
-        disabled={disabledSubmit}
-        type='submit'
-        className={cn('flex flex-1 !w-full', classBtnSubmit)}
-      >
+    <Group className='w-full ' justify='center'>
+      <Button className={cn('flex flex-1 !w-full', classBtnSubmit)} disabled={disabledSubmit} loading={loading} type='submit'>
         {titleSubmit || translate('cart.payment')}
       </Button>
       {!disableClose && (
-        <Button
-          className={cn('flex flex-1', classBtnCancel)}
-          onClick={closeModalDrawer}
-          variant='filled'
-        >
+        <Button className={cn('flex flex-1', classBtnCancel)} variant='filled' onClick={closeModalDrawer}>
           {titleClose || translate('common.close')}
         </Button>
       )}

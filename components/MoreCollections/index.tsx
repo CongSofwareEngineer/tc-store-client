@@ -16,9 +16,11 @@ const MoreCollections = () => {
   useEffect(() => {
     const getData = async () => {
       const res = await ClientApi.getMoreCollections(10)
+
       setData(res?.data || [])
       setIsLoading(false)
     }
+
     getData()
   }, [])
 
@@ -46,14 +48,7 @@ const MoreCollections = () => {
             if (e.keyName !== param.params?.[0]) {
               return (
                 <div key={`item-MyCollections-${index}`} className=' min-w-[200px] select-none'>
-                  <ItemProduct
-                    showDiscount
-                    className='!bg-gray-100 !shadow-full'
-                    noClick
-                    callback={() => getRouteProduct(e)}
-                    item={e}
-                    showSold
-                  />
+                  <ItemProduct noClick showDiscount showSold callback={() => getRouteProduct(e)} className='!bg-gray-100 !shadow-full' item={e} />
                 </div>
               )
             }

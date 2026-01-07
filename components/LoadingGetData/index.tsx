@@ -35,6 +35,7 @@ const LoadingGetData = ({
 
   useEffect(() => {
     let amountCol = colDesktop
+
     if (isSurface) {
       amountCol = colSurface
     }
@@ -57,18 +58,12 @@ const LoadingGetData = ({
   }
 
   return (
-    <div
-      className='grid md:gap-3 gap-3 w-full'
-      style={{ gridTemplateColumns: `repeat(${arrClo.length / rows}, minmax(0, 1fr))` }}
-    >
+    <div className='grid md:gap-3 gap-3 w-full' style={{ gridTemplateColumns: `repeat(${arrClo.length / rows}, minmax(0, 1fr))` }}>
       {arrClo.map((e) => {
         return children ? (
           <React.Fragment key={e}>{children}</React.Fragment>
         ) : (
-          <MySkeleton
-            key={e}
-            className='w-full items-center flex gap-2 flex-col md:p-5 p-3 rounded-lg aspect-square'
-          >
+          <MySkeleton key={e} className='w-full items-center flex gap-2 flex-col md:p-5 p-3 rounded-lg aspect-square'>
             <MySkeleton className='w-[100%] aspect-square ' />
             <MySkeleton className='w-full h-6' />
             <MySkeleton className='w-full h-6' />

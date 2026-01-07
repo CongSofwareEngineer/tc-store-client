@@ -65,9 +65,9 @@ const GgMap = () => {
         </Map>
       </APIProvider> */}
       <iframe
-        src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.925735303758!2d106.63089767616822!3d10.816995289334312!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529d60f102fe1%3A0x48a05f8f5cd877f6!2zODMvNDEgUGjhuqFtIFbEg24gQuG6oWNoLCBQaMaw4budbmcgMTUsIFTDom4gQsOsbmgsIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1723361925647!5m2!1svi!2s'
         className='w-full h-full'
         loading='lazy'
+        src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.925735303758!2d106.63089767616822!3d10.816995289334312!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529d60f102fe1%3A0x48a05f8f5cd877f6!2zODMvNDEgUGjhuqFtIFbEg24gQuG6oWNoLCBQaMaw4budbmcgMTUsIFTDom4gQsOsbmgsIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1723361925647!5m2!1svi!2s'
         title='TC Store'
       />
     </div>

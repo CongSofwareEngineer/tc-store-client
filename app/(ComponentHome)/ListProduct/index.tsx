@@ -1,7 +1,6 @@
 import ItemProduct from '@/components/ItemProduct'
 import LoadingGetData from '@/components/LoadingGetData'
 import MyCollapse from '@/components/MyCollapse'
-import { TYPE_PRODUCT } from '@/constants/admin'
 import { FilterAPI } from '@/constants/app'
 import useProductByLimit from '@/hooks/tank-query/useProductByLimit'
 import useLanguage from '@/hooks/useLanguage'
@@ -27,25 +26,23 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
   const renderListItem = () => {
     return (
       <div className='py-4 flex gap-3 md:gap-5 overflow-x-auto w-full'>
-        <LoadingGetData loading={isLoading} colDesktop={5} />
+        <LoadingGetData colDesktop={5} loading={isLoading} />
 
         {Array.isArray(data?.data) &&
           data?.data?.map((item) => {
             return (
               <ItemProduct
+                key={item.keyName}
                 showFeedback
                 showSold
-                key={item.keyName}
-                item={item}
-                href={getUrlProduct(item)}
                 className={'w-[180px] md:w-[230px]   md:h-[350px]'}
+                href={getUrlProduct(item)}
+                item={item}
               />
             )
           })}
 
-        {Array.isArray(data?.data) && data?.data?.length === 0 && (
-          <div>{translate('warning.noData')}</div>
-        )}
+        {Array.isArray(data?.data) && data?.data?.length === 0 && <div>{translate('warning.noData')}</div>}
       </div>
     )
   }
@@ -55,9 +52,9 @@ const ListProduct = ({ title, type = 'all' }: ListProductType) => {
       <div className='flex flex-1 justify-between'>
         <div>{title}</div>
         <Link
-          onClick={(event) => event.stopPropagation()}
-          href={getUrl()}
           className='text-medium flex items-center  cursor-pointer hover:font-semibold transition-all duration-300 font-bold  text-green-600'
+          href={getUrl()}
+          onClick={(event) => event.stopPropagation()}
         >
           <span> {translate('textPopular.viewMore')}</span>
           <AiOutlineRight className='text-sm ml-2' />

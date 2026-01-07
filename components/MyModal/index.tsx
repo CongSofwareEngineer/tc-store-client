@@ -7,18 +7,10 @@ const MyModal = () => {
 
   return (
     <Modal
-      title={modal?.open ? modal?.title || <></> : <></>}
-      onClose={() => {
-        closeModal()
-        if (modal?.onClose) {
-          modal.onClose()
-        }
-      }}
       centered
-      opened={modal?.open!}
-      withCloseButton={modal.showBtnClose}
       closeOnClickOutside={modal?.overClickClose}
       closeOnEscape={modal?.overClickClose}
+      opened={modal?.open!}
       size={modal.width || 500}
       styles={{
         header: {
@@ -27,10 +19,16 @@ const MyModal = () => {
           paddingTop: 0,
         },
       }}
+      title={modal?.open ? modal?.title || <></> : <></>}
+      withCloseButton={modal.showBtnClose}
+      onClose={() => {
+        closeModal()
+        if (modal?.onClose) {
+          modal.onClose()
+        }
+      }}
     >
-      <div className={cn('w-full h-full max-h-[90dvh]  overflow-y-auto ', modal?.classContent)}>
-        {modal?.content}
-      </div>
+      <div className={cn('w-full h-full max-h-[90dvh]  overflow-y-auto ', modal?.classContent)}>{modal?.content}</div>
     </Modal>
   )
 }

@@ -60,44 +60,29 @@ const ModalDelete = ({
       setLoadingReject(false)
     }
   }
+
   return (
     <div className='w-full flex flex-col gap-2'>
       <p className='text-title text-center'>{title || translate('warning.doYouWantDetele')}</p>
 
       <div className='m-auto my-2'>
-        <Image
-          fill
-          src={images.icon.iconWarning}
-          alt='icon-modal-delete'
-          className='!relative !w-auto md:!h-[120px] !h-[70px]'
-        />
+        <Image fill alt='icon-modal-delete' className='!relative !w-auto md:!h-[120px] !h-[70px]' src={images.icon.iconWarning} />
       </div>
       <div
-        className='text-center mb-2 md:max-w-[90%] m-auto'
         dangerouslySetInnerHTML={{
           __html: des,
         }}
+        className='text-center mb-2 md:max-w-[90%] m-auto'
       />
       <div className='w-full flex gap-4'>
         <div className='flex-1'>
-          <Button
-            disabled={loadingReject}
-            className='!w-full'
-            loading={loading}
-            onClick={handleSubmit}
-          >
+          <Button className='!w-full' disabled={loadingReject} loading={loading} onClick={handleSubmit}>
             {titleConfirm || translate('common.ok')}
           </Button>
         </div>
         {!disableCancel && (
           <div className='flex-1'>
-            <Button
-              loading={loadingReject}
-              disabled={loading}
-              variant='filled'
-              className='!w-full'
-              onClick={handleCancel}
-            >
+            <Button className='!w-full' disabled={loading} loading={loadingReject} variant='filled' onClick={handleCancel}>
               {titleReject || translate('common.close')}
             </Button>
           </div>

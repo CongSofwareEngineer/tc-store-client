@@ -20,17 +20,19 @@ const ViewDetailBill = ({ data }: Props) => {
   const { openModalDrawer } = useModalDrawer()
   const enableFeedback = data?.status === FILTER_BILL.DeliverySuccess
 
-  console.log({ ViewDetailBill: data })
+  // console.log({ ViewDetailBill: data })
 
   const getAddressShip = (item: any) => {
     const address = { ...item.addressShip }
+
     address.address = address.address.replaceAll('---', ' ')
+
     return `${address.addressDetail} (${address.address})`
   }
 
   const handleFeedback = (item: any) => {
     openModalDrawer({
-      content: <ModalFeedBack item={data} data={item} />,
+      content: <ModalFeedBack data={item} item={data} />,
       title: translate('feedback.title'),
       useDrawer: true,
     })
@@ -74,19 +76,19 @@ const ViewDetailBill = ({ data }: Props) => {
           {data?.listBill?.map((e) => {
             return (
               <div
+                key={e.moreData._id}
+                className={`flex gap-3 w-full pb-4 `}
                 style={{
                   borderBottom: `2px solid #e5e7eb `,
                 }}
-                key={e.moreData._id}
-                className={`flex gap-3 w-full pb-4 `}
               >
                 <div className='  w-[100px] h-max   relative rounded-md overflow-hidden'>
                   <ImageMain listImage={e.moreData.images} model={e.models.model} />
                 </div>
                 <div className='flex flex-col  gap-1'>
-                  <p onClick={() => handleRoute(e)} className='font-bold'>
+                  <button className='font-bold bg-transparent border-none p-0 cursor-pointer text-left' type='button' onClick={() => handleRoute(e)}>
                     {e.moreData.name}
-                  </p>
+                  </button>
                   <div>{`${translate('textPopular.amount')} : x${e.amountBuy}`}</div>
                   <ConfigBill
                     item={{
@@ -104,17 +106,12 @@ const ViewDetailBill = ({ data }: Props) => {
                   </div>
                   <div className='flex gap-2 items-center'>
                     {enableFeedback && (
-                      <Button
-                        variant='filled'
-                        onClick={() => handleFeedback(e)}
-                        size='xs'
-                        className='w-max'
-                      >
+                      <Button className='w-max' size='xs' variant='filled' onClick={() => handleFeedback(e)}>
                         {translate('common.feedback')}
                       </Button>
                     )}
                     {data?.status !== FILTER_BILL.Processing && (
-                      <Button onClick={() => handleRoute(e)} size='xs' className='w-max'>
+                      <Button className='w-max' size='xs' onClick={() => handleRoute(e)}>
                         {translate('common.buyAgain')}
                       </Button>
                     )}

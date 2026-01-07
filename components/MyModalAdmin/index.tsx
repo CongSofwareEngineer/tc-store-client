@@ -66,12 +66,12 @@ const MyModalAdmin = () => {
 
   return modalAdmin.body ? (
     <div
-      onClick={onClick}
       className='fixed z-[9999999] flex justify-center items-center flex-col inset-0 w-[100dvw] h-[100dvh] bg-black/20 '
       style={{
         backdropFilter: 'blur(5px)',
         ...getPosition(),
       }}
+      onClick={onClick}
     >
       <div
         className={cn(
@@ -93,9 +93,7 @@ const MyModalAdmin = () => {
             />
           </div>
         )}
-        {modalAdmin.title && (
-          <div className='text-medium mb-2 font-bold w-full'>{modalAdmin.title}</div>
-        )}
+        {modalAdmin.title && <div className='text-medium mb-2 font-bold w-full'>{modalAdmin.title}</div>}
         {modalAdmin.body}
       </div>
     </div>

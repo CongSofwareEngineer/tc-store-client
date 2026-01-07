@@ -4,6 +4,7 @@ import dayjs, { ManipulateType } from 'dayjs'
 
 const localMoment = () => {
   const { locale } = zustandLanguage.getState().language
+
   // moment.locale(locale)
   // return moment
   return dayjs().locale(locale)
@@ -14,6 +15,7 @@ export const formatDayjs = (date?: any) => {
     if (!date) {
       return null
     }
+
     return dayjs(date)
   } catch {
     return dayjs(dayjs().valueOf())
@@ -23,6 +25,7 @@ export const formatDayjs = (date?: any) => {
 export const convertDateToNumber = (data?: any) => {
   try {
     let timeTemp = data
+
     if (!timeTemp) {
       timeTemp = Date.now()
     }
@@ -59,6 +62,7 @@ export function isNumericString(input: string) {
 export const formatDateTime = (data: any, format = 'DD / MM /YYYY') => {
   try {
     let timeTemp = data
+
     if (typeof data === 'string' && isNumericString(data)) {
       timeTemp = parseInt(data)
     }
@@ -87,6 +91,7 @@ export const expiredTimeToNumber = (data: any) => {
     }
 
     const daysDifference = dayjs(timeTemp).diff(dayjs(), 'days')
+
     return daysDifference
   } catch {
     return data
@@ -108,6 +113,7 @@ export const diffTime = (data: any, type: ManipulateType = 'days') => {
     }
 
     const daysDifference = dayjs(timeTemp).diff(dayjs().valueOf(), type)
+
     return daysDifference
   } catch {
     return 0
@@ -117,6 +123,7 @@ export const diffTime = (data: any, type: ManipulateType = 'days') => {
 export const formatDatePicker = (data: any) => {
   try {
     let timeTemp = data
+
     // if (typeof data === typeof dayjs) {
     //   return timeTemp
     // }

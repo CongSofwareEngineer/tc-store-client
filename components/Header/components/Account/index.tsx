@@ -63,29 +63,15 @@ const Account = () => {
         <CartUser />
         {isLogin ? (
           <div className='flex gap-2 items-center pr-1'>
-            {userData?.avatar && (
-              <Image
-                fill
-                alt='user-avatar'
-                className='!relative !w-6 !h-6 rounded-[50%]'
-                src={detectAvatar(userData?.avatar)}
-              />
-            )}
+            {userData?.avatar && <Image fill alt='user-avatar' className='!relative !w-6 !h-6 rounded-[50%]' src={detectAvatar(userData?.avatar)} />}
             <div>{userData?.name}</div>
           </div>
         ) : (
-          <div
-            onClick={handleLogin}
-            className='rounded h-full cursor-pointer w-24  flex justify-center items-center'
-          >
+          <div className='rounded h-full cursor-pointer w-24  flex justify-center items-center' onClick={handleLogin}>
             <span className='text-black underline'>{translate('common.login')}</span>
           </div>
         )}
-        <AiOutlineMenu
-          className='cursor-pointer'
-          onClick={handleViewMenu}
-          style={{ fontSize: 20 }}
-        />
+        <AiOutlineMenu className='cursor-pointer' style={{ fontSize: 20 }} onClick={handleViewMenu} />
       </div>
     )
   }
@@ -97,10 +83,7 @@ const Account = () => {
     const items: IItemDropDown[] = [
       {
         children: (
-          <div
-            onClick={() => route.push('/my-page')}
-            className='flex items-center gap-2 cursor-pointer'
-          >
+          <div className='flex items-center gap-2 cursor-pointer' onClick={() => route.push('/my-page')}>
             <AiOutlineUser />
             <div>{translate('myProfile.myProfile')}</div>
           </div>
@@ -108,7 +91,7 @@ const Account = () => {
       },
       {
         children: (
-          <div onClick={handleLogin} className='flex items-center gap-2 cursor-pointer'>
+          <div className='flex items-center gap-2 cursor-pointer' onClick={handleLogin}>
             <FiLogOut />
             <div>{translate('common.logOut')}</div>
           </div>
@@ -127,17 +110,15 @@ const Account = () => {
                 <div className='flex gap-2 items-center '>
                   {userData?.avatar && (
                     <Image
+                      key={detectAvatar(userData?.avatar)}
                       fill
                       alt='user-avatar'
                       className='!relative !w-6 !h-6 rounded-[50%]'
                       src={detectAvatar(userData?.avatar)}
-                      key={detectAvatar(userData?.avatar)}
                     />
                   )}
 
-                  <div className='whitespace-nowrap mr-1 max-w-[120px] text-ellipsis overflow-hidden'>{`${
-                    userData?.name || userData?.sdt
-                  }`}</div>
+                  <div className='whitespace-nowrap mr-1 max-w-[120px] text-ellipsis overflow-hidden'>{`${userData?.name || userData?.sdt}`}</div>
                   <AiOutlineDown />
                 </div>
               </MyDropDown>
@@ -145,10 +126,10 @@ const Account = () => {
           ) : (
             <div className='flex gap-2 items-center'>
               <CartUser />
-              <span onClick={handleLogin} className='text-black underline  w-24 '>
+              <span className='text-black underline  w-24 ' onClick={handleLogin}>
                 {translate('common.login')}
               </span>
-              {isLogin && <AiOutlineMenu onClick={handleViewMenu} style={{ fontSize: 20 }} />}
+              {isLogin && <AiOutlineMenu style={{ fontSize: 20 }} onClick={handleViewMenu} />}
             </div>
           )}
         </div>

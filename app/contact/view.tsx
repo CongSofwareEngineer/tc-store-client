@@ -51,6 +51,7 @@ const ContactScreen = () => {
 
   useEffect(() => {
     const footer = window.document.getElementsByClassName('main-content')[0]
+
     if (footer) {
       footer.classList.add('bg-custom-register')
     }
@@ -66,6 +67,7 @@ const ContactScreen = () => {
       emailUser: formData?.emailUser,
       nameUser: formData?.nameUser,
     }
+
     openModalDrawer({
       content: <ModalProcess />,
       configModal: {
@@ -73,9 +75,10 @@ const ContactScreen = () => {
       },
     })
     const res = await ClientApi.createContact(dataAPI)
-    console.log('====================================')
-    console.log({ res })
-    console.log('====================================')
+
+    // console.log('====================================')
+    // console.log({ res })
+    // console.log('====================================')
     closeModalDrawer()
     if (res?.data) {
       showNotificationSuccess(translate('contactMe.contactSuccess'))
@@ -89,64 +92,43 @@ const ContactScreen = () => {
     <div className=' flex flex-col justify-center items-center h-full w-full gap-2'>
       <div className='w-full flex  justify-between h-full items-center'>
         {!isMobile && (
-          <div
-            data-aos='fade-right'
-            className='flex-1 flex flex-col justify-center items-center max-w-[450px]'
-          >
-            <MyImage
-              alt={'tc-store-logo-register'}
-              className='  cursor-pointer !max-w-0['
-              onClick={() => router.push('/')}
-              src={images.logoStore}
-            />
+          <div className='flex-1 flex flex-col justify-center items-center max-w-[450px]' data-aos='fade-right'>
+            <MyImage alt={'tc-store-logo-register'} className='  cursor-pointer !max-w-0[' src={images.logoStore} onClick={() => router.push('/')} />
           </div>
         )}
 
-        <div data-aos='fade-left' className='flex flex-1 justify-start items-start md:w-fit w-full'>
+        <div className='flex flex-1 justify-start items-start md:w-fit w-full' data-aos='fade-left'>
           <div className='m-auto flex flex-col   md:w-[80%] w-full shadow-md p-8 rounded-[16px] justify-center align-middle bg-white'>
-            <p className='mb- uppercase font-bold text-center text-[16px]'>
-              {translate('header.contact')}
-            </p>
+            <p className='mb- uppercase font-bold text-center text-[16px]'>{translate('header.contact')}</p>
             <MyForm form={form} submit={handleSubmit}>
               <InputForm
                 required
-                placeholder={translate('productDetail.modalBuy.enterNumberPhone')}
                 formData={form}
                 keyName='sdt'
                 label={translate('productDetail.modalBuy.enterNumberPhone')}
+                placeholder={translate('productDetail.modalBuy.enterNumberPhone')}
               />
               <InputForm
                 required
-                placeholder={translate('productDetail.modalBuy.enterName')}
+                showCount
                 formData={form}
                 keyName='nameUser'
                 label={translate('productDetail.modalBuy.enterName')}
-                showCount
                 maxLength={14}
+                placeholder={translate('productDetail.modalBuy.enterName')}
               />
-              <InputForm
-                required
-                placeholder={'Email'}
-                formData={form}
-                keyName='emailUser'
-                label={'Email'}
-              />
+              <InputForm required formData={form} keyName='emailUser' label={'Email'} placeholder={'Email'} />
               <InputAreaForm
                 required
-                placeholder={translate('textPopular.note')}
+                showCount
                 formData={form}
                 keyName='desá'
                 label={translate('textPopular.note')}
-                showCount
-                rows={5}
                 maxLength={300}
+                placeholder={translate('textPopular.note')}
+                rows={5}
               />
-              <ButtonForm
-                classBtnSubmit='mt-6'
-                loading={loading}
-                disableClose
-                titleSubmit={translate('common.Send')}
-              />
+              <ButtonForm disableClose classBtnSubmit='mt-6' loading={loading} titleSubmit={translate('common.Send')} />
             </MyForm>
 
             {/* {formData && (

@@ -8,11 +8,11 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
   const dataBase = await parent
   const metaData = generateMetaBase({
     dataBase,
-    title:
-      'TC Store - Giày đẹp, Yến Sào, Laptop, Cây Cảnh, Nước Hoa, Cà Phê Chất Lượng & Hơn Thế Nữa',
+    title: 'TC Store - Giày đẹp, Yến Sào, Laptop, Cây Cảnh, Nước Hoa, Cà Phê Chất Lượng & Hơn Thế Nữa',
     override: true,
     des: 'TC Store - Cửa hàng đa dạng: Giày đẹp, yến sào cao cấp, laptop hiện đại, cây cảnh đẹp, nước hoa chính hãng, cà phê nguyên chất và nhiều sản phẩm tốt khác. Mua sắm ngay để nhận ưu đãi đặc biệt!',
   })
+
   return metaData
 }
 
@@ -20,9 +20,7 @@ const ShopPage: NextPage = () => {
   return (
     <>
       <Header>
-        <h1 className='sr-only'>
-          TC Store - Cửa Hàng Đa Dạng Sản Phẩm: Giày, Yến Sào, Laptop, Cà Phê & Hơn Thế Nữa
-        </h1>
+        <h1 className='sr-only'>TC Store - Cửa Hàng Đa Dạng Sản Phẩm: Giày, Yến Sào, Laptop, Cà Phê & Hơn Thế Nữa</h1>
       </Header>
       <ContainerContent>
         <h2 className='sr-only'>Khám Phá Bộ Sưu Tập Giày Dép Thời Trang</h2>

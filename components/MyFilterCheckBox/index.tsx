@@ -30,15 +30,12 @@ const MyFilterCheckBox = ({
       <div className='w-full flex gap-1 md:pb-3   md:flex-col  flex-wrap'>
         {data.map((menu, index: number) => {
           return (
-            <div
-              className={`md:w-full px-4 py-2  md:border-b-lime-200 ${index !== data.length - 1 && ' '}`}
-              key={`menu_${typeChecked}_${index}`}
-            >
+            <div key={`menu_${typeChecked}_${index}`} className={`md:w-full px-4 py-2  md:border-b-lime-200 ${index !== data.length - 1 && ' '}`}>
               <Checkbox
                 key={`menu_${typeChecked}_${index}_${queries?.[typeChecked]?.includes(menu?.value || menu.key)}`}
                 checked={queries?.[typeChecked]?.includes(menu?.value || menu.key)}
-                onChange={() => updateQuery(typeChecked, menu?.value || menu.key, isReplace)}
                 label={<div className='whitespace-nowrap'>{menu.name || menu.label}</div>}
+                onChange={() => updateQuery(typeChecked, menu?.value || menu.key, isReplace)}
               />
             </div>
           )
@@ -50,6 +47,8 @@ const MyFilterCheckBox = ({
 
   return isClient ? (
     <MyCollapse
+      isDefaultActive={isDefault}
+      noBorderBottom={noBorderBottom}
       title={
         <div className='flex items-center flex-1'>
           <div className='flex justify-between items-center'>
@@ -57,8 +56,6 @@ const MyFilterCheckBox = ({
           </div>
         </div>
       }
-      noBorderBottom={noBorderBottom}
-      isDefaultActive={isDefault}
     >
       {renderContent()}
     </MyCollapse>

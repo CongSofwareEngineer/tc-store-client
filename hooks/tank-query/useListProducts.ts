@@ -43,6 +43,7 @@ const useListProducts = (pageSize = PAGE_SIZE_LIMIT, query: any) => {
       if (lastPage.data.length == pageSize) {
         return lastPage.page + 1
       }
+
       return null
     },
   })
@@ -52,6 +53,7 @@ const useListProducts = (pageSize = PAGE_SIZE_LIMIT, query: any) => {
       return []
     }
     const dataFormat = data?.pages.flatMap((e) => e.data)
+
     return dataFormat
   }, [data])
 

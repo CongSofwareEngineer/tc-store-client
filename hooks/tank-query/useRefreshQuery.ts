@@ -12,6 +12,7 @@ const useRefreshQuery = () => {
     const fun = listKey.map((e: QUERY_KEY) => {
       return refreshQuery(e)
     })
+
     await Promise.all(fun)
   }
 

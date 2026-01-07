@@ -28,6 +28,7 @@ const MyFilter = ({
   const getNumberQuery = useMemo(() => {
     try {
       let numberQuery = 0
+
       if (queries) {
         Object.values(queries).forEach((e) => {
           numberQuery += e.length
@@ -46,27 +47,20 @@ const MyFilter = ({
   }
 
   return (
-    <div
-      className={`bg-white border-zinc-500 border-[1px] w-full  flex flex-col md:rounded-xl rounded-lg overflow-hidden ${className}`}
-    >
-      <div
-        className={`border-b-[1px] border-zinc-500 w-full flex justify-between items-center  md:py-3 py-2 px-3 bg-green-200  ${classNameHeader}`}
-      >
+    <div className={`bg-white border-zinc-500 border-[1px] w-full  flex flex-col md:rounded-xl rounded-lg overflow-hidden ${className}`}>
+      <div className={`border-b-[1px] border-zinc-500 w-full flex justify-between items-center  md:py-3 py-2 px-3 bg-green-200  ${classNameHeader}`}>
         <div className='flex items-center gap-2'>
           <AiOutlineAlignLeft style={{ fontSize: 20 }} />
           <div className='text-medium '>{titleHeader || translate('menuProduct.category')}</div>
         </div>
         {!disableShowClear && (
-          <div
-            onClick={handleCleanAll}
-            className='hover:underline hover:font-medium cursor-pointer'
-          >
+          <div className='hover:underline hover:font-medium cursor-pointer' onClick={handleCleanAll}>
             {`${translate('common.clearAll')} (${getNumberQuery})`}
           </div>
         )}
       </div>
       {children}
-      <div className={`w-full  ${classNameContent}`}></div>
+      <div className={`w-full  ${classNameContent}`} />
     </div>
   )
 }

@@ -24,6 +24,7 @@ const useRoutePage = () => {
   const push = (url: string = '') => {
     const urlFinal = url
     const urlPathName = url.replace(/\?.*$/, '')
+
     checkPageExited(urlPathName)
     router.push(urlFinal)
   }

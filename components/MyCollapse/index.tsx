@@ -41,19 +41,16 @@ const MyCollapse = ({
   return (
     <Box className={cn('w-full', className)}>
       <div
+        className={cn('flex py-2 px-3 cursor-pointer  items-center w-full gap-2  border-b-2 border-gray-300', classNameTitle)}
         onClick={() => setOpened(!opened)}
-        className={cn(
-          'flex py-2 px-3 cursor-pointer  items-center w-full gap-2  border-b-2 border-gray-300',
-          classNameTitle
-        )}
       >
         {!noLeftIcon &&
           (leftIcon || (
             <AiOutlineCaretRight
+              className='transition-all duration-300'
               style={{
                 transform: `rotate(${opened ? 90 : 0}deg)`,
               }}
-              className='transition-all duration-300'
             />
           ))}
         <div className='flex flex-1 items-center '>{title}</div>

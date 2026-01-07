@@ -10,8 +10,6 @@ import { useModalAdmin } from '@/zustand/useModalAdmin'
 import { delayTime } from '@/utils/functions'
 import SepayServices from '@/services/Sepay'
 import { showNotificationError } from '@/utils/notification'
-import { useModal } from '@/zustand/useModal'
-import useUserData from '@/hooks/useUserData'
 import { cn } from '@/utils/tailwind'
 
 const InfoBanking = ({
@@ -39,6 +37,7 @@ const InfoBanking = ({
 
   useEffect(() => {
     isStopRef.current = false
+
     return () => {
       isStopRef.current = true
     }
@@ -52,6 +51,7 @@ const InfoBanking = ({
         }, 1000)
       }
     }
+
     isTracking && countDown()
   }, [time, isTracking])
 
@@ -86,17 +86,14 @@ const InfoBanking = ({
 
       const listPayment = await SepayServices.getListPayment()
 
-      if (
-        listPayment?.transactions &&
-        Array.isArray(listPayment?.transactions) &&
-        listPayment?.transactions?.length > 0
-      ) {
+      if (listPayment?.transactions && Array.isArray(listPayment?.transactions) && listPayment?.transactions?.length > 0) {
         const isValidContent = listPayment?.transactions.some((e) => {
           return e.transaction_content.includes(message)
         })
         const isValidMoney = listPayment?.transactions.some((e) => {
           return Number(e.amount_in) === amount
         })
+
         if (isValidContent) {
           if (isValidMoney) {
             callback(idBanking, message)
@@ -128,13 +125,13 @@ const InfoBanking = ({
       {isMobile ? (
         <div className='relative w-[90%] flex-1  m-auto  flex md:pb-0  aspect-square overflow-hidden'>
           {/* <Image preview={false} src={qrCode} alt='QR' className='!relative !w-full !h-auto' /> */}
-          <MyImage src={qrCode} alt='QR' className='!relative !w-full !h-auto' />
+          <MyImage alt='QR' className='!relative !w-full !h-auto' src={qrCode} />
         </div>
       ) : (
         <div className='relative w-full flex-1 flex md:pb-0  aspect-square overflow-hidden'>
           <div className='absolute w-full aspect-square flex justify-center items-center'>
             <div className='relative md:w-full   aspect-square '>
-              <Image src={qrCode} alt='QR' className='!relative !w-full !h-auto ' />
+              <Image alt='QR' className='!relative !w-full !h-auto ' src={qrCode} />
             </div>
           </div>
         </div>
@@ -146,19 +143,19 @@ const InfoBanking = ({
 
           <div className='relative justify-center w-5 rounded-lg aspect-square overflow-auto'>
             <MyImage
-              src={'https://www.vpbank.com.vn/assets/images/favicons/favicon-32x32.png'}
               alt='logo VCB'
               className='!relative !w-full !h-auto '
+              src={'https://www.vpbank.com.vn/assets/images/favicons/favicon-32x32.png'}
             />
           </div>
         </div>
         <div className='flex  md:gap-2 gap-1'>
           <span className='font-bold'>{`STK : `}</span>
-          <TextCopy value={'0392225405'} textView={'0392225405'} />
+          <TextCopy textView={'0392225405'} value={'0392225405'} />
         </div>
         <div className='flex  flex-col  gap-1'>
           <span className='font-bold'>{translate('textPopular.content')} :</span>
-          <TextCopy value={message} textView={message} />
+          <TextCopy textView={message} value={message} />
         </div>
         <div className='rounded-lg mt-1 flex p-3 w-full bg-[#f6cf83]'>
           <span className='mr-1'>
@@ -167,12 +164,7 @@ const InfoBanking = ({
           <span>Nội dung chuyển khoản phải ghi đúng để bạn khiếu nãi và kiểm tra hoá đơn.</span>
         </div>
 
-        <div
-          className={cn(
-            'w-full gap-1 text-base flex  items-center relative ',
-            isTracking ? 'opacity-100' : 'opacity-0'
-          )}
-        >
+        <div className={cn('w-full gap-1 text-base flex  items-center relative ', isTracking ? 'opacity-100' : 'opacity-0')}>
           <span>{translate('banking.tracking')}:</span>
           <span className='font-bold'>{time}</span>
           <span>(s)</span>
@@ -180,31 +172,15 @@ const InfoBanking = ({
         <div className='flex gap-3  '>
           {isMobile ? (
             <>
-              <Button
-                disabled={isTracking}
-                onClick={checkBanking}
-                loading={loadingCheck}
-                className='flex-1'
-                variant='filled'
-              >
+              <Button className='flex-1' disabled={isTracking} loading={loadingCheck} variant='filled' onClick={checkBanking}>
                 {translate('banking.openApp')}
               </Button>
-              <Button
-                onClick={handleCallBack}
-                disabled={isBanking}
-                className='flex-1'
-                loading={isTracking}
-              >
+              <Button className='flex-1' disabled={isBanking} loading={isTracking} onClick={handleCallBack}>
                 {translate('textPopular.sended')}
               </Button>
             </>
           ) : (
-            <Button
-              loading={isTracking}
-              onClick={handleCallBack}
-              disabled={isBanking}
-              className='flex-1'
-            >
+            <Button className='flex-1' disabled={isBanking} loading={isTracking} onClick={handleCallBack}>
               {translate('textPopular.sended')}
             </Button>
           )}

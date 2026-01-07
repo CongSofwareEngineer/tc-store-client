@@ -15,30 +15,20 @@ const MyImageZoom = ({ url }: { url: string }) => {
     openModal({
       body: (
         <div className='w-[90%] flex justify-center items-center h-[90%]'>
-          <MyImage
-            alt={url}
-            className='!w-auto !h-full !max-w-full !max-h-full'
-            src={detectImg(url)}
-          />
+          <MyImage alt={url} className='!w-auto !h-full !max-w-full !max-h-full' src={detectImg(url)} />
         </div>
       ),
 
       className: '!md:min-h-[600px] !min-h-[300px]',
     })
   }
+
   return (
-    <div
-      onMouseLeave={() => setIsHover(false)}
-      onMouseEnter={() => setIsHover(true)}
-      className='w-full h-full relative '
-      onClick={onClick}
-    >
-      <MyImage alt='img' src={detectImg(url)} className='!w-full !h-full' />
+    <div className='w-full h-full relative ' onClick={onClick} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+      <MyImage alt='img' className='!w-full !h-full' src={detectImg(url)} />
       {isHover && isClient && (
         <div className='absolute cursor-pointer top-0 left-0 w-full flex justify-center items-center h-full bg-black/50'>
-          <div className='text-white flex justify-center items-center'>
-            {translate('common.view')}
-          </div>
+          <div className='text-white flex justify-center items-center'>{translate('common.view')}</div>
         </div>
       )}
     </div>

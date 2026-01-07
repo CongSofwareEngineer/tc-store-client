@@ -7,6 +7,7 @@ import { expiredTimeToNumber } from '@/utils/momentFunc'
 
 const getData = async ({ queryKey }: { queryKey: any }): Promise<any[]> => {
   const data = await ClientApi.getVouchersByIdUser(queryKey[1])
+
   return data?.data || []
 }
 
@@ -24,9 +25,11 @@ const useVoucherUser = () => {
     if (data.length > 0) {
       const arrValid = data.filter((e) => {
         const isValidDate = expiredTimeToNumber(e.expired)
+
         return isValidDate >= 0
       })
-      console.log({ arrValid })
+
+      // console.log({ arrValid })
     }
   }, [data, userData])
 

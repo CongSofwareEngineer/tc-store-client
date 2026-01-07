@@ -5,6 +5,7 @@ import axios from 'axios'
 const getData = async ({ queryKey }: { queryKey: any }): Promise<any> => {
   const url = `https://esgoo.net/api-tinhthanh/${queryKey[1]}/${queryKey[2]}.htm`
   const data = await axios.get(url)
+
   return data?.data?.data || data?.data || []
 }
 

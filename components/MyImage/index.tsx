@@ -15,32 +15,28 @@ const MyImage = ({ isAnimation = false, ...props }: IImage) => {
 
   return (
     <Image
-      draggable={false}
       ref={ref}
       fill
+      draggable={false}
       {...props}
+      className={cn('!relative', props?.className)}
+      src={inView ? props.src : 'https://res.cloudinary.com/tc-store/image/upload/w_100/v1734883048/tc-store/bgWhiteBlur_yxlqi7.png'}
+      style={{
+        filter: loaded ? 'none' : 'blur(20px)',
+        transition: !isAnimation ? 'none' : 'filter 0.08s ease-out',
+        ...props.style,
+      }}
+      onError={({ currentTarget }) => {
+        currentTarget.onerror = null
+        currentTarget.src = images.icon.unknowTokenIcon
+      }}
       onLoad={() => {
         setLoaded(true)
         if (props.onLoaded) {
           props.onLoaded()
         }
       }}
-      className={cn('!relative', props?.className)}
-      style={{
-        filter: loaded ? 'none' : 'blur(20px)',
-        transition: !isAnimation ? 'none' : 'filter 0.08s ease-out',
-        ...props.style,
-      }}
-      src={
-        inView
-          ? props.src
-          : 'https://res.cloudinary.com/tc-store/image/upload/w_100/v1734883048/tc-store/bgWhiteBlur_yxlqi7.png'
-      }
-      onError={({ currentTarget }) => {
-        currentTarget.onerror = null
-        currentTarget.src = images.icon.unknowTokenIcon
-      }}
-    />    
+    />
   )
 }
 

@@ -1,13 +1,8 @@
 import plugin from 'tailwindcss/plugin'
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss'
 
 export default {
-  content: [
-    './components/**/*.{ts,tsx}',
-    './hook/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './hook/**/*.{ts,tsx}',
-  ],
+  content: ['./components/**/*.{ts,tsx}', './hook/**/*.{ts,tsx}', './app/**/*.{ts,tsx}', './hook/**/*.{ts,tsx}'],
   theme: {
     extend: {
       keyframes: {
@@ -51,4 +46,4 @@ export default {
       addUtilities(newUtilities)
     }),
   ],
-} satisfies Config;
+} satisfies Config

@@ -8,6 +8,7 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
     dataBase,
     title: 'My Bill',
   })
+
   return metaData
 }
 

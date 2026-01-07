@@ -22,7 +22,7 @@ const ShoesScreen = () => {
       <>
         <MySkeleton className='w-full min-h-10 h-10 rounded-lg' />
 
-        <LoadingGetData colSurface={3} rows={2} loading />
+        <LoadingGetData loading colSurface={3} rows={2} />
       </>
     )
   }
@@ -35,37 +35,24 @@ const ShoesScreen = () => {
         {data.length > 0 ? (
           <div className=' w-full grid grid-cols-2 sm:grid-cols-3  lg:grid-cols-4   gap-3 xl:gap-6 md:gap-4'>
             {data.map((item: any) => {
-              return (
-                <ItemProduct
-                  showFeedback
-                  showSold
-                  key={`shoes-${item._id}`}
-                  item={item}
-                  href={`/shop/${item.keyName}`}
-                />
-              )
+              return <ItemProduct key={`shoes-${item._id}`} showFeedback showSold href={`/shop/${item.keyName}`} item={item} />
             })}
           </div>
         ) : (
           <div className='mt-3'>{translate('textPopular.empty')}</div>
         )}
 
-        <MyLoadMore
-          callback={loadMore}
-          hasLoadMore={hasNextPage}
-          loading={isLoading}
-          isFetchingNextPage={isFetchingNextPage}
-        />
+        <MyLoadMore callback={loadMore} hasLoadMore={hasNextPage} isFetchingNextPage={isFetchingNextPage} loading={isLoading} />
       </>
     )
   }
 
   return (
     <div className='w-full flex md:flex-row flex-col  md:gap-6 gap-3  h-full justify-star md:mt-3'>
-      <div data-aos='fade-right' className='md:w-[250px] w-full'>
+      <div className='md:w-[250px] w-full' data-aos='fade-right'>
         <MenuShoes />
       </div>
-      <div data-aos='fade-left' className='flex-1 w-full flex flex-col gap-3 h-full'>
+      <div className='flex-1 w-full flex flex-col gap-3 h-full' data-aos='fade-left'>
         {isLoading ? renderLoading() : renderContent()}
       </div>
     </div>

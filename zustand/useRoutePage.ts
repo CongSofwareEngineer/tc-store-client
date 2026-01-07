@@ -18,6 +18,7 @@ const zustandRoutePage = create<RoutePageStore>()(
       [ZUSTAND.RoutePage]: INIT_ZUSTAND[ZUSTAND.RoutePage],
       addPathName: (pathName: string) => {
         const mapRoutePage = get()[ZUSTAND.RoutePage]
+
         mapRoutePage.set(pathName, pathName)
 
         set({ [ZUSTAND.RoutePage]: mapRoutePage })

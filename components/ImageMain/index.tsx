@@ -14,13 +14,7 @@ type IImageMain = {
   isZoom?: boolean
   isNoAnimation?: boolean
 }
-const ImageMain = ({
-  model,
-  listImage,
-  isNoAnimation = false,
-  className,
-  isZoom = false,
-}: IImageMain) => {
+const ImageMain = ({ model, listImage, isNoAnimation = false, className, isZoom = false }: IImageMain) => {
   let img
 
   if (Array.isArray(listImage)) {
@@ -35,10 +29,10 @@ const ImageMain = ({
     <MyImageZoom url={img?.url.toString() || ''} />
   ) : (
     <MyImage
-      className={cn('!relative ', className)}
       alt={img?.url.toString() || ''}
-      src={detectImg(img?.url.toString() || '')}
+      className={cn('!relative ', className)}
       isNoAnimation={isNoAnimation}
+      src={detectImg(img?.url.toString() || '')}
     />
   )
 }

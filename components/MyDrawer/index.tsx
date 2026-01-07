@@ -17,22 +17,19 @@ const MyDrawer: NextPage = () => {
 
   return (
     <Drawer
+      className='!max-h-[calc(100dvh-60px)]'
       closeOnClickOutside={drawer?.overClickOutside}
-      title={drawer.title}
+      opened={drawer?.opened || false}
       position={drawer.position || 'bottom'}
       size={drawer?.width}
-      opened={drawer?.opened || false}
-      onClose={closeDrawer}
-      className='!max-h-[calc(100dvh-60px)]'
       styles={{
         content: {
-          maxHeight:
-            drawer.position === 'left' || drawer.position === 'right'
-              ? 'unset'
-              : 'calc(100dvh - 60px)',
+          maxHeight: drawer.position === 'left' || drawer.position === 'right' ? 'unset' : 'calc(100dvh - 60px)',
           height: drawer.position === 'left' || drawer.position === 'right' ? '100%' : 'auto',
         },
       }}
+      title={drawer.title}
+      onClose={closeDrawer}
     >
       <div className='h-full'>
         {drawer.content ?? <></>}

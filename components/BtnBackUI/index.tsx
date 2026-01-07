@@ -13,24 +13,23 @@ const BtnBackUI = ({ clickBack, titlePageMain, titlePage }: PropsType) => {
   return (
     <div className='flex w-full align-middle justify-start gap-1 mb-3 md:mb-6 items-center '>
       <Image
-        onClick={clickBack}
-        src={images.icon.iconBack}
+        fill
         alt={'TC Store Icon Back page '}
         className='cursor-pointer !relative !w-[25px] !h-[25px]'
-        fill
+        src={images.icon.iconBack}
+        onClick={clickBack}
       />
       {titlePageMain && (
-        <a
+        <button
+          className='cursor-pointer whitespace-nowrap hover:underline text-[16px] text-blue-700 flex gap-1 bg-transparent border-none p-0'
+          type='button'
           onClick={clickBack}
-          className='cursor-pointer whitespace-nowrap hover:underline text-[16px] text-blue-700 flex gap-1'
         >
           <h2>{titlePageMain}</h2>
           <AiOutlineRight className='black' />
-        </a>
+        </button>
       )}
-      {titlePage && (
-        <h1 className='whitespace-nowrap text-ellipsis overflow-hidden '>{titlePage}</h1>
-      )}
+      {titlePage && <h1 className='whitespace-nowrap text-ellipsis overflow-hidden '>{titlePage}</h1>}
     </div>
   )
 }

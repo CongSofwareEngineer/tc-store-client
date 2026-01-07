@@ -44,18 +44,16 @@ const ChatMessage = ({
 
   const handleRootScroll = () => {
     const rootNode = scrollableRootRef.current
+
     if (rootNode) {
       const scrollDistanceToBottom = rootNode.scrollHeight - rootNode.scrollTop
+
       lastScrollDistanceToBottomRef.current = scrollDistanceToBottom
     }
   }
 
   return (
-    <div
-      ref={rootRefSetter}
-      onScroll={handleRootScroll}
-      className={`flex flex-col flex-1 min-h-full h-full overflow-y-auto ${className}`}
-    >
+    <div ref={rootRefSetter} className={`flex flex-col flex-1 min-h-full h-full overflow-y-auto ${className}`} onScroll={handleRootScroll}>
       {isLoadMore && (
         <div ref={infiniteRef} className='flex w-full '>
           Loading....

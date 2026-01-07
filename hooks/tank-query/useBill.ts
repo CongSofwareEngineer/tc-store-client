@@ -5,18 +5,13 @@ import { useMemo } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import ClientApi from '@/services/ClientApi/index'
 
-const getData = async ({
-  queryKey,
-  pageParam = 1,
-}: {
-  queryKey: any
-  pageParam: any
-}): Promise<TypeHookReactQuery> => {
+const getData = async ({ queryKey, pageParam = 1 }: { queryKey: any; pageParam: any }): Promise<TypeHookReactQuery> => {
   const query = queryKey[2]
   const dateTime = queryKey[3]
   const { type = null } = query
 
   let queryUrl = `${queryKey[1]}?page=${pageParam}&limit=${PAGE_SIZE_LIMIT}`
+
   if (type) {
     queryUrl += `&status=${type[0]}`
   }
@@ -43,6 +38,7 @@ const useBill = (query: any = [], dateTime = '') => {
       if (lastPage?.data?.length == PAGE_SIZE_LIMIT) {
         return lastPage.page + 1
       }
+
       return null
     },
   })
@@ -52,6 +48,7 @@ const useBill = (query: any = [], dateTime = '') => {
       return []
     }
     const dataFormat = data?.pages.flatMap((e: any) => e.data)
+
     return dataFormat
   }, [data])
 

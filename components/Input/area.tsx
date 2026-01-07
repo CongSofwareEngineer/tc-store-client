@@ -10,6 +10,7 @@ const InputArea = ({ showCount = false, error = null, ...props }: IInputArea) =>
     if (props?.value?.toString()?.length) {
       return props?.value?.toString().length
     }
+
     return 0
   }
 

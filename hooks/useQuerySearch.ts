@@ -27,17 +27,15 @@ const useQuerySearch = () => {
       }
     })
     const stringified = queryString.stringify(searchPareClone, { arrayFormat: 'comma' })
+
     router.push(`${pathPage}?${stringified}`)
     setQueries(searchPareClone)
     setCurrentQueries(window.location.search)
   }, [searchParam, router, pathPage])
 
-  const updateQuery = (
-    key: string,
-    value: string | string[] | number | number[],
-    isReplace = true
-  ) => {
+  const updateQuery = (key: string, value: string | string[] | number | number[], isReplace = true) => {
     let searchPareClone = cloneData(queries)
+
     if (!searchPareClone) {
       searchPareClone = {}
     }
@@ -57,6 +55,7 @@ const useQuerySearch = () => {
     }
 
     const stringified = queryString.stringify(searchPareClone, { arrayFormat: 'comma' })
+
     router.push(`${pathPage}?${stringified}`)
   }
 

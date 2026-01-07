@@ -13,9 +13,10 @@ const ClientApi = {
   sendNotiNewChatMessages: async (idChat: string) => {
     try {
       const urlExp = `https://ts-store-nodejs-noti.vercel.app/new-messages/${idChat}`
+
       return fetch(urlExp)
     } catch (error) {
-      console.log({ error })
+      // console.log({ error })
     }
   },
 
@@ -28,6 +29,7 @@ const ClientApi = {
   // -> about
   getAbout: async () => {
     const res = await fetchData({ url: `/about/category/shoes` })
+
     if (res.data) {
       return {
         _id: res.data._id,
@@ -35,6 +37,7 @@ const ClientApi = {
         category: res.data.category,
       }
     }
+
     return null
   },
   createAbout: async (body: any) => {
@@ -88,6 +91,7 @@ const ClientApi = {
     const body = {
       data: dataBody,
     }
+
     return fetchData({
       url: `user/login`,
       method: REQUEST_TYPE.POST,
@@ -107,7 +111,9 @@ const ClientApi = {
   // -> user
   updateAvatar: async (id: string | undefined, file: any) => {
     const publicId = file.public_id
+
     delete file.public_id
+
     return fetchData({
       url: `user/update-avatar/${id}`,
       body: {
@@ -137,6 +143,7 @@ const ClientApi = {
   // -> bill
   buyNoLogin: async (bodyAPI: BodyAddBill) => {
     const dataEncode = encryptData(bodyAPI)
+
     return fetchData({
       url: `bill/no-login/create?data=${dataEncode}`,
       isAuth: false,
@@ -148,6 +155,7 @@ const ClientApi = {
       body: bodyAPI,
       method: REQUEST_TYPE.POST,
     }
+
     return fetchData(config)
   },
   deleteBill: async (idBill: string) => {
@@ -155,6 +163,7 @@ const ClientApi = {
       url: `bill/delete/${idBill}`,
       method: REQUEST_TYPE.DELETE,
     }
+
     return fetchData(config)
   },
   getBills: async (queryUrl: string): Promise<IClientApi['bill'][]> => {
@@ -170,6 +179,7 @@ const ClientApi = {
     const data = await fetchData({
       url: `cart/detail/${queryUrl}`,
     })
+
     return data?.data || []
   },
   createMyCart: async (body: any) => {
@@ -201,6 +211,7 @@ const ClientApi = {
     const data = await fetchData({
       url: `/cart/length-cart/${queryUrl}`,
     })
+
     return (
       data?.data || {
         lengthCart: 0,
@@ -214,18 +225,21 @@ const ClientApi = {
       url: `product/detail-keyName/${keyName}`,
       isAuth: false,
     })
+
     return data?.data || []
   },
   getListProducts: async (queryUrl: string): Promise<IClientApi['product'][]> => {
     const data = await fetchData({
       url: `product/all${queryUrl}`,
     })
+
     return (data?.data || []) as IClientApi['product'][]
   },
   getProductById: async (id: string): Promise<IClientApi['product']> => {
     const data = await fetchData({
       url: `/product/detail/${id}`,
     })
+
     return data?.data as IClientApi['product']
   },
 
@@ -234,12 +248,14 @@ const ClientApi = {
     const data = await fetchData({
       url: `/comment/detail/${queryUrl}`,
     })
+
     return data.data || []
   },
   getCommentByIdAndSDT: async (idProduct: string, sdt: string): Promise<IClientApi['comment']> => {
     const data = await fetchData({
       url: `/comment/detail/${idProduct}/${sdt}`,
     })
+
     return data.data
   },
   createComment: async (body: any) => {
@@ -281,4 +297,5 @@ const ClientApi = {
     })
   },
 }
+
 export default ClientApi

@@ -47,6 +47,7 @@ const zustandModalAdmin = create<ModalAdminStore>()(
               state?.[ZUSTAND.ModalAdmin].onCloseAfter()
             }
           }
+
           return {
             [ZUSTAND.ModalAdmin]: INIT_ZUSTAND[ZUSTAND.ModalAdmin],
           }

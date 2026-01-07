@@ -10,13 +10,8 @@ import { LINK_CONTACT } from '@/constants/app'
 const Item = ({ icon, value, link }: any) => {
   return (
     <div className='flex gap-2 items-center'>
-      <Image
-        fill
-        alt={`icon-footer-${value}`}
-        src={icon}
-        className='!relative md:!w-[25px] !w-[20px] md:!h-[25px] !h-[20px]'
-      />
-      <Link target='_blank' href={link} className='hover:underline cursor-pointer'>
+      <Image fill alt={`icon-footer-${value}`} className='!relative md:!w-[25px] !w-[20px] md:!h-[25px] !h-[20px]' src={icon} />
+      <Link className='hover:underline cursor-pointer' href={link} target='_blank'>
         {value}
       </Link>
       <AiOutlineCopy onClick={() => copyToClipboard(value)} />
@@ -31,41 +26,20 @@ const Footer = () => {
           <p className='text-medium font-bold mb-2'>Thông tin vẻ Shop</p>
           <div className='flex md:flex-row flex-col w-full justify-between md:gap-0 gap-4'>
             <div className='flex flex-col md:gap-3 gap-2 md:w-[48%] w-full'>
-              <Item
-                icon={images.footer.iconGmail}
-                value={'hodiencong2000.@gmail.com'}
-                link={LINK_CONTACT.Mail}
-              />
-              <Item
-                icon={images.footer.iconNumberPhone}
-                value={'Hồ Diên Công'}
-                link={LINK_CONTACT.SDT}
-              />
+              <Item icon={images.footer.iconGmail} link={LINK_CONTACT.Mail} value={'hodiencong2000.@gmail.com'} />
+              <Item icon={images.footer.iconNumberPhone} link={LINK_CONTACT.SDT} value={'Hồ Diên Công'} />
 
-              <Item
-                icon={images.footer.iconZalo}
-                value={'+84392225405'}
-                link={LINK_CONTACT.Zalo}
-                type={'zalo'}
-              />
-              <Item icon={images.footer.iconFace} value={'Facebook'} link={LINK_CONTACT.FaceBook} />
-              <Item
-                icon={images.footer.iconGithub}
-                value={'CongSofwareEngineer'}
-                link={LINK_CONTACT.Github}
-              />
-              <Item
-                icon={images.footer.iconAddress}
-                value={'83/41, Phạm Văn Bạch, P.15, Tân Bình, TP.HCM'}
-                link={LINK_CONTACT.GGMap}
-              />
+              <Item icon={images.footer.iconZalo} link={LINK_CONTACT.Zalo} type={'zalo'} value={'+84392225405'} />
+              <Item icon={images.footer.iconFace} link={LINK_CONTACT.FaceBook} value={'Facebook'} />
+              <Item icon={images.footer.iconGithub} link={LINK_CONTACT.Github} value={'CongSofwareEngineer'} />
+              <Item icon={images.footer.iconAddress} link={LINK_CONTACT.GGMap} value={'83/41, Phạm Văn Bạch, P.15, Tân Bình, TP.HCM'} />
             </div>
             <div className='w-full md:w-[48%] min-h-[200px]'>
               <div style={{ height: '100%', width: '100%', minHeight: 200 }}>
                 <iframe
-                  src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.925735303758!2d106.63089767616822!3d10.816995289334312!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529d60f102fe1%3A0x48a05f8f5cd877f6!2zODMvNDEgUGjhuqFtIFbEg24gQuG6oWNoLCBQaMaw4budbmcgMTUsIFTDom4gQsOsbmgsIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1723361925647!5m2!1svi!2s'
                   className='w-full h-full'
                   loading='lazy'
+                  src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.925735303758!2d106.63089767616822!3d10.816995289334312!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529d60f102fe1%3A0x48a05f8f5cd877f6!2zODMvNDEgUGjhuqFtIFbEg24gQuG6oWNoLCBQaMaw4budbmcgMTUsIFTDom4gQsOsbmgsIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1723361925647!5m2!1svi!2s'
                   title='TC Store'
                 />
               </div>

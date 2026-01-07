@@ -50,26 +50,28 @@ const useOptionPayment = (defaultValue?: OptionType | null, optionEnable?: Enabl
   ]
 
   const handlePayment = async (data: any) => {
-    console.log({ handlePayment: data, optionSelected })
+    // console.log({ handlePayment: data, optionSelected })
     let result
+
     switch (optionSelected.value) {
       case OPTIONS_PAYMENT.momo:
-        console.log('====================================')
-        console.log('cash by momo')
+        // console.log('====================================')
+        // console.log('cash by momo')
         await delayTime(3000)
-        console.log('====================================')
+        // console.log('====================================')
         result = true
         break
 
       case OPTIONS_PAYMENT.banking:
-        console.log('====================================')
-        console.log('cash by banking')
+        // console.log('====================================')
+        // console.log('cash by banking')
         await delayTime(3000)
 
-        console.log('====================================')
+        // console.log('====================================')
         result = true
         break
     }
+
     return result
   }
 

@@ -3,6 +3,7 @@ import { toast, ToastOptions } from 'react-toastify'
 
 export const copyToClipboard = (text: any) => {
   const tmp = document.createElement('input')
+
   tmp.value = text
   document.body.appendChild(tmp)
   tmp.select()
@@ -18,10 +19,7 @@ export const copyToClipboard = (text: any) => {
   })
 }
 
-export const showNotificationError = (
-  errorMessage = '',
-  options?: ToastOptions<unknown> | undefined
-) => {
+export const showNotificationError = (errorMessage = '', options?: ToastOptions<unknown> | undefined) => {
   toast.error(errorMessage, {
     position: 'top-right',
     hideProgressBar: false,
@@ -34,10 +32,7 @@ export const showNotificationError = (
   })
 }
 
-export const showNotificationSuccess = (
-  message = '',
-  options?: ToastOptions<unknown> | undefined
-) => {
+export const showNotificationSuccess = (message = '', options?: ToastOptions<unknown> | undefined) => {
   toast.success(message, {
     position: 'top-right',
     hideProgressBar: false,

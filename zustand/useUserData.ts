@@ -32,6 +32,7 @@ const zustandUserData = create<UserDataStore>()(
 
           if (dataSecure) {
             const dataDecode = decryptData(dataSecure.toString())
+
             state[ZUSTAND.UserData] = JSON.parse(dataDecode)
             state.connecting = false
           }

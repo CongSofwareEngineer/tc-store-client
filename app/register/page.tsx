@@ -12,6 +12,7 @@ export async function generateMetadata(_: any, parent: ResolvingMetadata) {
     override: true,
     des: 'Tạo tài khoản tại TC Store để trải nghiệm mua sắm tiện lợi: yến sào cao cấp, laptop hiện đại, cây cảnh đẹp, nước hoa chính hãng và cà phê nguyên chất. Đăng ký ngay để nhận ưu đãi hấp dẫn!',
   })
+
   return metaData
 }
 
@@ -19,9 +20,7 @@ const RegisterPage: NextPage = () => {
   return (
     <>
       <Header>
-        <h1 className='sr-only'>
-          Đăng Ký Tài Khoản Tại TC Store - Bắt Đầu Hành Trình Mua Sắm Dễ Dàng
-        </h1>
+        <h1 className='sr-only'>Đăng Ký Tài Khoản Tại TC Store - Bắt Đầu Hành Trình Mua Sắm Dễ Dàng</h1>
       </Header>
       <ContainerContent>
         <h2 className='sr-only'>Lợi Ích Khi Đăng Ký Tài Khoản TC Store</h2>

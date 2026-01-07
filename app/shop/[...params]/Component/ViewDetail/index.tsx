@@ -6,15 +6,7 @@ import { COOKIE_KEY } from '@/constants/app'
 import useRefreshQuery from '@/hooks/tank-query/useRefreshQuery'
 import useLanguage from '@/hooks/useLanguage'
 import useUserData from '@/hooks/useUserData'
-import {
-  delayTime,
-  detectImg,
-  formatPrice,
-  formatPriceBase,
-  getDataLocal,
-  numberWithCommas,
-  saveDataLocal,
-} from '@/utils/functions'
+import { delayTime, detectImg, formatPrice, formatPriceBase, getDataLocal, numberWithCommas, saveDataLocal } from '@/utils/functions'
 import { QUERY_KEY } from '@/constants/reactQuery'
 import SubAndPlus from '@/components/SubAndPlus'
 
@@ -48,13 +40,7 @@ type Props = {
   setAmountBuy: (e: any) => void
   onChangeData: (param: IProduct) => void
 }
-const ViewDetail = ({
-  onChangeData,
-  productDetail,
-  amountBuy = 0,
-  setIsPayment,
-  setAmountBuy,
-}: Props) => {
+const ViewDetail = ({ onChangeData, productDetail, amountBuy = 0, setIsPayment, setAmountBuy }: Props) => {
   const { isMobile } = useMedia()
   const { refreshQuery } = useRefreshQuery()
   const { translate } = useLanguage()
@@ -71,6 +57,7 @@ const ViewDetail = ({
     const listCartUser = await ClientApi.getCartDetail(data.idUser!, data.idProduct!)
 
     const dataExited = listCartUser?.data[0]
+
     if (!dataExited) {
       await ClientApi.createMyCart(data)
     } else {
@@ -89,20 +76,20 @@ const ViewDetail = ({
   const addCartNoLogin = async (body: ItemCartBody) => {
     const dataCart = getDataLocal(COOKIE_KEY.MyCart)
     const arrTemp: Array<ItemCartBody> = []
+
     if (Array.isArray(dataCart)) {
       let isExited = false
+
       dataCart.forEach((e: ItemCartBody) => {
         const itemTemp = e
-        if (
-          itemTemp.idProduct === body.idProduct &&
-          itemTemp.configCart?.model === body.configCart?.model
-        ) {
+
+        if (itemTemp.idProduct === body.idProduct && itemTemp.configCart?.model === body.configCart?.model) {
           itemTemp.amountBuy = itemTemp.amountBuy! + body.amountBuy!
           isExited = true
         }
         arrTemp.push(itemTemp)
       })
-      console.log({ isExited })
+      // console.log({ isExited })
 
       if (!isExited) {
         arrTemp.push(body)
@@ -123,9 +110,10 @@ const ViewDetail = ({
         idProduct: productDetail._id?.toString(),
         configCart: productDetail.configBill!,
       }
+
       if (isLogin) {
         body.idUser = userData?._id
-        console.log({ body })
+        // console.log({ body })
 
         await handleAddCartLogin(body)
       } else {
@@ -137,6 +125,7 @@ const ViewDetail = ({
           id: '',
           configCart: productDetail.configBill,
         }
+
         bodyOther.moreData = {
           name: productDetail.name,
           keyName: productDetail.keyName,
@@ -148,10 +137,7 @@ const ViewDetail = ({
         }
         await addCartNoLogin(bodyOther)
       }
-      await Promise.all([
-        refreshQuery(QUERY_KEY.LengthCartUser),
-        refreshQuery(QUERY_KEY.MyCartUser),
-      ])
+      await Promise.all([refreshQuery(QUERY_KEY.LengthCartUser), refreshQuery(QUERY_KEY.MyCartUser)])
       setLoadingAddCart(false)
       showNotificationSuccess(translate('addCart.addSuccess'))
     } catch {
@@ -162,25 +148,23 @@ const ViewDetail = ({
 
   const renderSubAndPlus = () => {
     const maxAmount = 0
+
     productDetail.models.some((model) => {
       let isValidSize = false
       const isValidModel = model.model === productDetail.configBill?.model
+
       model.sizes.some((size) => {
         if (size.size === productDetail.configBill?.size) {
           isValidSize = true
         }
+
         return isValidSize
       })
+
       return isValidSize && isValidModel
     })
-    return (
-      <SubAndPlus
-        callBackSub={(e) => setAmountBuy(e)}
-        value={amountBuy}
-        maxAmount={maxAmount}
-        callBackPlus={(e) => setAmountBuy(e)}
-      />
-    )
+
+    return <SubAndPlus callBackPlus={(e) => setAmountBuy(e)} callBackSub={(e) => setAmountBuy(e)} maxAmount={maxAmount} value={amountBuy} />
   }
 
   const renderImageMain = () => {
@@ -189,18 +173,18 @@ const ViewDetail = ({
       if (imageShow) {
         return model.model === imageShow.model
       }
+
       return model.model === productDetail.configBill?.model
     })
+
     return (
       <div className='relative w-full'>
         <MyImage
-          src={detectImg(imageShow?.url?.toString() || img?.url.toString())}
           alt={`img-main--${productDetail.name}`}
           className='!relative !w-full !h-auto'
+          src={detectImg(imageShow?.url?.toString() || img?.url.toString())}
         />
-        <div className=' bg-green-400 rounded-md px-2 py-1 text-center absolute left-2 top-2'>
-          {modelSelected?.name}
-        </div>
+        <div className=' bg-green-400 rounded-md px-2 py-1 text-center absolute left-2 top-2'>{modelSelected?.name}</div>
       </div>
     )
   }
@@ -210,12 +194,9 @@ const ViewDetail = ({
       <div className='flex flex-col'>
         <BtnBack title={[translate('textPopular.shoes'), productDetail.name]} url={['/shop']} />
         <div className='w-full flex gap-6 bg-white rounded-xl p-6'>
-          <div
-            data-aos='fade-right'
-            className='relative min-w-[300px] max-w-[450px] w-[50%] p-5 overflow-hidden '
-          >
+          <div className='relative min-w-[300px] max-w-[450px] w-[50%] p-5 overflow-hidden ' data-aos='fade-right'>
             {renderImageMain()}
-            <ImageMore onHover={(url) => setImageShow(url!)} data={productDetail.images!} />
+            <ImageMore data={productDetail.images!} onHover={(url) => setImageShow(url!)} />
           </div>
           <div className='flex-1 flex flex-col gap-2 justify-center  ' data-aos='fade-left'>
             <h1 className='text-title font-bold'>{productDetail.name}</h1>
@@ -223,34 +204,23 @@ const ViewDetail = ({
             <div className='text-medium  line-through text-green-400'>
               {numberWithCommas(formatPriceBase(productDetail.price, productDetail?.disCount!))} VNĐ
             </div>
-            <div className='text-title font-bold text-green-500'>{`${formatPrice(
-              Number(productDetail.price || '0') * amountBuy
-            )} VNĐ`}</div>
+            <div className='text-title font-bold text-green-500'>{`${formatPrice(Number(productDetail.price || '0') * amountBuy)} VNĐ`}</div>
             <Models
+              listModels={productDetail.models}
+              value={productDetail.configBill}
               onChange={(e) => {
                 onChangeData({ ...productDetail, configBill: e })
               }}
-              listModels={productDetail.models}
-              value={productDetail.configBill}
             />
             {renderSubAndPlus()}
 
             <div className='flex gap-6 mt-4'>
-              <Button onClick={handleBuy} className='min-w-[30%] !h-[40px]'>
+              <Button className='min-w-[30%] !h-[40px]' onClick={handleBuy}>
                 {translate('common.buyNow')}
               </Button>
-              <Button
-                variant='filled'
-                onClick={handleAddCart}
-                className='min-w-[30%] !h-[40px]'
-                loading={loadingAddCart}
-              >
+              <Button className='min-w-[30%] !h-[40px]' loading={loadingAddCart} variant='filled' onClick={handleAddCart}>
                 <div className='flex gap-3 items-center whitespace-nowrap'>
-                  <MyImage
-                    src={images.icon.iconCart}
-                    alt='btn-add-cart'
-                    className='!relative !w-[25px] !h-[25px]'
-                  />
+                  <MyImage alt='btn-add-cart' className='!relative !w-[25px] !h-[25px]' src={images.icon.iconCart} />
                   <span>{translate('common.addCart')}</span>
                 </div>
               </Button>
@@ -258,14 +228,12 @@ const ViewDetail = ({
           </div>
         </div>
 
-        <div data-aos='fade-up' className='w-full bg-white rounded-xl p-6 mt-6'>
+        <div className='w-full bg-white rounded-xl p-6 mt-6' data-aos='fade-up'>
           <MoreInfo data={productDetail} />
         </div>
 
         <div className='w-full bg-white py-4 px-4   rounded-xl  mt-6'>
-          <div className='text-medium capitalize font-bold'>
-            {translate('textPopular.moreLike')}
-          </div>
+          <div className='text-medium capitalize font-bold'>{translate('textPopular.moreLike')}</div>
           <MoreCollections />
         </div>
       </div>
@@ -277,63 +245,44 @@ const ViewDetail = ({
       <div className='flex flex-col gap-2'>
         <BtnBack title={[translate('textPopular.shoes'), productDetail.name]} url={['/shop']} />
         <div className='pt-8 pb-2 shadow-lg shadow-yellow-50 bg-white   w-full flex flex-col justify-center items-center'>
-          <div data-aos='fade-right' className='w-[80%]  overflow-hidden '>
+          <div className='w-[80%]  overflow-hidden ' data-aos='fade-right'>
             {renderImageMain()}
-            <ImageMore onHover={(url) => setImageShow(url!)} data={productDetail.images!} />
+            <ImageMore data={productDetail.images!} onHover={(url) => setImageShow(url!)} />
           </div>
-          <div data-aos='fade-right' className='w-full flex-col gap-2 px-5 pt-5'>
+          <div className='w-full flex-col gap-2 px-5 pt-5' data-aos='fade-right'>
             <h1 className='text-title font-bold'>{productDetail.name}</h1>
             <InfoItemDetail data={productDetail} />
-            <div className='text-medium  line-through'>
-              {formatPriceBase(productDetail?.price, productDetail?.disCount)} VNĐ
-            </div>
-            <div className='text-title font-bold text-green-500'>{`${formatPrice(
-              Number(productDetail?.price || '0') * amountBuy
-            )} VNĐ`}</div>
+            <div className='text-medium  line-through'>{formatPriceBase(productDetail?.price, productDetail?.disCount)} VNĐ</div>
+            <div className='text-title font-bold text-green-500'>{`${formatPrice(Number(productDetail?.price || '0') * amountBuy)} VNĐ`}</div>
 
             <Models
+              listModels={productDetail.models}
+              value={productDetail.configBill}
               onChange={(e) => {
                 onChangeData({ ...productDetail, configBill: e })
               }}
-              listModels={productDetail.models}
-              value={productDetail.configBill}
             />
             <div className='mb-3' />
             {renderSubAndPlus()}
 
             <div className='flex sm:gap-6 gap-2 mt-4 mb-3 sm:flex-row flex-col'>
-              <Button onClick={handleBuy} className='min-w-[30%] ' style={{ height: 40 }}>
+              <Button className='min-w-[30%] ' style={{ height: 40 }} onClick={handleBuy}>
                 {translate('common.buyNow')}
               </Button>
-              <Button
-                variant='filled'
-                onClick={handleAddCart}
-                className='min-w-[30%] '
-                style={{ height: 40 }}
-                loading={loadingAddCart}
-              >
+              <Button className='min-w-[30%] ' loading={loadingAddCart} style={{ height: 40 }} variant='filled' onClick={handleAddCart}>
                 <div className='flex gap-3  items-center  whitespace-nowrap'>
-                  <MyImage
-                    src={images.icon.iconCart}
-                    alt='btn-add-cart'
-                    className='!relative !w-[25px] !h-[25px]'
-                  />
+                  <MyImage alt='btn-add-cart' className='!relative !w-[25px] !h-[25px]' src={images.icon.iconCart} />
                   <span>{translate('common.addCart')}</span>
                 </div>
               </Button>
             </div>
           </div>
         </div>
-        <div
-          data-aos='fade-right'
-          className=' shadow-yellow-50 bg-white p-5 md:pr-5 pr-3 w-full flex flex-col gap-2 mt-2'
-        >
+        <div className=' shadow-yellow-50 bg-white p-5 md:pr-5 pr-3 w-full flex flex-col gap-2 mt-2' data-aos='fade-right'>
           <MoreInfo data={productDetail} />
         </div>
         <div className='w-full bg-white p-4  mt-2 '>
-          <div className='text-medium capitalize font-bold mb-1'>
-            {translate('textPopular.moreLike')}
-          </div>
+          <div className='text-medium capitalize font-bold mb-1'>{translate('textPopular.moreLike')}</div>
           <MoreCollections />
         </div>
       </div>

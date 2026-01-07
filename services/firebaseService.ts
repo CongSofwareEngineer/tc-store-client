@@ -27,20 +27,21 @@ export const FirebaseServices = {
   },
   initAuth: () => {
     const auth = getAuth(FirebaseServices.initFirebase())
+
     auth.useDeviceLanguage()
+
     return auth
   },
 
   initRealtimeData: () => {
-    const db = getDatabase(
-      FirebaseServices.initFirebase(),
-      'https://tc-store-7c79f-default-rtdb.asia-southeast1.firebasedatabase.app/'
-    )
+    const db = getDatabase(FirebaseServices.initFirebase(), 'https://tc-store-7c79f-default-rtdb.asia-southeast1.firebasedatabase.app/')
+
     return db
   },
 
   addSigninNumberPhone: (callback: (param?: any) => any) => {
     const auth = FirebaseServices.initAuth()
+
     auth.useDeviceLanguage()
     window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
       size: 'invisible',
@@ -52,34 +53,32 @@ export const FirebaseServices = {
 
   sendNumberToGetOtp: async (numberPhone: string, auth: Auth, appVerifier: RecaptchaVerifier) => {
     const data = await signInWithPhoneNumber(auth, numberPhone, appVerifier)
+
     return data
   },
 
   createMessage: () => {
     const fb = FirebaseServices.initFirebase()
+
     return getMessaging(fb)
   },
   isSupportedNotification: async () => {
     const isSupportFirebaseMess = await isSupported()
+
     return (
-      isSupportFirebaseMess &&
-      typeof window !== 'undefined' &&
-      'serviceWorker' in navigator &&
-      'PushManager' in window &&
-      'Notification' in window
+      isSupportFirebaseMess && typeof window !== 'undefined' && 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window
     )
   },
   serviceWorker: async () => {
     const firebaseUrl = encodeURIComponent(JSON.stringify(FirebaseServices.config))
 
-    const registration = await navigator.serviceWorker.register(
-      `/firebase-messaging-sw.js?firebaseConfig=${firebaseUrl}`,
-      { scope: '/' }
-    )
+    const registration = await navigator.serviceWorker.register(`/firebase-messaging-sw.js?firebaseConfig=${firebaseUrl}`, { scope: '/' })
+
     return registration
   },
   updateServiceWorker: async () => {
     const registration = await FirebaseServices.serviceWorker()
+
     registration.update()
   },
   createToken: async (callback: (e?: any) => Promise<void>) => {
@@ -87,30 +86,30 @@ export const FirebaseServices = {
 
     return await FirebaseServices.recursiveCreateToken(callback, registration, 0)
   },
-  recursiveCreateToken: async (
-    callBack: (e?: any) => Promise<void>,
-    registration: any,
-    numberReq = 0
-  ): Promise<any> => {
+  recursiveCreateToken: async (callBack: (e?: any) => Promise<void>, registration: any, numberReq = 0): Promise<any> => {
     if (numberReq >= 5) {
       callBack && callBack(null)
+
       return null
     } else {
       try {
         const permission = await navigator.permissions.query({
           name: 'notifications',
         })
+
         if (permission.state === 'granted') {
           const token = await getToken(FirebaseServices.createMessage(), {
             vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VERIFIED_API_KEY,
             serviceWorkerRegistration: registration,
           })
+
           callBack && callBack(token)
 
           return token
         }
       } catch {
         numberReq++
+
         return await FirebaseServices.recursiveCreateToken(callBack, registration, numberReq)
       }
     }
@@ -119,16 +118,19 @@ export const FirebaseServices = {
   deleteToken: async () => {
     const cloudMess = FirebaseServices.createMessage()
     const isDelete = await deleteToken(cloudMess)
+
     return isDelete
   },
 
   createFBFun: (nameData: string) => {
     const dataCreate = FirebaseServices.initFirebase()
     const collectionData: DatabaseCollectionType = collection(getFirestore(dataCreate), nameData)
+
     return new FirebaseFun(collectionData)
   },
   addListenMessage: async (callback: (e?: any) => any) => {
     const isSupportFirebaseMess = await FirebaseServices.isSupportedNotification()
+
     if (isSupportFirebaseMess) {
       onMessage(FirebaseServices.createMessage(), (payload) => {
         callback(payload)
@@ -138,6 +140,7 @@ export const FirebaseServices = {
 
   requestPermission: async (callback: (e?: any) => any, callbackReject?: () => any) => {
     const isSupportFirebaseMess = await FirebaseServices.isSupportedNotification()
+
     if (isSupportFirebaseMess) {
       navigator.permissions.query({ name: 'notifications' }).then(async (result) => {
         if (result.state === 'prompt') {

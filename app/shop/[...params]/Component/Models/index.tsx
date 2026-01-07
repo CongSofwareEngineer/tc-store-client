@@ -11,6 +11,7 @@ type IModels = {
 const Models = ({ listModels, onChange, value }: IModels) => {
   const optionSize = useMemo(() => {
     const sizeMap = new Map<number, ISizesModel>()
+
     listModels.forEach((model) => {
       model.sizes.forEach((size) => sizeMap.set(size.size, size))
     })
@@ -20,8 +21,10 @@ const Models = ({ listModels, onChange, value }: IModels) => {
         value: size.size.toFixed(),
         disabled: size.amount <= size.sold,
       }
+
       return item
     })
+
     return arrFilter
   }, [listModels])
 
@@ -31,6 +34,7 @@ const Models = ({ listModels, onChange, value }: IModels) => {
         if (size.amount <= size.sold && size.size === value?.size) {
           return true
         }
+
         return false
       })
 
@@ -63,11 +67,11 @@ const Models = ({ listModels, onChange, value }: IModels) => {
   return (
     <div className='flex flex-col gap-4'>
       <Select
-        label={'Size :'}
         checkIconPosition='right'
-        data={optionSize}
-        value={value.size.toFixed()}
         className='w-[100px]'
+        data={optionSize}
+        label={'Size :'}
+        value={value.size.toFixed()}
         onChange={(value) => onChangeSize(value?.toString()!)}
       />
 
@@ -78,7 +82,6 @@ const Models = ({ listModels, onChange, value }: IModels) => {
             return (
               <Checkbox
                 key={`model_${model.value}`}
-                onChange={() => onChangeModel(model.value)}
                 checked={value.model === model.value}
                 label={
                   <div className='flex items-center gap-1'>
@@ -86,6 +89,7 @@ const Models = ({ listModels, onChange, value }: IModels) => {
                     {model.isOutSold && <span className='text-red-600 text-sm'>(Hết hàng)</span>}
                   </div>
                 }
+                onChange={() => onChangeModel(model.value)}
               />
             )
           })}

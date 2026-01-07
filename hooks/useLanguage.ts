@@ -10,6 +10,7 @@ const useLanguage = () => {
     try {
       const arrKey = key!.split('.')
       let text: any = ''
+
       arrKey.forEach((e) => {
         if (!text) {
           text = language?.messages[e]
@@ -17,6 +18,7 @@ const useLanguage = () => {
           text = text[e]
         }
       })
+
       return text
     } catch {
       return ''
@@ -26,6 +28,7 @@ const useLanguage = () => {
   const getLabelCategory = (key: string) => {
     try {
       const data = categoryMenu.find((e) => e.keyName === key)
+
       return data?.lang?.[language.locale] || key
     } catch {
       return key
