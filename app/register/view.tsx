@@ -2,6 +2,7 @@
 import { useForm } from '@mantine/form'
 import React, { useEffect, useState } from 'react'
 import { Checkbox } from '@mantine/core'
+import dynamic from 'next/dynamic'
 
 import { IFormRegister } from './type'
 
@@ -19,11 +20,15 @@ import { showNotificationError } from '@/utils/notification'
 import MyImage from '@/components/MyImage'
 import { images } from '@/configs/images'
 import MyForm from '@/components/Form/MyForm'
-import InputForm from '@/components/Form/Input'
-import InputPasswordForm from '@/components/Form/InputPassword'
-import CheckboxForm from '@/components/Form/Checkbox'
-import ButtonForm from '@/components/Form/ButtonForm'
-import CaptchaOtp from '@/components/CaptchaOtp'
+// import InputForm from '@/components/Form/Input'
+// import InputPasswordForm from '@/components/Form/InputPassword'
+// import CheckboxForm from '@/components/Form/Checkbox'
+// import ButtonForm from '@/components/Form/ButtonForm'
+const CaptchaOtp = dynamic(() => import('@/components/CaptchaOtp'), { ssr: false })
+const ButtonForm = dynamic(() => import('@/components/Form/ButtonForm'), { ssr: false })
+const InputForm = dynamic(() => import('@/components/Form/Input'), { ssr: false })
+const InputPasswordForm = dynamic(() => import('@/components/Form/InputPassword'), { ssr: false })
+const CheckboxForm = dynamic(() => import('@/components/Form/Checkbox'), { ssr: false })
 
 const RegisterScreen = () => {
   useFirstLoadPage()
